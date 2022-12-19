@@ -6,15 +6,33 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!-- Connection Pool -->
-	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" 
-		  destroy-method="close"> 
-		<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
-		<property name="username" value="E5"/>
-		<property name="password" value="E5"/>
-		<property name="initialSize" value="2"/>
-		<property name="maxTotal" value="3"/>
-		<property name="maxIdle" value="2"/>
+<!-- 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"  -->
+<!-- 		  destroy-method="close">  -->
+<!-- 		<property name="driverClassName" value="oracle.jdbc.OracleDriver"/> -->
+<!-- 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"/> -->
+<!-- 		<property name="username" value="E5"/> -->
+<!-- 		<property name="password" value="E5"/> -->
+<!-- 		<property name="initialSize" value="2"/> -->
+<!-- 		<property name="maxTotal" value="3"/> -->
+<!-- 		<property name="maxIdle" value="2"/> -->
+<!-- 	</bean> -->
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<!-- jdbc템플릿 설정 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- myBatis 설정?? -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath:com/mycompany/webapp/**/*.xml"/>
 	</bean>
 	
 	<!-- 
