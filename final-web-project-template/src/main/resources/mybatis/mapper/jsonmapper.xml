@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.mycompany.webapp.dao.IJsonRepository">
+
+<insert id="insert_into_groupinfo"
+		parameterType="com.mycompany.webapp.dto.DTO_for_json">
+	<![CDATA[
+		INSERT INTO 
+		groupinfo 
+			(ratioid, class,
+			email, name, 
+			phone, deparmentid, managerid)  
+		VALUES 
+			(#{ratioid},
+			#{classes}, #{email}, #{name}, 
+			#{phone}, #{departmentid}, #{managerid})
+	]]>
+	</insert>
+
+<insert id="insert_into_pjhistorys"
+		parameterType="com.mycompany.webapp.dto.DTO_for_json2">
+	<![CDATA[
+		INSERT INTO 
+		pjhistorys 
+			(projectid, projectname,
+			EVALUATEDID, startdate, 
+			enddate)  
+		VALUES 
+			(#{projectid},
+			#{projectname}, #{evaluatedid}, #{startdate}, 
+			#{enddate})
+	]]>
+	</insert>
+
+
+<!-- <insert id="insert_into_mappingtable"> -->
+<!-- 	<![CDATA[ -->
+<!-- 		INSERT INTO  -->
+<!-- 		mappingtable  -->
+<!-- 			(ratorid, surveyid, -->
+<!-- 			projectid, evaluatedid  -->
+<!-- 			)   -->
+		
+<!-- 	]]> -->
+<!-- 	</insert> -->
+
+</mapper>
