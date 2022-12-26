@@ -8,10 +8,10 @@
 	<!-- Connection Pool -->
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" 
 		  destroy-method="close"> 
-		<property name="driverClassName" value="oracle.jdbc.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
-		<property name="username" value="user"/>
-		<property name="password" value="user"/>
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@kosa403.iptime.org:41521:xe"/>
+		<property name="username" value="E5"/>
+		<property name="password" value="E5"/>
 		<property name="initialSize" value="2"/>
 		<property name="maxTotal" value="3"/>
 		<property name="maxIdle" value="2"/>
