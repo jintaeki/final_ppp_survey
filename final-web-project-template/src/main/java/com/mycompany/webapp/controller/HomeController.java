@@ -161,7 +161,12 @@ public class HomeController {
 		//log.info("실행");
 		return "survey_details";
 	}
-	
+	@RequestMapping("/surveyevaluate")
+	public String survey_evaluate() {
+		logger.info("실행");
+		//log.info("실행");
+		return "survey_evaluate";
+	}
 	@RequestMapping("/surveyinsert")
 	public String survey_insert() {
 		logger.info("실행");

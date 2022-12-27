@@ -33,6 +33,12 @@
 			<a class="text-white" href="<c:url value='/surveydetails'/>">설문지 문항 관리</a>
 		</h6>
 	</li>	
+		<li class="nav-item mb-2">
+		<h6 class="text-white">
+			<span class="mr-2">Title.</span>
+			<a class="text-white" href="<c:url value='/surveyevaluate'/>">설문 피평가자 목록</a>
+		</h6>
+	</li>	
 	
 		<li class="nav-item mb-2">
 		<h6 class="text-white">
