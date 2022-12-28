@@ -179,23 +179,17 @@ public class HomeController {
 		//log.info("실행");
 		return "survey_list";
 	}
+	@RequestMapping("/surveyresultteam")
+	public String survey_success() {
+		logger.info("실행");
+		//log.info("실행");
+		return "survey_result_team";
+	}
 	@RequestMapping("/surveyresult")
 	public String survey_result() {
 		logger.info("실행");
 		//log.info("실행");
 		return "survey_result";
-	}
-	@RequestMapping("/surveysuccess")
-	public String survey_success() {
-		logger.info("실행");
-		//log.info("실행");
-		return "survey_success";
-	}
-	@RequestMapping("/surveyupdate")
-	public String survey_update() {
-		logger.info("실행");
-		//log.info("실행");
-		return "survey_update";
 	}
 	@RequestMapping("/survey")
 	public String survey() {
