@@ -1,15 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
-<div class="card m-2">
-	<div class="card-header">
-		login_after_user.jsp
-	</div>
-	<div class="card-body">
-		<img src="C:\Users\ljt94\OneDrive\바탕 화면\login_after_user.png">
-		<img src="${pageContext.request.contextPath}/resources/images/forPractice/survey_result.png">
-	</div>
-</div>
-
+<link rel="stylesheet" type="text/css" href="resources/css/surveyresult.css">
+<script src="resources/js/surveyresult.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+	<div id="root"></div>
+<div id="chartdiv"></div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
