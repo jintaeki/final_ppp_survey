@@ -35,6 +35,7 @@ function send(obj){
 							id="button-addon2">검색</button>
 					</div>
 					<button type="button" class="btn btn-outline-primary" onclick="location.href='surveyinsert'">등록</button>
+					<button type="button" class="btn btn-outline-primary" onclick="location.href='mappingview'">매핑등록</button>
 				</div>
 			</div>
 				<table class="table">
