@@ -3,7 +3,7 @@
 
 
 .scrollarea {
-  overflow-y: auto;
+  overflow-y: scroll;
 }
       .nav-scroller {
         position: relative;
@@ -32,13 +32,14 @@
 	width: 30%;	
 	float: left;
 	top-margin:15px;
-	overfllow-y:scroll;
+	height:830px;
+	
 }
 
 .list-group-item.active{ /*이거 없애거나 건들면 이 클래스 싹 다 파래짐*/
 	background: transparent!important;
-	border-color: rgba(0,0,0,.125)!important;
-	border-bottom: 1px solid rgba(0,0,0,.125)!important;
+	border: none!important;
+	
 }
 
 
@@ -50,6 +51,7 @@
 float:right;
 background-color: white;
 width: 600px;
+margin-right: 10%;
 margin-top: 5%;
   padding: 20px;
   border-radius: 10px;
@@ -107,3 +109,5 @@ button.delete_btn {
 	background: transparent!important;
 	border-bottom: 1px solid rgba(0,0,0,.125)!important;
 }
+
+

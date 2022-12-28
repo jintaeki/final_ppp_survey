@@ -7,7 +7,12 @@
 <meta charset="utf-8">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
-	
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+	integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
 	
 	
 
@@ -22,8 +27,7 @@
 		</div>
 		
 		<div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
-			<div class="list-group list-group-flush border-bottom scrollarea">	
-				
+				 <div class="list-group list-group-flush border-bottom scrollarea">
 				<div class="list-group-item list-group-item-action active py-3 lh-sm" id="question_list">
 					<input type="text" class="input_qus"  
 						placeholder="문제를 입력해 주세요.">
