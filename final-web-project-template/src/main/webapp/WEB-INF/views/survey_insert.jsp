@@ -7,7 +7,12 @@
 <meta charset="utf-8">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
-	
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+	integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
 	
 	
 
@@ -18,14 +23,13 @@
 		<div class="input-group mb-3">
 			<span class="input-group-text" id="basic-addon1">설문지 이름</span> <input
 				type="text" class="form-control" placeholder="설문지 이름을 입력해 주세요">
-		<button type="button" class="btn btn-outline-primary" onclick="addInput();">문제 추가</button>		
+		<button type="button" class="btn btn-outline-primary" onclick=" divCopy()">문제 추가</button>		
 		</div>
 		
 		<div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
-			<div class="list-group list-group-flush border-bottom scrollarea">	
-				
-				<div class="list-group-item list-group-item-action active py-3 lh-sm">
-					<input type="text" class="input_qus" id="input_question" 
+				 <div class="list-group list-group-flush border-bottom scrollarea">
+				<div class="list-group-item list-group-item-action active py-3 lh-sm" id="question_list">
+					<input type="text" class="input_qus"  
 						placeholder="문제를 입력해 주세요.">
 						
 					<button class="delete_btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" 
@@ -67,6 +71,7 @@
 					</svg></button>
 					<div class="blank_under"></div>
 					</div>
+					
 				<div class="list-group-item list-group-item-action active py-3 lh-sm">
 					<input type="text"
 						class="input_qus" 
@@ -77,6 +82,7 @@
 					</svg></button>
 					<div class="blank_under"></div>
 					</div>
+					
 				<div class="list-group-item list-group-item-action active py-3 lh-sm">
 					<input type="text"
 						class="input_qus"  placeholder="문제를 입력해 주세요.">
@@ -86,6 +92,7 @@
 					</svg></button>
 					<div class="blank_under"></div>
 					</div>
+					
 				<div class="list-group-item list-group-item-action active py-3 lh-sm">
 					<input type="text"
 						class="input_qus" 
@@ -308,10 +315,7 @@
 		crossorigin="anonymous"></script>
 		
 
-<script>
-	
-	
-	
+<script>	
 	const close = document.querySelectorAll('.delete_btn');
 
 	close.forEach((item) => {
@@ -319,8 +323,25 @@
 	        item.parentNode.style.display = 'none';
 	    })
 	})
+
+	let idNum = 0;
+		
+	function divCopy()  {
+		const testDiv = document.getElementById('question_list');
+		
+		const newNode = testDiv.cloneNode(true);
+		
+		 idNum++;
+		 newNode.id = 'question_list' + idNum;
+		  
+		  testDiv.after(newNode);
+	}
+
+
+
+
 	
-	</script>
+</script>
 
 </body>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
