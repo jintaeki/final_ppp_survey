@@ -191,6 +191,7 @@ public class HomeController {
 		//log.info("실행");
 		return "survey_result";
 	}
+	
 	@RequestMapping("/survey")
 	public String survey() {
 		logger.info("실행");

@@ -29,10 +29,10 @@
 }
 
 .d-flex.flex-column.align-items-stretch.flex-shrink-0.bg-white{
-	width: 30%;	
+	width: 40%;	
 	float: left;
 	top-margin:15px;
-	height:830px;
+	height:700px;
 	
 }
 
@@ -78,7 +78,6 @@ margin-top: 5%;
 }
 
 button.delete_btn {
-	
     left: 88%;
     background-color: transparent;
     border: none;
@@ -110,4 +109,15 @@ button.delete_btn {
 	border-bottom: 1px solid rgba(0,0,0,.125)!important;
 }
 
+.insert_button{
+	background-color: transparent;
+    border: none;
+    left: 92.5%;
+    margin: 15px;
+    position: relative;
+}
+
+.all_qus{
+	display:block;
+}
 
