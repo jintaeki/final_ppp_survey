@@ -8,4 +8,5 @@
 <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 	<div id="root"></div>
 <div id="chartdiv"></div>
+
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
