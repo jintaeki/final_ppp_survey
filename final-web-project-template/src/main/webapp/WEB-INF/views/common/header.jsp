@@ -24,7 +24,7 @@
 	<body>
 		<div class="d-flex flex-column vh-100">
 			<nav class="navbar navbar-dark bg-dark text-white font-weight-bold">
-				<a class="navbar-brand" href="/"> 
+				<a class="navbar-brand"> 
 					<img src="${pageContext.request.contextPath}/resources/images/logo-spring.png" width="30" height="30" class="d-inline-block align-top">
 					Spring
 				</a>
