@@ -203,7 +203,12 @@ public class HomeController {
 		//log.info("실행");
 		return "survey";
 	}
-	
+	@RequestMapping("/mappingview")
+	public String mapping_view() {
+		logger.info("실행");
+		//log.info("실행");
+		return "home2";
+	}
 
 	
 	
