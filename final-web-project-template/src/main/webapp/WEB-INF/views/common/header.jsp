@@ -37,7 +37,7 @@
 			</nav>
 	
 			<div class="flex-grow-1 container-fluid">
-				<div class="row h-100" style="flex-wrap: unset;">
+								<div class="row h-100" style="flex-wrap: unset;">
 					<div class="col-md-4 p-3 bg-dark" style="min-width: 350px; flex: 0 0 17.33333%; max-width: 17.33333%">
 						<div class="h-100 d-flex flex-column">
 							<div class="flex-grow-1" style="height: 0px; overflow-y: auto; overflow-x: hidden;">
@@ -45,7 +45,7 @@
 							</div>
 						</div>
 					</div>
-	
+					
 					<div class="col-md-8 p-3" style="flex:0 0 79.9%; max-width: 79.5%">
 						<div class=" h-100 d-flex flex-column">
 							<div class="flex-grow-1 overflow-auto pr-3" style="height: 0px">

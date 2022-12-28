@@ -1,0 +1,109 @@
+@charset "UTF-8";
+
+
+
+.scrollarea {
+  overflow-y: auto;
+}
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+.list-group.list-group-flush.border-bottom.scrollarea {
+     position: relative;
+    overflow-x: auto;
+}
+
+.d-flex.flex-column.align-items-stretch.flex-shrink-0.bg-white{
+	width: 30%;	
+	float: left;
+	top-margin:15px;
+	overfllow-y:scroll;
+}
+
+.list-group-item.active{ /*이거 없애거나 건들면 이 클래스 싹 다 파래짐*/
+	background: transparent!important;
+	border-color: rgba(0,0,0,.125)!important;
+	border-bottom: 1px solid rgba(0,0,0,.125)!important;
+}
+
+
+.all_insertdiv {
+	display:block;
+}
+
+.block_box {
+float:right;
+background-color: white;
+width: 600px;
+margin-top: 5%;
+  padding: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+   box-shadow: rgba(59, 59, 91, 0.25) 0px 6px 12px -2px,
+    rgba(15, 13, 13, 0.3) 0px 3px 7px -3px;
+}
+
+.input-group.mb-3{
+	margin: 15px;
+	width:35%;
+}
+
+
+#other {
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    flex-shrink: 1;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    width:500px;
+}
+
+button.delete_btn {
+	
+    left: 88%;
+    background-color: transparent;
+    border: none;
+    float: right;
+}
+
+.input_qus{
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: transparent;
+    border: none;
+     outline: none;
+     width:90%
+}
+
+.blank_under{
+	background: none;
+    border-bottom: 1px dotted rgba(0,0,0,.38);
+    height: 1px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: block;
+}
+
+.list-group-item.active{
+	background: transparent!important;
+	border-bottom: 1px solid rgba(0,0,0,.125)!important;
+}
