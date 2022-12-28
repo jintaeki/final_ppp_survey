@@ -8,8 +8,7 @@
 					$("#btn_toggle").click(function (){
 				  	$("#Toggle").slideToggle();
 				  });
-				
-				
+
 				
 				});
 				
@@ -40,49 +39,49 @@
 // 				사원버튼 기준
 				function selectPEmp(selectAll)  {
 					  const checkboxes 
-					       = document.getElementsByName('평가자사원');
+					       = document.getElementsByName('EMP');
 					  
 					  checkboxes.forEach((checkbox) => {
 					    checkbox.checked = selectAll.checked;
 					  })
 					}
 				
-				function EMP_EMP(selectAll)  {
+				function EMPEMP(selectAll)  {
 					  const checkboxes 
-					       = document.getElementsByName('피평가자사원');
+					       = document.getElementsByName('EMP_EMP');
 					  
 					  checkboxes.forEach((checkbox) => {
 					    checkbox.checked = selectAll.checked;
 					  })
 					}
 				
-				function EMP_AM(selectAll)  {
+				function EMPAM(selectAll)  {
 					  const checkboxes 
-					       = document.getElementsByName('피평가자대리');
+					       = document.getElementsByName('EMP_AM');
 					  
 					  checkboxes.forEach((checkbox) => {
 					    checkbox.checked = selectAll.checked;
 					  })
 					}
-				function EMP_SM(selectAll)  {
+				function EMPSM(selectAll)  {
 					  const checkboxes 
-					       = document.getElementsByName('피평가자과장');
+					       = document.getElementsByName('EMP_SM');
 					  
 					  checkboxes.forEach((checkbox) => {
 					    checkbox.checked = selectAll.checked;
 					  })
 					}
-				function EMP_AGM(selectAll)  {
+				function EMPAGM(selectAll)  {
 					  const checkboxes 
-					       = document.getElementsByName('피평가자차장');
+					       = document.getElementsByName('EMP_AGM');
 					  
 					  checkboxes.forEach((checkbox) => {
 					    checkbox.checked = selectAll.checked;
 					  })
 					}
-				function EMP_DM(selectAll)  {
+				function EMPDM(selectAll)  {
 					  const checkboxes 
-					       = document.getElementsByName('피평가자부장');
+					       = document.getElementsByName('EMP_DM');
 					  
 					  checkboxes.forEach((checkbox) => {
 					    checkbox.checked = selectAll.checked;
@@ -191,19 +190,37 @@
 				
 // 				옵션				
 // 				사원 기준
+
 				$(document).ready(function(){
 					 
-					  
-					  $("#same").click(function(){
+					  // 동급 제외
+					  $("#EMPsame").click(function(){
 							
 							if(this.checked){
-								$(".emp").prop("disabled",true);
+								$(".EMPPEMP").prop("disabled",true);
 							}
 							else{
-								$(".emp").prop("disabled",false);
+								$(".EMPPEMP").prop("disabled",false);
 							}
 						});
 					    
+					  // 상급자 제외
+					  $("#EMPhigher").click(function(){
+							
+							if(this.checked){
+								$(".EMPPAM").prop("disabled",true);
+								$(".EMPPAGM").prop("disabled",true);
+								$(".EMPPSM").prop("disabled",true);
+								$(".EMPPDM").prop("disabled",true);
+							
+							}
+							else{
+								$(".EMPPAM").prop("disabled",false);
+								$(".EMPPAGM").prop("disabled",false);
+								$(".EMPPSM").prop("disabled",false);
+								$(".EMPPDM").prop("disabled",false);
+							}
+						});
 					   });
 					   
 		
