@@ -229,11 +229,13 @@
 								id="EMPhigher"> <label for="EMPhigher">상급자 평가 제외</label>
 
 						</div>
+						<input type="submit" value="등록">
 					</div>
 				</div>
+				
 				<div class="col-12"></div>
 				<br>
-
+				
 				<!-- 사원버튼 끝 -->
 
 				<div class="col-12">&nbsp;</div>
