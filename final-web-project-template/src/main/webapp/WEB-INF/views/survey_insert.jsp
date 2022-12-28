@@ -17,7 +17,7 @@
 	<div class="all_insertdiv">
 		<div class="input-group mb-3">
 			<span class="input-group-text" id="basic-addon1">설문지 이름</span> <input
-				type="text" class="form-control" placeholder="입력창">
+				type="text" class="form-control" placeholder="설문지 이름을 입력해 주세요">
 		<button type="button" class="btn btn-outline-primary" onclick="addInput();">문제 추가</button>		
 		</div>
 		
