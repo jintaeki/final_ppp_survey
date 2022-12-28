@@ -131,7 +131,7 @@
 					<li class="page-item"><a class="page-link" href="#">Next</a></li>
 				</ul>
 				<div class="lmenu">
-					<button type="button" class="btn btn-primary" onclick="location.href='survey_result_team'">통계</button>
+					<button type="button" class="btn btn-primary" onclick="location.href='surveyresultteam'">통계</button>
 				</div>
 			</div>
 		</div>

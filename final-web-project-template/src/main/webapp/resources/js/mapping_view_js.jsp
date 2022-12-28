@@ -90,36 +90,54 @@
 // 				사원버튼 기준끝
 				
 // 				대리버튼 기준
-				function select(selectAll)  {
+				function selectPAM(selectAll)  {
 					  const checkboxes 
-					       = document.getElementsByName('평가자대리');
+					       = document.getElementsByName('AM');
 					  
 					  checkboxes.forEach((checkbox) => {
 					    checkbox.checked = selectAll.checked;
 					  })
 					}
 				
-				function select(selectAll)  {
+				function AMEMP(selectAll)  {
 					  const checkboxes 
-					       = document.getElementsByName('피평가자사원');
+					       = document.getElementsByName('AM_EMP');
 					  
 					  checkboxes.forEach((checkbox) => {
 					    checkbox.checked = selectAll.checked;
 					  })
 					}
 				
-				function select(selectAll)  {
+				function AMAM(selectAll)  {
 					  const checkboxes 
-					       = document.getElementsByName('피평가자대리');
+					       = document.getElementsByName('AM_AM');
 					  
 					  checkboxes.forEach((checkbox) => {
 					    checkbox.checked = selectAll.checked;
 					  })
 					}
 				
-				function select(selectAll)  {
+				function AMSM(selectAll)  {
 					  const checkboxes 
-					       = document.getElementsByName('피평가자과장');
+					       = document.getElementsByName('AM_SM');
+					  
+					  checkboxes.forEach((checkbox) => {
+					    checkbox.checked = selectAll.checked;
+					  })
+					}
+				
+				function AMAGM(selectAll)  {
+					  const checkboxes 
+					       = document.getElementsByName('AM_AGM');
+					  
+					  checkboxes.forEach((checkbox) => {
+					    checkbox.checked = selectAll.checked;
+					  })
+					}
+				
+				function AMADM(selectAll)  {
+					  const checkboxes 
+					       = document.getElementsByName('AM_DM');
 					  
 					  checkboxes.forEach((checkbox) => {
 					    checkbox.checked = selectAll.checked;
@@ -128,18 +146,54 @@
 // 				대리버튼 기준끝
 
 // 				과장버튼 기준
-				function select(selectAll)  {
+				function selectPSM(selectAll)  {
 					  const checkboxes 
-					       = document.getElementsByName('평가자과장');
+					       = document.getElementsByName('SM');
 					  
 					  checkboxes.forEach((checkbox) => {
 					    checkbox.checked = selectAll.checked;
 					  })
 					}
 				
-				function select(selectAll)  {
+				function SMEMP(selectAll)  {
 					  const checkboxes 
-					       = document.getElementsByName('피평가자과장');
+					       = document.getElementsByName('SM_EMP');
+					  
+					  checkboxes.forEach((checkbox) => {
+					    checkbox.checked = selectAll.checked;
+					  })
+					}
+				
+				function SMAM(selectAll)  {
+					  const checkboxes 
+					       = document.getElementsByName('SM_AM');
+					  
+					  checkboxes.forEach((checkbox) => {
+					    checkbox.checked = selectAll.checked;
+					  })
+					}
+				
+				function SMSM(selectAll)  {
+					  const checkboxes 
+					       = document.getElementsByName('SM_SM');
+					  
+					  checkboxes.forEach((checkbox) => {
+					    checkbox.checked = selectAll.checked;
+					  })
+					}
+				
+				function SMAGM(selectAll)  {
+					  const checkboxes 
+					       = document.getElementsByName('SM_AGM');
+					  
+					  checkboxes.forEach((checkbox) => {
+					    checkbox.checked = selectAll.checked;
+					  })
+					}
+				
+				function SMDM(selectAll)  {
+					  const checkboxes 
+					       = document.getElementsByName('SM_DM');
 					  
 					  checkboxes.forEach((checkbox) => {
 					    checkbox.checked = selectAll.checked;
@@ -148,19 +202,54 @@
 // 				과장버튼 기준 끝
 
 // 				차장버튼 기준
-				function select(selectAll)  {
+				function selectPAGM(selectAll)  {
 					  const checkboxes 
-					       = document.getElementsByName('평가자차장');
+					       = document.getElementsByName('AGM');
 					  
 					  checkboxes.forEach((checkbox) => {
 					    checkbox.checked = selectAll.checked;
 					  })
 					}
 
-				
-				function select(selectAll)  {
+				function AGMEMP(selectAll)  {
 					  const checkboxes 
-					       = document.getElementsByName('피평가자차장');
+					       = document.getElementsByName('AGM_EMP');
+					  
+					  checkboxes.forEach((checkbox) => {
+					    checkbox.checked = selectAll.checked;
+					  })
+					}
+				
+				function AGMAM(selectAll)  {
+					  const checkboxes 
+					       = document.getElementsByName('AGM_AM');
+					  
+					  checkboxes.forEach((checkbox) => {
+					    checkbox.checked = selectAll.checked;
+					  })
+					}
+				
+				function AGMSM(selectAll)  {
+					  const checkboxes 
+					       = document.getElementsByName('AGM_SM');
+					  
+					  checkboxes.forEach((checkbox) => {
+					    checkbox.checked = selectAll.checked;
+					  })
+					}
+				
+				function AGMAGM(selectAll)  {
+					  const checkboxes 
+					       = document.getElementsByName('AGM_AGM');
+					  
+					  checkboxes.forEach((checkbox) => {
+					    checkbox.checked = selectAll.checked;
+					  })
+					}
+				
+				function AGMDM(selectAll)  {
+					  const checkboxes 
+					       = document.getElementsByName('AGM_DM');
 					  
 					  checkboxes.forEach((checkbox) => {
 					    checkbox.checked = selectAll.checked;
@@ -169,30 +258,65 @@
 // 				차장버튼 기준끝
 
 // 				부장버튼 기준		
-				function select(selectAll)  {
+				function selectPDM(selectAll)  {
 					  const checkboxes 
-					       = document.getElementsByName('평가자부장');
+					       = document.getElementsByName('DM');
 					  
 					  checkboxes.forEach((checkbox) => {
 					    checkbox.checked = selectAll.checked;
 					  })
 					}
 				
-				function select(selectAll)  {
+				function DMEMP(selectAll)  {
 					  const checkboxes 
-					       = document.getElementsByName('피평가자부장');
+					       = document.getElementsByName('DM_EMP');
 					  
 					  checkboxes.forEach((checkbox) => {
 					    checkbox.checked = selectAll.checked;
 					  })
 					}
-// 				차장버튼 기준끝				
+
+				function DMAM(selectAll)  {
+					  const checkboxes 
+					       = document.getElementsByName('DM_AM');
+					  
+					  checkboxes.forEach((checkbox) => {
+					    checkbox.checked = selectAll.checked;
+					  })
+					}
+				
+				function DMSM(selectAll)  {
+					  const checkboxes 
+					       = document.getElementsByName('DM_SM');
+					  
+					  checkboxes.forEach((checkbox) => {
+					    checkbox.checked = selectAll.checked;
+					  })
+					}
+				
+				function DMAGM(selectAll)  {
+					  const checkboxes 
+					       = document.getElementsByName('DM_AGM');
+					  
+					  checkboxes.forEach((checkbox) => {
+					    checkbox.checked = selectAll.checked;
+					  })
+					}
+				
+				function DMDM(selectAll)  {
+					  const checkboxes 
+					       = document.getElementsByName('DM_DM');
+					  
+					  checkboxes.forEach((checkbox) => {
+					    checkbox.checked = selectAll.checked;
+					  })
+					}
+// 				부장버튼 기준끝				
 				
 // 				옵션				
-// 				사원 기준
 
 				$(document).ready(function(){
-					 
+// 				사원 기준
 					  // 동급 제외
 					  $("#EMPsame").click(function(){
 							
@@ -221,9 +345,156 @@
 								$(".EMPPDM").prop("disabled",false);
 							}
 						});
-					   });
-					   
 		
-				
 // 				사원 기준 끝
+
+// 				대리 기준
+					  // 동급 제외
+					  $("#AMsame").click(function(){
+							
+							if(this.checked){
+								$(".AMPAM").prop("disabled",true);
+							}
+							else{
+								$(".AMPAM").prop("disabled",false);
+							}
+						});
+						
+					// 히급자 제외
+					  $("#AMlower").click(function(){
+							
+							if(this.checked){
+								$(".AMPEMP").prop("disabled",true);				
+							}
+							else{
+								$(".AMPEMP").prop("disabled",false);
+							}
+					   });
+					    
+					  // 상급자 제외
+					  $("#AMhigher").click(function(){
+							
+							if(this.checked){
+								$(".AMPAGM").prop("disabled",true);
+								$(".AMPSM").prop("disabled",true);
+								$(".AMPDM").prop("disabled",true);
+							
+							}
+							else{
+								$(".AMPAGM").prop("disabled",false);
+								$(".AMPSM").prop("disabled",false);
+								$(".AMPDM").prop("disabled",false);
+							}
+						});
+// 				대리 기준 끝
+
+// 				과장 기준
+					  // 동급 제외
+					  $("#SMsame").click(function(){
+							
+							if(this.checked){
+								$(".SMPSM").prop("disabled",true);
+							}
+							else{
+								$(".SMPSM").prop("disabled",false);
+							}
+						});
+						
+					// 히급자 제외
+					  $("#SMlower").click(function(){
+							
+							if(this.checked){
+								$(".SMPEMP").prop("disabled",true);				
+								$(".SMPAM").prop("disabled",true);				
+							}
+							else{
+								$(".SMPEMP").prop("disabled",false);
+								$(".SMPAM").prop("disabled",false);
+							}
+						});
+					
+					  // 상급자 제외
+					  $("#SMhigher").click(function(){
+							
+							if(this.checked){
+								$(".SMPAGM").prop("disabled",true);
+								$(".SMPDM").prop("disabled",true);
+							
+							}
+							else{
+								$(".SMPAGM").prop("disabled",false);
+								$(".SMPDM").prop("disabled",false);
+							}
+						});
+// 				과장 기준 끝
+
+// 				차장 기준
+					  // 동급 제외
+					  $("#AGMsame").click(function(){
+							
+							if(this.checked){
+								$(".AGMPAGM").prop("disabled",true);
+							}
+							else{
+								$(".AGMPAGM").prop("disabled",false);
+							}
+						});
+						
+					// 히급자 제외
+					  $("#AGMlower").click(function(){
+							
+							if(this.checked){
+								$(".AGMPEMP").prop("disabled",true);				
+								$(".AGMPAM").prop("disabled",true);				
+								$(".AGMPSM").prop("disabled",true);				
+							}
+							else{
+								$(".AGMPEMP").prop("disabled",false);
+								$(".AGMPAM").prop("disabled",false);
+								$(".AGMPSM").prop("disabled",false);
+							}
+					   });
+					    
+					  // 상급자 제외
+					  $("#AGMhigher").click(function(){
+							
+							if(this.checked){
+								$(".AGMPDM").prop("disabled",true);
+							}
+							else{
+								$(".AGMPDM").prop("disabled",false);
+							}
+						});
+// 				차장 기준 끝
+
+// 				부장 기준
+					  // 동급 제외
+					  $("#DMsame").click(function(){
+							
+							if(this.checked){
+								$(".DMPDM").prop("disabled",true);
+							}
+							else{
+								$(".DMPDM").prop("disabled",false);
+							}
+						});
+						
+					// 히급자 제외
+					  $("#DMlower").click(function(){
+							
+							if(this.checked){
+								$(".DMPEMP").prop("disabled",true);				
+								$(".DMPAM").prop("disabled",true);				
+								$(".DMPSM").prop("disabled",true);				
+								$(".DMPAGM").prop("disabled",true);				
+							}
+							else{
+								$(".DMPEMP").prop("disabled",false);
+								$(".DMPAM").prop("disabled",false);
+								$(".DMPSM").prop("disabled",false);
+								$(".DMPAGM").prop("disabled",false);
+							}
+						});
+					   });
+// 				부장 기준 끝				    
 	</script>
