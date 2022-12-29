@@ -35,6 +35,7 @@ function send(obj){
 							id="button-addon2">검색</button>
 					</div>
 					<button type="button" class="btn btn-outline-primary" onclick="location.href='surveyinsert'">등록</button>
+					<button type="button" class="btn btn-outline-primary" onclick="location.href='mappingview'">매핑등록</button>
 				</div>
 			</div>
 				<table class="table">
@@ -52,7 +53,7 @@ function send(obj){
 					<tbody>
 						<tr>
 							<th scope="row">1</th>
-							<td class="sv_name">22년도 4분기 다면평가</td>
+							<td class="sv_name"><a href="surveydetails">22년도 4분기 다면평가</a></td>
 							<td>2022.10.01 - 2022.12.31</td>
 							<td>2023.01.06</td>
 							<td><span class="wait">대기</span></td>
@@ -62,7 +63,7 @@ function send(obj){
 						</tr>
 						<tr id="grey">
 							<th scope="row">2</th>
-							<td class="sv_name">22년도 3분기 다면평가</td>
+							<td class="sv_name"><a href="surveydetails">22년도 3분기 다면평가</a></td>
 							<td>2022.07.01 - 2022.09.30</td>
 							<td>2022.10.07</td>
 							<td class="comp">확정</td>
@@ -72,7 +73,7 @@ function send(obj){
 						</tr>
 						<tr id="grey">
 							<th scope="row">3</th>
-							<td class="sv_name">22년도 2분기 다면평가</td>
+							<td class="sv_name"><a href="surveydetails">22년도 2분기 다면평가</a></td>
 							<td>2022.04.01 - 2022.06.30</td>
 							<td>2022.07.07</td>
 							<td class="comp">확정</td>
@@ -82,7 +83,7 @@ function send(obj){
 						</tr>
 						<tr id="grey">
 							<th scope="row">4</th>
-							<td class="sv_name">22년도 1분기 다면평가</td>
+							<td class="sv_name"><a href="surveydetails">22년도 1분기 다면평가</a></td>
 							<td>2022.01.01 - 2022.03.31</td>
 							<td>2022.04.07</td>
 							<td class="comp">확정</td>
@@ -92,7 +93,7 @@ function send(obj){
 						</tr>
 						<tr id="grey">
 							<th scope="row">5</th>
-							<td class="sv_name">21년도 전체 다면평가</td>
+							<td class="sv_name"><a href="surveydetails">21년도 전체 다면평가</a></td>
 							<td>2021.01.01 - 2021.12.31</td>
 							<td>2021.01.07</td>
 							<td class="comp">확정</td>
@@ -102,7 +103,7 @@ function send(obj){
 						</tr>
 						<tr id="grey">
 							<th scope="row">6</th>
-							<td class="sv_name">21년도 4분기 다면평가</td>
+							<td class="sv_name"><a href="surveydetails">21년도 4분기 다면평가</a></td>
 							<td>2021.10.01 - 2021.12.31</td>
 							<td>2022.01.06</td>
 							<td class="comp">확정</td>
@@ -112,7 +113,7 @@ function send(obj){
 						</tr>
 						<tr id="grey">
 							<th scope="row">7</th>
-							<td class="sv_name">21년도 3분기 다면평가</td>
+							<td class="sv_name"><a href="surveydetails">21년도 3분기 다면평가</a></td>
 							<td>2021.07.01 - 2021.09.30</td>
 							<td>2021.10.07</td>
 							<td class="comp">확정</td>
@@ -122,7 +123,7 @@ function send(obj){
 						</tr>
 						<tr id="grey">
 							<th scope="row">8</th>
-							<td class="sv_name">21년도 2분기 다면평가</td>
+							<td class="sv_name"><a href="surveydetails">21년도 2분기 다면평가</a></td>
 							<td>2021.04.01 - 2021.06.30</td>
 							<td>2021.07.07</td>
 							<td class="comp">확정</td>
@@ -132,7 +133,7 @@ function send(obj){
 						</tr>
 						<tr id="grey">
 							<th scope="row">9</th>
-							<td class="sv_name">21년도 1분기 다면평가</td>
+							<td class="sv_name"><a href="surveydetails">21년도 1분기 다면평가</a></td>
 							<td>2021.01.01 - 2021.03.31</td>
 							<td>2021.04.07</td>
 							<td class="comp">확정</td>
@@ -142,7 +143,7 @@ function send(obj){
 						</tr>
 						<tr id="grey">
 							<th scope="row">5</th>
-							<td class="sv_name">20년도 전체 다면평가</td>
+							<td class="sv_name"><a href="surveydetails">20년도 전체 다면평가</a></td>
 							<td>2020.01.01 - 2020.12.31</td>
 							<td>2020.01.07</td>
 							<td class="comp">확정</td>

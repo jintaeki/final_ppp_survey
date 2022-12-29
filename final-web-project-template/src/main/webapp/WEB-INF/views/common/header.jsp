@@ -7,6 +7,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!DOCTYPE html>
 <html>
@@ -24,7 +25,7 @@
 	<body>
 		<div class="d-flex flex-column vh-100">
 			<nav class="navbar navbar-dark bg-dark text-white font-weight-bold">
-				<a class="navbar-brand" href="/"> 
+				<a class="navbar-brand"> 
 					<img src="${pageContext.request.contextPath}/resources/images/logo-spring.png" width="30" height="30" class="d-inline-block align-top">
 					Spring
 				</a>

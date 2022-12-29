@@ -33,7 +33,7 @@
 							<th scope="row">1</th>
 							<td class="sv_name">사업지원팀</td>
 							<td>1팀</td>
-							<td>팀장</td>
+							<td>부장</td>
 							<td>임진택</td>
 							<td>O</td>
 							<td><input type="button" class="btn btn-link" onclick="location.href='surveyresult'" value="조회"></td>
@@ -42,7 +42,7 @@
 							<th scope="row">2</th>
 							<td class="sv_name">사업지원팀</td>
 							<td>1팀</td>
-							<td>팀원</td>
+							<td>과장</td>
 							<td>최병준</td>
 							<td>O</td>
 							<td><input type="button" class="btn btn-link" onclick="location.href='surveyresult'" value="조회"></td>
@@ -51,7 +51,7 @@
 							<th scope="row">3</th>
 							<td class="sv_name">사업지원팀</td>
 							<td>1팀</td>
-							<td>팀원</td>
+							<td>시원</td>
 							<td>김찬수</td>
 							<td>-</td>
 							<td><input type="button" class="btn btn-link" onclick="location.href='surveyresult'" value="조회"></td>
@@ -60,7 +60,7 @@
 							<th scope="row">4</th>
 							<td class="sv_name">사업지원팀</td>
 							<td>1팀</td>
-							<td>팀원</td>
+							<td>대리</td>
 							<td>민채우</td>
 							<td>O</td>
 							<td><input type="button" class="btn btn-link" onclick="location.href='surveyresult'" value="조회"></td>
@@ -78,7 +78,7 @@
 							<th scope="row">6</th>
 							<td class="sv_name">사업지원팀</td>
 							<td>2팀</td>
-							<td>팀원</td>
+							<td>과장</td>
 							<td>이순신</td>
 							<td>O</td>
 							<td><input type="button" class="btn btn-link" onclick="location.href='surveyresult'" value="조회"></td>
@@ -87,7 +87,7 @@
 							<th scope="row">7</th>
 							<td class="sv_name">사업지원팀</td>
 							<td>2팀</td>
-							<td>팀원</td>
+							<td>대리</td>
 							<td>을지문덕</td>
 							<td>O</td>
 							<td><input type="button" class="btn btn-link" onclick="send(this)" value="조회"></td>
@@ -96,7 +96,7 @@
 							<th scope="row">8</th>
 							<td class="sv_name">사업지원팀</td>
 							<td>2팀</td>
-							<td>팀원</td>
+							<td>사원</td>
 							<td>권율</td>
 							<td>O</td>
 							<td><input type="button" class="btn btn-link" onclick="send(this)" value="조회"></td>
@@ -105,7 +105,7 @@
 							<th scope="row">9</th>
 							<td class="sv_name">사업지원팀</td>
 							<td>2팀</td>
-							<td>팀원</td>
+							<td>사원</td>
 							<td>장보고</td>
 							<td>-</td>
 							<td><input type="button" class="btn btn-link" onclick="send(this)" value="조회"></td>
@@ -114,7 +114,7 @@
 							<th scope="row">10</th>
 							<td class="sv_name">정보기술연구원</td>
 							<td>연구팀</td>
-							<td>사원</td>
+							<td>차장</td>
 							<td>임꺽정</td>
 							<td>O</td>
 							<td></td>
@@ -131,7 +131,7 @@
 					<li class="page-item"><a class="page-link" href="#">Next</a></li>
 				</ul>
 				<div class="lmenu">
-					<button type="button" class="btn btn-primary">통계</button>
+					<button type="button" class="btn btn-primary" onclick="location.href='surveyresultteam'">통계</button>
 				</div>
 			</div>
 		</div>
