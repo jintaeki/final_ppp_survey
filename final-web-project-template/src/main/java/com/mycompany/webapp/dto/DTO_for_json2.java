@@ -3,47 +3,42 @@ package com.mycompany.webapp.dto;
 import java.sql.Date;
 
 public class DTO_for_json2 {
-
-	private long projectid;
-	private String projectname;
-	private String evaluatedid;
-	private Date startdate;
-	private Date enddate;
-	public long getProjectid() {
-		return projectid;
+	// 프로젝트 투입 이력
+	private long participationEmployeeId;
+	private long projectId;
+	private Date projectStartDate;
+	private Date projectClosedDate;
+	
+	public long getParticipationEmployeeId() {
+		return participationEmployeeId;
 	}
-	public void setProjectid(long projectid) {
-		this.projectid = projectid;
+	public long getProjectId() {
+		return projectId;
 	}
-	public String getProjectname() {
-		return projectname;
+	public Date getProjectStartDate() {
+		return projectStartDate;
 	}
-	public void setProjectname(String projectname) {
-		this.projectname = projectname;
+	public Date getProjectClosedDate() {
+		return projectClosedDate;
 	}
-	public String getEvaluatedid() {
-		return evaluatedid;
+	public void setParticipationEmployeeId(long participationEmployeeId) {
+		this.participationEmployeeId = participationEmployeeId;
 	}
-	public void setEvaluatedid(String evaluatedid) {
-		this.evaluatedid = evaluatedid;
+	public void setProjectId(long projectId) {
+		this.projectId = projectId;
 	}
-	public Date getStartdate() {
-		return startdate;
+	public void setProjectStartDate(Date projectStartDate) {
+		this.projectStartDate = projectStartDate;
 	}
-	public void setStartdate(Date startdate) {
-		this.startdate = startdate;
-	}
-	public Date getEnddate() {
-		return enddate;
-	}
-	public void setEnddate(Date enddate) {
-		this.enddate = enddate;
+	public void setProjectClosedDate(Date projectClosedDate) {
+		this.projectClosedDate = projectClosedDate;
 	}
 	@Override
 	public String toString() {
-		return "DTO_for_json2 [projectid=" + projectid + ", projectname=" + projectname + ", evaluatedid=" + evaluatedid
-				+ ", startdate=" + startdate + ", enddate=" + enddate + "]";
+		return "DTO_for_json2 [participationEmployeeId=" + participationEmployeeId + ", projectId=" + projectId
+				+ ", projectStartDate=" + projectStartDate + ", projectClosedDate=" + projectClosedDate + "]";
 	}
+	
 	
 	
 	
