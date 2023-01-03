@@ -5,6 +5,10 @@ public class SurveyQuestionDTO {
 	private int questionId;
 	private String questionContent;
 	private int questionTypeCode;
+	private int itemId;
+	private String itemContent;
+	private String itemScore;
+	
 	
 	public int getSurveyId() {
 		return surveyId;
@@ -30,13 +34,33 @@ public class SurveyQuestionDTO {
 	public void setQuestionTypeCode(int questionTypeCode) {
 		this.questionTypeCode = questionTypeCode;
 	}
+	public int getItemId() {
+		return itemId;
+	}
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
+	public String getItemContent() {
+		return itemContent;
+	}
+	public void setItemContent(String itemContent) {
+		this.itemContent = itemContent;
+	}
+	public String getItemScore() {
+		return itemScore;
+	}
+	public void setItemScore(String itemScore) {
+		this.itemScore = itemScore;
+	}
 	@Override
 	public String toString() {
-		return "Survey_QuestionDTO [surveyId=" + surveyId + ", questionId=" + questionId + ", questionContent="
-				+ questionContent + ", questionTypeCode=" + questionTypeCode + ", getSurveyId()=" + getSurveyId()
-				+ ", getQuestionId()=" + getQuestionId() + ", getQuestionContent()=" + getQuestionContent()
-				+ ", getQuestionTypeCode()=" + getQuestionTypeCode() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
+		return "SurveyQuestionDTO [surveyId=" + surveyId + ", questionId=" + questionId + ", questionContent="
+				+ questionContent + ", questionTypeCode=" + questionTypeCode + ", itemId=" + itemId + ", itemContent="
+				+ itemContent + ", itemScore=" + itemScore + ", getSurveyId()=" + getSurveyId() + ", getQuestionId()="
+				+ getQuestionId() + ", getQuestionContent()=" + getQuestionContent() + ", getQuestionTypeCode()="
+				+ getQuestionTypeCode() + ", getItemId()=" + getItemId() + ", getItemContent()=" + getItemContent()
+				+ ", getItemScore()=" + getItemScore() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
 	
 	
