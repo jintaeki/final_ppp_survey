@@ -121,3 +121,30 @@ button.delete_btn {
 	display:block;
 }
 
+.question_inputdiv {
+	/*background-color:yellow;*/
+    position: relative;
+    top: 550px;
+}
+
+#exampleFormControlInput {
+	/*background-color:green!important;*/
+	 position: relative;
+   	 left: 19.5%;
+   	 width: 33.7%!important;
+	}
+.select_radio{
+	/*background-color:red;*/
+	width: 41%;
+	float:right;
+}
+.question_content_area{
+	/*background-color:blue;*/
+	    width: 41%;
+	float:right;
+}
+
+#question_add{
+    position: relative;
+    float:right;
+}

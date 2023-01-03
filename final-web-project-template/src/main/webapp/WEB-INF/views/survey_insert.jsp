@@ -26,9 +26,7 @@
 		<div class="input-group mb-3">
 			<span class="input-group-text" id="basic-addon1">설문지 제목</span> <input
 				type="text" class="form-control" placeholder="설문지 이름을 입력해 주세요">
-			<!-- 문제 추가 버튼  -->
-			<button type="button" class="btn btn-outline-primary"
-				onclick="divCopy()">문제 추가</button>
+
 		</div>
 
 		<div
@@ -150,21 +148,6 @@
 			</div>
 		</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		<div class="list-group-item list-group-item-action active py-3 lh-sm"
 			id="newQUE" style="display: none">
 			<input type="text" class="input_qus" placeholder="문제를 입력해 주세요.">
@@ -179,6 +162,32 @@
 			</div>
 			<div class="blank_under"></div>
 		</div>
+		
+	<div class="question_inputdiv">
+	<c:url value='/survey/questioninsert' var =""/>
+		<form action="" method="post">
+		<div class="col-sm">
+			<input type="text" class="form-control" id="exampleFormControlInput" placeholder="문제를 입력해 주세요">
+		</div>
+		<div class="select_radio">
+			<input type="radio" name="type_check" value="multiple-choice">객관식
+			<input type="radio" name="type_check" value="subjective-question">주관식
+			<input type="radio" name="type_check" value="mixed">혼합식
+		</div>
+		<div class="question_content_area" id="question_add">
+			<textarea name="question_content" rows="4" cols="50" name="question_content" value=""></textarea>
+			<!-- 문제 추가 버튼  -->
+			<button type="button" class="btn btn-outline-primary"
+				onclick="divCopy()" value="">문제 추가</button>
+		</div>
+		</form>
+	</div>	
+	
+	
+	
+	
+	
+	</div>
 </body>
 <script>
 	/*문제 삭제*/
