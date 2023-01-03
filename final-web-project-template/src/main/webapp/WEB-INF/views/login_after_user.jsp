@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <script>
 function surveyopen(obj){
-    window.open("http://localhost/springframework-xml-config-no-root/survey", "_blank");
+    window.open("http://localhost:8080/springframework-xml-config-no-root/survey", "_blank");
 	const tag = $(obj);
 	
 	const completeMsg = `완료`;

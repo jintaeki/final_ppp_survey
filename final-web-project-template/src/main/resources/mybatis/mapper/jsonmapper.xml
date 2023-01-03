@@ -7,14 +7,12 @@
 		parameterType="com.mycompany.webapp.dto.DTO_for_json">
 	<![CDATA[
 		INSERT INTO 
-		groupinfo 
-			(ratioid, class,
-			email, name, 
-			phone, deparmentid, managerid)  
+		ORGANIZATION_CHART 
+			(HIGH_DEPARTMENT_ID, DEPARTMENT_ID,
+			DEPARTMENT_NAME)  
 		VALUES 
-			(#{ratioid},
-			#{classes}, #{email}, #{name}, 
-			#{phone}, #{departmentid}, #{managerid})
+			(#{highDepartmentId},
+			#{departmentId}, #{departmentName})
 	]]>
 	</insert>
 
@@ -22,14 +20,12 @@
 		parameterType="com.mycompany.webapp.dto.DTO_for_json2">
 	<![CDATA[
 		INSERT INTO 
-		pjhistorys 
-			(projectid, projectname,
-			EVALUATEDID, startdate, 
-			enddate)  
+		PROJECT_HISTORY 
+			(PARTICIPATION_EMPLOYEE_ID, PROJECT_ID, 
+			PROJECT_START_DATE, PROJECT_CLOSED_DATE)  
 		VALUES 
-			(#{projectid},
-			#{projectname}, #{evaluatedid}, #{startdate}, 
-			#{enddate})
+			(#{participationEmployeeId},
+			#{projectId}, #{projectStartDate}, #{projectClosedDate})
 	]]>
 	</insert>
 
