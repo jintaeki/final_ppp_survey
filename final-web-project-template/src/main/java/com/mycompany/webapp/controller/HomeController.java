@@ -27,7 +27,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mycompany.webapp.dto.DTO_for_json;
 import com.mycompany.webapp.dto.DTO_for_json2;
+import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.service.IJsonService;
+import com.mycompany.webapp.service.ISurveyService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -39,6 +41,8 @@ public class HomeController {
 	@Autowired
 	IJsonService ijr;
 	
+	@Autowired
+	ISurveyService ISS;
 
 	
 	
@@ -176,8 +180,12 @@ public class HomeController {
 		//log.info("실행");
 		return "survey_insert";
 	}
-	@RequestMapping("/surveylist")
-	public String survey_list() {
+	
+	
+	@RequestMapping(value="/surveylist" , method=RequestMethod.GET)
+	public String survey_list(Model model) {
+	
+		model.addAttribute("SLD", new SurveyListDTO());
 		logger.info("실행");
 		//log.info("실행");
 		return "survey_list";
@@ -201,12 +209,12 @@ public class HomeController {
 		//log.info("실행");
 		return "survey";
 	}
-	@RequestMapping("/mappingview")
-	public String mapping_view() {
-		logger.info("실행");
-		//log.info("실행");
-		return "home2";
-	}
+//	@RequestMapping("/mappingview")
+//	public String mapping_view() {
+//		logger.info("실행4");
+//		log.info("실행11111");
+//		return "home2";
+//	}
 
 	
 	

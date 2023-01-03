@@ -20,7 +20,39 @@
 </head>
 <body>
 
+	<div id="survey_manage">
+		<c:url value="/set" var="actionURL" scope="page" />
+		<form:form action="${actionURL}" modelAttribute="SLD">
+			<%-- 					<form action='<c:url value="/set"/>' method="POST">  --%>
+			<div class="form-group">
+				<label for="recipient-name" class="col-form-label">설문지 이름</label> <input
+					type="text" class="form-control" id="recipient-name"
+					name="surveyName">
+			</div>
+			<div class="form-group">
+				<label for="message-text" class="col-form-label">설문 부가 설명</label>
+				<textarea class="form-control" id="message-text"
+					name="surveyContent"></textarea>
+			</div>
+			<input type="hidden" name="decideCheck" value="N">
+			<input type="hidden" name="surveyId" value="1"> 설문 진행 기간<br>
 
+			<input type="date" name="surveyStartDate">~<input type="date"
+				name="surveyClosedDate">
+			<br>
+			<input type="radio" name="anonymityCheckCode" value="20001">익명 <br>
+			<input type="radio" name="anonymityCheckCode" value="20002">기명
+<!-- 					<select name="anonymityCheckDate"> -->
+			<!-- 						<option value="A">익명</option> -->
+			<!-- 						<option value="R">기명</option> -->
+			<!-- 					</select> -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+				<input type="submit" class="btn btn-primary" value="등록">
+			</div>
+			<!-- 					</form> -->
+		</form:form>
+	</div>
 
 	<div class="all_insertdiv">
 		<div class="input-group mb-3">
@@ -127,22 +159,22 @@
 							</button>
 						</div>
 					</div>
-					</div>
-					<div id="subj_box_toggle" style="display: none">
-						<div class="block_box">
-							<input type="text" class="input_qus" placeholder="주관식 문제입니다.">
-							<button class="delete_btn">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-									fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+				</div>
+				<div id="subj_box_toggle" style="display: none">
+					<div class="block_box">
+						<input type="text" class="input_qus" placeholder="주관식 문제입니다.">
+						<button class="delete_btn">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+								fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
   						<path
-										d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+									d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
 						</svg>
-							</button>
-							<div class="blank_under"></div>
-						</div>
+						</button>
+						<div class="blank_under"></div>
 					</div>
+				</div>
 
-				
+
 
 				<input type="submit" value="등록" class="btn_submit" name="bbbb"
 					disabled>

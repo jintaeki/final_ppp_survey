@@ -1,12 +1,12 @@
 package com.mycompany.webapp.dto;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class SurveyListDTO {
 	private int surveyId;
 	private String surveyName;
 	private String surveyContent;
-	private int anonymityCheckDate;
+	private String anonymityCheckCode;
 	private Date surveyStartDate;
 	private Date surveyClosedDate;
 	private String decideCheck;
@@ -29,11 +29,11 @@ public class SurveyListDTO {
 	public void setSurveyContent(String surveyContent) {
 		this.surveyContent = surveyContent;
 	}
-	public int getAnonymityCheckDate() {
-		return anonymityCheckDate;
+	public String getanonymityCheckCode() {
+		return anonymityCheckCode;
 	}
-	public void setAnonymityCheckDate(int anonymityCheckDate) {
-		this.anonymityCheckDate = anonymityCheckDate;
+	public void setanonymityCheckCode(String anonymityCheckCode) {
+		this.anonymityCheckCode = anonymityCheckCode;
 	}
 	public Date getSurveyStartDate() {
 		return surveyStartDate;
@@ -57,10 +57,10 @@ public class SurveyListDTO {
 	@Override
 	public String toString() {
 		return "SurveyList [surveyId=" + surveyId + ", surveyName=" + surveyName + ", surveyContent=" + surveyContent
-				+ ", anonymityCheckDate=" + anonymityCheckDate + ", surveyStartDate=" + surveyStartDate
+				+ ", anonymityCheckCode=" + anonymityCheckCode + ", surveyStartDate=" + surveyStartDate
 				+ ", surveyClosedDate=" + surveyClosedDate + ", decideCheck=" + decideCheck + ", getSurveyId()="
 				+ getSurveyId() + ", getSurveyName()=" + getSurveyName() + ", getSurveyContent()=" + getSurveyContent()
-				+ ", getAnonymityCheckDate()=" + getAnonymityCheckDate() + ", getSurveyStartDate()="
+				+ ", getanonymityCheckCode()=" + getanonymityCheckCode() + ", getSurveyStartDate()="
 				+ getSurveyStartDate() + ", getSurveyClosedDate()=" + getSurveyClosedDate() + ", getDecideCheck()="
 				+ getDecideCheck() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
 				+ super.toString() + "]";
