@@ -88,12 +88,7 @@
 		</h6>
 	</li>
 
-	<li class="nav-item mb-2">
-		<h6 class="text-white">
-			<span class="mr-2">11.</span> <a class="text-white"
-				href="<c:url value='/surveyresultteam'/>">통계</a>
-		</h6>
-	</li>
+	
 
 
 

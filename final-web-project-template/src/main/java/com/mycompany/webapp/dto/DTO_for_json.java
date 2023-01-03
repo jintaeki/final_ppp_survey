@@ -2,59 +2,34 @@ package com.mycompany.webapp.dto;
 
 public class DTO_for_json {
 
-	private String ratioid;
-	private String classes;
-	private  String email;
-	private  String name;
-	private  String phone;
-	private  long departmentid;
-	private  long managerid;
-	public String getRatioid() {
-		return ratioid;
+	// 조직조
+	
+	private long highDepartmentId;
+	private long departmentId;
+	private String departmentName;
+	
+	public long getHighDepartmentId() {
+		return highDepartmentId;
 	}
-	public void setRatioid(String ratioid) {
-		this.ratioid = ratioid;
+	public long getDepartmentId() {
+		return departmentId;
 	}
-	public String getClasses() {
-		return classes;
+	public String getDepartmentName() {
+		return departmentName;
 	}
-	public void setClasses(String classes) {
-		this.classes = classes;
+	public void setHighDepartmentId(long highDepartmentId) {
+		this.highDepartmentId = highDepartmentId;
 	}
-	public String getEmail() {
-		return email;
+	public void setDepartmentId(long departmentId) {
+		this.departmentId = departmentId;
 	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-	public long getDepartmentid() {
-		return departmentid;
-	}
-	public void setDepartmentid(long departmentid) {
-		this.departmentid = departmentid;
-	}
-	public long getManagerid() {
-		return managerid;
-	}
-	public void setManagerid(long managerid) {
-		this.managerid = managerid;
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
 	}
 	@Override
 	public String toString() {
-		return "DTO_for_json [ratioid=" + ratioid + ", classes=" + classes + ", email=" + email + ", name=" + name
-				+ ", phone=" + phone + ", departmentid=" + departmentid + ", managerid=" + managerid + "]";
+		return "DTO_for_json [highDepartmentId=" + highDepartmentId + ", departmentId=" + departmentId
+				+ ", departmentName=" + departmentName + "]";
 	}
 	
 	
