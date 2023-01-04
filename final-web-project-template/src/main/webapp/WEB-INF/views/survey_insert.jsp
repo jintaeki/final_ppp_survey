@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <!DOCTYPE html>
 <html>
@@ -45,10 +46,6 @@
 					</div>
 					<div class="blank_under"></div>
 				</div>
-
-
-
-
 			</div>
 		</div>
 
@@ -164,24 +161,25 @@
 		</div>
 		
 	<div class="question_inputdiv">
-	<c:url value='/survey/questioninsert' var =""/>
-		<form action="" method="post">
-		<div class="col-sm">
-			<input type="text" class="form-control" id="exampleFormControlInput" placeholder="문제를 입력해 주세요">
-		</div>
+		<c:url value="survey/questioninsert/${surveyListDTO.surveyId}"  var='surveyinsert'/>
+		<form:form  modelAttribute="sqd" action="${surveyinsert}" method="post">
 		<div class="select_radio">
-			<input type="radio" name="type_check" value="multiple-choice">객관식
-			<input type="radio" name="type_check" value="subjective-question">주관식
-			<input type="radio" name="type_check" value="mixed">혼합식
+			<input type="radio" name="type_check" value="1001">객관식
+			<input type="radio" name="type_check" value="1002">주관식
+			<input type="radio" name="type_check" value="1003">혼합식
 		</div>
 		<div class="question_content_area" id="question_add">
-			<textarea name="question_content" rows="4" cols="50" name="question_content" value=""></textarea>
+			<div class="input-group" id="question_content">
+  				<div class="input-group-prepend">
+  				  <span class="input-group-text">문제 입력</span>
+  				</div>
+  					<textarea class="form-control" aria-label="문제 입력칸"></textarea>
+			</div>
 			<!-- 문제 추가 버튼  -->
-			<button type="button" class="btn btn-outline-primary"
-				onclick="divCopy()" value="">문제 추가</button>
+			<button type="button" class="btn btn-outline-primary" id="add_btn">문제 추가</button>
 		</div>
-		</form>
-	</div>	
+		</form:form>
+</div>	
 	
 	
 	
@@ -189,19 +187,21 @@
 	
 	</div>
 </body>
-<script>
-	/*문제 삭제*/
 
+<script>
+
+	/*문제 삭제*/
+	
+	/*
 	function delete_btn1(obj) {
 		const tag = $(obj);
 		tag.parent().remove();
 	}
-
 	function btn_for_ans_box(obj) {
 		$("#select_answer_box").slideToggle();
 	}
 
-	/*문제 추가*/
+	//문제 추가
 
 	function divCopy() {
 		const testDiv = document.getElementById('newQUE');
@@ -288,7 +288,7 @@
 
 		  $("#question_option").after(element);
 	}
+	*/
 </script>
-
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </html>

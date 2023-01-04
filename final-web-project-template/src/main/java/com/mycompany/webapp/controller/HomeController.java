@@ -158,6 +158,7 @@ public class HomeController {
 		return "login";
 	}
 	
+	/*
 	@RequestMapping("/surveydetails")
 	public String survey_details() {
 		logger.info("실행");
@@ -208,7 +209,7 @@ public class HomeController {
 		return "home2";
 	}
 
-	
+	*/
 	
 	
 }
