@@ -38,14 +38,14 @@
 	<li class="nav-item mb-2">
 		<h6 class="text-white">
 			<span class="mr-2">4.</span> <a class="text-white"
-				href="<c:url value='/surveylist'/>">설문지 목록</a>
+				href="<c:url value='/survey/surveylist'/>">설문지 목록</a>
 		</h6>
 	</li>
 
 	<li class="nav-item mb-2">
 		<h6 class="text-white">
 			<span class="mr-2">5.</span> <a class="text-white"
-				href="<c:url value='/surveyinsert'/>">설문 등록</a>
+				href="<c:url value='/survey/surveyinsert'/>">설문 등록</a>
 		</h6>
 	</li>
 
@@ -55,7 +55,7 @@
 		<h6 class="text-white">
 
 			<span class="mr-2">6.</span> <a class="text-white"
-				href="<c:url value='/surveydetails'/>">설문지 문항 관리</a>
+				href="<c:url value='/survey/surveydetails'/>">설문지 문항 관리</a>
 		</h6>
 	</li>
 
@@ -63,21 +63,21 @@
 	<li class="nav-item mb-2">
 		<h6 class="text-white">
 			<span class="mr-2">7.</span> <a class="text-white"
-				href="<c:url value='/surveyevaluate'/>">팀원 목록</a>
+				href="<c:url value='/survey/surveyevaluate'/>">팀원 목록</a>
 		</h6>
 	</li>
 
 	<li class="nav-item mb-2">
 		<h6 class="text-white">
 			<span class="mr-2">8.</span> <a class="text-white"
-				href="<c:url value='/surveyresult'/>">설문 결과</a>
+				href="<c:url value='/survey/surveyresult'/>">설문 결과</a>
 		</h6>
 	</li>
 
 	<li class="nav-item mb-2">
 		<h6 class="text-white">
 			<span class="mr-2">9.</span> <a class="text-white"
-				href="<c:url value='/surveyresultteam'/>">설문 부서 통계</a>
+				href="<c:url value='/survey/surveyresultteam'/>">설문 부서 통계</a>
 		</h6>
 	</li>
 

@@ -2,316 +2,153 @@
 	pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
-<!DOCTYPE html>
-<html>
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/insert_survey.css"/>
 
-<head>
-<meta charset="UTF-8">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-	integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
-	crossorigin="anonymous">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+<form:form modelAttribute="SLD" style="display:inline-flex;" id="form"> 
+	<div class="container">
+		<div class="row">
+			<div class="col-3">설문지 이름</div>
+			<div class="col-3">설문 기간</div>
+			<div class="col-3">익명기명</div>
+			<div class="col-3">설문 부가 설명</div>
 
-</head>
-<body>
-
-	<div id="survey_manage">
-		<c:url value="/set" var="actionURL" scope="page" />
-		<form:form action="${actionURL}" modelAttribute="SLD">
-			<%-- 					<form action='<c:url value="/set"/>' method="POST">  --%>
-			<div class="form-group">
-				<label for="recipient-name" class="col-form-label">설문지 이름</label> <input
-					type="text" class="form-control" id="recipient-name"
-					name="surveyName">
+			<input type="hidden" name="decideCheck" value="N"> 
+			<input type="hidden" name="surveyId" value="1">
+			<div class="col-3">
+				<div class="form-group" id="survey_name_content">
+					<label for="recipient-name" class="col-form-label"></label> 
+					<input type="text" class="form-control" id="recipient-name" name="surveyName">
+				</div>
 			</div>
-			<div class="form-group">
-				<label for="message-text" class="col-form-label">설문 부가 설명</label>
-				<textarea class="form-control" id="message-text"
-					name="surveyContent"></textarea>
-			</div>
-			<input type="hidden" name="decideCheck" value="N">
-			<input type="hidden" name="surveyId" value="1"> 설문 진행 기간<br>
 
-			<input type="date" name="surveyStartDate">~<input type="date"
-				name="surveyClosedDate">
-			<br>
-			<input type="radio" name="anonymityCheckCode" value="20001">익명 <br>
-			<input type="radio" name="anonymityCheckCode" value="20002">기명
-<!-- 					<select name="anonymityCheckDate"> -->
-			<!-- 						<option value="A">익명</option> -->
-			<!-- 						<option value="R">기명</option> -->
-			<!-- 					</select> -->
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-				<input type="submit" class="btn btn-primary" value="등록">
+			<div class="col-3">
+				<input type="date" name="surveyStartDate">
+				~
+				<input type="date" name="surveyClosedDate">
 			</div>
-			<!-- 					</form> -->
-		</form:form>
+			<div class="col-3">
+				<input type="radio" name="anonymityCheckCode" value="20001">익명
+				<br> 
+				<input type="radio" name="anonymityCheckCode" value="20002">기명
+			</div>
+			<div class="col-3">
+				<div class="form-group">
+					<label for="message-text" class="col-form-label"></label>
+					<textarea class="form-control" id="message-text"
+						name="surveyContent"></textarea>
+				</div>
+			</div>
+			<div class="col-12">
+				<button type="button" class="btn btn-secondary"
+					data-dismiss="modal">취소</button>
+				<input type="button" class="btn btn-primary" onclick="register()" value="등록">
+			</div>
+		</div>
 	</div>
+</form:form>
 
-	<div class="all_insertdiv">
-		<div class="input-group mb-3">
-			<span class="input-group-text" id="basic-addon1">설문지 제목</span> <input
-				type="text" class="form-control" placeholder="설문지 이름을 입력해 주세요">
-			<!-- 문제 추가 버튼  -->
-			<button type="button" class="btn btn-outline-primary"
-				onclick="divCopy()">문제 추가</button>
-		</div>
+	<!-- 	<div id="survey_manage" style=""> -->
+	<%-- 		<c:url value="/set" var="actionURL" scope="page" /> --%>
+	<%-- 		<form:form action="${actionURL}" modelAttribute="SLD" --%>
+	<%-- 			style="display:inline-flex;"> --%>
 
-		<div
-			class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
-			<div class="list-group list-group-flush border-bottom scrollarea">
+	<!-- 			<div class="form-group" id="survey_name_content"> -->
+	<!-- 				<label for="recipient-name" class="col-form-label">설문지 이름</label> <input -->
+	<!-- 					type="text" class="form-control" id="recipient-name" -->
+	<!-- 					name="surveyName"> -->
+	<!-- 			</div> -->
 
-				<!-- 문제 div -->
-
-				<div
-					class="list-group-item list-group-item-action active py-3 lh-sm"
-					id="queAfter">
-					<input type="text" class="input_qus" placeholder="문제를 입력해 주세요.">
-					<div class="card m-2" style="float: right; width: 60px;">
-						<button class="btn btn-secondary" id="btn_for_answer_box"
-							onclick="btn_for_ans_box(this)">ans</button>
-					</div>
-					<div class="blank_under"></div>
-				</div>
+	<!-- 			<div class="form-group"> -->
+	<!-- 				<label for="message-text" class="col-form-label">설문 부가 설명</label> -->
+	<!-- 				<textarea class="form-control" id="message-text" -->
+	<!-- 					name="surveyContent"></textarea> -->
+	<!-- 			</div> -->
 
 
+	<!-- 			<input type="hidden" name="decideCheck" value="N"> -->
+	<!-- 			<input type="hidden" name="surveyId" value="1"> -->
 
+	<!-- 			<div id="survey_date_A_R_submit" style=""> -->
+	<!-- 				설문 진행 기간 <br> <input type="date" name="surveyStartDate">~<input -->
+	<!-- 					type="date" name="surveyClosedDate"> <br> <input -->
+	<!-- 					type="radio" name="anonymityCheckCode" value="20001">익명 <br> -->
+	<!-- 				<input type="radio" name="anonymityCheckCode" value="20002">기명 -->
 
-			</div>
-		</div>
+	<!-- 				<div class="modal-footer"> -->
+	<!-- 					<button type="button" class="btn btn-secondary" -->
+	<!-- 						data-dismiss="modal">취소</button> -->
+	<!-- 					<input type="submit" class="btn btn-primary" value="등록"> -->
+	<!-- 				</div> -->
+	<!-- 			</div> -->
+	<%-- 		</form:form> --%>
+	<!-- 	</div> -->
 
-
-		<div id="select_answer_box"
-			style="display: none; width: 500px; float: right;">
-
-			<div class="select_one_of_three">
-				<select id="myselect" onchange="change_my_select()">
-					<option value="subj">주관식</option>
-					<option value="obj">객관식</option>
-					<option value="mix">혼합식</option>
-				</select>
-
-				<div class="card m-2">
-					<button class="btn btn-secondary" id="btn_obj_toggle" disabled>객관식</button>
-				</div>
-
-				<div class="card m-2">
-					<button class="btn btn-secondary" id="btn_subj_toggle" disabled>주관식</button>
-				</div>
-
-				<div class="card m-2">
-					<button class="btn btn-secondary" id="btn_mix_toggle" disabled>혼합식</button>
-				</div>
-
-			</div>
-
-			<div class="all_qus">
-				<div id="obj_box_toggle" style="display: none">
-					<div class="block_box">
-						<button class="insert_button" onclick=" divCopy2()">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-								fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-  						<path fill-rule="evenodd"
-									d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
-					</svg>
-						</button>
-						<div class="icon_line" id="question_option">
-							<label><input type="radio" name="" value="">객관식
-								문항</label>
-							<button class="delete_btn" onclick="deleteQuestion(this)">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-									fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-  					<path
-										d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-					</svg>
-							</button>
-						</div>
-					</div>
-				</div>
-				<div id="mix_box_toggle" style="display: none">
-					<div class="block_box">
-						<div class="icon_line" id="question_option">
-							<label><input type="radio" name="" value="">객관식
-								문항</label>
-							<button class="delete_btn" onclick="deleteQuestion(this)">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-									fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-  					<path
-										d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-					</svg>
-							</button>
-						</div>
-						<div class="icon_line">
-							<label><input type="radio" name="test" value=""><input
-								type="text" id="other" placeholder="기타.."></label>
-							<button class="delete_btn" onclick="deleteQuestion(this)">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-									fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-  					<path
-										d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-					</svg>
-							</button>
-						</div>
-					</div>
-				</div>
-				<div id="subj_box_toggle" style="display: none">
-					<div class="block_box">
-						<input type="text" class="input_qus" placeholder="주관식 문제입니다.">
-						<button class="delete_btn">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-								fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-  						<path
-									d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-						</svg>
-						</button>
-						<div class="blank_under"></div>
-					</div>
-				</div>
-
-
-
-				<input type="submit" value="등록" class="btn_submit" name="bbbb"
-					disabled>
-
-			</div>
-		</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		<div class="list-group-item list-group-item-action active py-3 lh-sm"
-			id="newQUE" style="display: none">
-			<input type="text" class="input_qus" placeholder="문제를 입력해 주세요.">
-			<button class="delete_btn" onclick="delete_btn1(this)">
-				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-					fill="currentColor" class="bi bi-x" viewBox="0 0 16 16"> <path
-						d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /> </svg>
-			</button>
-			<div class="card m-2" style="float: right; width: 60px;">
-				<button class="btn btn-secondary" id="btn_for_answer_box"
-					onclick="btn_for_ans_box(this)">ans</button>
-			</div>
-			<div class="blank_under"></div>
-		</div>
-</body>
 <script>
 	/*문제 삭제*/
+	function register(){
+		var form = $('#form')[0];
+		
+		/*var data = new FormData();
+		data.append("surveyName", "aaa");
+		data.append("surveyStartDate", "2022-01-01");
+		data.append("surveyClosedDate", "2022-01-05");
+		data.append("anonymityCheckCode", "20001");
+		data.append("surveyContent", "bbb");
+		data.append("surveyId", "1");*/
+		
+		var data = new FormData(form);
+		
+		$.ajax({
+			method: "POST",
+			url: 'surveyupdate.do',	// form을 전송할 실제 파일경로
+			data: data,
+			processData: false,
+			contentType: false,
+			cache: false,
+			timeout: 600000,
+			beforeSend : function() {
+				// 전송 전 실행 코드
+			},
+			success: function (data) {
+				// 전송 후 성공 시 실행 코드
+				console.log(data);
 
-	function delete_btn1(obj) {
-		const tag = $(obj);
-		tag.parent().remove();
-	}
-
-	function btn_for_ans_box(obj) {
-		$("#select_answer_box").slideToggle();
-	}
-
-	/*문제 추가*/
-
-	function divCopy() {
-		const testDiv = document.getElementById('newQUE');
-		const testDiv1 = document.getElementById('queAfter');
-
-		const newNode = testDiv.cloneNode(true);
-		newNode.style.display = 'inline-block';
-
-		testDiv1.after(newNode);
-	}
-
-	//11111111111
-
-	function change_my_select() {
-		$('.btn_submit').attr('disabled', true);
-		var hhh = document.getElementById('myselect')
-		if (hhh.options[hhh.selectedIndex].value == "subj") {
-
-			$('#btn_obj_toggle').attr('disabled', true);
-			$('#btn_mix_toggle').attr('disabled', true);
-			$('#btn_subj_toggle').removeAttr('disabled');
-		}
-		if (hhh.options[hhh.selectedIndex].value == "obj") {
-			$('#btn_subj_toggle').attr('disabled', true);
-			$('#btn_mix_toggle').attr('disabled', true);
-			$('#btn_obj_toggle').removeAttr('disabled');
-		}
-		if (hhh.options[hhh.selectedIndex].value == "mix") {
-			$('#btn_obj_toggle').attr('disabled', true);
-			$('#btn_subj_toggle').attr('disabled', true);
-			$('#btn_mix_toggle').removeAttr('disabled');
-		}
-		console.log(hhh);
-	}
-
-	$(function() {
-		//객관식 버튼
-
-		$("#btn_obj_toggle").click(function() {
-			if ($('.btn_submit').attr('disabled') == 'disabled') {
-				$('.btn_submit').removeAttr('disabled');
-			} else {
-				$('.btn_submit').attr('disabled', true);
+			},
+			error: function (e) {
+				// 전송 후 에러 발생 시 실행 코드
+				console.log("ERROR : ", e);
 			}
-			$("#obj_box_toggle").slideToggle();
 		});
 
-		//혼합식 버튼
-		$("#btn_mix_toggle").click(function() {
-			if ($('.btn_submit').attr('disabled') == 'disabled') {
-				$('.btn_submit').removeAttr('disabled');
-			} else {
-				$('.btn_submit').attr('disabled', true);
-			}
-			$("#mix_box_toggle").slideToggle();
-		});
-
-		//주관식 버튼
-		$("#btn_subj_toggle").click(function() {
-			if ($('.btn_submit').attr('disabled') == 'disabled') {
-				$('.btn_submit').removeAttr('disabled');
-			} else {
-				$('.btn_submit').attr('disabled', true);
-			}
-			$("#subj_box_toggle").slideToggle();
-		});
-
-		// 		$("#btn_for_answer_box").click(function(){
-		// 			$("#select_answer_box").slideToggle();		
-
-		// 		});
-
-	});
-	function divCopy2()  {
-		const element = `<div class="icon_line" id="question_option">
-							<label><input type="radio" name="" value="">객관식 문항</label> 
-							<button class="delete_btn" onclick="deleteQuestion(this)">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-									fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-									<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-								</svg>
-							</button>
-						</div>`;
-
-		  $("#question_option").after(element);
+	
 	}
+	
+	
+// 	 $(function(){
+// 	        $('#submit').on("click",function () {
+
+// 	            var form1 = $("#form").serialize();
+// 				console.log("하이")
+// 	            console.log(form1);
+
+// 	            $.ajax({
+// 	                type: "post",
+// 	                url: "/login/check",
+// 	                data: form1,
+// 	                dataType: 'json',
+// 	                success: function (data) {
+// 	                    alert("success");
+// 	                    console.log(data);
+// 	                },
+// 	                error: function (request, status, error) {
+// 	                    console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+
+// 	                }
+// 	            });
+// 	        });
+// 	    });
+	
 </script>
-
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
 </html>
