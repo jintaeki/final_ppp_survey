@@ -161,23 +161,26 @@
 		</div>
 		
 	<div class="question_inputdiv">
-		<c:url value="survey/questioninsert/${surveyListDTO.surveyId}"  var='surveyinsert'/>
+		<c:url value="survey/questioninsert.do"  var='surveyinsert'/>
 		<form:form  modelAttribute="sqd" action="${surveyinsert}" method="post">
-		<div class="select_radio">
-			<input type="radio" name="type_check" value="1001">객관식
-			<input type="radio" name="type_check" value="1002">주관식
-			<input type="radio" name="type_check" value="1003">혼합식
+		<div class="select_radio" value="${sqd.questionTypeCode}">
+			<input type="radio" name="questionTypeCode" value="1001">객관식
+			<input type="radio" name="questionTypeCode" value="1002">주관식
+			<input type="radio" name="questionTypeCode" value="1003">혼합식
 		</div>
 		<div class="question_content_area" id="question_add">
 			<div class="input-group" id="question_content">
   				<div class="input-group-prepend">
   				  <span class="input-group-text">문제 입력</span>
   				</div>
-  					<textarea class="form-control" aria-label="문제 입력칸"></textarea>
+  					<textarea class="form-control" aria-label="문제 입력칸" name="questionContent" value="${sqd.questionContent}"></textarea>
 			</div>
 			<!-- 문제 추가 버튼  -->
-			<button type="button" class="btn btn-outline-primary" id="add_btn">문제 추가</button>
+			<button type="submit" class="btn btn-outline-primary" id="add_btn">문제 추가</button>
 		</div>
+		<input type="hidden" name="surveyId" value="2310103">
+		<input type="hidden" name="itemScore" value="1">
+		<input type="hidden" name="itemContent" value=" ">
 		</form:form>
 </div>	
 	

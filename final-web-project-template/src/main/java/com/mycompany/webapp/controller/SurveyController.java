@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 import com.mycompany.webapp.service.ISurveyService;
@@ -20,6 +21,7 @@ import com.mycompany.webapp.service.ISurveyService;
 @Controller
 public class SurveyController {
 		static final Logger logger = LoggerFactory.getLogger(SurveyController.class);
+		
 		@Autowired
 		ISurveyService surveySurvice;
 		
@@ -83,12 +85,20 @@ public class SurveyController {
 		}
 	
 	//문제 등록
-	@RequestMapping(value="survey/questioninsert.do/{surveyListDTO}", method=RequestMethod.POST)
-	public String insertSurvey(@ModelAttribute("sqd") @Valid  SurveyQuestionDTO sqd, Model model, BindingResult result) {
+	@RequestMapping(value="survey/questioninsert.do", method=RequestMethod.POST)
+	public String insertSurvey(@ModelAttribute("SQD") @Valid  SurveyQuestionDTO SQD, BindingResult result ,Model model) {
 			logger.info("문제 생성 진입했나?");
-			surveySurvice.setQuestInsert(sqd);
+			model.addAttribute("SQD",SQD);
+			surveySurvice.setQuestInsert(SQD);
 			
 			
-			return "common/survey_insert";
+			return "survey_insert";
 		}	
+	
+	//문항 수정
+	@RequestMapping(value="survey/iteminsert.do", method=RequestMethod.POST)
+	public String updateItem(@ModelAttribute("SID") @Valid SurveyItemDTO SID, BindingResult result) {
+		return null;
+		
 	}
+}

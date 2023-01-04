@@ -27,7 +27,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mycompany.webapp.dto.DTO_for_json;
 import com.mycompany.webapp.dto.DTO_for_json2;
+import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.service.IJsonService;
+import com.mycompany.webapp.service.ISurveyService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -39,6 +41,8 @@ public class HomeController {
 	@Autowired
 	IJsonService ijr;
 	
+	@Autowired
+	ISurveyService ISS;
 
 	
 	
