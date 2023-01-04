@@ -1,14 +1,25 @@
 package com.mycompany.webapp.dto;
 
-import java.sql.Date;
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class SurveyListDTO {
 	private int surveyId;
 	private String surveyName;
 	private String surveyContent;
 	private String anonymityCheckCode;
+	
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date surveyStartDate;
+	
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date surveyClosedDate;
+	
 	private String decideCheck;
 	
 	public int getSurveyId() {

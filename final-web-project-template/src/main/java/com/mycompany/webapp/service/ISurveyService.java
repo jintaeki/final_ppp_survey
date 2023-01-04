@@ -5,7 +5,7 @@ import com.mycompany.webapp.dto.SurveyQuestionDTO;
 
 public interface ISurveyService {
 
-void setSurvey(SurveyListDTO surveylist);
+	void setSurvey(SurveyListDTO surveylist);
 	
 	void setSurveyUpdate(SurveyListDTO surveylist);
 	
