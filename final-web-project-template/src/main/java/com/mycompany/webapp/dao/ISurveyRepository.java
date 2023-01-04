@@ -11,4 +11,5 @@ public interface ISurveyRepository {
 	
 	void setItemUpdate(SurveyQuestionDTO surveyquestion);
 	
+	int selectMaxSurveyId();
 }

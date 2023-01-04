@@ -51,8 +51,8 @@
 					<input type="hidden" name="decideCheck" value="N">
 					<input type="hidden" name="surveyId" value="1"> 설문 진행 기간<br>
 
-					<input type="date" name="surveyStartDate">~<input
-						type="date" name="surveyClosedDate">
+					<input type="date" name="surveyStartDate" pattern="yyyy-MM-dd">~<input
+						type="date" name="surveyClosedDate" pattern="yyyy-MM-dd">
 					<br>
 					<input type="radio" name="anonymityCheckCode" value="20001">익명 <br>
 					<input type="radio" name="anonymityCheckCode" value="20002">기명

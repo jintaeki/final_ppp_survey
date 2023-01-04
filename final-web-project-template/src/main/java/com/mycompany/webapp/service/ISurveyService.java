@@ -10,5 +10,7 @@ public interface ISurveyService {
 	void setSurveyUpdate(SurveyListDTO surveylist);
 	
 	void setItemUpdate(SurveyQuestionDTO surveyquestion);
+
+	int selectMaxSurveyId();
 	
 }

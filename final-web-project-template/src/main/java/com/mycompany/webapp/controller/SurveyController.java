@@ -1,5 +1,7 @@
 package com.mycompany.webapp.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -85,6 +87,14 @@ public class SurveyController {
 	@RequestMapping(value="/set.do", method=RequestMethod.POST)
 	public String setSurvey(@ModelAttribute ("SLD") @Valid SurveyListDTO SLD, BindingResult result,Model model) {
 		logger.info("모달창을 통해 설문 등록 페이지 진입");
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String Sdate = transFormat.format(SLD.getSurveyStartDate());
+		String Cdate = transFormat.format(SLD.getSurveyClosedDate());
+		System.out.println(Cdate);
+		model.addAttribute("Sdate",Sdate);
+		model.addAttribute("Cdate",Cdate);
+		SLD.setSurveyId(ISS.selectMaxSurveyId()+1);
+		logger.info(SLD.toString());
 		ISS.setSurvey(SLD);
 		model.addAttribute("SLD",SLD);
 		return "/survey_insert";
@@ -98,7 +108,7 @@ public class SurveyController {
 	//public String updateSurvey(SurveyListDTO SLD, Model model) {
 		logger.info("모달창을 통해 설문 등록 페이지 진입");
 		logger.info(SLD.toString());
-		//ISS.setSurveyUpdate(SLD);
+		ISS.setSurveyUpdate(SLD);
 		//model.addAttribute("SLD",SLD);
 		
 //		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d", Locale.KOREA);

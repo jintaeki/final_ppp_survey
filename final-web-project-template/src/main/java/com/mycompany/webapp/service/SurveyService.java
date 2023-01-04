@@ -35,5 +35,13 @@ public class SurveyService implements ISurveyService{
 		ISR.setItemUpdate(surveyquestion);
 		
 	}
+	
+	@Override
+	public int selectMaxSurveyId() {
+		
+		return ISR.selectMaxSurveyId();
+		
+	}
+	
 
 }
