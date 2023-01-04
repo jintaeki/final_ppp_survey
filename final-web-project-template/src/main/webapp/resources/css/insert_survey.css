@@ -156,3 +156,11 @@ button.delete_btn {
 #add_btn {
 	margin-top:5px;	
 }
+
+#answer_box {
+	left: 2%;
+    position: relative;
+    width: 500px;
+    float: right;
+	}
+}

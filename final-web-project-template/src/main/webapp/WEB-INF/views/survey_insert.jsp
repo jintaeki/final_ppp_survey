@@ -50,34 +50,11 @@
 		</div>
 
 
-		<div id="select_answer_box"
-			style="display: none; width: 500px; float: right;">
-
-			<div class="select_one_of_three">
-				<select id="myselect" onchange="change_my_select()">
-					<option value="subj">주관식</option>
-					<option value="obj">객관식</option>
-					<option value="mix">혼합식</option>
-				</select>
-
-				<div class="card m-2">
-					<button class="btn btn-secondary" id="btn_obj_toggle" disabled>객관식</button>
-				</div>
-
-				<div class="card m-2">
-					<button class="btn btn-secondary" id="btn_subj_toggle" disabled>주관식</button>
-				</div>
-
-				<div class="card m-2">
-					<button class="btn btn-secondary" id="btn_mix_toggle" disabled>혼합식</button>
-				</div>
-
-			</div>
-
+		<div id="answer_box">
 			<div class="all_qus">
-				<div id="obj_box_toggle" style="display: none">
+				<div id="obj_box_toggle">
 					<div class="block_box">
-						<button class="insert_button" onclick=" divCopy2()">
+						<button class="insert_button"  type="submit" onclick=" divCopy2()">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 								fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
   						<path fill-rule="evenodd"
@@ -90,8 +67,7 @@
 							<button class="delete_btn" onclick="deleteQuestion(this)">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 									fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-  					<path
-										d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+  					<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
 					</svg>
 							</button>
 						</div>
@@ -136,12 +112,6 @@
 							<div class="blank_under"></div>
 						</div>
 					</div>
-
-				
-
-				<input type="submit" value="등록" class="btn_submit" name="bbbb"
-					disabled>
-
 			</div>
 		</div>
 
@@ -162,7 +132,7 @@
 		
 	<div class="question_inputdiv">
 		<c:url value="survey/questioninsert.do"  var='surveyinsert'/>
-		<form:form  modelAttribute="sqd" action="${surveyinsert}" method="post">
+		<form:form  modelAttribute="sqd" action="${surveyinsert}" id="questioN_insert_form" method="post">
 		<div class="select_radio" value="${sqd.questionTypeCode}">
 			<input type="radio" name="questionTypeCode" value="1001">객관식
 			<input type="radio" name="questionTypeCode" value="1002">주관식
@@ -183,12 +153,27 @@
 		<input type="hidden" name="itemContent" value=" ">
 		</form:form>
 </div>	
-	
-	
-	
-	
-	
 	</div>
+	<script>
+	$(function(){
+		$('#submit').on("click", function() {
+			
+			var qI = $("questioN_insert_form").serialize();
+			
+			console.log(qI);
+			$.ajax({
+			 type:"post",
+			 url:"survey/questioninsert.do"
+			 data:qI,
+			 dataType: 'json',
+			 success: functon (data) {
+				 alert("success");
+				 console.log(data);
+			 }
+			})
+		}
+	}
+	</script>
 </body>
 
 <script>
@@ -216,7 +201,6 @@
 		testDiv1.after(newNode);
 	}
 
-	//11111111111
 
 	function change_my_select() {
 		$('.btn_submit').attr('disabled', true);
@@ -272,7 +256,7 @@
 			$("#subj_box_toggle").slideToggle();
 		});
 
-		// 		$("#btn_for_answer_box").click(function(){
+			$("#btn_for_answer_box").click(function(){
 		// 			$("#select_answer_box").slideToggle();		
 
 		// 		});

@@ -9,14 +9,14 @@
 		]]>
 	</insert>
 	
-	<select id="selectMaxQuestionId" parameterType="int" resultType="int">
+	<select id="selectMaxQuestionId" resultType="int">
 	
 	<![CDATA[
 				SELECT NVL(MAX(QUESTION_ID), 0) AS "questionId" FROM SURVEY_QUESTION
 		]]>
 	</select>
 	
-	<select id="selectMaxItemId" parameterType="int" resultType="int">
+	<select id="selectMaxItemId"  resultType="int">
 		<![CDATA[
 				SELECT NVL(MAX(ITEM_ID), 0) AS "itemId" FROM SURVEY_ITEM
 		]]>
@@ -24,8 +24,8 @@
 	
 	<insert id="setItemInsert" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
 		<![CDATA[	
-			INSERT INTO SURVEY_ITEM(ITEM_ID, QUESTION_ID, ITEM_CONTENT, ITEM_SCORE)
-			values (#{itemId), #{questioniD}, #{itemContent}, #{itemScore})
+			INSERT INTO SURVEY_ITEM(QUESTION_ID, ITEM_ID, ITEM_CONTENT, ITEM_SCORE)
+			values (#{questionId}, #{itemId}, #{itemContent}, #{itemScore})
 		]]>
 	</insert>
 	

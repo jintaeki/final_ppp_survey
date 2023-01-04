@@ -11,10 +11,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mycompany.webapp.dto.SurveyItemDTO;
-import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 import com.mycompany.webapp.service.ISurveyService;
 
@@ -90,7 +88,6 @@ public class SurveyController {
 			logger.info("문제 생성 진입했나?");
 			model.addAttribute("SQD",SQD);
 			surveySurvice.setQuestInsert(SQD);
-			
 			
 			return "survey_insert";
 		}	

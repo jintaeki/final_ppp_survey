@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mycompany.webapp.dao.ISurveyRepository;
-import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 
 @Service
@@ -15,12 +14,9 @@ public class SurveyService implements ISurveyService{
 	
 	@Autowired
 	ISurveyRepository surveyDao;
-	ISurveyService surveyService;
 	
 	static final Logger logger = LoggerFactory.getLogger(SurveyService.class);
 
-	private static final String sqd= null;
-	
 	
 	@Transactional
 	public void setQuestInsert(SurveyQuestionDTO sqd) {
@@ -29,7 +25,8 @@ public class SurveyService implements ISurveyService{
 		logger.info("id가 들어갔니 안갔니 :" + sqd);
 		surveyDao.setQuestInsert(sqd);
 		logger.info("문제등록");
-		surveyService.setItemInsert(sqd);
+		logger.info("");
+		setItemInsert(sqd);
 		logger.info("문항등록");
 	}
 
