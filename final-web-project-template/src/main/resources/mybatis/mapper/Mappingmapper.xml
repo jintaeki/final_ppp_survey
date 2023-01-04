@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.dao.MappingRepository">
+
+<select id="setMapping" resultType="com.mycompany.webapp.dto.MappingDTO">
+
+	<![CDATA[
+		insert into mapping m (m.survey_id, m.rater_id, m.appraisee_id, m.survey_complete_check)
+    		select s.survey_id, u.employee_id as rater_id, a.participation_employee_id as appraisee_id, 0
+  			from survey_list s, project_history r, project_history a, user_info u, user_info i
+   			where  u.employee_id = r.participation_employee_id 
+    		and r.project_id = a.project_id 
+    		and r.participation_employee_id <> a.participation_employee_id 
+ 		    and s.survey_id = #{surveyId}
+    		and TO_CHAR(r.PROJECT_CLOSED_DATE, 'YY/MM/dd') >= TO_CHAR(SYSDATE -#{year} , 'YY/MM/dd')
+    		and i.employee_id = a.participation_employee_id
+    		and i.grade_id = 2
+    	ORDER BY u.employee_id
+	]]>
+	</select>
+	
+	<select id="selectMappingData" parameterType="map" resultType="com.mycompany.webapp.dto.MappingDTO">
+		<![CDATA[
+			 SELECT 
+         M.SURVEY_ID             AS "surveyId", 
+         M.RATER_ID         	 AS "raterId", 
+         M.APPRAISEE_ID          AS "appraiseeId"
+       FROM (
+          SELECT 
+             M.SURVEY_ID,  
+             M.RATER_ID, 
+             M.APPRAISEE_ID,
+             ROWNUM AS RNUM
+       )
+		]]>
+	</select>
+
+	<select id="selectRater" parameterType="map" resultType="com.mycompany.webapp.dto.MappingDTO">
+		<![CDATA[
+			 SELECT 
+         M.SURVEY_ID             AS "surveyId", 
+         M.RATER_ID         	 AS "raterId", 
+         M.APPRAISEE_ID          AS "appraiseeId"
+       FROM (
+          SELECT 
+             M.SURVEY_ID,  
+             M.RATER_ID, 
+             M.APPRAISEE_ID
+       )
+       WHERE RATER_ID = #{raterId}
+		]]>
+	</select>
+
+	<insert id="insertAppreisee" parameterType="com.mycompany.webapp.dto.MappingDTO">
+		insert into mapping
+			(surveyId, raterId, appraiseeId, surveyCompleteCheck)
+ 		values
+ 			(#{surveyId}, #{raterId}, #{appraiseeId}, 0)
+	</insert>
+	
+	<delete id="deleteAppriesee" parameterType="int">
+		delete from mapping where appraisee_id=#{appraiseeId} and rater_id=#{raterId}
+	</delete>
+	
+	
+</mapper>
