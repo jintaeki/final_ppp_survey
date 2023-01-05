@@ -24,13 +24,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+//import com.mycompany.webapp.dto.DTO_for_json;
+//import com.mycompany.webapp.dto.DTO_for_json2;
 import com.mycompany.webapp.dto.SurveyListDTO;
+//import com.mycompany.webapp.service.IJsonService;
+
 import com.mycompany.webapp.service.ISurveyService;
 
 import lombok.extern.log4j.Log4j2;
 
 @Controller
-@Log4j2
 public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -76,7 +79,7 @@ public class HomeController {
 //				for(int i=0; i<jsonArr2.size(); i++) {
 //					
 //					jsonObj2 = (JSONObject)jsonArr2.get(i);
-////					System.out.println(jsonObj.get("projectid")); // for문 안에 VO 객체 set 메소드로 값을 설정하고 mapper에 insert하는 방식
+//					System.out.println(jsonObj.get("projectid")); // for문 안에 VO 객체 set 메소드로 값을 설정하고 mapper에 insert하는 방식
 //					
 //					if(i<9) {
 //						JSONObject jsonObj = (JSONObject)jsonArr.get(i);
@@ -157,58 +160,14 @@ public class HomeController {
 		return "login";
 	}
 	
-	/*
-	@RequestMapping("/surveydetails")
-	public String survey_details() {
-		logger.info("실행");
-		//log.info("실행");
-		return "survey_details";
-	}
-	@RequestMapping("/surveyevaluate")
-	public String survey_evaluate() {
-		logger.info("실행");
-		//log.info("실행");
-		return "survey_evaluate";
-	}
-	@RequestMapping("/surveyinsert")
-	public String survey_insert() {
-		logger.info("실행");
-		//log.info("실행");
-		return "survey_insert";
-	}
-	@RequestMapping("/surveylist")
-	public String survey_list() {
-		logger.info("실행");
-		//log.info("실행");
-		return "survey_list";
-	}
-	@RequestMapping("/surveyresultteam")
-	public String survey_success() {
-		logger.info("실행");
-		//log.info("실행");
-		return "survey_result_team";
-	}
-	@RequestMapping("/surveyresult")
-	public String survey_result() {
-		logger.info("실행");
-		//log.info("실행");
-		return "survey_result";
-	}
-	
-	@RequestMapping("/survey")
-	public String survey() {
-		logger.info("실행");
-		//log.info("실행");
-		return "survey";
-	}
-	@RequestMapping("/mappingview")
-	public String mapping_view() {
-		logger.info("실행");
-		//log.info("실행");
-		return "home2";
-	}
 
-	*/
+//	@RequestMapping("/mappingview")
+//	public String mapping_view() {
+//		logger.info("실행4");
+//		log.info("실행11111");
+//		return "home2";
+//	}
+
 	
 	
 }

@@ -218,7 +218,7 @@
 	function divCopy() {
 		const testDiv = document.getElementById('newQUE');
 		const testDiv1 = document.getElementById('queAfter');
-		const testDiv2 = document.getElementById();
+		const testDiv 2
 		const newNode = testDiv.cloneNode(true);
 		newNode.style.display = 'inline-block';
 

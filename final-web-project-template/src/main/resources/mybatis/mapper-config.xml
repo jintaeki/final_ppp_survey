@@ -5,6 +5,7 @@
 	<typeAliases>
 			<typeAlias type="com.mycompany.webapp.dto.SurveyListDTO" alias="SLD"/>
 			<typeAlias type="com.mycompany.webapp.dto.SurveyQuestionDTO" alias="sqd"/>
+
 	</typeAliases>	
 </configuration>
 

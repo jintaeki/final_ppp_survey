@@ -7,16 +7,41 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mycompany.webapp.dao.ISurveyRepository;
+import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 
 @Service
 public class SurveyService implements ISurveyService{
-	
+	private static final Logger logger = LoggerFactory.getLogger(SurveyService.class);
+
 	@Autowired
 	ISurveyRepository surveyDao;
 	
-	static final Logger logger = LoggerFactory.getLogger(SurveyService.class);
+	@Override
+	public void setSurvey(SurveyListDTO surveylist) {
+		logger.info(surveylist.toString());
+		surveyDao.setSurvey(surveylist);
+	}
 
+	@Override
+	public void setSurveyUpdate(SurveyListDTO surveylist) {
+		surveyDao.setSurveyUpdate(surveylist);
+		
+	}
+
+	@Override
+	public void setItemUpdate(SurveyQuestionDTO surveyquestion) {
+		
+		surveyDao.setItemUpdate(surveyquestion);
+		
+	}
+	
+	@Override
+	public int selectMaxSurveyId() {
+		
+		return surveyDao.selectMaxSurveyId();
+		
+	}
 	
 	@Transactional
 	public void setQuestInsert(SurveyQuestionDTO sqd) {
@@ -54,5 +79,10 @@ public class SurveyService implements ISurveyService{
 		// TODO Auto-generated method stub
 		
 	}
-		
+
+
+
+
+
+
 }

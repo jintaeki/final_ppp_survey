@@ -5,9 +5,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <!DOCTYPE html>
 <html>

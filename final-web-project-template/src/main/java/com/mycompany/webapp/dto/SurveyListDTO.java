@@ -2,13 +2,24 @@ package com.mycompany.webapp.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class SurveyListDTO {
 	private int surveyId;
 	private String surveyName;
 	private String surveyContent;
-	private int anonymityCheckDate;
+	private String anonymityCheckCode;
+	
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date surveyStartDate;
+	
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date surveyClosedDate;
+	
 	private String decideCheck;
 	
 	public int getSurveyId() {
@@ -29,11 +40,11 @@ public class SurveyListDTO {
 	public void setSurveyContent(String surveyContent) {
 		this.surveyContent = surveyContent;
 	}
-	public int getAnonymityCheckDate() {
-		return anonymityCheckDate;
+	public String getanonymityCheckCode() {
+		return anonymityCheckCode;
 	}
-	public void setAnonymityCheckDate(int anonymityCheckDate) {
-		this.anonymityCheckDate = anonymityCheckDate;
+	public void setanonymityCheckCode(String anonymityCheckCode) {
+		this.anonymityCheckCode = anonymityCheckCode;
 	}
 	public Date getSurveyStartDate() {
 		return surveyStartDate;
@@ -57,10 +68,10 @@ public class SurveyListDTO {
 	@Override
 	public String toString() {
 		return "SurveyList [surveyId=" + surveyId + ", surveyName=" + surveyName + ", surveyContent=" + surveyContent
-				+ ", anonymityCheckDate=" + anonymityCheckDate + ", surveyStartDate=" + surveyStartDate
+				+ ", anonymityCheckCode=" + anonymityCheckCode + ", surveyStartDate=" + surveyStartDate
 				+ ", surveyClosedDate=" + surveyClosedDate + ", decideCheck=" + decideCheck + ", getSurveyId()="
 				+ getSurveyId() + ", getSurveyName()=" + getSurveyName() + ", getSurveyContent()=" + getSurveyContent()
-				+ ", getAnonymityCheckDate()=" + getAnonymityCheckDate() + ", getSurveyStartDate()="
+				+ ", getanonymityCheckCode()=" + getanonymityCheckCode() + ", getSurveyStartDate()="
 				+ getSurveyStartDate() + ", getSurveyClosedDate()=" + getSurveyClosedDate() + ", getDecideCheck()="
 				+ getDecideCheck() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
 				+ super.toString() + "]";
