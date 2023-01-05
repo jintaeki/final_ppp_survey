@@ -12,4 +12,10 @@ public interface ISurveyRepository {
 	void setItemUpdate(SurveyQuestionDTO surveyquestion);
 	
 	int selectMaxSurveyId();
+	
+	void setQuestInsert(SurveyQuestionDTO SQD);
+	int selectMaxQuestionId();
+	int selectMaxItemId();
+	void setItemInsert(SurveyQuestionDTO SQD);
+
 }

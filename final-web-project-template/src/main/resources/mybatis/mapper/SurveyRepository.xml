@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.dao.ISurveyRepository">
+
+	<insert id="setQuestInsert" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
+		<![CDATA[
+				INSERT INTO SURVEY_QUESTION(QUESTION_ID, SURVEY_ID, QUESTION_CONTENT, QUESTION_TYPE_CODE)
+				values (#{questionId}, #{surveyId}, #{questionContent}, #{questionTypeCode})
+		]]>
+	</insert>
+	
+	<select id="selectMaxQuestionId" resultType="int">
+	
+	<![CDATA[
+				SELECT NVL(MAX(QUESTION_ID), 0) AS "questionId" FROM SURVEY_QUESTION
+		]]>
+	</select>
+	
+	<select id="selectMaxItemId"  resultType="int">
+		<![CDATA[
+				SELECT NVL(MAX(ITEM_ID), 0) AS "itemId" FROM SURVEY_ITEM
+		]]>
+	</select>
+	
+	<insert id="setItemInsert" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
+		<![CDATA[	
+			INSERT INTO SURVEY_ITEM(QUESTION_ID, ITEM_ID, ITEM_CONTENT, ITEM_SCORE)
+			values (#{questionId}, #{itemId}, #{itemContent}, #{itemScore})
+		]]>
+	</insert>
+	
+	<insert id="setSurvey" parameterType="SLD" >
+	
+		insert into SURVEY_LIST (SURVEY_ID,SURVEY_NAME, SURVEY_CONTENT,
+		ANONYMITY_CHECK_CODE,SURVEY_STATR_DATE,SURVEY_CLOSED_DATE,DECIDE_CHECK) 
+		values(#{surveyId},#{surveyName},#{surveyContent},#{anonymityCheckCode},
+		#{surveyStartDate},#{surveyClosedDate},#{decideCheck})
+	</insert>
+	
+	<update id="setSurveyUpdate" parameterType="SLD">
+		update SURVEY_LIST set SURVEY_NAME=#{surveyName}, SURVEY_CONTENT=#{surveyContent},
+		ANONYMITY_CHECK_CODE=#{anonymityCheckCode},SURVEY_STATR_DATE=#{surveyStartDate},SURVEY_CLOSED_DATE=#{surveyClosedDate}  where survey_id=#{surveyId}
+	</update>
+	
+	<select id="selectMaxSurveyId" resultType="int">
+				select max(survey_id) from survey_list
+	</select>
+	
+</mapper>

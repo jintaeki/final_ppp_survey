@@ -24,11 +24,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.mycompany.webapp.dto.DTO_for_json;
-import com.mycompany.webapp.dto.DTO_for_json2;
+//import com.mycompany.webapp.dto.DTO_for_json;
+//import com.mycompany.webapp.dto.DTO_for_json2;
 import com.mycompany.webapp.dto.SurveyListDTO;
-import com.mycompany.webapp.service.IJsonService;
+//import com.mycompany.webapp.service.IJsonService;
+
 import com.mycompany.webapp.service.ISurveyService;
 
 import lombok.extern.log4j.Log4j2;
@@ -37,8 +37,7 @@ import lombok.extern.log4j.Log4j2;
 public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	@Autowired
-	IJsonService ijr;
+
 	
 	@Autowired
 	ISurveyService ISS;
@@ -161,6 +160,7 @@ public class HomeController {
 		return "login";
 	}
 	
+
 //	@RequestMapping("/mappingview")
 //	public String mapping_view() {
 //		logger.info("실행4");
@@ -168,7 +168,6 @@ public class HomeController {
 //		return "home2";
 //	}
 
-	
 	
 	
 }

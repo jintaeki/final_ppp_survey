@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+
 .scrollarea {
   overflow-y: scroll;
 }
@@ -23,29 +24,27 @@
 
 .list-group.list-group-flush.border-bottom.scrollarea {
      position: relative;
-    overflow-x: auto;
+     overflow-x: auto;
 }
-
-.d-flex.flex-column.align-items-stretch.flex-shrink-0.bg-white{
+#survey_question_dv{
 	width: 40%;	
 	float: left;
 	top-margin:15px;
 	height:700px;
-	
 }
 
 .list-group-item.active{ /*이거 없애거나 건들면 이 클래스 싹 다 파래짐*/
 	background: transparent!important;
 	border: none!important;
+	border-bottom: 1px solid rgba(0,0,0,.125)!important;
 	
 }
 
-
-.all_insertdiv {
+.all_insertdv {
 	display:block;
 }
 
-.block_box {
+#block_box {
 float:right;
 background-color: white;
 width: 600px;
@@ -58,7 +57,7 @@ margin-top: 5%;
     rgba(15, 13, 13, 0.3) 0px 3px 7px -3px;
 }
 
-.input-group.mb-3{
+#question_content{
 	margin: 15px;
 	width:35%;
 }
@@ -75,14 +74,14 @@ margin-top: 5%;
     width:500px;
 }
 
-button.delete_btn {
+#delete_button {
     left: 88%;
     background-color: transparent;
     border: none;
     float: right;
 }
 
-.input_qus{
+#input_qus{
 	text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -102,12 +101,7 @@ button.delete_btn {
     display: block;
 }
 
-.list-group-item.active{
-	background: transparent!important;
-	border-bottom: 1px solid rgba(0,0,0,.125)!important;
-}
-
-.insert_button{
+#qus_isnert_button{
 	background-color: transparent;
     border: none;
     left: 92.5%;
@@ -119,3 +113,45 @@ button.delete_btn {
 	display:block;
 }
 
+.question_inputdv {
+	/*background-color:yellow;*/
+    position: relative;
+    top: 550px;
+}
+
+#exampleFormControlInput {
+	/*background-color:green!important;*/
+	position: absolute;
+    left: 54%;
+    width: 42%!important;
+	}
+#select_radio{
+	/*background-color:red;*/
+	width: 50%;
+    margin-bottom: 5px;
+    position: absolute;
+    left: 48%;
+    margin-top: 40px;
+}
+
+
+#question_add{
+		/*background-color:blue;*/
+  width: 50%;
+    left: 48%;
+    top: 70px;
+    position: absolute;
+    float:right;
+}
+
+#add_btn {
+	margin-top:5px;	
+}
+
+#answer_box {
+	left: 2%;
+    position: relative;
+    width: 500px;
+    float: right;
+	}
+}

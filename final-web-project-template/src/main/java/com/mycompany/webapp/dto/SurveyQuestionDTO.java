@@ -12,6 +12,7 @@ public class SurveyQuestionDTO {
 	private int itemId;
 	private String itemContent;
 	private String itemScore;
+	
 	public int getSurveyId() {
 		return surveyId;
 	}
@@ -45,11 +46,13 @@ public class SurveyQuestionDTO {
 	public void setQuestionTypeCode(int questionTypeCode) {
 		this.questionTypeCode = questionTypeCode;
 	}
+
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}
 	public void setItemContent(String itemContent) {
 		this.itemContent = itemContent;
+
 	}
 	public void setItemScore(String itemScore) {
 		this.itemScore = itemScore;
@@ -59,6 +62,8 @@ public class SurveyQuestionDTO {
 		return "SurveyQuestionDTO [surveyId=" + surveyId + ", questionId=" + questionId + ", questionContent="
 				+ questionContent + ", questionTypeCode=" + questionTypeCode + ", itemId=" + itemId + ", itemContent="
 				+ itemContent + ", itemScore=" + itemScore + "]";
+
+				
 	}
 	
 	

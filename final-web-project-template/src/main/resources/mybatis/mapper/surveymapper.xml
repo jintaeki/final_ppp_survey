@@ -3,20 +3,5 @@
 
 <mapper namespace="com.mycompany.webapp.dao.ISurveyRepository">
 	
-	<insert id="setSurvey" parameterType="SLD" >
 	
-		insert into SURVEY_LIST (SURVEY_ID,SURVEY_NAME, SURVEY_CONTENT,
-		ANONYMITY_CHECK_CODE,SURVEY_STATR_DATE,SURVEY_CLOSED_DATE,DECIDE_CHECK) 
-		values(#{surveyId},#{surveyName},#{surveyContent},#{anonymityCheckCode},
-		#{surveyStartDate},#{surveyClosedDate},#{decideCheck})
-	</insert>
-	
-	<update id="setSurveyUpdate" parameterType="SLD">
-		update SURVEY_LIST set SURVEY_NAME=#{surveyName}, SURVEY_CONTENT=#{surveyContent},
-		ANONYMITY_CHECK_CODE=#{anonymityCheckCode},SURVEY_STATR_DATE=#{surveyStartDate},SURVEY_CLOSED_DATE=#{surveyClosedDate}  where survey_id=#{surveyId}
-	</update>
-	
-	<select id="selectMaxSurveyId" resultType="int">
-				select max(survey_id) from survey_list
-	</select>
 </mapper>

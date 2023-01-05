@@ -42,6 +42,4 @@ public class ProjectHistoryDTO {
 				+ ", getProjectClosedDate()=" + getProjectClosedDate() + ", getClass()=" + getClass() + ", hashCode()="
 				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}
-	
-	
 }
