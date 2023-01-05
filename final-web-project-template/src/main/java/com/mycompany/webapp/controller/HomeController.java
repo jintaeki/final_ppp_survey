@@ -34,7 +34,6 @@ import com.mycompany.webapp.service.ISurveyService;
 import lombok.extern.log4j.Log4j2;
 
 @Controller
-@Log4j2
 public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -81,7 +80,7 @@ public class HomeController {
 //				for(int i=0; i<jsonArr2.size(); i++) {
 //					
 //					jsonObj2 = (JSONObject)jsonArr2.get(i);
-////					System.out.println(jsonObj.get("projectid")); // for문 안에 VO 객체 set 메소드로 값을 설정하고 mapper에 insert하는 방식
+//					System.out.println(jsonObj.get("projectid")); // for문 안에 VO 객체 set 메소드로 값을 설정하고 mapper에 insert하는 방식
 //					
 //					if(i<9) {
 //						JSONObject jsonObj = (JSONObject)jsonArr.get(i);

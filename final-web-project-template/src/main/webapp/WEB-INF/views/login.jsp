@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/login.css"/>
 
 <div class="card m-2">

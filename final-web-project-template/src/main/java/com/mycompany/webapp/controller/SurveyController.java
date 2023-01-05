@@ -10,6 +10,8 @@ import java.util.Locale;
 import javax.validation.Valid;
 
 import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.dto.SurveyListDTO;
+import com.mycompany.webapp.dto.SurveyQuestionDTO;
 import com.mycompany.webapp.service.ISurveyService;
 
 @Controller
@@ -109,23 +112,47 @@ public class SurveyController {
 		logger.info("모달창을 통해 설문 등록 페이지 진입");
 		logger.info(SLD.toString());
 		ISS.setSurveyUpdate(SLD);
-		//model.addAttribute("SLD",SLD);
-		
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d", Locale.KOREA);
-//		LocalDate Ldate1 = LocalDate.parse((CharSequence) SLD.get("surveyStartDate"), formatter);
-//		LocalDate Ldate2 = LocalDate.parse((CharSequence) SLD.get("surveyClosedDate"), formatter);
-//		Date date = Date.valueOf(Ldate);
+
 		/*JSONObject jsonObject = new JSONObject();
-		jsonObject.put("surveyId", SLD.getSurveyId());
-		jsonObject.put("surveyName", SLD.getSurveyName());
-		jsonObject.put("surveyContent", SLD.getSurveyContent());
-		jsonObject.put("anonymityCheckCode", SLD.getanonymityCheckCode());
-		jsonObject.put("surveyStartDate", SLD.getSurveyStartDate());
-		jsonObject.put("surveyClosedDate", SLD.getSurveyClosedDate());
 		jsonObject.put("decideCheck", SLD.getDecideCheck());
 
 		String json = jsonObject.toString();*/
 		return SLD;
+				
+	}
+	
+	// 모달창을 통해 설문 등록 페이지로 이동
+	@RequestMapping(value="/itemupdate.do")
+	@ResponseBody
+	public SurveyQuestionDTO updateitem(@ModelAttribute ("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,Model model) {
+		logger.info("모달창을 통해 설문 등록 페이지 진입");
+		logger.info(SQD.toString());
+//		ISS.setItemUpdate(SQD);
+		
+		String itemcontents = SQD.getItemContent();
+		
+		int cnt = itemcontents.length()-itemcontents.replace(",", "").length();
+		String  [] itmencontent = itemcontents.split(",");
+		for(int i =0; i <= cnt;i++) { 
+			logger.info(itmencontent[i]);
+		}
+//		JSONParser parser = new JSONParser();
+//		Object obj = null;
+//		try {
+//			obj = parser.parse(SQD.getItemContent());
+//		} catch (org.json.simple.parser.ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		JSONArray jsonArr = (JSONArray) obj;
+//		System.out.println(jsonArr.size());
+		logger.info(Integer.toString(cnt));
+		logger.info(itemcontents);
+		/*JSONObject jsonObject = new JSONObject();
+		jsonObject.put("decideCheck", SLD.getDecideCheck());
+
+		String json = jsonObject.toString();*/
+		return SQD;
 				
 	}
 	
