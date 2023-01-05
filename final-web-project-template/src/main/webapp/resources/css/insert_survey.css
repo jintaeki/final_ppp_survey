@@ -45,16 +45,18 @@
 }
 
 #block_box {
-float:right;
-background-color: white;
-width: 600px;
-margin-right: 10%;
-margin-top: 5%;
-  padding: 20px;
-  border-radius: 10px;
-  overflow: hidden;
-   box-shadow: rgba(59, 59, 91, 0.25) 0px 6px 12px -2px,
-    rgba(15, 13, 13, 0.3) 0px 3px 7px -3px;
+left: 600px;
+    float: right;
+    background-color: white;
+    width: 600px;
+    margin-right: 10%;
+    margin-top: 5%;
+    padding: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: rgb(59 59 91 / 25%) 0px 6px 12px -2px, rgb(15 13 13 / 30%) 0px 3px 7px -3px;
+    position: relative;
+    top: 50px;
 }
 
 #question_content{
@@ -111,22 +113,24 @@ margin-top: 5%;
 
 .all_qus{
 	display:block;
+	background-color:#47FF9C;
 }
 
 .question_inputdv {
-	/*background-color:yellow;*/
+	background-color:yellow;
     position: relative;
     top: 550px;
 }
 
 #exampleFormControlInput {
-	/*background-color:green!important;*/
+	background-color:green!important;
 	position: absolute;
     left: 54%;
     width: 42%!important;
 	}
+	
 #select_radio{
-	/*background-color:red;*/
+	background-color:red;
 	width: 50%;
     margin-bottom: 5px;
     position: absolute;
@@ -136,7 +140,7 @@ margin-top: 5%;
 
 
 #question_add{
-		/*background-color:blue;*/
+	background-color:blue;
   width: 50%;
     left: 48%;
     top: 70px;

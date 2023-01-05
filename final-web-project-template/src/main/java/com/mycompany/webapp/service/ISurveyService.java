@@ -25,5 +25,4 @@ public interface ISurveyService {
 
 	void setQuestUpdate(SurveyQuestionDTO sqd);
 	
-
 }

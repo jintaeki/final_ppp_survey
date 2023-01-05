@@ -7,7 +7,7 @@
 
 
 
-<head>
+<head>000
 <meta charset="UTF-8">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
@@ -35,10 +35,7 @@
 					class="list-group-item list-group-item-action active py-3 lh-sm"
 					id="queAfter">
 					<input type="text" class="input_qus" placeholder="문제를 입력해 주세요.">
-					<div class="card m-2" style="float: right; width: 60px;">
-						<button class="btn btn-secondary" id="btn_for_answer_box"
-							onclick="btn_for_ans_box(this)">ans</button>
-					</div>
+					<div class="card m-2" style="float: right; width: 60px;"></div>
 					<div class="blank_under"></div>
 				</div>
 			</div>

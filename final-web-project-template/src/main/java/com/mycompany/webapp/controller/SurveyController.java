@@ -160,30 +160,41 @@ public class SurveyController {
 	
 
 
-	//
+	/*
 	@RequestMapping(value="survey/questioninsert.do/{surveyListDTO}", method=RequestMethod.GET)
 	public String getSurveyInfo(Model model){
 			
 			return "common/survey_insert";
 		}
-	
+	*/
 	//문제 등록
-	@RequestMapping(value="survey/questioninsert.do", method=RequestMethod.POST)
-	public String insertSurvey(@ModelAttribute("SQD") @Valid  SurveyQuestionDTO SQD, BindingResult result ,Model model) {
+	@RequestMapping(value="/questioninsert.do")
+	@ResponseBody
+	public  SurveyQuestionDTO insertSurvey(@ModelAttribute("SQD") @Valid  SurveyQuestionDTO SQD, BindingResult result ,Model model) {
 			logger.info("문제 생성 진입했나?");
 			model.addAttribute("SQD",SQD);
 			surveySurvice.setQuestInsert(SQD);
 			
-			
-			
-			return "survey_insert";
+			return SQD;
 		}	
 	
 	//문항 수정
 	@RequestMapping(value="survey/iteminsert.do", method=RequestMethod.POST)
 	public String updateItem(@ModelAttribute("SID") @Valid SurveyItemDTO SID, BindingResult result) {
+			
+		
 		return null;
 		
+	}
+	
+	//문제 비동기 조회
+	@RequestMapping(value="/questionList.do")
+	@ResponseBody
+	public SurveyQuestionDTO questionList(@ModelAttribute("SID") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model) {
+		logger.info("문제 비동기 조회");
+		model.addAttribute("SQD", SQD);
+		
+		return SQD;
 	}
 }
 
