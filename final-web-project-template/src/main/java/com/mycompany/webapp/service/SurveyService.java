@@ -38,7 +38,7 @@ public class SurveyService implements ISurveyService{
 	
 	@Override
 	public int selectMaxSurveyId() {
-		
+		// 불필요하다 지우자
 		return surveyDao.selectMaxSurveyId();
 		
 	}
