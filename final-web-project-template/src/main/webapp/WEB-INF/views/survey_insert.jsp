@@ -153,7 +153,7 @@
 	$(function(){
 		$('#submit').on("click", function() {
 			
-			var qI = $("questioN_insert_form").serialize();
+			var qI = qI;
 			
 			console.log(qI);
 			$.ajax({
