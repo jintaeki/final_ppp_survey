@@ -68,7 +68,7 @@
 						</div>
 					</div>
 				</div>
-				<div id="mix_box_toggle" style="display: none">
+				<div id="mix_box_toggle" style="display: none" id="1001">
 					<div class="block_box">
 						<div class="icon_line" id="question_option">
 							<label><input type="radio" name="" value="">객관식
@@ -81,7 +81,7 @@
 					</svg>
 							</button>
 						</div>
-						<div class="icon_line">
+						<div class="icon_line" style="display:none" id="1003">
 							<label><input type="radio" name="test" value=""><input
 								type="text" id="other" placeholder="기타.."></label>
 							<button class="delete_btn" onclick="deleteQuestion(this)">
@@ -94,7 +94,7 @@
 						</div>
 					</div>
 					</div>
-					<div id="subj_box_toggle" style="display: none">
+					<div id="subj_box_toggle" style="display: none" id="1002">
 						<div class="block_box">
 							<input type="text" class="input_qus" id="input_qus" placeholder="주관식 문제입니다.">
 							<button class="delete_btn">
@@ -141,7 +141,7 @@
   					<textarea class="form-control" aria-label="문제 입력칸" name="questionContent" value="${sqd.questionContent}"></textarea>
 			</div>
 			<!-- 문제 추가 버튼  -->
-			<button type="submit" class="btn btn-outline-primary" id="add_btn">문제 추가</button>
+			<button type="submit" class="btn btn-outline-primary" id="add_btn" onclick="divCopy()">문제 추가</button>
 		</div>
 		<input type="hidden" name="surveyId" value="2310103">
 		<input type="hidden" name="itemScore" value="1">
@@ -150,6 +150,7 @@
 </div>	
 	</div>
 	<script>
+	/*
 	$(function(){
 		$('#submit').on("click", function() {
 			
@@ -166,6 +167,37 @@
 			})
 		}
 	}
+	*/
+	
+	$("#replyList").on("click", "a", function() {
+    	event.preventDefault(); // 고유 이벤트 중지
+    	
+    	// 클릭한 대상의 번호를 모달창에 저장.
+    	var rno = $(this).attr("href");
+    	$("#modalRno").val(rno);
+    	
+    	// replyModify 라면 수정창, replyDelete 라면 삭제창의 형태로 사용
+    	if( $(this).hasClass("replyModify") ){ // 수정창
+    		
+    		$(".modal-title").html("댓글수정");
+    		$("#modalModBtn").css("display", "inline"); // 수정버튼은 보여지도록 처리
+    		$("#modalDelBtn").css("display", "none"); // 삭제버튼은 숨겨지도록 처리
+    		$("#modalReply").css("display", "inline"); // 수정창 보여지도록
+    		
+    	} else if ( $(this).hasClass("replyDelete") ) { // 삭제창
+    		
+    		$(".modal-title").html("댓글삭제");
+    		$("#modalModBtn").css("display", "none"); // 수정버튼은 숨겨지도록 처리
+    		$("#modalDelBtn").css("display", "inline"); // 삭제버튼은 보여지도록 처리
+    		$("#modalReply").css("display", "none"); // 수정창 숨겨지도록
+    		
+    	}
+    	
+    	$("#replyModal").modal("show"); // 부트스트랩 모달 함수
+    	
+    }); // end on
+	
+	
 	</script>
 </body>
 
@@ -173,7 +205,6 @@
 
 	/*문제 삭제*/
 	
-	/*
 	function delete_btn1(obj) {
 		const tag = $(obj);
 		tag.parent().remove();
@@ -187,7 +218,7 @@
 	function divCopy() {
 		const testDiv = document.getElementById('newQUE');
 		const testDiv1 = document.getElementById('queAfter');
-
+		const testDiv2 = document.getElementById();
 		const newNode = testDiv.cloneNode(true);
 		newNode.style.display = 'inline-block';
 
@@ -268,6 +299,7 @@
 
 		  $("#question_option").after(element);
 	}
-	*/
+	
+
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
