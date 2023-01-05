@@ -190,9 +190,11 @@ public class SurveyController {
 	//문제 비동기 조회
 	@RequestMapping(value="/questionList.do")
 	@ResponseBody
-	public SurveyQuestionDTO questionList(@ModelAttribute("SID") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model) {
+	public SurveyQuestionDTO questionList(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model, int surveyId) {
 		logger.info("문제 비동기 조회");
+		SurveyQuestionDTO questionList = surveySurvice.getQuestionList(surveyId);
 		model.addAttribute("SQD", SQD);
+		logger.info("제 비동기 조회 dto: " + SQD);
 		
 		return SQD;
 	}

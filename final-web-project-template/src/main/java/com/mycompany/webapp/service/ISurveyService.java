@@ -6,6 +6,7 @@ import com.mycompany.webapp.dto.SurveyQuestionDTO;
 
 public interface ISurveyService {
 
+
 	void setSurvey(SurveyListDTO surveylist);
 	
 	void setSurveyUpdate(SurveyListDTO surveylist);
@@ -24,5 +25,7 @@ public interface ISurveyService {
 	int selectMaxItemId();
 
 	void setQuestUpdate(SurveyQuestionDTO sqd);
+	
+	SurveyQuestionDTO getQuestionList(int surveyId);
 	
 }

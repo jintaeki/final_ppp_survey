@@ -80,6 +80,13 @@ public class SurveyService implements ISurveyService{
 		
 	}
 
+	@Override
+	public SurveyQuestionDTO getQuestionList(int surveyId) {
+		logger.info("getQuestionList: " + surveyId);
+		return surveyDao.getQuestionList(surveyId);
+		
+	}
+
 	
 
 
