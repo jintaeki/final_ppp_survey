@@ -89,6 +89,8 @@ public class SurveyController {
 			model.addAttribute("SQD",SQD);
 			surveySurvice.setQuestInsert(SQD);
 			
+			
+			
 			return "survey_insert";
 		}	
 	

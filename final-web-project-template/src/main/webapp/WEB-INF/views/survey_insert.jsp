@@ -155,15 +155,13 @@
 			
 			var qI = qI;
 			
-			console.log(qI);
 			$.ajax({
 			 type:"post",
 			 url:"survey/questioninsert.do"
 			 data:qI,
-			 dataType: 'json',
 			 success: functon (data) {
 				 alert("success");
-				 console.log(data);
+		
 			 }
 			})
 		}
