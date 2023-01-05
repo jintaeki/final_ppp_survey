@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <!DOCTYPE html>
-<html>
+
 
 
 <head>
@@ -17,24 +17,19 @@
 	crossorigin="anonymous">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-
 </head>
 <body>
-
-
-
-	<div class="all_insertdiv">
+	<div class="all_insertdv">
 		<div class="input-group mb-3">
 			<span class="input-group-text" id="basic-addon1">설문지 제목</span> <input
 				type="text" class="form-control" placeholder="설문지 이름을 입력해 주세요">
 
 		</div>
+				<!-- 여기까지 설문제 제목 div -->		
+		<div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" id="survey_question_dv">
+			<div class="list-group list-group-flush border-bottom scrollarea" id="scroll_area">
 
-		<div
-			class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
-			<div class="list-group list-group-flush border-bottom scrollarea">
-
-				<!-- 문제 div -->
+				<!-- 여기까지 문제 div -->
 
 				<div
 					class="list-group-item list-group-item-action active py-3 lh-sm"
@@ -53,8 +48,8 @@
 		<div id="answer_box">
 			<div class="all_qus">
 				<div id="obj_box_toggle">
-					<div class="block_box">
-						<button class="insert_button"  type="submit" onclick=" divCopy2()">
+					<div class="block_box" id="block_box">
+						<button class="insert_button" id="qus_isnert_button" type="submit" onclick=" divCopy2()">
 							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 								fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
   						<path fill-rule="evenodd"
@@ -64,7 +59,7 @@
 						<div class="icon_line" id="question_option">
 							<label><input type="radio" name="" value="">객관식
 								문항</label>
-							<button class="delete_btn" onclick="deleteQuestion(this)">
+							<button class="delete_btn" id="delete_button" onclick="deleteQuestion(this)">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 									fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
   					<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
@@ -101,7 +96,7 @@
 					</div>
 					<div id="subj_box_toggle" style="display: none">
 						<div class="block_box">
-							<input type="text" class="input_qus" placeholder="주관식 문제입니다.">
+							<input type="text" class="input_qus" id="input_qus" placeholder="주관식 문제입니다.">
 							<button class="delete_btn">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 									fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
@@ -130,10 +125,10 @@
 			<div class="blank_under"></div>
 		</div>
 		
-	<div class="question_inputdiv">
+	<div class="question_inputdv">
 		<c:url value="survey/questioninsert.do"  var='surveyinsert'/>
 		<form:form  modelAttribute="sqd" action="${surveyinsert}" id="questioN_insert_form" method="post">
-		<div class="select_radio" value="${sqd.questionTypeCode}">
+		<div class="select_radio" id="select_radio" value="${sqd.questionTypeCode}">
 			<input type="radio" name="questionTypeCode" value="1001">객관식
 			<input type="radio" name="questionTypeCode" value="1002">주관식
 			<input type="radio" name="questionTypeCode" value="1003">혼합식
@@ -278,4 +273,3 @@
 	*/
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
-</html>
