@@ -193,7 +193,7 @@ public class SurveyController {
 	public SurveyQuestionDTO questionList(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model, int surveyId) {
 		logger.info("문제 비동기 조회");
 		SurveyQuestionDTO questionList = surveySurvice.getQuestionList(surveyId);
-		model.addAttribute("SQD", SQD);
+		model.addAttribute("questionList", questionList);
 		logger.info("제 비동기 조회 dto: " + SQD);
 		
 		return SQD;

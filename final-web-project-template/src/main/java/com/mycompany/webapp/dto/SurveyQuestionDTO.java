@@ -5,7 +5,7 @@ public class SurveyQuestionDTO {
 	private int surveyId;
 	private int questionId;
 	private String questionContent;
-	private int questionTypeCode;
+	private String questionTypeCode;
 	
 	//for 문항
 	// questionId는 문제와 동일하게 사용
@@ -22,7 +22,7 @@ public class SurveyQuestionDTO {
 	public String getQuestionContent() {
 		return questionContent;
 	}
-	public int getQuestionTypeCode() {
+	public String getQuestionTypeCode() {
 		return questionTypeCode;
 	}
 	public int getItemId() {
@@ -43,7 +43,7 @@ public class SurveyQuestionDTO {
 	public void setQuestionContent(String questionContent) {
 		this.questionContent = questionContent;
 	}
-	public void setQuestionTypeCode(int questionTypeCode) {
+	public void setQuestionTypeCode(String questionTypeCode) {
 		this.questionTypeCode = questionTypeCode;
 	}
 

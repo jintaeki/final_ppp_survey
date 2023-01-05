@@ -216,6 +216,7 @@
 	</div>
 
 	<div class="question_inputdv" id="input_question">
+
 		<form:form modelAttribute="sqd" action="${surveyInsert}"
 			id="questioN_insert_form" method="post">
 			
@@ -233,7 +234,7 @@
 						name="questionContent">${sqd.questionContent}</textarea>
 				</div>
 				<!-- 문제 추가 버튼  -->
-				<button type="button" class="btn btn-outline-primary" id="add_btn" onclick="insertQus()">문제
+				<button type="button" class="btn btn-outline-primary" id="add_btn">문제
 					추가</button>
 			</div>
 			<input type="hidden" name="surveyId" value="2310103">
@@ -241,7 +242,7 @@
 			<input type="hidden" name="itemContent" value=" ">
 		</form:form>
 	</div>
-</div>
+
 
 <script>
 	//진택 -------------------------------------------------------------------
@@ -320,10 +321,7 @@
 					alert("문항은 최대 5개까지 생성 가능합니다.");
 				}
 				});
-	</script>
 
-
-<script>
 //채우--------------------------------------------------------------------
 	/*문제 삭제*/
 	function delete_btn(obj) {
@@ -345,22 +343,24 @@
 		
 	}else{
 		alert("문항은 최대 5개까지 생성 가능합니다.");
-	}
-
+		}
+	});
+	
 
 	//문제 추가(비동기)
 	function insertQus(){
-			var qdiv = $('#questioN_insert_form')[0]
+			var qdiv = $('#questioN_insert_form')[0];
 			alert("요청이 가는가?");
 			var data = new FormData(qdiv);
 		
 			$.ajax({
 				method:'POST', //어떤 방식으로 보낼 지
 				url:'questioninsert.do', // qdiv를 보낼 경로 설정
-				data: data,	//
+				data: data,	
 				processData: false, 
 				contentType: false, 
 				cache: false, 
+				timeout: 600000, 
 			   beforeSend : function() { //보내기 전 실행
 				console.log("요청이 보내지는가?");
 			   },
@@ -372,8 +372,11 @@
 			   }
 				});
 			}
+	
+	//문제 조회
 	function qusList(){
-			var qdiv = $('#questioN_insert_form'[0]
+			var qdiv = $('#questioN_insert_form')[0]
+			console.log("리스트 시작!");
 			var data = new FrmData(qdiv);
 			
 			$.ajax({
@@ -394,9 +397,16 @@
 			});
 		}
 	
-	}
+	var ab = document.getElementById('add_btn');
+	ab.addEventListener('click', (function(insertQus())) {
+		console.log("문제등록");
+	})();
+	/*
+	ab.addEventListener('click',  function(qusList) {
+		console.log("문제fltmxm");
+	});
 	
-	
+	/*
 	
 	function change_my_select() {
 		$('.btn_submit').attr('disabled', true);
@@ -419,7 +429,7 @@
 		}
 		console.log(hhh);
 	}
-
+/*
 	$(function() {
 		//객관식 버튼
 
@@ -455,12 +465,12 @@
 			$("#btn_for_answer_box").click(function(){
 		// 			$("#select_answer_box").slideToggle();		
 
-		// 		});
+		 		});
 
 
 	});
 
-
+/*
 	function divCopy2()  {
 		const element = `<div class="icon_line" id="question_option">
 							<label><input type="radio" name="" value="">객관식 문항</label> 
@@ -474,9 +484,9 @@
 
 		  $("#question_option").after(element);
 	});
-
-
+*/
 </script>
+
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
 

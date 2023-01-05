@@ -11,7 +11,7 @@
 
 		</h6>
 	</li>
-하하하하핳
+
 	<li class="nav-item mb-2">
 		<h6 class="text-white">
 			<span class="mr-2">1.</span> <a class="text-white"
