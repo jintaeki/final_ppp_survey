@@ -48,7 +48,7 @@
 						<label for="message-text" class="col-form-label">설문 부가 설명</label>
 						<textarea class="form-control" id="message-text" name="surveyContent"></textarea>
 					</div>
-					<input type="hidden" name="decideCheck" value="N">
+				 	<input type="hidden" name="decideCheck" value="N">
 					<input type="hidden" name="surveyId" value="1"> 설문 진행 기간<br>
 
 					<input type="date" name="surveyStartDate" pattern="yyyy-MM-dd">~<input
@@ -89,10 +89,9 @@
 						</div>
 						<button type="button" class="btn btn-primary" data-toggle="modal"
 							data-target="#exampleModal" data-whatever="@mdo">등록</button>
-						<button type="button" class="btn btn-outline-primary"
-							onclick="location.href='surveyinsert'">등록</button>
-						<button type="button" class="btn btn-outline-primary"
-							onclick="location.href='mappingview'">매핑등록</button>
+
+<!-- 						<button type="button" class="btn btn-outline-primary" -->
+<!-- 							onclick="location.href='mappingview'">매핑등록</button> -->
 					</div>
 				</div>
 				<table class="table">
@@ -100,122 +99,33 @@
 						<tr>
 							<th scope="col"></th>
 							<th scope="col">다면평가 목록</th>
-							<th scope="col">기간</th>
-							<th scope="col">평가마감</th>
+							<th scope="col">평가 기간</th>
 							<th scope="col">확정여부</th>
 							<th scope="col">상태</th>
 							<th scope="col">결과</th>
+							<th scope= "col">평가자 매칭</th>	
 						</tr>
 					</thead>
 					<tbody>
+						<c:forEach var="list" items="${surveylist}" >
 						<tr>
-							<th scope="row">1</th>
-							<td class="sv_name"><a href="surveydetails">22년도 4분기
-									다면평가</a></td>
-							<td>2022.10.01 - 2022.12.31</td>
-							<td>2023.01.06</td>
-							<td><span class="wait">대기</span></td>
+							<th scope="row">${list.surveyId }</th>
+							<td><a href="surveyinsert1/${list.surveyId }">${list.surveyName }</a></td>
+							<td><fmt:formatDate value="${list.surveyStartDate }" pattern="yyyy-MM-dd"/><br>~<br>
+					<fmt:formatDate value="${list.surveyClosedDate }" pattern="yyyy-MM-dd"/></td>
+							
+							<td><span class="wait"><c:if test="${list.decideCheck eq 'N' }">대기</c:if>
+							<c:if test="${list.decideCheck != 'N' }">확정</c:if></span>
+							</td>
 							<td><input type="button" id="send" class="btn btn-primary"
 								onclick="send(this)" value="발송"></td>
-							<td></td>
-						</tr>
-						<tr id="grey">
-							<th scope="row">2</th>
-							<td class="sv_name"><a href="surveydetails">22년도 3분기
-									다면평가</a></td>
-							<td>2022.07.01 - 2022.09.30</td>
-							<td>2022.10.07</td>
-							<td class="comp">확정</td>
-							<td class="comp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
-									onclick="location.href='surveyevaluate'">조회</button></td>
+									onclick="location.href='surveyevaluate/${list.surveyId}'">조회</button></td>
 						</tr>
-						<tr id="grey">
-							<th scope="row">3</th>
-							<td class="sv_name"><a href="surveydetails">22년도 2분기
-									다면평가</a></td>
-							<td>2022.04.01 - 2022.06.30</td>
-							<td>2022.07.07</td>
-							<td class="comp">확정</td>
-							<td class="comp">전송완료</td>
-							<td><button type="button" class="btn btn-link"
-									onclick="location.href='surveyevaluate'">조회</button></td>
-						</tr>
-						<tr id="grey">
-							<th scope="row">4</th>
-							<td class="sv_name"><a href="surveydetails">22년도 1분기
-									다면평가</a></td>
-							<td>2022.01.01 - 2022.03.31</td>
-							<td>2022.04.07</td>
-							<td class="comp">확정</td>
-							<td class="comp">전송완료</td>
-							<td><button type="button" class="btn btn-link"
-									onclick="location.href='surveyevaluate'">조회</button></td>
-						</tr>
-						<tr id="grey">
-							<th scope="row">5</th>
-							<td class="sv_name"><a href="surveydetails">21년도 전체 다면평가</a></td>
-							<td>2021.01.01 - 2021.12.31</td>
-							<td>2021.01.07</td>
-							<td class="comp">확정</td>
-							<td class="comp">전송완료</td>
-							<td><button type="button" class="btn btn-link"
-									onclick="location.href='surveyevaluate'">조회</button></td>
-						</tr>
-						<tr id="grey">
-							<th scope="row">6</th>
-							<td class="sv_name"><a href="surveydetails">21년도 4분기
-									다면평가</a></td>
-							<td>2021.10.01 - 2021.12.31</td>
-							<td>2022.01.06</td>
-							<td class="comp">확정</td>
-							<td class="comp">전송완료</td>
-							<td><button type="button" class="btn btn-link"
-									onclick="location.href='surveyevaluate'">조회</button></td>
-						</tr>
-						<tr id="grey">
-							<th scope="row">7</th>
-							<td class="sv_name"><a href="surveydetails">21년도 3분기
-									다면평가</a></td>
-							<td>2021.07.01 - 2021.09.30</td>
-							<td>2021.10.07</td>
-							<td class="comp">확정</td>
-							<td class="comp">전송완료</td>
-							<td><button type="button" class="btn btn-link"
-									onclick="location.href='surveyevaluate'">조회</button></td>
-						</tr>
-						<tr id="grey">
-							<th scope="row">8</th>
-							<td class="sv_name"><a href="surveydetails">21년도 2분기
-									다면평가</a></td>
-							<td>2021.04.01 - 2021.06.30</td>
-							<td>2021.07.07</td>
-							<td class="comp">확정</td>
-							<td class="comp">전송완료</td>
-							<td><button type="button" class="btn btn-link"
-									onclick="location.href='surveyevaluate'">조회</button></td>
-						</tr>
-						<tr id="grey">
-							<th scope="row">9</th>
-							<td class="sv_name"><a href="surveydetails">21년도 1분기
-									다면평가</a></td>
-							<td>2021.01.01 - 2021.03.31</td>
-							<td>2021.04.07</td>
-							<td class="comp">확정</td>
-							<td class="omp">전송완료</td>
-							<td><button type="button" class="btn btn-link"
-									onclick="location.href='surveyevaluate'">조회</button></td>
-						</tr>
-						<tr id="grey">
-							<th scope="row">5</th>
-							<td class="sv_name"><a href="surveydetails">20년도 전체 다면평가</a></td>
-							<td>2020.01.01 - 2020.12.31</td>
-							<td>2020.01.07</td>
-							<td class="comp">확정</td>
-							<td class="comp">전송완료</td>
-							<td><button type="button" class="btn btn-link"
-									onclick="location.href='surveyevaluate'">조회</button></td>
-						</tr>
+						
+						
+						</c:forEach>
+						
 					</tbody>
 				</table>
 				<ul class="pagination">

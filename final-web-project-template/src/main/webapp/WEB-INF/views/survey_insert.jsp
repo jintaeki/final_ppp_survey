@@ -20,7 +20,7 @@
 			<div class="col-3">설문 부가 설명</div>
 
 			<input type="hidden" name="decideCheck" value="N"> <input
-				type="hidden" name="surveyId" id="surveyid" value="2310103">${SLD.surveyId}
+				type="hidden" name="surveyId" id="surveyid" value="${SLD.surveyId}">
 			<div class="col-3">
 				<div class="form-group">
 					<label for="survey_name" class="col-form-label"></label> <input
@@ -163,14 +163,14 @@
 	<div id="answer_box" style="border: 1px solid black;">
 		<%-- 			<c:if test="${ }"></c:if> --%>
 		
-		<form action ="<c:url value='/survey/aa' />" method="post">
-		<div id="obj_box_toggle" style="display:none;" >
+		
+		<div id="obj_box_toggle"  >
 			<div class="col-12">
 				<div class="Item_box">
 					<button type="button" id="item_obj_copy">+</button>
-<%-- 					<form:form modelAttribute="SQD" id="item_obj_form"> --%>
+					<form:form modelAttribute="SQD" id="item_obj_form">
 						<input type="hidden" name="questionTypeCode" value="10001">
-						<input type="hidden" name="surveyId" value="2310103">
+						<input type="hidden" name="surveyId" value="${SLD.surveyId}">
 						<input type="hidden" name="questionId" value="6">
 						<div class="icon_line" id="obj_ItemAfter">
 							<label><input type="text" name="itemContent"  
@@ -185,7 +185,7 @@
 							<input type="button" class="btn btn-primary"
 								onclick="update_obj_item_btn()" value="수정">
 						</div>
-<%-- 					</form:form> --%>
+					</form:form>
 				</div>
 			</div>
 		</div>
@@ -194,13 +194,13 @@
 
 		<%-- 		<c:if test="${ }"></c:if> --%>
 
-		<div id="mix_box_toggle" style="display:none;">
+		<div id="mix_box_toggle" >
 			<div class="col-12">
 				<div class="Item_box">
 					<button type="button" id="item_mix_copy">+</button>
-<%-- 					<form:form modelAttribute="SQD" id="item_mix_form"> --%>
+					<form:form modelAttribute="SQD" id="item_mix_form">
 						<input type="hidden" name="questionTypeCode" value="10003">
-						<input type="hidden" name="surveyId" value="2310103" id="surveyid">
+						<input type="hidden" name="surveyId" value="${SLD.surveyId}" id="surveyid">
 						<input type="hidden" name="questionId" value="6">
 						<div class="icon_line" id="mix_ItemAfter">
 							<label><input type="text" name="itemContent"  
@@ -220,14 +220,14 @@
 							<input type="button" class="btn btn-primary"
 								onclick="update_mix_item_btn()" value="수정">
 						</div>
-<%-- 					</form:form> --%>
+					</form:form>
 				</div>
 			</div>
 			
  
 		</div>
 		<%-- 		<c:if test="${ }"></c:if> --%>
-
+			<!-- 주관식은 문제 만들 때 id값 가장 큰 거 부여 -->
 		<div id="subj_box_toggle" style="display: none">
 			<div class="block_box">
 				<input type="text" class="input_qus" id="input_qus"
@@ -243,7 +243,7 @@
 			</div>
 		</div>
 		<input type="submit" value="등록">
-		</form>
+		
 	</div>
 	<!-- 채우 폼에 진택 코드 넣기 끝-->
 
@@ -268,9 +268,9 @@
 		<form:form modelAttribute="SQD" id="questioN_insert_form">
 			<!-- aa -->
 			<div class="select_radio" id="select_radio">
-				<input type="radio" name="questionTypeCode" id= "obj_radio" onclick="checkit1()" value="10001" checked>객관식
-				<input type="radio" name="questionTypeCode" id= "sub_radio" onclick="checkit2()" value="10002">주관식
-				<input type="radio" name="questionTypeCode" id= "mix_radio" onclick="checkit3()" value="10003" >혼합식
+				<input type="radio" name="questionTypeCode" id= "obj_radio"  onclick="checkit1()" value="10001" checked>객관식
+				<input type="radio" name="questionTypeCode" id= "sub_radio"  onclick="checkit2()" value="10002">주관식
+				<input type="radio" name="questionTypeCode" id= "mix_radio"  onclick="checkit3()" value="10003" >혼합식
 			</div>
 			<div class="question_content_area" id="question_add">
 				<div class="input-group" id="question_content">
@@ -280,13 +280,14 @@
 					<textarea class="form-control" aria-label="문제 입력칸"
 						name="questionContent">${sqd.questionContent}</textarea>
 				</div>
+				${SLD.surveyId}
 				<!-- 문제 추가 버튼  -->
 				<button type="button" class="btn btn-outline-primary" id="add_btn"
 					onclick="insertQus()">문제 추가</button>
 			</div>
-			<input type="hidden" name="surveyId" value="2310103">
-			<input type="hidden" name="itemScore" value="1">
-			<input type="hidden" name="itemContent" value=" ">
+			<input type="hidden" name="surveyId" value="${SLD.surveyId}"> 
+			<input type="hidden" name="itemScore" value="0">
+			<input type="hidden" name="itemContent" value="문제 만들 때 만들어지는 문항">
 		</form:form>
 	</div>
 </div>
@@ -354,7 +355,6 @@
 	
 	function update_mix_item_btn() {
 		var form = $('#item_mix_form')[0];
-		console.log($('input:checkbox[input[id="obj_radio"]').is(':checked'));
 		var data = new FormData(form);
 
 		$.ajax({

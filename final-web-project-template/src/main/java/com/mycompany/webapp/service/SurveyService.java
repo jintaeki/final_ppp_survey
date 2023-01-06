@@ -22,8 +22,9 @@ public class SurveyService implements ISurveyService{
 	
 	@Override
 	public void setSurvey(SurveyListDTO surveylist) {
-		logger.info(surveylist.toString());
 		surveyDao.setSurvey(surveylist);
+		logger.info(surveylist.toString());
+
 	}
 
 	@Override
@@ -97,7 +98,10 @@ public class SurveyService implements ISurveyService{
 		
 	}
 
-
+	@Override
+	public List<SurveyListDTO> selectSurveyList(){
+		return surveyDao.selectSurveyList();
+	}
 
 
 }

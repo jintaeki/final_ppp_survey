@@ -25,4 +25,5 @@ public interface ISurveyRepository {
 	//뿌리기
 	List<Map<String, Object>> selectQuestion(int surveyId);
 	
+	List<SurveyListDTO> selectSurveyList();	
 }

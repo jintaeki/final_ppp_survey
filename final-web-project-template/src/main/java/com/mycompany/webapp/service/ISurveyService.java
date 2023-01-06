@@ -30,4 +30,6 @@ public interface ISurveyService {
 	void setQuestUpdate(SurveyQuestionDTO sqd);
 	
 	List<Map<String, Object>> selectQuestion(int surveyId);
+	
+	List<SurveyListDTO> selectSurveyList();
 }

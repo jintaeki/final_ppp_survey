@@ -54,7 +54,7 @@
 		
 		insert into survey_item (QUESTION_ID,ITEM_ID, ITEM_CONTENT,
 		ITEM_SCORE) 
-		values(6,#{itemId},#{itemContent},#{itemScore})
+		values(#{questionId},#{itemId},#{itemContent},#{itemScore})
 	</insert>
 	
 	<delete id="setItemDelete" parameterType="SQD">
@@ -69,5 +69,14 @@
 		where si.question_id=sq.question_id and survey_id = #{surveyId}	 order by question_id desc
 	</select>
 	
+	<select id="selectSurveyList" resultType="com.mycompany.webapp.dto.SurveyListDTO">
+
 	
+		select SURVEY_ID as surveyId, SURVEY_NAME as surveyName, SURVEY_CONTENT surveyContent, ANONYMITY_CHECK_CODE as anonymityCheckCode,
+		SURVEY_STATR_DATE as surveyStartDate,  SURVEY_CLOSED_DATE as surveyClosedDate, DECIDE_CHECK as decideCheck
+			   from survey_list 
+			   order by rownum desc
+		
+	
+	</select>
 </mapper>
