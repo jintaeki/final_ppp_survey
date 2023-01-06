@@ -67,7 +67,8 @@ public class SurveyController {
 @RequestMapping("/surveyinsert1/{surveyId}")
 	public String survey_insert(@PathVariable int surveyId, Model model, HttpSession session) {
 		logger.info("실행");
-		int checkSurveyId = ((SurveyListDTO) session.getAttribute("SLD")).getSurveyId();
+		int checkSurveyId = 76;
+				//((SurveyListDTO) session.getAttribute("SLD")).getSurveyId();
 		System.out.println(checkSurveyId);
 
 
@@ -285,7 +286,7 @@ public class SurveyController {
 		}
 	*/
 	//문제 등록
-	@RequestMapping(value="/questioninsert.do")
+	@RequestMapping(value="surveyinsert1/questioninsert.do")
 	@ResponseBody
 	public  SurveyQuestionDTO insertSurvey(@ModelAttribute("SQD") @Valid  SurveyQuestionDTO SQD, BindingResult result ,Model model) {
 			logger.info("문제 생성 진입했나?");
@@ -324,25 +325,31 @@ public class SurveyController {
 	
 	
 	//문제 비동기 조회
+
 	@RequestMapping(value="/questionList.do/{surveyId}")
 	@ResponseBody
-	public SurveyQuestionDTO questionList(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model, int surveyId) {
-		logger.info("문제 비동기 조회");
+	public List<SurveyQuestionDTO> questionList(@PathVariable int surveyId, Model model) {
+		List<SurveyQuestionDTO> sqd = surveyService.questionList(surveyId);
+		logger.info("비동기 조회 진입");
 		SurveyQuestionDTO questionList = surveyService.getQuestionList(surveyId);
 		model.addAttribute("questionList", questionList);
-		logger.info("제 비동기 조회 dto: " + SQD);
+		logger.info("제 비동기 조회 dto: ");
 		
-		return SQD;
+		return sqd;
 	}
 	
-	
 	//문제 업데이트
-	@RequestMapping(value="/questionUpdate.do/{questionId}")
+	@RequestMapping(value="surveyinsert1/questionUpdate.do")
 	@ResponseBody
-	public SurveyQuestionDTO questionUpdate(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD,int surveyId, BindingResult result, Model model) {
+	public SurveyQuestionDTO questionUpdate(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model) {
 		logger.info("업데이트 진입");
+		logger.info(SQD.toString());
+		//int questionId = SQD.getQuestionId();
 		surveyService.setQuestUpdate(SQD);
-		surveyService.getQuestionList(surveyId);
+		System.out.println(SQD);
+		logger.info(SQD.toString());
+		//surveyService.getQuestionList(surveyId);
+		logger.info("업데이트 성공");
 		return SQD;
 	}
 }

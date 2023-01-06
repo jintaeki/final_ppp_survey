@@ -20,11 +20,12 @@ public interface ISurveyRepository {
 	int selectMaxQuestionId();
 	int selectMaxItemId();
 	void setItemInsert(SurveyQuestionDTO SQD);
-	SurveyQuestionDTO getQuestionList(int surveyId);
+	//SurveyQuestionDTO getQuestionList(int surveyId);
 	void setQuestUpdate(SurveyQuestionDTO SQD);
 
 	List<Map<String, Object>> selectQuestion(int surveyId);
-
+	List<SurveyQuestionDTO> getQuestionList(int surveyId);
+	
 	void setItemDelete(SurveyQuestionDTO sqd);
 
 }

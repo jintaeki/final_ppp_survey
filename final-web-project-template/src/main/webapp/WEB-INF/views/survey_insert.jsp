@@ -95,7 +95,6 @@
 
 
 
-</div>
 <!-- 문항 관리 진택-->
 <!-- 추가될 문항 none 진택 -->
 
@@ -151,21 +150,12 @@
 			<div class="list-group-item list-group-item-action active py-3 lh-sm"
 				id="queAfter">
 				<input type="text" class="input_qus" placeholder="문제를 입력해 주세요.">
-				<div class="card m-2" style="float: right; width: 60px;">
-					<button class="btn btn-secondary" id="btn_for_answer_box"
-						onclick="btn_for_ans_box(this)">ans</button>
-				</div>
 				<div class="blank_under"></div>
-				
-						</div>
+			</div>
 		</div>
 	</div>
 
-
-
-
-
-	<!-- 채우 폼에 진택 코드 넣기 -->
+	<!-- 채우	 폼에 진택 코드 넣기 -->
 	<div id="answer_box" style="border: 1px solid black;">
 		<%-- 			<c:if test="${ }"></c:if> --%>
 		
@@ -195,8 +185,6 @@
 				</div>
 			</div>
 		</div>
-
-
 
 		<%-- 		<c:if test="${ }"></c:if> --%>
 
@@ -230,7 +218,6 @@
 				</div>
 			</div>
 			
- 
 		</div>
 		<%-- 		<c:if test="${ }"></c:if> --%>
 
@@ -275,9 +262,9 @@
 		<form:form modelAttribute="SQD" id="questioN_insert_form">
 			<!-- aa -->
 			<div class="select_radio" id="select_radio">
-				<input type="radio" name="questionTypeCode" id= "obj_radio" onclick="checkit1()" value="10001" checked>객관식
-				<input type="radio" name="questionTypeCode" id= "sub_radio" onclick="checkit2()" value="10002">주관식
-				<input type="radio" name="questionTypeCode" id= "mix_radio" onclick="checkit3()" value="10003" >혼합식
+				<input type="radio" name="questionTypeCode" id= "obj_radio"  value="10001" checked>객관식
+				<input type="radio" name="questionTypeCode" id= "sub_radio"  value="10002">주관식
+				<input type="radio" name="questionTypeCode" id= "mix_radio"  value="10003" >혼합식
 			</div>
 			<div class="question_content_area" id="question_add">
 				<div class="input-group" id="question_content">
@@ -288,153 +275,18 @@
 						name="questionContent">${sqd.questionContent}</textarea>
 				</div>
 				<!-- 문제 추가 버튼  -->
-				<button type="button" class="btn btn-outline-primary" id="add_btn"
-					onclick="insertQus()">문제 추가</button>
+				<button type="button" class="btn btn-outline-primary"  id="add_btn" onclick="insertQus()">문제
+					추가</button>
+				<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate()">문제
+					수정</button>
+				<input type="hidden" name="surveyId" value="2310103">
+				<input type="hidden" name="questionId" value="19">
 			</div>
-			<input type="hidden" name="surveyId" value="2310103">
 			<input type="hidden" name="itemScore" value="1">
 			<input type="hidden" name="itemContent" value=" ">
 		</form:form>
 	</div>
 </div>
-				
-				
-				
-				
-				
-				
-
-<div class="col-12">---위 진택---</div>
-<div class="col-12">---아래 채우---</div>
-
-
-<div class="all_insertdv">
-
-	<!-- 여기까지 설문제 제목 div -->
-	<div
-		class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
-		id="survey_question_dv">
-		<div class="list-group list-group-flush border-bottom scrollarea"
-			id="scroll_area">
-			<!-- 여기까지 문제 div -->
-			<form:form  modelAttribute="SQD" id="iqsform">
-			<div class="list-group-item list-group-item-action active py-3 lh-sm"
-				id="queAfter">
-				<input type="text" class="input_qus" placeholder="문제를 입력해 주세요.">
-				<div class="card m-2" style="float: right; width: 60px;">
-				<button type="button" class="btn btn-primary btn-sm" onclick="">수정</button>
-				</div>
-				<div display="none" id="update_qi" value="${sqd.questionId}"></div>
-				<div class="blank_under"></div>
-			</div>
-			</form:form>
-		</div>
-		
-		
-		<div id="answer_box">
-			<div class="all_qus">
-				<div id="obj_box_toggle">
-					<div class="block_box" id="block_box">
-						<button class="insert_button" id="qus_isnert_button" type="submit"
-							onclick=" divCopy2()">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-								fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-  						<path fill-rule="evenodd"
-									d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
-					</svg>
-						</button>
-						<div class="icon_line" id="question_option">
-							<label><input type="radio" name="" value="">객관식
-								문항</label>
-							<button class="delete_btn" id="delete_button"
-								onclick="deleteQuestion(this)">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-									fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-  							<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-						</svg>
-							</button>
-						</div>
-
-					</div>
-				</div>
-			</div>
-			<div id="mix_box_toggle" style="display: none">
-					<div class="icon_line">
-						<label><input type="radio" name="test" value=""><input
-							type="text" id="other" placeholder="기타.."></label>
-						<button class="delete_btn" onclick="deleteQuestion(this)">
-							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-								fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-  					<path
-									d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-					</svg>
-						</button>
-					</div>
-				</div>
-			</div>
-			<div id="subj_box_toggle" style="display: none">
-				<div class="block_box">
-					<input type="text" class="input_qus" id="input_qus"
-						placeholder="주관식 문제입니다.">
-					<button class="delete_btn">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-							fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-  						<path
-								d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-						</svg>
-					</button>
-					<div class="blank_under"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="list-group-item list-group-item-action active py-3 lh-sm"
-		id="newQUE" style="display: none">
-		<input type="text" class="input_qus" placeholder="문제를 입력해 주세요.">
-		<button class="delete_btn" onclick="delete_btn1(this)">
-			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-				fill="currentColor" class="bi bi-x" viewBox="0 0 16 16"> <path
-					d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /> </svg>
-		</button>
-		<div class="card m-2" style="float: right; width: 60px;">
-		
-		</div>
-		<div class="blank_under"></div>
-	</div>
-
-	<div class="question_inputdv" id="input_question">
-
-		<form:form modelAttribute="sqd" action="${surveyInsert}"
-			id="questioN_insert_form" method="post">
-			
-			<div class="select_radio" id="select_radio">
-				<input type="radio" name="questionTypeCode" value="10001">객관식
-				<input type="radio" name="questionTypeCode" value="10002">주관식
-				<input type="radio" name="questionTypeCode" value="10003">혼합식
-			</div>
-			<div class="question_content_area" id="question_add">
-				<div class="input-group" id="question_content">
-					<div class="input-group-prepend">
-						<span class="input-group-text">문제 입력</span>
-					</div>
-					<textarea class="form-control" aria-label="문제 입력칸"
-						name="questionContent">${sqd.questionContent}</textarea>
-				</div>
-				<!-- 문제 추가 버튼  -->
-				<button type="button" class="btn btn-outline-primary" id="add_btn">문제
-					추가</button>
-				<button type="button" class="btn btn-outline-primary" id="update_btn">문제
-					수정</button>
-					
-					
-			</div>
-			<input type="hidden" name="surveyId" value="2310103">
-			<input type="hidden" name="itemScore" value="1">
-			<input type="hidden" name="itemContent" value=" ">
-		</form:form>
-	</div>
-
 
 <script>
 	//진택
@@ -639,27 +491,33 @@
 		}
 	
 		function qusUpdate(){
-			var qdiv = $('#'#questioN_insert_form')[0]
+			var qdiv = $('#questioN_insert_form')[0]
+			alert("업데이트 시작!");
 			 console.log("업데이트 시작");
 			var data = new FormData(qdiv);
 			
 			$.ajax({
 				method: 'POST',
-				uri: 'questionUpdate.do',
-				data: data,
-				processData: false,
-				contentType: false,
-				cache: false,
+				url: 'questionUpdate.do',
+				data: data,	
+				processData: false, 
+				contentType: false, 
+				cache: false, 
+				timeout: 600000, 
 				beforeSend: function() {
 					console.log("요청 보냈음");
+					alert("업데이트 beforesend");
+					
 				},
 				succes: function(data) {
-					console.log("요청 보냄");
+					console.log("요청 성공");
+					alert("업데이트 요청 success!");
 				},
 				error: function(e) {
 					console.log("Error", e);
 					}
 				});
+			
 			}
 		
 		/*

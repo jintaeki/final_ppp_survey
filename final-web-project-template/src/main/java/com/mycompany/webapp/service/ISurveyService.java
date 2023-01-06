@@ -34,5 +34,7 @@ public interface ISurveyService {
 	
 	SurveyQuestionDTO getQuestionList(int surveyId);
 	
+	public List<SurveyQuestionDTO>questionList(int surveyId);
+	
 	
 }

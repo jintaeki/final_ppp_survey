@@ -103,12 +103,24 @@ public class SurveyService implements ISurveyService{
 		
 	}
 
-
+/*
 	@Override
 	public SurveyQuestionDTO getQuestionList(int surveyId) {
 		logger.info("getQuestionList: " + surveyId);
 		return surveyDao.getQuestionList(surveyId);
 		
+	}
+*/
+	@Override
+	public List<SurveyQuestionDTO> questionList(int surveyId) {
+			
+		return surveyDao.getQuestionList(surveyId);
+	}
+
+	@Override
+	public SurveyQuestionDTO getQuestionList(int surveyId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
