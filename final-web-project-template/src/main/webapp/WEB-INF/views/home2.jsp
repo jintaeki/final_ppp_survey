@@ -47,7 +47,7 @@ function popup()
 						<tr>
 							<th scope="col"></th>
 							<th scope="col">다면평가 목록</th>
-							<th scope="col">기간</th>
+							<th scope="col">기간ㅇ</th>
 							<th scope="col">평가마감</th>
 							<th scope="col">확정여부</th>
 							<th scope="col">상태</th>
