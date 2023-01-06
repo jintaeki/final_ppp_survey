@@ -209,20 +209,7 @@ public class SurveyController {
 		return SQD;
 	}
 
-
-
-	//문제 등록
-	@RequestMapping(value="/questioninsert.do")
-	@ResponseBody
-	public  SurveyQuestionDTO insertSurvey(@ModelAttribute("SQD") @Valid  SurveyQuestionDTO SQD, BindingResult result ,Model model) {
-		logger.info("문제 생성 진입했나?");
-		model.addAttribute("SQD",SQD);
-		surveyService.setQuestInsert(SQD);
-
-		return SQD;
-	}	
-
-	// 문제 비동기식으로 출력 
+	// 문제 비동기식으로 출력 진택
 	@RequestMapping(value="/selectquestion.do/{surveyId}")
 	@ResponseBody
 	public  List<Map<String, Object>> selectquestion(@PathVariable int surveyId,Model model) {
@@ -234,5 +221,67 @@ public class SurveyController {
 	}	
 
 
+
+
+	/*
+	@RequestMapping(value="survey/questioninsert.do/{surveyListDTO}", method=RequestMethod.GET)
+	public String getSurveyInfo(Model model){
+			
+			return "common/survey_insert";
+		}
+	*/
+	//문제 등록
+	@RequestMapping(value="/questioninsert.do")
+	@ResponseBody
+	public  SurveyQuestionDTO insertSurvey(@ModelAttribute("SQD") @Valid  SurveyQuestionDTO SQD, BindingResult result ,Model model) {
+			logger.info("문제 생성 진입했나?");
+			model.addAttribute("SQD",SQD);
+			surveyService.setQuestInsert(SQD);
+			
+			return SQD;
+		}	
+	
+	//문항 수정
+	@RequestMapping(value="survey/iteminsert.do", method=RequestMethod.POST)
+	public String updateItem(@ModelAttribute("SID") @Valid SurveyItemDTO SID, BindingResult result) {
+			
+			
+		return null;
+		
+	}
+	
+	
+	
+	
+	
+	//문제 비동기 조회 채우
+
+	@RequestMapping(value="/questionList.do/{surveyId}")
+	@ResponseBody
+	public List<SurveyQuestionDTO> questionList(@PathVariable int surveyId, Model model) {
+		List<SurveyQuestionDTO> sqd = surveyService.questionList(surveyId);
+		logger.info("비동기 조회 진입");
+		SurveyQuestionDTO questionList = surveyService.getQuestionList(surveyId);
+		model.addAttribute("questionList", questionList);
+		logger.info("제 비동기 조회 dto: ");
+		
+		return sqd;
+	}
+	
+	//문제 업데이트
+	@RequestMapping(value="/questionUpdate.do")
+	@ResponseBody
+	public SurveyQuestionDTO questionUpdate(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model) {
+		logger.info("업데이트 진입");
+		logger.info(SQD.toString());
+		//int questionId = SQD.getQuestionId();
+		surveyService.setQuestUpdate(SQD);
+		System.out.println(SQD);
+		logger.info(SQD.toString());
+		//surveyService.getQuestionList(surveyId);
+		logger.info("업데이트 성공");
+		return SQD;
+	}
+	
 }
 

@@ -1,3 +1,4 @@
+
 package com.mycompany.webapp.service;
 
 import java.util.List;
@@ -7,7 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+
 import org.springframework.transaction.annotation.Transactional;
+
 
 import com.mycompany.webapp.dao.ISurveyRepository;
 import com.mycompany.webapp.dto.SurveyListDTO;
@@ -85,6 +89,7 @@ public class SurveyService implements ISurveyService{
 		
 		surveyDao.setItemDelete(sqd);
 	}
+
 	
 	@Override
 	public int selectMaxItemId() {
@@ -94,7 +99,9 @@ public class SurveyService implements ISurveyService{
 
 	@Override
 	public void setQuestUpdate(SurveyQuestionDTO SQD) {
-		// TODO Auto-generated method stub
+		logger.info("문제 업데이트 서비스 진입: " + SQD);
+		
+		 surveyDao.setQuestUpdate(SQD);
 		
 	}
 
@@ -106,10 +113,44 @@ public class SurveyService implements ISurveyService{
 		
 	}
 
+
 	@Override
 	public List<SurveyListDTO> selectSurveyList(){
 		return surveyDao.selectSurveyList();
 	}
 
+	/*
+	@Override
+	public SurveyQuestionDTO getQuestionList(int surveyId) {
+		logger.info("getQuestionList: " + surveyId);
+		return surveyDao.getQuestionList(surveyId);
+		
+	}
+	*/
+	@Override
+	public List<SurveyQuestionDTO> questionList(int surveyId) {
+			
+		return surveyDao.getQuestionList(surveyId);
+	}
+
+	@Override
+	public SurveyQuestionDTO getQuestionList(int surveyId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+		
+// 1월 9일 여기부터 시작 
+
+
+
+
+
 
 }
+
+
+
+	
+
+	
+

@@ -273,8 +273,8 @@
 					추가</button>
 				<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate()">문제
 					수정</button>
-				<input type="hidden" name="surveyId" value="${SLD.surveyId }">
-				<input type="hidden" name="questionId" value="48"> <!-- 비동기로 바꿔 넣어보자 -> 문항도 마찬가지 -->
+				<input type="hidden" name="surveyId" value="2310103">
+				<input type="hidden" name="questionId" value="19">
 			</div>
 			<input type="hidden" name="itemScore" value="1">
 			<input type="hidden" name="itemContent" value=" ">

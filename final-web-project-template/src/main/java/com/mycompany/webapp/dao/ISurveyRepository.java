@@ -1,5 +1,6 @@
 package com.mycompany.webapp.dao;
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -22,10 +23,23 @@ public interface ISurveyRepository {
 	int selectMaxItemId();
 	void setItemInsert(SurveyQuestionDTO SQD);
 
-	//뿌리기
+	//문제 비동기 조회 목적
 	List<Map<String, Object>> selectQuestion(int surveyId);
 	
 	List<SurveyListDTO> selectSurveyList();	
 	
 	SurveyListDTO selectSurvey(int surveyid);
+	
+	//SurveyQuestionDTO getQuestionList(int surveyId);
+	void setQuestUpdate(SurveyQuestionDTO SQD);
+
+
+	List<SurveyQuestionDTO> getQuestionList(int surveyId);
 }
+
+
+	
+
+	
+	
+
