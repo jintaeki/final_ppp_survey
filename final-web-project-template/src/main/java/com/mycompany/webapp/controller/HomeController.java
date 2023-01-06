@@ -39,9 +39,6 @@ public class HomeController {
 	@Autowired
 	IJsonService ijr;
 	
-
-	
-	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
 		
@@ -208,8 +205,9 @@ public class HomeController {
 		return "home2";
 	}
 
-	
-	
-	
+	@RequestMapping(value= "/popup", method = RequestMethod.GET)
+	public String popupGET() {
+		return "popup";
+	}
 }
 

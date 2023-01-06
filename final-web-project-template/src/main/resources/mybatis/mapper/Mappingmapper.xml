@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mycompany.webapp.dao.MappingRepository">
+<mapper namespace="com.mycompany.webapp.dao.IMappingRepository">
 
 <select id="setMapping" resultType="com.mycompany.webapp.dto.MappingDTO">
 
 	<![CDATA[
 		insert into mapping m (m.survey_id, m.rater_id, m.appraisee_id, m.survey_complete_check)
-    		select s.survey_id, u.employee_id as rater_id, a.participation_employee_id as appraisee_id, 0
-  			from survey_list s, project_history r, project_history a, user_info u, user_info i
+    	select
+    		S.SURVEY_ID					AS "surveyId",
+			U.EMPLOYEE_ID				AS "raterId", 
+			A.PARTICIPATION_EMPLOYEE_ID AS "appraiseeId",
+			0
+  		from survey_list s, project_history r, project_history a, user_info u, user_info i
    			where  u.employee_id = r.participation_employee_id 
     		and r.project_id = a.project_id 
     		and r.participation_employee_id <> a.participation_employee_id 
@@ -21,39 +25,64 @@
 	
 	<select id="selectMappingData" parameterType="map" resultType="com.mycompany.webapp.dto.MappingDTO">
 		<![CDATA[
-			 SELECT 
-         M.SURVEY_ID             AS "surveyId", 
-         M.RATER_ID         	 AS "raterId", 
-         M.APPRAISEE_ID          AS "appraiseeId"
-       FROM (
-          SELECT 
-             M.SURVEY_ID,  
-             M.RATER_ID, 
-             M.APPRAISEE_ID,
-             ROWNUM AS RNUM
-       )
+			select 
+			  	p.project_name as 프로젝트,
+     		  	g.grade_name 		  as 직급,
+       		  	ur.employee_name 	  as 평가자,
+       		  	ua.employee_name    as 피평가자
+			from project p,
+    			 project_history h,
+     			 grade g,
+     			 mapping m,
+     		     user_info ua,
+     			 user_info ur
+			where p.project_id = h.project_id
+  				  and ur.grade_id = g.grade_id
+				  and h.participation_employee_id = m.appraisee_id
+    			  and ua.employee_id = m.appraisee_id
+    			  and ur.employee_id = m.rater_id
+			order by  p.project_name, g.grade_id, ur.employee_name;
 		]]>
 	</select>
 
 	<select id="selectRater" parameterType="map" resultType="com.mycompany.webapp.dto.MappingDTO">
 		<![CDATA[
-			 SELECT 
-         M.SURVEY_ID             AS "surveyId", 
-         M.RATER_ID         	 AS "raterId", 
-         M.APPRAISEE_ID          AS "appraiseeId"
-       FROM (
-          SELECT 
-             M.SURVEY_ID,  
-             M.RATER_ID, 
-             M.APPRAISEE_ID
-       )
-       WHERE RATER_ID = #{raterId}
+		select 
+			p.project_name as 프로젝트,
+      		g.grade_name as 직급,
+       		ur.employee_name as 평가자,
+       		ua.employee_name as 피평가자
+		from project p,
+    	 	project_history h,
+     		grade g,
+     		(SELECT 
+				S.SURVEY_ID					AS survey_id,
+				U.EMPLOYEE_ID				AS rater_id, 
+				A.PARTICIPATION_EMPLOYEE_ID AS appraisee_id
+  			from survey_list s, project_history r, project_history a, user_info u, user_info i
+   			where  u.employee_id = r.participation_employee_id 
+    			and r.project_id = a.project_id 
+    			and r.participation_employee_id <> a.participation_employee_id 
+ 		    	and s.survey_id = #{surveyId}
+    			and TO_CHAR(r.PROJECT_CLOSED_DATE, 'YY/MM/dd') >= TO_CHAR(SYSDATE -#{year}, 'YY/MM/dd')
+    			and i.employee_id = a.participation_employee_id
+    			and i.grade_id = 2
+            	and U.EMPLOYEE_ID = #{raterId}
+    		ORDER BY u.employee_id) m,
+     		user_info ua,
+     		user_info ur
+		where p.project_id = h.project_id
+ 			  and ur.grade_id = g.grade_id
+			  and h.participation_employee_id = m.appraisee_id
+    		  and ua.employee_id = m.appraisee_id
+    		  and ur.employee_id = m.rater_id
+		order by  p.project_name, g.grade_id, ur.employee_name;
 		]]>
 	</select>
 
-	<insert id="insertAppreisee" parameterType="com.mycompany.webapp.dto.MappingDTO">
+	<insert id="insertAppraisee" parameterType="com.mycompany.webapp.dto.MappingDTO">
 		insert into mapping
-			(surveyId, raterId, appraiseeId, surveyCompleteCheck)
+			(survey_id, rater_id, appraisee_id, survey_complete_check)
  		values
  			(#{surveyId}, #{raterId}, #{appraiseeId}, 0)
 	</insert>
