@@ -1,5 +1,9 @@
 package com.mycompany.webapp.service;
 
+import java.util.List;
+import java.util.Map;
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +72,15 @@ public class SurveyService implements ISurveyService{
 		surveyDao.setItemInsert(sqd);
 	}
 
+
+@Override
+	public void setItemDelete(SurveyQuestionDTO sqd) {
+		
+		surveyDao.setItemDelete(sqd);
+	}
+	
+
+
 	@Override
 	public int selectMaxItemId() {
 		// TODO Auto-generated method stub
@@ -81,6 +94,15 @@ public class SurveyService implements ISurveyService{
 		 surveyDao.setQuestUpdate(SQD);
 		
 	}
+
+@Override
+	public List<Map<String, Object>> selectQuestion(int surveyId) {
+
+		
+		return surveyDao.selectQuestion(surveyId);
+		
+	}
+
 
 	@Override
 	public SurveyQuestionDTO getQuestionList(int surveyId) {

@@ -1,5 +1,8 @@
 package com.mycompany.webapp.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 
@@ -19,4 +22,9 @@ public interface ISurveyRepository {
 	void setItemInsert(SurveyQuestionDTO SQD);
 	SurveyQuestionDTO getQuestionList(int surveyId);
 	void setQuestUpdate(SurveyQuestionDTO SQD);
+
+	List<Map<String, Object>> selectQuestion(int surveyId);
+
+	void setItemDelete(SurveyQuestionDTO sqd);
+
 }

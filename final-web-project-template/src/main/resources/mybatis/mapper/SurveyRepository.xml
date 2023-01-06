@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.dao.ISurveyRepository">
 
-	<insert id="setQuestInsert" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
+	<insert id="setQuestInsert" parameterType="SQD">
 		<![CDATA[
 				INSERT INTO SURVEY_QUESTION(QUESTION_ID, SURVEY_ID, QUESTION_CONTENT, QUESTION_TYPE_CODE)
 				values (#{questionId}, #{surveyId}, #{questionContent}, #{questionTypeCode})
@@ -22,7 +22,7 @@
 		]]>
 	</select>
 	
-	<insert id="setItemInsert" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
+	<insert id="setItemInsert" parameterType="SQD">
 		<![CDATA[	
 			INSERT INTO SURVEY_ITEM(QUESTION_ID, ITEM_ID, ITEM_CONTENT, ITEM_SCORE)
 			values (#{questionId}, #{itemId}, #{itemContent}, #{itemScore})
@@ -46,6 +46,28 @@
 		ANONYMITY_CHECK_CODE=#{anonymityCheckCode},SURVEY_STATR_DATE=#{surveyStartDate},SURVEY_CLOSED_DATE=#{surveyClosedDate}  WHERE SURVEY_ID=#{surveyId}
 	</update>
 	
+	<insert id="setItemUpdate" parameterType="SQD" >
+		
+		<selectKey keyProperty="itemId" resultType="int" order="BEFORE">
+			select item_id_seq.nextval from dual	
+		</selectKey>
+		
+		insert into survey_item (QUESTION_ID,ITEM_ID, ITEM_CONTENT,
+		ITEM_SCORE) 
+		values(6,#{itemId},#{itemContent},#{itemScore})
+	</insert>
+	
+	<delete id="setItemDelete" parameterType="SQD">
+		delete from survey_item where question_id = ${questionId}
+		
+	</delete>
+	
+	<select id="selectQuestion" parameterType="int" resultType="hashmap">
+		select sq.survey_id, sq.question_id, sq.question_content, sq.question_type_code, 
+		si.item_id, si.item_content, si.item_score 
+		from SURVEY_ITEM si, survey_question sq 
+		where si.question_id=sq.question_id and survey_id = #{surveyId}	 order by question_id desc
+	</select>
 	
 	
 	<select id="getQuestionList" resultType="com.mycompany.webapp.dto.SurveyQuestionDTO">

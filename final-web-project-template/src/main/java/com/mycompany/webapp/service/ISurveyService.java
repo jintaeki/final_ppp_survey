@@ -4,6 +4,9 @@ package com.mycompany.webapp.service;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 
+import java.util.List;
+import java.util.Map;
+
 public interface ISurveyService {
 
 
@@ -15,6 +18,7 @@ public interface ISurveyService {
 
 	int selectMaxSurveyId();
 	
+	void setItemDelete(SurveyQuestionDTO sqd);
 
 	void setQuestInsert(SurveyQuestionDTO sqd);
 
@@ -25,6 +29,8 @@ public interface ISurveyService {
 	int selectMaxItemId();
 
 	void setQuestUpdate(SurveyQuestionDTO sqd);
+	
+	List<Map<String, Object>> selectQuestion(int surveyId);
 	
 	SurveyQuestionDTO getQuestionList(int surveyId);
 	
