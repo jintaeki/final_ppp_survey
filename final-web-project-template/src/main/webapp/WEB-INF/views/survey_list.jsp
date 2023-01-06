@@ -21,6 +21,9 @@ function send(obj){
 		
    }
    
+	$('#myModal').on('shown.bs.modal', function () {
+	  $('#myInput').trigger('focus')
+	})
    
 </script>
 
@@ -62,8 +65,9 @@ function send(obj){
 							<td><input type="button" id="send" class="btn btn-primary"
 								onclick="send(this)" value="발송"></td>
 							<td></td>
-							<td><td><input type="button" id="map" class="btn btn-primary"
-								onclick="location.href='mappingview'" value="메핑"></td></td>
+							<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+ 									매핑
+								</button></td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">2</th>
@@ -74,7 +78,7 @@ function send(obj){
 							<td class="comp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
 									onclick="location.href='surveyevaluate'">조회</button></td>
-							<td>메핑완료</td>
+							<td>매핑완료</td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">3</th>
@@ -85,7 +89,7 @@ function send(obj){
 							<td class="comp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
 									onclick="location.href='surveyevaluate'">조회</button></td>
-							<td>메핑완료</td>
+							<td>매핑완료</td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">4</th>
@@ -96,7 +100,7 @@ function send(obj){
 							<td class="comp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
 									onclick="location.href='surveyevaluate'">조회</button></td>
-							<td>메핑완료</td>
+							<td>매핑완료</td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">5</th>
@@ -107,6 +111,7 @@ function send(obj){
 							<td class="comp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
 									onclick="location.href='surveyevaluate'">조회</button></td>
+							<td>매핑완료</td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">6</th>
@@ -117,7 +122,7 @@ function send(obj){
 							<td class="comp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
 									onclick="location.href='surveyevaluate'">조회</button></td>
-							<td>메핑완료</td>
+							<td>매핑완료</td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">7</th>
@@ -128,6 +133,7 @@ function send(obj){
 							<td class="comp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
 									onclick="location.href='surveyevaluate'">조회</button></td>
+							<td>매핑완료</td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">8</th>
@@ -138,7 +144,7 @@ function send(obj){
 							<td class="comp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
 									onclick="location.href='surveyevaluate'">조회</button></td>
-							<td>메핑완료</td>
+							<td>매핑완료</td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">9</th>
@@ -149,7 +155,7 @@ function send(obj){
 							<td class="omp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
 									onclick="location.href='surveyevaluate'">조회</button></td>
-							<td>메핑완료</td>
+							<td>매핑완료</td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">5</th>
@@ -160,7 +166,7 @@ function send(obj){
 							<td class="comp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
 									onclick="location.href='surveyevaluate'">조회</button></td>
-							<td>메핑완료</td>
+							<td>매핑완료</td>
 						</tr>
 					</tbody>
 				</table>
@@ -176,6 +182,27 @@ function send(obj){
 			</div>
 		</div>
 	</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

@@ -26,9 +26,9 @@
 	<select id="selectMappingData" parameterType="map" resultType="com.mycompany.webapp.dto.MappingDTO">
 		<![CDATA[
 			select 
-			  	p.project_name as 프로젝트,
-     		  	g.grade_name 		  as 직급,
-       		  	ur.employee_name 	  as 평가자,
+			  	p.project_name 		as 프로젝트,
+     		  	g.grade_name 		as 직급,
+       		  	ur.employee_name 	as 평가자,
        		  	ua.employee_name    as 피평가자
 			from project p,
     			 project_history h,
