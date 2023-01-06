@@ -79,4 +79,12 @@
 		
 	
 	</select>
+	
+	<select id="selectSurvey" parameterType="int" resultType="SLD">
+		select SURVEY_ID as surveyId, SURVEY_NAME as surveyName, SURVEY_CONTENT surveyContent, ANONYMITY_CHECK_CODE as anonymityCheckCode,
+		SURVEY_STATR_DATE as surveyStartDate,  SURVEY_CLOSED_DATE as surveyClosedDate, DECIDE_CHECK as decideCheck
+			   from survey_list
+			   where survey_id = #{surveyId}
+	
+	</select>
 </mapper>

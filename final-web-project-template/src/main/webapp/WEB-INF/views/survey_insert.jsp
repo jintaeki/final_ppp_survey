@@ -55,7 +55,6 @@
 				</div>
 			</div>
 			<div class="col-12">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
 				<input type="button" class="btn btn-primary" onclick="register()"
 					value="수정">
 			</div>
@@ -164,7 +163,7 @@
 		<%-- 			<c:if test="${ }"></c:if> --%>
 		
 		
-		<div id="obj_box_toggle"  >
+		<div id="obj_box_toggle"  style="display:none">
 			<div class="col-12">
 				<div class="Item_box">
 					<button type="button" id="item_obj_copy">+</button>
@@ -180,8 +179,7 @@
 						</div>
 
 						<div class="col-12">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">취소</button>
+
 							<input type="button" class="btn btn-primary"
 								onclick="update_obj_item_btn()" value="수정">
 						</div>
@@ -194,7 +192,7 @@
 
 		<%-- 		<c:if test="${ }"></c:if> --%>
 
-		<div id="mix_box_toggle" >
+		<div id="mix_box_toggle" style="display:none">
 			<div class="col-12">
 				<div class="Item_box">
 					<button type="button" id="item_mix_copy">+</button>
@@ -215,8 +213,7 @@
 								name="itemScore" value="0" style="display:none">
 						</div>
 						<div class="col-12">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">취소</button>
+
 							<input type="button" class="btn btn-primary"
 								onclick="update_mix_item_btn()" value="수정">
 						</div>
@@ -228,21 +225,15 @@
 		</div>
 		<%-- 		<c:if test="${ }"></c:if> --%>
 			<!-- 주관식은 문제 만들 때 id값 가장 큰 거 부여 -->
-		<div id="subj_box_toggle" style="display: none">
+		<div id="subj_box_toggle" style="display: none" >
 			<div class="block_box">
 				<input type="text" class="input_qus" id="input_qus"
 					placeholder="주관식 문제입니다.">
-				<button class="delete_btn">
-					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-						fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-  						<path
-							d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-						</svg>
-				</button>
+				
 				<div class="blank_under"></div>
 			</div>
 		</div>
-		<input type="submit" value="등록">
+	
 		
 	</div>
 	<!-- 채우 폼에 진택 코드 넣기 끝-->

@@ -26,4 +26,6 @@ public interface ISurveyRepository {
 	List<Map<String, Object>> selectQuestion(int surveyId);
 	
 	List<SurveyListDTO> selectSurveyList();	
+	
+	SurveyListDTO selectSurvey(int surveyid);
 }

@@ -110,7 +110,7 @@
 						<c:forEach var="list" items="${surveylist}" >
 						<tr>
 							<th scope="row">${list.surveyId }</th>
-							<td><a href="surveyinsert1/${list.surveyId }">${list.surveyName }</a></td>
+							<td><a href="<c:url value='surveyinsert/${list.surveyId}'/>">${list.surveyName }</a></td>
 							<td><fmt:formatDate value="${list.surveyStartDate }" pattern="yyyy-MM-dd"/><br>~<br>
 					<fmt:formatDate value="${list.surveyClosedDate }" pattern="yyyy-MM-dd"/></td>
 							

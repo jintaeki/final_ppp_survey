@@ -28,6 +28,14 @@ public class SurveyService implements ISurveyService{
 	}
 
 	@Override
+	public SurveyListDTO selectSurvey(int surveyid) {
+		
+		
+		return surveyDao.selectSurvey(surveyid);
+
+	}
+	
+	@Override
 	public void setSurveyUpdate(SurveyListDTO surveylist) {
 		surveyDao.setSurveyUpdate(surveylist);
 		
