@@ -128,20 +128,20 @@
 		id="survey_question_dv">
 		<div class="list-group list-group-flush border-bottom scrollarea"
 			id="scroll_area">
-
 			<!-- 여기까지 문제 div -->
-
+			<form:form  modelAttribute="SQD" id="iqsform">
 			<div class="list-group-item list-group-item-action active py-3 lh-sm"
 				id="queAfter">
 				<input type="text" class="input_qus" placeholder="문제를 입력해 주세요.">
 				<div class="card m-2" style="float: right; width: 60px;">
-					<button class="btn btn-secondary" id="btn_for_answer_box"
-						onclick="btn_for_ans_box(this)">ans</button>
+				<button type="button" class="btn btn-primary btn-sm" onclick="">수정</button>
 				</div>
+				<div display="none" id="update_qi" value="${sqd.questionId}"></div>
 				<div class="blank_under"></div>
-
 			</div>
+			</form:form>
 		</div>
+		
 		
 		<div id="answer_box">
 			<div class="all_qus">
@@ -236,6 +236,10 @@
 				<!-- 문제 추가 버튼  -->
 				<button type="button" class="btn btn-outline-primary" id="add_btn">문제
 					추가</button>
+				<button type="button" class="btn btn-outline-primary" id="update_btn">문제
+					수정</button>
+					
+					
 			</div>
 			<input type="hidden" name="surveyId" value="2310103">
 			<input type="hidden" name="itemScore" value="1">
@@ -377,11 +381,11 @@
 	function qusList(){
 			var qdiv = $('#questioN_insert_form')[0]
 			console.log("리스트 시작!");
-			var data = new FrmData(qdiv);
+			var data = new FormData(qdiv);
 			
 			$.ajax({
 				method: 'POST',
-				url: '',
+				url: 'questionList.do',
 				data: data,
 				processData: false,
 				contentType: false,
@@ -397,15 +401,35 @@
 			});
 		}
 	
-	var ab = document.getElementById('add_btn');
-	ab.addEventListener('click', (function(insertQus())) {
-		console.log("문제등록");
-	})();
-	/*
+		function qusUpdate(){
+			var qdiv = $('#'#questioN_insert_form')[0]
+			 console.log("업데이트 시작");
+			var data = new FormData(qdiv);
+			
+			$.ajax({
+				method: 'POST',
+				uri: 'questionUpdate.do',
+				data: data,
+				processData: false,
+				contentType: false,
+				cache: false,
+				beforeSend: function() {
+					console.log("요청 보냈음");
+				},
+				succes: function(data) {
+					console.log("요청 보냄");
+				},
+				error: function(e) {
+					console.log("Error", e);
+					}
+				});
+			}
+		
+		/*
 	ab.addEventListener('click',  function(qusList) {
 		console.log("문제fltmxm");
 	});
-	
+	*/
 	/*
 	
 	function change_my_select() {

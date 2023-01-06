@@ -42,8 +42,8 @@
 	</insert>
 	
 	<update id="setSurveyUpdate" parameterType="SLD">
-		update SURVEY_LIST set SURVEY_NAME=#{surveyName}, SURVEY_CONTENT=#{surveyContent},
-		ANONYMITY_CHECK_CODE=#{anonymityCheckCode},SURVEY_STATR_DATE=#{surveyStartDate},SURVEY_CLOSED_DATE=#{surveyClosedDate}  where survey_id=#{surveyId}
+		UPDATE SURVEY_LIST SET SURVEY_NAME=#{surveyName}, SURVEY_CONTENT=#{surveyContent},
+		ANONYMITY_CHECK_CODE=#{anonymityCheckCode},SURVEY_STATR_DATE=#{surveyStartDate},SURVEY_CLOSED_DATE=#{surveyClosedDate}  WHERE SURVEY_ID=#{surveyId}
 	</update>
 	
 	
@@ -53,4 +53,7 @@
 		FROM SURVEY_QUESTION WHERE SURVEY_ID = #{surveyId} 
 	</select>
 	
+	<update id="setQuestUpdate" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
+		UPDATE SURVEY_QUESTION SET QUESTION_CONTENT=#{questionContent}, QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_ID=#{questionId}
+	</update>
 </mapper>

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mycompany.webapp.dto.SurveyItemDTO;
@@ -36,7 +37,7 @@ public class SurveyController {
 	private static final Logger logger = LoggerFactory.getLogger(SurveyController.class);
 
 	@Autowired
-	ISurveyService surveySurvice;
+	ISurveyService surveyService;
 	
 
 	@RequestMapping("")
@@ -62,6 +63,8 @@ public class SurveyController {
 	public String survey_insert() {
 		logger.info("실행");
 		//log.info("실행");
+		
+		
 		return "survey_insert";
 	}
 	
@@ -98,9 +101,9 @@ public class SurveyController {
 		System.out.println(Cdate);
 		model.addAttribute("Sdate",Sdate);
 		model.addAttribute("Cdate",Cdate);
-		SLD.setSurveyId(surveySurvice.selectMaxSurveyId()+1);
+		SLD.setSurveyId(surveyService.selectMaxSurveyId()+1);
 		logger.info(SLD.toString());
-		surveySurvice.setSurvey(SLD);
+		surveyService.setSurvey(SLD);
 		model.addAttribute("SLD",SLD);
 		return "/survey_insert";
 				
@@ -113,7 +116,7 @@ public class SurveyController {
 	//public String updateSurvey(SurveyListDTO SLD, Model model) {
 		logger.info("모달창을 통해 설문 등록 페이지 진입");
 		logger.info(SLD.toString());
-		surveySurvice.setSurveyUpdate(SLD);
+		surveyService.setSurveyUpdate(SLD);
 
 		/*JSONObject jsonObject = new JSONObject();
 		jsonObject.put("decideCheck", SLD.getDecideCheck());
@@ -173,7 +176,7 @@ public class SurveyController {
 	public  SurveyQuestionDTO insertSurvey(@ModelAttribute("SQD") @Valid  SurveyQuestionDTO SQD, BindingResult result ,Model model) {
 			logger.info("문제 생성 진입했나?");
 			model.addAttribute("SQD",SQD);
-			surveySurvice.setQuestInsert(SQD);
+			surveyService.setQuestInsert(SQD);
 			
 			return SQD;
 		}	
@@ -182,20 +185,32 @@ public class SurveyController {
 	@RequestMapping(value="survey/iteminsert.do", method=RequestMethod.POST)
 	public String updateItem(@ModelAttribute("SID") @Valid SurveyItemDTO SID, BindingResult result) {
 			
-		
+			
 		return null;
 		
 	}
+	
 	
 	//문제 비동기 조회
 	@RequestMapping(value="/questionList.do")
 	@ResponseBody
 	public SurveyQuestionDTO questionList(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model, int surveyId) {
 		logger.info("문제 비동기 조회");
-		SurveyQuestionDTO questionList = surveySurvice.getQuestionList(surveyId);
+		SurveyQuestionDTO questionList = surveyService.getQuestionList(surveyId);
 		model.addAttribute("questionList", questionList);
 		logger.info("제 비동기 조회 dto: " + SQD);
 		
+		return SQD;
+	}
+	
+	
+	//문제 업데이트
+	@RequestMapping(value="/questionUpdate.do")
+	@ResponseBody
+	public SurveyQuestionDTO questionUpdate(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD,int surveyId, BindingResult result, Model model) {
+		logger.info("업데이트 진입");
+		surveyService.setQuestUpdate(SQD);
+		surveyService.getQuestionList(surveyId);
 		return SQD;
 	}
 }

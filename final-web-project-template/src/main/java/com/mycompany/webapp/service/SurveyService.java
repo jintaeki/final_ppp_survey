@@ -76,7 +76,9 @@ public class SurveyService implements ISurveyService{
 
 	@Override
 	public void setQuestUpdate(SurveyQuestionDTO SQD) {
-		// TODO Auto-generated method stub
+		logger.info("문제 업데이트 서비스 진입: " + SQD);
+		
+		 surveyDao.setQuestUpdate(SQD);
 		
 	}
 
@@ -86,11 +88,5 @@ public class SurveyService implements ISurveyService{
 		return surveyDao.getQuestionList(surveyId);
 		
 	}
-
-	
-
-
-
-
 
 }

@@ -28,4 +28,5 @@ public interface ISurveyService {
 	
 	SurveyQuestionDTO getQuestionList(int surveyId);
 	
+	
 }
