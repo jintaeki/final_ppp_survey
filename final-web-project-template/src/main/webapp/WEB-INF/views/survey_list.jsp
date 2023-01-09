@@ -4,23 +4,47 @@
 	href="${pageContext.request.contextPath}/resources/css/survey_list.css" />
 
 <script>
-	function send(obj) {
-		const tag = $(obj);
+	function send() {
+	
+		const surveyseq = $('#surveyseq').val();
+		console.log(surveyseq);
+		$.ajax({
+			method:'POST', //어떤 방식으로 보낼 지
+			url:'sendmessage.do/'+surveyseq, // qdiv를 보낼 경로 설정
 
-		const completeMsg = `전송완료`;
-		const complete = `확정`;
-		const text = `<button type="button" class="btn btn-link" onclick="location.href='surveyevaluate'">조회</button>`;
-		tag.parent().next().append(text);
+		   beforeSend : function() { //보내기 전 실행
+			console.log("요청이 보내지는가?");
+		   },
+		   success:function (data) {	 //전송 성공시 실행
+			   console.log("요청 성송");
+		   
+			   const tag = $(obj);
 
-		tag.parent().prev().html(complete);
-		tag.parent().prev().css('font-weight', 'bold');
+				const completeMsg = `전송완료`;
+				const complete = `확정`;
+				const text = `<button type="button" class="btn btn-link"
+								onclick="location.href='surveyevaluate/${list.surveySeq}'">조회</button>`;
+				tag.parent().next().append(text);
 
-		tag.closest('tr').css('color', '#ccc');
-		tag.parent().html(completeMsg);
+				tag.parent().prev().html(complete);
+				tag.parent().prev().css('font-weight', 'bold');
 
-		tag.hide();
-
+				tag.closest('tr').css('color', '#ccc');
+				tag.parent().html(completeMsg);
+				tag.hide();
+					   
+			   
+		   }, error:function(e) {	//실패, 에러
+			   console.log("Error", e); 
+		   }
+			});
+		
+		
 	}
+		
+		
+		
+
 </script>
 <!-- modal(설문 등록 시 뜨는 팝업창) -->
 <div class="modal fade" id="exampleModal" tabindex="-1"
@@ -107,10 +131,11 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="list" items="${surveylist}" >
+						<c:forEach var="list" items="${surveylist}">
 						<tr>
 							<th scope="row">${list.surveySeq }</th>
-							<td><a href="surveyinsert2?surveyseq=${list.surveySeq}">${list.surveyName }</a></td>
+							<td ><input type="hidden" id="surveyseq" value="${list.surveySeq}">
+							<a href="surveyinsert2?surveyseq=${list.surveySeq}">${list.surveyName }</a></td>
 							<td><fmt:formatDate value="${list.surveyStartDate }" pattern="yyyy-MM-dd"/><br>~<br>
 					<fmt:formatDate value="${list.surveyClosedDate }" pattern="yyyy-MM-dd"/></td>
 							
@@ -118,12 +143,9 @@
 							<c:if test="${list.decideYN != 'N' }">확정</c:if></span>
 							</td>
 							<td><input type="button" id="send" class="btn btn-primary"
-								onclick="send(this)" value="발송"></td>
-							<td><button type="button" class="btn btn-link"
-									onclick="location.href='surveyevaluate/${list.surveySeq}'">조회</button></td>
-						</tr>
-						
-						
+								onclick="send()" value="발송"></td>
+							<td></td>
+						</tr>												
 						</c:forEach>
 						
 					</tbody>

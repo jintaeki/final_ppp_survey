@@ -88,7 +88,14 @@ public class SurveyController {
 		model.addAttribute("SLD",surveyService.selectSurvey(surveySeq));
 		return "survey_insert2";
 	}
-
+	
+	@RequestMapping(value= "/sendmessage.do/{surveyseq}", method=RequestMethod.POST)
+	public void sendmessage(@PathVariable int surveySeq) {
+		logger.info("하이하이하이하이");
+		surveyService.sendMessage(surveySeq);
+		
+	}
+	
 	// 설문지 목록으로 이동을 위한 컨트롤러
 	@RequestMapping(value="/surveylist")
 	public String survey_list(@RequestParam(defaultValue="1") int pageNo, Model model) {

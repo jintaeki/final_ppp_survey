@@ -108,4 +108,7 @@
 	</select>
 	
 
+	<update id="sendMessage" parameterType="int">
+		update survey_list set 	DECIDE_YN='Y' where survey_seq =#{surveySeq}
+	</update>
 </mapper>

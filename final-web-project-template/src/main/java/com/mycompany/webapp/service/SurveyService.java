@@ -145,8 +145,11 @@ public class SurveyService implements ISurveyService{
 	}
 		
 // 1월 9일 여기부터 시작 
-
-
+	
+	@Override
+	public void sendMessage(int surveySeq) {
+		surveyDao.sendMessage(surveySeq);
+	}
 
 
 

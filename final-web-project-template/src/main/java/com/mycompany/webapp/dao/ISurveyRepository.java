@@ -39,6 +39,8 @@ public interface ISurveyRepository {
 	List<SurveyQuestionDTO> getQuestionList(int surveyId);
 	
 	Date getAddDate(int serveySeq);
+	
+	void sendMessage(int surveySeq);
 }
 
 
