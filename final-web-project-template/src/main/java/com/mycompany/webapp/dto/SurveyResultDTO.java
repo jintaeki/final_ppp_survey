@@ -2,20 +2,19 @@ package com.mycompany.webapp.dto;
 
 public class SurveyResultDTO {
 	private int surveySeq;
-	private int raterId;
-	private int appraiseeId;
+	private String raterId;
+	private String appraiseeId;
 	private int anonymitySeq;
 	private int questionSeq;
 	private int itemSeq;
 	private String answerContent;
-	
 	public int getSurveySeq() {
 		return surveySeq;
 	}
-	public int getRaterId() {
+	public String getRaterId() {
 		return raterId;
 	}
-	public int getAppraiseeId() {
+	public String getAppraiseeId() {
 		return appraiseeId;
 	}
 	public int getAnonymitySeq() {
@@ -33,10 +32,10 @@ public class SurveyResultDTO {
 	public void setSurveySeq(int surveySeq) {
 		this.surveySeq = surveySeq;
 	}
-	public void setRaterId(int raterId) {
+	public void setRaterId(String raterId) {
 		this.raterId = raterId;
 	}
-	public void setAppraiseeId(int appraiseeId) {
+	public void setAppraiseeId(String appraiseeId) {
 		this.appraiseeId = appraiseeId;
 	}
 	public void setAnonymitySeq(int anonymitySeq) {
@@ -57,6 +56,9 @@ public class SurveyResultDTO {
 				+ ", anonymitySeq=" + anonymitySeq + ", questionSeq=" + questionSeq + ", itemSeq=" + itemSeq
 				+ ", answerContent=" + answerContent + "]";
 	}
+	
+	
+	
 	
 	
 	
