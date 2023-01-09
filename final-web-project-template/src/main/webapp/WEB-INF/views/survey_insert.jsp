@@ -20,7 +20,7 @@
 			<div class="col-3">설문 부가 설명</div>
 
 			<input type="hidden" name="decideCheck" value="N"> <input
-				type="hidden" name="surveyId" id="surveyid" value="${SLD.surveyId}">
+				type="hidden" name="surveyId" id="surveyid" value="${SLD.surveySeq}">
 			<div class="col-3">
 				<div class="form-group">
 					<label for="survey_name" class="col-form-label"></label> <input
@@ -165,8 +165,8 @@
 					<button type="button" id="item_obj_copy">+</button>
 					<form:form modelAttribute="SQD" id="item_obj_form">
 						<input type="hidden" name="questionTypeCode" value="10001">
-						<input type="hidden" name="surveyId" value="${SLD.surveyId}">
-						<input type="hidden" name="questionId" value="6">
+						<input type="hidden" name="surveySeq" value="${SLD.surveySeq}">
+						<input type="hidden" name="questionSeq" value="6">
 						<div class="icon_line" id="obj_ItemAfter">
 							<label><input type="text" name="itemContent"
 								placeholder="문항 입력..." id="ic"></label> 점수<input type="number"
@@ -194,9 +194,9 @@
 					<button type="button" id="item_mix_copy">+</button>
 					<form:form modelAttribute="SQD" id="item_mix_form">
 						<input type="hidden" name="questionTypeCode" value="10003">
-						<input type="hidden" name="surveyId" value="${SLD.surveyId}"
+						<input type="hidden" name="surveySeq" value="${SLD.surveySeq}"
 							id="surveyid">
-						<input type="hidden" name="questionId" value="6">
+						<input type="hidden" name="questionSeq" value="6">
 						<div class="icon_line" id="mix_ItemAfter">
 							<label><input type="text" name="itemContent"
 								placeholder="문항 입력..." id="ic" required></label> 점수<input
@@ -273,8 +273,8 @@
 					추가</button>
 				<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate()">문제
 					수정</button>
-				<input type="hidden" name="surveyId" value="${SLD.surveyId }">
-				<input type="hidden" name="questionId" value="48"> <!-- 비동기로 바꿔 넣어보자 -> 문항도 마찬가지 -->
+				<input type="hidden" name="surveySeq" value="${SLD.surveySeq }">
+				<input type="hidden" name="questionSeq" value=""> <!-- 비동기로 바꿔 넣어보자 -> 문항도 마찬가지 -->
 			</div>
 			<input type="hidden" name="itemScore" value="1">
 			<input type="hidden" name="itemContent" value=" ">

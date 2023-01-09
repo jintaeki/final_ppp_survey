@@ -1,65 +1,63 @@
 package com.mycompany.webapp.dto;
 
 public class SurveyResultDTO {
-	private int surveyId;
+	private int surveySeq;
 	private int raterId;
 	private int appraiseeId;
-	private int anonymitySerialNumber;
-	private int questionId;
-	private int itemId;
+	private int anonymitySeq;
+	private int questionSeq;
+	private int itemSeq;
 	private String answerContent;
-	public int getSurveyId() {
-		return surveyId;
-	}
-	public void setSurveyId(int surveyId) {
-		this.surveyId = surveyId;
+	
+	public int getSurveySeq() {
+		return surveySeq;
 	}
 	public int getRaterId() {
 		return raterId;
 	}
-	public void setRaterId(int raterId) {
-		this.raterId = raterId;
-	}
 	public int getAppraiseeId() {
 		return appraiseeId;
+	}
+	public int getAnonymitySeq() {
+		return anonymitySeq;
+	}
+	public int getQuestionSeq() {
+		return questionSeq;
+	}
+	public int getItemSeq() {
+		return itemSeq;
+	}
+	public String getAnswerContent() {
+		return answerContent;
+	}
+	public void setSurveySeq(int surveySeq) {
+		this.surveySeq = surveySeq;
+	}
+	public void setRaterId(int raterId) {
+		this.raterId = raterId;
 	}
 	public void setAppraiseeId(int appraiseeId) {
 		this.appraiseeId = appraiseeId;
 	}
-	public int getAnonymitySerialNumber() {
-		return anonymitySerialNumber;
+	public void setAnonymitySeq(int anonymitySeq) {
+		this.anonymitySeq = anonymitySeq;
 	}
-	public void setAnonymitySerialNumber(int anonymitySerialNumber) {
-		this.anonymitySerialNumber = anonymitySerialNumber;
+	public void setQuestionSeq(int questionSeq) {
+		this.questionSeq = questionSeq;
 	}
-	public int getQuestionId() {
-		return questionId;
-	}
-	public void setQuestionId(int questionId) {
-		this.questionId = questionId;
-	}
-	public int getItemId() {
-		return itemId;
-	}
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
-	}
-	public String getAnswerContent() {
-		return answerContent;
+	public void setItemSeq(int itemSeq) {
+		this.itemSeq = itemSeq;
 	}
 	public void setAnswerContent(String answerContent) {
 		this.answerContent = answerContent;
 	}
 	@Override
 	public String toString() {
-		return "SurveyResultDTO [surveyId=" + surveyId + ", raterId=" + raterId + ", appraiseeId=" + appraiseeId
-				+ ", anonymitySerialNumber=" + anonymitySerialNumber + ", questionId=" + questionId + ", itemId="
-				+ itemId + ", answerContent=" + answerContent + ", getSurveyId()=" + getSurveyId() + ", getRaterId()="
-				+ getRaterId() + ", getAppraiseeId()=" + getAppraiseeId() + ", getAnonymitySerialNumber()="
-				+ getAnonymitySerialNumber() + ", getQuestionId()=" + getQuestionId() + ", getItemId()=" + getItemId()
-				+ ", getAnswerContent()=" + getAnswerContent() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
+		return "SurveyResultDTO [surveySeq=" + surveySeq + ", raterId=" + raterId + ", appraiseeId=" + appraiseeId
+				+ ", anonymitySeq=" + anonymitySeq + ", questionSeq=" + questionSeq + ", itemSeq=" + itemSeq
+				+ ", answerContent=" + answerContent + "]";
 	}
+	
 	
 	
 }

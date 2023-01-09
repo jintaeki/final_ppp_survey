@@ -62,7 +62,7 @@ public class SurveyService implements ISurveyService{
 	@Transactional
 	public void setQuestInsert(SurveyQuestionDTO sqd) {
 		logger.info("setQuestInsert service: " + sqd );
-		sqd.setQuestionId(surveyDao.selectMaxQuestionId()+1);
+		sqd.setQuestionSeq(surveyDao.selectMaxQuestionId()+1);
 		logger.info("id가 들어갔니 안갔니 :" + sqd);
 		surveyDao.setQuestInsert(sqd);
 		logger.info("문제등록");
@@ -79,7 +79,7 @@ public class SurveyService implements ISurveyService{
 	@Override
 	public void setItemInsert(SurveyQuestionDTO sqd) {
 		logger.info("setItemInserT: " + sqd);
-		sqd.setItemId(surveyDao.selectMaxItemId()+1);
+		sqd.setItemSeq(surveyDao.selectMaxItemId()+1);
 		logger.info("문항 id가 들어갔냐 안갔냐"  + sqd);
 		surveyDao.setItemInsert(sqd);
 	}
