@@ -1,23 +1,23 @@
 package com.mycompany.webapp.dto;
 
 public class UserInfoDTO {
-	private int employeeId;
-	private int departmentId;
+	private String employeeId;
+	private String departmentId;
 	private String employeeName;
-	private int gradeId;
+	private String gradeId;
 	private String phone;
 	private String email;
 	private String managerYN;
-	public int getEmployeeId() {
+	public String getEmployeeId() {
 		return employeeId;
 	}
-	public int getDepartmentId() {
+	public String getDepartmentId() {
 		return departmentId;
 	}
 	public String getEmployeeName() {
 		return employeeName;
 	}
-	public int getGradeId() {
+	public String getGradeId() {
 		return gradeId;
 	}
 	public String getPhone() {
@@ -29,16 +29,16 @@ public class UserInfoDTO {
 	public String getManagerYN() {
 		return managerYN;
 	}
-	public void setEmployeeId(int employeeId) {
+	public void setEmployeeId(String employeeId) {
 		this.employeeId = employeeId;
 	}
-	public void setDepartmentId(int departmentId) {
+	public void setDepartmentId(String departmentId) {
 		this.departmentId = departmentId;
 	}
 	public void setEmployeeName(String employeeName) {
 		this.employeeName = employeeName;
 	}
-	public void setGradeId(int gradeId) {
+	public void setGradeId(String gradeId) {
 		this.gradeId = gradeId;
 	}
 	public void setPhone(String phone) {
@@ -56,7 +56,6 @@ public class UserInfoDTO {
 				+ employeeName + ", gradeId=" + gradeId + ", phone=" + phone + ", email=" + email + ", managerYN="
 				+ managerYN + "]";
 	}
-	
 	
 	
 	

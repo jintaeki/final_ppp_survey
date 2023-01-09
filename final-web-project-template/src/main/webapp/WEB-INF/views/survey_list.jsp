@@ -48,8 +48,8 @@
 						<label for="message-text" class="col-form-label">설문 부가 설명</label>
 						<textarea class="form-control" id="message-text" name="surveyContent"></textarea>
 					</div>
-				 	<input type="hidden" name="decideCheck" value="N">
-					<input type="hidden" name="surveyId" value="1"> 설문 진행 기간<br>
+				 	<input type="hidden" name="decideYN" value="N">
+					<input type="hidden" name="surveySeq" value="1"> 설문 진행 기간<br>
 
 					<input type="date" name="surveyStartDate" pattern="yyyy-MM-dd">~<input
 						type="date" name="surveyClosedDate" pattern="yyyy-MM-dd">
@@ -109,18 +109,18 @@
 					<tbody>
 						<c:forEach var="list" items="${surveylist}" >
 						<tr>
-							<th scope="row">${list.surveyId }</th>
-							<td><a href="<c:url value='surveyinsert/${list.surveyId}'/>">${list.surveyName }</a></td>
+							<th scope="row">${list.surveySeq }</th>
+							<td><a href="<c:url value='surveyinsert/${list.surveySeq}'/>">${list.surveyName }</a></td>
 							<td><fmt:formatDate value="${list.surveyStartDate }" pattern="yyyy-MM-dd"/><br>~<br>
 					<fmt:formatDate value="${list.surveyClosedDate }" pattern="yyyy-MM-dd"/></td>
 							
-							<td><span class="wait"><c:if test="${list.decideCheck eq 'N' }">대기</c:if>
-							<c:if test="${list.decideCheck != 'N' }">확정</c:if></span>
+							<td><span class="wait"><c:if test="${list.decideYN eq 'N' }">대기</c:if>
+							<c:if test="${list.decideYN != 'N' }">확정</c:if></span>
 							</td>
 							<td><input type="button" id="send" class="btn btn-primary"
 								onclick="send(this)" value="발송"></td>
 							<td><button type="button" class="btn btn-link"
-									onclick="location.href='surveyevaluate/${list.surveyId}'">조회</button></td>
+									onclick="location.href='surveyevaluate/${list.surveySeq}'">조회</button></td>
 						</tr>
 						
 						

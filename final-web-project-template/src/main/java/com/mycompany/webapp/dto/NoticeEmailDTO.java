@@ -4,17 +4,16 @@ import java.util.Date;
 
 public class NoticeEmailDTO {
 	private int emailSeq;
-	private int raterId;
+	private String raterId;
 	private String email;
 	private String surveyLink;
 	private Date deliveryDate;
 	private String deliveryYN;
 	private String deliveyContent;
-	
 	public int getEmailSeq() {
 		return emailSeq;
 	}
-	public int getRaterId() {
+	public String getRaterId() {
 		return raterId;
 	}
 	public String getEmail() {
@@ -35,7 +34,7 @@ public class NoticeEmailDTO {
 	public void setEmailSeq(int emailSeq) {
 		this.emailSeq = emailSeq;
 	}
-	public void setRaterId(int raterId) {
+	public void setRaterId(String raterId) {
 		this.raterId = raterId;
 	}
 	public void setEmail(String email) {
@@ -60,6 +59,8 @@ public class NoticeEmailDTO {
 				+ surveyLink + ", deliveryDate=" + deliveryDate + ", deliveryYN=" + deliveryYN + ", deliveyContent="
 				+ deliveyContent + "]";
 	}
+	
+	
 	
 	
 	

@@ -1,6 +1,7 @@
 package com.mycompany.webapp.dao;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +36,8 @@ public interface ISurveyRepository {
 
 
 	List<SurveyQuestionDTO> getQuestionList(int surveyId);
+	
+	Date getAddDate(int serveySeq);
 }
 
 

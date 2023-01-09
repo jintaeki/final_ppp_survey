@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class NoticeSmsDTO {
 	private int smsSeq;
-	private int raterId;
+	private String raterId;
 	private String phone;
 	private String surveyLink;
 	private Date deliveryDate;
@@ -13,7 +13,7 @@ public class NoticeSmsDTO {
 	public int getSmsSeq() {
 		return smsSeq;
 	}
-	public int getRaterId() {
+	public String getRaterId() {
 		return raterId;
 	}
 	public String getPhone() {
@@ -34,7 +34,7 @@ public class NoticeSmsDTO {
 	public void setSmsSeq(int smsSeq) {
 		this.smsSeq = smsSeq;
 	}
-	public void setRaterId(int raterId) {
+	public void setRaterId(String raterId) {
 		this.raterId = raterId;
 	}
 	public void setPhone(String phone) {
@@ -58,6 +58,8 @@ public class NoticeSmsDTO {
 				+ surveyLink + ", deliveryDate=" + deliveryDate + ", deliveyYN=" + deliveyYN + ", deliveryContent="
 				+ deliveryContent + "]";
 	}
+	
+	
 	
 	
 	

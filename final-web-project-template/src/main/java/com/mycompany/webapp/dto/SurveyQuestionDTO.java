@@ -1,5 +1,7 @@
 package com.mycompany.webapp.dto;
 
+import java.util.Date;
+
 public class SurveyQuestionDTO {
 	//for 문제
 	private int surveySeq;
@@ -8,6 +10,7 @@ public class SurveyQuestionDTO {
 	private String questionTypeCode;
 	
 	
+	private Date addDate;
 	
 	//for 문항
 	// questionId는 문제와 동일하게 사용
@@ -60,20 +63,20 @@ public class SurveyQuestionDTO {
 		this.itemScore = itemScore;
 	}
 	
+	
+	
+	public Date getAddDate() {
+		return addDate;
+	}
+	public void setAddDate(Date addDate) {
+		this.addDate = addDate;
+	}
 	@Override
 	public String toString() {
 		return "SurveyQuestionDTO [surveySeq=" + surveySeq + ", questionSeq=" + questionSeq + ", questionContent="
-				+ questionContent + ", questionTypeCode=" + questionTypeCode + ", itemSeq=" + itemSeq + ", itemContent="
-				+ itemContent + ", itemScore=" + itemScore + "]";
+				+ questionContent + ", questionTypeCode=" + questionTypeCode + ", addDate=" + addDate + ", itemSeq="
+				+ itemSeq + ", itemContent=" + itemContent + ", itemScore=" + itemScore + "]";
 	}
 
-
-	
-
-	
-	
-	
-	
-	
 	
 }

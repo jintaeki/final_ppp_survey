@@ -2,17 +2,16 @@ package com.mycompany.webapp.dto;
 
 public class MappingDTO {
 	private int surveySeq;
-	private int raterId;
-	private int appraiseeId;
+	private String raterId;
+	private String appraiseeId;
 	private String surveyCompleteYN;
-	
 	public int getSurveySeq() {
 		return surveySeq;
 	}
-	public int getRaterId() {
+	public String getRaterId() {
 		return raterId;
 	}
-	public int getAppraiseeId() {
+	public String getAppraiseeId() {
 		return appraiseeId;
 	}
 	public String getSurveyCompleteYN() {
@@ -21,10 +20,10 @@ public class MappingDTO {
 	public void setSurveySeq(int surveySeq) {
 		this.surveySeq = surveySeq;
 	}
-	public void setRaterId(int raterId) {
+	public void setRaterId(String raterId) {
 		this.raterId = raterId;
 	}
-	public void setAppraiseeId(int appraiseeId) {
+	public void setAppraiseeId(String appraiseeId) {
 		this.appraiseeId = appraiseeId;
 	}
 	public void setSurveyCompleteYN(String surveyCompleteYN) {
@@ -35,6 +34,8 @@ public class MappingDTO {
 		return "MappingDTO [surveySeq=" + surveySeq + ", raterId=" + raterId + ", appraiseeId=" + appraiseeId
 				+ ", surveyCompleteYN=" + surveyCompleteYN + "]";
 	}
+	
+	
 	
 	
 

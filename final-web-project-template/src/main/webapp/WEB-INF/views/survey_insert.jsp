@@ -19,8 +19,8 @@
 			<div class="col-3">익명기명</div>
 			<div class="col-3">설문 부가 설명</div>
 
-			<input type="hidden" name="decideCheck" value="N"> <input
-				type="hidden" name="surveyId" id="surveyid" value="${SLD.surveySeq}">
+			<input type="hidden" name="decideYN" value="N"> <input
+				type="hidden" name="surveySeq" id="surveyseq" value="${SLD.surveySeq}">
 			<div class="col-3">
 				<div class="form-group">
 					<label for="survey_name" class="col-form-label"></label> <input
@@ -107,7 +107,7 @@
 					</svg>
 	</button>
 </div>
-<!--  주관식 -->
+<!--  혼합식 -->
 <div class="icon_line" id="new_mix_Item" style="display: none;">
 	<label><input type="text" name="itemContent" required
 		placeholder="문항 입력..." id="ic"></label> 점수<input type="number"
@@ -166,7 +166,7 @@
 					<form:form modelAttribute="SQD" id="item_obj_form">
 						<input type="hidden" name="questionTypeCode" value="10001">
 						<input type="hidden" name="surveySeq" value="${SLD.surveySeq}">
-						<input type="hidden" name="questionSeq" value="6">
+						<input type="hidden" name="questionSeq" value="2">
 						<div class="icon_line" id="obj_ItemAfter">
 							<label><input type="text" name="itemContent"
 								placeholder="문항 입력..." id="ic"></label> 점수<input type="number"
@@ -195,8 +195,8 @@
 					<form:form modelAttribute="SQD" id="item_mix_form">
 						<input type="hidden" name="questionTypeCode" value="10003">
 						<input type="hidden" name="surveySeq" value="${SLD.surveySeq}"
-							id="surveyid">
-						<input type="hidden" name="questionSeq" value="6">
+							id="surveyseq">
+						<input type="hidden" name="questionSeq" value="2">
 						<div class="icon_line" id="mix_ItemAfter">
 							<label><input type="text" name="itemContent"
 								placeholder="문항 입력..." id="ic" required></label> 점수<input
@@ -255,9 +255,9 @@
 		<form:form modelAttribute="SQD" id="questioN_insert_form">
 			<!-- aa -->
 			<div class="select_radio" id="select_radio">
-				<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1()" value="10001" checked>객관식 
-				<input type="radio" name="questionTypeCode" id="sub_radio" onclick="checkit2()" value="10002"> 주관식
-				<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3()" value="10003"> 혼합식
+				<input type="radio" name="questionTypeCode" id="obj_radio"  value="10001" checked>객관식 
+				<input type="radio" name="questionTypeCode" id="sub_radio"  value="10002"> 주관식
+				<input type="radio" name="questionTypeCode" id="mix_radio" value="10003"> 혼합식
 			</div>
 			<div class="question_content_area" id="question_add">
 				<div class="input-group" id="question_content">
@@ -267,14 +267,14 @@
 					<textarea class="form-control" aria-label="문제 입력칸"
 						name="questionContent">${sqd.questionContent}</textarea>
 				</div>
-				${SLD.surveyId}-> 설문id 확인용
+				${SLD.surveySeq}-> 설문id 확인용
 				<!-- 문제 추가 버튼  -->
 				<button type="button" class="btn btn-outline-primary"  id="add_btn" onclick="insertQus()">문제
 					추가</button>
 				<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate()">문제
 					수정</button>
-				<input type="hidden" name="surveySeq" value="${SLD.surveySeq }">
-				<input type="hidden" name="questionSeq" value=""> <!-- 비동기로 바꿔 넣어보자 -> 문항도 마찬가지 -->
+				<input type="hidden" name="surveySeq" value="${SLD.surveySeq}">
+				<input type="hidden" name="questionSeq" value="2"> <!-- 비동기로 바꿔 넣어보자 -> 문항도 마찬가지 -->
 			</div>
 			<input type="hidden" name="itemScore" value="1">
 			<input type="hidden" name="itemContent" value=" ">
@@ -443,12 +443,12 @@
 // 				console.log("요청이 보내지는가?");
 // 			   },
 // 			   success:function (data) {	 //전송 성공시 실행
-// 				   console.log($('#surveyid').val());
-// 				   var surveyid = $('#surveyid').val();
+// 				   console.log($('#surveyseq').val());
+// 				   var surveyseq = $('#"surveyseq"').val();
 				   
 // 			   $.ajax({
 // 						method:'GET', //어떤 방식으로 보낼 지
-// 						url:'selectquestion.do/'+surveyid, // qdiv를 보낼 경로 설정				
+// 						url:'selectquestion.do/'+"surveyseq", // qdiv를 보낼 경로 설정				
 // 			 			dataType: "json",
 // 					   beforeSend : function() { //보내기 전 실행
 // 						console.log("요청이 보내지는가?");
@@ -456,7 +456,25 @@
 // 					   success:function (jsondata){	 //전송 성공시 실행
 // 								console.log(jsondata);
 // 								questionHtml(jsondata);
-// 								itemHtml(jsondata);
+// 								var surveyseq = jsondata[0].SURVEY_SEQ;
+// 								var questionseq = jsondata[0].QUESTION_SEQ;
+// 								$.ajax({
+// 									method:'GET', //어떤 방식으로 보낼 지
+// 									url:'selectitems.do/'+ surveyseq + questionseq, // qdiv를 보낼 경로 설정				
+// 						 			dataType: "json",
+// 								   beforeSend : function() { //보내기 전 실행
+// 									console.log("요청이 보내지는가?");
+// 								   },
+// 								   success:function (jsondata){	 //전송 성공시 실행
+// 											console.log(jsondata);
+// 											itemHtml(jsondata)
+											
+											
+											
+// 								   }, error:function(e) {	//실패, 에러
+// 									   console.log("Error", e); 
+// 								   }
+// 									});								
 								
 								
 // 					   }, error:function(e) {	//실패, 에러
@@ -487,7 +505,7 @@
 // 	function itemHtml(data){
 // 		  let size = data.length;
 // 		  var html = '';
-// 		  $("#scroll_area").empty();
+// 		 if(data[0].QUESTION_TYPE_CODE)
 // 		 for(i=0; i<size; i++){
 // 			 html +='<div class="list-group-item list-group-item-action active py-3 lh-sm" id="queAfter1">';
 // 			   html +='<input type="text" class="input_qus" value="'+data[i].QUESTION_CONTENT+'">';
@@ -513,9 +531,8 @@
 	//문제 추가(비동기)
 	function insertQus(){
 			var qdiv = $('#questioN_insert_form')[0];
-			alert("요청이 가는가?");
 			var data = new FormData(qdiv);
-		
+			alert("요청이 가는가?");
 			$.ajax({
 				method:'POST', //어떤 방식으로 보낼 지
 				url:'questioninsert.do', // qdiv를 보낼 경로 설정
@@ -524,27 +541,28 @@
 				contentType: false, 
 				cache: false, 
 				timeout: 600000, 
-			   beforeSend : function() { //보내기 전 실행
-				console.log("요청이 보내지는가?");
-			   },
-			   success:function (data) {	 //전송 성공시 실행
-				   console.log("요청 성송");
+			   		beforeSend : function() { //보내기 전 실행
+				   alert("beforesend");
+				   console.log("요청이 보내지는가?");
+					},
+			   			success:function (data) {	 //전송 성공시 실행
+				   		console.log("요청 성공");
 				   
-			   }, error:function(e) {	//실패, 에러
-				   console.log("Error", e); 
-			   }
+			   			}, error:function(e) {	//실패, 에러
+				   			console.log("Error", e); 
+			   				}
 				});
 			}
 	
 	//문제 조회
 	function qusList(){
-			var qdiv = $('#questioN_insert_form')[0]
+			var qdiv = $('#questioN_insert_form')[0];
 			console.log("리스트 시작!");
 			var data = new FormData(qdiv);
 			
 			$.ajax({
 				method: 'POST',
-				url: 'questionList.do',
+				url: 'questionList.do/',
 				data: data,
 				processData: false,
 				contentType: false,
@@ -561,7 +579,7 @@
 		}
 	
 		function qusUpdate(){
-			var qdiv = $('#questioN_insert_form')[0]
+			var qdiv = $('#questioN_insert_form')[0];
 			alert("업데이트 시작!");
 			 console.log("업데이트 시작");
 			var data = new FormData(qdiv);
@@ -589,10 +607,7 @@
 				});
 			
 			} 
-		var test = document.getElementById('questioN_insert_form');
-		
-		
-		
+
 		
 	//채우 끝
 </script>

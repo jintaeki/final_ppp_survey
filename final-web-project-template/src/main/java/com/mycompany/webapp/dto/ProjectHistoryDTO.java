@@ -2,15 +2,15 @@ package com.mycompany.webapp.dto;
 
 
 public class ProjectHistoryDTO {
-	private int projectId;
-	private int participationEmployeeId;
+	private String projectId;
+	private String participationEmployeeId;
 	private String projectStartDate;
 	private String projectClosedDate;
 	
-	public int getProjectId() {
+	public String getProjectId() {
 		return projectId;
 	}
-	public int getParticipationEmployeeId() {
+	public String getParticipationEmployeeId() {
 		return participationEmployeeId;
 	}
 	public String getProjectStartDate() {
@@ -19,10 +19,10 @@ public class ProjectHistoryDTO {
 	public String getProjectClosedDate() {
 		return projectClosedDate;
 	}
-	public void setProjectId(int projectId) {
+	public void setProjectId(String projectId) {
 		this.projectId = projectId;
 	}
-	public void setParticipationEmployeeId(int participationEmployeeId) {
+	public void setParticipationEmployeeId(String participationEmployeeId) {
 		this.participationEmployeeId = participationEmployeeId;
 	}
 	public void setProjectStartDate(String projectStartDate) {
@@ -36,6 +36,8 @@ public class ProjectHistoryDTO {
 		return "ProjectHistoryDTO [projectId=" + projectId + ", participationEmployeeId=" + participationEmployeeId
 				+ ", projectStartDate=" + projectStartDate + ", projectClosedDate=" + projectClosedDate + "]";
 	}
+	
+	
 	
 		
 	

@@ -4,8 +4,8 @@
 
 	<insert id="setQuestInsert" parameterType="SQD">
 		<![CDATA[
-				INSERT INTO SURVEY_QUESTION(QUESTION_SEQ, SURVEY_SEQ, QUESTION_CONTENT, QUESTION_TYPE_CODE)
-				values (#{questionSeq}, #{surveySeq}, #{questionContent}, #{questionTypeCode})
+				INSERT INTO SURVEY_QUESTION(QUESTION_SEQ, SURVEY_SEQ, QUESTION_CONTENT, QUESTION_TYPE_CODE,ADD_DATE,UPDATE_DATE)
+				values (#{questionSeq}, #{surveySeq}, #{questionContent}, #{questionTypeCode}, sysdate, sysdate)
 		]]>
 	</insert>
 	
@@ -18,43 +18,43 @@
 	
 	<select id="selectMaxItemId"  resultType="int">
 		<![CDATA[
-				SELECT NVL(MAX(ITEM_Seq), 0) AS "itemsSeq" FROM SURVEY_ITEM
+					SELECT NVL(MAX(ITEM_SEQ), 0) AS "itemSeq" FROM SURVEY_ITEM
 		]]>
 	</select>
 	
 	<insert id="setItemInsert" parameterType="SQD">
 		<![CDATA[	
-			INSERT INTO SURVEY_ITEM(QUESTION_SEQ, ITEM_SEQ, ITEM_CONTENT, ITEM_SCORE)
-			values (#{questionSeq}, #{itemSeq}, #{itemContent}, #{itemScore})
+			INSERT INTO SURVEY_ITEM(QUESTION_SEQ, ITEM_SEQ, ITEM_CONTENT, ITEM_SCORE,ADD_DATE,UPDATE_DATE)
+			values (#{questionSeq}, #{itemSeq}, #{itemContent}, #{itemScore},sysdate,sysdate)
 		]]>
 	</insert>
 	
 	<insert id="setSurvey" parameterType="SLD" >
 		
-		<selectKey keyProperty="surveyId" resultType="int" order="BEFORE">
+		<selectKey keyProperty="surveySeq" resultType="int" order="BEFORE">
 			select SURVEY_LIST_SEQ.nextval from dual	
 		</selectKey>
 		
 		insert into SURVEY_LIST (SURVEY_SEQ,SURVEY_NAME, SURVEY_CONTENT,
-		ANONYMITY_CHECK_CODE,SURVEY_STATR_DATE,SURVEY_CLOSED_DATE,DECIDE_CHECK) 
+		ANONYMITY_CHECK_CODE,SURVEY_STATR_DATE,SURVEY_CLOSED_DATE,DECIDE_YN, ADD_DATE, UPDATE_DATE) 
 		values(#{surveySeq},#{surveyName},#{surveyContent},#{anonymityCheckCode},
-		#{surveyStartDate},#{surveyClosedDate},#{decideCheck})
+		#{surveyStartDate},#{surveyClosedDate},'N', sysdate, sysdate)
 	</insert>
 	
 	<update id="setSurveyUpdate" parameterType="SLD">
 		UPDATE SURVEY_LIST SET SURVEY_NAME=#{surveyName}, SURVEY_CONTENT=#{surveyContent},
-		ANONYMITY_CHECK_CODE=#{anonymityCheckCode},SURVEY_STATR_DATE=#{surveyStartDate},SURVEY_CLOSED_DATE=#{surveyClosedDate}  WHERE SURVEY_SEQ=#{surveySeq}
+		ANONYMITY_CHECK_CODE=#{anonymityCheckCode},SURVEY_STATR_DATE=#{surveyStartDate},SURVEY_CLOSED_DATE=#{surveyClosedDate}, UPDATE_DATE=sysdate  WHERE SURVEY_SEQ=#{surveySeq}
 	</update>
 	
 	<insert id="setItemUpdate" parameterType="SQD" >
 		
-		<selectKey keyProperty="itemId" resultType="int" order="BEFORE">
+		<selectKey keyProperty="itemSeq" resultType="int" order="BEFORE">
 			select item_id_seq.nextval from dual	
 		</selectKey>
 		
 		insert into survey_item (QUESTION_SEQ,ITEM_SEQ, ITEM_CONTENT,
-		ITEM_SCORE) 
-		values(#{questionSeq},#{itemSeq},#{itemContent},#{itemScore})
+		ITEM_SCORE, UPDATE_DATE) 
+		values(#{questionSeq},#{itemSeq},#{itemContent},#{itemScore},sysdate)
 	</insert>
 	
 	<delete id="setItemDelete" parameterType="SQD">
@@ -63,7 +63,7 @@
 	</delete>
 	
 	<select id="selectQuestion" parameterType="int" resultType="hashmap">
-		select sq.survey_seq, sq.question_seq, sq.question_content, sq.question_type_code, 
+		select sq.survey_seq, sq.question_Seq, sq.question_content, sq.question_type_code, 
 		si.item_seq, si.item_content, si.item_score 
 		from SURVEY_ITEM si, survey_question sq 
 		where si.question_seq=sq.question_seq and survey_seq = #{surveySeq}	 order by question_seq desc
@@ -72,7 +72,7 @@
 	<select id="selectSurveyList" resultType="com.mycompany.webapp.dto.SurveyListDTO">
 		
 		select SURVEY_SEQ as surveySeq, SURVEY_NAME as surveyName, SURVEY_CONTENT surveyContent, ANONYMITY_CHECK_CODE as anonymityCheckCode,
-		SURVEY_STATR_DATE as surveyStartDate,  SURVEY_CLOSED_DATE as surveyClosedDate, DECIDE_CHECK as decideCheck
+		SURVEY_STATR_DATE as surveyStartDate,  SURVEY_CLOSED_DATE as surveyClosedDate, DECIDE_YN as decideYN
 			   from survey_list 
 			   order by rownum desc
 		
@@ -81,7 +81,7 @@
 	
 	<select id="selectSurvey" parameterType="int" resultType="SLD">
 		select SURVEY_SEQ as surveySeq, SURVEY_NAME as surveyName, SURVEY_CONTENT surveyContent, ANONYMITY_CHECK_CODE as anonymityCheckCode,
-		SURVEY_STATR_DATE as surveyStartDate,  SURVEY_CLOSED_DATE as surveyClosedDate, DECIDE_CHECK as decideCheck
+		SURVEY_STATR_DATE as surveyStartDate,  SURVEY_CLOSED_DATE as surveyClosedDate, DECIDE_YN as decideYN
 			   from survey_list
 			   where survey_seq = #{surveySeq}
 	
@@ -96,5 +96,8 @@
 		UPDATE SURVEY_QUESTION SET QUESTION_CONTENT=#{questionContent}, QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq}
 	</update>
 	
+	<select id="getAddDate" parameterType="int" resultType="date">
+		select ADD_DATE from survey_item where question_seq = #{questionSeq}
+	</select>
 
 </mapper>

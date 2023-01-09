@@ -5,6 +5,7 @@ public class SurveyItemDTO {
 	private int itemSeq;
 	private String itemContent;
 	private String itemScore;
+	
 	public int getQuestionSeq() {
 		return questionSeq;
 	}
