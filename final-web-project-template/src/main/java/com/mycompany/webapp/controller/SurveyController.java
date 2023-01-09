@@ -243,8 +243,9 @@ public class SurveyController {
 	
 	//문항 수정
 	@RequestMapping(value="survey/iteminsert.do", method=RequestMethod.POST)
-	public String updateItem(@ModelAttribute("SID") @Valid SurveyItemDTO SID, BindingResult result) {
-			
+	public String updateItem(@ModelAttribute("SID") @Valid SurveyItemDTO SID, BindingResult result, Model model, RedirectAttributes RedirectAttrs) {
+		logger.info("문항 수정 Controller 진입");
+		model.addAttribute("SID", SID);
 			
 		return null;
 		

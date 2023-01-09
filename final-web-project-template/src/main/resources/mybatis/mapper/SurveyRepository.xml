@@ -4,28 +4,28 @@
 
 	<insert id="setQuestInsert" parameterType="SQD">
 		<![CDATA[
-				INSERT INTO SURVEY_QUESTION(QUESTION_ID, SURVEY_ID, QUESTION_CONTENT, QUESTION_TYPE_CODE)
-				values (#{questionId}, #{surveyId}, #{questionContent}, #{questionTypeCode})
+				INSERT INTO SURVEY_QUESTION(QUESTION_SEQ, SURVEY_SEQ, QUESTION_CONTENT, QUESTION_TYPE_CODE)
+				values (#{questionSeq}, #{surveySeq}, #{questionContent}, #{questionTypeCode})
 		]]>
 	</insert>
 	
 	<select id="selectMaxQuestionId" resultType="int">
 	
 	<![CDATA[
-				SELECT NVL(MAX(QUESTION_ID), 0) AS "questionId" FROM SURVEY_QUESTION
+				SELECT NVL(MAX(QUESTION_SEQ), 0) AS "questionSeq" FROM SURVEY_QUESTION
 		]]>
 	</select>
 	
 	<select id="selectMaxItemId"  resultType="int">
 		<![CDATA[
-				SELECT NVL(MAX(ITEM_ID), 0) AS "itemId" FROM SURVEY_ITEM
+				SELECT NVL(MAX(ITEM_Seq), 0) AS "itemsSeq" FROM SURVEY_ITEM
 		]]>
 	</select>
 	
 	<insert id="setItemInsert" parameterType="SQD">
 		<![CDATA[	
-			INSERT INTO SURVEY_ITEM(QUESTION_ID, ITEM_ID, ITEM_CONTENT, ITEM_SCORE)
-			values (#{questionId}, #{itemId}, #{itemContent}, #{itemScore})
+			INSERT INTO SURVEY_ITEM(QUESTION_SEQ, ITEM_SEQ, ITEM_CONTENT, ITEM_SCORE)
+			values (#{questionSeq}, #{itemSeq}, #{itemContent}, #{itemScore})
 		]]>
 	</insert>
 	
@@ -35,15 +35,15 @@
 			select SURVEY_LIST_SEQ.nextval from dual	
 		</selectKey>
 		
-		insert into SURVEY_LIST (SURVEY_ID,SURVEY_NAME, SURVEY_CONTENT,
+		insert into SURVEY_LIST (SURVEY_SEQ,SURVEY_NAME, SURVEY_CONTENT,
 		ANONYMITY_CHECK_CODE,SURVEY_STATR_DATE,SURVEY_CLOSED_DATE,DECIDE_CHECK) 
-		values(#{surveyId},#{surveyName},#{surveyContent},#{anonymityCheckCode},
+		values(#{surveySeq},#{surveyName},#{surveyContent},#{anonymityCheckCode},
 		#{surveyStartDate},#{surveyClosedDate},#{decideCheck})
 	</insert>
 	
 	<update id="setSurveyUpdate" parameterType="SLD">
 		UPDATE SURVEY_LIST SET SURVEY_NAME=#{surveyName}, SURVEY_CONTENT=#{surveyContent},
-		ANONYMITY_CHECK_CODE=#{anonymityCheckCode},SURVEY_STATR_DATE=#{surveyStartDate},SURVEY_CLOSED_DATE=#{surveyClosedDate}  WHERE SURVEY_ID=#{surveyId}
+		ANONYMITY_CHECK_CODE=#{anonymityCheckCode},SURVEY_STATR_DATE=#{surveyStartDate},SURVEY_CLOSED_DATE=#{surveyClosedDate}  WHERE SURVEY_SEQ=#{surveySeq}
 	</update>
 	
 	<insert id="setItemUpdate" parameterType="SQD" >
@@ -52,26 +52,26 @@
 			select item_id_seq.nextval from dual	
 		</selectKey>
 		
-		insert into survey_item (QUESTION_ID,ITEM_ID, ITEM_CONTENT,
+		insert into survey_item (QUESTION_SEQ,ITEM_SEQ, ITEM_CONTENT,
 		ITEM_SCORE) 
-		values(#{questionId},#{itemId},#{itemContent},#{itemScore})
+		values(#{questionSeq},#{itemSeq},#{itemContent},#{itemScore})
 	</insert>
 	
 	<delete id="setItemDelete" parameterType="SQD">
-		delete from survey_item where question_id = ${questionId}
+		delete from survey_item where question_seq = ${questionSeq}
 		
 	</delete>
 	
 	<select id="selectQuestion" parameterType="int" resultType="hashmap">
-		select sq.survey_id, sq.question_id, sq.question_content, sq.question_type_code, 
-		si.item_id, si.item_content, si.item_score 
+		select sq.survey_seq, sq.question_seq, sq.question_content, sq.question_type_code, 
+		si.item_seq, si.item_content, si.item_score 
 		from SURVEY_ITEM si, survey_question sq 
-		where si.question_id=sq.question_id and survey_id = #{surveyId}	 order by question_id desc
+		where si.question_seq=sq.question_seq and survey_seq = #{surveySeq}	 order by question_seq desc
 	</select>
 	
 	<select id="selectSurveyList" resultType="com.mycompany.webapp.dto.SurveyListDTO">
 		
-		select SURVEY_ID as surveyId, SURVEY_NAME as surveyName, SURVEY_CONTENT surveyContent, ANONYMITY_CHECK_CODE as anonymityCheckCode,
+		select SURVEY_SEQ as surveySeq, SURVEY_NAME as surveyName, SURVEY_CONTENT surveyContent, ANONYMITY_CHECK_CODE as anonymityCheckCode,
 		SURVEY_STATR_DATE as surveyStartDate,  SURVEY_CLOSED_DATE as surveyClosedDate, DECIDE_CHECK as decideCheck
 			   from survey_list 
 			   order by rownum desc
@@ -80,20 +80,20 @@
 	</select>
 	
 	<select id="selectSurvey" parameterType="int" resultType="SLD">
-		select SURVEY_ID as surveyId, SURVEY_NAME as surveyName, SURVEY_CONTENT surveyContent, ANONYMITY_CHECK_CODE as anonymityCheckCode,
+		select SURVEY_SEQ as surveySeq, SURVEY_NAME as surveyName, SURVEY_CONTENT surveyContent, ANONYMITY_CHECK_CODE as anonymityCheckCode,
 		SURVEY_STATR_DATE as surveyStartDate,  SURVEY_CLOSED_DATE as surveyClosedDate, DECIDE_CHECK as decideCheck
 			   from survey_list
-			   where survey_id = #{surveyId}
+			   where survey_seq = #{surveySeq}
 	
 	</select>
 	
 	<select id="getQuestionList" resultType="com.mycompany.webapp.dto.SurveyQuestionDTO">
-		select QUESTION_ID AS questionId, QUESTION_CONTENT AS questContent, QUESTION_TYPE_CODE AS questionTypeCode
-		FROM SURVEY_QUESTION WHERE SURVEY_ID = #{surveyId} 
+		select QUESTION_SEQ AS questionSeq, QUESTION_CONTENT AS questContent, QUESTION_TYPE_CODE AS questionTypeCode
+		FROM SURVEY_QUESTION WHERE SURVEY_SEQ = #{surveySeq} 
 	</select>
 	
 	<update id="setQuestUpdate" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
-		UPDATE SURVEY_QUESTION SET QUESTION_CONTENT=#{questionContent}, QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_ID=#{questionId}
+		UPDATE SURVEY_QUESTION SET QUESTION_CONTENT=#{questionContent}, QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq}
 	</update>
 	
 

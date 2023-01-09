@@ -588,7 +588,12 @@
 					}
 				});
 			
-			}
+			} 
+		var test = document.getElementById('questioN_insert_form');
+		
+		
+		
+		
 	//채우 끝
 </script>
 
