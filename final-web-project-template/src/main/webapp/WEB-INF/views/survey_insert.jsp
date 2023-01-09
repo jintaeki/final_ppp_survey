@@ -269,7 +269,7 @@
 				</div>
 				${SLD.surveySeq}-> 설문id 확인용
 				<!-- 문제 추가 버튼  -->
-				<button type="button" class="btn btn-outline-primary"  id="add_btn" onclick="insertQus()">문제
+				<button type="button" class="btn btn-outline-primary"  id="add_btn" onclick="qusList()" >문제
 					추가</button>
 				<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate()">문제
 					수정</button>
@@ -562,7 +562,7 @@
 			
 			$.ajax({
 				method: 'POST',
-				url: 'questionList.do/',
+				url: 'questionList.do' + surveyseq,
 				data: data,
 				processData: false,
 				contentType: false,
@@ -607,7 +607,15 @@
 				});
 			
 			} 
-
+	/*					
+		var test = document.getElementById('add_btn');
+		test.addEventListener('click', insertQus() {
+		});
+		test.addEventListener('click' , insertQus() {
+			console.log("야호");
+			alert(1);
+		});
+		*/
 		
 	//채우 끝
 </script>
