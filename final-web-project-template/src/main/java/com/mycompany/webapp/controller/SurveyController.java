@@ -23,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
+import com.mycompany.webapp.service.IPagingService;
 import com.mycompany.webapp.service.ISurveyService;
 
 @Controller
@@ -36,6 +38,9 @@ public class SurveyController {
 	@Autowired
 	ISurveyService surveyService;
 
+	@Autowired
+	IPagingService pagingService;
+	
 
 	@RequestMapping("")
 	public String survey() {
@@ -57,37 +62,46 @@ public class SurveyController {
 		return "survey_evaluate";
 	}
 	// 설문 작성 페이지로 이동을 위한 컨트롤러
-	@RequestMapping("/surveyinsert")
-	public String survey_insert(Model model, HttpSession session) {
-		logger.info("실행");
-		
-			if(String.valueOf(session.getAttribute("SLD")).equals("null")){
-				
-				model.addAttribute("surveylist", surveyService.selectSurveyList());
-				return "survey_list";
-			}else {
-				SurveyListDTO SLD = (SurveyListDTO) session.getAttribute("SLD");
-			session.removeAttribute("SLD");
-			model.addAttribute("SLD", SLD);	
-			return "survey_insert";
-			}
+		@RequestMapping("/surveyinsert")
+		public String survey_insert(@RequestParam(defaultValue="1") int pageNo,Model model, HttpSession session) {
+			logger.info("실행");
+			
+				if(String.valueOf(session.getAttribute("SLD")).equals("null")){
+					int totalRows= pagingService.getTotalBoardNum();
+					
+					PagingDTO pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
+					
+					model.addAttribute("surveylist", surveyService.selectSurveyList(pagingdto));
+					return "survey_list";
+				}else {
+					SurveyListDTO SLD = (SurveyListDTO) session.getAttribute("SLD");
+				session.removeAttribute("SLD");
+				model.addAttribute("SLD", SLD);	
+				return "survey_insert";
+				}
 
 
-		
-	}
+			
+		}
 	// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
 	@RequestMapping("/surveyinsert/{surveySeq}")
 	public String survey_insert2(@PathVariable int surveySeq, Model model) {
 		model.addAttribute("SLD",surveyService.selectSurvey(surveySeq));
+		logger.info("설문지 번호" + surveySeq);
 		return "survey_insert2";
 	}
 
 	// 설문지 목록으로 이동을 위한 컨트롤러
 	@RequestMapping(value="/surveylist")
-	public String survey_list((@RequestParam(defaultValue="1") int pageNo, Model model) {
-		System.out.println(surveyService.selectSurveyList());
-		model.addAttribute("surveylist", surveyService.selectSurveyList());
+	public String survey_list(@RequestParam(defaultValue="1") int pageNo, Model model) {
+int totalRows= pagingService.getTotalBoardNum();
 		
+		PagingDTO pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
+		
+		
+//		System.out.println(surveyService.selectSurveyList());
+		model.addAttribute("surveylist", surveyService.selectSurveyList(pagingdto));
+		model.addAttribute("pagingdto",pagingdto);
 		logger.info("실행");
 		
 		return "survey_list";
