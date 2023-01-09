@@ -95,7 +95,7 @@
 	</select>
 	
 	<select id="getQuestionList" resultType="com.mycompany.webapp.dto.SurveyQuestionDTO">
-		select QUESTION_SEQ AS questionSeq, QUESTION_CONTENT AS questContent, QUESTION_TYPE_CODE AS questionTypeCode
+		SELECT QUESTION_SEQ AS questionSeq, QUESTION_CONTENT AS questionContent, QUESTION_TYPE_CODE AS questionTypeCode
 		FROM SURVEY_QUESTION WHERE SURVEY_SEQ = #{surveySeq} 
 	</select>
 	
@@ -107,4 +107,7 @@
 		select ADD_DATE from survey_item where question_seq = #{questionSeq}
 	</select>
 
+	<update id="sendMessage" parameterType="int">
+		update survey_list set 	DECIDE_YN='Y' where survey_seq =#{surveySeq}
+	</update>
 </mapper>

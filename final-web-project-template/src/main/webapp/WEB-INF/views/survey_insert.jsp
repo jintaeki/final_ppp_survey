@@ -255,9 +255,9 @@
 		<form:form modelAttribute="SQD" id="questioN_insert_form">
 			<!-- aa -->
 			<div class="select_radio" id="select_radio">
-				<input type="radio" name="questionTypeCode" id="obj_radio"  value="10001" checked>객관식 
-				<input type="radio" name="questionTypeCode" id="sub_radio"  value="10002"> 주관식
-				<input type="radio" name="questionTypeCode" id="mix_radio" value="10003"> 혼합식
+				<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1()" value="10001" checked>객관식 
+				<input type="radio" name="questionTypeCode" id="sub_radio" onclick="checkit2()" value="10002"> 주관식
+				<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3()" value="10003"> 혼합식
 			</div>
 			<div class="question_content_area" id="question_add">
 				<div class="input-group" id="question_content">
@@ -269,9 +269,9 @@
 				</div>
 				${SLD.surveySeq}-> 설문id 확인용
 				<!-- 문제 추가 버튼  -->
-				<button type="button" class="btn btn-outline-primary"  id="add_btn" onclick="qusList()" >문제
+							<button type="button" class="btn btn-outline-primary"  id="add_btn" onclick="insertQus()">문제
 					추가</button>
-				<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate()">문제
+				<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="updateQus()">문제
 					수정</button>
 				<input type="hidden" name="surveySeq" id="seq" value="${SLD.surveySeq }">
 				<input type="hidden" name="questionSeq" value="2"> <!-- 비동기로 바꿔 넣어보자 -> 문항도 마찬가지 -->
@@ -541,17 +541,15 @@
 				contentType: false, 
 				cache: false, 
 				timeout: 600000, 
-			   		beforeSend : function() { //보내기 전 실행
-				   alert("beforesend");
-				   console.log("요청이 보내지는가?");
-					},
-			   			success:function (data) {	 //전송 성공시 실행
-				   		console.log("요청 성공");
+			   	beforeSend : function() { //보내기 전 실행
+				console.log("요청이 보내지는가?");// 			   
+				},
+			   success:function (data) {	 //전송 성공시 실행
+ 				   console.log("요청 성송");
 				   
-			   			}, error:function(e) {	//실패, 에러
-				   			console.log("Error", e); 
-			   				}
-				});
+ 			   }, error:function(e) {	//실패, 에러
+				   console.log("Error", e); 
+			   }
 			}
 	
 	//문제 조회
@@ -578,7 +576,7 @@
 			});
 		}
 	
-		function qusUpdate(){
+		function updateQus(){
 			var qdiv = $('#questioN_insert_form')[0];
 			alert("업데이트 시작!");
 			 console.log("업데이트 시작");

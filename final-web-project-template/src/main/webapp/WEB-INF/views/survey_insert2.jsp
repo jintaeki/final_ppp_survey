@@ -136,19 +136,24 @@
 	<div style="border: 1px solid black;"
 		class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
 		id="survey_question_dv">
+		<form:form modelAttribute="SQD">
 		<div class="list-group list-group-flush border-bottom scrollarea"
 			id="scroll_area">
 
 
 	<!-- 여기까지 문제 div -->
-
+	
 			<div class="list-group-item list-group-item-action active py-3 lh-sm"
-				id="queAfter">
-				<input type="text" class="input_qus" placeholder="문제를 입력해 주세요.">
+				id="queAfter" >
+				<tr>
+					<td class="input_qus">${SQD.questionCotent}</td>
+				</tr>
 				<div class="blank_under"></div>
+				</div>
+				</div>
+					</form:form>
 			</div>
-		</div>
-	</div>
+		
 
 
 
@@ -269,7 +274,7 @@
 				</div>
 				${SLD.surveySeq}-> 설문id 확인용
 				<!-- 문제 추가 버튼  -->
-				<button type="button" class="btn btn-outline-primary"  id="add_btn" onclick="insertQus()">문제
+				<button type="button" class="btn btn-outline-primary"  id="add_btn">문제
 					추가</button>
 				<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate()">문제
 					수정</button>
@@ -607,6 +612,11 @@
 				});
 			
 			}
+		
+		var test = document.getElementById('add_btn');
+		test.addEventListener('click', insertQus); {
+			test.addEventListener('click' , qusList)
+			};
 	//채우 끝
 </script>
 

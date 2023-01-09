@@ -34,10 +34,10 @@ public class SurveyService implements ISurveyService{
 	}
 
 	@Override
-	public SurveyListDTO selectSurvey(int surveyid) {
+	public SurveyListDTO selectSurvey(int surveySeq) {
 		
 		
-		return surveyDao.selectSurvey(surveyid);
+		return surveyDao.selectSurvey(surveySeq);
 
 	}
 	
@@ -111,10 +111,10 @@ public class SurveyService implements ISurveyService{
 	}
 
 	@Override
-	public List<Map<String, Object>> selectQuestion(int surveyId) {
+	public List<Map<String, Object>> selectQuestion(int surveySeq) {
 
 		
-		return surveyDao.selectQuestion(surveyId);
+		return surveyDao.selectQuestion(surveySeq);
 		
 	}
 
@@ -133,20 +133,22 @@ public class SurveyService implements ISurveyService{
 	}
 	*/
 	@Override
-	public List<SurveyQuestionDTO> questionList(int surveyId) {
+	public List<SurveyQuestionDTO> questionList(int surveySeq) {
 			
-		return surveyDao.getQuestionList(surveyId);
+		return surveyDao.getQuestionList(surveySeq);
 	}
-
 	@Override
-	public SurveyQuestionDTO getQuestionList(int surveyId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<SurveyQuestionDTO> getQuestionList(int surveySeq) {
+		logger.info("문제 조회 서비스: " + surveySeq);
+		return surveyDao.getQuestionList(surveySeq);
 	}
 		
 // 1월 9일 여기부터 시작 
-
-
+	
+	@Override
+	public void sendMessage(int surveySeq) {
+		surveyDao.sendMessage(surveySeq);
+	}
 
 
 

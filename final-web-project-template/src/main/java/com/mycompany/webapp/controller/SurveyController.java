@@ -83,29 +83,35 @@ public class SurveyController {
 
 			
 		}
-	// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
-	@RequestMapping("/surveyinsert/{surveySeq}")
-	public String survey_insert2(@PathVariable int surveySeq, Model model) {
-		model.addAttribute("SLD",surveyService.selectSurvey(surveySeq));
-		logger.info("설문지 번호" + surveySeq);
-		return "survey_insert2";
+		// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
+		@RequestMapping("/surveyinsert2")
+		public String survey_insert(@RequestParam("surveyseq") int surveySeq, Model model) {
+			model.addAttribute("SLD",surveyService.selectSurvey(surveySeq));
+			return "survey_insert2";
+		}
+	
+	@RequestMapping(value= "/sendmessage.do/{surveyseq}", method=RequestMethod.POST)
+	public void sendmessage(@PathVariable int surveySeq) {
+		logger.info("하이하이하이하이");
+		surveyService.sendMessage(surveySeq);
+		
 	}
-
+	
 	// 설문지 목록으로 이동을 위한 컨트롤러
-	@RequestMapping(value="/surveylist")
-	public String survey_list(@RequestParam(defaultValue="1") int pageNo, Model model) {
-int totalRows= pagingService.getTotalBoardNum();
-		
-		PagingDTO pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
-		
-		
-//		System.out.println(surveyService.selectSurveyList());
-		model.addAttribute("surveylist", surveyService.selectSurveyList(pagingdto));
-		model.addAttribute("pagingdto",pagingdto);
-		logger.info("실행");
-		
-		return "survey_list";
-	}
+		@RequestMapping(value="/surveylist")
+		public String survey_list(@RequestParam(defaultValue="1") int pageNo, Model model) {
+			int totalRows= pagingService.getTotalBoardNum();
+			
+			PagingDTO pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
+			
+			
+//			System.out.println(surveyService.selectSurveyList());
+			model.addAttribute("surveylist", surveyService.selectSurveyList(pagingdto));
+			model.addAttribute("pagingdto",pagingdto);
+			logger.info("실행");
+			
+			return "survey_list";
+		}
 	
 	@RequestMapping("/surveyresultteam")
 	public String survey_success() {
@@ -272,15 +278,17 @@ int totalRows= pagingService.getTotalBoardNum();
 	
 	
 	//문제 비동기 조회 채우
-	@RequestMapping(value="/questionList.do/{surveySeq}")
+	@RequestMapping(value="/questionList.do")
 	@ResponseBody
-	public List<SurveyQuestionDTO> questionList(@PathVariable int surveySeq, Model model) {
+	public List<SurveyQuestionDTO> questionList(@RequestParam("surveySeq") int surveySeq, Model model) {
 		System.out.println("비동기 조회 컨트롤러 진입");
-		List<SurveyQuestionDTO> sqd = surveyService.questionList(surveySeq);
+		List<SurveyQuestionDTO> sqd = surveyService.getQuestionList(surveySeq);
 		logger.info("비동기 조회 진입");
-		SurveyQuestionDTO questionList = surveyService.getQuestionList(surveySeq);
-		model.addAttribute("questionList", questionList);
-		logger.info("제 비동기 조회 dto: ");
+		logger.info("조회 seq:" + surveySeq);
+		
+		logger.info("문제 비동기 조회 dto: " + sqd);
+		model.addAttribute("sqd", sqd);
+		
 		
 		return sqd;
 	}
@@ -290,7 +298,7 @@ int totalRows= pagingService.getTotalBoardNum();
 	@ResponseBody
 	public SurveyQuestionDTO questionUpdate(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model) {
 		logger.info("업데이트 진입");
-		logger.info(SQD.toString());
+		logger.info("sqd값" + SQD.toString());
 		//int questionId = SQD.getQuestionId();
 		surveyService.setQuestUpdate(SQD);
 		System.out.println(SQD);

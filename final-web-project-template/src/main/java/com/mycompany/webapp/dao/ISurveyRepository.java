@@ -26,7 +26,7 @@ public interface ISurveyRepository {
 	void setItemInsert(SurveyQuestionDTO SQD);
 
 	//문제 비동기 조회 목적
-	List<Map<String, Object>> selectQuestion(int surveyId);
+	List<Map<String, Object>> selectQuestion(int surveySeq);
 	
 	List<SurveyListDTO> selectSurveyList(PagingDTO pagingdto);	
 	
@@ -36,9 +36,11 @@ public interface ISurveyRepository {
 	void setQuestUpdate(SurveyQuestionDTO SQD);
 
 
-	List<SurveyQuestionDTO> getQuestionList(int surveyId);
+	List<SurveyQuestionDTO> getQuestionList(int surveySeq);
 	
 	Date getAddDate(int serveySeq);
+	
+	void sendMessage(int surveySeq);
 }
 
 

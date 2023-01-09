@@ -31,15 +31,17 @@ public interface ISurveyService {
 
 	void setQuestUpdate(SurveyQuestionDTO sqd);
 	
-	List<Map<String, Object>> selectQuestion(int surveyId);
+	List<Map<String, Object>> selectQuestion(int surveySeq);
 	
 	List<SurveyListDTO> selectSurveyList(PagingDTO pagingdto);
 	
-	SurveyListDTO selectSurvey(int surveyid);
+	SurveyListDTO selectSurvey(int surveySeq);
 	
-	SurveyQuestionDTO getQuestionList(int surveyId);
+	public List<SurveyQuestionDTO> getQuestionList(int surveySeq);
 	
-	public List<SurveyQuestionDTO>questionList(int surveyId);
+	public List<SurveyQuestionDTO>questionList(int surveySeq);
+
+	void sendMessage(int surveySeq);
 }
 
 
