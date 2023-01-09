@@ -110,7 +110,7 @@
 						<c:forEach var="list" items="${surveylist}" >
 						<tr>
 							<th scope="row">${list.surveySeq }</th>
-							<td><a href="<c:url value='surveyinsert/${list.surveySeq}'/>">${list.surveyName }</a></td>
+							<td><a href="surveyinsert2?surveyseq=${list.surveySeq}">${list.surveyName }</a></td>
 							<td><fmt:formatDate value="${list.surveyStartDate }" pattern="yyyy-MM-dd"/><br>~<br>
 					<fmt:formatDate value="${list.surveyClosedDate }" pattern="yyyy-MM-dd"/></td>
 							
@@ -127,16 +127,36 @@
 						</c:forEach>
 						
 					</tbody>
+				
+				<tr>
+				<tr>
+				<td colspan="4" class="text-center">
+					<div>
+						<a class="btn btn-outline-primary btn-sm" href="surveylist?pageNo=1">처음</a>
+						<c:if test="${pager.groupNo>1}">
+							<a class="btn btn-outline-info btn-sm" href="surveylist?pageNo=${pagingdto.startPageNo-1}">이전</a>
+						</c:if>
+						
+						<c:forEach var="i" begin="${pagingdto.startPageNo}" end="${pagingdto.endPageNo}">
+							<c:if test="${pagingdto.pageNo != i}">
+								<a class="btn btn-outline-success btn-sm" href="surveylist?pageNo=${i}">${i}</a>
+							</c:if>
+							<c:if test="${pagingdto.pageNo == i}">
+								<a class="btn btn-danger btn-sm" href="surveylist?pageNo=${i}">${i}</a>
+							</c:if>
+						</c:forEach>
+						
+						<c:if test="${pagingdto.groupNo<pager.totalGroupNo}">
+							<a class="btn btn-outline-info btn-sm" href="surveylist?pageNo=${pagingdto.endPageNo+1}">다음</a>
+						</c:if>
+						<a class="btn btn-outline-primary btn-sm" href="surveylist?pageNo=${pagingdto.totalPageNo}">맨끝</a>
+					</div>
+				</td>
+			</tr>
+				
 				</table>
-				<ul class="pagination">
-					<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item"><a class="page-link" href="#">4</a></li>
-					<li class="page-item"><a class="page-link" href="#">5</a></li>
-					<li class="page-item"><a class="page-link" href="#">Next</a></li>
-				</ul>
+				
+				
 			</div>
 		</div>
 	</div>

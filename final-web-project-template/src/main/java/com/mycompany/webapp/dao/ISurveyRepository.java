@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 
@@ -27,7 +28,7 @@ public interface ISurveyRepository {
 	//문제 비동기 조회 목적
 	List<Map<String, Object>> selectQuestion(int surveyId);
 	
-	List<SurveyListDTO> selectSurveyList();	
+	List<SurveyListDTO> selectSurveyList(PagingDTO pagingdto);	
 	
 	SurveyListDTO selectSurvey(int surveyid);
 	
