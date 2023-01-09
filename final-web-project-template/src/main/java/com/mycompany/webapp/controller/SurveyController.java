@@ -19,12 +19,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
+import com.mycompany.webapp.service.IPagingService;
 import com.mycompany.webapp.service.ISurveyService;
 
 @Controller
@@ -35,6 +38,8 @@ public class SurveyController {
 	@Autowired
 	ISurveyService surveyService;
 
+	@Autowired
+	IPagingService pagingService;
 
 	@RequestMapping("")
 	public String survey() {
@@ -57,12 +62,15 @@ public class SurveyController {
 	}
 	// 설문 작성 페이지로 이동을 위한 컨트롤러
 	@RequestMapping("/surveyinsert")
-	public String survey_insert(Model model, HttpSession session) {
+	public String survey_insert(@RequestParam(defaultValue="1") int pageNo,Model model, HttpSession session) {
 		logger.info("실행");
 		
 			if(String.valueOf(session.getAttribute("SLD")).equals("null")){
+				int totalRows= pagingService.getTotalBoardNum();
 				
-				model.addAttribute("surveylist", surveyService.selectSurveyList());
+				PagingDTO pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
+				
+				model.addAttribute("surveylist", surveyService.selectSurveyList(pagingdto));
 				return "survey_list";
 			}else {
 				SurveyListDTO SLD = (SurveyListDTO) session.getAttribute("SLD");
@@ -75,18 +83,23 @@ public class SurveyController {
 		
 	}
 	// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
-	@RequestMapping("/surveyinsert/{surveySeq}")
-	public String survey_insert2(@PathVariable int surveySeq, Model model) {
+	@RequestMapping("/surveyinsert2")
+	public String survey_insert(@RequestParam("surveyseq") int surveySeq, Model model) {
 		model.addAttribute("SLD",surveyService.selectSurvey(surveySeq));
 		return "survey_insert2";
 	}
 
 	// 설문지 목록으로 이동을 위한 컨트롤러
-	@RequestMapping(value="/surveylist" , method=RequestMethod.GET)
-	public String survey_list(Model model) {
-		System.out.println(surveyService.selectSurveyList());
-		model.addAttribute("surveylist", surveyService.selectSurveyList());
+	@RequestMapping(value="/surveylist")
+	public String survey_list(@RequestParam(defaultValue="1") int pageNo, Model model) {
+		int totalRows= pagingService.getTotalBoardNum();
 		
+		PagingDTO pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
+		
+		
+//		System.out.println(surveyService.selectSurveyList());
+		model.addAttribute("surveylist", surveyService.selectSurveyList(pagingdto));
+		model.addAttribute("pagingdto",pagingdto);
 		logger.info("실행");
 		
 		return "survey_list";
@@ -152,7 +165,7 @@ public class SurveyController {
 		String checkCode = SQD.getQuestionTypeCode();
 		try {
 			if(checkCode.equals("10001")) {
-//				surveyService.setItemDelete(SQD);
+				surveyService.setItemDelete(SQD);
 				// 문제 id, 점수, 문항내용, itemid, 각 각 받아야 한다
 				// questionId, itemScore, itemContent, itemId
 
@@ -173,11 +186,11 @@ public class SurveyController {
 					surveyService.setItemUpdate(SQD);
 				}
 			}else if(checkCode.equals("10002")) {
-//				surveyService.setItemDelete(SQD);
+				surveyService.setItemDelete(SQD);
 				surveyService.setItemUpdate(SQD);
 
 			}else if(checkCode.equals("10003")) {
-//				surveyService.setItemDelete(SQD);
+				surveyService.setItemDelete(SQD);
 				// 문제 id, 점수, 문항내용, itemid, 각 각 받아야 한다
 				// questionId, itemScore, itemContent, itemId
 

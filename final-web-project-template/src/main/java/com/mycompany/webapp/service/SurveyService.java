@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import com.mycompany.webapp.dao.ISurveyRepository;
+import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 
@@ -51,7 +52,7 @@ public class SurveyService implements ISurveyService{
 //		Date date = surveyDao.getAddDate(surveyquestion.getQuestionSeq());
 //		logger.info(date.toString());
 //		surveyquestion.setAddDate(date);
-		surveyDao.setItemDelete(surveyquestion);
+//		surveyDao.setItemDelete(surveyquestion);
 		surveyDao.setItemUpdate(surveyquestion);
 		
 	}
@@ -119,8 +120,8 @@ public class SurveyService implements ISurveyService{
 
 
 	@Override
-	public List<SurveyListDTO> selectSurveyList(){
-		return surveyDao.selectSurveyList();
+	public List<SurveyListDTO> selectSurveyList(PagingDTO pagingdto){
+		return surveyDao.selectSurveyList(pagingdto);
 	}
 
 	/*

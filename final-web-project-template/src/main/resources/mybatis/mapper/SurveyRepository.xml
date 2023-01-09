@@ -69,14 +69,21 @@
 		where si.question_seq=sq.question_seq and survey_seq = #{surveySeq}	 order by question_seq desc
 	</select>
 	
-	<select id="selectSurveyList" resultType="com.mycompany.webapp.dto.SurveyListDTO">
+	<select id="selectSurveyList" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="com.mycompany.webapp.dto.SurveyListDTO">
 		
-		select SURVEY_SEQ as surveySeq, SURVEY_NAME as surveyName, SURVEY_CONTENT surveyContent, ANONYMITY_CHECK_CODE as anonymityCheckCode,
-		SURVEY_STATR_DATE as surveyStartDate,  SURVEY_CLOSED_DATE as surveyClosedDate, DECIDE_YN as decideYN
-			   from survey_list 
-			   order by rownum desc
+		SELECT SURVEY_SEQ as surveySeq, SURVEY_NAME as surveyName, SURVEY_CONTENT as surveyContent, ANONYMITY_CHECK_CODE as anonymityCheckCode,
+			   SURVEY_STATR_DATE as surveyStartDate,  SURVEY_CLOSED_DATE as surveyClosedDate, DECIDE_YN as decideYN
+			   FROM (
+			   		select ROWNUM as rnum, SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
+			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN 
+			   		FROM (select SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
+			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN  from survey_list
+			   		order by ROWNUM desc
+			   	)
+			   	where rownum &lt; = #{endRowNo}
+			   	)	 
+			   where rnum &gt; = #{startRowNo}
 		
-	
 	</select>
 	
 	<select id="selectSurvey" parameterType="int" resultType="SLD">

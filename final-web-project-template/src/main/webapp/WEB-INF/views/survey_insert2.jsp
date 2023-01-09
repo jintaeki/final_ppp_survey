@@ -273,7 +273,7 @@
 					추가</button>
 				<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate()">문제
 					수정</button>
-				<input type="hidden" name="surveySeq" value="${SLD.surveySeq }">
+				<input type="hidden" name="surveySeq" id="seq" value="${SLD.surveySeq }">
 				<input type="hidden" name="questionSeq" value="2"> <!-- 비동기로 바꿔 넣어보자 -> 문항도 마찬가지 -->
 			</div>
 			<input type="hidden" name="itemScore" value="1">
@@ -531,7 +531,7 @@
 	//문제 추가(비동기)
 	function insertQus(){
 			var qdiv = $('#questioN_insert_form')[0];
-			alert("요청이 가는가?");
+
 			var data = new FormData(qdiv);
 		
 			$.ajax({

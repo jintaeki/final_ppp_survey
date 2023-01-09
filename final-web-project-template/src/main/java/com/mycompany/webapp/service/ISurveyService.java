@@ -5,6 +5,7 @@ package com.mycompany.webapp.service;
 import java.util.List;
 import java.util.Map;
 
+import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 
@@ -32,7 +33,7 @@ public interface ISurveyService {
 	
 	List<Map<String, Object>> selectQuestion(int surveyId);
 	
-	List<SurveyListDTO> selectSurveyList();
+	List<SurveyListDTO> selectSurveyList(PagingDTO pagingdto);
 	
 	SurveyListDTO selectSurvey(int surveyid);
 	
