@@ -1,33 +1,24 @@
 package com.mycompany.webapp.controller;
 
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
+
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.json.JSONObject;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -43,7 +34,7 @@ public class SurveyController {
 
 	@Autowired
 	ISurveyService surveyService;
-	
+
 
 	@RequestMapping("")
 	public String survey() {
@@ -64,38 +55,43 @@ public class SurveyController {
 		//log.info("실행");
 		return "survey_evaluate";
 	}
-@RequestMapping("/surveyinsert1/{surveyId}")
-	public String survey_insert(@PathVariable int surveyId, Model model, HttpSession session) {
+	// 설문 작성 페이지로 이동을 위한 컨트롤러
+	@RequestMapping("/surveyinsert")
+	public String survey_insert(Model model, HttpSession session) {
 		logger.info("실행");
-		int checkSurveyId = 76;
-				//((SurveyListDTO) session.getAttribute("SLD")).getSurveyId();
-		System.out.println(checkSurveyId);
-
-
-		if(checkSurveyId==0) {
-			SurveyListDTO SLD = (SurveyListDTO) session.getAttribute("SLD");
-			// surveyId로 설문지의 설문 문제와 문항들 가져와서 model에 담자
-			model.addAttribute("SLD", SLD);
-		}else {
-
-			SurveyListDTO SLD = (SurveyListDTO) session.getAttribute("SLD");
-						session.removeAttribute("SLD");
+		
+			if(String.valueOf(session.getAttribute("SLD")).equals("null")){
+				
+				model.addAttribute("surveylist", surveyService.selectSurveyList());
+				return "survey_list";
+			}else {
+				SurveyListDTO SLD = (SurveyListDTO) session.getAttribute("SLD");
+			session.removeAttribute("SLD");
 			model.addAttribute("SLD", SLD);	
-		}
+			return "survey_insert";
+			}
 
 
-		return "survey_insert";
+		
 	}
-	
-	
+	// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
+	@RequestMapping("/surveyinsert/{surveyId}")
+	public String survey_insert2(@PathVariable int surveyId, Model model) {
+		model.addAttribute("SLD",surveyService.selectSurvey(surveyId));
+		return "survey_insert2";
+	}
+
+	// 설문지 목록으로 이동을 위한 컨트롤러
 	@RequestMapping(value="/surveylist" , method=RequestMethod.GET)
 	public String survey_list(Model model) {
-	
-//		model.addAttribute("SLD", new SurveyListDTO());
+		System.out.println(surveyService.selectSurveyList());
+		model.addAttribute("surveylist", surveyService.selectSurveyList());
+		
 		logger.info("실행");
-		//log.info("실행");
+		
 		return "survey_list";
 	}
+	
 	@RequestMapping("/surveyresultteam")
 	public String survey_success() {
 		logger.info("실행");
@@ -108,22 +104,24 @@ public class SurveyController {
 		//log.info("실행");
 		return "survey_result";
 	}
-	
-	
-		// 모달창을 통해 설문지 설정 데이터 입력
+
+
+
+	// 모달창을 통해 설문지 설정 데이터 입력
 	@RequestMapping(value="/set.do", method=RequestMethod.POST)
 	public String setSurvey(@ModelAttribute ("SLD") @Valid SurveyListDTO SLD, BindingResult result, HttpSession session, RedirectAttributes redirectAttrs) {
 		logger.info("모달창을 통해 설문 등록하는 컨트롤러 진입");
-		//SLD.setSurveyId(surveySurvice.selectMaxSurveyId()+1);
+		//SLD.setSurveyId(surveyService.selectMaxSurveyId()+1);
 		surveyService.setSurvey(SLD);
 		session.setAttribute("SLD", SLD);
 
-		return "redirect:/survey/surveyinsert1/"+SLD.getSurveyId();
+		return "redirect:/survey/surveyinsert";
 
 	}
 
-// 설문 설정 변경
-	@RequestMapping(value="/surveyinsert1/surveyupdate.do")
+
+	// 설문 설정 변경
+	@RequestMapping(value="/surveyupdate.do")
 	@ResponseBody
 	public SurveyListDTO updateSurvey(@ModelAttribute ("SLD") @Valid SurveyListDTO SLD, BindingResult result, Model model, RedirectAttributes redirectAttrs) {
 		//public String updateSurvey(SurveyListDTO SLD, Model model) {
@@ -141,31 +139,8 @@ public class SurveyController {
 
 
 	
-	// 모달창을 통해 설문 등록 페이지로 이동
-	@RequestMapping(value="/surveyupdate.do")
-	@ResponseBody
-	public SurveyListDTO updateSurvey(@ModelAttribute ("SLD") @Valid SurveyListDTO SLD, BindingResult result, Model model) {
-	//public String updateSurvey(SurveyListDTO SLD, Model model) {
-		logger.info("모달창을 통해 설문 등록 페이지 진입");
-		logger.info(SLD.toString());
-		surveyService.setSurveyUpdate(SLD);
-
-		/*JSONObject jsonObject = new JSONObject();
-		jsonObject.put("decideCheck", SLD.getDecideCheck());
-
-		String json = jsonObject.toString();*/
-		return SLD;
-				
-	}
-	
-	
-	@RequestMapping(value="/aa", method=RequestMethod.POST)
-	public void aa (SurveyQuestionDTO SQD) {
-		logger.info(SQD.toString());
-	}
-	
 	// 문항 수정
-	@RequestMapping(value="/surveyinsert1/itemupdate.do")
+	@RequestMapping(value="/itemupdate.do")
 	@ResponseBody
 	public SurveyQuestionDTO updateitem(@ModelAttribute ("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,Model model, RedirectAttributes redirectAttrs) {
 		logger.info("itemupdate.do");
@@ -198,6 +173,8 @@ public class SurveyController {
 					surveyService.setItemUpdate(SQD);
 				}
 			}else if(checkCode.equals("10002")) {
+				surveyService.setItemDelete(SQD);
+				surveyService.setItemUpdate(SQD);
 
 			}else if(checkCode.equals("10003")) {
 				surveyService.setItemDelete(SQD);
@@ -229,53 +206,21 @@ public class SurveyController {
 
 
 
-
-		//		ISS.setItemUpdate(SQD);
-
-
-
 		return SQD;
 	}
-	
-	
-	
-	
-	
-	// 모달창을 통해 설문 등록 페이지로 이동
-	@RequestMapping(value="/itemupdate.do")
+
+	// 문제 비동기식으로 출력 진택
+	@RequestMapping(value="/selectquestion.do/{surveyId}")
 	@ResponseBody
-	public SurveyQuestionDTO updateitem(@ModelAttribute ("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,Model model) {
-		logger.info("모달창을 통해 설문 등록 페이지 진입");
-		logger.info(SQD.toString());
-//		ISS.setItemUpdate(SQD);
+	public  List<Map<String, Object>> selectquestion(@PathVariable int surveyId,Model model) {
+		logger.info("뿌리기 컨트롤 ");
 		
-		String itemcontents = SQD.getItemContent();
 		
-		int cnt = itemcontents.length()-itemcontents.replace(",", "").length();
-		String  [] itmencontent = itemcontents.split(",");
-		for(int i =0; i <= cnt;i++) { 
-			logger.info(itmencontent[i]);
-		}
-//		JSONParser parser = new JSONParser();
-//		Object obj = null;
-//		try {
-//			obj = parser.parse(SQD.getItemContent());
-//		} catch (org.json.simple.parser.ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		JSONArray jsonArr = (JSONArray) obj;
-//		System.out.println(jsonArr.size());
-		logger.info(Integer.toString(cnt));
-		logger.info(itemcontents);
-		/*JSONObject jsonObject = new JSONObject();
-		jsonObject.put("decideCheck", SLD.getDecideCheck());
+		System.out.println(surveyService.selectQuestion(surveyId));
+		return surveyService.selectQuestion(surveyId) ;
+	}	
 
-		String json = jsonObject.toString();*/
-		return SQD;
-				
-	}
-	
+
 
 
 	/*
@@ -286,7 +231,7 @@ public class SurveyController {
 		}
 	*/
 	//문제 등록
-	@RequestMapping(value="surveyinsert1/questioninsert.do")
+	@RequestMapping(value="/questioninsert.do")
 	@ResponseBody
 	public  SurveyQuestionDTO insertSurvey(@ModelAttribute("SQD") @Valid  SurveyQuestionDTO SQD, BindingResult result ,Model model) {
 			logger.info("문제 생성 진입했나?");
@@ -305,26 +250,11 @@ public class SurveyController {
 		
 	}
 	
-	// 뿌리기 연습
-	@RequestMapping(value="/selectquestion.do/{surveyId}")
-	@ResponseBody
-	public  List<Map<String, Object>> selectquestion(@PathVariable int surveyId,Model model) {
-		logger.info("뿌리기 컨트롤 ");
-		
-//
-//		JSONObject jsonObject = new JSONObject();
-//		jsonObject.put("questionContent", SLD.getDecideCheck());
-//
-//		String json = jsonObject.toString();
-		
-		System.out.println(surveyService.selectQuestion(surveyId));
-		return surveyService.selectQuestion(surveyId) ;
-	}	
 	
 	
 	
 	
-	//문제 비동기 조회
+	//문제 비동기 조회 채우
 
 	@RequestMapping(value="/questionList.do/{surveyId}")
 	@ResponseBody
@@ -339,7 +269,7 @@ public class SurveyController {
 	}
 	
 	//문제 업데이트
-	@RequestMapping(value="surveyinsert1/questionUpdate.do")
+	@RequestMapping(value="/questionUpdate.do")
 	@ResponseBody
 	public SurveyQuestionDTO questionUpdate(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model) {
 		logger.info("업데이트 진입");
@@ -352,5 +282,6 @@ public class SurveyController {
 		logger.info("업데이트 성공");
 		return SQD;
 	}
+	
 }
 

@@ -14,15 +14,15 @@
     				</div>			
 					<div class="form-group">
   						<input type="text" class="form-control" id="id" required>
-  						<label class="form-control-placeholder" for="id">ID</label>
+  						<label class="form-control-placeholder" for="id">Email</label>
 					</div>
 					<div class="form-group">
 	  					<input type="password" class="form-control" id="password" required>
-  						<label class="form-control-placeholder" for="password">Password</label>
+  						<label class="form-control-placeholder" for="password">ID</label>
 					</div>
 					<div class="buttonlogin">
-						<button type="button" class="btn btn-primary" onclick="location.href='loginafter'">평가자 로그인</button>
-						<button type="button" class="btn btn-primary" onclick="location.href='surveylist'">관리자 로그인</button>
+						<button type="button" class="btn btn-primary" onclick="location.href='survey/loginafter'">평가자 로그인</button>
+						<button type="button" class="btn btn-primary" onclick="location.href='survey/surveylist'">관리자 로그인</button>
 					</div>
 				</div>
 			</div>

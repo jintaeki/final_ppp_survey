@@ -1,14 +1,14 @@
 package com.mycompany.webapp.service;
 
 
-import com.mycompany.webapp.dto.SurveyListDTO;
-import com.mycompany.webapp.dto.SurveyQuestionDTO;
 
 import java.util.List;
 import java.util.Map;
 
-public interface ISurveyService {
+import com.mycompany.webapp.dto.SurveyListDTO;
+import com.mycompany.webapp.dto.SurveyQuestionDTO;
 
+public interface ISurveyService {
 
 	void setSurvey(SurveyListDTO surveylist);
 	
@@ -19,7 +19,7 @@ public interface ISurveyService {
 	int selectMaxSurveyId();
 	
 	void setItemDelete(SurveyQuestionDTO sqd);
-
+	
 	void setQuestInsert(SurveyQuestionDTO sqd);
 
 	int selectMaxQuestionId();
@@ -32,9 +32,17 @@ public interface ISurveyService {
 	
 	List<Map<String, Object>> selectQuestion(int surveyId);
 	
+	List<SurveyListDTO> selectSurveyList();
+	
+	SurveyListDTO selectSurvey(int surveyid);
+	
 	SurveyQuestionDTO getQuestionList(int surveyId);
 	
 	public List<SurveyQuestionDTO>questionList(int surveyId);
-	
-	
 }
+
+
+
+	
+
+	

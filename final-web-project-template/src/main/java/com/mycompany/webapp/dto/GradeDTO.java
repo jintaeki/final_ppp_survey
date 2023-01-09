@@ -4,6 +4,7 @@ public class GradeDTO {
 	private int gradeId;
 	private String gradeName;
 	private int rank;
+	
 	public int getGradeId() {
 		return gradeId;
 	}

@@ -1,43 +1,42 @@
 package com.mycompany.webapp.dto;
 
 public class MappingDTO {
-	private int surveyId;
+	private int surveySeq;
 	private int raterId;
 	private int appraiseeId;
-	private String surveyCompleteCheck;
+	private String surveyCompleteYN;
 	
-	
-	public int getSurveyId() {
-		return surveyId;
-	}
-	public void setSurveyId(int surveyId) {
-		this.surveyId = surveyId;
+	public int getSurveySeq() {
+		return surveySeq;
 	}
 	public int getRaterId() {
 		return raterId;
 	}
-	public void setRaterId(int raterId) {
-		this.raterId = raterId;
-	}
 	public int getAppraiseeId() {
 		return appraiseeId;
+	}
+	public String getSurveyCompleteYN() {
+		return surveyCompleteYN;
+	}
+	public void setSurveySeq(int surveySeq) {
+		this.surveySeq = surveySeq;
+	}
+	public void setRaterId(int raterId) {
+		this.raterId = raterId;
 	}
 	public void setAppraiseeId(int appraiseeId) {
 		this.appraiseeId = appraiseeId;
 	}
-	public String getSurveyCompleteCheck() {
-		return surveyCompleteCheck;
-	}
-	public void setSurveyCompleteCheck(String surveyCompleteCheck) {
-		this.surveyCompleteCheck = surveyCompleteCheck;
+	public void setSurveyCompleteYN(String surveyCompleteYN) {
+		this.surveyCompleteYN = surveyCompleteYN;
 	}
 	@Override
 	public String toString() {
-		return "MappingDTO [surveyId=" + surveyId + ", raterId=" + raterId + ", appraiseeId=" + appraiseeId
-				+ ", surveyCompleteCheck=" + surveyCompleteCheck + ", getSurveyId()=" + getSurveyId()
-				+ ", getRaterId()=" + getRaterId() + ", getAppraiseeId()=" + getAppraiseeId()
-				+ ", getSurveyCompleteCheck()=" + getSurveyCompleteCheck() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+		return "MappingDTO [surveySeq=" + surveySeq + ", raterId=" + raterId + ", appraiseeId=" + appraiseeId
+				+ ", surveyCompleteYN=" + surveyCompleteYN + "]";
 	}
+	
+	
+
 	
 }

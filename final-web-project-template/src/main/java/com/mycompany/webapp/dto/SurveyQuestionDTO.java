@@ -2,22 +2,25 @@ package com.mycompany.webapp.dto;
 
 public class SurveyQuestionDTO {
 	//for 문제
-	private int surveyId;
-	private int questionId;
+	private int surveySeq;
+	private int questionSeq;
 	private String questionContent;
 	private String questionTypeCode;
 	
+	
+	
 	//for 문항
 	// questionId는 문제와 동일하게 사용
-	private int itemId;
+	
+	private int itemSeq;
 	private String itemContent;
 	private String itemScore;
 	
-	public int getSurveyId() {
-		return surveyId;
+	public int getSurveySeq() {
+		return surveySeq;
 	}
-	public int getQuestionId() {
-		return questionId;
+	public int getQuestionSeq() {
+		return questionSeq;
 	}
 	public String getQuestionContent() {
 		return questionContent;
@@ -25,20 +28,11 @@ public class SurveyQuestionDTO {
 	public String getQuestionTypeCode() {
 		return questionTypeCode;
 	}
-	public int getItemId() {
-		return itemId;
+	public void setSurveySeq(int surveySeq) {
+		this.surveySeq = surveySeq;
 	}
-	public String getItemContent() {
-		return itemContent;
-	}
-	public String getItemScore() {
-		return itemScore;
-	}
-	public void setSurveyId(int surveyId) {
-		this.surveyId = surveyId;
-	}
-	public void setQuestionId(int questionId) {
-		this.questionId = questionId;
+	public void setQuestionSeq(int questionSeq) {
+		this.questionSeq = questionSeq;
 	}
 	public void setQuestionContent(String questionContent) {
 		this.questionContent = questionContent;
@@ -46,25 +40,37 @@ public class SurveyQuestionDTO {
 	public void setQuestionTypeCode(String questionTypeCode) {
 		this.questionTypeCode = questionTypeCode;
 	}
-
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
+	
+	public int getItemSeq() {
+		return itemSeq;
+	}
+	public String getItemContent() {
+		return itemContent;
+	}
+	public String getItemScore() {
+		return itemScore;
+	}
+	public void setItemSeq(int itemSeq) {
+		this.itemSeq = itemSeq;
 	}
 	public void setItemContent(String itemContent) {
 		this.itemContent = itemContent;
-
 	}
 	public void setItemScore(String itemScore) {
 		this.itemScore = itemScore;
 	}
+	
 	@Override
 	public String toString() {
-		return "SurveyQuestionDTO [surveyId=" + surveyId + ", questionId=" + questionId + ", questionContent="
-				+ questionContent + ", questionTypeCode=" + questionTypeCode + ", itemId=" + itemId + ", itemContent="
+		return "SurveyQuestionDTO [surveySeq=" + surveySeq + ", questionSeq=" + questionSeq + ", questionContent="
+				+ questionContent + ", questionTypeCode=" + questionTypeCode + ", itemSeq=" + itemSeq + ", itemContent="
 				+ itemContent + ", itemScore=" + itemScore + "]";
-
-				
 	}
+
+
+	
+
+	
 	
 	
 	

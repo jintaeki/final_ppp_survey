@@ -1,14 +1,17 @@
+
 package com.mycompany.webapp.service;
 
 import java.util.List;
 import java.util.Map;
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+
 import org.springframework.transaction.annotation.Transactional;
+
 
 import com.mycompany.webapp.dao.ISurveyRepository;
 import com.mycompany.webapp.dto.SurveyListDTO;
@@ -23,10 +26,19 @@ public class SurveyService implements ISurveyService{
 	
 	@Override
 	public void setSurvey(SurveyListDTO surveylist) {
-		logger.info(surveylist.toString());
 		surveyDao.setSurvey(surveylist);
+		logger.info(surveylist.toString());
+
 	}
 
+	@Override
+	public SurveyListDTO selectSurvey(int surveyid) {
+		
+		
+		return surveyDao.selectSurvey(surveyid);
+
+	}
+	
 	@Override
 	public void setSurveyUpdate(SurveyListDTO surveylist) {
 		surveyDao.setSurveyUpdate(surveylist);
@@ -50,7 +62,7 @@ public class SurveyService implements ISurveyService{
 	@Transactional
 	public void setQuestInsert(SurveyQuestionDTO sqd) {
 		logger.info("setQuestInsert service: " + sqd );
-		sqd.setQuestionId(surveyDao.selectMaxQuestionId()+1);
+		sqd.setQuestionSeq(surveyDao.selectMaxQuestionId()+1);
 		logger.info("id가 들어갔니 안갔니 :" + sqd);
 		surveyDao.setQuestInsert(sqd);
 		logger.info("문제등록");
@@ -67,23 +79,21 @@ public class SurveyService implements ISurveyService{
 	@Override
 	public void setItemInsert(SurveyQuestionDTO sqd) {
 		logger.info("setItemInserT: " + sqd);
-		sqd.setItemId(surveyDao.selectMaxItemId()+1);
+		sqd.setItemSeq(surveyDao.selectMaxItemId()+1);
 		logger.info("문항 id가 들어갔냐 안갔냐"  + sqd);
 		surveyDao.setItemInsert(sqd);
 	}
 
-
-@Override
+	@Override
 	public void setItemDelete(SurveyQuestionDTO sqd) {
 		
 		surveyDao.setItemDelete(sqd);
 	}
+
 	
-
-
 	@Override
 	public int selectMaxItemId() {
-		// TODO Auto-generated method stub
+		// 필요없음
 		return 0;
 	}
 
@@ -95,7 +105,7 @@ public class SurveyService implements ISurveyService{
 		
 	}
 
-@Override
+	@Override
 	public List<Map<String, Object>> selectQuestion(int surveyId) {
 
 		
@@ -103,14 +113,20 @@ public class SurveyService implements ISurveyService{
 		
 	}
 
-/*
+
+	@Override
+	public List<SurveyListDTO> selectSurveyList(){
+		return surveyDao.selectSurveyList();
+	}
+
+	/*
 	@Override
 	public SurveyQuestionDTO getQuestionList(int surveyId) {
 		logger.info("getQuestionList: " + surveyId);
 		return surveyDao.getQuestionList(surveyId);
 		
 	}
-*/
+	*/
 	@Override
 	public List<SurveyQuestionDTO> questionList(int surveyId) {
 			
@@ -122,5 +138,19 @@ public class SurveyService implements ISurveyService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+		
+// 1월 9일 여기부터 시작 
+
+
+
+
+
 
 }
+
+
+
+	
+
+	
+

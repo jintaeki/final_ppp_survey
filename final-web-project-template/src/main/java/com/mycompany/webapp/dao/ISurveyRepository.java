@@ -1,5 +1,6 @@
 package com.mycompany.webapp.dao;
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ public interface ISurveyRepository {
 	void setSurveyUpdate(SurveyListDTO surveylist);
 	
 	void setItemUpdate(SurveyQuestionDTO surveyquestion);
+	void setItemDelete(SurveyQuestionDTO sqd);
 	
 	int selectMaxSurveyId();
 	
@@ -20,12 +22,24 @@ public interface ISurveyRepository {
 	int selectMaxQuestionId();
 	int selectMaxItemId();
 	void setItemInsert(SurveyQuestionDTO SQD);
+
+	//문제 비동기 조회 목적
+	List<Map<String, Object>> selectQuestion(int surveyId);
+	
+	List<SurveyListDTO> selectSurveyList();	
+	
+	SurveyListDTO selectSurvey(int surveyid);
+	
 	//SurveyQuestionDTO getQuestionList(int surveyId);
 	void setQuestUpdate(SurveyQuestionDTO SQD);
 
-	List<Map<String, Object>> selectQuestion(int surveyId);
-	List<SurveyQuestionDTO> getQuestionList(int surveyId);
-	
-	void setItemDelete(SurveyQuestionDTO sqd);
 
+	List<SurveyQuestionDTO> getQuestionList(int surveyId);
 }
+
+
+	
+
+	
+	
+
