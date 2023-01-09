@@ -19,8 +19,8 @@
 			<div class="col-3">익명기명</div>
 			<div class="col-3">설문 부가 설명</div>
 
-			<input type="hidden" name="decideCheck" value="N"> <input
-				type="hidden" name="surveyId" id="surveyid" value="${SLD.surveySeq}">
+			<input type="hidden" name="decideYN" value="N"> <input
+				type="hidden" name="surveySeq" id="surveyseq" value="${SLD.surveySeq}">
 			<div class="col-3">
 				<div class="form-group">
 					<label for="survey_name" class="col-form-label"></label> <input
@@ -107,7 +107,7 @@
 					</svg>
 	</button>
 </div>
-<!--  주관식 -->
+<!--  혼합식 -->
 <div class="icon_line" id="new_mix_Item" style="display: none;">
 	<label><input type="text" name="itemContent" required
 		placeholder="문항 입력..." id="ic"></label> 점수<input type="number"
@@ -166,7 +166,7 @@
 					<form:form modelAttribute="SQD" id="item_obj_form">
 						<input type="hidden" name="questionTypeCode" value="10001">
 						<input type="hidden" name="surveySeq" value="${SLD.surveySeq}">
-						<input type="hidden" name="questionSeq" value="6">
+						<input type="hidden" name="questionSeq" value="2">
 						<div class="icon_line" id="obj_ItemAfter">
 							<label><input type="text" name="itemContent"
 								placeholder="문항 입력..." id="ic"></label> 점수<input type="number"
@@ -195,8 +195,8 @@
 					<form:form modelAttribute="SQD" id="item_mix_form">
 						<input type="hidden" name="questionTypeCode" value="10003">
 						<input type="hidden" name="surveySeq" value="${SLD.surveySeq}"
-							id="surveyid">
-						<input type="hidden" name="questionSeq" value="6">
+							id="surveyseq">
+						<input type="hidden" name="questionSeq" value="2">
 						<div class="icon_line" id="mix_ItemAfter">
 							<label><input type="text" name="itemContent"
 								placeholder="문항 입력..." id="ic" required></label> 점수<input
@@ -267,14 +267,14 @@
 					<textarea class="form-control" aria-label="문제 입력칸"
 						name="questionContent">${sqd.questionContent}</textarea>
 				</div>
-				${SLD.surveyId}-> 설문id 확인용
+				${SLD.surveySeq}-> 설문id 확인용
 				<!-- 문제 추가 버튼  -->
 				<button type="button" class="btn btn-outline-primary"  id="add_btn" onclick="insertQus()">문제
 					추가</button>
 				<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate()">문제
 					수정</button>
 				<input type="hidden" name="surveySeq" value="${SLD.surveySeq }">
-				<input type="hidden" name="questionSeq" value=""> <!-- 비동기로 바꿔 넣어보자 -> 문항도 마찬가지 -->
+				<input type="hidden" name="questionSeq" value="2"> <!-- 비동기로 바꿔 넣어보자 -> 문항도 마찬가지 -->
 			</div>
 			<input type="hidden" name="itemScore" value="1">
 			<input type="hidden" name="itemContent" value=" ">
@@ -428,75 +428,93 @@
 	}
 	
 	//문제 입력 채우 코드에 추가한 것
-// 	function insertQus(){
-// 			var qdiv = $('#questioN_insert_form')[0];
-// 			var data = new FormData(qdiv);
+	function insertQus(){
+			var qdiv = $('#questioN_insert_form')[0];
+			var data = new FormData(qdiv);
 		
-// 			$.ajax({
-// 				method:'POST', //어떤 방식으로 보낼 지
-// 				url:'questioninsert.do', // qdiv를 보낼 경로 설정
-// 				data: data,	//
-// 				processData : false,
-//  				contentType : false,
-// 	 			cache : false,
-// 			   beforeSend : function() { //보내기 전 실행
-// 				console.log("요청이 보내지는가?");
-// 			   },
-// 			   success:function (data) {	 //전송 성공시 실행
-// 				   console.log($('#surveyid').val());
-// 				   var surveyid = $('#surveyid').val();
+			$.ajax({
+				method:'POST', //어떤 방식으로 보낼 지
+				url:'questioninsert.do', // qdiv를 보낼 경로 설정
+				data: data,	//
+				processData : false,
+ 				contentType : false,
+	 			cache : false,
+			   beforeSend : function() { //보내기 전 실행
+				console.log("요청이 보내지는가?");
+			   },
+			   success:function (data) {	 //전송 성공시 실행
+				   console.log($('#surveyseq').val());
+				   var surveyseq = $('#"surveyseq"').val();
 				   
-// 			   $.ajax({
-// 						method:'GET', //어떤 방식으로 보낼 지
-// 						url:'selectquestion.do/'+surveyid, // qdiv를 보낼 경로 설정				
-// 			 			dataType: "json",
-// 					   beforeSend : function() { //보내기 전 실행
-// 						console.log("요청이 보내지는가?");
-// 					   },
-// 					   success:function (jsondata){	 //전송 성공시 실행
-// 								console.log(jsondata);
-// 								questionHtml(jsondata);
-// 								itemHtml(jsondata);
+			   $.ajax({
+						method:'GET', //어떤 방식으로 보낼 지
+						url:'selectquestion.do/'+"surveyseq", // qdiv를 보낼 경로 설정				
+			 			dataType: "json",
+					   beforeSend : function() { //보내기 전 실행
+						console.log("요청이 보내지는가?");
+					   },
+					   success:function (jsondata){	 //전송 성공시 실행
+								console.log(jsondata);
+								questionHtml(jsondata);
+								var surveyseq = jsondata[0].SURVEY_SEQ;
+								var questionseq = jsondata[0].QUESTION_SEQ;
+								$.ajax({
+									method:'GET', //어떤 방식으로 보낼 지
+									url:'selectitems.do/'+ surveyseq + questionseq, // qdiv를 보낼 경로 설정				
+						 			dataType: "json",
+								   beforeSend : function() { //보내기 전 실행
+									console.log("요청이 보내지는가?");
+								   },
+								   success:function (jsondata){	 //전송 성공시 실행
+											console.log(jsondata);
+											itemHtml(jsondata)
+											
+											
+											
+								   }, error:function(e) {	//실패, 에러
+									   console.log("Error", e); 
+								   }
+									});								
 								
 								
-// 					   }, error:function(e) {	//실패, 에러
-// 						   console.log("Error", e); 
-// 					   }
-// 						});
+					   }, error:function(e) {	//실패, 에러
+						   console.log("Error", e); 
+					   }
+						});
 				   
-// 			   }, error:function(e) {	//실패, 에러
-// 				   console.log("Error", e); 
-// 			   }
-// 				});
-// 			}
+			   }, error:function(e) {	//실패, 에러
+				   console.log("Error", e); 
+			   }
+				});
+			}
 	
-// 	function questionHtml(data){
-// 		  let size = data.length;
-// 		  var html = '';
-// 		  $("#scroll_area").empty();
-// 		 for(i=0; i<size; i++){
-// 			 html +='<div class="list-group-item list-group-item-action active py-3 lh-sm" id="queAfter1">';
-// 			   html +='<input type="text" class="input_qus" value="'+data[i].QUESTION_CONTENT+'">';
-// 			   html	+='<div class="card m-2" style="float: right; width: 60px;">';
-// 			   html +='<button class="btn btn-secondary" id="btn_for_answer_box" onclick="btn_for_ans_box(this)">ans</button>';
-// 			   html +='</div> <div class="blank_under"></div></div>';
-//          }
-// 		 $('#scroll_area').append(html);
-// 	}
+	function questionHtml(data){
+		  let size = data.length;
+		  var html = '';
+		  $("#scroll_area").empty();
+		 for(i=0; i<size; i++){
+			 html +='<div class="list-group-item list-group-item-action active py-3 lh-sm" id="queAfter1">';
+			   html +='<input type="text" class="input_qus" value="'+data[i].QUESTION_CONTENT+'">';
+			   html	+='<div class="card m-2" style="float: right; width: 60px;">';
+			   html +='<button class="btn btn-secondary" id="btn_for_answer_box" onclick="btn_for_ans_box(this)">ans</button>';
+			   html +='</div> <div class="blank_under"></div></div>';
+         }
+		 $('#scroll_area').append(html);
+	}
 	
-// 	function itemHtml(data){
-// 		  let size = data.length;
-// 		  var html = '';
-// 		  $("#scroll_area").empty();
-// 		 for(i=0; i<size; i++){
-// 			 html +='<div class="list-group-item list-group-item-action active py-3 lh-sm" id="queAfter1">';
-// 			   html +='<input type="text" class="input_qus" value="'+data[i].QUESTION_CONTENT+'">';
-// 			   html	+='<div class="card m-2" style="float: right; width: 60px;">';
-// 			   html +='<button class="btn btn-secondary" id="btn_for_answer_box" onclick="btn_for_ans_box(this)">ans</button>';
-// 			   html +='</div> <div class="blank_under"></div></div>';
-//        }
-// 		 $('#scroll_area').append(html);
-// 	}
+	function itemHtml(data){
+		  let size = data.length;
+		  var html = '';
+		 if(data[0].QUESTION_TYPE_CODE)
+		 for(i=0; i<size; i++){
+			 html +='<div class="list-group-item list-group-item-action active py-3 lh-sm" id="queAfter1">';
+			   html +='<input type="text" class="input_qus" value="'+data[i].QUESTION_CONTENT+'">';
+			   html	+='<div class="card m-2" style="float: right; width: 60px;">';
+			   html +='<button class="btn btn-secondary" id="btn_for_answer_box" onclick="btn_for_ans_box(this)">ans</button>';
+			   html +='</div> <div class="blank_under"></div></div>';
+       }
+		 $('#scroll_area').append(html);
+	}
 	
 	//문제 입력 채우 코드에 추가한 것 끝
 	

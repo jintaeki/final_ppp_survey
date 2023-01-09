@@ -1,6 +1,7 @@
 
 package com.mycompany.webapp.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +48,10 @@ public class SurveyService implements ISurveyService{
 
 	@Override
 	public void setItemUpdate(SurveyQuestionDTO surveyquestion) {
-		
+//		Date date = surveyDao.getAddDate(surveyquestion.getQuestionSeq());
+//		logger.info(date.toString());
+//		surveyquestion.setAddDate(date);
+		surveyDao.setItemDelete(surveyquestion);
 		surveyDao.setItemUpdate(surveyquestion);
 		
 	}

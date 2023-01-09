@@ -75,9 +75,9 @@ public class SurveyController {
 		
 	}
 	// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
-	@RequestMapping("/surveyinsert/{surveyId}")
-	public String survey_insert2(@PathVariable int surveyId, Model model) {
-		model.addAttribute("SLD",surveyService.selectSurvey(surveyId));
+	@RequestMapping("/surveyinsert/{surveySeq}")
+	public String survey_insert2(@PathVariable int surveySeq, Model model) {
+		model.addAttribute("SLD",surveyService.selectSurvey(surveySeq));
 		return "survey_insert2";
 	}
 
@@ -152,7 +152,7 @@ public class SurveyController {
 		String checkCode = SQD.getQuestionTypeCode();
 		try {
 			if(checkCode.equals("10001")) {
-				surveyService.setItemDelete(SQD);
+//				surveyService.setItemDelete(SQD);
 				// 문제 id, 점수, 문항내용, itemid, 각 각 받아야 한다
 				// questionId, itemScore, itemContent, itemId
 
@@ -173,11 +173,11 @@ public class SurveyController {
 					surveyService.setItemUpdate(SQD);
 				}
 			}else if(checkCode.equals("10002")) {
-				surveyService.setItemDelete(SQD);
+//				surveyService.setItemDelete(SQD);
 				surveyService.setItemUpdate(SQD);
 
 			}else if(checkCode.equals("10003")) {
-				surveyService.setItemDelete(SQD);
+//				surveyService.setItemDelete(SQD);
 				// 문제 id, 점수, 문항내용, itemid, 각 각 받아야 한다
 				// questionId, itemScore, itemContent, itemId
 
@@ -210,14 +210,14 @@ public class SurveyController {
 	}
 
 	// 문제 비동기식으로 출력 진택
-	@RequestMapping(value="/selectquestion.do/{surveyId}")
+	@RequestMapping(value="/selectquestion.do/{surveySeq}")
 	@ResponseBody
-	public  List<Map<String, Object>> selectquestion(@PathVariable int surveyId,Model model) {
+	public  List<Map<String, Object>> selectquestion(@PathVariable int surveySeq,Model model) {
 		logger.info("뿌리기 컨트롤 ");
 		
 		
-		System.out.println(surveyService.selectQuestion(surveyId));
-		return surveyService.selectQuestion(surveyId) ;
+		System.out.println(surveyService.selectQuestion(surveySeq));
+		return surveyService.selectQuestion(surveySeq) ;
 	}	
 
 
@@ -256,12 +256,12 @@ public class SurveyController {
 	
 	//문제 비동기 조회 채우
 
-	@RequestMapping(value="/questionList.do/{surveyId}")
+	@RequestMapping(value="/questionList.do/{surveySeq}")
 	@ResponseBody
-	public List<SurveyQuestionDTO> questionList(@PathVariable int surveyId, Model model) {
-		List<SurveyQuestionDTO> sqd = surveyService.questionList(surveyId);
+	public List<SurveyQuestionDTO> questionList(@PathVariable int surveySeq, Model model) {
+		List<SurveyQuestionDTO> sqd = surveyService.questionList(surveySeq);
 		logger.info("비동기 조회 진입");
-		SurveyQuestionDTO questionList = surveyService.getQuestionList(surveyId);
+		SurveyQuestionDTO questionList = surveyService.getQuestionList(surveySeq);
 		model.addAttribute("questionList", questionList);
 		logger.info("제 비동기 조회 dto: ");
 		
