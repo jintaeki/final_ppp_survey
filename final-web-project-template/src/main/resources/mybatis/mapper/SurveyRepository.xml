@@ -111,4 +111,58 @@
 	<update id="sendMessage" parameterType="int">
 		update survey_list set 	DECIDE_YN='Y' where survey_seq =#{surveySeq}
 	</update>
+	
+	<select id="searchListByKeyword" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="SLD">
+	
+		SELECT SURVEY_SEQ as surveySeq, SURVEY_NAME as surveyName, SURVEY_CONTENT as surveyContent, ANONYMITY_CHECK_CODE as anonymityCheckCode,
+			   SURVEY_STATR_DATE as surveyStartDate,  SURVEY_CLOSED_DATE as surveyClosedDate, DECIDE_YN as decideYN
+			   FROM (
+			   		select ROWNUM as rnum, SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
+			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN 
+			   		FROM (select SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
+			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN  from survey_list where survey_name LIKE #{keyword}
+			   		order by ROWNUM desc
+			   	)
+			   	where rownum &lt; = #{endRowNo}
+			   	)	 
+			   where rnum &gt; = #{startRowNo} 
+	
+	</select>
+	
+	<select id="searchListByKeywordAndDicideYN"  resultType="SLD">
+	
+		SELECT SURVEY_SEQ as surveySeq, SURVEY_NAME as surveyName, SURVEY_CONTENT as surveyContent, ANONYMITY_CHECK_CODE as anonymityCheckCode,
+			   SURVEY_STATR_DATE as surveyStartDate,  SURVEY_CLOSED_DATE as surveyClosedDate, DECIDE_YN as decideYN
+			   FROM (
+			   		select ROWNUM as rnum, SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
+			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN 
+			   		FROM (select SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
+			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN  from survey_list where survey_name LIKE #{keyword} and DECIDE_YN = #{selection} 
+			   		order by ROWNUM desc
+			   	)
+			   	where rownum &lt; = #{endRowNo}
+			   	)	 
+			   where rnum &gt; = #{startRowNo} 
+	
+	</select>
+	
+	<select id="searchListByKeywordAndDate"  resultType="SLD">
+	
+		SELECT SURVEY_SEQ as surveySeq, SURVEY_NAME as surveyName, SURVEY_CONTENT as surveyContent, ANONYMITY_CHECK_CODE as anonymityCheckCode,
+			   SURVEY_STATR_DATE as surveyStartDate,  SURVEY_CLOSED_DATE as surveyClosedDate, DECIDE_YN as decideYN
+			   FROM (
+			   		select ROWNUM as rnum, SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
+			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN 
+			   		FROM (select SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
+			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN  from survey_list where survey_name LIKE #{keyword}
+			   		order by SURVEY_STATR_DATE, ROWNUM  desc
+			   	)
+			   	where rownum &lt; = #{endRowNo}
+			   	)	 
+			   where rnum &gt; = #{startRowNo} 
+	
+	</select>
+	
+	
+	
 </mapper>

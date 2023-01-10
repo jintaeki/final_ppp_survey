@@ -42,6 +42,13 @@ public interface ISurveyService {
 	public List<SurveyQuestionDTO>questionList(int surveyId);
 
 	void sendMessage(int surveySeq);
+	
+	List<SurveyListDTO> searchListByKeyword(PagingDTO pagingdto);
+
+	List<SurveyListDTO> searchListByKeywordAndDicideYN(PagingDTO pagingdto);
+
+	List<SurveyListDTO> searchListByKeywordAndDate(PagingDTO pagingdto);
+
 }
 
 

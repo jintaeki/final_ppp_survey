@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
@@ -89,28 +88,86 @@ public class SurveyController {
 		return "survey_insert2";
 	}
 	
-	@RequestMapping(value= "/sendmessage.do/{surveyseq}", method=RequestMethod.POST)
-	public void sendmessage(@PathVariable int surveySeq) {
-		logger.info("하이하이하이하이");
-		surveyService.sendMessage(surveySeq);
+	@RequestMapping("/sendmessage.do/{surveyseq}/{pageno}")
+	@ResponseBody
+	public String sendmessage(@PathVariable int surveyseq , @PathVariable int pageno) {
+
+		surveyService.sendMessage(surveyseq);
 		
+		return "성공";
 	}
 	
 	// 설문지 목록으로 이동을 위한 컨트롤러
 	@RequestMapping(value="/surveylist")
 	public String survey_list(@RequestParam(defaultValue="1") int pageNo, Model model) {
-		int totalRows= pagingService.getTotalBoardNum();
+		int totalRows= pagingService.getTotalBoardNum(); 
 		
 		PagingDTO pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
-		
-		
-//		System.out.println(surveyService.selectSurveyList());
+		 logger.info(surveyService.selectSurveyList(pagingdto).toString());
 		model.addAttribute("surveylist", surveyService.selectSurveyList(pagingdto));
 		model.addAttribute("pagingdto",pagingdto);
 		logger.info("실행");
 		
 		return "survey_list";
 	}
+	
+	@RequestMapping("/surveysearch")
+	public String search(@RequestParam(defaultValue="") String keyword, @RequestParam(defaultValue="1") int pageNo, 
+			@RequestParam(defaultValue="") String selection, HttpSession session, Model model) {
+		try {
+
+			List<SurveyListDTO> surveylist = null; 
+			PagingDTO pagingdto = null;
+			String beforeKeyword = keyword;
+			if (selection.equals("")) {
+				logger.info("빈 키워드만 받음");
+				int totalRows = pagingService.getTotalListNumByKeyword(keyword, selection);
+				System.out.println("totolRows:" + totalRows);
+				pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
+				pagingdto.setSelection(selection);
+				pagingdto.setKeyword(keyword);
+				logger.info("selection:" + pagingdto.getSelection());
+				logger.info("keyword: "+pagingdto.getKeyword());
+				surveylist = surveyService.searchListByKeyword(pagingdto);
+				logger.info("리스트:" +surveylist.toString());
+				pagingdto.setKeyword(beforeKeyword);
+				logger.info(pagingdto.toString());
+			}else if(selection.equals("Y") || selection.equals("N")) {
+				logger.info("키워드와 발송여부 Y 받음");
+				int totalRows = pagingService.getTotalListNumByKeywordAndDecideYN(keyword, selection);
+				pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
+				pagingdto.setSelection(selection);
+				pagingdto.setKeyword(keyword);
+				logger.info(pagingdto.getSelection());
+				logger.info(pagingdto.getKeyword());
+				surveylist = surveyService.searchListByKeywordAndDicideYN(pagingdto);
+				pagingdto.setKeyword(beforeKeyword);
+			}else if (selection.equals("date")) {
+				logger.info("키워드와 날짜기준 받음");
+				int totalRows = pagingService.getTotalListNumByKeywordAndDate(keyword, selection);
+				pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
+				pagingdto.setSelection(selection);
+				pagingdto.setKeyword(keyword);	
+				logger.info(pagingdto.getSelection());
+				logger.info(pagingdto.getKeyword());
+				surveylist = surveyService.searchListByKeywordAndDate(pagingdto);
+				pagingdto.setKeyword(beforeKeyword);
+
+			}
+		
+			model.addAttribute("surveylist", surveylist);
+			
+			logger.info(keyword);
+			System.out.println(pageNo);
+			model.addAttribute("pagingdto", pagingdto);
+			model.addAttribute("keyword", keyword);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "survey_search";
+	}
+
 	
 	@RequestMapping("/surveyresultteam")
 	public String survey_success() {
@@ -131,7 +188,6 @@ public class SurveyController {
 	@RequestMapping(value="/set.do", method=RequestMethod.POST)
 	public String setSurvey(@ModelAttribute ("SLD") @Valid SurveyListDTO SLD, BindingResult result, HttpSession session, RedirectAttributes redirectAttrs) {
 		logger.info("모달창을 통해 설문 등록하는 컨트롤러 진입");
-		//SLD.setSurveyId(surveyService.selectMaxSurveyId()+1);
 		surveyService.setSurvey(SLD);
 		session.setAttribute("SLD", SLD);
 
@@ -232,11 +288,11 @@ public class SurveyController {
 	// 문제 비동기식으로 출력 진택
 	@RequestMapping(value="/selectquestion.do/{surveySeq}")
 	@ResponseBody
-	public  List<Map<String, Object>> selectquestion(@PathVariable int surveySeq,Model model) {
+	public  List<Map<String, Object>> selectquestion(@PathVariable int surveySeq, Model model) {
 		logger.info("뿌리기 컨트롤 ");
 		
 		
-		System.out.println(surveyService.selectQuestion(surveySeq));
+//		System.out.println(surveyService.selectQuestion(surveySeq));
 		return surveyService.selectQuestion(surveySeq) ;
 	}	
 

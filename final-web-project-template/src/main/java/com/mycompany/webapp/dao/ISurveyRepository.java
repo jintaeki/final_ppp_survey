@@ -41,6 +41,14 @@ public interface ISurveyRepository {
 	Date getAddDate(int serveySeq);
 	
 	void sendMessage(int surveySeq);
+	
+	List<SurveyListDTO> searchListByKeyword(PagingDTO pagingdto);
+
+	List<SurveyListDTO> searchListByKeywordAndDicideYN(PagingDTO pagingdto);
+
+	List<SurveyListDTO> searchListByKeywordAndDate(PagingDTO pagingdto);
+
+	
 }
 
 

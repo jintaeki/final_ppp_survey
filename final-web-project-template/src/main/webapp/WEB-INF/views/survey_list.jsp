@@ -3,36 +3,74 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/survey_list.css" />
 
+
 <script>
-	function send() {
+	function sendRe(obj){
+		var pageno = $('#pageNo').val();
+  		var surveyseq = $(obj).val();
+  		console.log(surveyseq)
+//   		$.ajax({
+// 			method:'POST', //어떤 방식으로 보낼 지
+// 			url:'sendmessage.do/'+surveyseq+'/'+pageno, // qdiv를 보낼 경로 설정	
+// 		    beforeSend : function() { //보내기 전 실행
+// 			console.log("요청이 보내지는가?");
+// 		   },
+// 		   success:function () {	 //전송 성공시 실행
+// 			console.log("굿");
+// 			const tag = $(obj);
+// 			console.log(tag);
+// 			const completeMsg = `전송완료`;
+
+// 			tag.parent().html(completeMsg);
+// 			tag.hide
+			   
+// 		   }, error:function(e) {	//실패, 에러
+// 			   console.log("Error", e); 
+// 		   }
+// 			});
+	}
 	
-		const surveyseq = $('#surveyseq').val();
-		console.log(surveyseq);
+			
+
+  	function send(obj) {
+  		
+  		var pageno = $('#pageNo').val();
+  		var surveyseq = $(obj).val();
+
+  		console.log(surveyseq);
+
 		$.ajax({
 			method:'POST', //어떤 방식으로 보낼 지
-			url:'sendmessage.do/'+surveyseq, // qdiv를 보낼 경로 설정
-
-		   beforeSend : function() { //보내기 전 실행
+			url:'sendmessage.do/'+surveyseq+'/'+pageno, // qdiv를 보낼 경로 설정	
+		    beforeSend : function() { //보내기 전 실행
 			console.log("요청이 보내지는가?");
 		   },
-		   success:function (data) {	 //전송 성공시 실행
-			   console.log("요청 성송");
-		   
-			   const tag = $(obj);
+		   success:function () {	 //전송 성공시 실행
+			console.log("굿");
+			const tag = $(obj);
+			console.log(tag);
 
-				const completeMsg = `전송완료`;
-				const complete = `확정`;
-				const text = `<button type="button" class="btn btn-link"
-								onclick="location.href='surveyevaluate/${list.surveySeq}'">조회</button>`;
-				tag.parent().next().append(text);
+ 			const text = `<button type="button" class="btn btn-link"
+ 							onclick="location.href='surveyevaluate/${list.surveySeq}'">조회</button>`;
 
-				tag.parent().prev().html(complete);
-				tag.parent().prev().css('font-weight', 'bold');
+ 							tag.parent().next().append(text);					
 
-				tag.closest('tr').css('color', '#ccc');
-				tag.parent().html(completeMsg);
-				tag.hide();
-					   
+ 							const complete = `확정`;
+ 							tag.parent().prev().html(complete);
+ 							tag.parent().prev().css('font-weight', 'bold');
+ 							tag.parent().prev().css('color', '#F06');
+ 							
+			const completeMsg = `<button class="btn btn-primary" onclick="sendRe(this)" value="${list.surveySeq}">재발송</button>`;
+			tag.parent().html(completeMsg);
+
+
+// 			const text = `<button type="button" class="btn btn-link" onclick="location.href='surveyevaluate/`;
+
+// 			text +=	`${surveyseq}`;
+// 			text += `\'">조회</button>`;
+
+			
+// 			tag.hide
 			   
 		   }, error:function(e) {	//실패, 에러
 			   console.log("Error", e); 
@@ -40,12 +78,15 @@
 			});
 		
 		
+		
+		
 	}
 		
 		
-		
+  	
 
 </script>
+
 <!-- modal(설문 등록 시 뜨는 팝업창) -->
 <div class="modal fade" id="exampleModal" tabindex="-1"
 	aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -63,7 +104,7 @@
 			<div class="modal-body">
 				<c:url value="/survey/set.do" var="actionURL" scope="page" />
 				<form:form action="${actionURL}" modelAttribute="SLD">
-<%-- 					<form action='<c:url value="/set"/>' method="POST">  --%>
+				
 					<div class="form-group">
 						<label for="recipient-name" class="col-form-label" >설문지 이름</label>
 						<input type="text" class="form-control" id="recipient-name" name="surveyName">
@@ -89,7 +130,6 @@
 							data-dismiss="modal">취소</button>
 						<input type="submit" class="btn btn-primary" value="등록">
 					</div>
-<!-- 					</form> -->
 				</form:form>
 			</div>
 
@@ -105,12 +145,21 @@
 			<div class="row">
 				<div class="hmenu">
 					<div class="input-group mb-3">
-						<input type="text" class="form-control " placeholder="search"
+					<form action ="<c:url value='/survey/surveysearch'/>" method="get">
+					<select name="selection">
+					<option selected value="">키워드</option>
+					<option value="date">날짜</option>
+					<option value="Y">확정</option>
+					<option value="N">미확정</option>
+				</select>
+						<input type="text" class="form-control " placeholder="search" name="keyword"
 							aria-describedby="button-addon2">
+							<input type="hidden" name="pageNo" value="${pagingdto.pageNo }"> 
 						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button"
-								id="button-addon2">검색</button>
+							<input type="submit" class="btn btn-outline-secondary" 
+								id="button-addon2" value="검색">
 						</div>
+					</form>
 						<button type="button" class="btn btn-primary" data-toggle="modal"
 							data-target="#exampleModal" data-whatever="@mdo">등록</button>
 
@@ -131,26 +180,34 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="list" items="${surveylist}">
+					
+						<c:forEach var="list" items="${surveylist}" >
 						<tr>
+						
 							<th scope="row">${list.surveySeq }</th>
-							<td ><input type="hidden" id="surveyseq" value="${list.surveySeq}">
-							<a href="surveyinsert2?surveyseq=${list.surveySeq}">${list.surveyName }</a></td>
-							<td><fmt:formatDate value="${list.surveyStartDate }" pattern="yyyy-MM-dd"/><br>~<br>
-					<fmt:formatDate value="${list.surveyClosedDate }" pattern="yyyy-MM-dd"/></td>
-							
-							<td><span class="wait"><c:if test="${list.decideYN eq 'N' }">대기</c:if>
-							<c:if test="${list.decideYN != 'N' }">확정</c:if></span>
+							<td ><a href="surveyinsert2?surveyseq=${list.surveySeq}">${list.surveyName }</a></td>
+							<td>
+								<fmt:formatDate value="${list.surveyStartDate }" pattern="yyyy-MM-dd"/><br>~<br>
+								<fmt:formatDate value="${list.surveyClosedDate }" pattern="yyyy-MM-dd"/>
 							</td>
-							<td><input type="button" id="send" class="btn btn-primary"
-								onclick="send()" value="발송"></td>
+							
+							<td>
+								<span class="wait"><c:if test="${list.decideYN eq 'N' }">대기</c:if>
+								<c:if test="${list.decideYN eq 'Y' }">확정</c:if></span>
+							</td>
+							
+							<td>
+								<input type="hidden" id="pageNo" name=pageNo value="${pagingdto.startPageNo}">
+								<button class="btn btn-primary" onclick="send(this)" value="${list.surveySeq}">발송</button>
+							</td>
 							<td></td>
+					
 						</tr>												
 						</c:forEach>
-						
+				
 					</tbody>
 				
-				<tr>
+				
 				<tr>
 				<td colspan="4" class="text-center">
 					<div>
@@ -185,3 +242,4 @@
 </div>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
+

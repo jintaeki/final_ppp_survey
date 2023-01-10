@@ -151,8 +151,29 @@ public class SurveyService implements ISurveyService{
 		surveyDao.sendMessage(surveySeq);
 	}
 
+	@Override
+	public List<SurveyListDTO> searchListByKeyword(PagingDTO pagingdto) {
+		pagingdto.setKeyword("%"+pagingdto.getKeyword()+"%");
+		logger.info(surveyDao.searchListByKeyword(pagingdto).toString());
+		return surveyDao.searchListByKeyword(pagingdto);
+	}
 
 
+	@Override
+	public List<SurveyListDTO> searchListByKeywordAndDicideYN(PagingDTO pagingdto) {
+		pagingdto.setKeyword("%"+pagingdto.getKeyword()+"%");
+		logger.info(surveyDao.searchListByKeywordAndDicideYN(pagingdto).toString());
+
+		return surveyDao.searchListByKeywordAndDicideYN(pagingdto);
+	}
+	
+	@Override
+	public List<SurveyListDTO> searchListByKeywordAndDate(PagingDTO pagingdto) {
+		pagingdto.setKeyword("%"+pagingdto.getKeyword()+"%");
+		logger.info(surveyDao.searchListByKeyword(pagingdto).toString());
+
+		return surveyDao.searchListByKeywordAndDate(pagingdto);
+	}
 
 }
 
