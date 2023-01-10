@@ -65,7 +65,7 @@ function popup()
 							<td><input type="button" id="send" class="btn btn-primary"
 								onclick="send(this)" value="발송"></td>
 							<td></td>
-							<td><input type="button" value="대상 추가" onclick="popup();" /></td>
+							<td><input type="button" value="추가" onclick="popup();" /></td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">2</th>

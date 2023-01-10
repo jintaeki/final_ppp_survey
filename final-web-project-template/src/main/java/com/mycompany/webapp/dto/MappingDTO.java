@@ -1,17 +1,15 @@
 package com.mycompany.webapp.dto;
 
 public class MappingDTO {
-	private int surveyId;
+	private int surveySeq;
 	private int raterId;
 	private int appraiseeId;
 	private String surveyCompleteCheck;
-	
-	
-	public int getSurveyId() {
-		return surveyId;
+	public int getSurveySeq() {
+		return surveySeq;
 	}
-	public void setSurveyId(int surveyId) {
-		this.surveyId = surveyId;
+	public void setSurveySeq(int surveySeq) {
+		this.surveySeq = surveySeq;
 	}
 	public int getRaterId() {
 		return raterId;
@@ -33,11 +31,8 @@ public class MappingDTO {
 	}
 	@Override
 	public String toString() {
-		return "MappingDTO [surveyId=" + surveyId + ", raterId=" + raterId + ", appraiseeId=" + appraiseeId
-				+ ", surveyCompleteCheck=" + surveyCompleteCheck + ", getSurveyId()=" + getSurveyId()
-				+ ", getRaterId()=" + getRaterId() + ", getAppraiseeId()=" + getAppraiseeId()
-				+ ", getSurveyCompleteCheck()=" + getSurveyCompleteCheck() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+		return "MappingDTO [surveySeq=" + surveySeq + ", raterId=" + raterId + ", appraiseeId=" + appraiseeId
+				+ ", surveyCompleteCheck=" + surveyCompleteCheck + "]";
 	}
 	
 }

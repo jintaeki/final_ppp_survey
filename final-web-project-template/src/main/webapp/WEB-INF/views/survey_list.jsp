@@ -49,7 +49,7 @@ function send(obj){
 							<th scope="col">확정여부</th>
 							<th scope="col">상태</th>
 							<th scope="col">결과</th>
-							<th scope="col">메핑</th>
+							<th scope="col">매핑</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -62,8 +62,8 @@ function send(obj){
 							<td><input type="button" id="send" class="btn btn-primary"
 								onclick="send(this)" value="발송"></td>
 							<td></td>
-							<td><td><input type="button" id="map" class="btn btn-primary"
-								onclick="location.href='mappingview'" value="메핑"></td></td>
+							<td><input type="button" id="map" class="btn btn-primary"
+								onclick="location.href='mappingview'" value="매핑"></td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">2</th>
@@ -74,7 +74,7 @@ function send(obj){
 							<td class="comp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
 									onclick="location.href='surveyevaluate'">조회</button></td>
-							<td>메핑완료</td>
+							<td>매핑완료</td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">3</th>
@@ -85,7 +85,7 @@ function send(obj){
 							<td class="comp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
 									onclick="location.href='surveyevaluate'">조회</button></td>
-							<td>메핑완료</td>
+							<td>매핑완료</td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">4</th>
@@ -96,7 +96,7 @@ function send(obj){
 							<td class="comp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
 									onclick="location.href='surveyevaluate'">조회</button></td>
-							<td>메핑완료</td>
+							<td>매핑완료</td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">5</th>
@@ -107,6 +107,7 @@ function send(obj){
 							<td class="comp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
 									onclick="location.href='surveyevaluate'">조회</button></td>
+							<td>매핑완료</td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">6</th>
@@ -117,7 +118,7 @@ function send(obj){
 							<td class="comp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
 									onclick="location.href='surveyevaluate'">조회</button></td>
-							<td>메핑완료</td>
+							<td>매핑완료</td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">7</th>
@@ -128,6 +129,7 @@ function send(obj){
 							<td class="comp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
 									onclick="location.href='surveyevaluate'">조회</button></td>
+							<td>매핑완료</td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">8</th>
@@ -138,7 +140,7 @@ function send(obj){
 							<td class="comp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
 									onclick="location.href='surveyevaluate'">조회</button></td>
-							<td>메핑완료</td>
+							<td>매핑완료</td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">9</th>
@@ -149,7 +151,7 @@ function send(obj){
 							<td class="omp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
 									onclick="location.href='surveyevaluate'">조회</button></td>
-							<td>메핑완료</td>
+							<td>매핑완료</td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">5</th>
@@ -160,7 +162,7 @@ function send(obj){
 							<td class="comp">전송완료</td>
 							<td><button type="button" class="btn btn-link"
 									onclick="location.href='surveyevaluate'">조회</button></td>
-							<td>메핑완료</td>
+							<td>매핑완료</td>
 						</tr>
 					</tbody>
 				</table>

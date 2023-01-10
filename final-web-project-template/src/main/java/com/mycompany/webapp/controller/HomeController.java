@@ -29,6 +29,10 @@ import com.mycompany.webapp.dto.DTO_for_json;
 import com.mycompany.webapp.dto.DTO_for_json2;
 import com.mycompany.webapp.service.IJsonService;
 
+import com.mycompany.webapp.dto.MappingDTO;
+import com.mycompany.webapp.dto.PopupDTO;
+import com.mycompany.webapp.service.IMappingService;
+
 import lombok.extern.log4j.Log4j2;
 
 @Controller
@@ -121,8 +125,6 @@ public class HomeController {
 //		}
         
 		return "home";
-		
-	
 	}
 	
 	
@@ -203,11 +205,6 @@ public class HomeController {
 		logger.info("실행");
 		//log.info("실행");
 		return "home2";
-	}
-
-	@RequestMapping(value= "/popup", method = RequestMethod.GET)
-	public String popupGET() {
-		return "popup";
 	}
 }
 
