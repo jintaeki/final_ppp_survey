@@ -255,9 +255,9 @@
 		<form:form modelAttribute="SQD" id="questioN_insert_form">
 			<!-- aa -->
 			<div class="select_radio" id="select_radio">
-				<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1()" value="10001" checked>객관식 
-				<input type="radio" name="questionTypeCode" id="sub_radio" onclick="checkit2()" value="10002"> 주관식
-				<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3()" value="10003"> 혼합식
+				<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1()"  onclick="checkit1()" value="10001" checked>객관식 
+				<input type="radio" name="questionTypeCode" id="sub_radio" onclick="checkit2()" onclick="checkit2()" value="10002"> 주관식
+				<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3()" onclick="checkit3()" value="10003"> 혼합식
 			</div>
 			<div class="question_content_area" id="question_add">
 				<div class="input-group" id="question_content">
@@ -604,7 +604,6 @@
 					}
 				});
 			
-			} 
 	/*					
 		var test = document.getElementById('add_btn');
 		test.addEventListener('click', insertQus() {

@@ -42,6 +42,10 @@ public interface ISurveyService {
 	public List<SurveyQuestionDTO>questionList(int surveySeq);
 
 	void sendMessage(int surveySeq);
+	
+	void setQuestionDelete(int questionSeq);
+	
+	void setItemDeleteQus(int questionSeq);
 }
 
 

@@ -62,6 +62,10 @@
 		
 	</delete>
 	
+	<delete id="setQuestionDelete" parameterType="SQD">
+		DELETE FROM SURVEY_QUESTION WHERE QUESTION_SEQ = #{questionSeq}
+	</delete>
+	
 	<select id="selectQuestion" parameterType="int" resultType="hashmap">
 		select sq.survey_seq, sq.question_Seq, sq.question_content, sq.question_type_code, 
 		si.item_seq, si.item_content, si.item_score 
@@ -95,7 +99,7 @@
 	</select>
 	
 	<select id="getQuestionList" resultType="com.mycompany.webapp.dto.SurveyQuestionDTO">
-		SELECT QUESTION_SEQ AS questionSeq, QUESTION_CONTENT AS questionContent, QUESTION_TYPE_CODE AS questionTypeCode
+		SELECT SURVEY_SEQ AS surveySeq, QUESTION_SEQ AS questionSeq, QUESTION_CONTENT AS questionContent, QUESTION_TYPE_CODE AS questionTypeCode
 		FROM SURVEY_QUESTION WHERE SURVEY_SEQ = #{surveySeq} 
 	</select>
 	
@@ -110,4 +114,10 @@
 	<update id="sendMessage" parameterType="int">
 		update survey_list set 	DECIDE_YN='Y' where survey_seq =#{surveySeq}
 	</update>
+	
+	<delete id="setItemDeleteQus" parameterType="int">
+		DELETE FROM SURVEY_ITEM WHERE QUESTION_SEQ = #{questionSeq}	
+	</delete>
+
+	
 </mapper>

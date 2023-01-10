@@ -280,17 +280,15 @@ public class SurveyController {
 	//문제 비동기 조회 채우
 	@RequestMapping(value="/questionList.do")
 	@ResponseBody
-	public List<SurveyQuestionDTO> questionList(@RequestParam("surveySeq") int surveySeq, Model model) {
+	public List<SurveyQuestionDTO> questionList(@RequestParam("surveySeq") int surveySeq) {
 		System.out.println("비동기 조회 컨트롤러 진입");
-		List<SurveyQuestionDTO> sqd = surveyService.getQuestionList(surveySeq);
+		List<SurveyQuestionDTO> ql = surveyService.getQuestionList(surveySeq);
 		logger.info("비동기 조회 진입");
 		logger.info("조회 seq:" + surveySeq);
+		logger.info("문제 비동기 조회 dto: " + ql);
+	
 		
-		logger.info("문제 비동기 조회 dto: " + sqd);
-		model.addAttribute("sqd", sqd);
-		
-		
-		return sqd;
+		return ql;
 	}
 	
 	//문제 업데이트
@@ -308,5 +306,11 @@ public class SurveyController {
 		return SQD;
 	}
 	
+	@RequestMapping(value="/questionDelete.do/{questionSeq}")
+	@ResponseBody
+	public void questionDelete(@PathVariable int questionSeq) {
+		logger.info("문제 삭제 진입");
+		logger.info("삭제할 문제 id: " + questionSeq);
+		surveyService.setQuestionDelete(questionSeq);
+	}
 }
-

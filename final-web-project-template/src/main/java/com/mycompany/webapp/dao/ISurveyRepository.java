@@ -41,6 +41,10 @@ public interface ISurveyRepository {
 	Date getAddDate(int serveySeq);
 	
 	void sendMessage(int surveySeq);
+	
+	void setQuestionDelete(int questionSeq);
+	
+	void setItemDeleteQus(int questionSeq);
 }
 
 

@@ -71,7 +71,6 @@ public class SurveyService implements ISurveyService{
 		logger.info("id가 들어갔니 안갔니 :" + sqd);
 		surveyDao.setQuestInsert(sqd);
 		logger.info("문제등록");
-		logger.info("");
 		setItemInsert(sqd);
 		logger.info("문항등록");
 	}
@@ -150,9 +149,18 @@ public class SurveyService implements ISurveyService{
 		surveyDao.sendMessage(surveySeq);
 	}
 
+	
+	@Override
+	public void setQuestionDelete(int questionSeq) {
+		logger.info("문제삭제 서비스 진입");
+		surveyDao.setItemDeleteQus(questionSeq);
+		surveyDao.setQuestionDelete(questionSeq);
+	}
 
-
-
+	@Override
+	public void setItemDeleteQus(int questionSeq) {
+		surveyDao.setItemDeleteQus(questionSeq);
+	}
 }
 
 
