@@ -5,21 +5,37 @@
 	<select id="setMapping" resultType="com.mycompany.webapp.dto.MappingDTO">
 
 		<![CDATA[
-			insert into mapping (survey_seq, rater_id, appraisee_id, survey_complete_yn)
-    		select
-    			S.SURVEY_SEQ,			
-				U.EMPLOYEE_ID,
-				A.PARTICIPATION_EMPLOYEE_ID,
-				'N'
-  			from survey_list s, project_history r, project_history a, user_info u, user_info i
-   			   where  u.employee_id = r.participation_employee_id 
-    		   and r.project_id = a.project_id 
-    		   and r.participation_employee_id <> a.participation_employee_id 
- 			   and s.survey_seq = #{surveySeq}
-    		   and r.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE -(365 * #{year}) , 'YYYY-MM-dd')
-    		   and i.employee_id = a.participation_employee_id
-      		   and i.grade_id = 2
-    		ORDER BY u.employee_id
+    		INSERT INTO MAPPING (SURVEY_SEQ, RATER_ID, APPRAISEE_ID, SURVEY_COMPLETE_YN)
+          SELECT 
+             SURVEY_SEQ,         
+               EMPLOYEE_ID,
+             PARTICIPATION_EMPLOYEE_ID,
+             'N' 
+             FROM(
+                SELECT
+                   SURVEY_SEQ,         
+                   EMPLOYEE_ID,
+                   PARTICIPATION_EMPLOYEE_ID,
+                   'N',
+                   ROW_NUMBER() OVER (PARTITION BY EMPLOYEE_ID ORDER BY EMPLOYEE_ID) AS NUM
+               FROM(
+                   SELECT
+                       S.SURVEY_SEQ,         
+                        U.EMPLOYEE_ID,
+                            A.PARTICIPATION_EMPLOYEE_ID,
+                         'N'
+                   FROM SURVEY_LIST S, PROJECT_HISTORY R, PROJECT_HISTORY A, USER_INFO U, USER_INFO I
+                     WHERE U.EMPLOYEE_ID = R.PARTICIPATION_EMPLOYEE_ID 
+                       AND     R.PROJECT_ID = A.PROJECT_ID 
+                       AND   R.PARTICIPATION_EMPLOYEE_ID <> A.PARTICIPATION_EMPLOYEE_ID 
+                       AND   S.SURVEY_SEQ = #{surveySeq}
+                       AND   R.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE -(365 * #{year}) , 'YYYY-MM-dd')
+                       AND   I.EMPLOYEE_ID = A.PARTICIPATION_EMPLOYEE_ID
+                     AND   I.GRADE_ID = 2
+                    ORDER BY U.EMPLOYEE_ID, DBMS_RANDOM.VALUE
+                   ) 
+               )
+         WHERE NUM <= #{number}
 		]]>
 	</select>
 	
@@ -69,7 +85,7 @@
      		select distinct
             	 s.SURVEY_name        AS "surveyName",
             	 o.department_name    AS "departmentName",
-            	 i.EMPLOYEE_name      AS "employeeName"
+            	 i.EMPLOYEE_name      AS "appraiseeName"
        		from 
             	survey_list s, 
             	project_history r, 

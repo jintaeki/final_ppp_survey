@@ -24,7 +24,6 @@ function popup()
 							<th scope="col">직급</th>
 							<th scope="col">평가자</th>
 							<th scope="col">피평가자</th>
-							<th scope="col">추가</th>
 							<th scope="col">삭제여부</th>
 						</tr>
 					</thead>
@@ -41,8 +40,11 @@ function popup()
 										<td></td>	
 										<td>${mapping.gradeName}</td>
 										<td>${mapping.raterName}</td>
-										<td>${mapping.appraiseeName}</td>
-										<td><input type="button" value="추가" onclick="popup();" /></td>
+											
+											<td>${mapping.appraiseeName} 
+											<input type="button" class="add_btn" value="+" onclick="popup();" />
+											</td>
+											
 										<td><input type="button" id="delete" class="btn btn-primary"
 								         		   onclick="delete(${mapping.raterId})" value="삭제">
 										</td>

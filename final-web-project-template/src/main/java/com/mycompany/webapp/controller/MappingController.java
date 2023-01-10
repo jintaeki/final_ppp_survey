@@ -35,7 +35,7 @@ public class MappingController {
 	@RequestMapping(value="/mapping/set.do", method=RequestMethod.POST)
 	public String setMapping(@RequestParam int surveySeq, @RequestParam int year, @RequestParam int number,
 			Model model, RedirectAttributes redirectAttrs) {
-		logger.info("메핑실행");			
+		logger.info("매핑실행");			
 		try {
 			if(mappingService.mappingCheck(surveySeq) == 0) {				
 				mappingService.setMapping(surveySeq, year, number);
