@@ -1,47 +1,44 @@
 package com.mycompany.webapp.dto;
 
-import java.util.Date;
 
 public class ProjectHistoryDTO {
-	private int projectId;
-	private int participationEmployeeId;
-	private Date projectStartDate;
-	private Date projectClosedDate;
+	private String projectId;
+	private String participationEmployeeId;
+	private String projectStartDate;
+	private String projectClosedDate;
 	
-	
-	public int getProjectId() {
+	public String getProjectId() {
 		return projectId;
 	}
-	public void setProjectId(int projectId) {
-		this.projectId = projectId;
-	}
-	public int getParticipationEmployeeId() {
+	public String getParticipationEmployeeId() {
 		return participationEmployeeId;
 	}
-	public void setParticipationEmployeeId(int participationEmployeeId) {
-		this.participationEmployeeId = participationEmployeeId;
-	}
-	public Date getProjectStartDate() {
+	public String getProjectStartDate() {
 		return projectStartDate;
 	}
-	public void setProjectStartDate(Date projectStartDate) {
-		this.projectStartDate = projectStartDate;
-	}
-	public Date getProjectClosedDate() {
+	public String getProjectClosedDate() {
 		return projectClosedDate;
 	}
-	public void setProjectClosedDate(Date projectClosedDate) {
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
+	}
+	public void setParticipationEmployeeId(String participationEmployeeId) {
+		this.participationEmployeeId = participationEmployeeId;
+	}
+	public void setProjectStartDate(String projectStartDate) {
+		this.projectStartDate = projectStartDate;
+	}
+	public void setProjectClosedDate(String projectClosedDate) {
 		this.projectClosedDate = projectClosedDate;
 	}
 	@Override
 	public String toString() {
 		return "ProjectHistoryDTO [projectId=" + projectId + ", participationEmployeeId=" + participationEmployeeId
-				+ ", projectStartDate=" + projectStartDate + ", projectClosedDate=" + projectClosedDate
-				+ ", getProjectId()=" + getProjectId() + ", getParticipationEmployeeId()="
-				+ getParticipationEmployeeId() + ", getProjectStartDate()=" + getProjectStartDate()
-				+ ", getProjectClosedDate()=" + getProjectClosedDate() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
+				+ ", projectStartDate=" + projectStartDate + ", projectClosedDate=" + projectClosedDate + "]";
 	}
 	
+	
+	
+		
 	
 }

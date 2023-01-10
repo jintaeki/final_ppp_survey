@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mycompany.webapp.dto.MappingDTO;
+import com.mycompany.webapp.dto.PopupDTO;
 import com.mycompany.webapp.service.IMappingService;
 
 import lombok.extern.log4j.Log4j2;
@@ -30,39 +32,28 @@ public class MappingController {
 	@Autowired
 	IMappingService mappingService;
 	
-	@RequestMapping(value="/mapping/set.do", method=RequestMethod.GET)
-	public String setMapping(@PathVariable int surveyId, Model model) {
-		logger.info("실행");
-		model.addAttribute("surveyId", surveyId);
-		return "surveylistpopup";
-	}
-	
 	@RequestMapping(value="/mapping/set.do", method=RequestMethod.POST)
-	public String setMapping(@ModelAttribute("map") @Valid MappingDTO map, 
-			@PathVariable int surveyId, @PathVariable int year, @PathVariable int number,
-			BindingResult result, RedirectAttributes redirectAttrs, Model model) {
-		logger.info("실행");
+	public String setMapping(@RequestParam int surveySeq, @RequestParam int year, @RequestParam int number,
+			Model model, RedirectAttributes redirectAttrs) {
+		logger.info("메핑실행");			
 		try {
-			map.setSurveyId(map.getSurveyId());
-			map.setRaterId(map.getRaterId());
-			map.setAppraiseeId(map.getAppraiseeId());
-		
-			mappingService.setMapping(surveyId, year, number);
-			
-			List<MappingDTO> mappingList = mappingService.selectMappingData();
+			if(mappingService.mappingCheck(surveySeq) == 0) {				
+				mappingService.setMapping(surveySeq, year, number);
+			}
+			List<PopupDTO> mappingList = mappingService.selectMappingData(surveySeq);
 			model.addAttribute("mappingList", mappingList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			redirectAttrs.addFlashAttribute("message", e.getMessage());
 		}
-		return "redirect:/home2";
+		return "/home2";
 	}
 	
 	@RequestMapping(value="/mapping/serch-user.do", method=RequestMethod.GET)
-	public String insertAppraise(@PathVariable int raterId, Model model) {
+	public String insertAppraise(@PathVariable String raterId, Model model) {
 		logger.info("실행");
 		try {
-			List<MappingDTO> mappingList = mappingService.selectRater(raterId);
+			List<PopupDTO> mappingList = mappingService.selectRater(raterId);
 			model.addAttribute("mappingList", mappingList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,11 +66,11 @@ public class MappingController {
 			BindingResult result, RedirectAttributes redirectAttrs) {
 		logger.info("실행");
 		try {
-			int surveyId = map.getSurveyId();
-			int raterId = map.getRaterId();
-			int appraiseeId = map.getAppraiseeId();
+			int surveySeq = map.getSurveySeq();
+			String raterId = map.getRaterId();
+			String appraiseeId = map.getAppraiseeId();
 		
-			mappingService.insertAppraiseId(surveyId, raterId, appraiseeId);
+			mappingService.insertAppraiseId(surveySeq, raterId, appraiseeId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -90,6 +81,13 @@ public class MappingController {
 	public String deleteAppraiseeId(MappingDTO map, BindingResult result, HttpSession session, Model model) {
 		logger.info("실행");
 		mappingService.deleteAppraiseId(map.getRaterId(), map.getAppraiseeId());
-		return "redirect:/home2" + map.getSurveyId();
+		return "redirect:/home2" + map.getSurveySeq();
+	}
+	
+	@RequestMapping("/mappingview")
+	public String mapping_view() {
+		logger.info("실행");
+		//log.info("실행");
+		return "home2";
 	}
 }

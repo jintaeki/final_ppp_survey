@@ -3,21 +3,9 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/survey_list.css"/>
 
 <script>
-function send(obj){	
+function delete(obj){	
 	const tag = $(obj);
-	
-	const completeMsg = `전송완료`;
-	const complete = `확정`;
-	const text = `<button type="button" class="btn btn-link" onclick="location.href='mapping/deleteMapping.do'">조회</button>`;
-	tag.parent().next().append(text);
-	
-	tag.parent().prev().html(complete);
-	tag.parent().prev().css('font-weight', 'bold');
-	
-	tag.closest('tr').css('color', '#ccc');	
-	tag.parent().html(completeMsg);
-		
-	tag.hide();
+
 		
    }
 
@@ -29,7 +17,9 @@ function popup()
 
 <div class="card m-2">
 	<div class="card-body">
-		<h3>설문조사이름 - 평가자-피평가자 목록</h3>
+		<div>
+			<h3 style="text-align: center;">${mappingList[0].surveyName} 매핑 목록</h3>
+		</div>
 		<div class="container my-5">
 			<div class="row">
 				<table class="table">
@@ -39,80 +29,33 @@ function popup()
 							<th scope="col">직급</th>
 							<th scope="col">평가자</th>
 							<th scope="col">피평가자</th>
+							<th scope="col">추가</th>
 							<th scope="col">삭제여부</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<th scope="row">1</th>
-							<td>직급</td>
-							<td class="sv_name"><input type="button" value="대상 추가" onclick="popup();" /></td>
-							<td>이떙떙</td>
-							<td>삭제 버튼</td>
-						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>직급</td>
-							<td class="sv_name"><input type="button" value="대상 추가" onclick="popup();" /></td>
-							<td>이떙떙</td>
-							<td>삭제 버튼</td>
-						</tr>
-						<tr>
-							<th scope="row">3</th>
-							<td>직급</td>
-							<td class="sv_name"><input type="button" value="대상 추가" onclick="popup();" /></td>
-							<td>이떙떙</td>
-							<td>삭제 버튼</td>
-						</tr>
-						<tr>
-							<th scope="row">4</th>
-							<td>직급</td>
-							<td class="sv_name"><input type="button" value="대상 추가" onclick="popup();" /></td>
-							<td>이떙떙</td>
-							<td>삭제 버튼</td>
-						</tr>
-						<tr>
-							<th scope="row">5</th>
-							<td>직급</td>
-							<td class="sv_name"><input type="button" value="대상 추가" onclick="popup();" /></td>
-							<td>이떙떙</td>
-							<td>삭제 버튼</td>
-						</tr>
-						<tr>
-							<th scope="row">6</th>
-							<td>직급</td>
-							<td class="sv_name"><input type="button" value="대상 추가" onclick="popup();" /></td>
-							<td>이떙떙</td>
-							<td>삭제 버튼</td>
-						</tr>
-						<tr>
-							<th scope="row">7</th>
-							<td>직급</td>
-							<td class="sv_name"><input type="button" value="대상 추가" onclick="popup();" /></td>
-							<td>이떙떙</td>
-							<td>삭제 버튼</td>
-						</tr>
-						<tr>
-							<th scope="row">8</th>
-							<td>직급</td>
-							<td class="sv_name"><input type="button" value="대상 추가" onclick="popup();" /></td>
-							<td>이떙떙</td>
-							<td>삭제 버튼</td>
-						</tr>
-						<tr>
-							<th scope="row">9</th>
-							<td>직급</td>
-							<td class="sv_name"><input type="button" value="대상 추가" onclick="popup();" /></td>
-							<td>이떙떙</td>
-							<td>삭제 버튼</td>
-						</tr>
-						<tr>
-							<th scope="row">5</th>
-							<td>직급</td>
-							<td class="sv_name"><input type="button" value="대상 추가" onclick="popup();" /></td>
-							<td>이떙떙</td>
-							<td>삭제 버튼</td>
-						</tr>
+						<c:choose>
+							<c:when test="${empty mappingList}">
+								<tr>
+									<td>매칭된 평가자가 없습니다.
+								<tr>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="mapping" items="${mappingList}">
+									<tr id="${mapping.raterId}">
+										<td></td>	
+										<td>${mapping.gradeName}</td>
+										<td>${mapping.raterName}</td>
+										<td>${mapping.appraiseeName}</td>
+										<td><input type="button" id="delete" class="btn btn-primary"
+								         		   onclick="popup()" value="추가"></td>
+										<td><input type="button" id="delete" class="btn btn-primary"
+								         		   onclick="delete(${mapping.raterId})" value="삭제">
+										</td>
+									</tr>
+								</c:forEach>							
+							</c:otherwise>
+						</c:choose>
 					</tbody>
 				</table>
 				<ul class="pagination">

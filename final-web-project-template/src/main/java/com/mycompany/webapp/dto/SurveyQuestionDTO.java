@@ -1,44 +1,82 @@
 package com.mycompany.webapp.dto;
 
+import java.util.Date;
+
 public class SurveyQuestionDTO {
-	private int surveyId;
-	private int questionId;
+	//for 문제
+	private int surveySeq;
+	private int questionSeq;
 	private String questionContent;
-	private int questionTypeCode;
+	private String questionTypeCode;
 	
-	public int getSurveyId() {
-		return surveyId;
+	
+	private Date addDate;
+	
+	//for 문항
+	// questionId는 문제와 동일하게 사용
+	
+	private int itemSeq;
+	private String itemContent;
+	private String itemScore;
+	
+	public int getSurveySeq() {
+		return surveySeq;
 	}
-	public void setSurveyId(int surveyId) {
-		this.surveyId = surveyId;
-	}
-	public int getQuestionId() {
-		return questionId;
-	}
-	public void setQuestionId(int questionId) {
-		this.questionId = questionId;
+	public int getQuestionSeq() {
+		return questionSeq;
 	}
 	public String getQuestionContent() {
 		return questionContent;
 	}
+	public String getQuestionTypeCode() {
+		return questionTypeCode;
+	}
+	public void setSurveySeq(int surveySeq) {
+		this.surveySeq = surveySeq;
+	}
+	public void setQuestionSeq(int questionSeq) {
+		this.questionSeq = questionSeq;
+	}
 	public void setQuestionContent(String questionContent) {
 		this.questionContent = questionContent;
 	}
-	public int getQuestionTypeCode() {
-		return questionTypeCode;
-	}
-	public void setQuestionTypeCode(int questionTypeCode) {
+	public void setQuestionTypeCode(String questionTypeCode) {
 		this.questionTypeCode = questionTypeCode;
+	}
+	
+	public int getItemSeq() {
+		return itemSeq;
+	}
+	public String getItemContent() {
+		return itemContent;
+	}
+	public String getItemScore() {
+		return itemScore;
+	}
+	public void setItemSeq(int itemSeq) {
+		this.itemSeq = itemSeq;
+	}
+	public void setItemContent(String itemContent) {
+		this.itemContent = itemContent;
+	}
+	public void setItemScore(String itemScore) {
+		this.itemScore = itemScore;
+	}
+	
+	
+	
+	public Date getAddDate() {
+		return addDate;
+	}
+	public void setAddDate(Date addDate) {
+		this.addDate = addDate;
 	}
 	@Override
 	public String toString() {
-		return "Survey_QuestionDTO [surveyId=" + surveyId + ", questionId=" + questionId + ", questionContent="
-				+ questionContent + ", questionTypeCode=" + questionTypeCode + ", getSurveyId()=" + getSurveyId()
-				+ ", getQuestionId()=" + getQuestionId() + ", getQuestionContent()=" + getQuestionContent()
-				+ ", getQuestionTypeCode()=" + getQuestionTypeCode() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
+		return "SurveyQuestionDTO [surveySeq=" + surveySeq + ", questionSeq=" + questionSeq + ", questionContent="
+				+ questionContent + ", questionTypeCode=" + questionTypeCode + ", addDate=" + addDate + ", itemSeq="
+				+ itemSeq + ", itemContent=" + itemContent + ", itemScore=" + itemScore + "]";
 	}
-	
-	
+
 	
 }

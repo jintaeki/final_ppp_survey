@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.IMappingRepository;
-import com.mycompany.webapp.dto.MappingDTO;
+import com.mycompany.webapp.dto.PopupDTO;
 
 @Service
 public class MappingService implements IMappingService {
@@ -15,28 +15,32 @@ public class MappingService implements IMappingService {
 	IMappingRepository mappingrepository;
 	
 	@Override
-	public void setMapping(int surveyId, int year, int number) {
-		mappingrepository.setMapping(surveyId, year, number);
+	public void setMapping(int surveySeq, int year, int number) {
+		mappingrepository.setMapping(surveySeq, year, number);
+	}
+	
+	@Override
+	public int mappingCheck(int surveySeq) {
+		return mappingrepository.mappingCheck(surveySeq);
 	}
 
 	@Override
-	public List<MappingDTO> selectMappingData() {
-		return mappingrepository.selectMappingData();
+	public List<PopupDTO> selectMappingData(int surveySeq) {
+		return mappingrepository.selectMappingData(surveySeq);
 	}
 
 	@Override
-	public List<MappingDTO> selectRater(int raterId) {
+	public List<PopupDTO> selectRater(String raterId) {
 		return mappingrepository.selectRater(raterId);
 	}
 	
 	@Override
-	public void insertAppraiseId(int surveyId, int raterId, int appraiseeId) {
-		mappingrepository.insertAppraisee(surveyId, raterId, appraiseeId);
+	public void insertAppraiseId(int surveySeq, String raterId, String appraiseeId) {
+		mappingrepository.insertAppraisee(surveySeq, raterId, appraiseeId);
 	}
 
 	@Override
-	public void  deleteAppraiseId(int raterId, int appraiseeId) {
+	public void  deleteAppraiseId(String raterId, String appraiseeId) {
 		mappingrepository.deleteAppriesee(raterId, appraiseeId);
 	}
-
 }

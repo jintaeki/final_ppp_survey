@@ -134,12 +134,12 @@ public class HomeController {
 //		return "home";
 //	}
 	
-	@RequestMapping("/home2")
-	public String home2() {
-		logger.info("실행");
-		//log.info("실행");
-		return "home2";
-	}
+//	@RequestMapping("/home2")
+//	public String home2() {
+//		logger.info("실행");
+//		//log.info("실행");
+//		return "home2";
+//	}
 	
 	@RequestMapping("/loginafter")
 	public String login_after() {
@@ -198,12 +198,8 @@ public class HomeController {
 		//log.info("실행");
 		return "survey";
 	}
-	@RequestMapping("/mappingview")
-	public String mapping_view() {
-		logger.info("실행");
-		//log.info("실행");
-		return "home2";
-	}
+	
+
 
 	@RequestMapping(value= "/popup", method = RequestMethod.GET)
 	public String popupGET() {

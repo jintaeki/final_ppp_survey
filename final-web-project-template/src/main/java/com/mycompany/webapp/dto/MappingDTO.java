@@ -1,43 +1,43 @@
 package com.mycompany.webapp.dto;
 
 public class MappingDTO {
-	private int surveyId;
-	private int raterId;
-	private int appraiseeId;
-	private String surveyCompleteCheck;
-	
-	
-	public int getSurveyId() {
-		return surveyId;
+	private int surveySeq;
+	private String raterId;
+	private String appraiseeId;
+	private String surveyCompleteYN;
+	public int getSurveySeq() {
+		return surveySeq;
 	}
-	public void setSurveyId(int surveyId) {
-		this.surveyId = surveyId;
-	}
-	public int getRaterId() {
+	public String getRaterId() {
 		return raterId;
 	}
-	public void setRaterId(int raterId) {
-		this.raterId = raterId;
-	}
-	public int getAppraiseeId() {
+	public String getAppraiseeId() {
 		return appraiseeId;
 	}
-	public void setAppraiseeId(int appraiseeId) {
+	public String getSurveyCompleteYN() {
+		return surveyCompleteYN;
+	}
+	public void setSurveySeq(int surveySeq) {
+		this.surveySeq = surveySeq;
+	}
+	public void setRaterId(String raterId) {
+		this.raterId = raterId;
+	}
+	public void setAppraiseeId(String appraiseeId) {
 		this.appraiseeId = appraiseeId;
 	}
-	public String getSurveyCompleteCheck() {
-		return surveyCompleteCheck;
-	}
-	public void setSurveyCompleteCheck(String surveyCompleteCheck) {
-		this.surveyCompleteCheck = surveyCompleteCheck;
+	public void setSurveyCompleteYN(String surveyCompleteYN) {
+		this.surveyCompleteYN = surveyCompleteYN;
 	}
 	@Override
 	public String toString() {
-		return "MappingDTO [surveyId=" + surveyId + ", raterId=" + raterId + ", appraiseeId=" + appraiseeId
-				+ ", surveyCompleteCheck=" + surveyCompleteCheck + ", getSurveyId()=" + getSurveyId()
-				+ ", getRaterId()=" + getRaterId() + ", getAppraiseeId()=" + getAppraiseeId()
-				+ ", getSurveyCompleteCheck()=" + getSurveyCompleteCheck() + ", getClass()=" + getClass()
-				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+		return "MappingDTO [surveySeq=" + surveySeq + ", raterId=" + raterId + ", appraiseeId=" + appraiseeId
+				+ ", surveyCompleteYN=" + surveyCompleteYN + "]";
 	}
+	
+	
+	
+	
+
 	
 }

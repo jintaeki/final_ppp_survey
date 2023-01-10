@@ -65,9 +65,12 @@ function send(obj){
 							<td><input type="button" id="send" class="btn btn-primary"
 								onclick="send(this)" value="발송"></td>
 							<td></td>
-							<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+							<td>
+								<button type="button" class="btn btn-primary" 
+										data-toggle="modal" data-target="#exampleModal">
  									매핑
-								</button></td>
+								</button>
+							</td>
 						</tr>
 						<tr id="grey">
 							<th scope="row">2</th>
@@ -189,17 +192,34 @@ function send(obj){
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">매핑 조건 선택</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+     	<c:url value="/mapping/set.do" var="actionURL"/>
+     	<form:form action="${actionURL}" modelAttribute="map">
+  		   	<input type="hidden" id="surveySeq" name="surveySeq" value="2241012">
+     		<br>
+     		<h5> 다면평가에 포함될 프로젝트의 제한 년도 정하기 </h5>
+      	   	<select class="form-control" name="year">
+  				<option value="1">최근 1년전에 끝난 프로젝트</option>
+  				<option value="2">최근 2년전에 끝난 프로젝트</option>
+  				<option value="3">최근 3년전에 끝난 프로젝트</option>
+		 	</select>
+		 	<br>
+		 	<h5> 다면평가를 할 피평가자 수 정하기 </h5>
+		 	<select class="form-control" name="number">
+  				<option value="3">3명</option>
+  				<option value="5">5명</option>
+  				<option value="10">10명</option>
+		 	</select>
+      		<div class="modal-footer">
+        		<button type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</button>
+        		<input type="submit" class="btn btn-primary" value="메핑하기">
+      		</div>
+      	</form:form>
       </div>
     </div>
   </div>
