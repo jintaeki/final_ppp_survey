@@ -40,7 +40,7 @@
                $tr = $("#tr_" + surveyName);
                addObj.survey_Name = $tr.find("input[name='surveyName']").val();
                addObj.department_Name = $tr.find("input[name='departmentName']").val();
-               addObj.appraisee_id = $tr.find("input[name='appraiseeId']").val();
+               addObj.appraisee_Name = $tr.find("input[name='appraiseeName']").val();
 
                resArr.push(resObj);
             });
@@ -66,14 +66,14 @@
                   <tr id="tr_${result.surveyName}">
                         <input type="hidden" name="surveyName" value="${result.surveyName}" /> 
                         <input type="hidden" name="departmentName" value="${result.departmentName}" /> 
-                        <input type="hidden" name="appraiseeId" value="${result.appraiseeId}" />
+                        <input type="hidden" name="appraiseeName" value="${result.appraiseeName}" />
 
                      <td>
                         <input type="checkbox" name="chk_res" value="${result.surveyName}" />
                      </td>
                         <td class="surveyName"><c:out value="${result.surveyName}" /></td>
                         <td class=departmentName><c:out value="${result.departmentName}" /></td>
-                        <td class="appraiseeId"><c:out value="${result.appraiseeId}" /></td>
+                        <td class="appraiseeName"><c:out value="${result.appraiseeName}" /></td>
                   </tr>
                </c:forEach>
                <c:if test="${fn:length(popupList) == 0}">

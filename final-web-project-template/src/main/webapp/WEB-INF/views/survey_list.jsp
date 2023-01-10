@@ -209,9 +209,9 @@ function send(obj){
 		 	<br>
 		 	<h5> 다면평가를 할 피평가자 수 정하기 </h5>
 		 	<select class="form-control" name="number">
+  				<option value="1">1명</option>
+  				<option value="2">2명</option>
   				<option value="3">3명</option>
-  				<option value="5">5명</option>
-  				<option value="10">10명</option>
 		 	</select>
       		<div class="modal-footer">
         		<button type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</button>

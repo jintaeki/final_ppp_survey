@@ -1,10 +1,12 @@
 package com.mycompany.webapp.controller;
 
+import java.io.PrintWriter;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mycompany.webapp.dto.MappingDTO;
@@ -87,11 +91,24 @@ public class MappingController {
 		return "mappingpopup";
 	}
 	
-	@RequestMapping(value="mapping/deleteMapping.do", method=RequestMethod.POST)
-	public String deleteAppraiseeId(MappingDTO map, BindingResult result, HttpSession session, Model model) {
+	@RequestMapping(value="/mapping/deleteMapping.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String deleteAppraiseeId(@RequestBody String raterId, @RequestBody String appraiseeId, 
+			HttpServletResponse response, Model model) throws Exception {
 		logger.info("실행");
-		mappingService.deleteAppraiseId(map.getRaterId(), map.getAppraiseeId());
-		return "redirect:/home2" + map.getSurveySeq();
+		JSONObject resMap = new JSONObject();
+		
+		try {
+			mappingService.deleteAppraiseId(raterId, appraiseeId);
+			resMap.put("res", "success");
+			resMap.put("msg", "삭제를 완료하였습니다.");
+		} catch (Exception e) {
+			
+		}
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.print(resMap);
+		return "return null";
 	}
 	
 	@RequestMapping("/mappingview")
