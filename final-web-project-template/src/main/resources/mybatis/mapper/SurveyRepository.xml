@@ -62,6 +62,10 @@
 		
 	</delete>
 	
+	<delete id="setQuestionDelete" parameterType="SQD">
+		DELETE FROM SURVEY_QUESTION WHERE QUESTION_SEQ = #{questionSeq}
+	</delete>
+	
 	<select id="selectQuestion" parameterType="int" resultType="hashmap">
 		select sq.survey_seq, sq.question_Seq, sq.question_content, sq.question_type_code, 
 		si.item_seq, si.item_content, si.item_score 
@@ -174,5 +178,9 @@
             from survey_question sq, survey_item si
             where sq.question_seq = #{questionSeq} and sq.question_seq = si.question_seq
 	</select>
+	
+	<delete id="setItemDeleteQus" parameterType="int">
+		DELETE FROM SURVEY_ITEM WHERE QUESTION_SEQ = #{questionSeq}	
+	</delete>
 	
 </mapper>

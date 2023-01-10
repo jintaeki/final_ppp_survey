@@ -12,14 +12,14 @@ import com.mycompany.webapp.dto.SurveyQuestionDTO;
 public interface ISurveyRepository {
 
 	void setSurvey(SurveyListDTO surveylist);
-	
+
 	void setSurveyUpdate(SurveyListDTO surveylist);
-	
+
 	void setItemUpdate(SurveyQuestionDTO surveyquestion);
 	void setItemDelete(SurveyQuestionDTO sqd);
-	
+
 	int selectMaxSurveyId();
-	
+
 	void setQuestInsert(SurveyQuestionDTO SQD);
 	int selectMaxQuestionId();
 	int selectMaxItemId();
@@ -27,21 +27,25 @@ public interface ISurveyRepository {
 
 	//문제 비동기 조회 목적
 	List<Map<String, Object>> selectQuestion(int surveyId);
-	
+
 	List<SurveyListDTO> selectSurveyList(PagingDTO pagingdto);	
-	
+
 	SurveyListDTO selectSurvey(int surveyid);
-	
+
 	//SurveyQuestionDTO getQuestionList(int surveyId);
 	void setQuestUpdate(SurveyQuestionDTO SQD);
 
 
 	List<SurveyQuestionDTO> getQuestionList(int surveyId);
-	
+
 	Date getAddDate(int serveySeq);
-	
+
 	void sendMessage(int surveySeq);
-	
+
+	void setQuestionDelete(int questionSeq);
+
+	void setItemDeleteQus(int questionSeq);
+
 	List<SurveyListDTO> searchListByKeyword(PagingDTO pagingdto);
 
 	List<SurveyListDTO> searchListByKeywordAndDicideYN(PagingDTO pagingdto);
@@ -53,8 +57,8 @@ public interface ISurveyRepository {
 }
 
 
-	
 
-	
-	
+
+
+
 

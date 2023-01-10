@@ -139,9 +139,9 @@ public class SurveyService implements ISurveyService{
 	}
 
 	@Override
-	public SurveyQuestionDTO getQuestionList(int surveyId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<SurveyQuestionDTO> getQuestionList(int surveySeq) {
+		logger.info("문제 조회 서비스: " + surveySeq);
+		return surveyDao.getQuestionList(surveySeq);
 	}
 		
 // 1월 9일 여기부터 시작 
@@ -181,6 +181,17 @@ public class SurveyService implements ISurveyService{
 		return surveyDao.selectQuestionBySeq(questionSeq);
 	}
 	
+	@Override
+	public void setQuestionDelete(int questionSeq) {
+		logger.info("문제삭제 서비스 진입");
+		surveyDao.setItemDeleteQus(questionSeq);
+		surveyDao.setQuestionDelete(questionSeq);
+	}
+
+	@Override
+	public void setItemDeleteQus(int questionSeq) {
+		surveyDao.setItemDeleteQus(questionSeq);
+	}
 }
 
 
