@@ -43,4 +43,13 @@ public class MappingService implements IMappingService {
 	public void  deleteAppraiseId(String raterId, String appraiseeId) {
 		mappingrepository.deleteAppriesee(raterId, appraiseeId);
 	}
+	
+	@Override
+	public List<PopupDTO> getPopup() {
+		return mappingrepository.getPopup();
+	}
 }
+
+
+
+

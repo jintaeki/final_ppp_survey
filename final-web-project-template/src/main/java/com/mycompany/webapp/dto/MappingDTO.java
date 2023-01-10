@@ -1,3 +1,4 @@
+
 package com.mycompany.webapp.dto;
 
 public class MappingDTO {
@@ -34,10 +35,4 @@ public class MappingDTO {
 		return "MappingDTO [surveySeq=" + surveySeq + ", raterId=" + raterId + ", appraiseeId=" + appraiseeId
 				+ ", surveyCompleteYN=" + surveyCompleteYN + "]";
 	}
-	
-	
-	
-	
-
-	
 }

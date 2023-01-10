@@ -52,7 +52,7 @@ function send(obj){
 							<th scope="col">확정여부</th>
 							<th scope="col">상태</th>
 							<th scope="col">결과</th>
-							<th scope="col">메핑</th>
+							<th scope="col">매핑</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -65,12 +65,17 @@ function send(obj){
 							<td><input type="button" id="send" class="btn btn-primary"
 								onclick="send(this)" value="발송"></td>
 							<td></td>
+<<<<<<< HEAD
 							<td>
 								<button type="button" class="btn btn-primary" 
 										data-toggle="modal" data-target="#exampleModal">
  									매핑
 								</button>
 							</td>
+=======
+							<td><input type="button" id="map" class="btn btn-primary"
+								onclick="location.href='mappingview'" value="매핑"></td>
+>>>>>>> refs/heads/chansoo
 						</tr>
 						<tr id="grey">
 							<th scope="row">2</th>

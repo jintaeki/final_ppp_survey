@@ -1,3 +1,4 @@
+
 package com.mycompany.webapp.dao;
 
 import com.mycompany.webapp.dto.PopupDTO;
@@ -25,4 +26,7 @@ public interface IMappingRepository {
 	// 피평가자를 피평가자 목록에서 제외
 	void deleteAppriesee(String raterId, String appraiseeId);
 	
+	// 병준형
+	List<PopupDTO> getPopup();				  // 전체 리스트 출력
 }
+

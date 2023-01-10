@@ -3,15 +3,15 @@ package com.mycompany.webapp.dto;
 public class PopupDTO {
 	private int projectId;		 	// 프로젝트 아이디
 	private int gradeId;		    // 직급 아이디
-	private int departmentId; 	    // 부서 아이디
+	private int departmentId; 	    // 피평가자 부서 아이디
 	private int surveySeq;	 	    // 설문 아이디
 	private int raterId;		    // 평가자 아이디
 	private int appraiseeId;	    // 피평가자 아이디
 	private String surveyName;      // 설문명
-	private String departmentName;  // 부서명
-	private String raterName;    // 이름
-	private String appraiseeName;    // 이름
-	private String gradeName;       // 직급 이름
+	private String departmentName;  // 피평가자 부서명
+	private String raterName;    	// 평가자 이름
+	private String appraiseeName;   // 피평가자 이름
+	private String gradeName;       // 평가자 직급 이름
 	public int getProjectId() {
 		return projectId;
 	}
@@ -85,6 +85,4 @@ public class PopupDTO {
 				+ surveyName + ", departmentName=" + departmentName + ", raterName=" + raterName + ", appraiseeName="
 				+ appraiseeName + ", gradeName=" + gradeName + "]";
 	}
-	
-
 }

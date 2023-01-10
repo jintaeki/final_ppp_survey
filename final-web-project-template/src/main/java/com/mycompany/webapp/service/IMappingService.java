@@ -22,5 +22,7 @@ public interface IMappingService {
 	
 	// 삭제하기 
 	void deleteAppraiseId(String raterId, String appraiseeId);
+
+	// 병준
+	List<PopupDTO> getPopup();	
 }
-	

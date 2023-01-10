@@ -49,6 +49,16 @@ public class MappingController {
 		return "/home2";
 	}
 	
+	// 병준
+	@RequestMapping(value="/popup", method=RequestMethod.GET)
+	public String surveyName(Model model) { 
+		List<PopupDTO> getPopup = mappingService.getPopup();
+		logger.info(getPopup.toString());
+		model.addAttribute("getPopup", getPopup);
+		logger.info("getPopup"+getPopup);
+		return "popup"; 
+		}
+	
 	@RequestMapping(value="/mapping/serch-user.do", method=RequestMethod.GET)
 	public String insertAppraise(@PathVariable String raterId, Model model) {
 		logger.info("실행");
@@ -91,3 +101,7 @@ public class MappingController {
 		return "home2";
 	}
 }
+
+
+
+	
