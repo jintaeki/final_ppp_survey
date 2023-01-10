@@ -64,32 +64,28 @@
 			]]>
 	</select>
 
-	<select id="getPopup" parameterType="int" resultType="com.mycompany.webapp.dto.PopupDTO">
-		<![CDATA[
-		select distinct
-             s.SURVEY_name        AS "surveyName",
-             o.department_name    AS "departmentName",
-             i.EMPLOYEE_name      AS "employeeName"
-        
-        from 
-        	 survey_list s, 
-        	 project_history r, 
-        	 project_history a, 
-             organization_chart o, 
-             user_info i
-       
-        where 
-        	 r.project_id = a.project_id 
-         and r.participation_employee_id <> a.participation_employee_id 
-         and s.survey_seq = 2310103
-         and i.grade_id = 2
-         and r.PROJECT_CLOSED_DATE <= TO_CHAR(SYSDATE -(365 * 1),'YY/MM/dd')
-         and i.employee_id = r.participation_employee_id
-         and i.department_id = o.department_id  
-        
-        ORDER BY  i.employee_name
-		]]>
-	</select>
+	<select id="getPopup" parameterType="map" resultType="com.mycompany.webapp.dto.PopupDTO">
+    	<![CDATA[
+     		select distinct
+            	 s.SURVEY_name        AS "surveyName",
+            	 o.department_name    AS "departmentName",
+            	 i.EMPLOYEE_name      AS "employeeName"
+       		from 
+            	survey_list s, 
+            	project_history r, 
+            	project_history a, 
+            	organization_chart o, 
+             	user_info i
+       		where r.project_id = a.project_id 
+         		and r.participation_employee_id <> a.participation_employee_id 
+         		and s.survey_seq = 2310103
+         		and i.grade_id = 2
+         		and r.PROJECT_CLOSED_DATE <= TO_CHAR(SYSDATE -(365 * 1),'YY/MM/dd')
+         		and i.employee_id = r.participation_employee_id
+         		and i.department_id = o.department_id  
+        	ORDER BY i.employee_name
+      	]]>
+   	</select>
 	
 	<select id="selectRater" parameterType="map" resultType="com.mycompany.webapp.dto.PopupDTO">
 		<![CDATA[

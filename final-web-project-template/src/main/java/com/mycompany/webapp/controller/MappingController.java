@@ -100,6 +100,8 @@ public class MappingController {
 		//log.info("실행");
 		return "home2";
 	}
+	
+
 }
 
 

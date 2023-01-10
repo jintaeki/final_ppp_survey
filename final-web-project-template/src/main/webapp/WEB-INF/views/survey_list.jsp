@@ -65,17 +65,10 @@ function send(obj){
 							<td><input type="button" id="send" class="btn btn-primary"
 								onclick="send(this)" value="발송"></td>
 							<td></td>
-<<<<<<< HEAD
-							<td>
-								<button type="button" class="btn btn-primary" 
+							<td><button type="button" class="btn btn-primary" 
 										data-toggle="modal" data-target="#exampleModal">
- 									매핑
-								</button>
+ 								매핑</button>
 							</td>
-=======
-							<td><input type="button" id="map" class="btn btn-primary"
-								onclick="location.href='mappingview'" value="매핑"></td>
->>>>>>> refs/heads/chansoo
 						</tr>
 						<tr id="grey">
 							<th scope="row">2</th>

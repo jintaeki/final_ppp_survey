@@ -14,6 +14,9 @@ public interface IMappingService {
 	// 데이터 리스트 출력
 	List<PopupDTO> selectMappingData(int surveySeq);
 	
+	// 추가할 피평가자 출력 (병준형 버전)
+	List<PopupDTO> getPopup();	
+	
 	// 추가할 피평가자 출력
 	List<PopupDTO> selectRater(String raterId);
 	
@@ -23,6 +26,4 @@ public interface IMappingService {
 	// 삭제하기 
 	void deleteAppraiseId(String raterId, String appraiseeId);
 
-	// 병준
-	List<PopupDTO> getPopup();	
 }

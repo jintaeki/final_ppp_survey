@@ -14,39 +14,39 @@ public class MappingService implements IMappingService {
 	@Autowired
 	IMappingRepository mappingrepository;
 	
-	@Override
+	@Override // 처음 조건대로 매핑하기
 	public void setMapping(int surveySeq, int year, int number) {
 		mappingrepository.setMapping(surveySeq, year, number);
 	}
 	
-	@Override
+	@Override // 매칭 중복 조횐
 	public int mappingCheck(int surveySeq) {
 		return mappingrepository.mappingCheck(surveySeq);
 	}
 
-	@Override
+	@Override // 매핑된 데이터 출력
 	public List<PopupDTO> selectMappingData(int surveySeq) {
 		return mappingrepository.selectMappingData(surveySeq);
 	}
-
-	@Override
+	
+	@Override // 추가할 피평가자 검색 병준형
+	public List<PopupDTO> getPopup() {
+		return mappingrepository.getPopup();
+	}
+	
+	@Override // 추가할 피평가자 검색
 	public List<PopupDTO> selectRater(String raterId) {
 		return mappingrepository.selectRater(raterId);
 	}
 	
-	@Override
+	@Override // 피평가자 추가
 	public void insertAppraiseId(int surveySeq, String raterId, String appraiseeId) {
 		mappingrepository.insertAppraisee(surveySeq, raterId, appraiseeId);
 	}
 
-	@Override
+	@Override // 피평가자 삭제
 	public void  deleteAppraiseId(String raterId, String appraiseeId) {
 		mappingrepository.deleteAppriesee(raterId, appraiseeId);
-	}
-	
-	@Override
-	public List<PopupDTO> getPopup() {
-		return mappingrepository.getPopup();
 	}
 }
 

@@ -200,10 +200,5 @@ public class HomeController {
 		//log.info("실행");
 		return "survey";
 	}
-
-	@RequestMapping(value= "/popup", method = RequestMethod.GET)
-	public String popupGET() {
-		return "popup";
-	}
 }
 
