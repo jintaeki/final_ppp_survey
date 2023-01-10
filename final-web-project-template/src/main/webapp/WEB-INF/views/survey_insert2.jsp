@@ -254,6 +254,7 @@
 	<div class="question_inputdv" id="input_question">
 		<form:form modelAttribute="SQD" id="questioN_insert_form">
 			<!-- aa -->
+			<div id="insertQform">
 			<div class="select_radio" id="select_radio">
 				<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1()" value="10001" checked>객관식 
 				<input type="radio" name="questionTypeCode" id="sub_radio" onclick="checkit2()" value="10002"> 주관식
@@ -278,6 +279,7 @@
 			</div>
 			<input type="hidden" name="itemScore" value="1">
 			<input type="hidden" name="itemContent" value=" ">
+			</div>
 		</form:form>
 	</div>
 </div>
@@ -454,7 +456,6 @@
 						console.log("요청이 보내지는가?");
 					   },
 					   success:function (jsondata){	 //전송 성공시 실행
-								console.log(jsondata);
 								questionHtml(jsondata);
 								var surveyseq = jsondata[0].SURVEY_SEQ;
 								var questionseq = jsondata[0].QUESTION_SEQ;
@@ -474,11 +475,14 @@
 	
 	function questionHtml(data){
 		  let size = data.length;
+		  console.log("하하"+data[0].QUESTION_CONTENT);
 		  var html = '';
 		  $("#scroll_area").empty();
 		 for(i=0; i<size; i++){
 			 html +='<div class="list-group-item list-group-item-action active py-3 lh-sm" id="queAfter1">';
-			   html +='<input type="text" class="input_qus" value="'+data[i].QUESTION_CONTENT+'">';
+			 
+			   html +='<input type="text" class="input_qus" value="'+data[i].QUESTION_CONTENT+'" readonly>';
+			   html +='<button value="'+data[i].QUESTION_SEQ+'"onclick="touchQuestion(this)">확인</button>';
 			   html	+='<div class="card m-2" style="float: right; width: 60px;">';
 			   html +='<button class="btn btn-secondary" id="btn_for_answer_box" onclick="btn_for_ans_box(this)">ans</button>';
 			   html +='</div> <div class="blank_under"></div></div>';
@@ -499,6 +503,69 @@
        }
 		 $('#scroll_area').append(html);
 	}
+	
+	function touchQuestion(obj){
+		var questionid = $(obj).val();
+		
+		$.ajax({
+			method:'get', //어떤 방식으로 보낼 지
+			url:'touchandselect.do/' + questionid, // qdiv를 보낼 경로 설정
+			dataType: "json",
+		    beforeSend : function() { //보내기 전 실행
+			console.log("요청이 보내지는가?");
+		   },
+		   success:function (data) {	 //전송 성공시 실행
+				console.log("으잉?"+data);
+			   oneQuestion(data);
+		   		secondQuestion(data);
+	   
+   			}, error:function(e) {	//실패, 에러
+	   			console.log("Error", e); 
+   			}
+		});	   
+		   
+	}
+	
+	function oneQuestion(data){
+		console.log(data[0].SURVEYSEQ);
+// 		let size = data.length;
+		  var html = '';
+		  $("#questioN_insert_form").empty();
+// 		 for(i=0; i<size; i++){			   
+		html += `<div id="insertQform">`;
+		html += `<div class="select_radio" id="select_radio">`;
+		html += `<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1()" value="10001" checked>객관식 `;
+		html += `<input type="radio" name="questionTypeCode" id="sub_radio" onclick="checkit2()" value="10002"> 주관식`;
+		html +=  `<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3()" value="10003"> 혼합식`;
+		html += `</div>`;
+		html += `<div class="question_content_area" id="question_add">`;
+		html += `<div class="input-group" id="question_content">`;
+		html += `<div class="input-group-prepend">`;
+		html += '<span class="input-group-text" >문제입력</span>';
+		html += `</div>`;
+		html += '<textarea class="form-control" aria-label="문제 입력칸" id="hi" name="questionContent">'+data[0].QUESTIONCONTENT;
+		
+			   
+//        }
+		 $('#questioN_insert_form').append(html);
+	}
+	
+	function secondQuestion(data){
+		console.log(data[0].SURVEYSEQ);
+		  var html = '';
+		
+		html += `</div><button type="button" class="btn btn-outline-primary" id="add_btn" onclick="insertQus()">문제추가</button>`;
+		html += `<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate()">문제수정</button>`;
+		html += '<input type="hidden" name="surveySeq" id="seq" value="'+data[0].SURVEYSEQ+'">';
+		html += '<input type="hidden" name="questionSeq" value="'+data[0].QUESTIONSEQ +'">';
+		html += `</div>`;
+		html += `<input type="hidden" name="itemScore" value="1">`;
+		html += `<input type="hidden" name="itemContent" value=" ">`;
+		html += `</div>`;
+			   
+		 $('#hi').after(html);
+	}
+	
 	
 	//문제 입력 채우 코드에 추가한 것 끝
 	

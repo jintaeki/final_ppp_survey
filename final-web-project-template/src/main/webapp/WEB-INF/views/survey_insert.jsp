@@ -478,7 +478,7 @@
 		  $("#scroll_area").empty();
 		 for(i=0; i<size; i++){
 			 html +='<div class="list-group-item list-group-item-action active py-3 lh-sm" id="queAfter1">';
-			   html +='<input type="text" class="input_qus" value="'+data[i].QUESTION_CONTENT+'">';
+			   html +='<input type="text" class="input_qus" value="'+data[i].QUESTION_CONTENT+'" onclick="touchQuestion(this)" readonly>';
 			   html	+='<div class="card m-2" style="float: right; width: 60px;">';
 			   html +='<button class="btn btn-secondary" id="btn_for_answer_box" onclick="btn_for_ans_box(this)">ans</button>';
 			   html +='</div> <div class="blank_under"></div></div>';

@@ -359,5 +359,17 @@ public class SurveyController {
 		return SQD;
 	}
 	
+	@RequestMapping(value="/touchandselect.do/{questionSeq}")
+	@ResponseBody
+	public List<Map<String, Object>> touchandselect(@PathVariable int questionSeq) {
+		logger.info("touchandselect 진입");
+		System.out.println(questionSeq);
+
+
+		System.out.println(surveyService.selectQuestionBySeq(questionSeq));
+		return surveyService.selectQuestionBySeq(questionSeq);
+	}
+
+	
 }
 

@@ -163,6 +163,16 @@
 	
 	</select>
 	
-	
+	<select id="selectQuestionBySeq" parameterType="int" resultType="hashmap">
+	        select sq.SURVEY_SEQ as surveySeq
+            , sq.QUESTION_SEQ as questionSeq
+            ,sq.QUESTION_CONTENT as questionContent
+            ,sq.QUESTION_TYPE_CODE as questionTypeCode
+            ,si.ITEM_SEQ	as itemSeq
+            ,si.ITEM_CONTENT	as itemContent
+            ,si.ITEM_SCORE	as itemScore
+            from survey_question sq, survey_item si
+            where sq.question_seq = #{questionSeq} and sq.question_seq = si.question_seq
+	</select>
 	
 </mapper>

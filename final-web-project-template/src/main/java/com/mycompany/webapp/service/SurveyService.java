@@ -175,6 +175,12 @@ public class SurveyService implements ISurveyService{
 		return surveyDao.searchListByKeywordAndDate(pagingdto);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectQuestionBySeq(int questionSeq){
+		logger.info(surveyDao.selectQuestionBySeq(questionSeq).toString());
+		return surveyDao.selectQuestionBySeq(questionSeq);
+	}
+	
 }
 
 
