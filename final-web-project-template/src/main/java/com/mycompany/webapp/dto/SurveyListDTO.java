@@ -85,6 +85,5 @@ public class SurveyListDTO {
 				+ ", surveyClosedDate=" + surveyClosedDate + ", decideYN=" + decideYN + "]";
 	}
 	
-	
-	
+
 }

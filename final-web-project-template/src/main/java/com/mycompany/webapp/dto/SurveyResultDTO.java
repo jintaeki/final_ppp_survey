@@ -57,9 +57,5 @@ public class SurveyResultDTO {
 				+ ", answerContent=" + answerContent + "]";
 	}
 	
-	
-	
-	
-	
-	
+
 }

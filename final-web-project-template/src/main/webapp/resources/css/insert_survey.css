@@ -1,9 +1,6 @@
-@charset "UTF-8";
-
-
-
 .scrollarea {
   overflow-y: scroll;
+      height: 500px;
 }
       .nav-scroller {
         position: relative;
@@ -25,42 +22,42 @@
 
 .list-group.list-group-flush.border-bottom.scrollarea {
      position: relative;
-    overflow-x: auto;
+     overflow-x: auto;
 }
-
-.d-flex.flex-column.align-items-stretch.flex-shrink-0.bg-white{
+#survey_question_dv{
 	width: 40%;	
 	float: left;
 	top-margin:15px;
-	height:700px;
-	
+	height: 520px;
 }
 
 .list-group-item.active{ /*이거 없애거나 건들면 이 클래스 싹 다 파래짐*/
 	background: transparent!important;
 	border: none!important;
+	border-bottom: 1px solid rgba(0,0,0,.125)!important;
 	
 }
 
-
-.all_insertdiv {
+.all_insertdv {
 	display:block;
 }
 
-.block_box {
-float:right;
-background-color: white;
-width: 600px;
-margin-right: 10%;
-margin-top: 5%;
-  padding: 20px;
-  border-radius: 10px;
-  overflow: hidden;
-   box-shadow: rgba(59, 59, 91, 0.25) 0px 6px 12px -2px,
-    rgba(15, 13, 13, 0.3) 0px 3px 7px -3px;
+#block_box {
+left: 600px;
+    float: right;
+    background-color: white;
+    width: 600px;
+    margin-right: 10%;
+    margin-top: 5%;
+    padding: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: rgb(59 59 91 / 25%) 0px 6px 12px -2px, rgb(15 13 13 / 30%) 0px 3px 7px -3px;
+    position: relative;
+    top: 50px;
 }
 
-.input-group.mb-3{
+#question_content{
 	margin: 15px;
 	width:35%;
 }
@@ -77,22 +74,24 @@ margin-top: 5%;
     width:500px;
 }
 
-button.delete_btn {
+#delete_btn {
     left: 88%;
     background-color: transparent;
     border: none;
     float: right;
 }
 
-.input_qus{
+#input_qus{
 	text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     background-color: transparent;
+    margin-top: 15px;
     border: none;
      outline: none;
-     width:90%
+     width:70%
 }
+
 
 .blank_under{
 	background: none;
@@ -104,12 +103,7 @@ button.delete_btn {
     display: block;
 }
 
-.list-group-item.active{
-	background: transparent!important;
-	border-bottom: 1px solid rgba(0,0,0,.125)!important;
-}
-
-.insert_button{
+#qus_isnert_button{
 	background-color: transparent;
     border: none;
     left: 92.5%;
@@ -119,5 +113,49 @@ button.delete_btn {
 
 .all_qus{
 	display:block;
+	background-color:#47FF9C;
 }
 
+.question_inputdv {
+	background-color:yellow;
+    position: relative;
+    top: 400px;
+}
+
+#exampleFormControlInput {
+	background-color:green!important;
+	position: absolute;
+    left: 54%;
+    width: 42%!important;
+	}
+	
+#select_radio{
+	background-color:red;
+	width: 50%;
+    margin-bottom: 5px;
+    position: absolute;
+    left: 48%;
+    margin-top: 40px;
+}
+
+
+#question_add{
+	background-color:blue;
+  width: 50%;
+    left: 48%;
+    top: 70px;
+    position: absolute;
+    float:right;
+}
+
+#add_btn {
+	margin-top:5px;	
+}
+
+#answer_box {
+	left: 2%;
+    position: relative;
+    width: 500px;
+    float: right;
+	}
+}

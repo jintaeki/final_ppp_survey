@@ -35,4 +35,5 @@ public class MappingDTO {
 		return "MappingDTO [surveySeq=" + surveySeq + ", raterId=" + raterId + ", appraiseeId=" + appraiseeId
 				+ ", surveyCompleteYN=" + surveyCompleteYN + "]";
 	}
+
 }
