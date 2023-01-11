@@ -43,8 +43,17 @@ public interface ISurveyRepository {
 	void sendMessage(int surveySeq);
 	
 	void setQuestionDelete(int questionSeq);
-	
+
 	void setItemDeleteQus(int questionSeq);
+
+	List<SurveyListDTO> searchListByKeyword(PagingDTO pagingdto);
+
+	List<SurveyListDTO> searchListByKeywordAndDicideYN(PagingDTO pagingdto);
+
+	List<SurveyListDTO> searchListByKeywordAndDate(PagingDTO pagingdto);
+
+	List<Map<String, Object>> selectQuestionBySeq(int questionSeq);
+
 }
 
 

@@ -15,5 +15,23 @@ public class PagingService implements IPagingService{
 	public int getTotalBoardNum() {
 		return pagingRepo.getTotalBoardNum();
 	}
+	
+	@Override
+	public int getTotalListNumByKeyword(String keyword, String selection) {
+		String newkeyword = ("%"+keyword+"%");
+		return pagingRepo.getTotalListNumByKeyword(newkeyword , selection);
+	}
+	
+	@Override
+	public int getTotalListNumByKeywordAndDecideYN(String keyword, String selection) {
+		String newkeyword = ("%"+keyword+"%");
+		return pagingRepo.getTotalListNumByKeywordAndDecideYN(newkeyword , selection);
+	}
+	
+	@Override
+	public int getTotalListNumByKeywordAndDate(String keyword, String selection) {
+		String newkeyword = ("%"+keyword+"%");
+		return pagingRepo.getTotalListNumByKeywordAndDate(newkeyword , selection);
+	}
 
 }

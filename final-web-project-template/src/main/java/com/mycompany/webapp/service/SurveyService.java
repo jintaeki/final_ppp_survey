@@ -151,6 +151,36 @@ public class SurveyService implements ISurveyService{
 
 	
 	@Override
+	public List<SurveyListDTO> searchListByKeyword(PagingDTO pagingdto) {
+		pagingdto.setKeyword("%"+pagingdto.getKeyword()+"%");
+		logger.info(surveyDao.searchListByKeyword(pagingdto).toString());
+		return surveyDao.searchListByKeyword(pagingdto);
+	}
+
+
+	@Override
+	public List<SurveyListDTO> searchListByKeywordAndDicideYN(PagingDTO pagingdto) {
+		pagingdto.setKeyword("%"+pagingdto.getKeyword()+"%");
+		logger.info(surveyDao.searchListByKeywordAndDicideYN(pagingdto).toString());
+
+		return surveyDao.searchListByKeywordAndDicideYN(pagingdto);
+	}
+	
+	@Override
+	public List<SurveyListDTO> searchListByKeywordAndDate(PagingDTO pagingdto) {
+		pagingdto.setKeyword("%"+pagingdto.getKeyword()+"%");
+		logger.info(surveyDao.searchListByKeyword(pagingdto).toString());
+
+		return surveyDao.searchListByKeywordAndDate(pagingdto);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectQuestionBySeq(int questionSeq){
+		logger.info(surveyDao.selectQuestionBySeq(questionSeq).toString());
+		return surveyDao.selectQuestionBySeq(questionSeq);
+	}
+	
+	@Override
 	public void setQuestionDelete(int questionSeq) {
 		logger.info("문제삭제 서비스 진입");
 		surveyDao.setItemDeleteQus(questionSeq);
