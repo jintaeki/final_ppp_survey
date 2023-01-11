@@ -8,34 +8,29 @@ function popup()
 {window.open("/springframework-xml-config-no-root/popup", "다면평가 대상 추가", 
       "width=800, height=600, left=500, top=100");}
    
-function map_delete(raterId, appraiseeId){
-	if(!confirm("삭제를 하시겠습니까?"))
-	return false;
-	
-	var submitObj = new Object();
-	submitObj.raterId = raterId
-	submitObj.appraiseeId = appraiseeId
-	
-	$.ajax({ 
-	    url: "/mapping/deleteMapping.do", 
-	    type: "POST", 
-	    contentType: "application/json;charset=UTF-8",
-	    data:JSON.stringify(submitObj),
-	    dataType : "json"
-	    }) 
-	    .done(function(resMap) {
-	    
-	      alert(gTxt(resMap.msg));
-	 
-	    }) 
-	    .fail(function(e) {  
-	        alert("삭제를 실패하였습니다ㅜㅜ.");
-	    }) 
-	    .always(function() { 
-	        
-	    }); 
-	  
+function map_delete(obj){
+	var questionSeq = $(obj).val()
+	console.log(questionSeq)
+	$.ajax({
+		method:'POST', //어떤 방식으로 보낼 지
+			url:'/mapping/deleteMapping.do' , // qdiv를 보낼 경로 설정
+			processData : false,
+			contentType : false,
+ 			cache : false,
+		    beforeSend : function() { //보내기 전 실행
+			console.log("삭제 요청이 보내지는가?");
+		},
+			success:function (data) {	 //전송 성공시 실행
+				console.log("삭제 요청 성공");
+				alert("삭제 요청 success!");
+				
+				const tag = $(obj);
+				tag.parent().remove();
+			}
+		
+		});
 }
+
    
 </script>
 
@@ -75,7 +70,7 @@ function map_delete(raterId, appraiseeId){
 										<td>${mapping.appraiseeName}</td>
 										<td><input type="button" value="추가" onclick="popup();" /></td>
 										<td><input type="button" id="map_delete" class="btn btn-primary"
-								         		   onclick="map_delete('${mapping.raterId}', '${mapping.appraiseeId}');"
+								         		   onclick="map_delete(this);"
 								         		   value="삭제">
 										</td>
 									</tr>
