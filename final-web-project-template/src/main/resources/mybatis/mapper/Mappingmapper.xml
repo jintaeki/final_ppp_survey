@@ -27,7 +27,7 @@
            				AND	  R.PROJECT_ID = A.PROJECT_ID 
            				AND   R.PARTICIPATION_EMPLOYEE_ID <> A.PARTICIPATION_EMPLOYEE_ID 
            				AND   S.SURVEY_SEQ = #{surveySeq}
-           				AND   R.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE -(365 * #{year}) , 'YYYY-MM-dd')
+           				AND   R.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE -(30 * #{month}) , 'YYYY-MM-dd')
            				AND   I.EMPLOYEE_ID = A.PARTICIPATION_EMPLOYEE_ID
             			AND   I.GRADE_ID = 2
        				 ORDER BY U.EMPLOYEE_ID, DBMS_RANDOM.VALUE
@@ -94,7 +94,7 @@
          		and r.participation_employee_id <> a.participation_employee_id 
          		and s.survey_seq = 2310103
          		and i.grade_id = 2
-         		and r.PROJECT_CLOSED_DATE <= TO_CHAR(SYSDATE -(365 * 1),'YY/MM/dd')
+         		and r.PROJECT_CLOSED_DATE <= TO_CHAR(SYSDATE -(30 * 3),'YY/MM/dd')
          		and i.employee_id = r.participation_employee_id
          		and i.department_id = o.department_id  
         	ORDER BY i.employee_name
@@ -120,7 +120,7 @@
     			and r.project_id = a.project_id 
     			and r.participation_employee_id <> a.participation_employee_id 
  		    	and s.survey_seq = #{surveySeq}
-    			and r.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE - (365 * #{year}), 'YY/MM/dd')
+    			and r.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE - (365 * #{month}), 'YY/MM/dd')
     			and i.employee_id = a.participation_employee_id
     			and i.grade_id = 2
             	and U.EMPLOYEE_ID = #{raterId}

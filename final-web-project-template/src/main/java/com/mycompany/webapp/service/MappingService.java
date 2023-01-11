@@ -15,8 +15,8 @@ public class MappingService implements IMappingService {
 	IMappingRepository mappingrepository;
 	
 	@Override // 처음 조건대로 매핑하기
-	public void setMapping(int surveySeq, int year, int number) {
-		mappingrepository.setMapping(surveySeq, year, number);
+	public void setMapping(int surveySeq, int month, int number) {
+		mappingrepository.setMapping(surveySeq, month, number);
 	}
 	
 	@Override // 매칭 중복 조횐

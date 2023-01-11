@@ -200,23 +200,21 @@ function send(obj){
      	<form:form action="${actionURL}" modelAttribute="map">
   		   	<input type="hidden" id="surveySeq" name="surveySeq" value="2241012">
      		<br>
-     		<h5> 다면평가에 포함될 프로젝트의 제한 년도 정하기 </h5>
-      	   	<select class="form-control" name="year">
-  				<option value="1">최근 1년전에 끝난 프로젝트</option>
-  				<option value="2">최근 2년전에 끝난 프로젝트</option>
-  				<option value="3">최근 3년전에 끝난 프로젝트</option>
+     		<h5> 다면평가에 포함될 프로젝트의 범위 정하기 </h5>
+      	   	<select class="form-control" name="month">
+  				<option value="3">최근 3개월 동안에 끝난 프로젝트</option>
+  				<option value="6">최근 6개월 동얀에 끝난 프로젝트</option>
+  				<option value="12">최근 1년 동안에 끝난 프로젝트</option>
+  				<option value="24">최근 2년 동안에 끝난 프로젝트</option>
+  				<option value="36">최근 3년 동안에 끝난 프로젝트</option>
 		 	</select>
 		 	<br>
-		 	<h5> 다면평가를 할 피평가자 수 정하기 </h5>
-		 	<select class="form-control" name="number">
-  				<option value="1">1명</option>
-  				<option value="2">2명</option>
-  				<option value="3">3명</option>
-		 	</select>
-      		<div class="modal-footer">
-        		<button type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</button>
-        		<input type="submit" class="btn btn-primary" value="메핑하기">
-      		</div>
+		 	<h5>평가 인원</h5>
+          <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" max="5" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;">
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+              <input type="submit" class="btn btn-primary" value="매핑">
+            </div>
       	</form:form>
       </div>
     </div>

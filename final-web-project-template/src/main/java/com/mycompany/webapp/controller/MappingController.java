@@ -37,12 +37,12 @@ public class MappingController {
 	IMappingService mappingService;
 	
 	@RequestMapping(value="/mapping/set.do", method=RequestMethod.POST)
-	public String setMapping(@RequestParam int surveySeq, @RequestParam int year, @RequestParam int number,
+	public String setMapping(@RequestParam int surveySeq, @RequestParam int month, @RequestParam int number,
 			Model model, RedirectAttributes redirectAttrs) {
 		logger.info("메핑실행");			
 		try {
 			if(mappingService.mappingCheck(surveySeq) == 0) {				
-				mappingService.setMapping(surveySeq, year, number);
+				mappingService.setMapping(surveySeq, month, number);
 			}
 			List<PopupDTO> mappingList = mappingService.selectMappingData(surveySeq);
 			model.addAttribute("mappingList", mappingList);
