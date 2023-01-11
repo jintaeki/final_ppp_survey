@@ -1,7 +1,10 @@
+/* 전체 div */
 #all_survey_dv{
 /*background-color: aqua;*/
 	width:100%;
 }
+
+
 
 .scrollarea {
   overflow-y: scroll;
