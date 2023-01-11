@@ -19,32 +19,31 @@
 			<div class="col-3">설문 부가 설명</div>
 
 			<input type="hidden" name="decideYN" value="N"> <input
-				type="hidden" name="surveySeq" id="surveyseq"
-				value="${SLD.surveySeq}">
+				type="hidden" name="surveySeq" id="surveyseq" value="${SLD.surveySeq}">
 			<div class="col-3">
 				<div class="form-group">
 					<label for="survey_name" class="col-form-label"></label> <input
 						type="text" class="form-control" id="survey_name"
-						name="surveyName" value="${SLD.surveyName }">
+						name="surveyName" value="${SLD.surveyName}">
 				</div>
 			</div>
 			<div class="col-3">
-				<input type="date" name="surveyStartDate"
+				<input type="date" name="surveyStartDate" class="survey_date"
 					value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">
-				~ <input type="date" name="surveyClosedDate"
+				~ <input type="date" name="surveyClosedDate" class="survey_date"
 					value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />">
 			</div>
 			<div class="col-3">
 				<c:if test="${SLD.anonymityCheckCode eq '20001'}">
-					<input type="radio" name="anonymityCheckCode" value="20001" checked>익명
-				<input type="radio" name="anonymityCheckCode" value="20002">기명	
+					<input type="radio" name="anonymityCheckCode" class="survey_radio" id="survey_type_check" value="20001" checked>익명
+				<input type="radio" name="anonymityCheckCode" class="survey_radio" id="survey_type_check" value="20002">기명	
 				</c:if>
 
 				<c:if test="${SLD.anonymityCheckCode eq '20002'}">
-					<input type="radio" name="anonymityCheckCode" value="20001">익명
+					<input type="radio" name="anonymityCheckCode" class="survey_radio"  id="survey_type_check" value="20001"><label for="survey_type_check">익명</label>
 					<br>
-					<input type="radio" name="anonymityCheckCode" value="20002" checked>기명
-				</c:if>
+					<input type="radio" name="anonymityCheckCode" class="survey_radio" id="survey_type_check" value="20002" checked><label for="survey_type_check">기명</label>
+			</c:if>
 
 			</div>
 			<div class="col-3">

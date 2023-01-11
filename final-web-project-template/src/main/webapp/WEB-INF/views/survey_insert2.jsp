@@ -8,10 +8,11 @@
 	href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
 
 
+<div class="survey_dv" id="all_survey_dv">
 
 <!-- 설문지 설정 진택 -->
-<form:form modelAttribute="SLD"
-	style="display:inline-flex; border: 1px solid black;" id="form">
+<form:form modelAttribute="SLD" style="display:inline-flex; border: 1px solid black;" id="survey_setting_form">
+
 	<div class="container">
 		<div class="row">
 			<div class="col-3">설문지 이름</div>
@@ -65,62 +66,27 @@
 	</div>
 </form:form>
 
-<!-- 추가될 문항 none 진택 -->
-<!--  객관식 -->
-<div class="icon_line" id="new_obj_Item" style="display: none;">
-	<label><input type="text" name="itemContent"
-		placeholder="문항 입력..." id="ic"></label> 점수<input type="number"
-		name="itemScore" min="0" value="0"
-		style="min-width: 20px; max-width: 40px;" id="is">
 
-	<button onclick="delete_obj_item_btn(this)">
-		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-			fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-  					<path
-				d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-
-					</svg>
-	</button>
-</div>
-<!--  혼합식 -->
-<div class="icon_line" id="new_mix_Item" style="display: none;">
-	<label><input type="text" name="itemContent" required
-		placeholder="문항 입력..." id="ic"></label> 점수<input type="number"
-		name="itemScore" min="0" value="0"
-		style="min-width: 20px; max-width: 40px;" id="is">
-
-	<button onclick="delete_mix_item_btn(this)">
-		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-			fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-  					<path
-				d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-
-					</svg>
-	</button>
-</div>
-
-<!-- 추가될 문항 none 진택 -->
 
 <br>
-<div class="col-12">&nbsp;</div>
 
 
+	
 <div class="all_insertdv" style="border: 1px solid black;">
 
-	<!-- 여기까지 설문제 제목 div -->
 
+	<!-- 여기까지 설문제 제목 div -->
 	<div style="border: 1px solid black;"
 		class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
 		id="survey_question_dv">
-		
-		
-		<!-- 여기까지 문제 div -->
 		<div class="list-group list-group-flush border-bottom scrollarea"
 			id="scroll_area">
+
+	<!-- 여기까지 문제 div -->
+	
 			<c:forEach items="${SQL}" var="qlist">
-				<div
-					class="list-group-item list-group-item-action active py-3 lh-sm"
-					id="queAfter">
+				<div class="list-group-item list-group-item-action active py-3 lh-sm"
+				id="queAfter">
 					<input disabled type="text" id="input_qus"
 						value="${qlist.questionContent }">
 					<button value="${qlist.questionSeq }"onclick="touchQuestion(this)">확인</button> 
@@ -129,27 +95,96 @@
 							fill="currentColor" class="bi bi-x" viewBox="0 0 16 16"> <path
 								d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /> </svg>
 					</button>
-
+					
+					<div class="blank_under"></div>
 				</div>
-
-				<div class="blank_under"></div>
 			</c:forEach>
-
-
 
 		</div>
 	</div>
-	</div>
-
-
 
 
 
 	<!-- 채우 폼에 진택 코드 넣기 -->
-	<div id="answer_box" style="border: 1px solid black;">
-		
+	<div class="icon_div" id="item_div">
+<!-- 	<div id="answer_box" style="border: 1px solid black;"> -->
+		<%-- 			<c:if test="${ }"></c:if> --%>
 
-	</div>
+
+		<div id="obj_box_toggle" style="display: none">
+			<div class="col-12">
+				<div class="Item_box">
+					<button type="button" id="item_obj_copy">+</button>
+					<form:form modelAttribute="SQD" id="item_obj_form">
+						<input type="hidden" name="questionTypeCode" value="10001">
+						<input type="hidden" name="surveySeq" value="${SLD.surveySeq}">
+						<input type="hidden" name="questionSeq" value="2">
+						<div class="icon_line" id="obj_ItemAfter">
+							<label><input type="text" name="itemContent"
+								placeholder="문항 입력..." id="ic"></label> 점수<input type="number"
+								name="itemScore" min="0" value="0"
+								style="min-width: 20px; max-width: 40px;" id="is">
+						</div>
+
+						<div class="col-12">
+
+							<input type="button" class="btn btn-primary"
+								onclick="update_obj_item_btn()" value="수정">
+						</div>
+					</form:form>
+				</div>
+			</div>
+		</div>
+
+
+
+		<%-- 		<c:if test="${ }"></c:if> --%>
+
+		<div id="mix_box_toggle" style="display: none">
+			<div class="col-12">
+				<div class="Item_box">
+					<button type="button" id="item_mix_copy">+</button>
+					<form:form modelAttribute="SQD" id="item_mix_form">
+						<input type="hidden" name="questionTypeCode" value="10003">
+						<input type="hidden" name="surveySeq" value="${SLD.surveySeq}"
+							id="surveyseq">
+						<input type="hidden" name="questionSeq" value="2">
+						<div class="icon_line" id="mix_ItemAfter">
+							<label><input type="text" name="itemContent"
+								placeholder="문항 입력..." id="ic" required></label> 점수<input
+								type="number" name="itemScore" min="0" value="0"
+								style="min-width: 20px; max-width: 40px;" id="is">
+						</div>
+						<div class="icon_line">
+							<label> <input type="text" id="ic" name="itemContent"
+								placeholder="기타.." value="기타"></label> <input type="number"
+								name="itemScore" value="0" style="display: none">
+						</div>
+						<div class="col-12">
+
+							<input type="button" class="btn btn-primary"
+								onclick="update_mix_item_btn()" value="수정">
+						</div>
+					</form:form>
+				</div>
+			</div>
+
+
+		</div>
+		<%-- 		<c:if test="${ }"></c:if> --%>
+		<!-- 주관식은 문제 만들 때 id값 가장 큰 거 부여 -->
+		<div id="subj_box_toggle" style="display: none">
+			<div class="block_box">
+				<input type="text" class="input_qus" id="input_qus"
+					placeholder="주관식 문제입니다.">
+
+				<div class="blank_under"></div>
+			</div>
+		</div>
+
+
+<!-- 	</div> -->
+</div>
 	<!-- 채우 폼에 진택 코드 넣기 끝-->
 
 	<div class="list-group-item list-group-item-action active py-3 lh-sm"
@@ -161,11 +196,9 @@
 				fill="currentColor" class="bi bi-x" viewBox="0 0 16 16"> <path
 					d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /> </svg>
 		</button>
-		<div class="blank_under"></div>
-		
+		<div class="blank_under"></div>		
 	</div>
 
-	<div id="copydiv"></div>
 
 	<div class="question_inputdv" id="input_question">
 		<form:form modelAttribute="SQD" id="questioN_insert_form">
@@ -191,6 +224,8 @@
 
 					<!-- 문제 추가 버튼  -->
 					<!-- onclick="insertQus()" -->
+				<div class="question_add_btn_div">
+					
 					<button type="button" class="btn btn-outline-primary" id="add_btn"
 						onclick="insertQus()">문제 추가</button>
 
@@ -204,10 +239,11 @@
 				<input type="hidden" name="itemScore" value="1"> <input
 					type="hidden" name="itemContent" value=" ">
 			</div>
+			</div>
 		</form:form>
 	</div>
 </div>
-
+</div>
 <script>
 	//진택
 	var cnt = 0;
