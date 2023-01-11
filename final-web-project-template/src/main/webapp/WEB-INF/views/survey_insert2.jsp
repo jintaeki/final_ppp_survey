@@ -136,7 +136,7 @@
 	<div style="border: 1px solid black;"
 		class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
 		id="survey_question_dv">
-		<%-- 		<form:form modelAttribute="SQD" id="sv_qst_form"> --%>
+<%-- 		<form:form modelAttribute="SQD" id="sv_qst_form"> --%>
 		<div class="list-group list-group-flush border-bottom scrollarea"
 			id="scroll_area">
 
@@ -270,9 +270,10 @@
 					<textarea class="form-control" aria-label="문제 입력칸"
 						name="questionContent">${sqd.questionContent}</textarea>
 				</div>
-				${SLD.surveySeq}-> 설문id 확인용
+		
 				<!-- 문제 추가 버튼  --><!-- onclick="insertQus()" -->
 				<button type="button" class="btn btn-outline-primary"  id="add_btn" >문제 추가</button>
+				
 				<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate()">문제
 					수정</button>
 				<input type="hidden" name="surveySeq" id="seq" value="${SLD.surveySeq }">
@@ -366,7 +367,6 @@
 			}
 		});
 	}
-	
 	/*문제 삭제*/
 	function delete_obj_item_btn(obj) {
 		const tag = $(obj);
@@ -428,6 +428,7 @@
 	function checkit2() {
 		 document.querySelector("#mix_box_toggle").style.display = "none";
 		 document.querySelector("#obj_box_toggle").style.display = "none";
+	
 	}
 	
 	//문제 입력 채우 코드에 추가한 것
@@ -506,8 +507,8 @@
 // 	}
 	
 	
-	var test = document.getElementById('add_btn');
-		test.addEventListener('click', insertQus);
+//	var test = document.getElementById('add_btn');
+//		test.addEventListener('click', insertQus);
 		
  	function insertQus(){
  			var qdiv = $('#questioN_insert_form')[0];
@@ -652,7 +653,7 @@
 		html += `<div class="input-group-prepend">`;
 		html += '<span class="input-group-text" >문제입력</span>';
 		html += `</div>`;
-		html += '<textarea class="form-control" aria-label="문제 입력칸" id="hi" name="questionContent">'+data[0].QUESTIONCONTENT;
+		html += '<textarea class="form-control" aria-label="문제 입력칸" id="hi" name="questionContent">'+data[0].QUESTIONCONTENT+'';
 		
 		 $('#questioN_insert_form').append(html);
 	}
@@ -661,7 +662,9 @@
 		console.log(data[0].SURVEYSEQ);
 		  var html = '';
 		
-		html += `</div><button type="button" class="btn btn-outline-primary" id="add_btn" >문제추가</button>`;
+		html += `</div>
+		html += `<button type="button" class="btn btn-outline-primary" id="add_btn" onclick="insertQus()">문제추가</button>`;
+		
 		html += `<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate()">문제수정</button>`;
 		html += '<input type="hidden" name="surveySeq" id="seq" value="'+data[0].SURVEYSEQ+'">';
 		html += '<input type="hidden" name="questionSeq" value="'+data[0].QUESTIONSEQ +'">';

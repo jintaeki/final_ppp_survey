@@ -36,9 +36,5 @@ public class SurveyItemDTO {
 				+ ", itemScore=" + itemScore + "]";
 	}
 	
-	
-	
-	
-	
-	
+
 }

@@ -37,8 +37,5 @@ public class ProjectHistoryDTO {
 				+ ", projectStartDate=" + projectStartDate + ", projectClosedDate=" + projectClosedDate + "]";
 	}
 	
-	
-	
-		
-	
+
 }

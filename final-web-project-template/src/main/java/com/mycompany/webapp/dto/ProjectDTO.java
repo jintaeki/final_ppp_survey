@@ -20,6 +20,5 @@ public class ProjectDTO {
 		return "ProjectDTO [projectId=" + projectId + ", projectName=" + projectName + "]";
 	}
 	
-	
-	
+
 }

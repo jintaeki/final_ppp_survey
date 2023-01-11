@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.dao.IMappingRepository">
+	<select id="setMapping" resultType="com.mycompany.webapp.dto.MappingDTO">
+		<![CDATA[
+			INSERT INTO MAPPING (SURVEY_SEQ, RATER_ID, APPRAISEE_ID, SURVEY_COMPLETE_YN)
+    		SELECT 
+    			SURVEY_SEQ,			
+   				EMPLOYEE_ID,
+    			PARTICIPATION_EMPLOYEE_ID,
+    			'N' 
+    			FROM(
+    				SELECT
+    					SURVEY_SEQ,			
+    					EMPLOYEE_ID,
+    					PARTICIPATION_EMPLOYEE_ID,
+    					'N',
+    					ROW_NUMBER() OVER (PARTITION BY EMPLOYEE_ID ORDER BY EMPLOYEE_ID) AS NUM
+					FROM(
+    					SELECT
+ 				    	   S.SURVEY_SEQ,			
+        			 	   U.EMPLOYEE_ID,
+       				   	   A.PARTICIPATION_EMPLOYEE_ID,
+        			   	  'N'
+    					FROM SURVEY_LIST S, PROJECT_HISTORY R, PROJECT_HISTORY A, USER_INFO U, USER_INFO I
+         				WHERE U.EMPLOYEE_ID = R.PARTICIPATION_EMPLOYEE_ID 
+           				AND	  R.PROJECT_ID = A.PROJECT_ID 
+           				AND   R.PARTICIPATION_EMPLOYEE_ID <> A.PARTICIPATION_EMPLOYEE_ID 
+           				AND   S.SURVEY_SEQ = #{surveySeq}
+           				AND   R.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE -(30 * #{month}) , 'YYYY-MM-dd')
+           				AND   I.EMPLOYEE_ID = A.PARTICIPATION_EMPLOYEE_ID
+            			AND   I.GRADE_ID = 2
+       				 ORDER BY U.EMPLOYEE_ID, DBMS_RANDOM.VALUE
+       				) 
+  				 )
+			WHERE NUM <= #{number}
+		]]>
+	</select>
+	
+	<select id="mappingCheck" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) FROM MAPPING
+			WHERE SURVEY_SEQ = #{surveySeq}
+		]]>
+	</select>
+	
+	<select id="selectMappingData" parameterType="map" resultType="com.mycompany.webapp.dto.PopupDTO">
+		<![CDATA[
+			select 
+				p.project_id		as "projectId", 
+				ur.grade_id			as "gradeId",
+				ua.department_id	as "departmentId",
+				m.survey_seq		as "surveySeq",
+				m.rater_id			as "raterId",
+				m.appraisee_id		as "appraiseeId",
+				s.survey_name		as "surveyName",
+				o.department_name	as "departmentName",
+       		  	ur.employee_name 	as "raterName",
+       		  	ua.employee_name    as "appraiseeName",
+     		  	g.grade_name 		as "gradeName"
+			from project p,
+				 project_history h,
+     			 grade g,
+     			 mapping m,
+     		     user_info ua,
+     			 user_info ur,
+     			 survey_list s,
+                 organization_chart o
+			where p.project_Id = h.project_Id
+				  and ur.grade_id = g.grade_id
+				  and h.participation_employee_id = m.appraisee_id
+    			  and ua.employee_id = m.appraisee_id
+                  and ua.department_id = o.department_id
+    			  and ur.employee_id = m.rater_id
+    			  and m.survey_seq = #{surveySeq}
+    			  and m.survey_seq = s.survey_seq
+			order by g.grade_id desc, ur.employee_name
+			]]>
+	</select>
+
+	<select id="getPopup" parameterType="map" resultType="com.mycompany.webapp.dto.PopupDTO">
+    	<![CDATA[
+     		select distinct
+            	 s.survey_name        AS "surveyName",
+            	 o.department_name    AS "departmentName",
+            	 i.employee_name      AS "appraiseeName"
+       		from 
+            	survey_list s, 
+            	project_history r, 
+            	project_history a, 
+            	organization_chart o, 
+             	user_info i
+       		where r.project_id = a.project_id 
+         		and r.participation_employee_id <> a.participation_employee_id 
+         		and s.survey_seq = 2310103
+         		and i.grade_id = 2
+         		and r.PROJECT_CLOSED_DATE <= TO_CHAR(SYSDATE -(30 * 3),'YY/MM/dd')
+         		and i.employee_id = r.participation_employee_id
+         		and i.department_id = o.department_id  
+        	ORDER BY i.employee_name
+      	]]>
+   	</select>
+	
+	<select id="selectRater" parameterType="map" resultType="com.mycompany.webapp.dto.PopupDTO">
+		<![CDATA[
+		select 
+			p.project_name as 프로젝트,
+      		g.grade_name as 직급,
+       		ur.employee_name as 평가자,
+       		ua.employee_name as 피평가자
+		from project p,
+    	 	project_history h,
+     		grade g,
+     		(SELECT 
+				S.SURVEY_SEQ				AS surveySeq,
+				U.EMPLOYEE_ID				AS raterId 
+				A.PARTICIPATION_EMPLOYEE_ID AS appraiseeId
+  			from survey_list s, project_history r, project_history a, user_info u, user_info i
+   			where  u.employee_id = r.participation_employee_id 
+    			and r.project_id = a.project_id 
+    			and r.participation_employee_id <> a.participation_employee_id 
+ 		    	and s.survey_seq = #{surveySeq}
+    			and r.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE - (365 * #{month}), 'YY/MM/dd')
+    			and i.employee_id = a.participation_employee_id
+    			and i.grade_id = 2
+            	and U.EMPLOYEE_ID = #{raterId}
+    		ORDER BY u.employee_id) m, 
+     		user_info ua,
+     		user_info ur
+		where p.project_id = h.project_id
+ 			  and ur.grade_id = g.grade_id
+			  and h.participation_employee_id = m.appraisee_id
+    		  and ua.employee_id = m.appraisee_id
+    		  and ur.employee_id = m.rater_id
+		order by  p.project_name, g.grade_id, ur.employee_name
+		]]>
+	</select>
+
+	<insert id="insertAppraisee" parameterType="com.mycompany.webapp.dto.MappingDTO">
+		insert into mapping
+			(survey_seq, rater_id, appraisee_id, survey_complete_check)
+ 		values
+ 			(#{surveySeq}, #{raterId}, #{appraiseeId}, 'N')
+	</insert>
+	
+	<delete id="deleteAppriesee" parameterType="int">
+		delete from mapping where appraisee_id=#{appraiseeId} and rater_id=#{raterId}
+	</delete>
+
+</mapper>

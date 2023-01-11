@@ -59,10 +59,6 @@ public class NoticeEmailDTO {
 				+ surveyLink + ", deliveryDate=" + deliveryDate + ", deliveryYN=" + deliveryYN + ", deliveyContent="
 				+ deliveyContent + "]";
 	}
-	
-	
-	
-	
-	
-	
+
 }
+
