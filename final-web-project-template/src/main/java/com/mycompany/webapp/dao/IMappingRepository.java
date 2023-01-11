@@ -17,18 +17,13 @@ public interface IMappingRepository {
 	// 메핑된 데이터를 화면에 랜덤으로 조건에 맞게 출력
 	List<PopupDTO> selectMappingData(@Param("surveySeq") int surveySeq);
 	
-	// 병준형
-	List<PopupDTO> getPopup();// 전체 리스트 출력
-
-	// 해당 평가자를 눌러 해당 평가자가 평가할 수 있지만 제외된 피평가자를 포함 전체 목록 팝업창에 뛰우기
-	List<PopupDTO> selectRater(String raterId);
+	// 랜덤에 제외된 나머지 목록 띄우기
+	List<PopupDTO> getPopup(@Param("surveySeq") int surveySeq,  @Param("raterId") String raterId,  @Param("month") int month);
 	
 	// 위에 선택된 피평가자를 데이터를 저장 
 	void insertAppraisee(int surveySeq, String raterId, String appraiseeId);
 	
 	// 피평가자를 피평가자 목록에서 제외
-	void deleteAppriesee(String raterId, String appraiseeId);
-	
-	
-}
+	void deleteAppraisee(@Param("surveySeq") int surveySeq, @Param("raterId") String raterId, @Param("appraiseeId") String appraiseeId);
 
+}

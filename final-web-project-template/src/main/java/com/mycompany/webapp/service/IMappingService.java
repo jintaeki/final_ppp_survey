@@ -15,15 +15,12 @@ public interface IMappingService {
 	List<PopupDTO> selectMappingData(int surveySeq);
 	
 	// 추가할 피평가자 출력 (병준형 버전)
-	List<PopupDTO> getPopup();	
-	
-	// 추가할 피평가자 출력
-	List<PopupDTO> selectRater(String raterId);
+	List<PopupDTO> getPopup(int surveySeq, String raterId, int month);	
 	
 	// 선택한 피평가자 저장
 	void insertAppraiseId(int surveySeq, String raterId, String appraiseeId);
 	
 	// 삭제하기 
-	void deleteAppraiseId(String raterId, String appraiseeId);
+	void deleteAppraisee(int surveySeq, String raterId, String appraiseeId);
 
 }

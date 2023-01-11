@@ -30,13 +30,8 @@ public class MappingService implements IMappingService {
 	}
 	
 	@Override // 추가할 피평가자 검색 병준형
-	public List<PopupDTO> getPopup() {
-		return mappingrepository.getPopup();
-	}
-	
-	@Override // 추가할 피평가자 검색
-	public List<PopupDTO> selectRater(String raterId) {
-		return mappingrepository.selectRater(raterId);
+	public List<PopupDTO> getPopup(int surveySeq, String raterId, int month) {
+		return mappingrepository.getPopup(surveySeq, raterId, month);
 	}
 	
 	@Override // 피평가자 추가
@@ -45,8 +40,8 @@ public class MappingService implements IMappingService {
 	}
 
 	@Override // 피평가자 삭제
-	public void  deleteAppraiseId(String raterId, String appraiseeId) {
-		mappingrepository.deleteAppriesee(raterId, appraiseeId);
+	public void  deleteAppraisee(int surveySeq, String raterId, String appraiseeId) {
+		mappingrepository.deleteAppraisee(surveySeq, raterId, appraiseeId);
 	}
 }
 
