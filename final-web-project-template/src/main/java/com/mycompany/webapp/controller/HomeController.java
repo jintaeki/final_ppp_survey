@@ -160,49 +160,7 @@ public class HomeController {
 	}
 	
 
-	@RequestMapping("/surveydetails")
-	public String survey_details() {
-		logger.info("실행");
-		//log.info("실행");
-		return "survey_details";
-	}
-	@RequestMapping("/surveyevaluate")
-	public String survey_evaluate() {
-		logger.info("실행");
-		//log.info("실행");
-		return "survey_evaluate";
-	}
-	@RequestMapping("/surveyinsert")
-	public String survey_insert() {
-		logger.info("실행");
-		//log.info("실행");
-		return "survey_insert";
-	}
-	@RequestMapping("/surveylist")
-	public String survey_list() {
-		logger.info("실행");
-		//log.info("실행");
-		return "survey_list";
-	}
-	@RequestMapping("/surveyresultteam")
-	public String survey_success() {
-		logger.info("실행");
-		//log.info("실행");
-		return "survey_result_team";
-	}
-	@RequestMapping("/surveyresult")
-	public String survey_result() {
-		logger.info("실행");
-		//log.info("실행");
-		return "survey_result";
-	}
 	
-	@RequestMapping("/survey")
-	public String survey() {
-		logger.info("실행");
-		//log.info("실행");
-		return "survey";
-	}
 
 }
 

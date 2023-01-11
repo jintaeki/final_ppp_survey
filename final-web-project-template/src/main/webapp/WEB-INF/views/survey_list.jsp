@@ -159,8 +159,8 @@
 						<button type="button" class="btn btn-primary" data-toggle="modal"
 							data-target="#exampleModal" data-whatever="@mdo">등록</button>
 
-<!-- 						<button type="button" class="btn btn-outline-primary" -->
-<!-- 							onclick="location.href='mappingview'">매핑등록</button> -->
+						<button type="button" class="btn btn-outline-primary"
+							onclick="location.href='mappingview'">매핑등록</button>
 					</div>
 
 				</div>
@@ -203,6 +203,7 @@
 						</c:forEach>
 				
 					</tbody>
+
 				
 				
 				<tr>
