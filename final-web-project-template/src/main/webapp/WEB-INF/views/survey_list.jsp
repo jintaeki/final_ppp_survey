@@ -227,7 +227,7 @@ s
 
 					<tr>
 						<td colspan="4" class="text-center">
-							<div>
+							<div style=" margin-left:170px;">
 								<a class="btn btn-outline-primary btn-sm"
 									href="surveylist?pageNo=1">처음</a>
 								<c:if test="${pager.groupNo>1}">
