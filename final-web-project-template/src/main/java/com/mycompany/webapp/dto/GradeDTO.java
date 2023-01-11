@@ -28,7 +28,6 @@ public class GradeDTO {
 		return "GradeDTO [gradeId=" + gradeId + ", gradeName=" + gradeName + ", rank=" + rank + "]";
 	}
 	
-	
-	
-	
+
+
 }

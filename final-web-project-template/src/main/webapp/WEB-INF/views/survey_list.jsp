@@ -77,13 +77,9 @@
 		   }
 			});
 		
-		
-		
-		
+
 	}
-		
-		
-  	
+
 
 </script>
 
@@ -166,6 +162,7 @@
 <!-- 						<button type="button" class="btn btn-outline-primary" -->
 <!-- 							onclick="location.href='mappingview'">매핑등록</button> -->
 					</div>
+
 				</div>
 				<table class="table">
 					<thead>
@@ -177,6 +174,7 @@
 							<th scope="col">상태</th>
 							<th scope="col">결과</th>
 							<th scope= "col">평가자 매칭</th>	
+
 						</tr>
 					</thead>
 					<tbody>
@@ -200,8 +198,7 @@
 								<input type="hidden" id="pageNo" name=pageNo value="${pagingdto.startPageNo}">
 								<button class="btn btn-primary" onclick="send(this)" value="${list.surveySeq}">발송</button>
 							</td>
-							<td></td>
-					
+							<td></td>					
 						</tr>												
 						</c:forEach>
 				
@@ -240,6 +237,7 @@
 		</div>
 	</div>
 </div>
+
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
 

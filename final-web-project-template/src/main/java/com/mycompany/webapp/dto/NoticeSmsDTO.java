@@ -59,10 +59,6 @@ public class NoticeSmsDTO {
 				+ deliveryContent + "]";
 	}
 	
-	
-	
-	
-	
-	
-	
+
 }
+

@@ -31,6 +31,10 @@ import com.mycompany.webapp.dto.SurveyListDTO;
 
 import com.mycompany.webapp.service.ISurveyService;
 
+import com.mycompany.webapp.dto.MappingDTO;
+import com.mycompany.webapp.dto.PopupDTO;
+import com.mycompany.webapp.service.IMappingService;
+
 import lombok.extern.log4j.Log4j2;
 
 @Controller
@@ -38,12 +42,9 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 
-	
 	@Autowired
 	ISurveyService ISS;
 
-	
-	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
 		
@@ -126,8 +127,6 @@ public class HomeController {
 //		}
         
 		return "home";
-		
-	
 	}
 	
 	
@@ -139,12 +138,12 @@ public class HomeController {
 //		return "home";
 //	}
 	
-	@RequestMapping("/home2")
-	public String home2() {
-		logger.info("실행");
-		//log.info("실행");
-		return "home2";
-	}
+//	@RequestMapping("/home2")
+//	public String home2() {
+//		logger.info("실행");
+//		//log.info("실행");
+//		return "home2";
+//	}
 	
 	@RequestMapping("/loginafter")
 	public String login_after() {
@@ -161,14 +160,49 @@ public class HomeController {
 	}
 	
 
-//	@RequestMapping("/mappingview")
-//	public String mapping_view() {
-//		logger.info("실행4");
-//		log.info("실행11111");
-//		return "home2";
-//	}
+	@RequestMapping("/surveydetails")
+	public String survey_details() {
+		logger.info("실행");
+		//log.info("실행");
+		return "survey_details";
+	}
+	@RequestMapping("/surveyevaluate")
+	public String survey_evaluate() {
+		logger.info("실행");
+		//log.info("실행");
+		return "survey_evaluate";
+	}
+	@RequestMapping("/surveyinsert")
+	public String survey_insert() {
+		logger.info("실행");
+		//log.info("실행");
+		return "survey_insert";
+	}
+	@RequestMapping("/surveylist")
+	public String survey_list() {
+		logger.info("실행");
+		//log.info("실행");
+		return "survey_list";
+	}
+	@RequestMapping("/surveyresultteam")
+	public String survey_success() {
+		logger.info("실행");
+		//log.info("실행");
+		return "survey_result_team";
+	}
+	@RequestMapping("/surveyresult")
+	public String survey_result() {
+		logger.info("실행");
+		//log.info("실행");
+		return "survey_result";
+	}
+	
+	@RequestMapping("/survey")
+	public String survey() {
+		logger.info("실행");
+		//log.info("실행");
+		return "survey";
+	}
 
-	
-	
 }
 
