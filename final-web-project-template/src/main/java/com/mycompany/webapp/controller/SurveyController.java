@@ -53,9 +53,10 @@ public class SurveyController {
 		//log.info("실행");
 		return "survey_details";
 	}
-	@RequestMapping("/surveyevaluate")
-	public String survey_evaluate() {
+	@RequestMapping("/surveyevaluate/{surveySeq}")
+	public String survey_evaluate(@PathVariable int surveySeq) { 
 		logger.info("실행");
+		System.out.println(surveySeq);
 		//log.info("실행");
 		return "survey_evaluate";
 	}
@@ -104,6 +105,7 @@ public class SurveyController {
 
 		PagingDTO pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
 		logger.info(surveyService.selectSurveyList(pagingdto).toString());
+
 		model.addAttribute("surveylist", surveyService.selectSurveyList(pagingdto));
 		model.addAttribute("pagingdto",pagingdto);
 		logger.info("실행");

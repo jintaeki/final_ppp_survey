@@ -49,25 +49,21 @@
 			console.log("굿");
 			const tag = $(obj);
 			console.log(tag);
+			console.log(surveyseq);
+ 			
+			const text = '<button type="button" class="btn btn-link" onclick="location.href='+'\'surveyevaluate/' +surveyseq+ '\'">조회</button>';	
+ 			tag.parent().next().append(text);	
+ 									
 
- 			const text = `<button type="button" class="btn btn-link"
- 							onclick="location.href='surveyevaluate/${list.surveySeq}'">조회</button>`;
-
- 							tag.parent().next().append(text);					
-
- 							const complete = `확정`;
- 							tag.parent().prev().html(complete);
- 							tag.parent().prev().css('font-weight', 'bold');
- 							tag.parent().prev().css('color', '#F06');
+ 			const complete = `확정`;
+ 			tag.parent().prev().html(complete);
+ 			tag.parent().prev().css('font-weight', 'bold');
+ 			tag.parent().prev().css('color', '#F06');
  							
-			const completeMsg = `<button class="btn btn-primary" onclick="sendRe(this)" value="${list.surveySeq}">재발송</button>`;
+			const completeMsg = '<button class="btn btn-primary" onclick="sendRe(this)" value="'+surveyseq+'">재발송</button>';
 			tag.parent().html(completeMsg);
-
-
-// 			const text = `<button type="button" class="btn btn-link" onclick="location.href='surveyevaluate/`;
-
-// 			text +=	`${surveyseq}`;
-// 			text += `\'">조회</button>`;
+		
+	
 
 			
 // 			tag.hide
@@ -79,6 +75,26 @@
 		
 
 	}
+  	
+  	function btn_for_mapping(obj){
+  		var seqValue=$(obj).val();
+  		html ="";
+  		html += '<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+  		html += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">매핑 조건 선택</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+  	    html += '<span aria-hidden="true">&times;</span></button>';
+  	    html += '</div>';
+  	    html += '<div class="modal-body">'
+  	   	html += '<c:url value="/mapping/set.do" var="actionURL"/>';
+  	   	html += '<form:form action="${actionURL}" modelAttribute="map">';
+  	   	html += '<input type="hidden" id="surveySeq" name="surveySeq" value="'+seqValue+'">';
+  	   	html += '<br> <h5> 다면평가에 포함될 프로젝트의 범위 정하기 </h5> <select class="form-control" name="month"> <option value="3">최근 3개월 동안에 끝난 프로젝트</option> <option value="6">최근 6개월 동얀에 끝난 프로젝트</option> <option value="12">최근 1년 동안에 끝난 프로젝트</option>';
+  		html +=	'<option value="24">최근 2년 동안에 끝난 프로젝트</option> <option value="36">최근 3년 동안에 끝난 프로젝트</option> </select>';
+  		html += '<br> <h5>평가 인원</h5> <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" max="5" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;">';
+  	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> <input type="submit" class="btn btn-primary" value="매핑">';
+  	    html += '</div></form:form></div></div></div></div>';     
+  	    	
+  	    $('#beforModal').after(html)
+  	}
 
 
 </script>
@@ -117,10 +133,6 @@
 					<br>
 					<input type="radio" name="anonymityCheckCode" value="20001">익명 <br>
 					<input type="radio" name="anonymityCheckCode" value="20002">기명
-<!-- 					<select name="anonymityCheckDate"> -->
-<!-- 						<option value="A">익명</option> -->
-<!-- 						<option value="R">기명</option> -->
-<!-- 					</select> -->
 				<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">취소</button>
@@ -135,7 +147,7 @@
 <!-- modal(설문 등록 시 뜨는 팝업창) 끝-->
 
 
-<div class="card m-2">
+<div class="card m-2" id="beforModal">
 	<div class="card-body">
 		<div class="container my-5">
 			<div class="row">
@@ -159,8 +171,7 @@
 						<button type="button" class="btn btn-primary" data-toggle="modal"
 							data-target="#exampleModal" data-whatever="@mdo">등록</button>
 
-						<button type="button" class="btn btn-outline-primary"
-							onclick="location.href='mappingview'">매핑등록</button>
+					
 					</div>
 
 				</div>
@@ -198,7 +209,8 @@
 								<input type="hidden" id="pageNo" name=pageNo value="${pagingdto.startPageNo}">
 								<button class="btn btn-primary" onclick="send(this)" value="${list.surveySeq}">발송</button>
 							</td>
-							<td></td>					
+							<td></td>
+							<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1" onclick="btn_for_mapping(this)" value="${list.surveySeq}">매핑</button></td>					
 						</tr>												
 						</c:forEach>
 				
@@ -232,12 +244,52 @@
 			</tr>
 				
 				</table>
-				
-				
+							
 			</div>
 		</div>
 	</div>
 </div>
+
+<script>
+
+
+</script>
+
+<!-- Modal -->
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
+<!--   <div class="modal-dialog"> -->
+<!--     <div class="modal-content"> -->
+<!--       <div class="modal-header"> -->
+<!--         <h5 class="modal-title" id="exampleModalLabel">매핑 조건 선택</h5> -->
+<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!--           <span aria-hidden="true">&times;</span> -->
+<!--         </button> -->
+<!--       </div> -->
+<!--       <div class="modal-body"> -->
+<%--      	<c:url value="/mapping/set.do" var="actionURL"/> --%>
+<%--      	<form:form action="${actionURL}" modelAttribute="map"> --%>
+<%--   		   	<input type="hidden" id="surveySeq" name="surveySeq" value="${list.surveySeq }"> --%>
+<!--      		<br> -->
+<!--      		<h5> 다면평가에 포함될 프로젝트의 범위 정하기 </h5> -->
+<!--       	   	<select class="form-control" name="month"> -->
+<!--   				<option value="3">최근 3개월 동안에 끝난 프로젝트</option> -->
+<!--   				<option value="6">최근 6개월 동얀에 끝난 프로젝트</option> -->
+<!--   				<option value="12">최근 1년 동안에 끝난 프로젝트</option> -->
+<!--   				<option value="24">최근 2년 동안에 끝난 프로젝트</option> -->
+<!--   				<option value="36">최근 3년 동안에 끝난 프로젝트</option> -->
+<!-- 		 	</select> -->
+<!-- 		 	<br> -->
+<!-- 		 	<h5>평가 인원</h5> -->
+<!--           <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" max="5" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;"> -->
+<!--             <div class="modal-footer"> -->
+<!--               <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> -->
+<!--               <input type="submit" class="btn btn-primary" value="매핑"> -->
+<!--             </div> -->
+<%--       	</form:form> --%>
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </div> -->
 
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

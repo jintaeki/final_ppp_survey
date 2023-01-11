@@ -6,7 +6,7 @@ import com.mycompany.webapp.dto.PopupDTO;
 
 public interface IMappingService {
 	// 조건, 데이터 입력 후 메핑
-	void setMapping(int surveySeq, int year, int number);
+	void setMapping(int surveySeq, int month, int number);
 	
 	// 설문조사 중복 체크
 	int mappingCheck(int surveySeq);

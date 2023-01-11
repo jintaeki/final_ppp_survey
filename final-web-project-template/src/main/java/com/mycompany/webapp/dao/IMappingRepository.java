@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface IMappingRepository {
 	// 설문조사 팝업창의 조건을 받아 메핑데이터에 선택
-	void setMapping(@Param("surveySeq") int surveySeq, @Param("year") int year, @Param("number") int number);
+	void setMapping(@Param("surveySeq") int surveySeq, @Param("month") int month, @Param("number") int number);
 	
 	// 중복 확인
 	int mappingCheck(@Param("surveySeq") int surveySeq);
