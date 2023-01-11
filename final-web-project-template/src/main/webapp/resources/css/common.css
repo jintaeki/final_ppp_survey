@@ -1,0 +1,16 @@
+@charset "UTF-8";
+* {
+   box-sizing: border-box;   
+}
+body {
+   margin: 0;
+   text-align: center;
+}
+/* 메뉴 */
+.navbar {
+   margin-bottom: 20px;
+}
+
+.container {
+   margin: 0 auto;
+}

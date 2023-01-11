@@ -9,14 +9,14 @@
 	href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
 
 
-
+<div class="survey_dv" id="all_survey_dv">
 <!-- 설문지 설정 진택 -->
-<form:form modelAttribute="SLD" style="display:inline-flex; border: 1px solid black;" id="form">
+<form:form modelAttribute="SLD" style="display:inline-flex; border: 1px solid black;" id="survey_setting_form">
 	<div class="container">
 		<div class="row">
 			<div class="col-3">설문지 이름</div>
 			<div class="col-3">설문 기간</div>
-			<div class="col-3">익명기명</div>
+			<div class="col-3">익명 / 기명</div>
 			<div class="col-3">설문 부가 설명</div>
 
 			<input type="hidden" name="decideYN" value="N"> <input
@@ -29,22 +29,22 @@
 				</div>
 			</div>
 			<div class="col-3">
-				<input type="date" name="surveyStartDate"
+				<input type="date" name="surveyStartDate" class="survey_date"
 					value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">
-				~ <input type="date" name="surveyClosedDate"
+				~ <input type="date" name="surveyClosedDate" class="survey_date"
 					value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />">
 			</div>
 			<div class="col-3">
 				<c:if test="${SLD.anonymityCheckCode eq '20001'}">
-					<input type="radio" name="anonymityCheckCode" value="20001" checked>익명
-				<input type="radio" name="anonymityCheckCode" value="20002">기명	
+					<input type="radio" name="anonymityCheckCode" class="survey_radio" id="survey_type_check" value="20001" checked>익명
+				<input type="radio" name="anonymityCheckCode" class="survey_radio" id="survey_type_check" value="20002">기명	
 				</c:if>
 
 				<c:if test="${SLD.anonymityCheckCode eq '20002'}">
-					<input type="radio" name="anonymityCheckCode" value="20001">익명
+					<input type="radio" name="anonymityCheckCode" class="survey_radio"  id="survey_type_check" value="20001"><label for="survey_type_check">익명</label>
 					<br>
-					<input type="radio" name="anonymityCheckCode" value="20002" checked>기명
-				</c:if>
+					<input type="radio" name="anonymityCheckCode" class="survey_radio" id="survey_type_check" value="20002" checked><label for="survey_type_check">기명</label>
+			</c:if>
 
 			</div>
 			<div class="col-3">
@@ -89,49 +89,13 @@
 <!-- </div> -->
 
 
-<!-- 문항 관리 진택-->
-<!-- 추가될 문항 none 진택 -->
-<!--  객관식 -->
-<div class="icon_line" id="new_obj_Item" style="display: none;">
-	<label><input type="text" name="itemContent"
-		placeholder="문항 입력..." id="ic"></label> 점수<input type="number"
-		name="itemScore" min="0" value="0"
-		style="min-width: 20px; max-width: 40px;" id="is">
 
-	<button onclick="delete_obj_item_btn(this)">
-		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-			fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-  					<path
-				d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-
-					</svg>
-	</button>
-</div>
-<!--  혼합식 -->
-<div class="icon_line" id="new_mix_Item" style="display: none;">
-	<label><input type="text" name="itemContent" required
-		placeholder="문항 입력..." id="ic"></label> 점수<input type="number"
-		name="itemScore" min="0" value="0"
-		style="min-width: 20px; max-width: 40px;" id="is">
-
-	<button onclick="delete_mix_item_btn(this)">
-		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-			fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-  					<path
-				d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-
-					</svg>
-	</button>
-</div>
-
-<!-- 추가될 문항 none 진택 -->
 
 <br>
-<div class="col-12">&nbsp;</div>
 
 
 <div class="all_insertdv" style="border: 1px solid black;">
-
+		
 	<!-- 여기까지 설문제 제목 div -->
 	<div style="border: 1px solid black;"
 		class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
@@ -272,17 +236,56 @@
 				</div>
 		
 				<!-- 문제 추가 버튼  --><!-- onclick="insertQus()" -->
-				<button type="button" class="btn btn-outline-primary"  id="add_btn" >문제 추가</button>
+				<div class="question_add_btn_div">
+					<button type="button" class="btn btn-outline-primary"  id="add_btn" >문제 추가</button>
 				
-				<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate()">문제
-					수정</button>
+					<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate()">문제 수정</button>
+				</div>
+				
 				<input type="hidden" name="surveySeq" id="seq" value="${SLD.surveySeq }">
 			</div>
 			<input type="hidden" name="itemScore" value="1">
 			<input type="hidden" name="itemContent" value=" ">
 		</div>
 		</form:form>
+		</div>
+		
+		<!-- 문항 관리 진택-->
+		<!-- 추가될 문항 none 진택 -->
+		<!--  객관식 -->
+			<div class="icon_div" id="item_div">
+			<div class="icon_line" id="new_obj_Item">
+				<label><input type="text" name="itemContent"
+					placeholder="문항 입력..." id="ic"></label> 점수<input type="number"
+					name="itemScore" min="0" value="0"
+					style="min-width: 20px; max-width: 40px;" id="is">
 
+						<button onclick="delete_obj_item_btn(this)">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+							fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+  							<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+						</svg>
+			</button>
+	</div>
+<!--  혼합식 -->
+	<div class="icon_line" id="new_mix_Item" style="display: none;">
+	<label><input type="text" name="itemContent" required
+		placeholder="문항 입력..." id="ic"></label> 점수<input type="number"
+		name="itemScore" min="0" value="0"
+		style="min-width: 20px; max-width: 40px;" id="is">
+
+	<button onclick="delete_mix_item_btn(this)">
+		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+			fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+  					<path
+				d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+
+					</svg>
+	</button>
+	</div>
+</div>
+<!-- 추가될 문항 none 진택 -->
+		
 	</div>
 </div>
 <script>
@@ -653,7 +656,7 @@
 		html += `<div class="input-group-prepend">`;
 		html += '<span class="input-group-text" >문제입력</span>';
 		html += `</div>`;
-		html += '<textarea class="form-control" aria-label="문제 입력칸" id="hi" name="questionContent">'+data[0].QUESTIONCONTENT+'';
+		html += '<textarea class="form-control" aria-label="문제 입력칸" id="hi" name="questionContent">'+data[0].QUESTIONCONTENT+'">';
 		
 		 $('#questioN_insert_form').append(html);
 	}
