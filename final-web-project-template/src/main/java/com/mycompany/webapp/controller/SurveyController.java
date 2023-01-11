@@ -86,6 +86,8 @@ public class SurveyController {
 	@RequestMapping("/surveyinsert2")
 	public String survey_insert(@RequestParam("surveyseq") int surveySeq, Model model) {
 		model.addAttribute("SLD",surveyService.selectSurvey(surveySeq));
+		model.addAttribute("SQL", surveyService.getQuestionList(surveySeq));
+		System.out.println(surveyService.getQuestionList(surveySeq));
 		return "survey_insert2";
 	}
 
@@ -226,7 +228,7 @@ public class SurveyController {
 
 
 
-
+		
 		String checkCode = SQD.getQuestionTypeCode();
 		try {
 			if(checkCode.equals("10001")) {
@@ -287,7 +289,7 @@ public class SurveyController {
 		return SQD;
 	}
 
-	// 문제 비동기식으로 출력 진택
+	// 문제 비동기식으로 출력 
 	@RequestMapping(value="/selectquestion.do/{surveySeq}")
 	@ResponseBody
 	public  List<Map<String, Object>> selectquestion(@PathVariable int surveySeq, Model model) {
@@ -298,7 +300,16 @@ public class SurveyController {
 		return surveyService.selectQuestion(surveySeq) ;
 	}	
 
+	// 문항 비동기식으로 출력 
+	@RequestMapping(value="/selectitems.do/{questionseq}")
+	@ResponseBody
+	public  List<Map<String, Object>> selectitems(@PathVariable int questionseq, Model model) {
+		logger.info("뿌리기 컨트롤 ");
 
+		logger.info(surveyService.selectItems(questionseq).toString());
+		//		System.out.println(surveyService.selectQuestion(surveySeq));
+		return surveyService.selectItems(questionseq) ;
+	}	
 
 
 	/*
@@ -348,7 +359,7 @@ public class SurveyController {
 	}
 
 	//문제 업데이트
-	@RequestMapping(value="/questionUpdate.do")
+	@RequestMapping("/questionUpdate.do")
 	@ResponseBody
 	public SurveyQuestionDTO questionUpdate(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model) {
 		logger.info("업데이트 진입");
@@ -356,7 +367,7 @@ public class SurveyController {
 		//int questionId = SQD.getQuestionId();
 		surveyService.setQuestUpdate(SQD);
 		System.out.println(SQD);
-		logger.info(SQD.toString());
+		logger.info(SQD.toString());	
 		//surveyService.getQuestionList(surveyId);
 		logger.info("업데이트 성공");
 		return SQD;

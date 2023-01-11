@@ -99,12 +99,16 @@
 	</select>
 	
 	<select id="getQuestionList" resultType="com.mycompany.webapp.dto.SurveyQuestionDTO">
-		select QUESTION_SEQ AS questionSeq, QUESTION_CONTENT AS questContent, QUESTION_TYPE_CODE AS questionTypeCode
-		FROM SURVEY_QUESTION WHERE SURVEY_SEQ = #{surveySeq} 
+		select SURVEY_SEQ as surveySeq, QUESTION_SEQ AS questionSeq, QUESTION_CONTENT AS questionContent, QUESTION_TYPE_CODE AS questionTypeCode
+		FROM SURVEY_QUESTION WHERE SURVEY_SEQ = #{surveySeq} order by question_seq desc
 	</select>
 	
 	<update id="setQuestUpdate" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
 		UPDATE SURVEY_QUESTION SET QUESTION_CONTENT=#{questionContent}, QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq}
+	</update>
+	
+	<update id="setQuestUpdateType" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
+		UPDATE SURVEY_QUESTION SET QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq}
 	</update>
 	
 	<select id="getAddDate" parameterType="int" resultType="date">
@@ -182,5 +186,16 @@
 	<delete id="setItemDeleteQus" parameterType="int">
 		DELETE FROM SURVEY_ITEM WHERE QUESTION_SEQ = #{questionSeq}	
 	</delete>
+	
+	<select id="selectItems" parameterType="int" resultType="hashmap">
+	
+		select si.ITEM_SEQ	as itemSeq
+			,si.QUESTION_SEQ as questionSeq
+            ,si.ITEM_CONTENT	as itemContent
+            ,si.ITEM_SCORE	as itemScore
+            ,sq.QUESTION_TYPE_CODE as questionTypeCode
+		from survey_item si, survey_question sq 
+		where si.QUESTION_SEQ = #{questionSeq} and si.QUESTION_SEQ = sq.QUESTION_SEQ
+	</select>
 	
 </mapper>

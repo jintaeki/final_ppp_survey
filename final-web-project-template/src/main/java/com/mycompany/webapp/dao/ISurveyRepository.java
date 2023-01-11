@@ -53,7 +53,12 @@ public interface ISurveyRepository {
 	List<SurveyListDTO> searchListByKeywordAndDate(PagingDTO pagingdto);
 
 	List<Map<String, Object>> selectQuestionBySeq(int questionSeq);
+	
+	List<Map<String, Object>> selectItems(int questionSeq);
 
+	void setQuestUpdateType(SurveyQuestionDTO SQD);
+
+	
 }
 
 

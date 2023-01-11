@@ -54,6 +54,7 @@ public class SurveyService implements ISurveyService{
 //		surveyquestion.setAddDate(date);
 //		surveyDao.setItemDelete(surveyquestion);
 		surveyDao.setItemUpdate(surveyquestion);
+		surveyDao.setQuestUpdateType(surveyquestion);
 		
 	}
 	
@@ -192,6 +193,14 @@ public class SurveyService implements ISurveyService{
 	public void setItemDeleteQus(int questionSeq) {
 		surveyDao.setItemDeleteQus(questionSeq);
 	}
+
+	@Override
+	public List<Map<String, Object>> selectItems(int questionSeq) {
+		return surveyDao.selectItems(questionSeq);
+	}
+	
+
+		
 }
 
 
