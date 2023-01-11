@@ -94,12 +94,19 @@
              	user_info i
        		where r.project_id = a.project_id 
          		and r.participation_employee_id <> a.participation_employee_id 
-         		and s.survey_seq = 2310103
+                and r.participation_employee_id = #{raterId}
+         		and s.survey_seq = #{surveySeq}
          		and i.grade_id = 2
-         		and r.PROJECT_CLOSED_DATE <= TO_CHAR(SYSDATE -(365 * 1),'YY/MM/dd')
-         		and i.employee_id = r.participation_employee_id
-         		and i.department_id = o.department_id  
-        	ORDER BY i.employee_name
+         		and r.PROJECT_CLOSED_DATE <= TO_CHAR(SYSDATE -(30 * month),'YY/MM/dd')
+         		and i.employee_id = a.participation_employee_id
+         		and i.department_id = o.department_id
+                and not exists 
+                    (select 'x'
+                     from mapping m 
+                     where i.employee_id = m.appraisee_id 
+                         and r.participation_employee_id = m.rater_id
+                         and m.survey_seq = #{surveySeq))
+        	ORDER BY i.employee_name;
       	]]>
    	</select>
 	

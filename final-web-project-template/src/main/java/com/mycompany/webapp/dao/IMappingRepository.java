@@ -19,7 +19,10 @@ public interface IMappingRepository {
 	
 	// 병준형
 	List<PopupDTO> getPopup();// 전체 리스트 출력
-
+	void insertPopup(int surveySeq, String raterId, String appraiseeId);
+	
+	
+	
 	// 해당 평가자를 눌러 해당 평가자가 평가할 수 있지만 제외된 피평가자를 포함 전체 목록 팝업창에 뛰우기
 	List<PopupDTO> selectRater(String raterId);
 	

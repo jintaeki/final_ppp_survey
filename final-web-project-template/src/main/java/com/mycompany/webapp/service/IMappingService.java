@@ -15,7 +15,8 @@ public interface IMappingService {
 	List<PopupDTO> selectMappingData(int surveySeq);
 	
 	// 추가할 피평가자 출력 (병준형 버전)
-	List<PopupDTO> getPopup();	
+	List<PopupDTO> getPopup();
+	void insertPopup(int surveySeq, String raterId, String appraiseeId);
 	
 	// 추가할 피평가자 출력
 	List<PopupDTO> selectRater(String raterId);

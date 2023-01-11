@@ -33,6 +33,11 @@ public class MappingService implements IMappingService {
 	public List<PopupDTO> getPopup() {
 		return mappingrepository.getPopup();
 	}
+
+	@Override
+	public void insertPopup(int surveySeq, String raterId, String appraiseeId) {
+		mappingrepository.insertPopup(surveySeq, raterId, appraiseeId);
+	}
 	
 	@Override // 추가할 피평가자 검색
 	public List<PopupDTO> selectRater(String raterId) {
@@ -47,6 +52,8 @@ public class MappingService implements IMappingService {
 	@Override // 피평가자 삭제
 	public void  deleteAppraiseId(String raterId, String appraiseeId) {
 		mappingrepository.deleteAppriesee(raterId, appraiseeId);
+	}
+
 	}
 }
 

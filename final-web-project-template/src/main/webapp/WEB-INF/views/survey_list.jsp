@@ -201,8 +201,10 @@ function send(obj){
      	<form:form action="${actionURL}" modelAttribute="map">
   		   	<input type="hidden" id="surveySeq" name="surveySeq" value="2241012">
      		<br>
-     		<h5> 평가 선택 </h5>
+     		<h5>평가 기간 </h5>
       	   	<select class="form-control" name="year" required>
+  				<option value="1">23년 1분기 다면평가</option>
+  				<option value="2">23년 1분기 다면평가</option>
   				<option value="1">23년 1분기 다면평가</option>
 		 	</select>
 		 	<br>
