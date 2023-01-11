@@ -117,9 +117,10 @@ left: 600px;
 }
 
 .question_inputdv {
-	background-color:yellow;
+	/*background-color:yellow;*/
     position: relative;
-    top: 400px;
+    top: 300px;
+    right:40px;
 }
 
 #exampleFormControlInput {
@@ -130,7 +131,7 @@ left: 600px;
 	}
 	
 #select_radio{
-	background-color:red;
+	/*background-color:red;*/
 	width: 50%;
     margin-bottom: 5px;
     position: absolute;
@@ -140,7 +141,7 @@ left: 600px;
 
 
 #question_add{
-	background-color:blue;
+	/*background-color:blue;*/
   width: 50%;
     left: 48%;
     top: 70px;

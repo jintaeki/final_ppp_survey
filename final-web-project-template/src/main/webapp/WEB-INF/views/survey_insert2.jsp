@@ -25,7 +25,7 @@
 				<div class="form-group">
 					<label for="survey_name" class="col-form-label"></label> <input
 						type="text" class="form-control" id="survey_name"
-						name="surveyName" value="${SLD.surveyName }">
+						name="surveyName" value="${SLD.surveyName}">
 				</div>
 			</div>
 			<div class="col-3">
@@ -273,20 +273,19 @@
 				${SLD.surveySeq}-> 설문id 확인용
 				<!-- 문제 추가 버튼  --><!-- onclick="insertQus()" -->
 				<button type="button" class="btn btn-outline-primary"  id="add_btn" >문제 추가</button>
-							
 				<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate()">문제
 					수정</button>
 				<input type="hidden" name="surveySeq" id="seq" value="${SLD.surveySeq }">
-				<input type="hidden" name="questionSeq" value="2"> <!-- 비동기로 바꿔 넣어보자 -> 문항도 마찬가지 -->
 			</div>
 			<input type="hidden" name="itemScore" value="1">
 			<input type="hidden" name="itemContent" value=" ">
 		</div>
 		</form:form>
+
 	</div>
 </div>
-
 <script>
+
 	//진택
 	var cnt = 0;
 	//설문 설정 비동기 수정
@@ -680,6 +679,15 @@
 	// 진택 끝
 	
 	//채우
+	var ref = document.getElementById('refresh_btn');
+		ref.addEventListener('click', refresh);
+	
+	function refresh(){
+		console.log("새로고침 작동");
+		$('#scroll_area').load(location.href + '#scroll_area');
+}
+	
+	
 	
 	/*문제 삭제*/
 // 	function delete_btn(obj) {
