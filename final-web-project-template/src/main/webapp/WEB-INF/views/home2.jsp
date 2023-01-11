@@ -29,7 +29,7 @@ function map_delete(raterId, appraiseeId){
 	 
 	    }) 
 	    .fail(function(e) {  
-	        alert("삭제를 실패하였습니다.");
+	        alert("삭제를 실패하였습니다ㅜㅜ.");
 	    }) 
 	    .always(function() { 
 	        
