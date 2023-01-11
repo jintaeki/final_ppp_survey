@@ -93,7 +93,7 @@
   	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> <input type="submit" class="btn btn-primary" value="매핑">';
   	    html += '</div></form:form></div></div></div></div>';     
   	    	
-  	    $('#beforModal').after(html)
+  	    $('#beforeModal').after(html)
   	}
 
 
@@ -147,7 +147,7 @@
 <!-- modal(설문 등록 시 뜨는 팝업창) 끝-->
 
 
-<div class="card m-2" id="beforModal">
+<div class="card m-2" id="beforeModal">
 	<div class="card-body">
 		<div class="container my-5">
 			<div class="row">
@@ -255,41 +255,6 @@
 
 </script>
 
-<!-- Modal -->
-<!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
-<!--   <div class="modal-dialog"> -->
-<!--     <div class="modal-content"> -->
-<!--       <div class="modal-header"> -->
-<!--         <h5 class="modal-title" id="exampleModalLabel">매핑 조건 선택</h5> -->
-<!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!--           <span aria-hidden="true">&times;</span> -->
-<!--         </button> -->
-<!--       </div> -->
-<!--       <div class="modal-body"> -->
-<%--      	<c:url value="/mapping/set.do" var="actionURL"/> --%>
-<%--      	<form:form action="${actionURL}" modelAttribute="map"> --%>
-<%--   		   	<input type="hidden" id="surveySeq" name="surveySeq" value="${list.surveySeq }"> --%>
-<!--      		<br> -->
-<!--      		<h5> 다면평가에 포함될 프로젝트의 범위 정하기 </h5> -->
-<!--       	   	<select class="form-control" name="month"> -->
-<!--   				<option value="3">최근 3개월 동안에 끝난 프로젝트</option> -->
-<!--   				<option value="6">최근 6개월 동얀에 끝난 프로젝트</option> -->
-<!--   				<option value="12">최근 1년 동안에 끝난 프로젝트</option> -->
-<!--   				<option value="24">최근 2년 동안에 끝난 프로젝트</option> -->
-<!--   				<option value="36">최근 3년 동안에 끝난 프로젝트</option> -->
-<!-- 		 	</select> -->
-<!-- 		 	<br> -->
-<!-- 		 	<h5>평가 인원</h5> -->
-<!--           <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" max="5" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;"> -->
-<!--             <div class="modal-footer"> -->
-<!--               <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> -->
-<!--               <input type="submit" class="btn btn-primary" value="매핑"> -->
-<!--             </div> -->
-<%--       	</form:form> --%>
-<!--       </div> -->
-<!--     </div> -->
-<!--   </div> -->
-<!-- </div> -->
 
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

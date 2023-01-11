@@ -270,9 +270,9 @@
 					<textarea class="form-control" aria-label="문제 입력칸"
 						name="questionContent">${sqd.questionContent}</textarea>
 				</div>
-				${SLD.surveySeq}-> 설문id 확인용
+			
 				<!-- 문제 추가 버튼  --><!-- onclick="insertQus()" -->
-				<button type="button" class="btn btn-outline-primary"  id="add_btn" >문제 추가</button>
+				<button type="button" class="btn btn-outline-primary"  id="add_btn" onclick="insertQus()">문제 추가</button>
 																											
 				<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate()">문제
 					수정</button>
@@ -507,8 +507,8 @@
 // 	}
 	
 	
-	var test = document.getElementById('add_btn');
-		test.addEventListener('click', insertQus);
+// 	var test = document.getElementById('add_btn');
+// 		test.addEventListener('click', insertQus);
 		
  	function insertQus(){
  			var qdiv = $('#questioN_insert_form')[0];
@@ -653,7 +653,7 @@
 		html += `<div class="input-group-prepend">`;
 		html += '<span class="input-group-text" >문제입력</span>';
 		html += `</div>`;
-		html += '<textarea class="form-control" aria-label="문제 입력칸" id="hi" name="questionContent">'+data[0].QUESTIONCONTENT;
+		html += '<textarea class="form-control" aria-label="문제 입력칸" id="hi" name="questionContent">'+data[0].QUESTIONCONTENT+'';
 		
 		 $('#questioN_insert_form').append(html);
 	}
@@ -662,7 +662,9 @@
 		console.log(data[0].SURVEYSEQ);
 		  var html = '';
 		
-		html += `</div><button type="button" class="btn btn-outline-primary" id="add_btn" >문제추가</button>`;
+		html += `</div>`;
+		html += `<button type="button" class="btn btn-outline-primary" id="add_btn" onclick="insertQus()">문제추가</button>`;
+
 		html += `<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate()">문제수정</button>`;
 		html += '<input type="hidden" name="surveySeq" id="seq" value="'+data[0].SURVEYSEQ+'">';
 		html += '<input type="hidden" name="questionSeq" value="'+data[0].QUESTIONSEQ +'">';
@@ -674,7 +676,7 @@
 		 $('#hi').after(html);
 	}
 	
-	
+
 	//문제 입력 채우 코드에 추가한 것 끝
 	
 	// 진택 끝

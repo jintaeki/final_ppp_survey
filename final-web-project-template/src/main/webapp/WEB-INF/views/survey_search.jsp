@@ -5,50 +5,97 @@
 
 
 <script>
+	function sendRe(obj){
+		var pageno = $('#pageNo').val();
+  		var surveyseq = $(obj).val();
+  		console.log(surveyseq)
+//   		$.ajax({
+// 			method:'POST', //어떤 방식으로 보낼 지
+// 			url:'sendmessage.do/'+surveyseq+'/'+pageno, // qdiv를 보낼 경로 설정	
+// 		    beforeSend : function() { //보내기 전 실행
+// 			console.log("요청이 보내지는가?");
+// 		   },
+// 		   success:function () {	 //전송 성공시 실행
+// 			console.log("굿");
+// 			const tag = $(obj);
+// 			console.log(tag);
+// 			const completeMsg = `전송완료`;
 
+// 			tag.parent().html(completeMsg);
+// 			tag.hide
+			   
+// 		   }, error:function(e) {	//실패, 에러
+// 			   console.log("Error", e); 
+// 		   }
+// 			});
+	}
+	
 			
 
   	function send(obj) {
   		
   		var pageno = $('#pageNo').val();
-  		var suveryseq = $('#btn').val();
-  		
-  
-  		console.log(suveryseq);
+  		var surveyseq = $(obj).val();
+
+  		console.log(surveyseq);
 
 		$.ajax({
 			method:'POST', //어떤 방식으로 보낼 지
-			url:'sendmessage.do/'+suveryseq+'/'+pageno, // qdiv를 보낼 경로 설정	
+			url:'sendmessage.do/'+surveyseq+'/'+pageno, // qdiv를 보낼 경로 설정	
 		    beforeSend : function() { //보내기 전 실행
 			console.log("요청이 보내지는가?");
 		   },
 		   success:function () {	 //전송 성공시 실행
 			console.log("굿");
 			const tag = $(obj);
-			const completeMsg = `전송완료`;
-			const complete = `확정`;
-			const text = `<button type="button" class="btn btn-link"
-							onclick="location.href='surveyevaluate/${list.surveySeq}'">조회</button>`;
-			tag.parent().next().append(text);
-			tag.parent().prev().html(complete);
-			tag.parent().prev().css('font-weight', 'bold');
-			tag.closest('td').css('color', '#F06');
+			console.log(tag);
+			console.log(surveyseq);
+ 			
+			const text = '<button type="button" class="btn btn-link" onclick="location.href='+'\'surveyevaluate/' +surveyseq+ '\'">조회</button>';	
+ 			tag.parent().next().append(text);	
+ 									
 
+ 			const complete = `확정`;
+ 			tag.parent().prev().html(complete);
+ 			tag.parent().prev().css('font-weight', 'bold');
+ 			tag.parent().prev().css('color', '#F06');
+ 							
+			const completeMsg = '<button class="btn btn-primary" onclick="sendRe(this)" value="'+surveyseq+'">재발송</button>';
 			tag.parent().html(completeMsg);
-			tag.hide
+		
+	
+
+			
+// 			tag.hide
 			   
 		   }, error:function(e) {	//실패, 에러
 			   console.log("Error", e); 
 		   }
 			});
 		
-		
-		
-		
+
 	}
-		
-		
   	
+  	function btn_for_mapping(obj){
+  		var seqValue=$(obj).val();
+  		html ="";
+  		html += '<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+  		html += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">매핑 조건 선택</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+  	    html += '<span aria-hidden="true">&times;</span></button>';
+  	    html += '</div>';
+  	    html += '<div class="modal-body">'
+  	   	html += '<c:url value="/mapping/set.do" var="actionURL"/>';
+  	   	html += '<form:form action="${actionURL}" modelAttribute="map">';
+  	   	html += '<input type="hidden" id="surveySeq" name="surveySeq" value="'+seqValue+'">';
+  	   	html += '<br> <h5> 다면평가에 포함될 프로젝트의 범위 정하기 </h5> <select class="form-control" name="month"> <option value="3">최근 3개월 동안에 끝난 프로젝트</option> <option value="6">최근 6개월 동얀에 끝난 프로젝트</option> <option value="12">최근 1년 동안에 끝난 프로젝트</option>';
+  		html +=	'<option value="24">최근 2년 동안에 끝난 프로젝트</option> <option value="36">최근 3년 동안에 끝난 프로젝트</option> </select>';
+  		html += '<br> <h5>평가 인원</h5> <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" max="5" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;">';
+  	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> <input type="submit" class="btn btn-primary" value="매핑">';
+  	    html += '</div></form:form></div></div></div></div>';     
+  	    	
+  	    $('#beforeModal').after(html)
+  	}
+
 
 </script>
 
@@ -104,7 +151,7 @@
 <!-- modal(설문 등록 시 뜨는 팝업창) 끝-->
 
 
-<div class="card m-2">
+<div class="card m-2" id="beforeModal">
 	<div class="card-body">
 		<div class="container my-5">
 			<div class="row">
@@ -151,8 +198,7 @@
 						<button type="button" class="btn btn-primary" data-toggle="modal"
 							data-target="#exampleModal" data-whatever="@mdo">등록</button>
 
-<!-- 						<button type="button" class="btn btn-outline-primary" -->
-<!-- 							onclick="location.href='mappingview'">매핑등록</button> -->
+
 					</div>
 				</div>
 				<table class="table">
@@ -165,6 +211,7 @@
 							<th scope="col">상태</th>
 							<th scope="col">결과</th>
 							<th scope= "col">평가자 매칭</th>	
+
 						</tr>
 					</thead>
 					<tbody>
@@ -174,22 +221,22 @@
 						
 							<th scope="row">${list.surveySeq }</th>
 							<td ><a href="surveyinsert2?surveyseq=${list.surveySeq}">${list.surveyName }</a></td>
-							<td><fmt:formatDate value="${list.surveyStartDate }" pattern="yyyy-MM-dd"/><br>~<br>
-					<fmt:formatDate value="${list.surveyClosedDate }" pattern="yyyy-MM-dd"/></td>
-							
-							<td><span class="wait"><c:if test="${list.decideYN eq 'N' }">대기</c:if>
-							<c:if test="${list.decideYN eq 'Y' }">확정</c:if></span>
+							<td>
+								<fmt:formatDate value="${list.surveyStartDate }" pattern="yyyy-MM-dd"/><br>~<br>
+								<fmt:formatDate value="${list.surveyClosedDate }" pattern="yyyy-MM-dd"/>
 							</td>
 							
 							<td>
-
-						
-							<input type="hidden" id="pageNo" name=pageNo value="${pagingdto.startPageNo}">
-							<button id="btn" class="btn btn-primary" onclick="send(this)" value="${list.surveySeq}">
-							발송</button>
+								<span class="wait"><c:if test="${list.decideYN eq 'N' }">대기</c:if>
+								<c:if test="${list.decideYN eq 'Y' }">확정</c:if></span>
+							</td>
+							
+							<td>
+								<input type="hidden" id="pageNo" name=pageNo value="${pagingdto.startPageNo}">
+								<button class="btn btn-primary" onclick="send(this)" value="${list.surveySeq}">발송</button>
 							</td>
 							<td></td>
-					
+							<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1" onclick="btn_for_mapping(this)" value="${list.surveySeq}">매핑</button></td>					
 						</tr>												
 						</c:forEach>
 				
