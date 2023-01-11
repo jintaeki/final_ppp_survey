@@ -26,6 +26,16 @@
 					<img src="${pageContext.request.contextPath}/resources/images/logo-spring.png" width="30" height="30" class="d-inline-block align-top">
 					Spring
 				</a>
+					<a class="text-white"
+				href="<c:url value='/loginafter'/>">피평가자 리스트</a>
+				<a class="text-white"
+				href="<c:url value='/survey/surveylist'/>">설문지 목록</a>
+				<a class="text-white"
+				href="<c:url value='/survey/surveyevaluate'/>">팀원 목록</a>
+				<a class="text-white"
+				href="<c:url value='/survey/surveyresult'/>">설문 결과</a>
+				<a class="text-white"
+				href="<c:url value='/survey/surveyresultteam'/>">설문 부서 통계</a>
 				<div>
 					<div>
 						<a class="btn btn-success btn-sm" href="#">로그인</a>
@@ -36,14 +46,14 @@
 	
 			<div class="flex-grow-1 container-fluid">
 								<div class="row h-100" style="flex-wrap: unset;">
-					<div class="col-md-4 p-3 bg-dark" style="min-width: 350px; flex: 0 0 17.33333%; max-width: 17.33333%">
-						<div class="h-100 d-flex flex-column">
-							<div class="flex-grow-1" style="height: 0px; overflow-y: auto; overflow-x: hidden;">
-								<%@ include file="/WEB-INF/views/common/menu.jsp" %>
-							</div>
-						</div>
-					</div>
+<!-- 					<div class="col-md-4 p-3 bg-dark" style="min-width: 350px; flex: 0 0 17.33333%; max-width: 17.33333%"> -->
+<!-- 						<div class="h-100 d-flex flex-column"> -->
+<!-- 							<div class="flex-grow-1" style="height: 0px; overflow-y: auto; overflow-x: hidden;"> -->
+<%-- 								<%@ include file="/WEB-INF/views/common/menu.jsp" %> --%>
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
 					
 					<div class="col-md-8 p-3" style="flex:0 0 79.9%; max-width: 79.5%">
 						<div class=" h-100 d-flex flex-column">
-							<div class="flex-grow-1 overflow-auto pr-3" style="height: 0px">
+<!-- 							<div class="flex-grow-1 overflow-auto pr-3" style="height: 0px"> -->

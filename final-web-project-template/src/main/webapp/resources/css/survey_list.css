@@ -1,9 +1,28 @@
 @charset "UTF-8";
 .hmenu{
-	margin-left:750px;
-	float:right;
-	width:400px;	
+	display: flex;
+	margin-bottom: 20px;
+	
 }
+
+.survey_list_form_upper_dv{
+	display:flex;
+	margin-left: 580px;
+}
+
+
+.survey_list_form{
+	display: flex;
+}
+.survey_list_form select{
+	margin-right: 10px;
+}
+
+#upper_dv_btn{
+	margin-left: 10px; 
+}
+
+
 .table{
 	max-width: 900px;
 	margin-left: auto;
