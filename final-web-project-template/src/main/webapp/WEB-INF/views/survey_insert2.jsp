@@ -38,7 +38,7 @@
 			<div class="col-3">
 				<c:if test="${SLD.anonymityCheckCode eq '20001'}">
 					<input type="radio" name="anonymityCheckCode" class="survey_radio" id="survey_type_check" value="20001" checked>익명
-				<input type="radio" name="anonymityCheckCode" class="survey_radio" id="survey_type_check" value="20002">기명	
+				<input type="radio" name="anonymityCheckCode" class="survey_radio" id="survey_type_check" value="20002">기명
 				</c:if>
 
 				<c:if test="${SLD.anonymityCheckCode eq '20002'}">
@@ -102,6 +102,10 @@
 	<div style="border: 1px solid black;"
 		class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
 		id="survey_question_dv">
+		<div id="question_setting_banner">
+			문제 관리
+		</div>
+
 		<div class="list-group list-group-flush border-bottom scrollarea"
 			id="scroll_area">
 
@@ -110,25 +114,29 @@
 			<c:forEach items="${SQL}" var="qlist" >
 				<div class="list-group-item list-group-item-action active py-3 lh-sm"
 				id="queAfter">
-		
-				
+
+
 					<input disabled type="text" id="input_qus"
 						value="${qlist.questionContent }">
-					<button value="${qlist.questionSeq }"onclick="touchQuestion(this)">확인</button> 
+					<button value="${qlist.questionSeq }"onclick="touchQuestion(this)">확인</button>
 					<button class="delete_btn" onclick="deleteQus(this,${qlist.surveySeq})" value="${qlist.questionSeq }">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 							fill="currentColor" class="bi bi-x" viewBox="0 0 16 16"> <path
 								d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /> </svg>
 					</button>
-					
+
 					<div class="blank_under"></div>
 			</div>
 				</c:forEach>
-				
+
 			</div>
 		</div>
 	</div>
-
+	<div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" id="question_item_dv">
+		<div>
+			문항 관리
+		</div>
+	</div>
 
 
 <!-- 	</div> -->
@@ -137,14 +145,14 @@
 
 	<div class="list-group-item list-group-item-action active py-3 lh-sm"
 		id="newQUE" style="display: none">
-		
+
 		<input type="text" class="input_qus" value="문제를 입력해주세요">
 		<button class="delete_btn">
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 				fill="currentColor" class="bi bi-x" viewBox="0 0 16 16"> <path
 					d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /> </svg>
 		</button>
-		<div class="blank_under"></div>		
+		<div class="blank_under"></div>
 	</div>
 
 
@@ -152,7 +160,7 @@
 		<form:form modelAttribute="SQD" id="questioN_insert_form">
 			<!-- aa -->
 			<div id="insertQform">
-			
+
 				<div class="select_radio" id="select_radio">
 					<input type="radio" name="questionTypeCode" id="obj_radio"
 						onclick="checkit1()" value="10001" checked>객관식 <input
@@ -167,13 +175,13 @@
 							<span class="input-group-text">문제 입력</span>
 						</div>
 						<textarea class="form-control" aria-label="문제 입력칸"
-							name="questionContent">${sqd.questionContent}</textarea>
+							id="questionContent">${sqd.questionContent}</textarea>
 					</div>
 
 					<!-- 문제 추가 버튼  -->
 					<!-- onclick="insertQus()" -->
 				<div class="question_add_btn_div">
-					
+
 					<button type="button" class="btn btn-outline-primary" id="add_btn"
 						onclick="insertQus()">문제 추가</button>
 
@@ -220,12 +228,12 @@
 			}
 		});
 	}
-	//문항 비동기 등록(수정) 
+	//문항 비동기 등록(수정)
 	function update_obj_item_btn() {
 		var form = $('#item_obj_form')[0];
-		
+
 		var data = new FormData(form);
-		
+
 		$.ajax({
 			method : "POST",
 			url : 'itemupdate.do', // form을 전송할 실제 파일경로
@@ -246,9 +254,9 @@
 				console.log("ERROR : ", e);
 			}
 		});
-		
+
 	}
-	
+
 	function update_mix_item_btn() {
 		var form = $('#item_mix_form')[0];
 		var data = new FormData(form);
@@ -295,7 +303,7 @@
 			alert("문항은 최대 5개까지 생성 가능합니다.");
 		}
 	});
-	
+
 	$("#item_mix_copy").click(function() {
 		if (cnt < 1000) {
 			const testDiv = document.getElementById('new_mix_Item');
@@ -308,15 +316,15 @@
 			alert("문항은 최대 5개까지 생성 가능합니다.");
 		}
 	});
-	
+
 	$(document).ready(function(){
 	 	if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
 	 		document.querySelector("#obj_box_toggle").style.display = "block";
 	 	}
-				
+
 	});
 	function checkit1() {
-		if($("input[type=radio][id=mix_radio]:checked").is(':checked') != true){ // 
+		if($("input[type=radio][id=mix_radio]:checked").is(':checked') != true){ //
 	 		 document.querySelector("#mix_box_toggle").style.display = "none";
 	 	} if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
 	 		document.querySelector("#obj_box_toggle").style.display = "block";
@@ -329,23 +337,23 @@
 	 		document.querySelector("#mix_box_toggle").style.display = "block";
 	 	}
 	}
-	
-	
+
+
 	function checkit2() {
 		 document.querySelector("#mix_box_toggle").style.display = "none";
 		 document.querySelector("#obj_box_toggle").style.display = "none";
-		
+
 	}
-	
+
 
 
 // 	var test = document.getElementById('add_btn');
 // 		test.addEventListener('click', insertQus);
-		
+
  	function insertQus(){
  			var qdiv = $('#questioN_insert_form')[0];
  			var data = new FormData(qdiv);
-		
+
  			$.ajax({
 				method:'POST', //어떤 방식으로 보낼 지
 				url:'questioninsert.do', // qdiv를 보낼 경로 설정
@@ -359,10 +367,10 @@
 			   success:function (data) {	 //전송 성공시 실행
 				   console.log($('#surveyseq').val());
 				   var surveyseq = $('#surveyseq').val();
-				   
+
 			   $.ajax({
 						method:'GET', //어떤 방식으로 보낼 지
-						url:'selectquestion.do/'+ surveyseq, // qdiv를 보낼 경로 설정				
+						url:'selectquestion.do/'+ surveyseq, // qdiv를 보낼 경로 설정
 			 			dataType: "json",
 					   beforeSend : function() { //보내기 전 실행
 						console.log("요청이 보내지는가?");
@@ -371,10 +379,10 @@
 								questionHtml(jsondata);
 								var surveyseq = jsondata[0].SURVEY_SEQ;
 								var questionseq = jsondata[0].QUESTION_SEQ;
-								
+
 								$.ajax({
 									method:'GET', //어떤 방식으로 보낼 지
-									url:'selectitems.do/'+ questionseq, // qdiv를 보낼 경로 설정				
+									url:'selectitems.do/'+ questionseq, // qdiv를 보낼 경로 설정
 						 			dataType: "json",
 								   beforeSend : function() { //보내기 전 실행
 									console.log("요청이 보내지는가?");
@@ -382,25 +390,25 @@
 								   success:function (jsondata){	 //전송 성공시 실행
 									   console.log("답은:"+jsondata[0].QUESTIONTYPECODE)
 									   itemHtml(jsondata);
-																		
-											
-											
+
+
+
 								   }, error:function(e) {	//실패, 에러
-									   console.log("Error", e); 
+									   console.log("Error", e);
 								   }
 									});
-							   											
+
 					   }, error:function(e) {	//실패, 에러
-						   console.log("Error", e); 
+						   console.log("Error", e);
 					   }
 						});
-				   
+
 			   }, error:function(e) {	//실패, 에러
-				   console.log("Error", e); 
+				   console.log("Error", e);
 			   }
 				});
 			}
- 			
+
  	function questionHtml(data){
 		  let size = data.length;
 		  console.log("하하"+data[0].QUESTION_CONTENT);
@@ -415,11 +423,11 @@
 			  	html += '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /></svg>';
 				html +=	'</button>';
 				html +='<div class="blank_under"></div></div>';
-			
+
        }
 		 $('#scroll_area').append(html);
 	}
-	
+
  	function itemHtml(data){
  		  let size = data.length;
  		  var html = '';
@@ -428,7 +436,7 @@
  		// 10001 객 10002 주 10003 혼
  		 for(i=0; i<size; i++){
  			 if(data[i].QUESTIONTYPECODE == "10001"){
-			
+
  					html +='<div id="obj_box_toggle" >'
  		 			html +='<div class="col-12">'
  		 			html +='<div class="Item_box">'
@@ -447,7 +455,7 @@
  		 			html +='</div>'
  		 			html +='</div>'
  		 			html +='</div>'
- 		 			
+
  		 			html +='<div id="mix_box_toggle" style="display:none;">'
  			 		html +='<div class="col-12">'
  			 		html +='<div class="Item_box">'
@@ -469,7 +477,7 @@
  			 		html +='</form:form>'
  			 		html +='</div>'
  			 		html +='</div>'
- 			 		html +='</div>'	 
+ 			 		html +='</div>'
  			 }else if(data[i].QUESTIONTYPECODE=="10002"){
  				html +='<div id="obj_box_toggle" style="display:none;">'
  		 			html +='<div class="col-12">'
@@ -489,7 +497,7 @@
  		 			html +='</div>'
  		 			html +='</div>'
  		 			html +='</div>'
- 		 			
+
  		 			html +='<div id="mix_box_toggle" style="display:none;">'
  			 		html +='<div class="col-12">'
  			 		html +='<div class="Item_box">'
@@ -511,7 +519,7 @@
  			 		html +='</form:form>'
  			 		html +='</div>'
  			 		html +='</div>'
- 			 		html +='</div>'	 
+ 			 		html +='</div>'
  			 }else if(data[i].QUESTIONTYPECODE=="10003"){
  				html +='<div id="obj_box_toggle" style="display:none;">'
  		 			html +='<div class="col-12">'
@@ -531,7 +539,7 @@
  		 			html +='</div>'
  		 			html +='</div>'
  		 			html +='</div>'
- 		 			
+
  		 			html +='<div id="mix_box_toggle" >'
  			 		html +='<div class="col-12">'
  			 		html +='<div class="Item_box">'
@@ -553,22 +561,22 @@
  			 		html +='</form:form>'
  			 		html +='</div>'
  			 		html +='</div>'
- 			 		html +='</div>'	 
+ 			 		html +='</div>'
  			 }
 
- 			 
- 			
+
+
         }$('#item_div').append(html);
- 		 
- 		 
- 		
+
+
+
  	}
- 	
-	
+
+
  	//var dltest = document.getElementById('delete_btn');
 	//dltest.addEventListener('click', deleteQus);
- 	
- 	
+
+
  	function deleteQus(obj,surveySeq) {
 //  		var qdiv = $('#sv_qst_form')[0];
 // 		var data = new FormData(qdiv);
@@ -588,7 +596,7 @@
 					var surveyseq = surveySeq;
 					 $.ajax({
 							method:'GET', //어떤 방식으로 보낼 지
-							url:'selectquestion.do/'+ surveyseq, // qdiv를 보낼 경로 설정				
+							url:'selectquestion.do/'+ surveyseq, // qdiv를 보낼 경로 설정
 				 			dataType: "json",
 						   beforeSend : function() { //보내기 전 실행
 							console.log("요청이 보내지는가?");
@@ -597,19 +605,19 @@
 									questionHtml(jsondata);
 									var surveyseq = jsondata[0].SURVEY_SEQ;
 									var questionseq = jsondata[0].QUESTION_SEQ;
-					
+
 						   }, error:function(e) {	//실패, 에러
-							   console.log("Error", e); 
+							   console.log("Error", e);
 						   }
 							});
 				}
-			
+
  		});
 	}
-	
+
  	function touchQuestion(obj){
 		var questionid = $(obj).val();
-		
+
 		$.ajax({
 			method:'get', //어떤 방식으로 보낼 지
 			url:'touchandselect.do/' + questionid, // qdiv를 보낼 경로 설정
@@ -623,7 +631,7 @@
 		   		secondQuestion(data);
 		   		$.ajax({
 					method:'GET', //어떤 방식으로 보낼 지
-					url:'selectitems.do/'+ questionid, // qdiv를 보낼 경로 설정				
+					url:'selectitems.do/'+ questionid, // qdiv를 보낼 경로 설정
 		 			dataType: "json",
 				   beforeSend : function() { //보내기 전 실행
 					console.log("요청이 보내지는가?");
@@ -631,27 +639,27 @@
 				   success:function (jsondata){	 //전송 성공시 실행
 					   console.log("답은:"+jsondata[0].QUESTIONTYPECODE)
 					   itemHtml(jsondata);
-														
-							
-							
+
+
+
 				   }, error:function(e) {	//실패, 에러
-					   console.log("Error", e); 
+					   console.log("Error", e);
 				   }
 					});
    			}, error:function(e) {	//실패, 에러
-	   			console.log("Error", e); 
+	   			console.log("Error", e);
    			}
-		});	   
-		   
+		});
+
 	}
-	
-	
+
+
 	function oneQuestion(data){
 		console.log(data[0].SURVEYSEQ);
 // 		let size = data.length;
 		  var html = '';
 		  $("#questioN_insert_form").empty();
-			
+
 			html += `<div id="insertQform">`;
 			html += `<div class="select_radio" id="select_radio">`;
 
@@ -667,7 +675,7 @@
 			html += `<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1()"  value="10001" >객관식 `;
 			html += `<input type="radio" name="questionTypeCode" id="sub_radio" onclick="checkit2()" value="10002"> 주관식`;
 			html +=  `<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3()" checked value="10003"> 혼합식`;
-		}  
+		}
 
 		html += `</div>`;
 		html += `<div class="question_content_area" id="question_add">`;
@@ -676,14 +684,14 @@
 		html += '<span class="input-group-text" >문제입력</span>';
 		html += `</div>`;
 		html += '<textarea class="form-control" aria-label="문제 입력칸" id="hi" name="questionContent">'+data[0].QUESTIONCONTENT+'';
-		
+
 		 $('#questioN_insert_form').append(html);
 	}
-	
+
 	function secondQuestion(data){
 		console.log(data[0].SURVEYSEQ);
 		  var html = '';
-		
+
 		html += `</div>`;
 		html += `<button type="button" class="btn btn-outline-primary" id="add_btn" onclick="insertQus()">문제추가</button>`;
 
@@ -694,24 +702,29 @@
 		html += `<input type="hidden" name="itemScore" value="1">`;
 		html += `<input type="hidden" name="itemContent" value=" ">`;
 		html += `</div>`;
-			   
+
 		 $('#hi').after(html);
 	}
-	
+
 
 	//문제 입력 채우 코드에 추가한 것 끝
-	
+
 	// 진택 끝
-	
+
 	//채우
-	
+
 	/*문제 삭제*/
 // 	function delete_btn(obj) {
 // 		const tag = $(obj);
 // 		tag.parent().remove();
 // 	}
-	
-	
+
+
+	$(''){
+		qusUpdate(surveySeq)
+
+	});
+
 		function qusUpdate(surveySeq){
 			var qdiv = $('#questioN_insert_form')[0]
 			alert("업데이트 시작!");
@@ -720,21 +733,21 @@
 			$.ajax({
 				method: 'POST',
 				url: 'questionUpdate.do/',
-				data: data,	
+				data: data,
 				processData : false,
 				contentType : false,
 	 			cache : false,
-				beforeSend: function() {	
+				beforeSend: function() {
 					console.log("요청 보냈음");
 					alert("업데이트 beforesend");
-					
+
 				},
-				success: function(jsondata) {	
-					
+				success: function(jsondata) {
+
 					var surveyseq = surveySeq;
 					 $.ajax({
 							method:'GET', //어떤 방식으로 보낼 지
-							url:'selectquestion.do/'+ surveySeq, // qdiv를 보낼 경로 설정				
+							url:'selectquestion.do/'+ surveySeq, // qdiv를 보낼 경로 설정
 				 			dataType: "json",
 						   beforeSend : function() { //보내기 전 실행
 							console.log("요청이 보내지는가?");
@@ -743,17 +756,17 @@
 									questionHtml(jsondata);
 									var surveyseq = jsondata[0].SURVEY_SEQ;
 									var questionseq = jsondata[0].QUESTION_SEQ;
-					
+
 						   }, error:function(e) {	//실패, 에러
-							   console.log("Error", e); 
+							   console.log("Error", e);
 						   }
-							});				
+							});
 				},
 				error: function(e) {
 					console.log("Error", e);
 					}
 				});
-			
+
 			}
 	//채우 끝
 </script>

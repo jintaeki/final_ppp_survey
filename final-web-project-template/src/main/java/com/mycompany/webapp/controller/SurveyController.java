@@ -49,13 +49,13 @@ public class SurveyController {
 	}
 
 	@RequestMapping("/surveydetails")
-	public String survey_details() {
+	public String surveyDetails() {
 		logger.info("실행");
 		//log.info("실행");
 		return "survey_details";
 	}
 	@RequestMapping("/surveyevaluate/{surveySeq}")
-	public String survey_evaluate(@PathVariable int surveySeq) { 
+	public String surveyEvaluate(@PathVariable int surveySeq) { 
 		logger.info("실행");
 		System.out.println(surveySeq);
 		//log.info("실행");
@@ -63,7 +63,7 @@ public class SurveyController {
 	}
 	// 설문 작성 페이지로 이동을 위한 컨트롤러
 		@RequestMapping("/surveyinsert")
-	public String survey_insert(@RequestParam(defaultValue="1") int pageNo,Model model, HttpSession session) {
+	public String surveyInsert(@RequestParam(defaultValue="1") int pageNo,Model model, HttpSession session) {
 		logger.info("실행");
 
 		if(String.valueOf(session.getAttribute("SLD")).equals("null")){
@@ -84,7 +84,7 @@ public class SurveyController {
 		}
 			// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
 	@RequestMapping("/surveyinsert2")
-	public String survey_insert(@RequestParam("surveyseq") int surveySeq, Model model) {
+	public String surveyInsert(@RequestParam("surveyseq") int surveySeq, Model model) {
 		model.addAttribute("SLD",surveyService.selectSurvey(surveySeq));
 		model.addAttribute("SQL", surveyService.getQuestionList(surveySeq));
 		System.out.println(surveyService.getQuestionList(surveySeq));
@@ -102,7 +102,7 @@ public class SurveyController {
 	
 	// 설문지 목록으로 이동을 위한 컨트롤러
 			@RequestMapping(value="/surveylist")
-	public String survey_list(@RequestParam(defaultValue="1") int pageNo, Model model) {
+	public String surveyList(@RequestParam(defaultValue="1") int pageNo, Model model) {
 		int totalRows= pagingService.getTotalBoardNum(); 
 
 		PagingDTO pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
@@ -174,13 +174,13 @@ public class SurveyController {
 	
 	
 	@RequestMapping("/surveyresultteam")
-	public String survey_success() {
+	public String surveySuccess() {
 		logger.info("실행");
 		//log.info("실행");
 		return "survey_result_team";
 	}
 	@RequestMapping("/surveyresult")
-	public String survey_result() {
+	public String surveyResult() {
 		logger.info("실행");
 		//log.info("실행");
 		return "survey_result";
@@ -222,7 +222,7 @@ public class SurveyController {
 		// 문항 수정
 	@RequestMapping(value="/itemupdate.do")
 	@ResponseBody
-	public SurveyQuestionDTO updateitem(@ModelAttribute ("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,Model model, RedirectAttributes redirectAttrs) {
+	public SurveyQuestionDTO updateItem(@ModelAttribute ("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,Model model, RedirectAttributes redirectAttrs) {
 		logger.info("itemupdate.do");
 		logger.info(SQD.toString());
 
@@ -292,7 +292,7 @@ public class SurveyController {
 	// 문제 비동기식으로 출력
 	@RequestMapping(value="/selectquestion.do/{surveySeq}")
 	@ResponseBody
-	public  List<Map<String, Object>> selectquestion(@PathVariable int surveySeq,Model model) {
+	public  List<Map<String, Object>> selectQuestion(@PathVariable int surveySeq,Model model) {
 		logger.info("뿌리기 컨트롤 ");
 		
 		
@@ -303,7 +303,7 @@ public class SurveyController {
 // 문항 비동기식으로 출력 
 	@RequestMapping(value="/selectitems.do/{questionseq}")
 	@ResponseBody
-	public  List<Map<String, Object>> selectitems(@PathVariable int questionseq, Model model) {
+	public  List<Map<String, Object>> selectItems(@PathVariable int questionseq, Model model) {
 		logger.info("뿌리기 컨트롤 ");
 
 		logger.info(surveyService.selectItems(questionseq).toString());
@@ -380,7 +380,7 @@ public class SurveyController {
 
 	@RequestMapping(value="/touchandselect.do/{questionSeq}")
 	@ResponseBody
-	public List<Map<String, Object>> touchandselect(@PathVariable int questionSeq) {
+	public List<Map<String, Object>> touchAndSelect(@PathVariable int questionSeq) {
 		logger.info("touchandselect 진입");
 		System.out.println(questionSeq);
 

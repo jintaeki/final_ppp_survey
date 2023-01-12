@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<!-- Connection Pool -->
+		<!-- Connection Pool -->
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" 
 		  destroy-method="close"> 
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
