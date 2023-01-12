@@ -249,7 +249,7 @@
 	var cnt = 0;
 	//설문 설정 비동기 수정
 	function register() {
-		var form = $('#form')[0];
+		var form = $('#survey_setting_form')[0];
 		var data = new FormData(form);
 		$.ajax({
 			method : "POST",
