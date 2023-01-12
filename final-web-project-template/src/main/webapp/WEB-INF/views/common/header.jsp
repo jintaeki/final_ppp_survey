@@ -29,7 +29,7 @@
          <img src="${pageContext.request.contextPath}/resources/images/logo-spring.png"
             width="30" height="30" class="d-inline-block align-top">Spring</a> 
              <a class="text-white" href="<c:url value='/loginafter'/>">피평가자 리스트</a> 
-             <a class="text-white" href="<c:url value='/survey/surveylist'/>">설문지 목록</a> 
+             <a class="text-white" href="<c:url value='/survey/surveysearch'/>">설문지 목록</a> 
              <a class="text-white" href="<c:url value='/survey/surveyresult'/>">설문 결과</a> 
              <a class="text-white" href="<c:url value='/survey/surveyresultteam'/>">결과 통계</a>
          <div>

@@ -5,6 +5,10 @@
 
 
 <script>
+
+
+
+
 	function sendRe(obj){
 		var pageno = $('#pageNo').val();
   		var surveyseq = $(obj).val();
@@ -158,11 +162,12 @@
 				<div class="hmenu">
 					<div class="survey_list_form_upper_dv">
 					<form action ="<c:url value='/survey/surveysearch'/>" method="get" class="survey_list_form">
-						<select name="selection">
+						<input type="date" name="surveyStartDate" pattern="yyyy-MM-dd" value="pagingdto.SurveyStartDate">
+						<input type="date" name="surveyClosedDate" pattern="yyyy-MM-dd" value="pagingdto.SurveyClosedDate">
+						<select name="decideYN">
 							<c:choose>
-								<c:when test="${pagingdto.selection eq ''}">
-            						<option selected  value="">키워드</option>
-            						<option value="date">날짜</option>
+								<c:when test="${pagingdto.selection eq ''}">            						
+            						
 									<option value="N">미확정</option>
            							<option value="Y">확정</option>
     							</c:when>
@@ -178,15 +183,38 @@
            						 	<option value="N">미확정</option>
            							<option selected value="Y">확정</option>   								
            						</c:when>
-								<c:otherwise>
-         					 		<option value="">키워드</option>
-								 	<option value="date">날짜</option>
-           						 	<option selected value="N">미확정</option>
-           							<option value="Y">확정</option>
-   							 </c:otherwise>
 							</c:choose>
 						</select>
-							
+						<select name="deliveryYN">
+							<c:choose>
+								<c:when test="${pagingdto.selection eq ''}">            						
+            						
+									<option value="N">미확정</option>
+           							<option value="Y">확정</option>
+    							</c:when>
+								<c:when test="${pagingdto.selection eq 'date'}">
+									<option value="">키워드</option>
+								 	<option selected value="date">날짜</option>
+           						 	<option value="N">미확정</option>
+           							<option value="Y">확정</option>
+   								</c:when>
+							</c:choose>
+						</select>
+						<select name="deliveryYN">
+							<c:choose>
+								<c:when test="${pagingdto.selection eq ''}">            						
+            						
+									<option value="N">미확정</option>
+           							<option value="Y">확정</option>
+    							</c:when>
+								<c:when test="${pagingdto.selection eq 'date'}">
+									<option value="">키워드</option>
+								 	<option selected value="date">날짜</option>
+           						 	<option value="N">미확정</option>
+           							<option value="Y">확정</option>
+   								</c:when>
+							</c:choose>
+						</select>	
 						<input type="text" class="form-control " placeholder="search" name="keyword" value="${pagingdto.keyword}"
 							aria-describedby="button-addon2">
 							<input type="hidden" name="pageNo" value="1"> 

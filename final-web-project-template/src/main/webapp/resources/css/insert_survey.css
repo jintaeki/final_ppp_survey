@@ -67,6 +67,7 @@ left: 600px;
 
 #survey_setting_form {
 	width:85%;
+	display:contents !important;
 }
 
 .survey_date{

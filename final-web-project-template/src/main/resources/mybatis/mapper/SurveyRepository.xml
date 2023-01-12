@@ -75,8 +75,8 @@
 	
 	<select id="selectSurveyList" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="com.mycompany.webapp.dto.SurveyListDTO">
 		
-		SELECT SURVEY_SEQ as surveySeq, SURVEY_NAME as surveyName, SURVEY_CONTENT as surveyContent, ANONYMITY_CHECK_CODE as anonymityCheckCode,
-			   SURVEY_STATR_DATE as surveyStartDate,  SURVEY_CLOSED_DATE as surveyClosedDate, DECIDE_YN as decideYN
+			SELECT SURVEY_SEQ , SURVEY_NAME , SURVEY_CONTENT , ANONYMITY_CHECK_CODE ,
+			   SURVEY_STATR_DATE,  SURVEY_CLOSED_DATE, DECIDE_YN
 			   FROM (
 			   		select ROWNUM as rnum, SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
 			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN 
