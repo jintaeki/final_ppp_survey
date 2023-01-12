@@ -82,14 +82,16 @@ public class SurveyController {
 
 
 		}
-		// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
-		@RequestMapping("/surveyinsert2")
-		public String survey_insert(@RequestParam("surveyseq") int surveySeq, Model model) {
-			model.addAttribute("SLD",surveyService.selectSurvey(surveySeq));
-			return "survey_insert2";
-		}
-	
-		@RequestMapping("/sendmessage.do/{surveyseq}/{pageno}")
+			// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
+	@RequestMapping("/surveyinsert2")
+	public String survey_insert(@RequestParam("surveyseq") int surveySeq, Model model) {
+		model.addAttribute("SLD",surveyService.selectSurvey(surveySeq));
+		model.addAttribute("SQL", surveyService.getQuestionList(surveySeq));
+		System.out.println(surveyService.getQuestionList(surveySeq));
+		return "survey_insert2";
+	}
+
+	@RequestMapping("/sendmessage.do/{surveyseq}/{pageno}")
 	@ResponseBody
 	public String sendmessage(@PathVariable int surveyseq , @PathVariable int pageno) {
 
@@ -190,7 +192,6 @@ public class SurveyController {
 	@RequestMapping(value="/set.do", method=RequestMethod.POST)
 	public String setSurvey(@ModelAttribute ("SLD") @Valid SurveyListDTO SLD, BindingResult result, HttpSession session, RedirectAttributes redirectAttrs) {
 		logger.info("모달창을 통해 설문 등록하는 컨트롤러 진입");
-		//SLD.setSurveyId(surveyService.selectMaxSurveyId()+1);
 		surveyService.setSurvey(SLD);
 		session.setAttribute("SLD", SLD);
 
@@ -288,18 +289,27 @@ public class SurveyController {
 		return SQD;
 	}
 
-	// 문제 비동기식으로 출력 진택
+	// 문제 비동기식으로 출력
 	@RequestMapping(value="/selectquestion.do/{surveySeq}")
 	@ResponseBody
 	public  List<Map<String, Object>> selectquestion(@PathVariable int surveySeq,Model model) {
 		logger.info("뿌리기 컨트롤 ");
 		
 		
-		System.out.println(surveyService.selectQuestion(surveySeq));
+		// System.out.println(surveyService.selectQuestion(surveySeq));
 		return surveyService.selectQuestion(surveySeq) ;
 	}	
 
+// 문항 비동기식으로 출력 
+	@RequestMapping(value="/selectitems.do/{questionseq}")
+	@ResponseBody
+	public  List<Map<String, Object>> selectitems(@PathVariable int questionseq, Model model) {
+		logger.info("뿌리기 컨트롤 ");
 
+		logger.info(surveyService.selectItems(questionseq).toString());
+		//		System.out.println(surveyService.selectQuestion(surveySeq));
+		return surveyService.selectItems(questionseq) ;
+	}	
 
 
 	/*
@@ -366,6 +376,17 @@ public class SurveyController {
 		logger.info("문제 삭제 진입");
 		logger.info("삭제할 문제 id: " + questionSeq);
 		surveyService.setQuestionDelete(questionSeq);
+	}	
+
+	@RequestMapping(value="/touchandselect.do/{questionSeq}")
+	@ResponseBody
+	public List<Map<String, Object>> touchandselect(@PathVariable int questionSeq) {
+		logger.info("touchandselect 진입");
+		System.out.println(questionSeq);
+
+
+		System.out.println(surveyService.selectQuestionBySeq(questionSeq));
+		return surveyService.selectQuestionBySeq(questionSeq);
 	}
 	
-}
+	}

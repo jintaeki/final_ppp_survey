@@ -156,8 +156,8 @@
 		<div class="container my-5">
 			<div class="row">
 				<div class="hmenu">
-					<div class="input-group mb-3">
-					<form action ="<c:url value='/survey/surveysearch'/>" method="get">
+					<div class="survey_list_form_upper_dv">
+					<form action ="<c:url value='/survey/surveysearch'/>" method="get" class="survey_list_form">
 						<select name="selection">
 							<c:choose>
 								<c:when test="${pagingdto.selection eq ''}">
@@ -195,7 +195,7 @@
 								id="button-addon2" value="검색">
 						</div>
 					</form>
-						<button type="button" class="btn btn-primary" data-toggle="modal"
+						<button id="upper_dv_btn" type="button" class="btn btn-primary" data-toggle="modal"
 							data-target="#exampleModal" data-whatever="@mdo">등록</button>
 
 
@@ -245,7 +245,8 @@
 				
 				<tr>
 				<td colspan="4" class="text-center">
-					<div>
+					<div style=" margin-left:170px;">
+
 						<a class="btn btn-outline-primary btn-sm" href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}">처음</a>
 						<c:if test="${pagingdto.groupNo>1}">
 							<a class="btn btn-outline-info btn-sm" href="surveysearch?pageNo=${pagingdto.startPageNo-1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}">이전</a>

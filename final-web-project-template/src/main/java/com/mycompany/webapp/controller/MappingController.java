@@ -6,22 +6,23 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.PopupDTO;
 import com.mycompany.webapp.service.IMappingService;
@@ -39,7 +40,7 @@ public class MappingController {
 	@RequestMapping(value="/mapping/set.do", method=RequestMethod.POST)
 	public String setMapping(@RequestParam int surveySeq, @RequestParam int month, @RequestParam int number,
 			Model model, RedirectAttributes redirectAttrs) {
-		logger.info("메핑실행");			
+		logger.info("실행");			
 		try {
 			if(mappingService.mappingCheck(surveySeq) == 0) {				
 				mappingService.setMapping(surveySeq, month, number);
@@ -55,25 +56,14 @@ public class MappingController {
 	
 	// 병준
 	@RequestMapping(value="/popup", method=RequestMethod.GET)
-	public String surveyName(Model model) { 
-		List<PopupDTO> getPopup = mappingService.getPopup();
+	public String plusMapping(@RequestParam int surveySeq, @RequestParam String raterId, @RequestParam int month,  Model model) { 
+		List<PopupDTO> getPopup = mappingService.getPopup(surveySeq, raterId, month);
 		logger.info(getPopup.toString());
 		model.addAttribute("getPopup", getPopup);
 		logger.info("getPopup"+getPopup);
 		return "popup"; 
 		}
 	
-	@RequestMapping(value="/mapping/serch-user.do", method=RequestMethod.GET)
-	public String insertAppraise(@PathVariable String raterId, Model model) {
-		logger.info("실행");
-		try {
-			List<PopupDTO> mappingList = mappingService.selectRater(raterId);
-			model.addAttribute("mappingList", mappingList);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "mappingpopup";
-	}
 	
 	@RequestMapping(value="/mapping/serch-user.do", method=RequestMethod.POST)
 	public String insertAppraise(@ModelAttribute("map") @Valid MappingDTO map,
@@ -92,23 +82,28 @@ public class MappingController {
 	}
 	
 	@RequestMapping(value="/mapping/deleteMapping.do", method=RequestMethod.POST)
-	@ResponseBody
-	public String deleteAppraiseeId(@RequestBody String raterId, @RequestBody String appraiseeId, 
-			HttpServletResponse response, Model model) throws Exception {
+	public @ResponseBody String deleteAppraiseeId(@RequestBody String filterJSON, 
+			HttpServletResponse response, ModelMap model) throws Exception { 
 		logger.info("실행");
 		JSONObject resMap = new JSONObject();
-		
 		try {
-			mappingService.deleteAppraiseId(raterId, appraiseeId);
-			resMap.put("res", "success");
-			resMap.put("msg", "삭제를 완료하였습니다.");
-		} catch (Exception e) {
+			ObjectMapper mapper = new ObjectMapper();
+			MappingDTO deleteMap = (MappingDTO)mapper.readValue(filterJSON,new TypeReference<MappingDTO>(){ });
 			
-		}
+			int surveySeq = deleteMap.getSurveySeq();
+			String raterId = deleteMap.getRaterId(); 
+			String appraiseeId = deleteMap.getAppraiseeId(); 
+			
+			mappingService.deleteAppraisee(surveySeq, raterId, appraiseeId);
+			resMap.put("res", "success");
+		    resMap.put("msg", "삭제를 완료하였습니다.");
+		} catch (Exception e) {
+		
+		}	
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.print(resMap);
-		return "return null";
+		return null;
 	}
 	
 	@RequestMapping("/mappingview")

@@ -99,8 +99,8 @@
 	</select>
 	
 	<select id="getQuestionList" resultType="com.mycompany.webapp.dto.SurveyQuestionDTO">
-		SELECT SURVEY_SEQ AS surveySeq, QUESTION_SEQ AS questionSeq, QUESTION_CONTENT AS questionContent, QUESTION_TYPE_CODE AS questionTypeCode
-		FROM SURVEY_QUESTION WHERE SURVEY_SEQ = #{surveySeq} 
+			select SURVEY_SEQ as surveySeq, QUESTION_SEQ AS questionSeq, QUESTION_CONTENT AS questionContent, QUESTION_TYPE_CODE AS questionTypeCode
+		FROM SURVEY_QUESTION WHERE SURVEY_SEQ = #{surveySeq} order by question_seq desc
 	</select>
 	
 	<update id="setQuestUpdate" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
@@ -176,6 +176,17 @@
             ,si.ITEM_SCORE	as itemScore
             from survey_question sq, survey_item si
             where sq.question_seq = #{questionSeq} and sq.question_seq = si.question_seq
+	</select>
+	
+	<select id="selectItems" parameterType="int" resultType="hashmap">
+	
+		select si.ITEM_SEQ	as itemSeq
+			,si.QUESTION_SEQ as questionSeq
+            ,si.ITEM_CONTENT	as itemContent
+            ,si.ITEM_SCORE	as itemScore
+            ,sq.QUESTION_TYPE_CODE as questionTypeCode
+		from survey_item si, survey_question sq 
+		where si.QUESTION_SEQ = #{questionSeq} and si.QUESTION_SEQ = sq.QUESTION_SEQ
 	</select>
 	
 	<delete id="setItemDeleteQus" parameterType="int">
