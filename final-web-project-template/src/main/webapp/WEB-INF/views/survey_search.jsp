@@ -129,7 +129,7 @@
 						<label for="message-text" class="col-form-label">설문 부가 설명</label>
 						<textarea class="form-control" id="message-text" name="surveyContent"></textarea>
 					</div>
-				 	<input type="hidden" name="decideYN" value="N">
+				 	<input type="hidden" name="stateCode" value="N">
 					<input type="hidden" name="surveySeq" value="1"> 설문 진행 기간<br>
 
 					<input type="date" name="surveyStartDate" pattern="yyyy-MM-dd">~<input
@@ -164,7 +164,7 @@
 					<form action ="<c:url value='/survey/surveysearch'/>" method="get" class="survey_list_form">
 						<input type="date" name="surveyStartDate" pattern="yyyy-MM-dd" value="pagingdto.SurveyStartDate">
 						<input type="date" name="surveyClosedDate" pattern="yyyy-MM-dd" value="pagingdto.SurveyClosedDate">
-						<select name="decideYN">
+						<select name="stateCode">
 							<c:choose>
 								<c:when test="${pagingdto.selection eq ''}">            						
             						
@@ -255,8 +255,8 @@
 							</td>
 							
 							<td>
-								<span class="wait"><c:if test="${list.decideYN eq 'N' }">대기</c:if>
-								<c:if test="${list.decideYN eq 'Y' }">확정</c:if></span>
+								<span class="wait"><c:if test="${list.stateCode eq 'N' }">대기</c:if>
+								<c:if test="${list.stateCode eq 'Y' }">확정</c:if></span>
 							</td>
 							
 							<td>

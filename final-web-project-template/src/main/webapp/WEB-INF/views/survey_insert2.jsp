@@ -20,7 +20,7 @@
 			<div class="col-3">익명기명</div>
 			<div class="col-3">설문 부가 설명</div>
 
-			<input type="hidden" name="decideYN" value="N"> <input
+			<input type="hidden" name="stateCode" value="N"> <input
 				type="hidden" name="surveySeq" id="surveyseq"
 				value="${SLD.surveySeq}">
 			<div class="col-3">

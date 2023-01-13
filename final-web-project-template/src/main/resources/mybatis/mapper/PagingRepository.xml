@@ -12,9 +12,9 @@
 		SELECT count(*)
 			   FROM (
 			   		select ROWNUM as rnum, SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
-			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN 
+			   		SURVEY_START_DATE,SURVEY_CLOSED_DATE, STATE_CODE 
 			   		FROM (select SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
-			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN  from survey_list where survey_name LIKE #{keyword}
+			   		SURVEY_START_DATE,SURVEY_CLOSED_DATE, STATE_CODE  from survey_list where survey_name LIKE #{keyword}
 			   		order by ROWNUM desc
 			   			)
 			   		)
@@ -23,12 +23,12 @@
 	
 	<select id="getTotalListNumByKeywordAndDecideYN" parameterType="hashmap" resultType="int">
 	
-		SELECT count(*)
+		SELECT count(ROWNUM)
 			   FROM (
 			   		select ROWNUM as rnum, SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
-			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN 
+			   		SURVEY_START_DATE,SURVEY_CLOSED_DATE, STATE_CODE 
 			   		FROM (select SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
-			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN  from survey_list where survey_name LIKE #{keyword} and DECIDE_YN = #{selection} 
+			   		SURVEY_START_DATE,SURVEY_CLOSED_DATE, STATE_CODE  from survey_list where survey_name LIKE #{keyword} and STATE_CODE = #{selection} 
 			   		order by ROWNUM desc
 			   	)
 			   	
@@ -38,13 +38,13 @@
 	
 	<select id="getTotalListNumByKeywordAndDate" parameterType="hashmap" resultType="int">
 	
-		SELECT count(*)
+		SELECT count(ROWNUM)
 			   FROM (
 			   		select ROWNUM as rnum, SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
-			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN 
+			   		SURVEY_START_DATE,SURVEY_CLOSED_DATE, STATE_CODE 
 			   		FROM (select SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
-			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN  from survey_list where survey_name LIKE #{keyword}
-			   		order by SURVEY_STATR_DATE, ROWNUM  desc
+			   		SURVEY_START_DATE,SURVEY_CLOSED_DATE, STATE_CODE  from survey_list where survey_name LIKE #{keyword}
+			   		order by SURVEY_START_DATE, ROWNUM  desc
 			   	)
 			  
 			   	)
