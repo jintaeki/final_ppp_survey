@@ -13,7 +13,7 @@
 <!-- 설문지 설정 진택 -->
 <form:form modelAttribute="SLD" style="display:inline-flex; border: 1px solid black;" id="survey_setting_form">
 	<div class="container">
-		<div class="row">
+		<div class="row" id="survey_setting_row">
 			<div class="col-3">설문지 이름</div>
 			<div class="col-3">설문 기간</div>
 			<div class="col-3">익명 / 기명</div>
