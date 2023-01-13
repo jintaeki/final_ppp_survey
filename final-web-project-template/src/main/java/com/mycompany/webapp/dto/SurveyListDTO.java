@@ -20,7 +20,7 @@ public class SurveyListDTO {
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date surveyClosedDate;
 	
-	private String decideYN;
+	private String stateCode;
 
 	public int getSurveySeq() {
 		return surveySeq;
@@ -46,8 +46,8 @@ public class SurveyListDTO {
 		return surveyClosedDate;
 	}
 
-	public String getDecideYN() {
-		return decideYN;
+	public String getstateCode() {
+		return stateCode;
 	}
 
 	public void setSurveySeq(int surveySeq) {
@@ -74,15 +74,15 @@ public class SurveyListDTO {
 		this.surveyClosedDate = surveyClosedDate;
 	}
 
-	public void setDecideYN(String decideYN) {
-		this.decideYN = decideYN;
+	public void setstateCode(String stateCode) {
+		this.stateCode = stateCode;
 	}
 
 	@Override
 	public String toString() {
 		return "SurveyListDTO [surveySeq=" + surveySeq + ", surveyName=" + surveyName + ", surveyContent="
 				+ surveyContent + ", anonymityCheckCode=" + anonymityCheckCode + ", surveyStartDate=" + surveyStartDate
-				+ ", surveyClosedDate=" + surveyClosedDate + ", decideYN=" + decideYN + "]";
+				+ ", surveyClosedDate=" + surveyClosedDate + ", stateCode=" + stateCode + "]";
 	}
 	
 

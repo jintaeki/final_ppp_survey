@@ -2,7 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.dao.ISurveyRepository">
 
+<<<<<<< HEAD
 		<insert id="QuestionInsert" parameterType="SQD">
+=======
+		<insert id="setQuestInsert" parameterType="SQD">
+>>>>>>> refs/remotes/origin/master
 		<![CDATA[
 				INSERT INTO SURVEY_QUESTION(QUESTION_SEQ
 				    ,SURVEY_SEQ
@@ -31,7 +35,11 @@
 		]]>
 	</select>
 
+<<<<<<< HEAD
 	<insert id="ItemInsert" parameterType="SQD">
+=======
+	<insert id="setItemInsert" parameterType="SQD">
+>>>>>>> refs/remotes/origin/master
 		<![CDATA[
 			INSERT INTO SURVEY_ITEM(QUESTION_SEQ
 			     ,ITEM_SEQ
@@ -97,6 +105,13 @@
 		     ,SYSDATE)
 	</insert>
 
+<<<<<<< HEAD
+=======
+	<delete id="setItemDelete" parameterType="SQD">
+		DELETE FROM SURVEY_ITEM WHERE QUESTION_SEQ = ${questionSeq}
+
+	</delete>
+>>>>>>> refs/remotes/origin/master
 
 	<delete id="setQuestionDelete" parameterType="SQD">
 		DELETE FROM SURVEY_QUESTION WHERE QUESTION_SEQ = #{questionSeq}
@@ -117,6 +132,7 @@
 
 	<select id="selectSurveyList" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="com.mycompany.webapp.dto.SurveyListDTO">
 
+<<<<<<< HEAD
 		SELECT SURVEY_SEQ
 		     ,SURVEY_NAME
 		     ,SURVEY_CONTENT
@@ -130,6 +146,21 @@
 		          ,SURVEY_NAME,SURVEY_CONTENT
 		          ,ANONYMITY_CHECK_CODE
 		          ,SURVEY_START_DATE,SURVEY_CLOSED_DATE
+=======
+		SELECT SURVEY_SEQ 
+		     ,SURVEY_NAME 
+		     ,SURVEY_CONTENT 
+		     ,ANONYMITY_CHECK_CODE 
+		     ,to_date(SURVEY_START_DATE, 'YYYY.MM.dd') as surveyStartDate
+		      ,to_date(SURVEY_CLOSED_DATE, 'YYYY.MM.dd' )as surveyClosedDate 
+		     ,STATE_CODE 
+		FROM (
+		      SELECT ROWNUM as rnum
+		          ,SURVEY_SEQ
+		          ,SURVEY_NAME,SURVEY_CONTENT
+		          ,ANONYMITY_CHECK_CODE
+		          ,SURVEY_STARTT_DATE,SURVEY_CLOSED_DATE
+>>>>>>> refs/remotes/origin/master
 		          ,STATE_CODE
 			  FROM (select SURVEY_SEQ
 			             ,SURVEY_NAME
@@ -146,10 +177,17 @@
 	</select>
 
 	<select id="selectSurvey" parameterType="int" resultType="SLD">
+<<<<<<< HEAD
 		SELECT SURVEY_SEQ
 		     ,SURVEY_NAME
 		     ,SURVEY_CONTENT
 		     ,ANONYMITY_CHECK_CODE
+=======
+		SELECT SURVEY_SEQ 
+		     ,SURVEY_NAME 
+		     ,SURVEY_CONTENT 
+		     ,ANONYMITY_CHECK_CODE 
+>>>>>>> refs/remotes/origin/master
 		     ,to_date(SURVEY_START_DATE, 'YYYY.MM.dd') as surveyStartDate
 		      ,to_date(SURVEY_CLOSED_DATE, 'YYYY.MM.dd' )as surveyClosedDate
 		     ,STATE_CODE
@@ -159,21 +197,38 @@
 	</select>
 
 	<select id="getQuestionList" resultType="com.mycompany.webapp.dto.SurveyQuestionDTO">
+<<<<<<< HEAD
 		SELECT SURVEY_SEQ
 		    ,QUESTION_SEQ
 		    ,QUESTION_CONTENT
 		    ,QUESTION_TYPE_CODE
+=======
+		SELECT SURVEY_SEQ 
+		    ,QUESTION_SEQ 
+		    ,QUESTION_CONTENT 
+		    ,QUESTION_TYPE_CODE 
+>>>>>>> refs/remotes/origin/master
 		FROM SURVEY_QUESTION WHERE SURVEY_SEQ = #{surveySeq} order by question_seq desc
 	</select>
 
+<<<<<<< HEAD
 	<update id="UpdateQuestion" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
+=======
+	<update id="setQuestUpdate" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
+>>>>>>> refs/remotes/origin/master
 		UPDATE SURVEY_QUESTION SET QUESTION_CONTENT=#{questionContent}
 		    ,QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq}
 	</update>
 
+<<<<<<< HEAD
 <!-- 	<update id="UpdateQTypeBySeq" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO"> -->
 <!-- 		UPDATE SURVEY_QUESTION SET QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq} -->
 <!-- 	</update> -->
+=======
+	<update id="setQuestUpdateType" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
+		UPDATE SURVEY_QUESTION SET QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq}
+	</update>
+>>>>>>> refs/remotes/origin/master
 
 	<update id="sendMessage" parameterType="int">
 		UPDATE SURVEY_LIST SET 	STATE_CODE='Y' WHERE SURVEY_SEQ =#{surveySeq}
@@ -181,6 +236,7 @@
 
 	<select id="searchListByKeyword" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="SLD">
 	<![CDATA[
+<<<<<<< HEAD
 		SELECT SURVEY_SEQ
 		      ,SURVEY_NAME
 		      ,SURVEY_CONTENT
@@ -188,6 +244,15 @@
 		      ,to_date(SURVEY_START_DATE, 'YYYY.MM.dd') as surveyStartDate
 		      ,to_date(SURVEY_CLOSED_DATE, 'YYYY.MM.dd' )as surveyClosedDate
 		      ,STATE_CODE
+=======
+		SELECT SURVEY_SEQ 
+		      ,SURVEY_NAME 
+		      ,SURVEY_CONTENT 
+		      ,ANONYMITY_CHECK_CODE
+		      ,to_date(SURVEY_START_DATE, 'YYYY.MM.dd') as surveyStartDate
+		      ,to_date(SURVEY_CLOSED_DATE, 'YYYY.MM.dd' )as surveyClosedDate
+		      ,STATE_CODE 
+>>>>>>> refs/remotes/origin/master
 	    FROM (
 		SELECT ROWNUM AS rnum
 		      ,SURVEY_SEQ
@@ -213,6 +278,7 @@
 
 	<select id="searchListByKeywordAndDicideYN"  resultType="SLD">
 
+<<<<<<< HEAD
 		SELECT SURVEY_SEQ
 		      ,SURVEY_NAME
 		      ,SURVEY_CONTENT
@@ -220,6 +286,15 @@
 		      ,SURVEY_START_DATE
 		      ,SURVEY_CLOSED_DATE
 		      ,STATE_CODE
+=======
+		SELECT SURVEY_SEQ 
+		      ,SURVEY_NAME 
+		      ,SURVEY_CONTENT 
+		      ,ANONYMITY_CHECK_CODE 
+		      ,SURVEY_START_DATE 
+		      ,SURVEY_CLOSED_DATE
+		      ,STATE_CODE 
+>>>>>>> refs/remotes/origin/master
 	    FROM (
 	    SELECT ROWNUM AS rnum
 	          ,SURVEY_SEQ
@@ -243,6 +318,7 @@
 
 	<select id="searchListByKeywordAndDate"  resultType="SLD">
 
+<<<<<<< HEAD
 		SELECT SURVEY_SEQ
 		      ,SURVEY_NAME
 		      ,SURVEY_CONTENT
@@ -250,6 +326,15 @@
 		      ,SURVEY_START_DATE
 		      ,SURVEY_CLOSED_DATE as surveyClosedDate
 		      ,STATE_CODE
+=======
+		SELECT SURVEY_SEQ 
+		      ,SURVEY_NAME 
+		      ,SURVEY_CONTENT 
+		      ,ANONYMITY_CHECK_CODE 
+		      ,SURVEY_START_DATE 
+		      ,SURVEY_CLOSED_DATE as surveyClosedDate
+		      ,STATE_CODE 
+>>>>>>> refs/remotes/origin/master
 			   FROM (
 	    SELECT ROWNUM AS rnum
 			   		,SURVEY_SEQ
@@ -272,6 +357,7 @@
 	</select>
 
 	<select id="selectQuestionBySeq" parameterType="int" resultType="hashmap">
+<<<<<<< HEAD
 	        SELECT sq.SURVEY_SEQ
                 ,sq.QUESTION_SEQ
                 ,sq.QUESTION_CONTENT
@@ -281,25 +367,56 @@
                 ,si.ITEM_SCORE
             FROM SURVEY_QUESTION SQ, survey_item si
             WHERE sq.QUESTION_SEQ = si.QUESTION_SEQ and sq.QUESTION_SEQ = #{questionSeq}
+=======
+	        SELECT sq.SURVEY_SEQ 
+                ,sq.QUESTION_SEQ 
+                ,sq.QUESTION_CONTENT 
+                ,sq.QUESTION_TYPE_CODE 
+                ,si.ITEM_SEQ	
+                ,si.ITEM_CONTENT	
+                ,si.ITEM_SCORE	
+            FROM SURVEY_QUESTION SQ, survey_item si
+            WHERE sq.QUESTION_SEQ = si.QUESTION_SEQ and sq.QUESTION_SEQ = #{questionSeq} 
+>>>>>>> refs/remotes/origin/master
 	</select>
 
+<<<<<<< HEAD
 
 	<delete id="deleteItemByQSeq" parameterType="int">
+=======
+	<delete id="setItemDeleteQus" parameterType="int">
+>>>>>>> refs/remotes/origin/master
 		DELETE FROM SURVEY_ITEM WHERE QUESTION_SEQ = #{questionSeq}
 	</delete>
 
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> refs/remotes/origin/master
 	<select id="selectItems" parameterType="int" resultType="hashmap">
 
+<<<<<<< HEAD
 		select si.ITEM_SEQ
 			  ,si.QUESTION_SEQ
               ,si.ITEM_CONTENT
               ,si.ITEM_SCORE
               ,sq.QUESTION_TYPE_CODE
+=======
+		select si.ITEM_SEQ	
+			  ,si.QUESTION_SEQ 
+              ,si.ITEM_CONTENT	
+              ,si.ITEM_SCORE	
+              ,sq.QUESTION_TYPE_CODE 
+>>>>>>> refs/remotes/origin/master
 		FROM SURVEY_ITEM si, SURVEY_QUESTION sq
 		WHERE si.QUESTION_SEQ = sq.QUESTION_SEQ, si.QUESTION_SEQ = #{questionSeq}
 	</select>
+<<<<<<< HEAD
 </mapper>
+=======
+</mapper>
+	
+>>>>>>> refs/remotes/origin/master
