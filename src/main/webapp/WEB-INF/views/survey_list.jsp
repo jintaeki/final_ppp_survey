@@ -169,7 +169,6 @@ s
 					<button id="upper_dv_btn" type="button" class="btn btn-primary"
 						data-toggle="modal" data-target="#exampleModal"
 						data-whatever="@mdo">등록</button>
-
 				</div>
 				<table class="table">
 					<thead>
