@@ -9,7 +9,7 @@
 	href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
 
 
-<div class="survey_dv" id="all_survey_dv">
+<div class="container" id="all_survey_dv">
 <!-- 설문지 설정 진택 -->
 <form:form modelAttribute="SLD" style="display:inline-flex; border: 1px solid black;" id="survey_setting_form">
 	<div class="container">
