@@ -146,7 +146,6 @@ s
 	</div>
 </div>
 <!-- modal(설문 등록 시 뜨는 팝업창) 끝-->
-
 <div class="container" id="beforeModal">
 	<div class="card-body">
 			<div class="row">
