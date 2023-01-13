@@ -6,7 +6,7 @@
 function surveyopen(obj){
     window.open("http://localhost:8080/springframework-xml-config-no-root/survey", "_blank");
 	const tag = $(obj);
-	
+	 
 	const completeMsg = `완료`;
 	tag.parent().prev().html(completeMsg);
 	tag.parent().prev().css('color', '#ccc').css('font-weight', 'normal');
