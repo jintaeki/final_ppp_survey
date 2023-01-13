@@ -64,7 +64,7 @@
 		    	alert("추가 성공");
 		    })
 		    .fail(function(e) {
-		        alert("추가  실패");
+		        alert("추가 실패");
 		    })
 		    .always(function() {
 
