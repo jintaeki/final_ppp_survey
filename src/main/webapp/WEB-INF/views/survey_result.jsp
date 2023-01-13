@@ -2,24 +2,18 @@
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/survey_result.css" />
 <div class="container">
-	<div class="row" style="text-align: center">
-		<div class="info" style="display: contents;">
-			<div class="col-1">부서명</div>
+	<div class="" style="text-align: center">
+			<div class="row_round">부서명</div>
 			<div class="col-2">사업지원팀</div>
-			<div class="col-1">소속</div>
+			<div class="row_round">소속</div>
 			<div class="col-2">1팀</div>
-			<div class="col-1">직급</div>
+			<div class="row_round">직급</div>
 			<div class="col-2">부장</div>
-			<div class="col-1">이름</div>
+			<div class="row_round">이름</div>
 			<div class="col-2">임진택</div>
-		</div>
-		<div class="col-12">&nbsp;</div>
-		<div class="col-12">&nbsp;</div>
 	</div>
-</div>
+
 
 <table class="result_table">
 	<tr class="result_table_list">
@@ -89,4 +83,6 @@
 
 	</table>
 </div>
+</div>
+
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

@@ -43,12 +43,11 @@
 			</div>
 		</nav>
 
-		<div class="flex-grow-1 container-fluid">
+		<div class="flex-grow-1">
 			<div class="row h-100">
 				<div class="col-md-2 p-3 bg-dark">
 					<div class="h-100 d-flex flex-column">
-						<div class="flex-grow-1"
-							style="height: 0px; overflow-y: auto; overflow-x: hidden;">
+						<div class="flex-grow-1" style="height: 0px; overflow-y: auto; overflow-x: hidden;">
 							<%@ include file="/WEB-INF/views/common/menu.jsp"%>
 						</div>
 					</div>
