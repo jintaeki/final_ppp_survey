@@ -171,9 +171,6 @@ s
 						data-toggle="modal" data-target="#exampleModal"
 						data-whatever="@mdo">등록</button>
 
-
-
-
 				</div>
 				<table class="table">
 					<thead>
