@@ -5,58 +5,54 @@
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
 
 
 <div class="container" id="all_survey_dv">
 <!-- 설문지 설정 진택 -->
-<form:form modelAttribute="SLD" style="display:inline-flex; border: 1px solid black;" id="survey_setting_form">
-	<div class="container">
+<form:form modelAttribute="SLD" id="survey_setting_form">
+	<div class="container" id="survey_setting_dv">
 		<div class="row" id="survey_setting_row">
-			<div class="col-3">설문지 이름</div>
-			<div class="col-3">설문 기간</div>
-			<div class="col-3">익명 / 기명</div>
-			<div class="col-3">설문 부가 설명</div>
-
-			<input type="hidden" name="decideYN" value="N"> <input
-					type="hidden" name="surveySeq" id="surveyseq"
-				value="${SLD.surveySeq}">
-			<div class="col-3">
-				<div class="form-group">
+			<div class="col-3">설문지 이름
+					<div class="form-group">
 					<label for="survey_name" class="col-form-label"></label> <input
 						type="text" class="form-control" id="survey_name"
 						name="surveyName" value="${SLD.surveyName}">
 				</div>
 			</div>
-			<div class="col-3">
-				<input type="date" name="surveyStartDate" class="survey_date"
-					value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">
-				~ <input type="date" name="surveyClosedDate" class="survey_date"
-					value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />">
+			<div class="col-2">설문 기간
+				<div class="col-2">
+					<input type="date" name="surveyStartDate" class="survey_date"
+						value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">
+						~
+					<input type="date" name="surveyClosedDate" class="survey_date"
+						value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />">
+				</div>
 			</div>
-			<div class="col-3">
+			<div class="col-2">익명 / 기명
 				<c:if test="${SLD.anonymityCheckCode eq '20001'}">
 					<input type="radio" name="anonymityCheckCode" class="survey_radio" id="survey_type_check" value="20001" checked>익명
-				<input type="radio" name="anonymityCheckCode" class="survey_radio" id="survey_type_check" value="20002">기명
+					<br>
+					<input type="radio" name="anonymityCheckCode" class="survey_radio" id="survey_type_check" value="20002">기명
 				</c:if>
 
 				<c:if test="${SLD.anonymityCheckCode eq '20002'}">
 					<input type="radio" name="anonymityCheckCode" class="survey_radio"  id="survey_type_check" value="20001"><label for="survey_type_check">익명</label>
 					<br>
 					<input type="radio" name="anonymityCheckCode" class="survey_radio" id="survey_type_check" value="20002" checked><label for="survey_type_check">기명</label>
-			</c:if>
-
+				</c:if>
 			</div>
-			<div class="col-3">
+			<div class="col-3">설문 부가 설명
 				<div class="form-group">
 					<label for="message-text" class="col-form-label"></label>
 					<textarea class="form-control" id="message-text"
 						name="surveyContent">${SLD.surveyContent }</textarea>
 				</div>
 			</div>
-			<div class="col-12">
-				<input type="button" class="btn btn-primary" onclick="register()"
+			<input type="hidden" name="decideYN" value="N">
+			<input type="hidden" name="surveySeq" id="surveyseq" value="${SLD.surveySeq}">
+
+			<div class="col-2">
+				<input type="button" class="btn btn-primary" id="survey_setting_upd_btn" onclick="register()"
 					value="수정">
 			</div>
 
@@ -94,14 +90,11 @@
 
 <br>
 
-
-<div class="all_insertdv" style="border: 1px solid black;">
-
+<div class="container" id="all_insert_container">
+<div class="all_insertdv" >
 
 	<!-- 여기까지 설문제 제목 div -->
-	<div style="border: 1px solid black;"
-		class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
-		id="survey_question_dv">
+	<div id="survey_question_dv">
 		<div id="question_setting_banner">
 			문제 관리
 		</div>
@@ -572,9 +565,9 @@
 
  	}
 
+function() updateBlur{
 
- 	//var dltest = document.getElementById('delete_btn');
-	//dltest.addEventListener('click', deleteQus);
+}
 
 
  	function deleteQus(obj,surveySeq) {
@@ -719,11 +712,9 @@
 // 		tag.parent().remove();
 // 	}
 
+	//form elemental style 제거 함수
+	document.querySelector('#questioN_insert_form').removeAttribute('style');
 
-	$(''){
-		qusUpdate(surveySeq)
-
-	});
 
 		function qusUpdate(surveySeq){
 			var qdiv = $('#questioN_insert_form')[0]

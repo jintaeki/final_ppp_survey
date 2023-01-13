@@ -3,11 +3,12 @@
 <mapper namespace="com.mycompany.webapp.dao.ISurveyRepository">
 
 		<insert id="QuestionInsert" parameterType="SQD">
-		<![CDATA[
+
 				INSERT INTO SURVEY_QUESTION(QUESTION_SEQ
 				    ,SURVEY_SEQ
 				    ,QUESTION_CONTENT
-				    ,QUESTION_TYPE_CODE,REG_DATE
+				    ,QUESTION_TYPE_CODE
+				    ,REG_DATE
 				    ,UPDATE_DATE)
 				VALUES (#{questionSeq}
 				    ,#{surveySeq}
@@ -15,7 +16,6 @@
 				    ,#{questionTypeCode}
 				    ,sysdate
 				    ,sysdate)
-		]]>
 	</insert>
 
 	<select id="selectMaxQuestionId" resultType="int">
@@ -52,7 +52,8 @@
 			SELECT SURVEY_LIST_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
 
-		INSERT INTO SURVEY_LIST (SURVEY_SEQ,SURVEY_NAME
+		INSERT INTO SURVEY_LIST (SURVEY_SEQ
+		       ,SURVEY_NAME
 		       ,SURVEY_CONTENT
 		       ,ANONYMITY_CHECK_CODE
 		       ,SURVEY_START_DATE
@@ -294,12 +295,13 @@
 
 	<select id="selectItems" parameterType="int" resultType="hashmap">
 
-		select si.ITEM_SEQ
+		SELECT si.ITEM_SEQ
 			  ,si.QUESTION_SEQ
               ,si.ITEM_CONTENT
               ,si.ITEM_SCORE
               ,sq.QUESTION_TYPE_CODE
 		FROM SURVEY_ITEM si, SURVEY_QUESTION sq
-		WHERE si.QUESTION_SEQ = sq.QUESTION_SEQ, si.QUESTION_SEQ = #{questionSeq}
+		WHERE si.QUESTION_SEQ = sq.QUESTION_SEQ and si.QUESTION_SEQ = #{questionSeq}
 	</select>
+
 </mapper>

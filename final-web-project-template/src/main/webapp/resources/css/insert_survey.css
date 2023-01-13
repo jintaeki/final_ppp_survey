@@ -1,12 +1,19 @@
 /* 전체 div */
 #all_survey_dv{
 /*background-color: aqua;*/
-	width:100%;
-
+	height: 740px;
 }
 
 #survey_setting_row{
+    position: relative;
+    text-align: center;
+    bottom: 46px;
+}
 
+#survey_setting_upd_btn{
+	top: 30%;
+    left: 10%;
+    position: relative;
 }
 
 #question_setting_banner{
@@ -87,9 +94,10 @@ left: 600px;
  /*   top: 50px; */
 }
 
-#survey_setting_form {
-	width:85%;
-	display:contents !important;
+#survey_setting_dv{
+	height:120px;
+    bottom: 25px;
+    position: relative;
 }
 
 .survey_date{
@@ -183,6 +191,11 @@ left: 600px;
 	text-align:right;
 }
 
+
+#all_insert_container{
+	position: relative;
+	bottom:40px;
+}
 
 #answer_box {
 	left: 2%;
