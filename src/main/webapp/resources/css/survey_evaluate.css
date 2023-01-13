@@ -1,0 +1,35 @@
+@charset "UTF-8";
+.hmenu{
+	margin-left:750px;
+	margin-right:58px;
+	width:400px;	
+}
+.table{
+	max-width: 900px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.table td:not(.sv_name){
+	text-align: center;
+}
+.table thead th{
+	height: 65px;
+	text-align: center;
+	vertical-align: middle;
+}
+.table td, .table th{
+	height: 65px;
+	vertical-align: middle;
+	border-top: 1px solid #dee2e6;	
+}  
+
+.pagination{
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.lmenu{
+	margin-top: 20px;
+	margin-right:58px;
+	float:right;
+}

@@ -1,0 +1,170 @@
+#all_survey_dv{
+/*background-color: aqua;*/
+	width:100%;
+}
+
+.scrollarea {
+  overflow-y: scroll;
+      height: 500px;
+}
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+
+.list-group.list-group-flush.border-bottom.scrollarea {
+     position: relative;
+     overflow-x: auto;
+}
+#survey_question_dv{
+	width: 40%;
+    position: relative;
+    margin: 15px;
+    left: 6.5%;
+}
+
+.list-group-item.active{ /*이거 없애거나 건들면 이 클래스 싹 다 파래짐*/
+	background: transparent!important;
+	border: none!important;
+	border-bottom: 1px solid rgba(0,0,0,.125)!important;
+	
+}
+
+.all_insertdv {
+	/*background-color: red;*/
+	display:block;
+	width:100%;
+/*     height: 545px; */
+}
+
+#block_box {
+left: 600px;
+    float: right;
+    background-color: white;
+    width: 600px;
+    margin-right: 10%;
+    margin-top: 5%;
+    padding: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: rgb(59 59 91 / 25%) 0px 6px 12px -2px, rgb(15 13 13 / 30%) 0px 3px 7px -3px;
+    position: relative;
+ /*   top: 50px; */
+}
+
+#survey_setting_form {
+	width:85%;
+}
+
+.survey_date{
+	display: block;
+    text-align: center;
+    margin: auto;
+}
+
+.survey_radio{
+	position: relative;
+    margin: 15px;
+    vertical-align: middle;
+}
+
+#delete_btn {
+    left: 88%;
+    background-color: transparent;
+    border: none;
+    float: right;
+}
+
+#update_btn {
+	float:right;
+}
+
+#input_qus{
+	text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: transparent;
+    margin-top: 15px;
+    border: none;
+     outline: none;
+     width:70%
+}
+
+
+.blank_under{
+	background: none;
+    border-bottom: 1px dotted rgba(0,0,0,.38);
+    height: 1px;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: block;
+}
+
+#qus_isnert_button{
+	background-color: transparent;
+    border: none;
+    left: 92.5%;
+    margin: 15px;
+    position: relative;
+}
+
+.all_qus{
+	display:block;
+	background-color:#47FF9C;
+}
+
+.question_inputdv {
+   /* background-color: yellow;*/
+    position: relative;
+    width: 43%;
+    left: 49.5%;
+    border: solid;
+    bottom: 450px;
+}
+
+	
+#select_radio{
+   /*  background-color: blue;*/
+    text-align: left;
+}
+
+.icon_div{
+	/*   background-color: aquamarine; */
+	position: relative;
+    width: 42.5%;
+    left: 49.7%;
+    border: solid;
+    bottom: 517px;
+    height: 300px;
+}
+
+.icon_line{
+	margin:10px;
+}
+
+.question_add_btn_div{
+	text-align:right;
+}
+
+
+#answer_box {
+	left: 2%;
+    position: relative;
+    width: 500px;
+    float: right;
+	}
+}
