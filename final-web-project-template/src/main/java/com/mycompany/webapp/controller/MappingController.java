@@ -36,36 +36,37 @@ public class MappingController {
 
 	@Autowired
 	IMappingService mappingService;
-	
+
 	@RequestMapping(value="/mapping/set.do", method=RequestMethod.POST)
 	public String setMapping(@RequestParam int surveySeq, @RequestParam int month, @RequestParam int number,
 			Model model, RedirectAttributes redirectAttrs) {
-		logger.info("실행");			
+		logger.info("실행");
 		try {
-			if(mappingService.mappingCheck(surveySeq) == 0) {				
+			if(mappingService.mappingCheck(surveySeq) == 0) {
 				mappingService.setMapping(surveySeq, month, number);
 			}
 			List<PopupDTO> mappingList = mappingService.selectMappingData(surveySeq);
 			model.addAttribute("mappingList", mappingList);
+			model.addAttribute("month", month);
 		} catch (Exception e) {
 			e.printStackTrace();
 			redirectAttrs.addFlashAttribute("message", e.getMessage());
 		}
 		return "/home2";
 	}
-	
+
 	// 병준
-	@RequestMapping(value="/popup", method=RequestMethod.GET)
-	public String plusMapping(@RequestParam int surveySeq, @RequestParam String raterId, @RequestParam int month,  Model model) { 
+	@RequestMapping(value="/popup.do", method=RequestMethod.GET)
+	public String plusMapping(@RequestParam int surveySeq, @RequestParam String raterId, @RequestParam int month,  Model model) {
 		List<PopupDTO> getPopup = mappingService.getPopup(surveySeq, raterId, month);
 		logger.info(getPopup.toString());
 		model.addAttribute("getPopup", getPopup);
 		logger.info("getPopup"+getPopup);
-		return "popup"; 
+		return "popup";
 		}
-	
-	
-	@RequestMapping(value="/mapping/serch-user.do", method=RequestMethod.POST)
+
+
+	@RequestMapping(value="/popup.do", method=RequestMethod.POST)
 	public String insertAppraise(@ModelAttribute("map") @Valid MappingDTO map,
 			BindingResult result, RedirectAttributes redirectAttrs) {
 		logger.info("실행");
@@ -73,49 +74,49 @@ public class MappingController {
 			int surveySeq = map.getSurveySeq();
 			String raterId = map.getRaterId();
 			String appraiseeId = map.getAppraiseeId();
-		
+
 			mappingService.insertAppraiseId(surveySeq, raterId, appraiseeId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "mappingpopup";
 	}
-	
+
 	@RequestMapping(value="/mapping/deleteMapping.do", method=RequestMethod.POST)
-	public @ResponseBody String deleteAppraiseeId(@RequestBody String filterJSON, 
-			HttpServletResponse response, ModelMap model) throws Exception { 
+	public @ResponseBody String deleteAppraiseeId(@RequestBody String filterJSON,
+			HttpServletResponse response, ModelMap model) throws Exception {
 		logger.info("실행");
 		JSONObject resMap = new JSONObject();
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			MappingDTO deleteMap = (MappingDTO)mapper.readValue(filterJSON,new TypeReference<MappingDTO>(){ });
-			
+
 			int surveySeq = deleteMap.getSurveySeq();
-			String raterId = deleteMap.getRaterId(); 
-			String appraiseeId = deleteMap.getAppraiseeId(); 
-			
+			String raterId = deleteMap.getRaterId();
+			String appraiseeId = deleteMap.getAppraiseeId();
+
 			mappingService.deleteAppraisee(surveySeq, raterId, appraiseeId);
 			resMap.put("res", "success");
 		    resMap.put("msg", "삭제를 완료하였습니다.");
 		} catch (Exception e) {
-		
-		}	
+
+		}
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.print(resMap);
 		return null;
 	}
-	
+
 	@RequestMapping("/mappingview")
 	public String mapping_view() {
 		logger.info("실행");
 		//log.info("실행");
 		return "home2";
 	}
-	
+
 
 }
 
 
 
-	
+

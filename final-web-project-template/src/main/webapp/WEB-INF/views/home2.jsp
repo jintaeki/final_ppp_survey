@@ -4,45 +4,45 @@
 
 <script>
 
-function popup(surveySeq, raterId, month) 
-{	
-	let popUrl ="/springframework-xml-config-no-root/popup?surveySeq="+surveySeq+"&raterId="+raterId+"&month="+month;
+function popup(surveySeq, raterId, month)
+{
+	let popUrl ="/springframework-xml-config-no-root/popup.do?surveySeq="+surveySeq+"&raterId="+raterId+"&month="+month;
 	let popOption = "width=800, height=600, left=500, top=100"
-	
+
 	window.open(popUrl, "다면평가 대상 추가", popOption);
 
 }
-   
+
 function map_delete(surveySeq, raterId, appraiseeId){
-	
+
 	if(confirm("삭제를 하시겠습니까?")){
 		var submitObj = new Object();
 		submitObj.surveySeq= surveySeq;
 		submitObj.raterId= raterId;
 		submitObj.appraiseeId= appraiseeId;
-		
-		$.ajax({ 
-			url: "deleteMapping.do", 
-		    type: "POST", 
+
+		$.ajax({
+			url: "deleteMapping.do",
+		    type: "POST",
 		    contentType: "application/json;charset=UTF-8",
 		    data:JSON.stringify(submitObj),
 		    dataType : "json"
-		    }) 
+		    })
 		    .done(function(resMap) {
 		    	alert(resMap.msg);
 		    	const target= $('#' + raterId);
 		    	target.remove();
-		    }) 
-		    .fail(function(e) {  
+		    })
+		    .fail(function(e) {
 		        alert("삭제를 실패하였습니다.");
-		    }) 
-		    .always(function() { 
-		        
-		    }); 
+		    })
+		    .always(function() {
+
+		    });
 	};
 }
 
-   
+
 </script>
 
 <div class="card m-2">
@@ -50,7 +50,11 @@ function map_delete(surveySeq, raterId, appraiseeId){
 		<div>
 			<h3 style="text-align: center;">${mappingList[0].surveyName} 매핑 목록</h3>
 		</div>
+
 		<div class="container my-5">
+		<div>
+			<input type="button" id="map_insert" class="btn btn-primary" value="조건과 관계없이 추가">
+		</div>
 			<div class="row">
 				<table class="table">
 					<thead>
@@ -58,7 +62,6 @@ function map_delete(surveySeq, raterId, appraiseeId){
 							<th scope="col">직급</th>
 							<th scope="col">평가자</th>
 							<th scope="col">피평가자</th>
-							<th scope="col">추가</th>
 							<th scope="col">삭제여부</th>
 						</tr>
 					</thead>
@@ -71,17 +74,18 @@ function map_delete(surveySeq, raterId, appraiseeId){
 							</c:when>
 							<c:otherwise>
 								<c:forEach var="mapping" items="${mappingList}">
-									<tr id="${mapping.raterId}">	
+									<tr id="${mapping.raterId}">
 										<td>${mapping.gradeName}</td>
-										<td>${mapping.raterName}</td>
+										<td><a href="javascript:void(0);"
+										   onclick="popup('${mapping.surveySeq}', '${mapping.raterId}', '${month}');">
+										   ${mapping.raterName}</a></td>
 										<td>${mapping.appraiseeName}</td>
-										<td><input type="button" value="추가" onclick="popup('${mapping.surveySeq}', '${mapping.raterId}', '0');" /></td>
 										<td><input type="button" id="map_delete" class="btn btn-primary"
 								         		   onclick="map_delete('${mapping.surveySeq}', '${mapping.raterId}', '${mapping.appraiseeId}');"
 								         		   value="삭제">
 										</td>
 									</tr>
-								</c:forEach>							
+								</c:forEach>
 							</c:otherwise>
 						</c:choose>
 					</tbody>

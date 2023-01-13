@@ -6,12 +6,12 @@
 
 <script>
 	function sendRe(obj){
-		var pageno = $('#pageNo').val(); 
+		var pageno = $('#pageNo').val();
   		var surveyseq = $(obj).val();
   		console.log(surveyseq)
 //   		$.ajax({
 // 			method:'POST', //어떤 방식으로 보낼 지
-// 			url:'sendmessage.do/'+surveyseq+'/'+pageno, // qdiv를 보낼 경로 설정	
+// 			url:'sendmessage.do/'+surveyseq+'/'+pageno, // qdiv를 보낼 경로 설정
 // 		    beforeSend : function() { //보내기 전 실행
 // 			console.log("요청이 보내지는가?");
 // 		   },
@@ -23,17 +23,17 @@
 
 // 			tag.parent().html(completeMsg);
 // 			tag.hide
-			   
+
 // 		   }, error:function(e) {	//실패, 에러
-// 			   console.log("Error", e); 
+// 			   console.log("Error", e);
 // 		   }
 // 			});
 	}
-	
-			
+
+
 
   	function send(obj) {
-  		
+
   		var pageno = $('#pageNo').val();
   		var surveyseq = $(obj).val();
 
@@ -41,7 +41,7 @@
 
 		$.ajax({
 			method:'POST', //어떤 방식으로 보낼 지
-			url:'sendmessage.do/'+surveyseq+'/'+pageno, // qdiv를 보낼 경로 설정	
+			url:'sendmessage.do/'+surveyseq+'/'+pageno, // qdiv를 보낼 경로 설정
 		    beforeSend : function() { //보내기 전 실행
 			console.log("요청이 보내지는가?");
 		   },
@@ -50,32 +50,32 @@
 			const tag = $(obj);
 			console.log(tag);
 			console.log(surveyseq);
- 			
-			const text = '<button type="button" class="btn btn-link" onclick="location.href='+'\'surveyevaluate/' +surveyseq+ '\'">조회</button>';	
- 			tag.parent().next().append(text);	
- 									
+
+			const text = '<button type="button" class="btn btn-link" onclick="location.href='+'\'surveyevaluate/' +surveyseq+ '\'">조회</button>';
+ 			tag.parent().next().append(text);
+
 
  			const complete = `확정`;
  			tag.parent().prev().html(complete);
  			tag.parent().prev().css('font-weight', 'bold');
  			tag.parent().prev().css('color', '#F06');
- 							
+
 			const completeMsg = '<button class="btn btn-primary" onclick="sendRe(this)" value="'+surveyseq+'">재발송</button>';
 			tag.parent().html(completeMsg);
-		
-	
 
-			
+
+
+
 // 			tag.hide
-			   
+
 		   }, error:function(e) {	//실패, 에러
-			   console.log("Error", e); 
+			   console.log("Error", e);
 		   }
 			});
-		
+
 
 	}
-  	
+
   	function btn_for_mapping(obj){
   		var seqValue=$(obj).val();
   		html ="";
@@ -89,10 +89,10 @@
   	   	html += '<input type="hidden" id="surveySeq" name="surveySeq" value="'+seqValue+'">';
   	   	html += '<br> <h5> 다면평가에 포함될 프로젝트의 범위 정하기 </h5> <select class="form-control" name="month"> <option value="3">최근 3개월 동안에 끝난 프로젝트</option> <option value="6">최근 6개월 동얀에 끝난 프로젝트</option> <option value="12">최근 1년 동안에 끝난 프로젝트</option>';
   		html +=	'<option value="24">최근 2년 동안에 끝난 프로젝트</option> <option value="36">최근 3년 동안에 끝난 프로젝트</option> </select>';
-  		html += '<br> <h5>평가 인원</h5> <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" max="5" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;">';
+  		html += '<br> <h5>평가 최대 인원</h5> <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;">';
   	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> <input type="submit" class="btn btn-primary" value="매핑">';
-  	    html += '</div></form:form></div></div></div></div>';     
-  	    	
+  	    html += '</div></form:form></div></div></div></div>';
+
   	    $('#beforeModal').after(html)
   	}
 s
