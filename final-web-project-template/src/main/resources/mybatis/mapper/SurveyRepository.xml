@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.dao.ISurveyRepository">
 
-		<insert id="setQuestInsert" parameterType="SQD">
+		<insert id="insertQuestion" parameterType="SQD">
 		<![CDATA[
 				INSERT INTO SURVEY_QUESTION(QUESTION_SEQ
 				    ,SURVEY_SEQ
@@ -31,7 +31,7 @@
 		]]>
 	</select>
 
-	<insert id="setItemInsert" parameterType="SQD">
+	<insert id="insertItem" parameterType="SQD">
 		<![CDATA[
 			INSERT INTO SURVEY_ITEM(QUESTION_SEQ
 			     ,ITEM_SEQ
@@ -71,7 +71,7 @@
 		       ,SYSDATE)
 	</insert>
 
-	<update id="setSurveyUpdate" parameterType="SLD">
+	<update id="updateSurvey" parameterType="SLD">
 		UPDATE SURVEY_LIST SET SURVEY_NAME=#{surveyName}
 		      ,SURVEY_CONTENT=#{surveyContent}
 		      ,ANONYMITY_CHECK_CODE=#{anonymityCheckCode}
@@ -80,7 +80,7 @@
 		      ,UPDATE_DATE=sysdate  WHERE SURVEY_SEQ=#{surveySeq}
 	</update>
 
-	<insert id="setItemUpdate" parameterType="SQD" >
+	<insert id="updateItem" parameterType="SQD" >
 
 		<selectKey keyProperty="itemSeq" resultType="int" order="BEFORE">
 			SELECT ITEM_ID_SEQ.NEXTVAL FROM DUAL
@@ -97,12 +97,8 @@
 		     ,SYSDATE)
 	</insert>
 
-	<delete id="setItemDelete" parameterType="SQD">
-		DELETE FROM SURVEY_ITEM WHERE QUESTION_SEQ = ${questionSeq}
 
-	</delete>
-
-	<delete id="setQuestionDelete" parameterType="SQD">
+	<delete id="DeleteQuestion" parameterType="SQD">
 		DELETE FROM SURVEY_QUESTION WHERE QUESTION_SEQ = #{questionSeq}
 	</delete>
 
@@ -170,14 +166,14 @@
 		FROM SURVEY_QUESTION WHERE SURVEY_SEQ = #{surveySeq} order by question_seq desc
 	</select>
 
-	<update id="setQuestUpdate" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
+	<update id="UpdateQuestion" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
 		UPDATE SURVEY_QUESTION SET QUESTION_CONTENT=#{questionContent}
 		    ,QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq}
 	</update>
 
-	<update id="setQuestUpdateType" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
-		UPDATE SURVEY_QUESTION SET QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq}
-	</update>
+<!-- 	<update id="UpdateQTypeBySeq" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO"> -->
+<!-- 		UPDATE SURVEY_QUESTION SET QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq} -->
+<!-- 	</update> -->
 
 	<update id="sendMessage" parameterType="int">
 		UPDATE SURVEY_LIST SET 	STATE_CODE='Y' WHERE SURVEY_SEQ =#{surveySeq}
@@ -287,7 +283,7 @@
             WHERE sq.QUESTION_SEQ = si.QUESTION_SEQ and sq.QUESTION_SEQ = #{questionSeq} 
 	</select>
 
-	<delete id="setItemDeleteQus" parameterType="int">
+	<delete id="deleteItemByQSeq" parameterType="int">
 		DELETE FROM SURVEY_ITEM WHERE QUESTION_SEQ = #{questionSeq}
 	</delete>
 
@@ -299,7 +295,7 @@
               ,si.ITEM_SCORE	
               ,sq.QUESTION_TYPE_CODE 
 		FROM SURVEY_ITEM si, SURVEY_QUESTION sq
-		WHERE si.QUESTION_SEQ = sq.QUESTION_SEQ, si.QUESTION_SEQ = #{questionSeq}
+		WHERE si.QUESTION_SEQ = sq.QUESTION_SEQ and si.QUESTION_SEQ = #{questionSeq}
 	</select>
 </mapper>
 	

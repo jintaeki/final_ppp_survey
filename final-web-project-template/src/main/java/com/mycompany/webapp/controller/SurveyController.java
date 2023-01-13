@@ -60,34 +60,22 @@ public class SurveyController {
 		//log.info("실행");
 		return "survey_evaluate";
 	}
-	// 설문 작성 페이지로 이동을 위한 컨트롤러
-	@RequestMapping("/surveyinsert")
-	public String survey_insert(@RequestParam(defaultValue="1") int pageNo,Model model, HttpSession session) {
-		logger.info("실행");
 
-		if(String.valueOf(session.getAttribute("SLD")).equals("null")){
-			int totalRows= pagingService.getTotalBoardNum();
 
-			PagingDTO pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
-
-			model.addAttribute("surveylist", surveyService.selectSurveyList(pagingdto));
-			return "survey_list";
-		}else {
+	// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
+	@RequestMapping("/surveyinsert2")
+	public String survey_insert2(@RequestParam("surveyseq") int surveySeq, Model model, HttpSession session) {
+		System.out.println("이름을 통해:"+surveySeq);
+		if(!String.valueOf(session.getAttribute("SLD")).equals("null")) {
 			SurveyListDTO SLD = (SurveyListDTO) session.getAttribute("SLD");
 			session.removeAttribute("SLD");
 			model.addAttribute("SLD", SLD);	
-			return "survey_insert";
+		}else {
+			model.addAttribute("SLD",surveyService.selectSurvey(surveySeq));
+			model.addAttribute("SQL", surveyService.getQuestionList(surveySeq));
+			System.out.println(surveyService.getQuestionList(surveySeq));
 		}
 
-
-
-	}
-	// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
-	@RequestMapping("/surveyinsert2")
-	public String survey_insert(@RequestParam("surveyseq") int surveySeq, Model model) {
-		model.addAttribute("SLD",surveyService.selectSurvey(surveySeq));
-		model.addAttribute("SQL", surveyService.getQuestionList(surveySeq));
-		System.out.println(surveyService.getQuestionList(surveySeq));
 		return "survey_insert2";
 	}
 
@@ -195,19 +183,19 @@ public class SurveyController {
 		surveyService.setSurvey(SLD);
 		session.setAttribute("SLD", SLD);
 
-		return "redirect:/survey/surveyinsert";
+		return "redirect:/survey/surveyinsert2?surveyseq="+SLD.getSurveySeq();
 
 	}
 
 
 	// 설문 설정 변경
-	@RequestMapping(value="/surveyupdate.do")
+	@RequestMapping(value="/updatesurvey.do")
 	@ResponseBody
 	public SurveyListDTO updateSurvey(@ModelAttribute ("SLD") @Valid SurveyListDTO SLD, BindingResult result, Model model, RedirectAttributes redirectAttrs) {
 		//public String updateSurvey(SurveyListDTO SLD, Model model) {
 		logger.info("모달창을 통해 설문 등록 페이지 진입");
 		logger.info(SLD.toString());
-		surveyService.setSurveyUpdate(SLD);
+		surveyService.updateSurvey(SLD);
 
 		/*JSONObject jsonObject = new JSONObject();
 		jsonObject.put("decideCheck", SLD.getDecideCheck());
@@ -220,10 +208,10 @@ public class SurveyController {
 
 
 	// 문항 수정
-	@RequestMapping(value="/itemupdate.do")
+	@RequestMapping(value="/updateitem.do")
 	@ResponseBody
 	public SurveyQuestionDTO updateitem(@ModelAttribute ("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,Model model, RedirectAttributes redirectAttrs) {
-		logger.info("itemupdate.do");
+		logger.info("updateitem.do");
 		logger.info(SQD.toString());
 
 
@@ -232,7 +220,7 @@ public class SurveyController {
 		String checkCode = SQD.getQuestionTypeCode();
 		try {
 			if(checkCode.equals("10001")) {
-				surveyService.setItemDelete(SQD);
+				surveyService.deleteItemByQSeq(SQD);
 				// 문제 id, 점수, 문항내용, itemid, 각 각 받아야 한다
 				// questionId, itemScore, itemContent, itemId
 
@@ -250,14 +238,14 @@ public class SurveyController {
 				for(int i = 0 ; i<=cntcontent;i++) {
 					SQD.setItemContent(itmencontent[i]);
 					SQD.setItemScore(itemscore[i]);	
-					surveyService.setItemUpdate(SQD);
+					surveyService.updateItem(SQD);
 				}
 			}else if(checkCode.equals("10002")) {
-				surveyService.setItemDelete(SQD);
-				surveyService.setItemUpdate(SQD);
+				surveyService.deleteItemByQSeq(SQD);
+				surveyService.updateItem(SQD);
 
 			}else if(checkCode.equals("10003")) {
-				surveyService.setItemDelete(SQD);
+				surveyService.deleteItemByQSeq(SQD);
 				// 문제 id, 점수, 문항내용, itemid, 각 각 받아야 한다
 				// questionId, itemScore, itemContent, itemId
 
@@ -276,7 +264,7 @@ public class SurveyController {
 				for(int i = 0 ; i<=cntcontent;i++) {
 					SQD.setItemContent(itmencontent[i]);
 					SQD.setItemScore(itemscore[i]);	
-					surveyService.setItemUpdate(SQD);
+					surveyService.updateItem(SQD);
 				}
 			}
 		}catch(Exception e) {
@@ -320,25 +308,25 @@ public class SurveyController {
 		}
 	 */
 	//문제 등록
-	@RequestMapping(value="/questioninsert.do")
+	@RequestMapping(value="/insertquestion.do")
 	@ResponseBody
-	public  SurveyQuestionDTO insertSurvey(@ModelAttribute("SQD") @Valid  SurveyQuestionDTO SQD, BindingResult result ,Model model) {
+	public  SurveyQuestionDTO insertQuestion(@ModelAttribute("SQD") @Valid  SurveyQuestionDTO SQD, BindingResult result ,Model model) {
 		logger.info("문제 생성 진입했나?");
 		model.addAttribute("SQD",SQD);
-		surveyService.setQuestInsert(SQD);
+		surveyService.insertQuestion(SQD);
 
 		return SQD;
 	}	
 
-	//문항 수정
-	@RequestMapping(value="survey/iteminsert.do", method=RequestMethod.POST)
-	public String updateItem(@ModelAttribute("SID") @Valid SurveyItemDTO SID, BindingResult result, Model model, RedirectAttributes RedirectAttrs) {
-		logger.info("문항 수정 Controller 진입");
-		model.addAttribute("SID", SID);
-
-		return null;
-
-	}
+//	//문항 수정
+//	@RequestMapping(value="survey/iteminsert.do", method=RequestMethod.POST)
+//	public String updateItem(@ModelAttribute("SID") @Valid SurveyItemDTO SID, BindingResult result, Model model, RedirectAttributes RedirectAttrs) {
+//		logger.info("문항 수정 Controller 진입");
+//		model.addAttribute("SID", SID);
+//
+//		return null;
+//
+//	}
 
 
 
@@ -359,13 +347,13 @@ public class SurveyController {
 	}
 
 	//문제 업데이트
-	@RequestMapping("/questionUpdate.do")
+	@RequestMapping("/updatequestion.do")
 	@ResponseBody
-	public SurveyQuestionDTO questionUpdate(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model) {
+	public SurveyQuestionDTO updatequestion(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model) {
 		logger.info("업데이트 진입");
 		logger.info("sqd값" + SQD.toString());
 		//int questionId = SQD.getQuestionId();
-		surveyService.setQuestUpdate(SQD);
+		surveyService.UpdateQuestion(SQD);
 		System.out.println(SQD);
 		logger.info(SQD.toString());	
 		//surveyService.getQuestionList(surveyId);
@@ -373,12 +361,12 @@ public class SurveyController {
 		return SQD;
 	}
 
-	@RequestMapping(value="/questionDelete.do/{questionSeq}")
+	@RequestMapping(value="/deletequestion.do/{questionSeq}")
 	@ResponseBody
 	public void questionDelete(@PathVariable int questionSeq) {
 		logger.info("문제 삭제 진입");
 		logger.info("삭제할 문제 id: " + questionSeq);
-		surveyService.setQuestionDelete(questionSeq);
+		surveyService.DeleteQuestion(questionSeq);
 	}	
 
 	@RequestMapping(value="/touchandselect.do/{questionSeq}")

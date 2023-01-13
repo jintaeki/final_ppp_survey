@@ -256,7 +256,7 @@
 		var data = new FormData(form);
 		$.ajax({
 			method : "POST",
-			url : 'surveyupdate.do/', // form을 전송할 실제 파일경로
+			url : 'updatesurvey.do/', // form을 전송할 실제 파일경로
 			data : data,
 			processData : false,
 			contentType : false,
@@ -283,7 +283,7 @@
 		
 		$.ajax({
 			method : "POST",
-			url : 'itemupdate.do', // form을 전송할 실제 파일경로
+			url : 'updateitem.do', // form을 전송할 실제 파일경로
 			data : data,
 			processData : false,
 			contentType : false,
@@ -309,7 +309,7 @@
 		var data = new FormData(form);
 		$.ajax({
 			method : "POST",
-			url : 'itemupdate.do', // form을 전송할 실제 파일경로
+			url : 'updateitem.do', // form을 전송할 실제 파일경로
 			data : data,
 			processData : false,
 			contentType : false,
@@ -403,7 +403,7 @@
 		
  			$.ajax({
 				method:'POST', //어떤 방식으로 보낼 지
-				url:'questioninsert.do', // qdiv를 보낼 경로 설정
+				url:'insertquestion.do', // qdiv를 보낼 경로 설정
 				data: data,	//
 				processData : false,
  				contentType : false,
@@ -458,21 +458,29 @@
  			
  	function questionHtml(data){
 		  let size = data.length;
-		  console.log("하하"+data[0].QUESTION_CONTENT);
+
+		  console.log(size);
 		  var html = '';
 		  $("#scroll_area").empty();
-		 for(i=0; i<size; i++){
-			 	html+='<div class="list-group-item list-group-item-action active py-3 lh-sm" id="queAfter">'
-			    html +='<input type="text" id="input_qus" value="'+data[i].QUESTION_CONTENT+'" disabled>';
-			    html +='<button value="'+data[i].QUESTION_SEQ+'"onclick="touchQuestion(this)">확인</button>';
-				html +='<button class="delete_btn" onclick="deleteQus(this,'+data[i].SURVEY_SEQ+')" value="'+data[i].QUESTION_SEQ+'">';
-				html += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">';
-			  	html += '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /></svg>';
-				html +=	'</button>';
-				html +='<div class="blank_under"></div></div>';
+		  if(size < 1){
+			  html ='관리할 문제가 없어요~';
+			 
+		  }else{
+		  		
+				for(i=0; i<size; i++){
+			 		html+='<div class="list-group-item list-group-item-action active py-3 lh-sm" id="queAfter">'
+			    	html +='<input type="text" id="input_qus" value="'+data[i].QUESTION_CONTENT+'" disabled>';
+			    	html +='<button value="'+data[i].QUESTION_SEQ+'"onclick="touchQuestion(this)">확인</button>';
+					html +='<button class="delete_btn" onclick="deleteQus(this,'+data[i].SURVEY_SEQ+')" value="'+data[i].QUESTION_SEQ+'">';
+					html += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">';
+			  		html += '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /></svg>';
+					html +=	'</button>';
+					html +='<div class="blank_under"></div></div>';
 			
-       }
-		 $('#scroll_area').append(html);
+       			}
+			
+		  }
+		  $('#scroll_area').append(html);
 	}
 	
  	function itemHtml(data){
@@ -632,7 +640,7 @@
 		console.log("과연?:"+surveySeq);
 		$.ajax({
 			method:'POST', //어떤 방식으로 보낼 지
-				url:'questionDelete.do/'+ questionSeq , // qdiv를 보낼 경로 설정
+				url:'deletequestion.do/'+ questionSeq , // qdiv를 보낼 경로 설정
 				processData : false,
 				contentType : false,
 	 			cache : false,
@@ -684,7 +692,7 @@
 					console.log("요청이 보내지는가?");
 				   },
 				   success:function (jsondata){	 //전송 성공시 실행
-					   console.log("답은:"+jsondata[0].QUESTIONTYPECODE)
+					   console.log("답은:"+jsondata[0].QUESTION_TYPE_CODE)
 					   itemHtml(jsondata);
 														
 							
@@ -702,7 +710,7 @@
 	
 	
 	function oneQuestion(data){
-		console.log(data[0].SURVEYSEQ);
+		console.log(data[0].SURVEY_SEQ);
 // 		let size = data.length;
 		  var html = '';
 		  $("#questioN_insert_form").empty();
@@ -710,15 +718,15 @@
 			html += `<div id="insertQform">`;
 			html += `<div class="select_radio" id="select_radio">`;
 
-		if(data[0].QUESTIONTYPECODE =="10001"){
+		if(data[0].QUESTION_TYPE_CODE =="10001"){
 			html += `<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1()" checked value="10001" >객관식 `;
 			html += `<input type="radio" name="questionTypeCode" id="sub_radio" onclick="checkit2()" value="10002"> 주관식`;
 			html +=  `<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3()" value="10003"> 혼합식`;
-		} else if (data[0].QUESTIONTYPECODE =="10002"){
+		} else if (data[0].QUESTION_TYPE_CODE =="10002"){
 			html += `<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1()"  value="10001" >객관식 `;
 			html += `<input type="radio" name="questionTypeCode" id="sub_radio" onclick="checkit2()" checked value="10002"> 주관식`;
 			html +=  `<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3()" value="10003"> 혼합식`;
-		} else if (data[0].QUESTIONTYPECODE =="10003"){
+		} else if (data[0].QUESTION_TYPE_CODE =="10003"){
 			html += `<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1()"  value="10001" >객관식 `;
 			html += `<input type="radio" name="questionTypeCode" id="sub_radio" onclick="checkit2()" value="10002"> 주관식`;
 			html +=  `<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3()" checked value="10003"> 혼합식`;
@@ -730,7 +738,7 @@
 		html += `<div class="input-group-prepend">`;
 		html += '<span class="input-group-text" >문제입력</span>';
 		html += `</div>`;
-		html += '<textarea class="form-control" aria-label="문제 입력칸" id="hi" name="questionContent">'+data[0].QUESTIONCONTENT+'';
+		html += '<textarea class="form-control" aria-label="문제 입력칸" id="hi" name="questionContent">'+data[0].QUESTION_CONTENT+'';
 		
 		 $('#questioN_insert_form').append(html);
 	}
@@ -742,9 +750,9 @@
 		html += `</div>`;
 		html += `<button type="button" class="btn btn-outline-primary" id="add_btn" onclick="insertQus()">문제추가</button>`;
 
-		html += '<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate('+data[0].SURVEYSEQ+')">문제수정</button>';
-		html += '<input type="hidden" name="surveySeq" id="seq" value="'+data[0].SURVEYSEQ+'">';
-		html += '<input type="hidden" name="questionSeq" value="'+data[0].QUESTIONSEQ +'">';
+		html += '<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate('+data[0].SURVEY_SEQ+')">문제수정</button>';
+		html += '<input type="hidden" name="surveySeq" id="seq" value="'+data[0].SURVEY_SEQ+'">';
+		html += '<input type="hidden" name="questionSeq" value="'+data[0].QUESTION_SEQ +'">';
 		html += `</div>`;
 		html += `<input type="hidden" name="itemScore" value="1">`;
 		html += `<input type="hidden" name="itemContent" value=" ">`;
@@ -774,7 +782,7 @@
 			var data = new FormData(qdiv);
 			$.ajax({
 				method: 'POST',
-				url: 'questionUpdate.do/',
+				url: 'updatequestion.do/',
 				data: data,	
 				processData : false,
 				contentType : false,

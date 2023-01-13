@@ -13,17 +13,17 @@ public interface ISurveyRepository {
 
 	void setSurvey(SurveyListDTO surveylist);
 
-	void setSurveyUpdate(SurveyListDTO surveylist);
+	void updateSurvey(SurveyListDTO surveylist);
 
-	void setItemUpdate(SurveyQuestionDTO surveyquestion);
-	void setItemDelete(SurveyQuestionDTO sqd);
+	void updateItem(SurveyQuestionDTO surveyquestion);
+
 
 	int selectMaxSurveyId();
 
-	void setQuestInsert(SurveyQuestionDTO SQD);
+	void insertQuestion(SurveyQuestionDTO SQD);
 	int selectMaxQuestionId();
 	int selectMaxItemId();
-	void setItemInsert(SurveyQuestionDTO SQD);
+	void insertItem(SurveyQuestionDTO SQD);
 
 	//문제 비동기 조회 목적
 	List<Map<String, Object>> selectQuestion(int surveyId);
@@ -33,18 +33,18 @@ public interface ISurveyRepository {
 	SurveyListDTO selectSurvey(int surveyid);
 
 	//SurveyQuestionDTO getQuestionList(int surveyId);
-	void setQuestUpdate(SurveyQuestionDTO SQD);
+	void UpdateQuestion(SurveyQuestionDTO SQD);
 
 
 	List<SurveyQuestionDTO> getQuestionList(int surveyId);
 
-	Date getAddDate(int serveySeq);
+
 
 	void sendMessage(int surveySeq);
 
-	void setQuestionDelete(int questionSeq);
+	void DeleteQuestion(int questionSeq);
 
-	void setItemDeleteQus(int questionSeq);
+	void deleteItemByQSeq(int questionSeq);
 
 	List<SurveyListDTO> searchListByKeyword(PagingDTO pagingdto);
 
@@ -56,7 +56,7 @@ public interface ISurveyRepository {
 	
 	List<Map<String, Object>> selectItems(int questionSeq);
 
-	void setQuestUpdateType(SurveyQuestionDTO SQD);
+	void UpdateQTypeBySeq(SurveyQuestionDTO SQD);
 
 	
 }
