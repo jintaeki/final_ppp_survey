@@ -164,7 +164,6 @@ s
 
 							<input type="submit" class="btn btn-outline-secondary"
 								id="button-addon2" value="검색">
-
 						</form>
 					</div>
 					<button id="upper_dv_btn" type="button" class="btn btn-primary"
