@@ -1,16 +1,15 @@
 package com.mycompany.webapp.dao;
 
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
+import java.util.Date;
 
-@Repository
+import org.apache.ibatis.annotations.Param;
+
+
+
+
 public interface IPagingRepository {
 
-	int getTotalBoardNum();
+	int getTotalBoardNum(@Param("keyword")String keyword,@Param("selection") String selection, @Param("surveyStartDate") Date surveyStartDate);
 	
-	public int getTotalListNumByKeyword(@Param("keyword") String keyword, @Param("selection") String selection);
 	
-	public int getTotalListNumByKeywordAndDecideYN(@Param("keyword") String keyword, @Param("selection") String selection);
-	
-	public int getTotalListNumByKeywordAndDate(@Param("keyword") String keyword, @Param("selection") String selection);
 }

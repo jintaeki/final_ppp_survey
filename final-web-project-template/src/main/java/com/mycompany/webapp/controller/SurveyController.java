@@ -2,6 +2,9 @@ package com.mycompany.webapp.controller;
 
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +15,8 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +31,7 @@ import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
+import com.mycompany.webapp.service.ICommonCodeService;
 import com.mycompany.webapp.service.IPagingService;
 import com.mycompany.webapp.service.ISurveyService;
 
@@ -40,6 +46,9 @@ public class SurveyController {
 	@Autowired
 	IPagingService pagingService;
 
+	@Autowired
+	ICommonCodeService commonCodeService;
+	
 	@RequestMapping("")
 	public String survey() {
 		logger.info("실행");
@@ -89,68 +98,59 @@ public class SurveyController {
 	}
 
 	// 설문지 목록으로 이동을 위한 컨트롤러
-	@RequestMapping(value="/surveylist")
-	public String survey_list(@RequestParam(defaultValue="1") int pageNo, Model model) {
-		int totalRows= pagingService.getTotalBoardNum(); 
-
-		PagingDTO pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
-		logger.info(surveyService.selectSurveyList(pagingdto).toString());
-
-		model.addAttribute("surveylist", surveyService.selectSurveyList(pagingdto));
-		model.addAttribute("pagingdto",pagingdto);
-		logger.info("실행");
-
-		return "survey_list";
-	}
+//	@RequestMapping(value="/surveylist")
+//	public String survey_list(@RequestParam(defaultValue="1") int pageNo, Model model) {
+//		int totalRows= pagingService.getTotalBoardNum(); 
+//
+//		PagingDTO pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
+//		logger.info(surveyService.selectSurveyList(pagingdto).toString());
+//
+//		model.addAttribute("surveylist", surveyService.selectSurveyList(pagingdto));
+//		model.addAttribute("pagingdto",pagingdto);
+//		logger.info("실행");
+//
+//		return "survey_list";
+//	}
 
 	@RequestMapping("/surveysearch")
-	public String search(@RequestParam(defaultValue="") String keyword, @RequestParam(defaultValue="1") int pageNo, 
-			@RequestParam(defaultValue="") String selection, HttpSession session, Model model) {
+	public String search(@RequestParam(defaultValue="") String keyword, 
+						 @RequestParam(defaultValue="1") int pageNo, 
+						 @RequestParam(defaultValue="30005") String selection, 
+						 @RequestParam(required=false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDate, 
+						 HttpSession session, Model model) {
+
+		model.addAttribute("commonCodeList",commonCodeService.selectStateCode());
+		logger.info("지금 가져온 선택지:"+selection);
+		logger.info("페이지 수"+pageNo);
+		logger.info("키워드"+keyword);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//		logger.info("날짜"+formatter.format(surveyStartDate));
 		try {
 
 			List<SurveyListDTO> surveylist = null; 
 			PagingDTO pagingdto = null;
 			String beforeKeyword = keyword;
-			if (selection.equals("")) {
-				logger.info("빈 키워드만 받음");
-				int totalRows = pagingService.getTotalListNumByKeyword(keyword, selection);
+			
+				int totalRows = pagingService.getTotalBoardNum(keyword, selection, surveyStartDate);
 				System.out.println("totolRows:" + totalRows);
 				pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
 				pagingdto.setSelection(selection);
 				pagingdto.setKeyword(keyword);
+			
+				pagingdto.setSurveyStartDate(surveyStartDate);
 				logger.info("selection:" + pagingdto.getSelection());
 				logger.info("keyword: "+pagingdto.getKeyword());
 				surveylist = surveyService.searchListByKeyword(pagingdto);
 				logger.info("리스트:" +surveylist.toString());
 				pagingdto.setKeyword(beforeKeyword);
 				logger.info(pagingdto.toString());
-			}else if(selection.equals("Y") || selection.equals("N")) {
-				logger.info("키워드와 발송여부 Y 받음");
-				int totalRows = pagingService.getTotalListNumByKeywordAndDecideYN(keyword, selection);
-				pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
-				pagingdto.setSelection(selection);
-				pagingdto.setKeyword(keyword);
-				logger.info(pagingdto.getSelection());
-				logger.info(pagingdto.getKeyword());
-				surveylist = surveyService.searchListByKeywordAndDicideYN(pagingdto);
-				pagingdto.setKeyword(beforeKeyword);
-			}else if (selection.equals("date")) {
-				logger.info("키워드와 날짜기준 받음");
-				int totalRows = pagingService.getTotalListNumByKeywordAndDate(keyword, selection);
-				pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
-				pagingdto.setSelection(selection);
-				pagingdto.setKeyword(keyword);	
-				logger.info(pagingdto.getSelection());
-				logger.info(pagingdto.getKeyword());
-				surveylist = surveyService.searchListByKeywordAndDate(pagingdto);
-				pagingdto.setKeyword(beforeKeyword);
-
-			}
+			
 
 			model.addAttribute("surveylist", surveylist);
 
 			logger.info(keyword);
 			System.out.println(pageNo);
+			
 			model.addAttribute("pagingdto", pagingdto);
 			model.addAttribute("keyword", keyword);
 

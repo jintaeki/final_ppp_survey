@@ -48,10 +48,6 @@ public interface ISurveyService {
 	
 	List<SurveyListDTO> searchListByKeyword(PagingDTO pagingdto);
 
-	List<SurveyListDTO> searchListByKeywordAndDicideYN(PagingDTO pagingdto);
-
-	List<SurveyListDTO> searchListByKeywordAndDate(PagingDTO pagingdto);
-
 	List<Map<String, Object>> selectQuestionBySeq(int questionSeq);
 	
 	List<Map<String, Object>> selectItems(int questionSeq);

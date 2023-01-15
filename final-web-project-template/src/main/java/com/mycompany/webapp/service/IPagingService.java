@@ -1,13 +1,11 @@
 package com.mycompany.webapp.service;
 
+import java.util.Date;
+
 public interface IPagingService {
 
 
-	int getTotalBoardNum();
+	int getTotalBoardNum(String keyword, String selection, Date surveyStartDate);
 
-	public int getTotalListNumByKeyword(String keyword, String selection);
-
-	public int getTotalListNumByKeywordAndDecideYN(String keyword, String selection);
-
-	public int getTotalListNumByKeywordAndDate(String keyword, String selection);
+	
 }

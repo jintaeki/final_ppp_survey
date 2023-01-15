@@ -1,5 +1,7 @@
 package com.mycompany.webapp.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,25 +14,9 @@ public class PagingService implements IPagingService{
 	IPagingRepository pagingRepo;
 	
 	@Override
-	public int getTotalBoardNum() {
-		return pagingRepo.getTotalBoardNum();
+	public int getTotalBoardNum(String keyword, String selection, Date surveyStartDate) {
+		return pagingRepo.getTotalBoardNum(keyword, selection, surveyStartDate);
 	}
 
-	@Override
-	public int getTotalListNumByKeyword(String keyword, String selection) {
-		String newkeyword = ("%"+keyword+"%");
-		return pagingRepo.getTotalListNumByKeyword(newkeyword , selection);
-	}
 	
-	@Override
-	public int getTotalListNumByKeywordAndDecideYN(String keyword, String selection) {
-		String newkeyword = ("%"+keyword+"%");
-		return pagingRepo.getTotalListNumByKeywordAndDecideYN(newkeyword , selection);
-	}
-	
-	@Override
-	public int getTotalListNumByKeywordAndDate(String keyword, String selection) {
-		String newkeyword = ("%"+keyword+"%");
-		return pagingRepo.getTotalListNumByKeywordAndDate(newkeyword , selection);
-	}
 }
