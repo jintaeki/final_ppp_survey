@@ -2,15 +2,6 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
                         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-<<<<<<< HEAD
-	<settings>
-		<setting name="mapUnderscoreToCamelCase" value="true"/>
-	</settings>
-
-	<typeAliases>
-=======
-
-
 	<settings>
     
         <!-- 카멜 케이스 VO 매핑 -->       
@@ -25,16 +16,10 @@
     </settings>
     
     
-    	<typeAliases>
->>>>>>> refs/remotes/origin/master
+    <typeAliases>
 			<typeAlias type="com.mycompany.webapp.dto.SurveyListDTO" alias="SLD"/>
-<<<<<<< HEAD
 			<typeAlias type="com.mycompany.webapp.dto.SurveyQuestionDTO" alias="SQD"/>
 	</typeAliases>
-=======
-			<typeAlias type="com.mycompany.webapp.dto.SurveyQuestionDTO" alias="SQD"/>			
-	</typeAliases>	
->>>>>>> refs/remotes/origin/master
 </configuration>
 
 
