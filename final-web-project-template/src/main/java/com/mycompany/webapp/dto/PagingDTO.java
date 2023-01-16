@@ -150,15 +150,6 @@ public class PagingDTO {
 					+ ", rowsPerPage=" + rowsPerPage + ", startRowNo=" + startRowNo + ", startRowIndex=" + startRowIndex
 					+ ", endRowNo=" + endRowNo + ", endRowIndex=" + endRowIndex + ", keyword=" + keyword
 					+ ", selection=" + selection + ", surveyStartDate=" + surveyStartDate + "]";
-		}
-
-	
-		
-		
-		
-	
-
-
-		
-		
+		}		
 }
+

@@ -35,3 +35,4 @@ public class ProjectDTO {
             + projectStartDate + ", projectClosedDate=" + projectClosedDate + "]";
    }
 }
+

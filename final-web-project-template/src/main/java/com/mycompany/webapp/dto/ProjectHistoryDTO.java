@@ -1,6 +1,7 @@
 package com.mycompany.webapp.dto;
 
 public class ProjectHistoryDTO {
+
    private String projectId;
    private String participationEmployeeId;
    

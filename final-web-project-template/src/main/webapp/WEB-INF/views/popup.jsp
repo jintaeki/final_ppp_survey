@@ -54,22 +54,21 @@
             });
 
       $.ajax({
-         url: "popup.do",
-          type: "POST",
-          contentType: false,
-          data: false,
-          dataType : "Array"
-          })
-          .done(function(resArr) {
-             alert("추가 성공");
-          })
-          .fail(function(e) {
-              alert("추가 실패");
-          })
-          .always(function() {
+			url: "popup.do",
+		    type: "POST",
+		    contentType: false,
+		    data: false,
+		    dataType : "Array"
+		    })
+		    .done(function(resArr) {
+		    	alert("추가 성공");
+		    })
+		    .fail(function(e) {
+		        alert("추가 실패");
+		    })
+		    .always(function() {
 
-          });
-
+		    });
       window.close();
    }
 </script>
@@ -89,12 +88,12 @@
             <tbody>
                <c:forEach var="result" items="${getPopup}">
                   <tr id="tr_${result.surveyName}">
-                         <input type="hidden" name="projectId" value="${result.projectId}" />
+                   		<input type="hidden" name="projectId" value="${result.projectId}" />
                         <input type="hidden" name="gradeId" value="${result.gradeId}" />
                         <input type="hidden" name="departmentId" value="${result.departmentId}" />
                         <input type="hidden" name="surveySeq" value="${result.surveySeq}" />
                         <input type="hidden" name="raterId" value="${result.raterId}" />
-                        <input type="hidden" name="appraiseeId" value="${result.aappraiseeId}" />
+                        <input type="hidden" name="appraiseeId" value="${result.appraiseeId}" />
                         <input type="hidden" name="surveyName" value="${result.surveyName}" />
                         <input type="hidden" name="departmentName" value="${result.departmentName}" />
                         <input type="hidden" name="raterName" value="${result.raterName}" />
