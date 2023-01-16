@@ -146,16 +146,18 @@
 			<div class="modal-body">
 				<c:url value="/survey/set.do" var="actionURL" scope="page" />
 				<form:form action="${actionURL}" modelAttribute="SLD">
-				
+
 					<div class="form-group">
-						<label for="recipient-name" class="col-form-label" >설문지 이름</label>
-						<input type="text" class="form-control" id="recipient-name" name="surveyName">
+						<label for="recipient-name" class="col-form-label">설문지 이름</label>
+						<input type="text" class="form-control" id="recipient-name"
+							name="surveyName">
 					</div>
 					<div class="form-group">
 						<label for="message-text" class="col-form-label">설문 부가 설명</label>
-						<textarea class="form-control" id="message-text" name="surveyContent"></textarea>
+						<textarea class="form-control" id="message-text"
+							name="surveyContent"></textarea>
 					</div>
-				 	<input type="hidden" name="stateCode" value="30001">
+					<input type="hidden" name="stateCode" value="30001">
 					<input type="hidden" name="surveySeq" value="1"> 설문 진행 기간<br>
 
 					<input type="date" name="surveyStartDate" pattern="yyyy-MM-dd">~<input
@@ -164,10 +166,10 @@
 					<input type="radio" name="anonymityCheckCode" value="20001">익명 <br>
 					<input type="radio" name="anonymityCheckCode" value="20002">기명
 <!-- 					<select name="anonymityCheckDate"> -->
-<!-- 						<option value="A">익명</option> -->
-<!-- 						<option value="R">기명</option> -->
-<!-- 					</select> -->
-				<div class="modal-footer">
+					<!-- 						<option value="A">익명</option> -->
+					<!-- 						<option value="R">기명</option> -->
+					<!-- 					</select> -->
+					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">취소</button>
 						<input type="submit" class="btn btn-primary" value="등록">
@@ -187,29 +189,31 @@
 			<div class="row">
 				<div class="hmenu">
 					<div class="survey_list_form_upper_dv">
-					<form action="<c:url value='/survey/surveysearch'/>" method="GET" class="survey_list_form" >
-						<input type="date" name="surveyStartDate" value="<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />"> 
-						<select name="selection">
+						<form action="<c:url value='/survey/surveysearch'/>" method="GET"
+							class="survey_list_form">
+							<input type="date" name="surveyStartDate"
+								value="<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">
+							<select name="selection">
 								<c:forEach items="${commonCodeList}" var="commonCode">
 									<c:if test="${pagingdto.selection eq commonCode.codeDetailId }">
 										<option selected value="${pagingdto.selection}">${commonCode.codeDetailName }</option>
 									</c:if>
 									<c:if test="${pagingdto.selection ne commonCode.codeDetailId }">
-										<option  value="${commonCode.codeDetailId}">${commonCode.codeDetailName }</option>
+										<option value="${commonCode.codeDetailId}">${commonCode.codeDetailName }</option>
 									</c:if>
 								</c:forEach>
-						</select>
-								
-							<input type="text" class="form-control " placeholder="search" name="keyword" value="${pagingdto.keyword}"
-							aria-describedby="button-addon2">
-							<input type="hidden" name="pageNo" value="1"> 
-						<div class="input-group-append">
-							<input type="submit" class="btn btn-outline-secondary" 
-								id="button-addon2" value="검색">
-						</div>
-					</form>
-						<button id="upper_dv_btn" type="button" class="btn btn-primary" data-toggle="modal"
-							data-target="#exampleModal" data-whatever="@mdo">등록</button>
+							</select> <input type="text" class="form-control " placeholder="search"
+								name="keyword" value="${pagingdto.keyword}"
+								aria-describedby="button-addon2"> <input type="hidden"
+								name="pageNo" value="1">
+							<div class="input-group-append">
+								<input type="submit" class="btn btn-outline-secondary"
+									id="button-addon2" value="검색">
+							</div>
+						</form>
+						<button id="upper_dv_btn" type="button" class="btn btn-primary"
+							data-toggle="modal" data-target="#exampleModal"
+							data-whatever="@mdo">등록</button>
 
 
 					</div>
@@ -222,86 +226,90 @@
 							<th scope="col">평가 기간</th>
 							<th scope="col">진행상태</th>
 							<th scope="col">결과</th>
-							<th scope= "col">평가자 매칭</th>	
+							<th scope="col">평가자 매칭</th>
 
 						</tr>
 					</thead>
 					<tbody>
-					
-						<c:forEach var="list" items="${surveylist}" >
-						<tr>
-						
-							<th scope="row">${list.surveySeq }</th>
-							<td >
-								<c:if test="${list.stateCode ne '30004'}">
-									<a href="surveyinsert2?surveyseq=${list.surveySeq}">${list.surveyName }</a>
-								</c:if>
-								<c:if test="${list.stateCode eq '30004'}">
+
+						<c:forEach var="list" items="${surveylist}">
+							<tr>
+
+								<th scope="row">${list.surveySeq }</th>
+								<td><c:if test="${list.stateCode ne '30004'}">
+										<a href="surveyinsert2?surveyseq=${list.surveySeq}">${list.surveyName }</a>
+									</c:if> <c:if test="${list.stateCode eq '30004'}">
 									${list.surveyName }
-								</c:if>
-							</td>
-							<td>
-								<fmt:formatDate value="${list.surveyStartDate }" pattern='yyyy-MM-dd'/> &nbsp;~&nbsp;
-								<fmt:formatDate value="${list.surveyClosedDate }" pattern='yyyy-MM-dd'/>
-							</td>
-							
-							<td>
-								<span class="wait" id= "stateCode">
-									<c:if test="${list.stateCode eq '30003'}">
-										<button class="btn btn-primary" onclick="send(this)" value="${list.surveySeq}">발송</button>
-									</c:if>
-									<c:if test="${list.stateCode ne '30003'}">
+								</c:if></td>
+								<td><fmt:formatDate value="${list.surveyStartDate }"
+										pattern='yyyy-MM-dd' /> &nbsp;~&nbsp; <fmt:formatDate
+										value="${list.surveyClosedDate }" pattern='yyyy-MM-dd' /></td>
+
+								<td><span class="wait" id="stateCode"> <c:if
+											test="${list.stateCode eq '30003'}">
+											<button class="btn btn-primary" onclick="send(this)"
+												value="${list.surveySeq}">발송</button>
+										</c:if> <c:if test="${list.stateCode ne '30003'}">
 										${list.codeDetailName }
 									</c:if>
-										
-								</span>
-							</td>
-							
-							<td>
-								<c:if test="${list.stateCode eq '30004'}">
-									<button type="button" class="btn btn-link" onclick="location.href='surveyevaluate/surveyseq">조회</button>									
-								</c:if>
-								<input type="hidden" id="pageNo" name=pageNo value="${pagingdto.startPageNo}">
-							</td>
-							
-								<td><button type="button" class="btn btn-primary"
-												data-toggle="modal" data-target="#exampleModal1"
-												onclick="btn_for_mapping(this)" value="${list.surveySeq}">매핑</button></td>				
-						</tr>												
-						</c:forEach>
-				
-					</tbody>
-				
-				
-				<tr>
-				<td colspan="4" class="text-center">
-					<div style=" margin-left:170px;">
 
-						<a class="btn btn-outline-primary btn-sm" href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a>
-						<c:if test="${pagingdto.groupNo>1}">
-							<a class="btn btn-outline-info btn-sm" href="surveysearch?pageNo=${pagingdto.startPageNo-1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">이전</a>
-						</c:if>
-						
-						<c:forEach var="i" begin="${pagingdto.startPageNo}" end="${pagingdto.endPageNo}">
-							<c:if test="${pagingdto.pageNo != i}">
-								<a class="btn btn-outline-success btn-sm" href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
-							</c:if>
-							<c:if test="${pagingdto.pageNo == i}">
-								<a class="btn btn-danger btn-sm" href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
-							</c:if>
+								</span></td>
+
+								<td><c:if test="${list.stateCode eq '30004'}">
+										<button type="button" class="btn btn-link"
+											onclick="location.href='surveyevaluate/surveyseq">조회</button>
+									</c:if> <input type="hidden" id="pageNo" name=pageNo
+									value="${pagingdto.startPageNo}"></td>
+
+								<td><c:if test="${list.stateCode ne '30004'}">
+										<button type="button" class="btn btn-primary"
+											data-toggle="modal" data-target="#exampleModal1"
+											onclick="btn_for_mapping('${list.surveySeq}', '${list.stateCode}')">매핑</button>
+									</c:if> <c:if test="${list.stateCode eq '30004'}">
+									매핑완료
+								</c:if></td>
+							</tr>
 						</c:forEach>
-						
-						<c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
-							<a class="btn btn-outline-info btn-sm" href="surveysearch?pageNo=${pagingdto.endPageNo+1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">다음</a>
-						</c:if>
-						<a class="btn btn-outline-primary btn-sm" href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">맨끝</a>
-					</div>
-				</td>
-			</tr>
-				
+
+					</tbody>
+
+
+					<tr>
+						<td colspan="4" class="text-center">
+							<div style="margin-left: 170px;">
+
+								<a class="btn btn-outline-primary btn-sm"
+									href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a>
+								<c:if test="${pagingdto.groupNo>1}">
+									<a class="btn btn-outline-info btn-sm"
+										href="surveysearch?pageNo=${pagingdto.startPageNo-1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">이전</a>
+								</c:if>
+
+								<c:forEach var="i" begin="${pagingdto.startPageNo}"
+									end="${pagingdto.endPageNo}">
+									<c:if test="${pagingdto.pageNo != i}">
+										<a class="btn btn-outline-success btn-sm"
+											href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
+									</c:if>
+									<c:if test="${pagingdto.pageNo == i}">
+										<a class="btn btn-danger btn-sm"
+											href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
+									</c:if>
+								</c:forEach>
+
+								<c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
+									<a class="btn btn-outline-info btn-sm"
+										href="surveysearch?pageNo=${pagingdto.endPageNo+1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">다음</a>
+								</c:if>
+								<a class="btn btn-outline-primary btn-sm"
+									href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">맨끝</a>
+							</div>
+						</td>
+					</tr>
+
 				</table>
-				
-				
+
+
 			</div>
 		</div>
 	</div>
