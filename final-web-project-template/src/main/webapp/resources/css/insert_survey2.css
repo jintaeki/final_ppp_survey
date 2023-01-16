@@ -1,24 +1,6 @@
-/* 전체 div */
 #all_survey_dv{
 /*background-color: aqua;*/
-	height: 740px;
-}
-
-#survey_setting_row{
-    position: relative;
-    text-align: center;
-    bottom: 46px;
-}
-
-#survey_setting_upd_btn{
-	top: 30%;
-    left: 10%;
-    position: relative;
-}
-
-#question_setting_banner{
-	height:50px;
-	border-bottom: 1px dotted rgba(0,0,0,.38);
+	width:100%;
 }
 
 .scrollarea {
@@ -48,28 +30,17 @@
      overflow-x: auto;
 }
 #survey_question_dv{
-	width: 42%;
+	width: 40%;
     position: relative;
     margin: 15px;
     left: 6.5%;
-}
-
-#question_item_dv {
-	width: 42%;
-    position: relative;
-    margin: 15px;
-    left: 52%;
-    /*background-color: yellow!important;*/
-    bottom: 580px;
-    height: 548px;
-    border: solid;
 }
 
 .list-group-item.active{ /*이거 없애거나 건들면 이 클래스 싹 다 파래짐*/
 	background: transparent!important;
 	border: none!important;
 	border-bottom: 1px solid rgba(0,0,0,.125)!important;
-
+	
 }
 
 .all_insertdv {
@@ -94,10 +65,8 @@ left: 600px;
  /*   top: 50px; */
 }
 
-#survey_setting_dv{
-	height:120px;
-    bottom: 25px;
-    position: relative;
+#survey_setting_form {
+	width:85%;
 }
 
 .survey_date{
@@ -167,7 +136,9 @@ left: 600px;
     bottom: 450px;
 }
 
-
+	html {
+	height: 600px;
+}
 #select_radio{
    /*  background-color: blue;*/
     text-align: left;
@@ -191,11 +162,6 @@ left: 600px;
 	text-align:right;
 }
 
-
-#all_insert_container{
-	position: relative;
-	bottom:40px;
-}
 
 #answer_box {
 	left: 2%;

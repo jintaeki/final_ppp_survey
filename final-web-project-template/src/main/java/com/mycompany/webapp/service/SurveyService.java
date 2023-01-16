@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mycompany.webapp.dao.ISurveyRepository;
 import com.mycompany.webapp.dto.PagingDTO;
+import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 
@@ -25,7 +26,7 @@ public class SurveyService implements ISurveyService{
 
 	@Autowired
 	ISurveyRepository surveyDao;
-	
+
 	@Override
 	public void setSurvey(SurveyListDTO surveylist) {
 		surveyDao.setSurvey(surveylist);
@@ -34,17 +35,18 @@ public class SurveyService implements ISurveyService{
 	}
 
 	@Override
-	public SurveyListDTO selectSurvey(int surveyid) {
-		
-		
-		return surveyDao.selectSurvey(surveyid);
+	public SurveyListDTO selectSurvey(int surveySeq) {
+
+
+		return surveyDao.selectSurvey(surveySeq);
 
 	}
-	
+
 	@Override
+
 	public void updateSurvey(SurveyListDTO surveylist) {
 		surveyDao.updateSurvey(surveylist);
-		
+
 	}
 
 	@Override
@@ -52,32 +54,34 @@ public class SurveyService implements ISurveyService{
 //		Date date = surveyDao.getAddDate(surveyquestion.getQuestionSeq());
 //		logger.info(date.toString());
 //		surveyquestion.setAddDate(date);
+
+//		surveyDao.setItemDelete(surveyquestion);
 //		surveyDao.deleteItemByQSeq(surveyquestion);
 		surveyDao.updateItem(surveyquestion);
-		
 	}
-	
+
+
 	public void deleteItemByQSeq(SurveyQuestionDTO SQD) {
 		surveyDao.deleteItemByQSeq(SQD.getQuestionSeq());
 	}
-	
+
 	@Override
 	public int selectMaxSurveyId() {
 		// 불필요하다 지우자
 		return surveyDao.selectMaxSurveyId();
-		
+
 	}
-	
+
 	@Transactional
+
 	public void insertQuestion(SurveyQuestionDTO sqd) {
 		logger.info("insertQuestion service: " + sqd );
 		sqd.setQuestionSeq(surveyDao.selectMaxQuestionId()+1);
 		logger.info("id가 들어갔니 안갔니 :" + sqd);
 		surveyDao.insertQuestion(sqd);
 		logger.info("문제등록");
-		logger.info("");
-		insertItem(sqd);
-		logger.info("문항등록");
+		//ItemInsert(sqd);
+		//logger.info("문항등록");
 	}
 
 	@Override
@@ -86,6 +90,7 @@ public class SurveyService implements ISurveyService{
 	}
 
 	@Override
+
 	public void insertItem(SurveyQuestionDTO sqd) {
 		logger.info("insertItem: " + sqd);
 		sqd.setItemSeq(surveyDao.selectMaxItemId()+1);
@@ -93,8 +98,12 @@ public class SurveyService implements ISurveyService{
 		surveyDao.insertItem(sqd);
 	}
 
+	@Override
+	public void setItemDelete(SurveyQuestionDTO sqd) {
 
-	
+		surveyDao.setItemDelete(sqd);
+	}
+
 	@Override
 	public int selectMaxItemId() {
 		// 필요없음
@@ -104,17 +113,16 @@ public class SurveyService implements ISurveyService{
 	@Override
 	public void UpdateQuestion(SurveyQuestionDTO SQD) {
 		logger.info("문제 업데이트 서비스 진입: " + SQD);
-		
 		 surveyDao.UpdateQuestion(SQD);
-		
+
 	}
 
 	@Override
-	public List<Map<String, Object>> selectQuestion(int surveyId) {
+	public List<Map<String, Object>> selectQuestion(int surveySeq) {
 
-		logger.info(surveyDao.selectQuestion(surveyId).toString());
-		return surveyDao.selectQuestion(surveyId);
-		
+		logger.info("문제 찾을 설문지:" + surveySeq);
+		return surveyDao.selectQuestion(surveySeq);
+
 	}
 
 
@@ -128,23 +136,21 @@ public class SurveyService implements ISurveyService{
 	public SurveyQuestionDTO getQuestionList(int surveyId) {
 		logger.info("getQuestionList: " + surveyId);
 		return surveyDao.getQuestionList(surveyId);
-		
+
 	}
 	*/
 	@Override
-	public List<SurveyQuestionDTO> questionList(int surveyId) {
-			
-		return surveyDao.getQuestionList(surveyId);
-	}
+	public List<SurveyQuestionDTO> questionList(int surveySeq) {
 
+		return surveyDao.getQuestionList(surveySeq);
+	}
 	@Override
 	public List<SurveyQuestionDTO> getQuestionList(int surveySeq) {
 		logger.info("문제 조회 서비스: " + surveySeq);
 		return surveyDao.getQuestionList(surveySeq);
 	}
-		
-// 1월 9일 여기부터 시작 
-	
+
+// 1월 9일 여기부터 시작
 	@Override
 	public void sendMessage(int surveySeq) {
 		surveyDao.sendMessage(surveySeq);
@@ -157,12 +163,13 @@ public class SurveyService implements ISurveyService{
 		return surveyDao.searchListByKeyword(pagingdto);
 	}
 
+
 	@Override
 	public List<Map<String, Object>> selectQuestionBySeq(int questionSeq){
 		logger.info(surveyDao.selectQuestionBySeq(questionSeq).toString());
 		return surveyDao.selectQuestionBySeq(questionSeq);
 	}
-	
+
 	@Override
 	public void DeleteQuestion(int questionSeq) {
 		logger.info("문제삭제 서비스 진입");
@@ -171,18 +178,20 @@ public class SurveyService implements ISurveyService{
 	}
 
 
+
 	@Override
 	public List<Map<String, Object>> selectItems(int questionSeq) {
 		return surveyDao.selectItems(questionSeq);
 	}
-	
 
-		
+
+
+
 }
 
 
 
-	
 
-	
+
+
 

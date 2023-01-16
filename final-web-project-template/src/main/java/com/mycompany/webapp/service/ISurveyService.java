@@ -6,20 +6,24 @@ import java.util.List;
 import java.util.Map;
 
 import com.mycompany.webapp.dto.PagingDTO;
+import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 
 public interface ISurveyService {
 
 	void setSurvey(SurveyListDTO surveylist);
-	
+
 	void updateSurvey(SurveyListDTO surveylist);
-	
+
 	void updateItem(SurveyQuestionDTO surveyquestion);
 
 	int selectMaxSurveyId();
-	
-	
+
+	void setItemDelete(SurveyQuestionDTO sqd);
+
+
+
 	void insertQuestion(SurveyQuestionDTO sqd);
 
 	int selectMaxQuestionId();
@@ -29,32 +33,33 @@ public interface ISurveyService {
 	int selectMaxItemId();
 
 	void UpdateQuestion(SurveyQuestionDTO sqd);
-	
-	List<Map<String, Object>> selectQuestion(int surveyId);
-	
+
+	List<Map<String, Object>> selectQuestion(int surveySeq);
+
 	List<SurveyListDTO> selectSurveyList(PagingDTO pagingdto);
-	
-	SurveyListDTO selectSurvey(int surveyid);
-	
-	public List<SurveyQuestionDTO>questionList(int surveyId);
+
+	SurveyListDTO selectSurvey(int surveySeq);
 
 	public List<SurveyQuestionDTO> getQuestionList(int surveySeq);
-		
+
+	public List<SurveyQuestionDTO>questionList(int surveySeq);
+
 	void sendMessage(int surveySeq);
-	
+
 	void DeleteQuestion(int questionSeq);
-	
+
 	void deleteItemByQSeq(SurveyQuestionDTO SQD);
-	
+
 	List<SurveyListDTO> searchListByKeyword(PagingDTO pagingdto);
 
 	List<Map<String, Object>> selectQuestionBySeq(int questionSeq);
-	
+
 	List<Map<String, Object>> selectItems(int questionSeq);
+
 }
 
 
 
-	
 
-	
+
+

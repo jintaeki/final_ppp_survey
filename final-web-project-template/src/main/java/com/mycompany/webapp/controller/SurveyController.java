@@ -46,9 +46,10 @@ public class SurveyController {
 	@Autowired
 	IPagingService pagingService;
 
+
 	@Autowired
 	ICommonCodeService commonCodeService;
-	
+
 //	@RequestMapping("")
 //	public String survey() {
 //		logger.info("실행");
@@ -57,36 +58,36 @@ public class SurveyController {
 //	}
 
 	@RequestMapping("/surveydetails")
-	public String survey_details() {
+	public String surveyDetails() {
 		logger.info("실행");
 		//log.info("실행");
 		return "survey_details";
 	}
 	@RequestMapping("/surveyevaluate/{surveySeq}")
-	public String survey_evaluate(@PathVariable int surveySeq) { 
+	public String surveyEvaluate(@PathVariable int surveySeq) {
 		logger.info("실행");
 		System.out.println(surveySeq);
 		//log.info("실행");
 		return "survey_evaluate";
 	}
 
-
 	// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
-	@RequestMapping("/surveyinsert2")
-	public String survey_insert2(@RequestParam("surveyseq") int surveySeq, Model model, HttpSession session) {
-		System.out.println("이름을 통해:"+surveySeq);
-		if(!String.valueOf(session.getAttribute("SLD")).equals("null")) {
-			SurveyListDTO SLD = (SurveyListDTO) session.getAttribute("SLD");
-			session.removeAttribute("SLD");
-			model.addAttribute("SLD", SLD);	
-		}else {
-			model.addAttribute("SLD",surveyService.selectSurvey(surveySeq));
-			model.addAttribute("SQL", surveyService.getQuestionList(surveySeq));
-			System.out.println(surveyService.getQuestionList(surveySeq));
+		@RequestMapping("/surveyinsert2")
+		public String survey_insert2(@RequestParam("surveyseq") int surveySeq, Model model, HttpSession session) {
+			System.out.println("이름을 통해:"+surveySeq);
+			if(!String.valueOf(session.getAttribute("SLD")).equals("null")) {
+				SurveyListDTO SLD = (SurveyListDTO) session.getAttribute("SLD");
+				session.removeAttribute("SLD");
+				model.addAttribute("SLD", SLD);
+			}else {
+				model.addAttribute("SLD",surveyService.selectSurvey(surveySeq));
+				model.addAttribute("SQL", surveyService.getQuestionList(surveySeq));
+			//	System.out.println(surveyService.getQuestionList(surveySeq));
+			}
+
+			return "survey_insert2";
 		}
 
-		return "survey_insert2";
-	}
 
 	@RequestMapping("/sendmessage.do/{surveyseq}/{pageno}")
 	@ResponseBody
@@ -98,45 +99,44 @@ public class SurveyController {
 	}
 
 	// 설문지 목록으로 이동을 위한 컨트롤러
-//	@RequestMapping(value="/surveylist")
-//	public String survey_list(@RequestParam(defaultValue="1") int pageNo, Model model) {
-//		int totalRows= pagingService.getTotalBoardNum(); 
-//
-//		PagingDTO pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
-//		logger.info(surveyService.selectSurveyList(pagingdto).toString());
-//
-//		model.addAttribute("surveylist", surveyService.selectSurveyList(pagingdto));
-//		model.addAttribute("pagingdto",pagingdto);
-//		logger.info("실행");
-//
-//		return "survey_list";
-//	}
+//		@RequestMapping(value="/surveylist")
+//		public String survey_list(@RequestParam(defaultValue="1") int pageNo, Model model) {
+//			int totalRows= pagingService.getTotalBoardNum();
+	//
+//			PagingDTO pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
+//			logger.info(surveyService.selectSurveyList(pagingdto).toString());
+	//
+//			model.addAttribute("surveylist", surveyService.selectSurveyList(pagingdto));
+//			model.addAttribute("pagingdto",pagingdto);
+//			logger.info("실행");
+	//
+//			return "survey_list";
+//		}
 
 	@RequestMapping("/surveysearch")
-	public String search(@RequestParam(defaultValue="") String keyword, 
-						 @RequestParam(defaultValue="1") int pageNo, 
-						 @RequestParam(defaultValue="30005") String selection, 
-						 @RequestParam(required=false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDate, 
+	public String search(@RequestParam(defaultValue="") String keyword,
+						 @RequestParam(defaultValue="1") int pageNo,
+						 @RequestParam(defaultValue="30005") String selection,
+						 @RequestParam(required=false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDate,
 						 HttpSession session, Model model) {
 
 		model.addAttribute("commonCodeList",commonCodeService.selectStateCode());
 		logger.info("지금 가져온 선택지:"+selection);
 		logger.info("페이지 수"+pageNo);
 		logger.info("키워드"+keyword);
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//		logger.info("날짜"+formatter.format(surveyStartDate));
+
 		try {
 
-			List<SurveyListDTO> surveylist = null; 
+			List<SurveyListDTO> surveylist = null;
 			PagingDTO pagingdto = null;
 			String beforeKeyword = keyword;
-			
+
 				int totalRows = pagingService.getTotalBoardNum(keyword, selection, surveyStartDate);
 				System.out.println("totolRows:" + totalRows);
-				pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
+				pagingdto = new PagingDTO(7, 7, totalRows, pageNo);
 				pagingdto.setSelection(selection);
 				pagingdto.setKeyword(keyword);
-			
+
 				pagingdto.setSurveyStartDate(surveyStartDate);
 				logger.info("selection:" + pagingdto.getSelection());
 				logger.info("keyword: "+pagingdto.getKeyword());
@@ -144,13 +144,13 @@ public class SurveyController {
 				logger.info("리스트:" +surveylist.toString());
 				pagingdto.setKeyword(beforeKeyword);
 				logger.info(pagingdto.toString());
-			
+
 
 			model.addAttribute("surveylist", surveylist);
 
 			logger.info(keyword);
 			System.out.println(pageNo);
-			
+
 			model.addAttribute("pagingdto", pagingdto);
 			model.addAttribute("keyword", keyword);
 
@@ -161,14 +161,15 @@ public class SurveyController {
 	}
 
 
+
 	@RequestMapping("/surveyresultteam")
-	public String survey_success() {
+	public String surveySuccess() {
 		logger.info("실행");
 		//log.info("실행");
 		return "survey_result_team";
 	}
 	@RequestMapping("/surveyresult")
-	public String survey_result() {
+	public String surveyResult() {
 		logger.info("실행");
 		//log.info("실행");
 		return "survey_result";
@@ -208,96 +209,96 @@ public class SurveyController {
 
 
 	// 문항 수정
-	@RequestMapping(value="/updateitem.do")
-	@ResponseBody
-	public SurveyQuestionDTO updateitem(@ModelAttribute ("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,Model model, RedirectAttributes redirectAttrs) {
-		logger.info("updateitem.do");
-		logger.info(SQD.toString());
+		@RequestMapping(value="/updateitem.do")
+		@ResponseBody
+		public SurveyQuestionDTO updateitem(@ModelAttribute ("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,Model model, RedirectAttributes redirectAttrs) {
+			logger.info("updateitem.do");
+			logger.info(SQD.toString());
 
 
 
-		
-		String checkCode = SQD.getQuestionTypeCode();
-		try {
-			if(checkCode.equals("10001")) {
-				surveyService.deleteItemByQSeq(SQD);
-				// 문제 id, 점수, 문항내용, itemid, 각 각 받아야 한다
-				// questionId, itemScore, itemContent, itemId
 
-				// 다중 값들 문자열로 표현
-				String itemcontents = SQD.getItemContent();
-				String itemscores = SQD.getItemScore();
+			String checkCode = SQD.getQuestionTypeCode();
+			try {
+				if(checkCode.equals("10001")) {
+					surveyService.deleteItemByQSeq(SQD);
+					// 문제 id, 점수, 문항내용, itemid, 각 각 받아야 한다
+					// questionId, itemScore, itemContent, itemId
 
-				// 문항 개수 
-				int cntcontent = itemcontents.length()-itemcontents.replace(",", "").length();
+					// 다중 값들 문자열로 표현
+					String itemcontents = SQD.getItemContent();
+					String itemscores = SQD.getItemScore();
 
-				// 다중 값들을 배열로 변환
-				String  [] itmencontent = itemcontents.split(",");
-				String  [] itemscore = itemscores.split(",");
-				// 문항 개수만큼 for문 실행하여 문항 등록
-				for(int i = 0 ; i<=cntcontent;i++) {
-					SQD.setItemContent(itmencontent[i]);
-					SQD.setItemScore(itemscore[i]);	
+					// 문항 개수
+					int cntcontent = itemcontents.length()-itemcontents.replace(",", "").length();
+
+					// 다중 값들을 배열로 변환
+					String  [] itmencontent = itemcontents.split(",");
+					String  [] itemscore = itemscores.split(",");
+					// 문항 개수만큼 for문 실행하여 문항 등록
+					for(int i = 0 ; i<=cntcontent;i++) {
+						SQD.setItemContent(itmencontent[i]);
+						SQD.setItemScore(itemscore[i]);
+						surveyService.updateItem(SQD);
+					}
+				}else if(checkCode.equals("10002")) {
+					surveyService.deleteItemByQSeq(SQD);
 					surveyService.updateItem(SQD);
+
+				}else if(checkCode.equals("10003")) {
+					surveyService.deleteItemByQSeq(SQD);
+					// 문제 id, 점수, 문항내용, itemid, 각 각 받아야 한다
+					// questionId, itemScore, itemContent, itemId
+
+					// 다중 값들 문자열로 표현
+					String itemcontents = SQD.getItemContent();
+					String itemscores = SQD.getItemScore();
+
+					// 문항 개수
+					int cntcontent = itemcontents.length()-itemcontents.replace(",", "").length();
+
+					// 다중 값들을 배열로 변환
+					String  [] itmencontent = itemcontents.split(",");
+					String  [] itemscore = itemscores.split(",");
+
+					// 문항 개수만큼 for문 실행하여 문항 등록
+					for(int i = 0 ; i<=cntcontent;i++) {
+						SQD.setItemContent(itmencontent[i]);
+						SQD.setItemScore(itemscore[i]);
+						surveyService.updateItem(SQD);
+					}
 				}
-			}else if(checkCode.equals("10002")) {
-				surveyService.deleteItemByQSeq(SQD);
-				surveyService.updateItem(SQD);
-
-			}else if(checkCode.equals("10003")) {
-				surveyService.deleteItemByQSeq(SQD);
-				// 문제 id, 점수, 문항내용, itemid, 각 각 받아야 한다
-				// questionId, itemScore, itemContent, itemId
-
-				// 다중 값들 문자열로 표현
-				String itemcontents = SQD.getItemContent();
-				String itemscores = SQD.getItemScore();
-
-				// 문항 개수 
-				int cntcontent = itemcontents.length()-itemcontents.replace(",", "").length();
-
-				// 다중 값들을 배열로 변환
-				String  [] itmencontent = itemcontents.split(",");
-				String  [] itemscore = itemscores.split(",");
-
-				// 문항 개수만큼 for문 실행하여 문항 등록
-				for(int i = 0 ; i<=cntcontent;i++) {
-					SQD.setItemContent(itmencontent[i]);
-					SQD.setItemScore(itemscore[i]);	
-					surveyService.updateItem(SQD);
-				}
+			}catch(Exception e) {
+				e.printStackTrace();
+				redirectAttrs.addFlashAttribute("message", e.getMessage());
 			}
-		}catch(Exception e) {
-			e.printStackTrace();
-			redirectAttrs.addFlashAttribute("message", e.getMessage());
+
+
+
+			return SQD;
 		}
 
-
-
-		return SQD;
-	}
-
-	// 문제 비동기식으로 출력 
+	// 문제 비동기식으로 출력
 	@RequestMapping(value="/selectquestion.do/{surveySeq}")
 	@ResponseBody
-	public  List<Map<String, Object>> selectquestion(@PathVariable int surveySeq, Model model) {
-		logger.info("뿌리기 컨트롤 ");
-		
+	public  List<Map<String, Object>> selectQuestion(@PathVariable int surveySeq,Model model) {
+		logger.info("문제 뿌리기 컨트롤 ");
 
-		//		System.out.println(surveyService.selectQuestion(surveySeq));
+
+		System.out.println(surveyService.selectQuestion(surveySeq));
 		return surveyService.selectQuestion(surveySeq) ;
-	}	
+	}
 
-	// 문항 비동기식으로 출력 
+// 문항 비동기식으로 출력
 	@RequestMapping(value="/selectitems.do/{questionseq}")
 	@ResponseBody
-	public  List<Map<String, Object>> selectitems(@PathVariable int questionseq, Model model) {
-		logger.info("뿌리기 컨트롤 ");
+	public  List<Map<String, Object>> selectItems(@PathVariable int questionseq, Model model) {
+		logger.info("문항 뿌리기 컨트롤 ");
 
 		logger.info(surveyService.selectItems(questionseq).toString());
 		//		System.out.println(surveyService.selectQuestion(surveySeq));
 		return surveyService.selectItems(questionseq) ;
-	}	
+	}
 
 
 	/*
@@ -306,17 +307,17 @@ public class SurveyController {
 
 			return "common/survey_insert";
 		}
-	 */
+	*/
 	//문제 등록
-	@RequestMapping(value="/insertquestion.do")
-	@ResponseBody
-	public  SurveyQuestionDTO insertQuestion(@ModelAttribute("SQD") @Valid  SurveyQuestionDTO SQD, BindingResult result ,Model model) {
-		logger.info("문제 생성 진입했나?");
-		model.addAttribute("SQD",SQD);
-		surveyService.insertQuestion(SQD);
+		@RequestMapping(value="/insertquestion.do")
+		@ResponseBody
+		public  SurveyQuestionDTO insertQuestion(@ModelAttribute("SQD") @Valid  SurveyQuestionDTO SQD, BindingResult result ,Model model) {
+			logger.info("문제 생성 진입했나?");
+			model.addAttribute("SQD",SQD);
+			surveyService.insertQuestion(SQD);
 
-		return SQD;
-	}	
+			return SQD;
+		}
 
 //	//문항 수정
 //	@RequestMapping(value="survey/iteminsert.do", method=RequestMethod.POST)
@@ -327,7 +328,6 @@ public class SurveyController {
 //		return null;
 //
 //	}
-
 
 
 
@@ -347,31 +347,33 @@ public class SurveyController {
 	}
 
 	//문제 업데이트
-	@RequestMapping("/updatequestion.do")
-	@ResponseBody
-	public SurveyQuestionDTO updatequestion(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model) {
-		logger.info("업데이트 진입");
-		logger.info("sqd값" + SQD.toString());
-		//int questionId = SQD.getQuestionId();
-		surveyService.UpdateQuestion(SQD);
-		System.out.println(SQD);
-		logger.info(SQD.toString());	
-		//surveyService.getQuestionList(surveyId);
-		logger.info("업데이트 성공");
-		return SQD;
-	}
+		@RequestMapping("/updatequestion.do")
+		@ResponseBody
+		public SurveyQuestionDTO updatequestion(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model) {
+			logger.info("업데이트 진입");
+			logger.info("sqd값" + SQD.toString());
+			//int questionId = SQD.getQuestionId();
+			surveyService.UpdateQuestion(SQD);
+			System.out.println(SQD);
 
-	@RequestMapping(value="/deletequestion.do/{questionSeq}")
-	@ResponseBody
-	public void questionDelete(@PathVariable int questionSeq) {
-		logger.info("문제 삭제 진입");
-		logger.info("삭제할 문제 id: " + questionSeq);
-		surveyService.DeleteQuestion(questionSeq);
-	}	
+			logger.info(SQD.toString());
+			//surveyService.getQuestionList(surveyId);
+			logger.info("업데이트 성공");
+			return SQD;
+		}
 
+		@RequestMapping(value="/deletequestion.do/{questionSeq}")
+		@ResponseBody
+		public void questionDelete(@PathVariable int questionSeq) {
+			logger.info("문제 삭제 진입");
+			logger.info("삭제할 문제 id: " + questionSeq);
+			surveyService.DeleteQuestion(questionSeq);
+		}
+
+	//문제 선택 시 데이터 가져오기
 	@RequestMapping(value="/touchandselect.do/{questionSeq}")
 	@ResponseBody
-	public List<Map<String, Object>> touchandselect(@PathVariable int questionSeq) {
+	public List<Map<String, Object>> touchAndSelect(@PathVariable int questionSeq) {
 		logger.info("touchandselect 진입");
 		System.out.println(questionSeq);
 
@@ -380,6 +382,13 @@ public class SurveyController {
 		return surveyService.selectQuestionBySeq(questionSeq);
 	}
 
+	//문항 등록
+	public SurveyQuestionDTO itemInsert(@ModelAttribute ("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,Model model, RedirectAttributes redirectAttrs) {
+		logger.info("문항생성 Controller 진입");
 
-}
+		return SQD;
+	}
 
+
+
+	}

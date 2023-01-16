@@ -12,11 +12,11 @@ public class PagingService implements IPagingService{
 
 	@Autowired
 	IPagingRepository pagingRepo;
-	
+
 	@Override
 	public int getTotalBoardNum(String keyword, String selection, Date surveyStartDate) {
 		return pagingRepo.getTotalBoardNum(keyword, selection, surveyStartDate);
 	}
 
-	
+
 }

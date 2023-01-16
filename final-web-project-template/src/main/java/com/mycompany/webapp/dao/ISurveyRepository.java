@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.mycompany.webapp.dto.PagingDTO;
+import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 
@@ -16,7 +17,7 @@ public interface ISurveyRepository {
 	void updateSurvey(SurveyListDTO surveylist);
 
 	void updateItem(SurveyQuestionDTO surveyquestion);
-
+	void setItemDelete(SurveyQuestionDTO sqd);
 
 	int selectMaxSurveyId();
 
@@ -26,9 +27,9 @@ public interface ISurveyRepository {
 	void insertItem(SurveyQuestionDTO SQD);
 
 	//문제 비동기 조회 목적
-	List<Map<String, Object>> selectQuestion(int surveyId);
+	List<Map<String, Object>> selectQuestion(int surveySeq);
 
-	List<SurveyListDTO> selectSurveyList(PagingDTO pagingdto);	
+	List<SurveyListDTO> selectSurveyList(PagingDTO pagingdto);
 
 	SurveyListDTO selectSurvey(int surveyid);
 
@@ -36,9 +37,9 @@ public interface ISurveyRepository {
 	void UpdateQuestion(SurveyQuestionDTO SQD);
 
 
-	List<SurveyQuestionDTO> getQuestionList(int surveyId);
+	List<SurveyQuestionDTO> getQuestionList(int surveySeq);
 
-
+	Date getAddDate(int serveySeq);
 
 	void sendMessage(int surveySeq);
 
@@ -48,14 +49,17 @@ public interface ISurveyRepository {
 
 	List<SurveyListDTO> searchListByKeyword(PagingDTO pagingdto);
 
+	List<SurveyListDTO> searchListByKeywordAndDicideYN(PagingDTO pagingdto);
+
+	List<SurveyListDTO> searchListByKeywordAndDate(PagingDTO pagingdto);
 
 	List<Map<String, Object>> selectQuestionBySeq(int questionSeq);
-	
+
 	List<Map<String, Object>> selectItems(int questionSeq);
 
 	void UpdateQTypeBySeq(SurveyQuestionDTO SQD);
 
-	
+
 }
 
 
