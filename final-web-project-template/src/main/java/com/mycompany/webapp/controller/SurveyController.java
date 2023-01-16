@@ -49,12 +49,12 @@ public class SurveyController {
 	@Autowired
 	ICommonCodeService commonCodeService;
 	
-	@RequestMapping("")
-	public String survey() {
-		logger.info("실행");
-		//log.info("실행");
-		return "survey";
-	}
+//	@RequestMapping("")
+//	public String survey() {
+//		logger.info("실행");
+//		//log.info("실행");
+//		return "survey";
+//	}
 
 	@RequestMapping("/surveydetails")
 	public String survey_details() {
@@ -282,7 +282,7 @@ public class SurveyController {
 	@ResponseBody
 	public  List<Map<String, Object>> selectquestion(@PathVariable int surveySeq, Model model) {
 		logger.info("뿌리기 컨트롤 ");
-
+		
 
 		//		System.out.println(surveyService.selectQuestion(surveySeq));
 		return surveyService.selectQuestion(surveySeq) ;

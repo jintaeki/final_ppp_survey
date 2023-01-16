@@ -410,8 +410,11 @@
 	 			cache : false,
 			   beforeSend : function() { //보내기 전 실행
 				console.log("요청이 보내지는가?");
+			   console.log("qdiv:"+qdiv[0]);
+			   console.log("data:"+data);
 			   },
 			   success:function (data) {	 //전송 성공시 실행
+				   console.log(data);
 				   console.log($('#surveyseq').val());
 				   var surveyseq = $('#surveyseq').val();
 				   
