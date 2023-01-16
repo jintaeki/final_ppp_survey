@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.mycompany.webapp.dao.ILoginCheckRepository">
+
+	<select id="checkUser"
+		parameterType="com.mycompany.webapp.dto.UserCheckDTO" resultType="int">
+		SELECT COUNT(*) 
+		FROM user_info
+        WHERE  EMAIL =  #{email} AND EMPLOYEE_ID = #{raterId}
+		
+	</select>
+	
+		<select id="getUserManagerYN"
+		parameterType="com.mycompany.webapp.dto.UserCheckDTO" resultType="string">
+		SELECT MANAGER_YN 
+		FROM user_info
+        WHERE  EMAIL =  #{email} AND EMPLOYEE_ID = #{raterId}
+		
+	</select>
+	
+	<select id="getUserInfo"
+		parameterType="com.mycompany.webapp.dto.UserCheckDTO" resultType="com.mycompany.webapp.dto.UserCheckDTO">
+		SELECT S.SURVEY_SEQ, 
+               S.SURVEY_NAME, 
+               M.RATER_ID, 
+               UR.EMPLOYEE_NAME AS RATER_NAME, 
+               M.APPRAISEE_ID, 
+               UA.EMPLOYEE_NAME AS APPRAISEE_NAME,
+               M.SURVEY_COMPLETE_YN,
+               UR.EMAIL,
+               UR.MANAGER_YN
+        FROM USER_INFO UR , USER_INFO UA, SURVEY_LIST S, MAPPING M
+        WHERE 
+              S.SURVEY_CLOSED_DATE >= SYSDATE AND
+              UR.EMPLOYEE_ID = M.RATER_ID AND
+              UA.EMPLOYEE_ID = M.APPRAISEE_ID AND
+              S.SURVEY_SEQ = M.SURVEY_SEQ AND
+              UR.EMAIL = #{email} AND
+              UR.EMPLOYEE_ID = #{raterId} AND
+              S.SURVEY_SEQ = 187
+             
+		
+	</select>
+
+</mapper>

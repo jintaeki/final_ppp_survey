@@ -14,23 +14,25 @@ public interface ISurveyService {
 
 	void setSurvey(SurveyListDTO surveylist);
 
-	void setSurveyUpdate(SurveyListDTO surveylist);
+	void updateSurvey(SurveyListDTO surveylist);
 
-	void setItemUpdate(SurveyQuestionDTO surveyquestion);
+	void updateItem(SurveyQuestionDTO surveyquestion);
 
 	int selectMaxSurveyId();
 
 	void setItemDelete(SurveyQuestionDTO sqd);
 
-	void QuestionInsert(SurveyQuestionDTO sqd);
+
+
+	void insertQuestion(SurveyQuestionDTO sqd);
 
 	int selectMaxQuestionId();
 
-	void itemInsert(SurveyQuestionDTO sqd);
+	void insertItem(SurveyQuestionDTO sqd);
 
 	int selectMaxItemId();
 
-	void setQuestUpdate(SurveyQuestionDTO sqd);
+	void UpdateQuestion(SurveyQuestionDTO sqd);
 
 	List<Map<String, Object>> selectQuestion(int surveySeq);
 
@@ -44,19 +46,16 @@ public interface ISurveyService {
 
 	void sendMessage(int surveySeq);
 
-	void setQuestionDelete(int questionSeq);
+	void DeleteQuestion(int questionSeq);
 
-	void setItemDeleteQus(int questionSeq);
+	void deleteItemByQSeq(SurveyQuestionDTO SQD);
 
 	List<SurveyListDTO> searchListByKeyword(PagingDTO pagingdto);
-
-	List<SurveyListDTO> searchListByKeywordAndDicideYN(PagingDTO pagingdto);
-
-	List<SurveyListDTO> searchListByKeywordAndDate(PagingDTO pagingdto);
 
 	List<Map<String, Object>> selectQuestionBySeq(int questionSeq);
 
 	List<Map<String, Object>> selectItems(int questionSeq);
+
 }
 
 

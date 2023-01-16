@@ -9,9 +9,11 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -22,17 +24,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-//import com.mycompany.webapp.dto.DTO_for_json;
-//import com.mycompany.webapp.dto.DTO_for_json2;
-import com.mycompany.webapp.dto.SurveyListDTO;
-//import com.mycompany.webapp.service.IJsonService;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
+import com.mycompany.webapp.dto.SurveyListDTO;
+import com.mycompany.webapp.dto.UserCheckDTO;
 import com.mycompany.webapp.service.ISurveyService;
 
 import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.PopupDTO;
+import com.mycompany.webapp.service.ILoginCheckService;
 import com.mycompany.webapp.service.IMappingService;
 
 import lombok.extern.log4j.Log4j2;
@@ -45,9 +50,12 @@ public class HomeController {
 	@Autowired
 	ISurveyService ISS;
 
+	@Autowired
+	ILoginCheckService ILCS;
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
-		
+
 		
 		
 //		String filePathGroupinfo = "C:\\Users\\KOSA\\Desktop\\JSON 조직도.json";
@@ -126,17 +134,46 @@ public class HomeController {
 //			d.printStackTrace();
 //		}
         
-		return "home";
+		UserCheckDTO UCD = new UserCheckDTO();
+		model.addAttribute("UCD",UCD);
+		return "login";
 	}
 	
-	
-	
-//	@RequestMapping("/")
-//	public String home() {
-//		logger.info("실행");
-//		//log.info("실행");
-//		return "home";
-//	}
+	@RequestMapping("/logincheck")
+	public String login_after(@ModelAttribute("UCD")  @Valid UserCheckDTO UCD,
+							  BindingResult result, 
+							  HttpSession session, Model model) {
+		logger.info("실행");
+		logger.info(UCD.toString());
+		if(ILCS.checkUser(UCD)==1) {
+			logger.info("로그인 가능");
+			String check =  ILCS.getUserManagerYN(UCD);
+			
+			
+			if(check.equals("N")) {
+				logger.info("평가자 진입");
+				List<UserCheckDTO> UCDList = ILCS.getUserInfo(UCD);
+				model.addAttribute("UCDList",UCDList);
+				return "login_after_user";
+			}else {
+				logger.info("관리자 진입");
+				return "redirect:/survey/surveysearch";
+			}
+			
+		}else {
+			logger.info("로그인 불가");
+			return "login";
+		}
+		
+		
+	}
+
+	@RequestMapping("/loginafter")
+	public String home() {
+		logger.info("실행");
+		//log.info("실행");
+		return "login_after_user";
+	}
 	
 //	@RequestMapping("/home2")
 //	public String home2() {
@@ -145,19 +182,14 @@ public class HomeController {
 //		return "home2";
 //	}
 	
-	@RequestMapping("/loginafter")
-	public String login_after() {
-		logger.info("실행");
-		//log.info("실행");
-		return "login_after_user";
-	}
 	
-	@RequestMapping("/login")
-	public String login() {
-		logger.info("실행");
-		//log.info("실행");
-		return "login";
-	}
+	
+//	@RequestMapping("/login")
+//	public String login() {
+//		logger.info("실행");
+//		//log.info("실행");
+//		return "login";
+//	}
 	
 
 	

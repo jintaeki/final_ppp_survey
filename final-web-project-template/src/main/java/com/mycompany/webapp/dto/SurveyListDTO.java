@@ -21,7 +21,8 @@ public class SurveyListDTO {
 	private Date surveyClosedDate;
 	
 	private String stateCode;
-
+	private String codeDetailName;
+	
 	public int getSurveySeq() {
 		return surveySeq;
 	}
@@ -44,10 +45,6 @@ public class SurveyListDTO {
 
 	public Date getSurveyClosedDate() {
 		return surveyClosedDate;
-	}
-
-	public String getstateCode() {
-		return stateCode;
 	}
 
 	public void setSurveySeq(int surveySeq) {
@@ -74,16 +71,31 @@ public class SurveyListDTO {
 		this.surveyClosedDate = surveyClosedDate;
 	}
 
-	public void setstateCode(String stateCode) {
+	public String getStateCode() {
+		return stateCode;
+	}
+
+	public void setStateCode(String stateCode) {
 		this.stateCode = stateCode;
+	}
+
+	public String getCodeDetailName() {
+		return codeDetailName;
+	}
+
+	public void setCodeDetailName(String codeDetailName) {
+		this.codeDetailName = codeDetailName;
 	}
 
 	@Override
 	public String toString() {
 		return "SurveyListDTO [surveySeq=" + surveySeq + ", surveyName=" + surveyName + ", surveyContent="
 				+ surveyContent + ", anonymityCheckCode=" + anonymityCheckCode + ", surveyStartDate=" + surveyStartDate
-				+ ", surveyClosedDate=" + surveyClosedDate + ", stateCode=" + stateCode + "]";
+				+ ", surveyClosedDate=" + surveyClosedDate + ", stateCode=" + stateCode + ", codeDetailName="
+				+ codeDetailName + "]";
 	}
+
+
 	
 
 }

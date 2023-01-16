@@ -1,4 +1,4 @@
-package com.mycompany.webapp.service;
+package com.mycompany.webapp.service.json;
 
 import org.springframework.stereotype.Service;
 

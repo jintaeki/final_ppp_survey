@@ -14,17 +14,17 @@ public interface ISurveyRepository {
 
 	void setSurvey(SurveyListDTO surveylist);
 
-	void setSurveyUpdate(SurveyListDTO surveylist);
+	void updateSurvey(SurveyListDTO surveylist);
 
-	void setItemUpdate(SurveyQuestionDTO surveyquestion);
+	void updateItem(SurveyQuestionDTO surveyquestion);
 	void setItemDelete(SurveyQuestionDTO sqd);
 
 	int selectMaxSurveyId();
 
-	void QuestionInsert(SurveyQuestionDTO SQD);
+	void insertQuestion(SurveyQuestionDTO SQD);
 	int selectMaxQuestionId();
 	int selectMaxItemId();
-	void ItemInsert(SurveyQuestionDTO SQD);
+	void insertItem(SurveyQuestionDTO SQD);
 
 	//문제 비동기 조회 목적
 	List<Map<String, Object>> selectQuestion(int surveySeq);
@@ -43,7 +43,7 @@ public interface ISurveyRepository {
 
 	void sendMessage(int surveySeq);
 
-	void setQuestionDelete(int questionSeq);
+	void DeleteQuestion(int questionSeq);
 
 	void deleteItemByQSeq(int questionSeq);
 
@@ -57,7 +57,7 @@ public interface ISurveyRepository {
 
 	List<Map<String, Object>> selectItems(int questionSeq);
 
-	void setQuestUpdateType(SurveyQuestionDTO SQD);
+	void UpdateQTypeBySeq(SurveyQuestionDTO SQD);
 
 
 }

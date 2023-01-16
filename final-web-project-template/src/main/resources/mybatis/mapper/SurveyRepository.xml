@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.dao.ISurveyRepository">
 
-		<insert id="QuestionInsert" parameterType="SQD">
-
+		<insert id="insertQuestion" parameterType="SQD">
+		<![CDATA[
 				INSERT INTO SURVEY_QUESTION(QUESTION_SEQ
 				    ,SURVEY_SEQ
 				    ,QUESTION_CONTENT
@@ -16,6 +16,7 @@
 				    ,#{questionTypeCode}
 				    ,SYSDATE
 				    ,SYSDATE)
+				    	]]>
 	</insert>
 
 	<select id="selectMaxQuestionId" resultType="int">
@@ -30,22 +31,19 @@
 
 	</select>
 
-	<insert id="ItemInsert" parameterType="SQD">
-	<selectKey keyProperty="ITEM_SEQ" resultType="int" order="BEFORE">
-			SELECT ITEM_ID_SEQ.NEXTVAL FROM DUAL
-	</selectKey>
+<insert id="insertItem" parameterType="SQD">
+		<![CDATA[
 			INSERT INTO SURVEY_ITEM(QUESTION_SEQ
 			     ,ITEM_SEQ
 			     ,ITEM_CONTENT
-			     ,ITEM_SCORE
-			     ,REG_DATE
-			     ,UPDATE_DATE)
+			     ,ITEM_SCORE,REG_DATE,UPDATE_DATE)
 			VALUES (#{questionSeq}
 			     ,#{itemSeq}
 			     ,#{itemContent}
 			     ,#{itemScore}
-			     ,SYSDATE
-			     ,SYSDATE)
+			     ,sysdate
+			     ,sysdate)
+		]]>
 	</insert>
 
 	<insert id="setSurvey" parameterType="SLD" >
@@ -69,12 +67,12 @@
 		       ,#{anonymityCheckCode}
 		       ,TO_CHAR(#{surveyStartDate},'YYYY.MM.dd')
 		       ,TO_CHAR(#{surveyClosedDate} , 'YYYY.MM.dd')
-		       ,'N'
+		       ,#{stateCode}
 		       ,SYSDATE
 		       ,SYSDATE)
 	</insert>
 
-	<update id="setSurveyUpdate" parameterType="SLD">
+	<update id="updateSurvey" parameterType="SLD">
 		UPDATE SURVEY_LIST SET SURVEY_NAME=#{surveyName}
 		      ,SURVEY_CONTENT=#{surveyContent}
 		      ,ANONYMITY_CHECK_CODE=#{anonymityCheckCode}
@@ -83,7 +81,7 @@
 		      ,UPDATE_DATE=sysdate  WHERE SURVEY_SEQ=#{surveySeq}
 	</update>
 
-	<insert id="setItemUpdate" parameterType="SQD" >
+	<insert id="updateItem" parameterType="SQD" >
 
 		<selectKey keyProperty="itemSeq" resultType="int" order="BEFORE">
 			SELECT ITEM_ID_SEQ.NEXTVAL FROM DUAL
@@ -101,7 +99,7 @@
 	</insert>
 
 
-	<delete id="setQuestionDelete" parameterType="SQD">
+<delete id="DeleteQuestion" parameterType="SQD">
 		DELETE FROM SURVEY_QUESTION WHERE QUESTION_SEQ = #{questionSeq}
 	</delete>
 
@@ -118,48 +116,19 @@
 		WHERE SI.QUESTION_SEQ=SQ.QUESTION_SEQ AND SURVEY_SEQ = #{surveySeq}	 ORDER BY QUESTION_SEQ DESC
 	</select>
 
-	<select id="selectSurveyList" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="com.mycompany.webapp.dto.SurveyListDTO">
-
-		SELECT SURVEY_SEQ
-		     ,SURVEY_NAME
-		     ,SURVEY_CONTENT
-		     ,ANONYMITY_CHECK_CODE
-		     ,to_date(SURVEY_START_DATE, 'YYYY.MM.dd') as surveyStartDate
-		      ,to_date(SURVEY_CLOSED_DATE, 'YYYY.MM.dd' )as surveyClosedDate
-		     ,STATE_CODE
-		FROM (
-		      SELECT ROWNUM as rnum
-		          ,SURVEY_SEQ
-		          ,SURVEY_NAME,SURVEY_CONTENT
-		          ,ANONYMITY_CHECK_CODE
-		          ,SURVEY_START_DATE,SURVEY_CLOSED_DATE
-		          ,STATE_CODE
-			  FROM (select SURVEY_SEQ
-			             ,SURVEY_NAME
-			             ,SURVEY_CONTENT
-			             ,ANONYMITY_CHECK_CODE
-			             ,SURVEY_START_DATE,SURVEY_CLOSED_DATE
-			             ,STATE_CODE  FROM SURVEY_LIST
-			   	    ORDER BY ROWNUM DESC
-			   	)
-			  WHERE ROWNUM &lt; = #{endRowNo}
-			   	)
-			  WHERE rnum &gt; = #{startRowNo}
-
-	</select>
-
 	<select id="selectSurvey" parameterType="int" resultType="SLD">
 		SELECT SURVEY_SEQ
 		     ,SURVEY_NAME
 		     ,SURVEY_CONTENT
 		     ,ANONYMITY_CHECK_CODE
-		     ,to_date(SURVEY_START_DATE, 'YYYY.MM.dd') as surveyStartDate
-		      ,to_date(SURVEY_CLOSED_DATE, 'YYYY.MM.dd' )as surveyClosedDate
+		     ,to_date(SURVEY_START_DATE, 'YYYY-MM-dd') as surveyStartDate
+		     ,to_date(SURVEY_CLOSED_DATE, 'YYYY-MM-dd' ) as surveyClosedDate
 		     ,STATE_CODE
 	   FROM SURVEY_LIST
 	   WHERE SURVEY_SEQ = #{surveySeq}
 
 	</select>
+
 
 	<select id="getQuestionList" resultType="com.mycompany.webapp.dto.SurveyQuestionDTO">
 		SELECT SURVEY_SEQ
@@ -181,97 +150,63 @@
 	<update id="sendMessage" parameterType="int">
 		UPDATE SURVEY_LIST SET 	STATE_CODE='Y' WHERE SURVEY_SEQ =#{surveySeq}
 	</update>
-
-	<select id="searchListByKeyword" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="SLD">
+<select id="searchListByKeyword" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="SLD">
 	<![CDATA[
-		SELECT SURVEY_SEQ
+		 SELECT SURVEY_SEQ
 		      ,SURVEY_NAME
 		      ,SURVEY_CONTENT
 		      ,ANONYMITY_CHECK_CODE
-		      ,to_date(SURVEY_START_DATE, 'YYYY.MM.dd') as surveyStartDate
-		      ,to_date(SURVEY_CLOSED_DATE, 'YYYY.MM.dd' )as surveyClosedDate
+		      ,to_date(SURVEY_START_DATE, 'YYYY-MM-dd')  as surveyStartDate
+		      ,to_date(SURVEY_CLOSED_DATE, 'YYYY-MM-dd') as surveyClosedDate
 		      ,STATE_CODE
-	    FROM (
-		SELECT ROWNUM AS rnum
-		      ,SURVEY_SEQ
-		      ,SURVEY_NAME
-		      ,SURVEY_CONTENT
-		      ,ANONYMITY_CHECK_CODE
-		      ,SURVEY_START_DATE
-		      ,SURVEY_CLOSED_DATE
-		      ,STATE_CODE
-	    FROM (SELECT SURVEY_SEQ
-	          ,SURVEY_NAME
-	          ,SURVEY_CONTENT
-	          ,ANONYMITY_CHECK_CODE
-	          ,SURVEY_START_DATE,SURVEY_CLOSED_DATE
-	          ,STATE_CODE  FROM SURVEY_LIST WHERE SURVEY_NAME LIKE #{keyword}
-		ORDER BY ROWNUM DESC
+		      ,CODE_DETAIL_NAME
+	    FROM COMMON_DETAIL cd, (
+			SELECT ROWNUM AS rnum
+		      	  ,SURVEY_SEQ
+		      	  ,SURVEY_NAME
+		      	  ,SURVEY_CONTENT
+		      	  ,ANONYMITY_CHECK_CODE
+	          	  ,SURVEY_START_DATE
+		      	  ,SURVEY_CLOSED_DATE
+		      	  ,STATE_CODE
+	    	FROM (SELECT SURVEY_SEQ
+	          	 ,SURVEY_NAME
+	          	 ,SURVEY_CONTENT
+	          	 ,ANONYMITY_CHECK_CODE
+	          	 ,SURVEY_START_DATE
+		      	 ,SURVEY_CLOSED_DATE
+	          	 ,STATE_CODE
+	          	 FROM SURVEY_LIST
+	          	 WHERE
+	          	 (SURVEY_START_DATE is null and
+	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%' and
+	          	  STATE_CODE LIKE (CASE
+      							   WHEN #{selection} = '30005'
+      							   THEN '%' || '' || '%'
+                                   ELSE '%' || #{selection} || '%'
+                                   END)
+	          	 )
+	          	   or
+	          	 SURVEY_START_DATE >= (CASE
+	          	 						 WHEN #{surveyStartDate} is null
+	          	 						 THEN sysdate-99999
+	          	 						 WHEN #{surveyStartDate} is not null
+	          	 						 THEN to_date(to_char(#{surveyStartDate},'yyyy-MM-dd'),'yyyy-MM-dd')
+	          	 						 END) and
+
+	          	  STATE_CODE LIKE (CASE
+      							   WHEN #{selection} = '30005'
+      							   THEN '%' || '' || '%'
+                                   ELSE '%' || #{selection} || '%'
+                                   END) and
+
+	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%'
+				  ORDER BY ROWNUM  DESC
 			   	)
-			   	WHERE ROWNUM <= #{endRowNo}
+			 WHERE ROWNUM <= #{endRowNo}
 			   	)
-			   WHERE rnum  >= #{startRowNo}
+		WHERE cd.code_detail_id = state_code and rnum  >= #{startRowNo}
 		]]>
-	</select>
-
-	<select id="searchListByKeywordAndDicideYN"  resultType="SLD">
-
-		SELECT SURVEY_SEQ
-		      ,SURVEY_NAME
-		      ,SURVEY_CONTENT
-		      ,ANONYMITY_CHECK_CODE
-		      ,SURVEY_START_DATE
-		      ,SURVEY_CLOSED_DATE
-		      ,STATE_CODE
-	    FROM (
-	    SELECT ROWNUM AS rnum
-	          ,SURVEY_SEQ
-	          ,SURVEY_NAME,SURVEY_CONTENT
-	          ,ANONYMITY_CHECK_CODE
-	          ,SURVEY_START_DATE
-	          ,SURVEY_CLOSED_DATE
-	          , STATE_CODE
-	    FROM (SELECt SURVEY_SEQ
-	          ,SURVEY_NAME,SURVEY_CONTENT
-	          ,ANONYMITY_CHECK_CODE
-	          ,SURVEY_START_DATE,SURVEY_CLOSED_DATE
-	          ,STATE_CODE  FROM SURVEY_LIST WHERE SURVEY_NAME LIKE #{keyword} and STATE_CODE = #{selection}
-	   ORDER BY ROWNUM DESC
-			   	)
-			   	WHERE ROWNUM &lt; = #{endRowNo}
-			   	)
-			    WHERE rnum &gt; = #{startRowNo}
-
-	</select>
-
-	<select id="searchListByKeywordAndDate"  resultType="SLD">
-
-		SELECT SURVEY_SEQ
-		      ,SURVEY_NAME
-		      ,SURVEY_CONTENT
-		      ,ANONYMITY_CHECK_CODE
-		      ,SURVEY_START_DATE
-		      ,SURVEY_CLOSED_DATE as surveyClosedDate
-		      ,STATE_CODE
-			   FROM (
-	    SELECT ROWNUM AS rnum
-			   		,SURVEY_SEQ
-			   		,SURVEY_NAME,SURVEY_CONTENT
-			   		,ANONYMITY_CHECK_CODE
-			   		,SURVEY_START_DATE
-			   		,SURVEY_CLOSED_DATE
-			   		,STATE_CODE
-	    FROM (SELECT SURVEY_SEQ
-	                ,SURVEY_NAME,SURVEY_CONTENT
-	                ,ANONYMITY_CHECK_CODE
-	                ,SURVEY_START_DATE,SURVEY_CLOSED_DATE
-	                ,STATE_CODE  FROM SURVEY_LIST WHERE SURVEY_NAME LIKE #{keyword}
-			   		ORDER BY SURVEY_START_DATE, ROWNUM  DESC
-			   	)
-			   	WHERE ROWNUM &lt; = #{endRowNo}
-			   	)
-			    WHERE rnum &gt; = #{startRowNo}
-
 	</select>
 
 	<select id="selectQuestionBySeq" parameterType="int" resultType="hashmap">
