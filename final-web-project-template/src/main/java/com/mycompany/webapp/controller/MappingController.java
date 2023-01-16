@@ -36,14 +36,22 @@ public class MappingController {
 
 	@Autowired
 	IMappingService mappingService;
-
+	
+	// 매핑 출력
 	@RequestMapping(value="/mapping/set.do", method=RequestMethod.POST)
 	public String setMapping(@RequestParam int surveySeq, @RequestParam int month, @RequestParam int number,
-			Model model, RedirectAttributes redirectAttrs) {
+			@RequestParam String newCheck, Model model, RedirectAttributes redirectAttrs) {
 		logger.info("실행");
 		try {
-			if(mappingService.mappingCheck(surveySeq) == 0) {
+			if(mappingService.stateCheck(surveySeq) == "30002") {
 				mappingService.setMapping(surveySeq, month, number);
+				mappingService.updateState(surveySeq, "30003");
+			}else if(mappingService.stateCheck(surveySeq) == "30003") {
+				if(newCheck == "1") {
+					mappingService.deleteMapping(surveySeq);
+					mappingService.updateState(surveySeq, "30002");					
+					return "surveylist";
+				}
 			}
 			List<PopupDTO> mappingList = mappingService.selectMappingData(surveySeq);
 			model.addAttribute("mappingList", mappingList);
@@ -55,16 +63,25 @@ public class MappingController {
 		return "/home2";
 	}
 
-	// 병준
+	// 평가자 한사람에 대하여 모든 조건에 맞게 출력
 	@RequestMapping(value="/popup.do", method=RequestMethod.GET)
 	public String plusMapping(@RequestParam int surveySeq, @RequestParam String raterId, @RequestParam int month,  Model model) {
 		List<PopupDTO> getPopup = mappingService.getPopup(surveySeq, raterId, month);
-		logger.info(getPopup.toString());
+		logger.info("실행");
 		model.addAttribute("getPopup", getPopup);
-		logger.info("getPopup"+getPopup);
 		return "popup";
 		}
-
+	
+	// 제외된 리스트 전부 출력
+	@RequestMapping(value="/another.do", method=RequestMethod.GET)
+	public String anotherMapping(@RequestParam int surveySeq, Model model) {
+		List<PopupDTO> getAnother = mappingService.getAnother(surveySeq);
+		logger.info("실행");
+		model.addAttribute("getAnother", getAnother);
+		return "popup";
+	}
+	
+	//리스트 입력 
 	@RequestMapping(value="/popup.do", method=RequestMethod.POST)
 	public String insertAppraise(@ModelAttribute("map") @Valid MappingDTO map,
 			BindingResult result, RedirectAttributes redirectAttrs) {
@@ -73,14 +90,21 @@ public class MappingController {
 			int surveySeq = map.getSurveySeq();
 			String raterId = map.getRaterId();
 			String appraiseeId = map.getAppraiseeId();
-
+			
+			// 이미 해당 조합이 현재 시행중인 설문조사에 이미 있는 경우 
+			if(mappingService.ovrlpCheck(raterId, appraiseeId) != null) {
+				return "home2";
+			}
+			
+			//해당 데이터 매핑 테이블에 입력
 			mappingService.insertAppraiseId(surveySeq, raterId, appraiseeId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "mappingpopup";
 	}
-
+	
+	//리스트 삭제
 	@RequestMapping(value="/mapping/deleteMapping.do", method=RequestMethod.POST)
 	public @ResponseBody String deleteAppraiseeId(@RequestBody String filterJSON,
 			HttpServletResponse response, ModelMap model) throws Exception {
@@ -89,7 +113,7 @@ public class MappingController {
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			MappingDTO deleteMap = (MappingDTO)mapper.readValue(filterJSON,new TypeReference<MappingDTO>(){ });
-
+			
 			int surveySeq = deleteMap.getSurveySeq();
 			String raterId = deleteMap.getRaterId();
 			String appraiseeId = deleteMap.getAppraiseeId();
