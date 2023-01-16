@@ -63,28 +63,81 @@
 <!-- 설문지 설정 진택 -->
 
 <!-- 문항 관리 진택-->
-<!-- <div class="col-12"> -->
-<!-- 	<div class="Item_box"> -->
-<!-- 		<button type="button" id="itemcopy">+</button> -->
-<%-- 		<form:form modelAttribute="SQD" id="itemform"> --%>
-<!-- 			<input type="hidden" name="surveyId" value="13"> -->
-<!-- 			<input type="hidden" name="questionId" value="4"> -->
-<!-- 			<div class="icon_line" id="ItemAfter"> -->
-<!-- 				<label><input type="text" name="itemContent" value="" -->
-<!-- 					placeholder="문항 입력..." id="ic"></label> 점수<input type="number" -->
-<!-- 					name="itemScore" min="0" value="0" -->
-<!-- 					style="min-width: 20px; max-width: 40px;" id="is"> -->
-<!-- 			</div> -->
 
-<!-- 			<div class="col-12"> -->
-<!-- 				<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> -->
-<!-- 				<input type="button" class="btn btn-primary" -->
-<!-- 					onclick="updateitem_btn()" value="수정"> -->
-<!-- 			</div> -->
-<%-- 		</form:form> --%>
-<!-- 	</div> -->
-<!-- </div> -->
+<div class="icon_div" id="item_div">
+     <c:forEach items="${SQL}" var="qlist" >
+		<div id="obj_box_toggle" style="display: none">
+			<div class="col-12">
+				<div class="Item_box">
+					<button type="button" id="item_obj_copy">+1</button>
+					<form:form modelAttribute="SQD" id="item_obj_form">
+						<input type="hidden" name="questionTypeCode" value="10001">
+						<input type="hidden" name="surveySeq" value="${SLD.surveySeq}">
 
+						<div class="icon_line" id="obj_ItemAfter">
+							<label><input type="text" name="itemContent"
+								placeholder="문항 입력..." id="ic"></label> 점수<input type="number"
+								name="itemScore" min="0" value="0"
+								style="min-width: 20px; max-width: 40px;" id="is">
+						</div>
+
+						<div class="col-12">
+
+							<input type="button" class="btn btn-primary"
+								onclick="update_obj_item_btn()" value="수정">
+						</div>
+					</form:form>
+				</div>
+			</div>
+		</div>
+     </c:forEach>
+
+
+		<%-- 		<c:if test="${ }"></c:if> --%>
+
+		<div id="mix_box_toggle" style="display: none">
+			<div class="col-12">
+				<div class="Item_box">
+					<button type="button" id="item_mix_copy">+</button>
+					<form:form modelAttribute="SQD" id="item_mix_form">
+						<input type="hidden" name="questionTypeCode" value="10003">
+						<input type="hidden" name="surveySeq" value="${SLD.surveySeq}"
+							id="surveyseq">
+						<input type="hidden" name="questionSeq" value="2">
+						<div class="icon_line" id="mix_ItemAfter">
+							<label><input type="text" name="itemContent"
+								placeholder="문항 입력..." id="ic" required></label> 점수<input
+								type="number" name="itemScore" min="0" value="0"
+								style="min-width: 20px; max-width: 40px;" id="is">
+						</div>
+						<div class="icon_line">
+							<label> <input type="text" id="ic" name="itemContent"
+								placeholder="기타.." value="기타"></label> <input type="number"
+								name="itemScore" value="0" style="display: none">
+						</div>
+						<div class="col-12">
+
+							<input type="button" class="btn btn-primary"
+								onclick="update_mix_item_btn()" value="수정">
+						</div>
+					</form:form>
+				</div>
+			</div>
+		</div>
+		-->
+		<%-- 		<c:if test="${ }"></c:if> --%>
+		<!-- 주관식은 문제 만들 때 id값 가장 큰 거 부여 -->
+		<div id="subj_box_toggle" style="display: none">
+			<div class="block_box">
+				<input type="text" class="input_qus" id="input_qus"
+					placeholder="주관식 문제입니다.">
+
+				<div class="blank_under"></div>
+			</div>
+		</div>
+
+
+</div>
 
 
 
@@ -168,14 +221,14 @@
 							<span class="input-group-text">문제 입력</span>
 						</div>
 						<textarea class="form-control" aria-label="문제 입력칸"
-							id="questionContent">${sqd.questionContent}</textarea>
+							name="questionContent">${SQD.questionContent}</textarea>
 					</div>
 
 					<!-- 문제 추가 버튼  -->
 					<!-- onclick="insertQus()" -->
 				<div class="question_add_btn_div">
 
-					<button type="button" class="btn btn-outline-primary" id="add_btn"
+					<button type="button" class="btn btn-outline-primary" id="add_qus_btn"
 						onclick="insertQus()">문제 추가</button>
 
 					<button type="button" class="btn btn-outline-primary"
@@ -185,13 +238,20 @@
 						name="questionSeq" value="2">
 					<!-- 비동기로 바꿔 넣어보자 -> 문항도 마찬가지 -->
 				</div>
+
 				<input type="hidden" name="itemScore" value="1"> <input
 					type="hidden" name="itemContent" value=" ">
 			</div>
 			</div>
 		</form:form>
 	</div>
-</div>
+
+
+
+
+			<button type="button" class="btn btn-outline-primary" id="add_item_btn"
+						onclick="insertItem()">문항 추가</button>
+	</div>
 </div>
 <script>
 	//진택
@@ -221,6 +281,12 @@
 			}
 		});
 	}
+
+
+
+
+
+
 	//문항 비동기 등록(수정)
 	function update_obj_item_btn() {
 		var form = $('#item_obj_form')[0];
@@ -346,7 +412,7 @@
  	function insertQus(){
  			var qdiv = $('#questioN_insert_form')[0];
  			var data = new FormData(qdiv);
-
+ 			let formData = new FormData();
  			$.ajax({
 				method:'POST', //어떤 방식으로 보낼 지
 				url:'questioninsert.do', // qdiv를 보낼 경로 설정
@@ -361,14 +427,17 @@
 				   console.log($('#surveyseq').val());
 				   var surveyseq = $('#surveyseq').val();
 
+
 			   $.ajax({
 						method:'GET', //어떤 방식으로 보낼 지
 						url:'selectquestion.do/'+ surveyseq, // qdiv를 보낼 경로 설정
 			 			dataType: "json",
 					   beforeSend : function() { //보내기 전 실행
 						console.log("요청이 보내지는가?");
+						console.log($('#questionContent').val());
 					   },
 					   success:function (jsondata){	 //전송 성공시 실행
+						   		console.log(jsondata);
 								questionHtml(jsondata);
 								var surveyseq = jsondata[0].SURVEY_SEQ;
 								var questionseq = jsondata[0].QUESTION_SEQ;
@@ -565,9 +634,7 @@
 
  	}
 
-function() updateBlur{
 
-}
 
 
  	function deleteQus(obj,surveySeq) {
@@ -686,7 +753,7 @@ function() updateBlur{
 		  var html = '';
 
 		html += `</div>`;
-		html += `<button type="button" class="btn btn-outline-primary" id="add_btn" onclick="insertQus()">문제추가</button>`;
+		html += `<button type="button" class="btn btn-outline-primary" id="add_qus_btn" onclick="insertQus()">문제추가</button>`;
 
 		html += '<button type="button" class="btn btn-outline-primary"  id="update_btn" onclick="qusUpdate('+data[0].SURVEYSEQ+')">문제수정</button>';
 		html += '<input type="hidden" name="surveySeq" id="seq" value="'+data[0].SURVEYSEQ+'">';

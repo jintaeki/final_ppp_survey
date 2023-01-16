@@ -301,6 +301,7 @@ public class SurveyController {
 	}
 
 // 문항 비동기식으로 출력
+
 	@RequestMapping(value="/selectitems.do/{questionseq}")
 	@ResponseBody
 	public  List<Map<String, Object>> selectItems(@PathVariable int questionseq, Model model) {
@@ -330,15 +331,6 @@ public class SurveyController {
 		return SQD;
 	}
 
-	//문항 수정
-	@RequestMapping(value="survey/iteminsert.do", method=RequestMethod.POST)
-	public String updateItem(@ModelAttribute("SID") @Valid SurveyItemDTO SID, BindingResult result, Model model, RedirectAttributes RedirectAttrs) {
-		logger.info("문항 수정 Controller 진입");
-		model.addAttribute("SID", SID);
-
-		return null;
-
-	}
 
 
 	//문제 비동기 조회 채우
@@ -378,6 +370,7 @@ public class SurveyController {
 		surveyService.setQuestionDelete(questionSeq);
 	}
 
+	//문제 선택 시 데이터 가져오기
 	@RequestMapping(value="/touchandselect.do/{questionSeq}")
 	@ResponseBody
 	public List<Map<String, Object>> touchAndSelect(@PathVariable int questionSeq) {
@@ -389,6 +382,13 @@ public class SurveyController {
 		return surveyService.selectQuestionBySeq(questionSeq);
 	}
 
+	//문항 등록
+	public SurveyQuestionDTO itemInsert(@ModelAttribute ("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,Model model, RedirectAttributes redirectAttrs) {
+		logger.info("문항생성 Controller 진입");
+		surveyService.itemInsert(SQD);
+
+		return SQD;
+	}
 
 
 

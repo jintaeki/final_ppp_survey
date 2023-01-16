@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.mycompany.webapp.dto.PagingDTO;
+import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 
@@ -25,7 +26,7 @@ public interface ISurveyService {
 
 	int selectMaxQuestionId();
 
-	void ItemInsert(SurveyQuestionDTO sqd);
+	void itemInsert(SurveyQuestionDTO sqd);
 
 	int selectMaxItemId();
 

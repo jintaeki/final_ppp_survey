@@ -14,8 +14,8 @@
 				    ,#{surveySeq}
 				    ,#{questionContent}
 				    ,#{questionTypeCode}
-				    ,sysdate
-				    ,sysdate)
+				    ,SYSDATE
+				    ,SYSDATE)
 	</insert>
 
 	<select id="selectMaxQuestionId" resultType="int">
@@ -26,24 +26,26 @@
 	</select>
 
 	<select id="selectMaxItemId"  resultType="int">
-		<![CDATA[
 				SELECT NVL(MAX(ITEM_SEQ), 0) AS "itemSeq" FROM SURVEY_ITEM
-		]]>
+
 	</select>
 
 	<insert id="ItemInsert" parameterType="SQD">
-		<![CDATA[
+	<selectKey keyProperty="ITEM_SEQ" resultType="int" order="BEFORE">
+			SELECT ITEM_ID_SEQ.NEXTVAL FROM DUAL
+	</selectKey>
 			INSERT INTO SURVEY_ITEM(QUESTION_SEQ
 			     ,ITEM_SEQ
 			     ,ITEM_CONTENT
-			     ,ITEM_SCORE,REG_DATE,UPDATE_DATE)
+			     ,ITEM_SCORE
+			     ,REG_DATE
+			     ,UPDATE_DATE)
 			VALUES (#{questionSeq}
 			     ,#{itemSeq}
 			     ,#{itemContent}
 			     ,#{itemScore}
-			     ,sysdate
-			     ,sysdate)
-		]]>
+			     ,SYSDATE
+			     ,SYSDATE)
 	</insert>
 
 	<insert id="setSurvey" parameterType="SLD" >

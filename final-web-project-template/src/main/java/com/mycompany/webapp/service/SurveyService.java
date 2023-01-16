@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mycompany.webapp.dao.ISurveyRepository;
 import com.mycompany.webapp.dto.PagingDTO;
+import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 
@@ -73,7 +74,7 @@ public class SurveyService implements ISurveyService{
 		surveyDao.QuestionInsert(sqd);
 		logger.info("문제등록");
 		//ItemInsert(sqd);
-		logger.info("문항등록");
+		//logger.info("문항등록");
 	}
 
 	@Override
@@ -82,9 +83,9 @@ public class SurveyService implements ISurveyService{
 	}
 
 	@Override
-	public void ItemInsert(SurveyQuestionDTO sqd) {
+	public void itemInsert(SurveyQuestionDTO sqd) {
 		logger.info("setItemInserT: " + sqd);
-		sqd.setItemSeq(surveyDao.selectMaxItemId()+1);
+		//sid.setItemSeq(surveyDao.selectMaxItemId()+1);
 		logger.info("문항 id가 들어갔냐 안갔냐"  + sqd);
 		surveyDao.ItemInsert(sqd);
 	}
@@ -197,8 +198,6 @@ public class SurveyService implements ISurveyService{
 	public List<Map<String, Object>> selectItems(int questionSeq) {
 		return surveyDao.selectItems(questionSeq);
 	}
-
-
 
 
 }
