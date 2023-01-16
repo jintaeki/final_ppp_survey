@@ -296,7 +296,7 @@ public class SurveyController {
 		logger.info("뿌리기 컨트롤 ");
 
 
-		// System.out.println(surveyService.selectQuestion(surveySeq));
+		System.out.println(surveyService.selectQuestion(surveySeq));
 		return surveyService.selectQuestion(surveySeq) ;
 	}
 

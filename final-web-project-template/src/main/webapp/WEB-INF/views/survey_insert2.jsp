@@ -246,13 +246,6 @@
 		</form:form>
 	</div>
 
-
-
-
-			<button type="button" class="btn btn-outline-primary" id="add_item_btn"
-						onclick="insertItem()">문항 추가</button>
-	</div>
-</div>
 <script>
 	//진택
 	var cnt = 0;
@@ -425,6 +418,7 @@
 			   },
 			   success:function (data) {	 //전송 성공시 실행
 				   console.log($('#surveyseq').val());
+				   console.log($('#questionContent').val());
 				   var surveyseq = $('#surveyseq').val();
 
 
@@ -433,11 +427,13 @@
 						url:'selectquestion.do/'+ surveyseq, // qdiv를 보낼 경로 설정
 			 			dataType: "json",
 					   beforeSend : function() { //보내기 전 실행
-						console.log("요청이 보내지는가?");
+						console.log("문제찾기 요청이 보내지는가?");
+						console.log($('#surveyseq').val());
 						console.log($('#questionContent').val());
 					   },
 					   success:function (jsondata){	 //전송 성공시 실행
-						   		console.log(jsondata);
+						   		console.log("문제찾기 요청  성공 시 json: " + jsondata);
+					   			console.log(jsondata);
 								questionHtml(jsondata);
 								var surveyseq = jsondata[0].SURVEY_SEQ;
 								var questionseq = jsondata[0].QUESTION_SEQ;
