@@ -99,7 +99,7 @@
 
       <%--       <c:if test="${ }"></c:if> --%>
 <!-- 혼합식 -->
-      <div id="mix_box_toggle" style="background-color: red!important; display:block;">
+      <div id="mix_box_toggle" style="display:block;">
          <div class="col-12">
             <div class="Item_box">
                <button type="button" id="item_mix_copy">+</button>
@@ -813,27 +813,27 @@
       ///    document.querySelector("#obj_box_toggle").style.display = "block";
       // }
    //});
-
+/*
    function checkit1() {
       if($("input[type=radio][id=mix_radio]:checked").is(':checked') != true){ //
-           document.querySelector("#mix_box_toggle").style.display = "none";
+    	  $("#mix_box_toggle").prop().show();
        } if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
-          document.querySelector("#obj_box_toggle").style.display = "block";
+    	   $("#obj_box_toggle").prop().show();
        }
    }
 
-   function checkit3() {
+   $(function checkit3() {
       if($("input[type=radio][id=obj_radio]:checked").is(':checked') != true){ // 체크 여부(checked)
-           document.querySelector("#obj_box_toggle").style.display = "none";
+          $("#obj_box_toggle").prop().show();
        }if ($("input[type=radio][id=mix_radio]:checked").is(':checked') == true){
-          document.querySelector("#mix_box_toggle").style.display = "block";
+          $("#mix_box_toggle").prop().show();
        }
-   }
-
-
+   });
+*/
+//
    function checkit2() {
-	   $("#mix_box_toggle").hide();
-	   $("#obj_box_toggle").hide();
+	   $("#mix_box_toggle").show();
+	   $("#obj_box_toggle").show();
        //document.querySelector("#mix_box_toggle").style.display = "none";
        //document.querySelector("#obj_box_toggle").style.display = "none";
 

@@ -175,11 +175,10 @@ left: 600px;
 
 .icon_div{
 	/*   background-color: aquamarine; */
-	position: relative;
+	/* position: relative;  */
     width: 42.5%;
     left: 49.7%;
     border: solid;
-    bottom: 517px;
     height: 300px;
 }
 
