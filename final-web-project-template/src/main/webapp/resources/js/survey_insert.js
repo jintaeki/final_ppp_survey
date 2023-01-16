@@ -1,4 +1,4 @@
-	//진택
+//진택
 	var cnt = 0;
 	//설문 설정 비동기 수정
 	function register() {

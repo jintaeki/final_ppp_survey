@@ -9,37 +9,36 @@
 			                     SURVEY_COMPLETE_YN)
     		SELECT
     			SURVEY_SEQ,
-   				EMPLOYEE_ID,
-    			PARTICIPATION_EMPLOYEE_ID,
+   				RATER,
+    			APPRAISEE,
     			'N'
     			FROM(
     				SELECT
     					SURVEY_SEQ,
-    					EMPLOYEE_ID,
-    					PARTICIPATION_EMPLOYEE_ID,
+    					RATER,
+    					APPRAISEE,
     					'N',
-    					ROW_NUMBER() OVER (PARTITION BY EMPLOYEE_ID
-    					                       ORDER BY EMPLOYEE_ID) AS NUM
+    					ROW_NUMBER() OVER (PARTITION BY RATER
+    					                       ORDER BY RATER) AS NUM
 					FROM(
     					SELECT
  				    	   S.SURVEY_SEQ,
-        			 	   U.EMPLOYEE_ID,
-       				   	   A.PARTICIPATION_EMPLOYEE_ID,
+        			 	   R.PARTICIPATION_EMPLOYEE_ID AS RATER,
+       				   	   A.PARTICIPATION_EMPLOYEE_ID AS APPRAISEE,
         			   	  'N'
     					FROM SURVEY_LIST S,
     					     PROJECT_HISTORY R,
     					     PROJECT_HISTORY A,
-    					     USER_INFO U,
+    					     PROJECT P,
     					     USER_INFO I
-         				WHERE U.EMPLOYEE_ID = R.PARTICIPATION_EMPLOYEE_ID
-           				  AND R.PROJECT_ID = A.PROJECT_ID
-           				  AND R.PARTICIPATION_EMPLOYEE_ID <> A.PARTICIPATION_EMPLOYEE_ID
-           			  	  AND S.SURVEY_SEQ = #{surveySeq}
-           				  AND R.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE -(30 * #{month}) , 'YYYY-MM-dd')
+         				WHERE R.PROJECT_ID = A.PROJECT_ID
+           				  AND R.PARTICIPATION_EMPLOYEE_ID != A.PARTICIPATION_EMPLOYEE_ID
            				  AND I.EMPLOYEE_ID = A.PARTICIPATION_EMPLOYEE_ID
             			  AND I.GRADE_ID = 2
-       				 ORDER BY U.EMPLOYEE_ID,
-       				          DBMS_RANDOM.VALUE
+           				  AND A.PROJECT_ID = P.PROJECT_ID
+           				  AND P.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE -(30 * #{month}) , 'YYYY-MM-dd')
+           			  	  AND S.SURVEY_SEQ = #{surveySeq}
+       				 ORDER BY DBMS_RANDOM.VALUE
        				)
   				 )
 			WHERE NUM <= #{number}
@@ -81,8 +80,8 @@
     			  AND UA.EMPLOYEE_ID = M.APPRAISEE_ID
                   AND UA.DEPARTMENT_ID = O.DEPARTMENT_ID
     			  AND UR.EMPLOYEE_ID = M.RATER_ID
-    			  AND M.SURVEY_SEQ = #{surveySeq}
     			  AND M.SURVEY_SEQ = S.SURVEY_SEQ
+    			  AND M.SURVEY_SEQ = #{surveySeq}
 			ORDER BY G.GRADE_ID DESC, UR.EMPLOYEE_NAME
 			]]>
 	</select>
@@ -104,18 +103,20 @@
             	SURVEY_LIST S,
             	PROJECT_HISTORY R,
             	PROJECT_HISTORY A,
+            	PROJECT P,
             	ORGANIZATION_CHART O,
              	USER_INFO UA,
              	USER_INFO UR
        		WHERE R.PROJECT_ID = A.PROJECT_ID
          	  AND R.PARTICIPATION_EMPLOYEE_ID <> A.PARTICIPATION_EMPLOYEE_ID
-              AND R.PARTICIPATION_EMPLOYEE_ID = #{raterId}
               AND R.PARTICIPATION_EMPLOYEE_ID = UR.EMPLOYEE_ID
-         	  AND R.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE -(30 * #{month}) , 'YYYY-MM-dd')
-              AND S.SURVEY_SEQ = #{surveySeq}
+              AND R.PROJECT_ID = P.PROJECT_ID
          	  AND UA.GRADE_ID = 2
          	  AND UA.EMPLOYEE_ID = A.PARTICIPATION_EMPLOYEE_ID
          	  AND UA.DEPARTMENT_ID = O.DEPARTMENT_ID
+         	  AND P.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE -(30 * #{month}) , 'YYYY-MM-dd')
+              AND R.PARTICIPATION_EMPLOYEE_ID = #{raterId}
+              AND S.SURVEY_SEQ = #{surveySeq}
               AND NOT EXISTS
               	(SELECT 'X'
                  FROM MAPPING M

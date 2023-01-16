@@ -65,7 +65,6 @@ public class MappingController {
 		return "popup";
 		}
 
-
 	@RequestMapping(value="/popup.do", method=RequestMethod.POST)
 	public String insertAppraise(@ModelAttribute("map") @Valid MappingDTO map,
 			BindingResult result, RedirectAttributes redirectAttrs) {
@@ -113,10 +112,4 @@ public class MappingController {
 		//log.info("실행");
 		return "home2";
 	}
-
-
 }
-
-
-
-
