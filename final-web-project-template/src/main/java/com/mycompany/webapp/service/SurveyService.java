@@ -80,8 +80,8 @@ public class SurveyService implements ISurveyService{
 		logger.info("id가 들어갔니 안갔니 :" + sqd);
 		surveyDao.insertQuestion(sqd);
 		logger.info("문제등록");
-		//ItemInsert(sqd);
-		//logger.info("문항등록");
+		insertItem(sqd);
+		logger.info("문항등록");
 	}
 
 	@Override

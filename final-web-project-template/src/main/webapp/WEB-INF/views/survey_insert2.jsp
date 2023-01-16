@@ -70,7 +70,7 @@
 <!-- 객관식 -->
 <div class="icon_div" id="item_div">
      <c:forEach items="${SQL}" var="qlist" >
-      <div id="obj_box_toggle" style="display: none">
+      <div id="obj_box_toggle" style="display: block;">
          <div class="col-12">
             <div class="Item_box">
                <button type="button" id="item_obj_copy">+</button>
@@ -99,7 +99,7 @@
 
       <%--       <c:if test="${ }"></c:if> --%>
 <!-- 혼합식 -->
-      <div id="mix_box_toggle" style="display: none">
+      <div id="mix_box_toggle" style="display:block;">
          <div class="col-12">
             <div class="Item_box">
                <button type="button" id="item_mix_copy">+</button>
@@ -753,29 +753,34 @@
             });
          }
    //채우 끝
-   //문제 유형 선택 시  해당하는 유형의 문항form이 나오도록 하는 비동기
-   $(document).ready(function(){
-       if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
-          document.querySelector("#obj_box_toggle").style.display = "block";
-       }
-   });
+    //문제 유형 선택 시  해당하는 유형의 문항form이 나오도록 하는 비동기
+  // $(document).ready(function(){
+    //   if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
+      ///    document.querySelector("#obj_box_toggle").style.display = "block";
+      // }
+   //});
+/*
    function checkit1() {
       if($("input[type=radio][id=mix_radio]:checked").is(':checked') != true){ //
-           document.querySelector("#mix_box_toggle").style.display = "none";
+    	  $("#mix_box_toggle").prop().show();
        } if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
-          document.querySelector("#obj_box_toggle").style.display = "block";
+    	   $("#obj_box_toggle").prop().show();
        }
    }
-   function checkit3() {
+   $(function checkit3() {
       if($("input[type=radio][id=obj_radio]:checked").is(':checked') != true){ // 체크 여부(checked)
-           document.querySelector("#obj_box_toggle").style.display = "none";
+          $("#obj_box_toggle").prop().show();
        }if ($("input[type=radio][id=mix_radio]:checked").is(':checked') == true){
-          document.querySelector("#mix_box_toggle").style.display = "block";
+          $("#mix_box_toggle").prop().show();
        }
-   }
+   });
+*/
+//
    function checkit2() {
-       document.querySelector("#mix_box_toggle").style.display = "none";
-       document.querySelector("#obj_box_toggle").style.display = "none";
+	   $("#mix_box_toggle").show();
+	   $("#obj_box_toggle").show();
+       //document.querySelector("#mix_box_toggle").style.display = "none";
+       //document.querySelector("#obj_box_toggle").style.display = "none";
    }
 </script>
 
