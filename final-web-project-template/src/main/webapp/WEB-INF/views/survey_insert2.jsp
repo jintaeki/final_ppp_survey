@@ -49,12 +49,8 @@
                   name="surveyContent">${SLD.surveyContent }</textarea>
             </div>
          </div>
-        <input type="hidden" name="stateCode" value="30001"> <input
-
-					type="hidden" name="surveySeq" id="surveyseq"
-					value="${SLD.surveySeq}">
-
-
+        <input type="hidden" name="stateCode" value="30001"> 
+        <input type="hidden" name="surveySeq" id="surveyseq" value="${SLD.surveySeq}">
 
          <div class="col-2">
             <input type="button" class="btn btn-primary" id="survey_setting_upd_btn" onclick="register()"

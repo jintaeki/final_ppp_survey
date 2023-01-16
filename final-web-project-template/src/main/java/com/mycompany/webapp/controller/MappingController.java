@@ -37,52 +37,35 @@ public class MappingController {
 	@Autowired
 	IMappingService mappingService;
 	
-	// 매핑 출력
 	@RequestMapping(value="/mapping/set.do", method=RequestMethod.POST)
 	public String setMapping(@RequestParam int surveySeq, @RequestParam int month, @RequestParam int number,
-			@RequestParam String newCheck, Model model, RedirectAttributes redirectAttrs) {
-		logger.info("실행");
+			Model model, RedirectAttributes redirectAttrs) {
+		logger.info("실행");			
 		try {
-			if(mappingService.stateCheck(surveySeq) == "30002") {
+			if(mappingService.mappingCheck(surveySeq) == 0) {				
 				mappingService.setMapping(surveySeq, month, number);
-				mappingService.updateState(surveySeq, "30003");
-			}else if(mappingService.stateCheck(surveySeq) == "30003") {
-				if(newCheck == "1") {
-					mappingService.deleteMapping(surveySeq);
-					mappingService.updateState(surveySeq, "30002");					
-					return "surveylist";
-				}
 			}
 			List<PopupDTO> mappingList = mappingService.selectMappingData(surveySeq);
 			model.addAttribute("mappingList", mappingList);
-			model.addAttribute("month", month);
 		} catch (Exception e) {
 			e.printStackTrace();
 			redirectAttrs.addFlashAttribute("message", e.getMessage());
 		}
 		return "/home2";
 	}
-
-	// 평가자 한사람에 대하여 모든 조건에 맞게 출력
-	@RequestMapping(value="/popup.do", method=RequestMethod.GET)
-	public String plusMapping(@RequestParam int surveySeq, @RequestParam String raterId, @RequestParam int month,  Model model) {
+	
+	// 병준
+	@RequestMapping(value="/popup", method=RequestMethod.GET)
+	public String plusMapping(@RequestParam int surveySeq, @RequestParam String raterId, @RequestParam int month,  Model model) { 
 		List<PopupDTO> getPopup = mappingService.getPopup(surveySeq, raterId, month);
-		logger.info("실행");
+		logger.info(getPopup.toString());
 		model.addAttribute("getPopup", getPopup);
-		return "popup";
+		logger.info("getPopup"+getPopup);
+		return "popup"; 
 		}
 	
-	// 제외된 리스트 전부 출력
-	@RequestMapping(value="/another.do", method=RequestMethod.GET)
-	public String anotherMapping(@RequestParam int surveySeq, Model model) {
-		List<PopupDTO> getAnother = mappingService.getAnother(surveySeq);
-		logger.info("실행");
-		model.addAttribute("getAnother", getAnother);
-		return "popup";
-	}
 	
-	//리스트 입력 
-	@RequestMapping(value="/popup.do", method=RequestMethod.POST)
+	@RequestMapping(value="/mapping/serch-user.do", method=RequestMethod.POST)
 	public String insertAppraise(@ModelAttribute("map") @Valid MappingDTO map,
 			BindingResult result, RedirectAttributes redirectAttrs) {
 		logger.info("실행");
@@ -90,13 +73,7 @@ public class MappingController {
 			int surveySeq = map.getSurveySeq();
 			String raterId = map.getRaterId();
 			String appraiseeId = map.getAppraiseeId();
-			
-			// 이미 해당 조합이 현재 시행중인 설문조사에 이미 있는 경우 
-			if(mappingService.ovrlpCheck(raterId, appraiseeId) != null) {
-				return "home2";
-			}
-			
-			//해당 데이터 매핑 테이블에 입력
+		
 			mappingService.insertAppraiseId(surveySeq, raterId, appraiseeId);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -104,10 +81,9 @@ public class MappingController {
 		return "mappingpopup";
 	}
 	
-	//리스트 삭제
 	@RequestMapping(value="/mapping/deleteMapping.do", method=RequestMethod.POST)
-	public @ResponseBody String deleteAppraiseeId(@RequestBody String filterJSON,
-			HttpServletResponse response, ModelMap model) throws Exception {
+	public @ResponseBody String deleteAppraiseeId(@RequestBody String filterJSON, 
+			HttpServletResponse response, ModelMap model) throws Exception { 
 		logger.info("실행");
 		JSONObject resMap = new JSONObject();
 		try {
@@ -115,25 +91,31 @@ public class MappingController {
 			MappingDTO deleteMap = (MappingDTO)mapper.readValue(filterJSON,new TypeReference<MappingDTO>(){ });
 			
 			int surveySeq = deleteMap.getSurveySeq();
-			String raterId = deleteMap.getRaterId();
-			String appraiseeId = deleteMap.getAppraiseeId();
-
+			String raterId = deleteMap.getRaterId(); 
+			String appraiseeId = deleteMap.getAppraiseeId(); 
+			
 			mappingService.deleteAppraisee(surveySeq, raterId, appraiseeId);
 			resMap.put("res", "success");
 		    resMap.put("msg", "삭제를 완료하였습니다.");
 		} catch (Exception e) {
-
-		}
+		
+		}	
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.print(resMap);
 		return null;
 	}
-
+	
 	@RequestMapping("/mappingview")
 	public String mapping_view() {
 		logger.info("실행");
 		//log.info("실행");
 		return "home2";
 	}
+	
+
 }
+
+
+
+	

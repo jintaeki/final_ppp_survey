@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.IMappingRepository;
-import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.PopupDTO;
 
 @Service
@@ -20,21 +19,11 @@ public class MappingService implements IMappingService {
 		mappingrepository.setMapping(surveySeq, month, number);
 	}
 	
-	@Override
-	public void updateState(int surveySeq, String stateCode) {
-		mappingrepository.updateState(surveySeq, stateCode);
-	}
-	
-	@Override // 매핑 상태 조회
-	public String stateCheck(int surveySeq) {
-		return mappingrepository.stateCheck(surveySeq);
+	@Override // 매칭 중복 조횐
+	public int mappingCheck(int surveySeq) {
+		return mappingrepository.mappingCheck(surveySeq);
 	}
 
-	@Override
-	public void deleteMapping(int surveySeq) {
-		mappingrepository.deleteMapping(surveySeq);
-	}
-	
 	@Override // 매핑된 데이터 출력
 	public List<PopupDTO> selectMappingData(int surveySeq) {
 		return mappingrepository.selectMappingData(surveySeq);
@@ -43,16 +32,6 @@ public class MappingService implements IMappingService {
 	@Override // 추가할 피평가자 검색 병준형
 	public List<PopupDTO> getPopup(int surveySeq, String raterId, int month) {
 		return mappingrepository.getPopup(surveySeq, raterId, month);
-	}
-	
-	@Override
-	public List<PopupDTO> getAnother(int surveySeq){
-		return mappingrepository.getAnother(surveySeq);
-	}
-	
-	@Override
-	public List<MappingDTO> ovrlpCheck(String raterId, String appraiseeId) {
-		return mappingrepository.ovrlpCheck(raterId, appraiseeId);
 	}
 	
 	@Override // 피평가자 추가
@@ -65,7 +44,6 @@ public class MappingService implements IMappingService {
 		mappingrepository.deleteAppraisee(surveySeq, raterId, appraiseeId);
 	}
 }
-
 
 
 

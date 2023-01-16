@@ -24,14 +24,12 @@
             $("#resTb input[name='chk_res']").prop('checked', false);
       });
    });
-
    /* 체크값이 없을 경우 알림 */
    function selectItem() {
       if ($("#resTb input[name='chk_res']:checked").length == 0) {
          alert("추가할 인원을 선택해주세요");
          return false;
       }
-
       var resArr = new Array();
       $("#resTb input[name='chk_res']:checked").each(
             function(index) {
@@ -41,34 +39,9 @@
                addObj.survey_Name = $tr.find("input[name='surveyName']").val();
                addObj.department_Name = $tr.find("input[name='departmentName']").val();
                addObj.appraisee_Name = $tr.find("input[name='appraiseeName']").val();
-               addObj.survey_Name = $tr.find("input[name='surveyName']").val();
-               addObj.department_Name = $tr.find("input[name='departmentName']").val();
-               addObj.appraisee_Name = $tr.find("input[name='appraiseeName']").val();
-               addObj.survey_Name = $tr.find("input[name='surveyName']").val();
-               addObj.department_Name = $tr.find("input[name='departmentName']").val();
-               addObj.appraisee_Name = $tr.find("input[name='appraiseeName']").val();
-               addObj.survey_Name = $tr.find("input[name='surveyName']").val();
-               addObj.department_Name = $tr.find("input[name='departmentName']").val();
-
                resArr.push(resObj);
             });
-
-      $.ajax({
-			url: "popup.do",
-		    type: "POST",
-		    contentType: false,
-		    data: false,
-		    dataType : "Array"
-		    })
-		    .done(function(resArr) {
-		    	alert("추가 성공");
-		    })
-		    .fail(function(e) {
-		        alert("추가 실패");
-		    })
-		    .always(function() {
-
-		    });
+      window.opener.setResList(resArr);
       window.close();
    }
 </script>
@@ -88,17 +61,10 @@
             <tbody>
                <c:forEach var="result" items="${getPopup}">
                   <tr id="tr_${result.surveyName}">
-                   		<input type="hidden" name="projectId" value="${result.projectId}" />
-                        <input type="hidden" name="gradeId" value="${result.gradeId}" />
-                        <input type="hidden" name="departmentId" value="${result.departmentId}" />
-                        <input type="hidden" name="surveySeq" value="${result.surveySeq}" />
-                        <input type="hidden" name="raterId" value="${result.raterId}" />
-                        <input type="hidden" name="appraiseeId" value="${result.appraiseeId}" />
-                        <input type="hidden" name="surveyName" value="${result.surveyName}" />
-                        <input type="hidden" name="departmentName" value="${result.departmentName}" />
-                        <input type="hidden" name="raterName" value="${result.raterName}" />
+                        <input type="hidden" name="surveyName" value="${result.surveyName}" /> 
+                        <input type="hidden" name="departmentName" value="${result.departmentName}" /> 
                         <input type="hidden" name="appraiseeName" value="${result.appraiseeName}" />
-                        <input type="hidden" name="gradeName" value="${result.gradeName}" />
+
                      <td>
                         <input type="checkbox" name="chk_res" value="${result.surveyName}" />
                      </td>
@@ -116,17 +82,17 @@
                </c:if>
             </tbody>
          </table>
-
-
+   
+      
       <div class="d-flex justify-content-between"></div>
 
       <!-- selectItem : 체크값이 없을 경우 체크하라는 유효성 검사 -->
       <div class="d-grid gap-2">
-      <a class="btn btn-primary" onclick="selectItem();">추가</a>
+      <a class="btn btn-primary" href="#" onclick="selectItem(); return false;">추가</a>
       </div>
    </div>
 </div>
-<!--
+<!-- 
 <input type="button" type="submit" value="저장" />
-<input type="button" type="reset" value="닫기" onclick="window.close();" />
+<input type="button" type="reset" value="닫기" onclick="window.close();" /> 
 -->

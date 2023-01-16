@@ -50,12 +50,7 @@ public class SurveyController {
 	@Autowired
 	ICommonCodeService commonCodeService;
 
-//	@RequestMapping("")
-//	public String survey() {
-//		logger.info("실행");
-//		//log.info("실행");
-//		return "survey";
-//	}
+
 
 	@RequestMapping("/surveydetails")
 	public String surveyDetails() {
@@ -98,20 +93,7 @@ public class SurveyController {
 		return "성공";
 	}
 
-	// 설문지 목록으로 이동을 위한 컨트롤러
-//		@RequestMapping(value="/surveylist")
-//		public String survey_list(@RequestParam(defaultValue="1") int pageNo, Model model) {
-//			int totalRows= pagingService.getTotalBoardNum();
-	//
-//			PagingDTO pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
-//			logger.info(surveyService.selectSurveyList(pagingdto).toString());
-	//
-//			model.addAttribute("surveylist", surveyService.selectSurveyList(pagingdto));
-//			model.addAttribute("pagingdto",pagingdto);
-//			logger.info("실행");
-	//
-//			return "survey_list";
-//		}
+
 
 	@RequestMapping("/surveysearch")
 	public String search(@RequestParam(defaultValue="") String keyword,
@@ -300,14 +282,6 @@ public class SurveyController {
 		return surveyService.selectItems(questionseq) ;
 	}
 
-
-	/*
-	@RequestMapping(value="survey/questioninsert.do/{surveyListDTO}", method=RequestMethod.GET)
-	public String getSurveyInfo(Model model){
-
-			return "common/survey_insert";
-		}
-	*/
 	//문제 등록
 		@RequestMapping(value="/insertquestion.do")
 		@ResponseBody
@@ -318,19 +292,6 @@ public class SurveyController {
 
 			return SQD;
 		}
-
-//	//문항 수정
-//	@RequestMapping(value="survey/iteminsert.do", method=RequestMethod.POST)
-//	public String updateItem(@ModelAttribute("SID") @Valid SurveyItemDTO SID, BindingResult result, Model model, RedirectAttributes RedirectAttrs) {
-//		logger.info("문항 수정 Controller 진입");
-//		model.addAttribute("SID", SID);
-//
-//		return null;
-//
-//	}
-
-
-
 
 	//문제 비동기 조회 채우
 	@RequestMapping(value="/questionList.do")
