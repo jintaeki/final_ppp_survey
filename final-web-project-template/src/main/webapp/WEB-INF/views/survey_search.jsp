@@ -264,14 +264,9 @@
 								<input type="hidden" id="pageNo" name=pageNo value="${pagingdto.startPageNo}">
 							</td>
 							
-							<td><c:if test="${list.stateCode ne '30004'}">
-
-										<td><button type="button" class="btn btn-primary"
+								<td><button type="button" class="btn btn-primary"
 												data-toggle="modal" data-target="#exampleModal1"
-												onclick="btn_for_mapping(this)" value="${list.surveySeq}">매핑</button></td>
-									</c:if> <c:if test="${list.stateCode eq '30004'}">
-									매핑완료
-								</c:if></td>					
+												onclick="btn_for_mapping(this)" value="${list.surveySeq}">매핑</button></td>				
 						</tr>												
 						</c:forEach>
 				
