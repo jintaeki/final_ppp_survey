@@ -82,7 +82,7 @@ public class SurveyController {
 			}else {
 				model.addAttribute("SLD",surveyService.selectSurvey(surveySeq));
 				model.addAttribute("SQL", surveyService.getQuestionList(surveySeq));
-				System.out.println(surveyService.getQuestionList(surveySeq));
+			//	System.out.println(surveyService.getQuestionList(surveySeq));
 			}
 
 			return "survey_insert2";
@@ -283,7 +283,7 @@ public class SurveyController {
 	@RequestMapping(value="/selectquestion.do/{surveySeq}")
 	@ResponseBody
 	public  List<Map<String, Object>> selectQuestion(@PathVariable int surveySeq,Model model) {
-		logger.info("뿌리기 컨트롤 ");
+		logger.info("문제 뿌리기 컨트롤 ");
 
 
 		System.out.println(surveyService.selectQuestion(surveySeq));
@@ -291,11 +291,10 @@ public class SurveyController {
 	}
 
 // 문항 비동기식으로 출력
-
 	@RequestMapping(value="/selectitems.do/{questionseq}")
 	@ResponseBody
 	public  List<Map<String, Object>> selectItems(@PathVariable int questionseq, Model model) {
-		logger.info("뿌리기 컨트롤 ");
+		logger.info("문항 뿌리기 컨트롤 ");
 
 		logger.info(surveyService.selectItems(questionseq).toString());
 		//		System.out.println(surveyService.selectQuestion(surveySeq));
@@ -357,6 +356,7 @@ public class SurveyController {
 			//int questionId = SQD.getQuestionId();
 			surveyService.UpdateQuestion(SQD);
 			System.out.println(SQD);
+
 			logger.info(SQD.toString());
 			//surveyService.getQuestionList(surveyId);
 			logger.info("업데이트 성공");

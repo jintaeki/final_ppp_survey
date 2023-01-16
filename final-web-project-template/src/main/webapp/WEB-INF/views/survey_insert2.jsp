@@ -67,13 +67,13 @@
    <br>
 
 
-
+<!-- 객관식 -->
 <div class="icon_div" id="item_div">
      <c:forEach items="${SQL}" var="qlist" >
       <div id="obj_box_toggle" style="display: none">
          <div class="col-12">
             <div class="Item_box">
-               <button type="button" id="item_obj_copy">+1</button>
+               <button type="button" id="item_obj_copy">+</button>
                <form:form modelAttribute="SQD" id="item_obj_form">
                   <input type="hidden" name="questionTypeCode" value="10001">
                   <input type="hidden" name="surveySeq" value="${SLD.surveySeq}">
@@ -98,7 +98,7 @@
 
 
       <%--       <c:if test="${ }"></c:if> --%>
-
+<!-- 혼합식 -->
       <div id="mix_box_toggle" style="display: none">
          <div class="col-12">
             <div class="Item_box">
@@ -130,6 +130,7 @@
       </div>
       -->
       <%--       <c:if test="${ }"></c:if> --%>
+      <!-- 주관식 -->
       <!-- 주관식은 문제 만들 때 id값 가장 큰 거 부여 -->
       <div id="subj_box_toggle" style="display: none">
          <div class="block_box">
@@ -164,7 +165,6 @@
          <c:forEach items="${SQL}" var="qlist" >
             <div class="list-group-item list-group-item-action active py-3 lh-sm"
             id="queAfter">
-
 
                <input disabled type="text" id="input_qus"
                   value="${qlist.questionContent }">
@@ -210,7 +210,6 @@
       <form:form modelAttribute="SQD" id="questioN_insert_form">
          <!-- aa -->
          <div id="insertQform">
-
             <div class="select_radio" id="select_radio">
                <input type="radio" name="questionTypeCode" id="obj_radio"
                   onclick="checkit1()" value="10001" checked>객관식 <input
@@ -256,7 +255,7 @@
          <button type="button" class="btn btn-outline-primary" id="add_item_btn"
                   onclick="insertItem()">문항 추가</button>
    </div>
-</div>
+
 
 <script>
    //진택
@@ -348,7 +347,7 @@
       const tag = $(obj);
       tag.parent().remove();
    }
-   //문제 추가
+   //문제 추가 후 문항 추가
    $("#item_obj_copy").click(function() {
       if (cnt < 1000) {
          const testDiv = document.getElementById('new_obj_Item');
@@ -374,35 +373,7 @@
          alert("문항은 최대 5개까지 생성 가능합니다.");
       }
    });
-
-   $(document).ready(function(){
-       if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
-          document.querySelector("#obj_box_toggle").style.display = "block";
-       }
-
-   });
-   function checkit1() {
-      if($("input[type=radio][id=mix_radio]:checked").is(':checked') != true){ //
-           document.querySelector("#mix_box_toggle").style.display = "none";
-       } if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
-          document.querySelector("#obj_box_toggle").style.display = "block";
-       }
-   }
-   function checkit3() {
-      if($("input[type=radio][id=obj_radio]:checked").is(':checked') != true){ // 체크 여부(checked)
-           document.querySelector("#obj_box_toggle").style.display = "none";
-       }if ($("input[type=radio][id=mix_radio]:checked").is(':checked') == true){
-          document.querySelector("#mix_box_toggle").style.display = "block";
-       }
-   }
-
-
-   function checkit2() {
-       document.querySelector("#mix_box_toggle").style.display = "none";
-       document.querySelector("#obj_box_toggle").style.display = "none";
-
-   }
-
+   //문항추가 끝
 
 
 //    var test = document.getElementById('add_btn');
@@ -491,7 +462,6 @@
                  html += '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /></svg>';
                html +=   '</button>';
                html +='<div class="blank_under"></div></div>';
-
                 }
 
         }
@@ -723,7 +693,7 @@
 
    }
 
-
+   //문제 확인 시 객주흔중에서 문제에 해당하는 유형이 나오게
    function oneQuestion(data){
       console.log(data[0].SURVEY_SEQ);
 //       let size = data.length;
@@ -834,6 +804,37 @@
 
          }
    //채우 끝
+
+
+   //문제 유형 선택 시  해당하는 유형의 문항form이 나오도록 하는 비동기
+   $(document).ready(function(){
+       if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
+          document.querySelector("#obj_box_toggle").style.display = "block";
+       }
+   });
+
+   function checkit1() {
+      if($("input[type=radio][id=mix_radio]:checked").is(':checked') != true){ //
+           document.querySelector("#mix_box_toggle").style.display = "none";
+       } if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
+          document.querySelector("#obj_box_toggle").style.display = "block";
+       }
+   }
+
+   function checkit3() {
+      if($("input[type=radio][id=obj_radio]:checked").is(':checked') != true){ // 체크 여부(checked)
+           document.querySelector("#obj_box_toggle").style.display = "none";
+       }if ($("input[type=radio][id=mix_radio]:checked").is(':checked') == true){
+          document.querySelector("#mix_box_toggle").style.display = "block";
+       }
+   }
+
+
+   function checkit2() {
+       document.querySelector("#mix_box_toggle").style.display = "none";
+       document.querySelector("#obj_box_toggle").style.display = "none";
+
+   }
 </script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

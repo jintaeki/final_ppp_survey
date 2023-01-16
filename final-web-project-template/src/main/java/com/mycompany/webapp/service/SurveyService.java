@@ -82,9 +82,6 @@ public class SurveyService implements ISurveyService{
 		logger.info("문제등록");
 		//ItemInsert(sqd);
 		//logger.info("문항등록");
-		logger.info("");
-		insertItem(sqd);
-		logger.info("문항등록");
 	}
 
 	@Override
