@@ -77,8 +77,18 @@
 
 	}
   	
-  	function btn_for_mapping(obj){
-  		var seqValue=$(obj).val();
+  	function btn_for_mapping(surveySeq, stateCode){
+  		console.log(surveySeq);
+  		console.log(stateCode);
+  	  if(stateCode == '30002'){
+  		newMapping(surveySeq)  
+  	  }else if(stateCode == '30003'){
+  		reMapping(surveySeq)  
+  	  }
+  	}
+  	  
+  	  
+  	function newMapping(serveySeq){
   		html ="";
   		html += '<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
   		html += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">매핑 조건 선택</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
@@ -87,14 +97,34 @@
   	    html += '<div class="modal-body">'
   	   	html += '<c:url value="/mapping/set.do" var="actionURL"/>';
   	   	html += '<form:form action="${actionURL}" modelAttribute="map">';
-  	   	html += '<input type="hidden" id="surveySeq" name="surveySeq" value="'+seqValue+'">';
-  	   	html += '<br> <h5> 다면평가에 포함될 프로젝트의 범위 정하기 </h5> <select class="form-control" name="month"> <option value="3">최근 3개월 동안에 끝난 프로젝트</option> <option value="6">최근 6개월 동얀에 끝난 프로젝트</option> <option value="12">최근 1년 동안에 끝난 프로젝트</option>';
+  	   	html += '<input type="hidden" id="surveySeq" name="surveySeq" value="'+serveySeq+'">';
+  	   	html += '<input type="hidden" id="newCheck" name="newCheck" value="0">';
+  	   	html += '<br> <h5> 다면평가에 포함될d 프로젝트의 범위 정하기 </h5> <select class="form-control" name="month"> <option value="3">최근 3개월 동안에 끝난 프로젝트</option> <option value="6">최근 6개월 동얀에 끝난 프로젝트</option> <option value="12">최근 1년 동안에 끝난 프로젝트</option>';
   		html +=	'<option value="24">최근 2년 동안에 끝난 프로젝트</option> <option value="36">최근 3년 동안에 끝난 프로젝트</option> </select>';
-  		html += '<br> <h5>평가 인원</h5> <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" max="5" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;">';
+  		html += '<br> <h5>평가 최대 인원</h5> <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;">';
   	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> <input type="submit" class="btn btn-primary" value="매핑">';
-  	    html += '</div></form:form></div></div></div></div>';     
-  	    	
-  	    $('#beforeModal').after(html)
+  	    html += '</div></form:form></div></div></div></div>';
+  	    $('#beforeModal').after(html);
+  	}
+  	
+  	function reMapping(serveySeq){
+  		html ="";
+  		html += '<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+  		html += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">다시 매핑 하시겠습니까?</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+  	    html += '<span aria-hidden="true">&times;</span></button>';
+  	    html += '</div>';
+  	    html += '<div class="modal-body">'
+  	   	html += '<c:url value="/mapping/set.do" var="actionURL"/>';
+  	   	html += '<form:form action="${actionURL}" modelAttribute="map">';
+  	   	html += '<input type="hidden" id="surveySeq" name="surveySeq" value="'+serveySeq+'">';
+  	   	html += '<input type="hidden" id="month" name="month" value="3">';
+  	   	html += '<input type="hidden" id="number" name="number" value="3">';
+  	   	html += '<br> <h5> 해당 다면평가의 매핑을 새로 하시겠습니까? </h5>';
+  	   	html += '<br><button type="submit" class="btn btn-outline-danger" id="newCheck" name="newCheck" value="1">삭제하고 새로 시작하기</button>';  	   	
+  	   	html += '<br><button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 매핑 데이터로 넘어가기</button>';  	   	
+  	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>';
+  	    html += '</div></form:form></div></div></div></div>';
+  	    $('#beforeModal').after(html);
   	}
 
 </script>
@@ -234,13 +264,14 @@
 								<input type="hidden" id="pageNo" name=pageNo value="${pagingdto.startPageNo}">
 							</td>
 							
-							<td>
-								<c:if test="${list.stateCode ne '30004'}">
-<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1" onclick="btn_for_mapping(this)" value="${list.surveySeq}">매핑</button></td>								</c:if>
-								<c:if test="${list.stateCode eq '30004'}">
+							<td><c:if test="${list.stateCode ne '30004'}">
+
+										<td><button type="button" class="btn btn-primary"
+												data-toggle="modal" data-target="#exampleModal1"
+												onclick="btn_for_mapping(this)" value="${list.surveySeq}">매핑</button></td>
+									</c:if> <c:if test="${list.stateCode eq '30004'}">
 									매핑완료
-								</c:if>
-							</td>					
+								</c:if></td>					
 						</tr>												
 						</c:forEach>
 				
