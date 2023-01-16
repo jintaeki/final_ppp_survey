@@ -43,16 +43,17 @@ public class MappingController {
 			@RequestParam String newCheck, Model model, RedirectAttributes redirectAttrs) {
 		logger.info("실행");
 		try {
-			if(mappingService.stateCheck(surveySeq) == "30002") {
+			if(Integer.parseInt(mappingService.stateCheck(surveySeq)) == 30002) {
 				mappingService.setMapping(surveySeq, month, number);
 				mappingService.updateState(surveySeq, "30003");
-			}else if(mappingService.stateCheck(surveySeq) == "30003") {
-				if(newCheck == "1") {
+			}else if(Integer.parseInt(mappingService.stateCheck(surveySeq)) == 30003) {
+				if(Integer.parseInt(newCheck) == 1) {
 					mappingService.deleteMapping(surveySeq);
-					mappingService.updateState(surveySeq, "30002");					
-					return "surveylist";
+					mappingService.updateState(surveySeq, "30002");	
+					return "redirect:/survey/surveysearch";	
 				}
 			}
+			System.out.println("할4로");
 			List<PopupDTO> mappingList = mappingService.selectMappingData(surveySeq);
 			model.addAttribute("mappingList", mappingList);
 			model.addAttribute("month", month);
@@ -136,4 +137,5 @@ public class MappingController {
 		//log.info("실행");
 		return "home2";
 	}
+	
 }

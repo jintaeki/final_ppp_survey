@@ -13,7 +13,7 @@ public interface IMappingRepository {
 	void setMapping(@Param("surveySeq") int surveySeq, @Param("month") int month, @Param("number") int number);
 	
 	// 상태 코드 변경
-	void updateState(@Param("surveySeq") int surveySeq, String stateCode);
+	void updateState(@Param("surveySeq") int surveySeq, @Param("stateCode") String stateCode);
 	
 	// 상태 코드 조회
 	String stateCheck(@Param("surveySeq") int surveySeq);

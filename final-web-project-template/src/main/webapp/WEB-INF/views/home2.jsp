@@ -102,6 +102,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 				</ul>
 			</div>
 		</div>
+			<input type="button" onclick="location.href='<c:url value='/survey/surveysearch'/>'" class="btn btn-primary" value="돌아가기">
 	</div>
 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

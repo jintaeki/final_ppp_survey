@@ -76,16 +76,7 @@
 
 	}
   	
-  	function btn_for_mapping(surveySeq, stateCode){
-  		var stateCode = props.stateCode;
-  	  	var surveySeq = props.surveySeq;
-  	  if(stateCode === '30002')
-  	  	return <NewMapping(surveySeq) />;
-  	  else 
-  	  	return <reMapping(surveySeq) />;
-  	}
-  	
-  	function newMapping(obj){
+  	function btn_for_mapping(obj){
   		var seqValue=$(obj).val();
   		html ="";
   		html += '<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
@@ -106,26 +97,6 @@
   	    $('#beforeModal').after(html);
   	}
   	
-  	function reMapping(obj){
-  		var seqValue=$(obj).val();
-  		html ="";
-  		html += '<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-  		html += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">다시 매핑 하시겠습니까?</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
-  	    html += '<span aria-hidden="true">&times;</span></button>';
-  	    html += '</div>';
-  	    html += '<div class="modal-body">'
-  	   	html += '<c:url value="/mapping/set.do" var="actionURL"/>';
-  	   	html += '<form:form action="${actionURL}" modelAttribute="map">';
-  	   	html += '<input type="hidden" id="surveySeq" name="surveySeq" value="'+seqValue+'">';
-  	   	html += '<br> <h5> 해당 다면평가의 매핑을 새로 하시겠습니까? </h5>';
-  	   	html += '<br><button type="submit" class="btn btn-outline-danger" name="newCheck" value="1">삭제하고 새로 시작하기</button>';  	   	
-  	   	html += '<br><button type="submit" class="btn btn-outline-light" name="newCheck" value="0">저장된 매핑 데이터로 넘어가기</button>';  	   	
-  	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>';
-  	    html += '</div></form:form></div></div></div></div>';
-
-  	    $('#beforeModal').after(html);
-  	}
-s
 
 </script>
 <script type="text/javascript">

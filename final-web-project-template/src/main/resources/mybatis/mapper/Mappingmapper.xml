@@ -70,6 +70,7 @@
 		UPDATE SURVEY_LIST 
 		   SET STATE_CODE = #{stateCode},
 		       UPDATE_DATE = SYSDATE
+		 WHERE SURVEY_SEQ = #{surveySeq}
 	</update>
 	
 	<select id="stateCheck" resultType="String">
