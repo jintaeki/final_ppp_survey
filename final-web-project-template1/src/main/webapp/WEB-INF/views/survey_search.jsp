@@ -3,9 +3,6 @@
 
 <script>
 
-
-
-
 	function sendRe(obj){
 		var pageno = $('#pageNo').val();
   		var surveyseq = $(obj).val();
@@ -116,27 +113,27 @@
 				<form:form action="${actionURL}" modelAttribute="SLD">
 
 					<div class="form-group">
-						<label for="recipient-name" class="col-form-label">이름</label>
+						<label for="recipient-name" class="col-form-label"><b>이름</b></label>
 						<input type="text" class="form-control" id="recipient-name"
 							name="surveyName">
 					</div>
 					<div class="form-group">
-						<label for="message-text" class="col-form-label">상세 설명</label>
+						<label for="message-text" class="col-form-label"><b>상세 설명</b></label>
 						<textarea class="form-control" id="message-text"
 							name="surveyContent"></textarea>
 					</div>
+					
+					<div class="modal_class">
 					<input type="hidden" name="stateCode" value="30001">
-					<input type="hidden" name="surveySeq" value="1">기간<br>
+					<input type="hidden" name="surveySeq" value="1"><b>기간</b>
 
-					<input type="date" name="surveyStartDate" pattern="yyyy-MM-dd">~<input
+					<input type="date" name="surveyStartDate" pattern="yyyy-MM-dd"> - <input
 						type="date" name="surveyClosedDate" pattern="yyyy-MM-dd">
 					<br>
-					<input type="radio" name="anonymityCheckCode" value="20001">익명 <br>
+					<input type="radio" name="anonymityCheckCode" value="20001">익명
 					<input type="radio" name="anonymityCheckCode" value="20002">기명
-<!-- 					<select name="anonymityCheckDate"> -->
-					<!-- 						<option value="A">익명</option> -->
-					<!-- 						<option value="R">기명</option> -->
-					<!-- 					</select> -->
+					</div>
+					
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary"
 							data-dismiss="modal">취소</button>
@@ -149,7 +146,6 @@
 	</div>
 </div>
 <!-- modal(설문 등록 시 뜨는 팝업창) 끝-->
-
 
 <div class="container" id="beforeModal">
 	<div class="seach_float">
