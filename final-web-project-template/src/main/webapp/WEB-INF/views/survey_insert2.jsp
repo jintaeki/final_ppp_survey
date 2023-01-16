@@ -283,7 +283,7 @@
 		var data = new FormData(form);
 		$.ajax({
 			method : "POST",
-			url : 'surveyupdate.do/', // form을 전송할 실제 파일경로
+			url : 'updatesurvey.do/', // form을 전송할 실제 파일경로
 			data : data,
 			processData : false,
 			contentType : false,
@@ -310,7 +310,7 @@
 		
 		$.ajax({
 			method : "POST",
-			url : 'itemupdate.do', // form을 전송할 실제 파일경로
+			url : 'updateitem.do', // form을 전송할 실제 파일경로
 			data : data,
 			processData : false,
 			contentType : false,
@@ -336,7 +336,7 @@
 		var data = new FormData(form);
 		$.ajax({
 			method : "POST",
-			url : 'itemupdate.do', // form을 전송할 실제 파일경로
+			url : 'updateitem.do', // form을 전송할 실제 파일경로
 			data : data,
 			processData : false,
 			contentType : false,
@@ -428,7 +428,7 @@
 		
  			$.ajax({
 				method:'POST', //어떤 방식으로 보낼 지
-				url:'questioninsert.do', // qdiv를 보낼 경로 설정
+				url:'insertquestion.do', // qdiv를 보낼 경로 설정
 				data: data,	//
 				processData : false,
  				contentType : false,
@@ -656,7 +656,7 @@
 		console.log("과연?:"+surveySeq);
 		$.ajax({
 			method:'POST', //어떤 방식으로 보낼 지
-				url:'questionDelete.do/'+ questionSeq , // qdiv를 보낼 경로 설정
+				url:'deletequestion.do/'+ questionSeq , // qdiv를 보낼 경로 설정
 				processData : false,
 				contentType : false,
 	 			cache : false,
@@ -794,7 +794,7 @@
 			var data = new FormData(qdiv);
 			$.ajax({
 				method: 'POST',
-				url: 'questionUpdate.do/',
+				url: 'updatequestion.do/',
 				data: data,	
 				processData : false,
 				contentType : false,
