@@ -1,5 +1,9 @@
 package com.mycompany.webapp.dto;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class PagingDTO {
 	
 		private int surveySeq;
@@ -18,6 +22,9 @@ public class PagingDTO {
 		private int endRowIndex;	//페이지의 마지막 행 인덱스
 		private String keyword; 	//검색을 위한 변수
 		private String selection;	//
+		
+		@DateTimeFormat(pattern="yyyy-MM-dd")
+		private Date surveyStartDate;
 		
 		
 		public PagingDTO(int rowsPerPage, int pagesPerGroup, int totalRows, int pageNo) {
@@ -125,6 +132,16 @@ public class PagingDTO {
 			this.pageNo = pageNo;
 		}
 
+		
+		
+		public Date getSurveyStartDate() {
+			return surveyStartDate;
+		}
+
+		public void setSurveyStartDate(Date surveyStartDate) {
+			this.surveyStartDate = surveyStartDate;
+		}
+
 		@Override
 		public String toString() {
 			return "PagingDTO [surveySeq=" + surveySeq + ", totalRows=" + totalRows + ", totalPageNo=" + totalPageNo
@@ -132,14 +149,7 @@ public class PagingDTO {
 					+ ", pageNo=" + pageNo + ", pagesPerGroup=" + pagesPerGroup + ", groupNo=" + groupNo
 					+ ", rowsPerPage=" + rowsPerPage + ", startRowNo=" + startRowNo + ", startRowIndex=" + startRowIndex
 					+ ", endRowNo=" + endRowNo + ", endRowIndex=" + endRowIndex + ", keyword=" + keyword
-					+ ", selection=" + selection + "]";
-		}
-
-		
-		
-	
-
-
-		
-		
+					+ ", selection=" + selection + ", surveyStartDate=" + surveyStartDate + "]";
+		}		
 }
+

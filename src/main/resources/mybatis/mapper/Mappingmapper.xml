@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.dao.IMappingRepository">
+	<select id="setMapping" resultType="com.mycompany.webapp.dto.MappingDTO">
+		<![CDATA[
+			INSERT INTO MAPPING (SURVEY_SEQ, RATER_ID, APPRAISEE_ID, SURVEY_COMPLETE_YN)
+    		SELECT 
+    			SURVEY_SEQ,			
+   				EMPLOYEE_ID,
+    			PARTICIPATION_EMPLOYEE_ID,
+    			'N' 
+    			FROM(
+    				SELECT
+    					SURVEY_SEQ,			
+    					EMPLOYEE_ID,
+    					PARTICIPATION_EMPLOYEE_ID,
+    					'N',
+    					ROW_NUMBER() OVER (PARTITION BY EMPLOYEE_ID ORDER BY EMPLOYEE_ID) AS NUM
+					FROM(
+    					SELECT
+ 				    	   S.SURVEY_SEQ,			
+        			 	   U.EMPLOYEE_ID,
+       				   	   A.PARTICIPATION_EMPLOYEE_ID,
+        			   	  'N'
+    					FROM SURVEY_LIST S, PROJECT_HISTORY R, PROJECT_HISTORY A, USER_INFO U, USER_INFO I
+         				WHERE U.EMPLOYEE_ID = R.PARTICIPATION_EMPLOYEE_ID 
+           				AND	  R.PROJECT_ID = A.PROJECT_ID 
+           				AND   R.PARTICIPATION_EMPLOYEE_ID <> A.PARTICIPATION_EMPLOYEE_ID 
+           				AND   S.SURVEY_SEQ = #{surveySeq}
+           				AND   R.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE -(30 * #{month}) , 'YYYY-MM-dd')
+           				AND   I.EMPLOYEE_ID = A.PARTICIPATION_EMPLOYEE_ID
+            			AND   I.GRADE_ID = 2
+       				 ORDER BY U.EMPLOYEE_ID, DBMS_RANDOM.VALUE
+       				) 
+  				 )
+			WHERE NUM <= #{number}
+		]]>
+	</select>
+	
+	<select id="mappingCheck" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) FROM MAPPING
+			WHERE SURVEY_SEQ = #{surveySeq}
+		]]>
+	</select>
+	
+	<select id="selectMappingData" parameterType="map" resultType="com.mycompany.webapp.dto.PopupDTO">
+		<![CDATA[
+			select 
+				p.project_id		as "projectId", 
+				ur.grade_id			as "gradeId",
+				ua.department_id	as "departmentId",
+				m.survey_seq		as "surveySeq",
+				m.rater_id			as "raterId",
+				m.appraisee_id		as "appraiseeId",
+				s.survey_name		as "surveyName",
+				o.department_name	as "departmentName",
+       		  	ur.employee_name 	as "raterName",
+       		  	ua.employee_name    as "appraiseeName",
+     		  	g.grade_name 		as "gradeName"
+			from project p,
+				 project_history h,
+     			 grade g,
+     			 mapping m,
+     		     user_info ua,
+     			 user_info ur,
+     			 survey_list s,
+                 organization_chart o
+			where p.project_Id = h.project_Id
+				  and ur.grade_id = g.grade_id
+				  and h.participation_employee_id = m.appraisee_id
+    			  and ua.employee_id = m.appraisee_id
+                  and ua.department_id = o.department_id
+    			  and ur.employee_id = m.rater_id
+    			  and m.survey_seq = #{surveySeq}
+    			  and m.survey_seq = s.survey_seq
+			order by g.grade_id desc, ur.employee_name
+			]]>
+	</select>
+
+	<select id="getPopup" parameterType="map" resultType="com.mycompany.webapp.dto.PopupDTO">
+    	<![CDATA[
+     		select distinct
+     			 a.project_id		   AS "projectId",
+     			 ur.grade_id		   AS "gradeId",
+     			 ua.department_id 	   AS "departmentId",
+     			 s.survey_seq 		   AS "surveySeq",
+     			 ur.employee_id 	   AS "raterId",
+     			 ua.employee_id 	   AS "appraiseeId",
+            	 s.SURVEY_name         AS "surveyName",
+            	 o.department_name     AS "departmentName",
+            	 ur.EMPLOYEE_name      AS "raterName",
+            	 ua.EMPLOYEE_name      AS "appraiseeName"
+       		from 
+            	survey_list s, 
+            	project_history r, 
+            	project_history a, 
+            	organization_chart o, 
+             	user_info ua,
+             	user_info ur
+       		where r.project_id = a.project_id 
+         		and r.participation_employee_id <> a.participation_employee_id 
+                and r.participation_employee_id = #{raterId}
+                and r.participation_employee_id = ur.employee_Id
+         		and s.survey_seq = #{surveySeq}
+         		and ua.grade_id = 2
+         		and ua.employee_id = a.participation_employee_id
+         		and ua.department_id = o.department_id
+                and not exists 
+                    (select 'x'
+                     from mapping m 
+                     where m.appraisee_id = ua.employee_id
+                       and m.rater_id = ur.employee_id
+                       and m.survey_seq = #{surveySeq})
+        	ORDER BY ua.employee_name
+      	]]>
+   	</select>
+	
+
+	<insert id="insertAppraisee" parameterType="com.mycompany.webapp.dto.MappingDTO">
+		insert into mapping
+			(survey_seq, rater_id, appraisee_id, survey_complete_check)
+ 		values
+ 			(#{surveySeq}, #{raterId}, #{appraiseeId}, 'N')
+	</insert>
+	
+	<delete id="deleteAppraisee" parameterType="com.mycompany.webapp.dto.MappingDTO">
+		delete from mapping where survey_seq=#{surveySeq} and rater_id=#{raterId} and appraisee_id=#{appraiseeId}
+	</delete>
+
+</mapper>

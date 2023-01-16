@@ -130,7 +130,7 @@ s
 						<textarea class="form-control" id="message-text"
 							name="surveyContent"></textarea>
 					</div>
-					<input type="hidden" name="decideYN" value="N">
+					<input type="hidden" name="stateCode" value="N">
 					<input type="hidden" name="surveySeq" value="1"> 설문 진행 기간<br>
 
 					<input type="date" name="surveyStartDate" pattern="yyyy-MM-dd">~<input
@@ -207,8 +207,8 @@ s
 										value="${list.surveyClosedDate }" pattern="yyyy-MM-dd" /></td>
 
 								<td><span class="wait"><c:if
-											test="${list.decideYN eq 'N' }">대기</c:if> <c:if
-											test="${list.decideYN eq 'Y' }">확정</c:if></span></td>
+											test="${list.stateCode eq 'N' }">대기</c:if> <c:if
+											test="${list.stateCode eq 'Y' }">확정</c:if></span></td>
 
 								<td><input type="hidden" id="pageNo" name=pageNo
 									value="${pagingdto.startPageNo}">

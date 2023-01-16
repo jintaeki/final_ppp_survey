@@ -4,51 +4,58 @@
 <mapper namespace="com.mycompany.webapp.dao.IPagingRepository">
 
 	<select id="getTotalBoardNum" resultType="int">
-	 select count(*) from survey_list
+	<![CDATA[
+		SELECT count(ROWNUM)
+	    FROM (
+			SELECT ROWNUM AS rnum
+		      	  ,SURVEY_SEQ
+		      	  ,SURVEY_NAME
+		      	  ,SURVEY_CONTENT
+		      	  ,ANONYMITY_CHECK_CODE
+	          	  ,SURVEY_START_DATE
+		      	  ,SURVEY_CLOSED_DATE
+		      	  ,STATE_CODE
+	    	FROM (SELECT SURVEY_SEQ
+	          	 ,SURVEY_NAME
+	          	 ,SURVEY_CONTENT
+	          	 ,ANONYMITY_CHECK_CODE
+	          	 ,SURVEY_START_DATE
+		      	 ,SURVEY_CLOSED_DATE
+	          	 ,STATE_CODE  
+	          	 FROM SURVEY_LIST 
+	          	 WHERE 
+	          	 (SURVEY_START_DATE is null and
+	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%' and
+	          	  STATE_CODE LIKE (CASE  
+      							   WHEN #{selection} = '30005' 
+      							   THEN '%' || '' || '%' 
+                                   ELSE '%' || #{selection} || '%'
+                                   END) 
+	          	 )
+	          	   or  
+	          	 SURVEY_START_DATE >= (CASE
+	          	 						 WHEN #{surveyStartDate} is null
+	          	 						 THEN sysdate-99999
+	          	 						 WHEN #{surveyStartDate} is not null	          	 						 
+	          	 						 THEN to_date(to_char(#{surveyStartDate},'yyyy-MM-dd'),'yyyy-MM-dd')
+	          	 						 END) and
+	          	  
+	          	  STATE_CODE LIKE (CASE  
+      							   WHEN #{selection} = '30005' 
+      							   THEN '%' || '' || '%' 
+                                   ELSE '%' || #{selection} || '%'
+                                   END) and
+                  
+	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%' 
+				  ORDER BY ROWNUM DESC
+			   	)
+
+			   	)
+
+
+			   ]]>
 	</select>
 	
-	<select id="getTotalListNumByKeyword" parameterType="hashmap" resultType="int">
-	
-		SELECT count(*)
-			   FROM (
-			   		select ROWNUM as rnum, SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
-			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN 
-			   		FROM (select SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
-			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN  from survey_list where survey_name LIKE #{keyword}
-			   		order by ROWNUM desc
-			   			)
-			   		)
-	
-	</select>
-	
-	<select id="getTotalListNumByKeywordAndDecideYN" parameterType="hashmap" resultType="int">
-	
-		SELECT count(*)
-			   FROM (
-			   		select ROWNUM as rnum, SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
-			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN 
-			   		FROM (select SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
-			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN  from survey_list where survey_name LIKE #{keyword} and DECIDE_YN = #{selection} 
-			   		order by ROWNUM desc
-			   	)
-			   	
-			   	)
-	
-	</select>
-	
-	<select id="getTotalListNumByKeywordAndDate" parameterType="hashmap" resultType="int">
-	
-		SELECT count(*)
-			   FROM (
-			   		select ROWNUM as rnum, SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
-			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN 
-			   		FROM (select SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
-			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN  from survey_list where survey_name LIKE #{keyword}
-			   		order by SURVEY_STATR_DATE, ROWNUM  desc
-			   	)
-			  
-			   	)
-	
-	</select>
+
 
 </mapper>

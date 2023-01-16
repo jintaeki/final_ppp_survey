@@ -69,7 +69,6 @@
 		    .always(function() {
 
 		    });
-
       window.close();
    }
 </script>
@@ -89,6 +88,7 @@
             <tbody>
                <c:forEach var="result" items="${getPopup}">
                   <tr id="tr_${result.surveyName}">
+<<<<<<< HEAD
                    		<input type="hidden" name="projectId" value="${result.projectId}" />
                         <input type="hidden" name="gradeId" value="${result.gradeId}" />
                         <input type="hidden" name="departmentId" value="${result.departmentId}" />
