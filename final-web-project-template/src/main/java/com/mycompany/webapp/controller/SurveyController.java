@@ -413,7 +413,7 @@ public class SurveyController {
 		return surveyService.selectQuestionBySeq(questionSeq);
 	}
 
-<<<<<<< HEAD
+
 	//문항 등록
 	public SurveyQuestionDTO itemInsert(@ModelAttribute ("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,Model model, RedirectAttributes redirectAttrs) {
 		logger.info("문항생성 Controller 진입");
