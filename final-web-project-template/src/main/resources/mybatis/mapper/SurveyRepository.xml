@@ -3,20 +3,24 @@
 <mapper namespace="com.mycompany.webapp.dao.ISurveyRepository">
 
 		<insert id="insertQuestion" parameterType="SQD">
-		<![CDATA[
+		<selectKey keyProperty="questionNum" resultType="int" order="BEFORE">
+			SELECT QUESTION_ID_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+
 				INSERT INTO SURVEY_QUESTION(QUESTION_SEQ
 				    ,SURVEY_SEQ
 				    ,QUESTION_CONTENT
 				    ,QUESTION_TYPE_CODE
+				    ,QUESTION_NUM
 				    ,REG_DATE
 				    ,UPDATE_DATE)
 				VALUES (#{questionSeq}
 				    ,#{surveySeq}
 				    ,#{questionContent}
 				    ,#{questionTypeCode}
+				    ,#{questionNum}
 				    ,SYSDATE
 				    ,SYSDATE)
-				    	]]>
 	</insert>
 
 	<select id="selectMaxQuestionId" resultType="int">
@@ -27,23 +31,27 @@
 	</select>
 
 	<select id="selectMaxItemId"  resultType="int">
-				SELECT NVL(MAX(ITEM_SEQ), 0) AS "itemSeq" FROM SURVEY_ITEM
+					SELECT NVL(MAX(ITEM_SEQ	), 0) AS "itemSeq" FROM SURVEY_ITEM
 
 	</select>
 
 <insert id="insertItem" parameterType="SQD">
-		<![CDATA[
+
+		<selectKey keyProperty="itemSeq" resultType="int" order="BEFORE">
+				SELECT ITEM_ID_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
 			INSERT INTO SURVEY_ITEM(QUESTION_SEQ
 			     ,ITEM_SEQ
 			     ,ITEM_CONTENT
-			     ,ITEM_SCORE,REG_DATE,UPDATE_DATE)
+			     ,ITEM_SCORE
+			     ,REG_DATE
+			     ,UPDATE_DATE)
 			VALUES (#{questionSeq}
 			     ,#{itemSeq}
 			     ,#{itemContent}
 			     ,#{itemScore}
-			     ,sysdate
-			     ,sysdate)
-		]]>
+			     ,SYSDATE
+			     ,SYSDATE)
 	</insert>
 
 	<insert id="setSurvey" parameterType="SLD" >
@@ -87,7 +95,8 @@
 			SELECT ITEM_ID_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
 
-		INSERT INTO SURVEY_ITEM (QUESTION_SEQ,ITEM_SEQ
+		INSERT INTO SURVEY_ITEM (QUESTION_SEQ
+		     ,ITEM_SEQ
 		     ,ITEM_CONTENT
 		     ,ITEM_SCORE
 		     ,UPDATE_DATE)
@@ -223,7 +232,8 @@
 
 
 	<delete id="deleteItemByQSeq" parameterType="int">
-		DELETE FROM SURVEY_ITEM WHERE QUESTION_SEQ = #{questionSeq}
+		DELETE FROM SURVEY_ITEM
+		WHERE QUESTION_SEQ = #{questionSeq}
 	</delete>
 
 

@@ -76,12 +76,12 @@ public class SurveyService implements ISurveyService{
 
 	public void insertQuestion(SurveyQuestionDTO sqd) {
 		logger.info("insertQuestion service: " + sqd );
-		sqd.setQuestionSeq(surveyDao.selectMaxQuestionId()+1);
-		logger.info("id가 들어갔니 안갔니 :" + sqd);
+		//sqd.setQuestionSeq(surveyDao.selectMaxQuestionId()+1);
+		//logger.info("id가 들어갔니 안갔니 :" + sqd);
 		surveyDao.insertQuestion(sqd);
 		logger.info("문제등록");
-		insertItem(sqd);
-		logger.info("문항등록");
+		//insertItem(sqd);
+		//logger.info("문항등록");
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class SurveyService implements ISurveyService{
 
 	public void insertItem(SurveyQuestionDTO sqd) {
 		logger.info("insertItem: " + sqd);
-		sqd.setItemSeq(surveyDao.selectMaxItemId()+1);
+		//sqd.setItemSeq(surveyDao.selectMaxItemId()+1);
 		logger.info("문항 id가 들어갔냐 안갔냐"  + sqd);
 		surveyDao.insertItem(sqd);
 	}
