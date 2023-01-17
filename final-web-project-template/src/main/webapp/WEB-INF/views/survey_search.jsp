@@ -57,6 +57,10 @@
  			
 			const text = '<button type="button" class="btn btn-link" onclick="location.href='+'\'surveyevaluate/' +surveyseq+ '\'">조회</button>';	
  			tag.parent().parent().next().append(text);	
+ 			
+ 			const done = `매핑완료`;
+			tag.parent().parent().next().next().append(done);
+			tag.parent().parent().next().next().children().hide();
  									
 
  			const complete = `알림발송완료`;
@@ -66,8 +70,7 @@
  										
 			tag.parent().parent().parent().closest('td').css('color', 'black');
 			tag.parent().parent().parent().closest('td').css('disabled', true);
-			const done=`매핑완룡`;
-			tag.parent().parent().next().next().append(done);
+			
 			
 		   }, error:function(e) {	//실패, 에러
 			   console.log("Error", e); 
@@ -76,17 +79,32 @@
 		
 
 	}
+  		
+  		
+  	$(document).ready(function() {
+  	    const stateCode = $(".stateCode");
+  	    
+  	    stateCode.each((index, element) => {
+  	    	const value = $(element).val();
+  	    	console.log($(element).parent().prev().prev().prev().prev().children());
+  	    	if(value == 30004){
+	  	    	$(element).next().attr('disabled', 'disabled');
+  	    		$(element).parent().prev().prev().prev().prev().children().click(function () {return false;});
+  	    		$(element).parent().prev().prev().prev().prev().children().css('color', '#ccc');
+  	    	}else if(value == 30001){
+	  	    	$(element).next().attr('disabled', 'disabled');  	    		
+  	    	}
+  	    });
+  	});
+	
   	
   	function btn_for_mapping(surveySeq, stateCode){
-  		console.log(surveySeq);
-  		console.log(stateCode);
-  	  if(stateCode == '30002'){
-  		newMapping(surveySeq)  
-  	  }else if(stateCode == '30003'){
-  		reMapping(surveySeq)  
-  	  }
+  		if(stateCode == '30002'){
+  		  newMapping(surveySeq)  
+  	    }else if(stateCode == '30003'){
+  		  reMapping(surveySeq)  
+  	    }
   	}
-  	  
   	  
   	function newMapping(serveySeq){
   		html ="";
@@ -99,7 +117,7 @@
   	   	html += '<form:form action="${actionURL}" modelAttribute="map">';
   	   	html += '<input type="hidden" id="surveySeq" name="surveySeq" value="'+serveySeq+'">';
   	   	html += '<input type="hidden" id="newCheck" name="newCheck" value="0">';
-  	   	html += '<br> <h5> 다면평가에 포함될d 프로젝트의 범위 정하기 </h5> <select class="form-control" name="month"> <option value="3">최근 3개월 동안에 끝난 프로젝트</option> <option value="6">최근 6개월 동얀에 끝난 프로젝트</option> <option value="12">최근 1년 동안에 끝난 프로젝트</option>';
+  	   	html += '<br> <h5> 다면평가에 포함될 프로젝트의 범위 정하기 </h5> <select class="form-control" name="month"> <option value="3">최근 3개월 동안에 끝난 프로젝트</option> <option value="6">최근 6개월 동안에 끝난 프로젝트</option> <option value="12">최근 1년 동안에 끝난 프로젝트</option>';
   		html +=	'<option value="24">최근 2년 동안에 끝난 프로젝트</option> <option value="36">최근 3년 동안에 끝난 프로젝트</option> </select>';
   		html += '<br> <h5>평가 최대 인원</h5> <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;">';
   	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> <input type="submit" class="btn btn-primary" value="매핑">';
@@ -236,7 +254,7 @@
 							<tr>
 
 								<th scope="row">${list.surveySeq }</th>
-								<td><c:if test="${list.stateCode ne '30004'}">
+								<td id=sv><c:if test="${list.stateCode ne '30004'}">
 										<a href="surveyinsert2?surveyseq=${list.surveySeq}">${list.surveyName }</a>
 									</c:if> <c:if test="${list.stateCode eq '30004'}">
 									${list.surveyName }
@@ -262,7 +280,8 @@
 									value="${pagingdto.startPageNo}"></td>
 
 								<td><c:if test="${list.stateCode ne '30004'}">
-										<button type="button" class="btn btn-primary"
+										<input type="hidden" class="stateCode" value="${list.stateCode}">
+										<button type="button" class="btn btn-primary" id="btn_for_mapping"
 											data-toggle="modal" data-target="#exampleModal1"
 											onclick="btn_for_mapping('${list.surveySeq}', '${list.stateCode}')">매핑</button>
 									</c:if> <c:if test="${list.stateCode eq '30004'}">
@@ -270,9 +289,7 @@
 								</c:if></td>
 							</tr>
 						</c:forEach>
-
 					</tbody>
-
 
 					<tr>
 						<td colspan="4" class="text-center">

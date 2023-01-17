@@ -53,10 +53,8 @@ public class MappingController {
 					return "redirect:/survey/surveysearch";	
 				}
 			}
-			System.out.println("할4로");
 			List<PopupDTO> mappingList = mappingService.selectMappingData(surveySeq);
 			model.addAttribute("mappingList", mappingList);
-			model.addAttribute("month", month);
 		} catch (Exception e) {
 			e.printStackTrace();
 			redirectAttrs.addFlashAttribute("message", e.getMessage());
