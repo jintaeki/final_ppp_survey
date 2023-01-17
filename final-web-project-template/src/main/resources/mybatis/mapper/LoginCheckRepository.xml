@@ -33,13 +33,13 @@
                UR.MANAGER_YN
         FROM USER_INFO UR , USER_INFO UA, SURVEY_LIST S, MAPPING M
         WHERE 
-              S.SURVEY_CLOSED_DATE >= SYSDATE AND
+              S.SURVEY_CLOSED_DATE >= SYSDATE-1 AND
               UR.EMPLOYEE_ID = M.RATER_ID AND
               UA.EMPLOYEE_ID = M.APPRAISEE_ID AND
               S.SURVEY_SEQ = M.SURVEY_SEQ AND
               UR.EMAIL = #{email} AND
-              UR.EMPLOYEE_ID = #{raterId} AND
-              S.SURVEY_SEQ = 187
+              UR.EMPLOYEE_ID = #{raterId}
+
              
 		
 	</select>

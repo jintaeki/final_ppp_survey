@@ -6,9 +6,86 @@
 
 <script>
 
+	function delete_survey_btn(obj,surveyseq,selection,pageno){
+		let bselection = selection;
+		let bpageno = pageno;
+		let bdate = $('#selectedDate').val();
+		let bkeyword = $('#selectedKeyword').val();
+	  	var date = $('#selectedDate').val();
+	  	var keyword = $('#selectedKeyword').val();
+		if(date==''){
+			date = new Date('1111-11-11');
+			const year = date.getFullYear();
+			const month = date.getMonth();
+			const day = date.getDate();
 
+			currentDay = new Date(year, month, day).toLocaleDateString();			
+			currentDay = currentDay.replaceAll('.','-');		
+			currentDay = currentDay.replaceAll(' ', '');			
+			currentDay = currentDay.slice(0,-1);
 
+			let firstTemp = currentDay.split('-')[0];
+			let middleTemp = currentDay.split('-')[1];
+			let lastTemp = currentDay.split('-')[2];
+			if(Number(firstTemp<10)) firstTemp = '0' +firstTemp;
+			if(Number(middleTemp<10)) middleTemp = '0' + middleTemp;
+			if(Number(lastTemp<10)) lastTemp = '0'+lastTemp;
+			
+			currentDay = firstTemp+'-'+middleTemp+'-'+lastTemp;
+			date = currentDay;
 
+		}if(keyword==''){
+			keyword= 'empty';
+			
+		}
+		
+		console.log(date);
+
+		$.ajax({
+	         method:'POST', //어떤 방식으로 보낼 지
+	            url:'deletesurvey.do/'+ surveyseq+'/'+pageno+'/'+date +'/'+keyword+'/'+selection, // qdiv를 보낼 경로 설정
+	            processData : false,
+	            async: false,
+	            contentType : false,
+	            cache : false,
+	            beforeSend : function() { //보내기 전 실행
+	            console.log("삭제 요청이 보내지는가?");
+	         },
+	            success:function (data) {    //전송 성공시 실행
+
+	    		const tag= $('#'+surveyseq);
+	        	tag.remove();
+	            location.href='http://localhost:8080/springframework-xml-config-no-root/survey/surveysearch?pageNo='+bpageno+'&keyword='+bkeyword+'&selection='+bselection+'&surveyStartDate='+bdate;
+	            }
+	       });
+		
+		
+		
+	};
+
+// function getList(){
+	 
+// 	$.ajax({
+//          method:'GET', //어떤 방식으로 보낼 지
+//          url:'surveysearch/'+ surveyseq, // qdiv를 보낼 경로 설정
+//           dataType: "json",
+//          beforeSend : function() { //보내기 전 실행
+//          console.log("요청이 보내지는가?");
+//          },
+//          success:function (jsondata){    //전송 성공시 실행
+//                questionHtml(jsondata);
+//                var surveyseq = jsondata[0].SURVEY_SEQ;
+//                var questionseq = jsondata[0].QUESTION_SEQ;
+//          }, error:function(e) {   //실패, 에러
+//             console.log("Error", e);
+//          }
+//          });
+	
+// }
+
+	
+
+	
 	function sendRe(obj){
 		var pageno = $('#pageNo').val();
   		var surveyseq = $(obj).val();
@@ -191,7 +268,7 @@
 					<div class="survey_list_form_upper_dv">
 						<form action="<c:url value='/survey/surveysearch'/>" method="GET"
 							class="survey_list_form">
-							<input type="date" name="surveyStartDate"
+							<input type="date" name="surveyStartDate" id="selectedDate"
 								value="<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">
 							<select name="selection">
 								<c:forEach items="${commonCodeList}" var="commonCode">
@@ -202,13 +279,14 @@
 										<option value="${commonCode.codeDetailId}">${commonCode.codeDetailName }</option>
 									</c:if>
 								</c:forEach>
-							</select> <input type="text" class="form-control " placeholder="search"
-								name="keyword" value="${pagingdto.keyword}"
+							</select> <input type="text" class="form-control" id="selectedKeyword" placeholder="search"
+								name="keyword" value="${pagingdto.keyword}" 
 								aria-describedby="button-addon2"> <input type="hidden"
 								name="pageNo" value="1">
 							<div class="input-group-append">
 								<input type="submit" class="btn btn-outline-secondary"
 									id="button-addon2" value="검색">
+
 							</div>
 						</form>
 						<button id="upper_dv_btn" type="button" class="btn btn-primary"
@@ -233,9 +311,14 @@
 					<tbody>
 
 						<c:forEach var="list" items="${surveylist}">
-							<tr>
+							<tr id="${list.surveySeq }">
 
-								<th scope="row">${list.surveySeq }</th>
+								<th scope="row"><button class="delete_survey_btn" 
+								onclick="delete_survey_btn(this,${list.surveySeq}, ${pagingdto.selection},  ${pagingdto.pageNo})">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+											fill="currentColor" class="bi bi-x" viewBox="0 0 16 16"> <path
+												d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /> </svg>
+									</button></th>
 								<td><c:if test="${list.stateCode ne '30004'}">
 										<a href="surveyinsert2?surveyseq=${list.surveySeq}">${list.surveyName }</a>
 									</c:if> <c:if test="${list.stateCode eq '30004'}">

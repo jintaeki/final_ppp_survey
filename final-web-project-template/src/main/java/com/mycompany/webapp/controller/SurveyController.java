@@ -2,7 +2,7 @@ package com.mycompany.webapp.controller;
 
 
 
-import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -106,7 +107,7 @@ public class SurveyController {
 		logger.info("지금 가져온 선택지:"+selection);
 		logger.info("페이지 수"+pageNo);
 		logger.info("키워드"+keyword);
-
+		logger.info("날짜"+surveyStartDate);
 		try {
 
 			List<SurveyListDTO> surveylist = null;
@@ -139,6 +140,7 @@ public class SurveyController {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("하이?");
 		return "survey_search";
 	}
 
@@ -336,10 +338,7 @@ public class SurveyController {
 	@ResponseBody
 	public List<Map<String, Object>> touchAndSelect(@PathVariable int questionSeq) {
 		logger.info("touchandselect 진입");
-		System.out.println(questionSeq);
 
-
-		System.out.println(surveyService.selectQuestionBySeq(questionSeq));
 		return surveyService.selectQuestionBySeq(questionSeq);
 	}
 
@@ -352,4 +351,36 @@ public class SurveyController {
 
 
 
+	// 등록완료 돌아가기
+	@RequestMapping("/surveyinsertcomplete.do/{surveyseq}")
+	public String SurveyInsertComplete (@PathVariable int surveyseq ) {
+		surveyService.surveyInsertComplete(surveyseq);
+		
+		return "redirect:/survey/surveysearch";
+	}
+	
+	@RequestMapping("/deletesurvey.do/{surveyseq}/{pageno}/{date}/{keyword}/{selection}")
+	public String DeleteSurvey (@PathVariable int surveyseq, 
+								@PathVariable int pageno,
+								@PathVariable(required=false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
+								@PathVariable String selection,
+								@PathVariable String keyword){
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String strDate = (String)sdf.format(date);
+		if(sdf.format(date).equals("1111-11-11")) {
+			strDate = "";
+		}
+		if(keyword.equals("empty")) {
+			keyword="";
+		}
+		
+		logger.info("deletesurvey 컨트롤러 진입");
+//		surveyService.deleteSurvey(surveyseq);
+		return "redirect:/survey/surveysearch?pageNo="+pageno+"&keyword="+keyword+"&selection="+selection+"&surveyStartDate="+strDate;
+
+	}
+	
+	
+	
 	}

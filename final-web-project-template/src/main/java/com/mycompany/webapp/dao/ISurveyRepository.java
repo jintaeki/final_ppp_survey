@@ -59,7 +59,9 @@ public interface ISurveyRepository {
 
 	void UpdateQTypeBySeq(SurveyQuestionDTO SQD);
 
-
+	void surveyInsertComplete(int surveySeq);
+	
+	void deleteSurvey(int surveySeq);
 }
 
 

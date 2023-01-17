@@ -49,7 +49,7 @@
                   name="surveyContent">${SLD.surveyContent }</textarea>
             </div>
          </div>
-        <input type="hidden" name="stateCode" value="30001"> 
+        <input type="hidden" name="stateCode" value="30001">
         <input type="hidden" name="surveySeq" id="surveyseq" value="${SLD.surveySeq}">
 
          <div class="col-2">
@@ -70,7 +70,7 @@
 <!-- 객관식 -->
 <div class="icon_div" id="item_div">
      <c:forEach items="${SQL}" var="qlist" >
-      <div id="obj_box_toggle" style="display: block;">
+      <div id="obj_box_toggle" style="display: none;">
          <div class="col-12">
             <div class="Item_box">
                <button type="button" id="item_obj_copy">+</button>
@@ -94,20 +94,19 @@
             </div>
          </div>
       </div>
-     </c:forEach>
+
 
 
       <%--       <c:if test="${ }"></c:if> --%>
 <!-- 혼합식 -->
-      <div id="mix_box_toggle" style="display:block;">
+      <div id="mix_box_toggle" style="display:none;">
          <div class="col-12">
             <div class="Item_box">
                <button type="button" id="item_mix_copy">+</button>
                <form:form modelAttribute="SQD" id="item_mix_form">
                   <input type="hidden" name="questionTypeCode" value="10003">
-                  <input type="hidden" name="surveySeq" value="${SLD.surveySeq}"
-                     id="surveyseq">
-                  <input type="hidden" name="questionSeq" value="2">
+                  <input type="hidden" name="surveySeq" value="${SLD.surveySeq}" id="surveyseq">
+                  <input type="hidden" name="questionSeq" value="${SQD.questionSeq}" id="questionseq">
                   <div class="icon_line" id="mix_ItemAfter">
                      <label><input type="text" name="itemContent"
                         placeholder="문항 입력..." id="ic" required></label> 점수<input
@@ -142,7 +141,7 @@
          </div>
       </div>
 
-
+     </c:forEach>
 </div>
 
 
@@ -193,7 +192,7 @@
 
 
 
-  
+
 
 
 
@@ -222,7 +221,7 @@
             <div class="select_radio" id="select_radio">
                <input type="radio" name="questionTypeCode" id="obj_radio"
                   onclick="checkit1()" value="10001" checked>객관식 <input
-                  type="radio" name="questionTypeCode" id="sub_radio"
+                  type="radio" name="questionTypeCode" id="subj_radio"
                   onclick="checkit2()" value="10002"> 주관식 <input
                   type="radio" name="questionTypeCode" id="mix_radio"
                   onclick="checkit3()" value="10003"> 혼합식
@@ -265,7 +264,7 @@
 
 
          <button type="button" class="btn btn-outline-primary" id="add_item_btn"
-                  onclick="insertItem()">문항 추가</button>
+                  onclick="insert_obj_item_btn()">문항 추가</button>
    </div>
 </div>
 
@@ -298,6 +297,39 @@
          }
       });
    }
+
+
+   //문항 비동기 등록
+   function insert_obj_item_btn() {
+      var form = $('#item_obj_form')[0];
+      var data = new FormData(form);
+      $.ajax({
+         method : "POST",
+         url : 'insertItem.do', // form을 전송할 실제 파일경로
+         data : data,
+         processData : false,
+         contentType : false,
+         cache : false,
+         timeout : 600000,
+         beforeSend : function() {
+            // 전송 전 실행 코드
+            console.log("문항 등록 전송 전");
+            console.log($('#questionSeq').val());
+         },
+         success : function(data) {
+            // 전송 후 성공 시 실행 코드
+            console.log("문항 등록 전송 성공");
+            console.log(data);
+         },
+         error : function(e) {
+            // 전송 후 에러 발생 시 실행 코드
+            console.log("ERROR : ", e);
+         }
+      });
+   }
+
+
+
    //문항 비동기 등록(수정)
    function update_obj_item_btn() {
       var form = $('#item_obj_form')[0];
@@ -424,7 +456,7 @@
                            },
                            success:function (jsondata){    //전송 성공시 실행
                               console.log("답은:"+jsondata[0].QUESTIONTYPECODE)
-                              itemHtml(jsondata);
+//                               itemHtml(jsondata);
                            }, error:function(e) {   //실패, 에러
                               console.log("Error", e);
                            }
@@ -492,7 +524,7 @@
                  html +='<form:form modelAttribute="SQD" id="item_mix_form">'
                  html +='<input type="hidden" name="questionTypeCode" value="10003">'
                  html +='<input type="hidden" name="surveySeq" value="'+${SLD.surveySeq}+'" id="surveyseq">'
-                 html +='   <input type="hidden" name="questionSeq" value="'+data[i].QUESTIONSEQ+'">'
+                 html +='<input type="hidden" name="questionSeq" value="'+data[i].QUESTIONSEQ+'">'
                  html +='<div class="icon_line" id="mix_ItemAfter">'
                  html +='<label><input type="text" name="itemContent" value="'+data[i].ITEMCONTENT+'" id="ic"></label> 점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEMSCORE+'" style="min-width: 20px; max-width: 40px;" id="is">'
                  html +='</div>'
@@ -592,6 +624,7 @@
            }
         }$('#item_div').append(html);
     }
+
     //var dltest = document.getElementById('delete_btn');
    //dltest.addEventListener('click', deleteQus);
     function deleteQus(obj,surveySeq) {
@@ -651,7 +684,7 @@
                },
                success:function (jsondata){    //전송 성공시 실행
                   console.log("답은:"+jsondata[0].QUESTION_TYPE_CODE)
-                  itemHtml(jsondata);
+//                   itemHtml(jsondata);
                }, error:function(e) {   //실패, 에러
                   console.log("Error", e);
                }
@@ -671,15 +704,15 @@
          html += `<div class="select_radio" id="select_radio">`;
       if(data[0].QUESTION_TYPE_CODE =="10001"){
          html += `<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1()" checked value="10001" >객관식 `;
-         html += `<input type="radio" name="questionTypeCode" id="sub_radio" onclick="checkit2()" value="10002"> 주관식`;
+         html += `<input type="radio" name="questionTypeCode" id="subj_radio" onclick="checkit2()" value="10002"> 주관식`;
          html +=  `<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3()" value="10003"> 혼합식`;
       } else if (data[0].QUESTION_TYPE_CODE =="10002"){
          html += `<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1()"  value="10001" >객관식 `;
-         html += `<input type="radio" name="questionTypeCode" id="sub_radio" onclick="checkit2()" checked value="10002"> 주관식`;
+         html += `<input type="radio" name="questionTypeCode" id="subj_radio" onclick="checkit2()" checked value="10002"> 주관식`;
          html +=  `<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3()" value="10003"> 혼합식`;
       } else if (data[0].QUESTION_TYPE_CODE =="10003"){
          html += `<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1()"  value="10001" >객관식 `;
-         html += `<input type="radio" name="questionTypeCode" id="sub_radio" onclick="checkit2()" value="10002"> 주관식`;
+         html += `<input type="radio" name="questionTypeCode" id="subj_radio" onclick="checkit2()" value="10002"> 주관식`;
          html +=  `<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3()" checked value="10003"> 혼합식`;
       }
       html += `</div>`;
@@ -692,6 +725,7 @@
        $('#questioN_insert_form').append(html);
    }
    function secondQuestion(data){
+      console.log("secondQuestion");
       console.log(data[0].SURVEYSEQ);
         var html = '';
       html += `</div>`;
@@ -752,36 +786,73 @@
                }
             });
          }
-   //채우 끝
-    //문제 유형 선택 시  해당하는 유형의 문항form이 나오도록 하는 비동기
-  // $(document).ready(function(){
-    //   if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
-      ///    document.querySelector("#obj_box_toggle").style.display = "block";
-      // }
-   //});
-/*
-   function checkit1() {
-      if($("input[type=radio][id=mix_radio]:checked").is(':checked') != true){ //
-    	  $("#mix_box_toggle").prop().show();
-       } if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
-    	   $("#obj_box_toggle").prop().show();
-       }
-   }
-   $(function checkit3() {
-      if($("input[type=radio][id=obj_radio]:checked").is(':checked') != true){ // 체크 여부(checked)
-          $("#obj_box_toggle").prop().show();
-       }if ($("input[type=radio][id=mix_radio]:checked").is(':checked') == true){
-          $("#mix_box_toggle").prop().show();
-       }
-   });
+      /*
+     function insertItem(questionSeq) {
+         var idiv = $('#item_div')[0]
+         alert("문항 등록");
+          console.log("문항 등록 시작");
+         var data = new FormData(idiv);
+         $.ajax({
+            method: 'POST',
+            url: 'iteminsert.do',
+            data: data,
+            processData : false,
+            contentType : false,
+             cache : false,
+            beforeSend: function() {
+               console.log("요청 보냈음");
+               alert("업데이트 beforesend");
+               console.log("item data" + data);
+               console.log("idiv: " + idiv)
+            },
+            success: function(data) {
+               console.log($('#questionseq').val());
+               var surveyseq = $('#questionseq').val();
+              }, error:function(e) {
+                 console.log("Error", e)
+              }
+
 */
-//
+
+
+
+
+    //문제 유형 선택 시  해당하는 유형의 문항form이 나오도록 하는 비동기
+   window.onloade=function(){
+     if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
+               $("#obj_box_toggle").show();
+      }
+   };
+
+
+   function checkit1() {
+      if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
+          $("#obj_box_toggle").show();
+          $("#subj_box_toggle").hide();
+         $("#mix_box_toggle").hide();
+
+
+       }
+   };
+   function checkit3() {
+      if ($("input[type=radio][id=mix_radio]:checked").is(':checked') == true){
+          $("#mix_box_toggle").show();
+          $("#obj_box_toggle").hide();
+          $("#subj_box_toggle").hide();
+
+
+       }
+   };
+
    function checkit2() {
-	   $("#mix_box_toggle").show();
-	   $("#obj_box_toggle").show();
-       //document.querySelector("#mix_box_toggle").style.display = "none";
-       //document.querySelector("#obj_box_toggle").style.display = "none";
-   }
+    if($("input[type=radio][id=subj_radio]:checked").is(':checked') == true){ // 체크 여부(checked)
+        $("#subj_box_toggle").show();
+       $("#obj_box_toggle").hide();
+        $("#mix_box_toggle").hide();
+
+      }
+
+   };
 </script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
