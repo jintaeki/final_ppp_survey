@@ -29,12 +29,12 @@
      position: relative;
      overflow-x: auto;
 }
-#survey_question_dv{
+/* #survey_question_dv{
 	width: 40%;
     position: relative;
     margin: 15px;
     left: 6.5%;
-}
+} */
 
 .list-group-item.active{ /*이거 없애거나 건들면 이 클래스 싹 다 파래짐*/
 	background: transparent!important;
@@ -93,7 +93,7 @@ left: 600px;
 	float:right;
 }
 
-#input_qus{
+/* #input_qus{
 	text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -102,7 +102,7 @@ left: 600px;
     border: none;
      outline: none;
      width:70%
-}
+} */
 
 
 .blank_under{
@@ -143,15 +143,15 @@ left: 600px;
     text-align: left;
 }
 
-.icon_div{
-	/*   background-color: aquamarine; */
+/* .icon_div{
+	  background-color: aquamarine;
 	position: relative;
     width: 42.5%;
     left: 49.7%;
     border: solid;
     bottom: 517px;
     height: 300px;
-}
+} */
 
 .icon_line{
 	margin:10px;

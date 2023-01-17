@@ -82,7 +82,7 @@
   	   	html += '<c:url value="/mapping/set.do" var="actionURL"/>';
   	   	html += '<form:form action="${actionURL}" modelAttribute="map">';
   	   	html += '<input type="hidden" id="surveySeq" name="surveySeq" value="'+seqValue+'">';
-  	   	html += '<br> <h5> 다면평가에 포함될 프로젝트의 범위 정하기 </h5> <select class="form-control" name="month"> <option value="3">최근 3개월 동안에 끝난 프로젝트</option> <option value="6">최근 6개월 동얀에 끝난 프로젝트</option> <option value="12">최근 1년 동안에 끝난 프로젝트</option>';
+  	   	html += '<br> <h5> 프로젝트 평가 기간 </h5> <select class="form-control" name="month"> <option value="3">최근 3개월 동안에 끝난 프로젝트</option> <option value="6">최근 6개월 동얀에 끝난 프로젝트</option> <option value="12">최근 1년 동안에 끝난 프로젝트</option>';
   		html +=	'<option value="24">최근 2년 동안에 끝난 프로젝트</option> <option value="36">최근 3년 동안에 끝난 프로젝트</option> </select>';
   		html += '<br> <h5>평가 인원</h5> <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" max="5" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;">';
   	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> <input type="submit" class="btn btn-primary" value="매핑">';
@@ -125,12 +125,10 @@
 					
 					<div class="modal_class">
 					<input type="hidden" name="stateCode" value="30001">
-					<input type="hidden" name="surveySeq" value="1"><b>기간</b>
-
-					<input type="date" name="surveyStartDate" pattern="yyyy-MM-dd"> - <input
-						type="date" name="surveyClosedDate" pattern="yyyy-MM-dd">
-					<br>
-					<input type="radio" name="anonymityCheckCode" value="20001">익명
+					<input type="hidden" name="surveySeq" value="1"><b>기간</b>&nbsp;
+					<input type="date" name="surveyStartDate" pattern="yyyy-MM-dd">-<input
+						type="date" name="surveyClosedDate" pattern="yyyy-MM-dd">&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="anonymityCheckCode" value="20001">익명 &nbsp;
 					<input type="radio" name="anonymityCheckCode" value="20002">기명
 					</div>
 					
