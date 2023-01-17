@@ -5,6 +5,8 @@ package com.mycompany.webapp.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
@@ -52,7 +54,7 @@ public interface ISurveyService {
 
 	List<SurveyListDTO> searchListByKeyword(PagingDTO pagingdto);
 
-	List<Map<String, Object>> selectQuestionBySeq(int questionSeq);
+	List<Map<String, Object>> selectQuestionBySeq(@Param ("questionSeq") int questionSeq, @Param ("surveySeq") int surveySeq);
 
 	List<Map<String, Object>> selectItems(int questionSeq);
 

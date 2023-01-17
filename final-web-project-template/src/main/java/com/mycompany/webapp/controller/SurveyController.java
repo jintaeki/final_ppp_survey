@@ -442,16 +442,14 @@ public class SurveyController {
 			surveyService.DeleteQuestion(questionSeq);
 		}
 
-	//문제 선택 시 데이터 가져오기
-	@RequestMapping(value="/touchandselect.do/{questionSeq}")
-	@ResponseBody
-	public List<Map<String, Object>> touchAndSelect(@PathVariable int questionSeq) {
-		logger.info("touchandselect 진입");
-		System.out.println(questionSeq);
-
-
-		System.out.println(surveyService.selectQuestionBySeq(questionSeq));
-		return surveyService.selectQuestionBySeq(questionSeq);
-	}
+		//문제 선택 시 데이터 가져오기
+		@RequestMapping(value="/touchandselect.do/{questionSeq}/{surveySeq}")
+		@ResponseBody
+		public List<Map<String, Object>> touchAndSelect(@PathVariable int questionSeq, @PathVariable int surveySeq) {
+			logger.info("touchandselect 진입");
+			System.out.println(surveySeq);
+			System.out.println(surveyService.selectQuestionBySeq(questionSeq,surveySeq));
+			return surveyService.selectQuestionBySeq(questionSeq,surveySeq);
+		}
 
 	}

@@ -3,24 +3,24 @@
 <mapper namespace="com.mycompany.webapp.dao.ISurveyRepository">
 
 		<insert id="insertQuestion" parameterType="SQD">
-		<selectKey keyProperty="questionNum" resultType="int" order="BEFORE">
-			SELECT QUESTION_ID_SEQ.NEXTVAL FROM DUAL
-		</selectKey>
+		<selectKey keyProperty="questionSeq" resultType="int" order="BEFORE">
+         SELECT QUESTION_ID_SEQ.NEXTVAL FROM DUAL
+      </selectKey>
 
-				INSERT INTO SURVEY_QUESTION(QUESTION_SEQ
-				    ,SURVEY_SEQ
-				    ,QUESTION_CONTENT
-				    ,QUESTION_TYPE_CODE
-				    ,QUESTION_NUM
-				    ,REG_DATE
-				    ,UPDATE_DATE)
-				VALUES (#{questionSeq}
-				    ,#{surveySeq}
-				    ,#{questionContent}
-				    ,#{questionTypeCode}
-				    ,#{questionNum}
-				    ,SYSDATE
-				    ,SYSDATE)
+            INSERT INTO SURVEY_QUESTION(QUESTION_SEQ
+                ,SURVEY_SEQ
+                ,QUESTION_CONTENT
+                ,QUESTION_TYPE_CODE
+                ,QUESTION_NUM
+                ,REG_DATE
+                ,UPDATE_DATE)
+            VALUES (#{questionSeq}
+                ,#{surveySeq}
+                ,#{questionContent}
+                ,#{questionTypeCode}
+                ,(select nvl2(max(QUESTION_NUM),max(question_num)+1,1) from survey_question where survey_seq = #{surveySeq})
+                ,SYSDATE
+                ,SYSDATE)
 	</insert>
 
 	<select id="selectMaxQuestionId" resultType="int">
@@ -113,21 +113,21 @@
 	</delete>
 
 	<select id="selectQuestion" parameterType="int" resultType="hashmap">
-		SELECT SQ.SURVEY_SEQ
-		     ,SQ.QUESTION_SEQ
-		     ,SQ.QUESTION_CONTENT
-		     ,SQ.QUESTION_TYPE_CODE
-		     ,SI.ITEM_SEQ
-		     ,SI.ITEM_CONTENT
-		     ,SI.ITEM_SCORE
-		FROM SURVEY_ITEM SI
-		     ,SURVEY_QUESTION SQ
-		WHERE SI.QUESTION_SEQ=SQ.QUESTION_SEQ AND SURVEY_SEQ = #{surveySeq}	 ORDER BY QUESTION_SEQ DESC
+	SELECT SURVEY_QUESTION.SURVEY_SEQ
+       ,SURVEY_QUESTION.QUESTION_SEQ
+           ,SURVEY_QUESTION.QUESTION_CONTENT
+           ,SURVEY_QUESTION.QUESTION_TYPE_CODE
+           ,SURVEY_ITEM.ITEM_SEQ
+           ,SURVEY_ITEM.ITEM_CONTENT
+           ,SURVEY_ITEM.ITEM_SCORE
+      FROM  SURVEY_ITEM  right join SURVEY_QUESTION
+      on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ
+      where SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} ORDER BY SURVEY_QUESTION.QUESTION_SEQ DESC
 	</select>
 
 	<select id="selectSurvey" parameterType="int" resultType="SLD">
 		SELECT SURVEY_SEQ
-		     ,SURVEY_NAME
+		     	,SURVEY_NAME
 		     ,SURVEY_CONTENT
 		     ,ANONYMITY_CHECK_CODE
 		     ,to_date(SURVEY_START_DATE, 'YYYY-MM-dd') as surveyStartDate
@@ -218,16 +218,19 @@
 		]]>
 	</select>
 
-	<select id="selectQuestionBySeq" parameterType="int" resultType="hashmap">
-	        SELECT sq.SURVEY_SEQ
-                ,sq.QUESTION_SEQ
-                ,sq.QUESTION_CONTENT
-                ,sq.QUESTION_TYPE_CODE
-                ,si.ITEM_SEQ
-                ,si.ITEM_CONTENT
-                ,si.ITEM_SCORE
-            FROM SURVEY_QUESTION SQ, survey_item si
-            WHERE sq.QUESTION_SEQ = si.QUESTION_SEQ and sq.QUESTION_SEQ = #{questionSeq}
+	<select id="selectQuestionBySeq" resultType="map">
+	      SELECT SURVEY_QUESTION.SURVEY_SEQ
+      		    ,SURVEY_QUESTION.QUESTION_SEQ
+      		    ,SURVEY_QUESTION.QUESTION_CONTENT
+                ,SURVEY_QUESTION.QUESTION_TYPE_CODE
+                ,SURVEY_ITEM.ITEM_SEQ
+                ,SURVEY_ITEM.ITEM_CONTENT
+                ,SURVEY_ITEM.ITEM_SCORE
+          FROM  SURVEY_ITEM  right join SURVEY_QUESTION
+          on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ
+          WHERE SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq}
+          and SURVEY_QUESTION.QUESTION_SEQ = #{questionSeq}
+          ORDER BY SURVEY_QUESTION.QUESTION_SEQ DESC
 	</select>
 
 

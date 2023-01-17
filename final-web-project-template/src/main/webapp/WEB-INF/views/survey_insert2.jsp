@@ -165,7 +165,7 @@
          <c:forEach items="${SQL}" var="qlist" >
             <div class="list-group-item list-group-item-action active py-3 lh-sm"
             id="queAfter">
-
+				<input type="hidden"  value="${qlist.surveySeq }" id="surveySequence">
 
                <input disabled type="text" id="input_qus"
                   value="${qlist.questionContent }">
@@ -479,14 +479,15 @@
            html ='관리할 문제가 없어요~';
         }else{
             for(i=0; i<size; i++){
-                html+='<div class="list-group-item list-group-item-action active py-3 lh-sm" id="queAfter">'
-                html +='<input type="text" id="input_qus" value="'+data[i].QUESTION_CONTENT+'" disabled>';
-                html +='<button value="'+data[i].QUESTION_SEQ+'"onclick="touchQuestion(this)">확인</button>';
-               html +='<button class="delete_btn" onclick="deleteQus(this,'+data[i].SURVEY_SEQ+')" value="'+data[i].QUESTION_SEQ+'">';
-               html += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">';
-                 html += '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /></svg>';
-               html +=   '</button>';
-               html +='<div class="blank_under"></div></div>';
+            	html+='<div class="list-group-item list-group-item-action active py-3 lh-sm" id="queAfter">'
+                   html+='<input type="hidden" value="'+data[i].SURVEY_SEQ+'" id="surveySequence">'
+                   html +='<input type="text" id="input_qus" value="'+data[i].QUESTION_CONTENT+'" disabled>';
+                   html +='<button value="'+data[i].QUESTION_SEQ+'"onclick="touchQuestion(this)">확인</button>';
+                   html +='<button class="delete_btn" onclick="deleteQus(this,'+data[i].SURVEY_SEQ+')" value="'+data[i].QUESTION_SEQ+'">';
+                   html += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">';
+                   html += '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /></svg>';
+                   html +=   '</button>';
+                   html +='<div class="blank_under"></div></div>';
                 }
         }
         $('#scroll_area').append(html);
@@ -663,13 +664,14 @@
        });
    }
     function touchQuestion(obj){
+    	var sq = $('#surveySequence').val();
       var questionid = $(obj).val();
       $.ajax({
          method:'get', //어떤 방식으로 보낼 지
-         url:'touchandselect.do/' + questionid, // qdiv를 보낼 경로 설정
+         url:'touchandselect.do/' + questionid+'/'+sq, // qdiv를 보낼 경로 설정
          dataType: "json",
           beforeSend : function() { //보내기 전 실행
-         console.log("touchQuestion 요청이 보내지는가?");
+         console.log("요청이 보내지는가?");
          },
          success:function (data) {    //전송 성공시 실행
             console.log("으잉?"+data);
