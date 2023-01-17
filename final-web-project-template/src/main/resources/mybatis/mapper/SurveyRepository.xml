@@ -2,26 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.dao.ISurveyRepository">
 
+
       <insert id="insertQuestion" parameterType="SQD">
       <selectKey keyProperty="questionNum" resultType="int" order="BEFORE">
          SELECT QUESTION_ID_SEQ.NEXTVAL FROM DUAL
       </selectKey>
 
-            INSERT INTO SURVEY_QUESTION(QUESTION_SEQ
-                ,SURVEY_SEQ
-                ,QUESTION_CONTENT
-                ,QUESTION_TYPE_CODE
-                ,QUESTION_NUM
-                ,REG_DATE
-                ,UPDATE_DATE)
-            VALUES (#{questionSeq}
-                ,#{surveySeq}
-                ,#{questionContent}
-                ,#{questionTypeCode}
-                ,#{questionNum}
-                ,SYSDATE
-                ,SYSDATE)
-   </insert>
+
+				INSERT INTO SURVEY_QUESTION(QUESTION_SEQ
+				    ,SURVEY_SEQ
+				    ,QUESTION_CONTENT
+				    ,QUESTION_TYPE_CODE
+				    ,QUESTION_NUM
+				    ,REG_DATE
+				    ,UPDATE_DATE)
+				VALUES (#{questionSeq}
+				    ,#{surveySeq}
+				    ,#{questionContent}
+				    ,#{questionTypeCode}
+				    ,#{questionNum}
+				    ,SYSDATE
+				    ,SYSDATE)
+	</insert>
 
    <select id="selectMaxQuestionId" resultType="int">
 
@@ -30,29 +32,32 @@
       ]]>
    </select>
 
-   <select id="selectMaxItemId"  resultType="int">
-               SELECT NVL(MAX(ITEM_SEQ   ), 0) AS "itemSeq" FROM SURVEY_ITEM
-
+	<select id="selectMaxItemId"  resultType="int">
+			SELECT NVL(MAX(ITEM_SEQ	), 0) AS "itemSeq" FROM SURVEY_ITEM
    </select>
 
 <insert id="insertItem" parameterType="SQD">
 
-      <selectKey keyProperty="itemSeq" resultType="int" order="BEFORE">
-            SELECT ITEM_ID_SEQ.NEXTVAL FROM DUAL
-      </selectKey>
-         INSERT INTO SURVEY_ITEM(QUESTION_SEQ
-              ,ITEM_SEQ
-              ,ITEM_CONTENT
-              ,ITEM_SCORE
-              ,REG_DATE
-              ,UPDATE_DATE)
-         VALUES (#{questionSeq}
-              ,#{itemSeq}
-              ,#{itemContent}
-              ,#{itemScore}
-              ,SYSDATE
-              ,SYSDATE)
-   </insert>
+
+		<selectKey keyProperty="itemSeq" resultType="int" order="BEFORE">
+				SELECT ITEM_ID_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+			INSERT INTO SURVEY_ITEM(QUESTION_SEQ
+			     ,ITEM_SEQ
+			     ,ITEM_CONTENT
+			     ,ITEM_SCORE
+			     ,REG_DATE
+			     ,UPDATE_DATE)
+			VALUES (#{questionSeq}
+			     ,#{itemSeq}
+			     ,#{itemContent}
+			     ,#{itemScore}
+			     ,SYSDATE
+			     ,SYSDATE)
+	</insert>
+
+
+
 
    <insert id="setSurvey" parameterType="SLD" >
 
@@ -91,21 +96,24 @@
 
    <insert id="updateItem" parameterType="SQD" >
 
+
       <selectKey keyProperty="itemSeq" resultType="int" order="BEFORE">
          SELECT ITEM_ID_SEQ.NEXTVAL FROM DUAL
       </selectKey>
 
-      INSERT INTO SURVEY_ITEM (QUESTION_SEQ
-           ,ITEM_SEQ
-           ,ITEM_CONTENT
-           ,ITEM_SCORE
-           ,UPDATE_DATE)
-      VALUES(#{questionSeq}
-           ,#{itemSeq}
-           ,#{itemContent}
-           ,#{itemScore}
-           ,SYSDATE)
-   </insert>
+
+		INSERT INTO SURVEY_ITEM (QUESTION_SEQ
+		     ,ITEM_SEQ
+		     ,ITEM_CONTENT
+		     ,ITEM_SCORE
+		     ,UPDATE_DATE)
+		VALUES(#{questionSeq}
+		     ,#{itemSeq}
+		     ,#{itemContent}
+		     ,#{itemScore}
+		     ,SYSDATE)
+	</insert>
+
 
 
 <delete id="DeleteQuestion" parameterType="SQD">
@@ -231,10 +239,12 @@
    </select>
 
 
-   <delete id="deleteItemByQSeq" parameterType="int">
-      DELETE FROM SURVEY_ITEM
-      WHERE QUESTION_SEQ = #{questionSeq}
-   </delete>
+
+	<delete id="deleteItemByQSeq" parameterType="int">
+		DELETE FROM SURVEY_ITEM
+		WHERE QUESTION_SEQ = #{questionSeq}
+	</delete>
+
 
 
 
