@@ -218,7 +218,7 @@
 		]]>
 	</select>
 
-	<select id="selectQuestionBySeq" resultType="map">
+	<select id="selectQuestionBySeq" resultType="hashmap">
 	      SELECT SURVEY_QUESTION.SURVEY_SEQ
       		    ,SURVEY_QUESTION.QUESTION_SEQ
       		    ,SURVEY_QUESTION.QUESTION_CONTENT
