@@ -19,7 +19,7 @@
 				    ,#{surveySeq}
 				    ,#{questionContent}
 				    ,#{questionTypeCode}
-				    ,(select nvl2(max(QUESTION_NUM),max(question_num)+1,1) from survey_question where survey_seq = #{surveySeq})
+				    ,(SELECT NVL2(MAX(QUESTION_NUM),MAX(QUESTION_NUM)+1,1) FROM SURVEY_QUESTION WHERE SURVEY_SEQ = #{surveySeq})
 				    ,SYSDATE
 				    ,SYSDATE)
 	</insert>
@@ -35,24 +35,28 @@
 			SELECT NVL(MAX(ITEM_SEQ	), 0) AS "itemSeq" FROM SURVEY_ITEM
    </select>
 
-<insert id="insertItem" parameterType="SQD">
+	<insert id="insertItem" parameterType="SQD">
 
 
 		<selectKey keyProperty="itemSeq" resultType="int" order="BEFORE">
 				SELECT ITEM_ID_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
+		
 			INSERT INTO SURVEY_ITEM(QUESTION_SEQ
 			     ,ITEM_SEQ
 			     ,ITEM_CONTENT
 			     ,ITEM_SCORE
+			     ,ITEM_NUM
 			     ,REG_DATE
 			     ,UPDATE_DATE)
 			VALUES (#{questionSeq}
 			     ,#{itemSeq}
 			     ,#{itemContent}
 			     ,#{itemScore}
+			     ,(SELECT NVL2(MAX(ITEM_NUM),MAX(ITEM_NUM)+1,1) FROM SURVEY_ITEM WHERE QUESTION_SEQ = #{questionSeq})
 			     ,SYSDATE
 			     ,SYSDATE)
+			 
 	</insert>
 
 
