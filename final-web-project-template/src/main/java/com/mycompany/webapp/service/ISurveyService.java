@@ -52,9 +52,11 @@ public interface ISurveyService {
 
 	List<SurveyListDTO> searchListByKeyword(PagingDTO pagingdto);
 
-	List<Map<String, Object>> selectQuestionBySeq(int questionSeq);
+	List<Map<String, Object>> selectQuestionBySeq(int questionSeq,int surveySeq);
 
 	List<Map<String, Object>> selectItems(int questionSeq);
+	
+	//진택
 	
 	void surveyInsertComplete(int surveySeq);
 	

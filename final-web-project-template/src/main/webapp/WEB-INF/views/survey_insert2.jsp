@@ -77,14 +77,12 @@
                <form:form modelAttribute="SQD" id="item_obj_form">
                   <input type="hidden" name="questionTypeCode" value="10001">
                   <input type="hidden" name="surveySeq" value="${SLD.surveySeq}">
-
-                  <div class="icon_line" id="obj_ItemAfter">
-                     <label><input type="text" name="itemContent"
-                        placeholder="문항 입력..." id="ic"></label> 점수<input type="number"
-                        name="itemScore" min="0" value="0"
-                        style="min-width: 20px; max-width: 40px;" id="is">
-                  </div>
-
+					<div id="obj_ItemAfter">
+					  <div class="icon_line"> 		
+                  		<input type="text" name="itemContent" placeholder="문항 입력..." id="ic"> 
+                  		점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">
+                	  </div>
+					</div>
                   <div class="col-12">
 
                      <input type="button" class="btn btn-primary"
@@ -107,11 +105,13 @@
                   <input type="hidden" name="questionTypeCode" value="10003">
                   <input type="hidden" name="surveySeq" value="${SLD.surveySeq}" id="surveyseq">
                   <input type="hidden" name="questionSeq" value="${SQD.questionSeq}" id="questionseq">
-                  <div class="icon_line" id="mix_ItemAfter">
+                  <div id="mix_ItemAfter">
+                  <div class="icon_line" id="add_mix" >
                      <label><input type="text" name="itemContent"
                         placeholder="문항 입력..." id="ic" required></label> 점수<input
                         type="number" name="itemScore" min="0" value="0"
                         style="min-width: 20px; max-width: 40px;" id="is">
+                  </div>
                   </div>
                   <div class="icon_line">
                      <label> <input type="text" id="ic" name="itemContent"
@@ -166,7 +166,7 @@
             <div class="list-group-item list-group-item-action active py-3 lh-sm"
             id="queAfter">
 
-
+				<input type="hidden"  value="${qlist.surveySeq }" id="surveySequence">
                <input disabled type="text" id="input_qus"
                   value="${qlist.questionContent }">
                <button value="${qlist.questionSeq }"onclick="touchQuestion(this)">확인</button>
@@ -390,28 +390,30 @@
    }
    //문제 추가 후 문항 추가
    $("#item_obj_copy").click(function() {
-      if (cnt < 1000) {
-         const testDiv = document.getElementById('new_obj_Item');
-         const testDiv1 = document.getElementById('obj_ItemAfter');
-         const newNode = testDiv.cloneNode(true);
-         newNode.style.display = 'inline-block';
-         cnt++;
-         testDiv1.append(newNode);
-      } else {
-         alert("문항은 최대 5개까지 생성 가능합니다.");
-      }
+    
+         var testDiv ='';
+         testDiv +='<div class="icon_line">';
+         testDiv += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
+   		 testDiv +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+         testDiv += '</div>';
+         
+         var testDiv1 = document.getElementById('obj_ItemAfter');
+
+         $('#obj_ItemAfter').append(testDiv);
+       
+    
    });
    $("#item_mix_copy").click(function() {
-      if (cnt < 1000) {
-         const testDiv = document.getElementById('new_mix_Item');
-         const testDiv1 = document.getElementById('mix_ItemAfter');
-         const newNode = testDiv.cloneNode(true);
-         newNode.style.display = 'inline-block';
-         cnt++;
-         testDiv1.after(newNode);
-      } else {
-         alert("문항은 최대 5개까지 생성 가능합니다.");
-      }
+  	   var testDiv ='';
+	   testDiv +='<div class="icon_line">';
+       testDiv += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
+ 	   testDiv +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+       testDiv += '</div>';
+       
+   	   var testDiv1 = document.getElementById('mix_ItemAfter');
+
+         $('#mix_ItemAfter').append(testDiv);
+     
    });
    //문항추가 끝
 //    var test = document.getElementById('add_btn');
@@ -447,20 +449,8 @@
                         questionHtml(jsondata);
                         var surveyseq = jsondata[0].SURVEY_SEQ;
                         var questionseq = jsondata[0].QUESTION_SEQ;
-                        $.ajax({
-                           method:'GET', //어떤 방식으로 보낼 지
-                           url:'selectitems.do/'+ questionseq, // qdiv를 보낼 경로 설정
-                            dataType: "json",
-                           beforeSend : function() { //보내기 전 실행
-                           console.log("요청이 보내지는가?");
-                           },
-                           success:function (jsondata){    //전송 성공시 실행
-                              console.log("답은:"+jsondata[0].QUESTIONTYPECODE)
-//                               itemHtml(jsondata);
-                           }, error:function(e) {   //실패, 에러
-                              console.log("Error", e);
-                           }
-                           });
+                        itemHtml(jsondata);
+                       
                   }, error:function(e) {   //실패, 에러
                      console.log("Error", e);
                   }
@@ -480,6 +470,7 @@
         }else{
             for(i=0; i<size; i++){
                 html+='<div class="list-group-item list-group-item-action active py-3 lh-sm" id="queAfter">'
+                html+='<input type="hidden" value="'+data[i].SURVEY_SEQ+'" id="surveySequence">'
                 html +='<input type="text" id="input_qus" value="'+data[i].QUESTION_CONTENT+'" disabled>';
                 html +='<button value="'+data[i].QUESTION_SEQ+'"onclick="touchQuestion(this)">확인</button>';
                html +='<button class="delete_btn" onclick="deleteQus(this,'+data[i].SURVEY_SEQ+')" value="'+data[i].QUESTION_SEQ+'">';
@@ -494,136 +485,43 @@
     function itemHtml(data){
          let size = data.length;
          var html = '';
-        $("#item_div").empty();
-        console.log("답은:"+data[0].QUESTIONTYPECODE)
+        
+        console.log("답은:"+data[0].QUESTION_TYPE_CODE)
        // 10001 객 10002 주 10003 혼
         for(i=0; i<size; i++){
-           if(data[i].QUESTIONTYPECODE == "10001"){
-                html +='<div id="obj_box_toggle" >'
-                 html +='<div class="col-12">'
-                 html +='<div class="Item_box">'
-                 html +='<button type="button" id="item_obj_copy">+</button>'
-                 html +='<form:form modelAttribute="SQD" id="item_obj_form">'
-                 html +='<input type="hidden" name="questionTypeCode" value="10001">'
-                 html +='<input type="hidden" name="surveySeq" value="'+data[i].SURVEYSEQ+'">'
-                 html +='<input type="hidden" name="questionSeq" value="'+data[i].QUESTIONSEQ+'">'
-                 html +='<div class="icon_line" id="obj_ItemAfter">'
-                 html +='<label><input type="text" name="itemContent" value="'+data[i].ITEMCONTENT+'" id="ic"></label> 점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEMSCORE+'" style="min-width: 20px; max-width: 40px;" id="is">'
-                 html +='</div>'
-                 html +='<div class="col-12">'
-                 html +='<input type="button" class="btn btn-primary" onclick="update_obj_item_btn()" value="수정">'
-                 html +='</div>'
-                 html +='</form:form>'
-                 html +='</div>'
-                 html +='</div>'
-                 html +='</div>'
-                 html +='<div id="mix_box_toggle" style="display:none;">'
-                 html +='<div class="col-12">'
-                 html +='<div class="Item_box">'
-                 html +='<button type="button" id="item_mix_copy">+</button>'
-                 html +='<form:form modelAttribute="SQD" id="item_mix_form">'
-                 html +='<input type="hidden" name="questionTypeCode" value="10003">'
-                 html +='<input type="hidden" name="surveySeq" value="'+${SLD.surveySeq}+'" id="surveyseq">'
-                 html +='<input type="hidden" name="questionSeq" value="'+data[i].QUESTIONSEQ+'">'
-                 html +='<div class="icon_line" id="mix_ItemAfter">'
-                 html +='<label><input type="text" name="itemContent" value="'+data[i].ITEMCONTENT+'" id="ic"></label> 점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEMSCORE+'" style="min-width: 20px; max-width: 40px;" id="is">'
-                 html +='</div>'
-                 html +='<div class="icon_line">'
-                 html +='<label> <input type="text" id="ic" name="itemContent" placeholder="기타.." value="기타"></label>'
-                 html +='<input type="number" name="itemScore" value="0" style="display: none">'
-                 html +='</div>'
-                 html +='<div class="col-12">'
-                 html +='<input type="button" class="btn btn-primary" onclick="update_mix_item_btn()" value="수정">'
-                 html +='</div>'
-                 html +='</form:form>'
-                 html +='</div>'
-                 html +='</div>'
-                 html +='</div>'
-           }else if(data[i].QUESTIONTYPECODE=="10002"){
-             html +='<div id="obj_box_toggle" style="display:none;">'
-                 html +='<div class="col-12">'
-                 html +='<div class="Item_box">'
-                 html +='   <button type="button" id="item_obj_copy">+</button>'
-                 html +='<form:form modelAttribute="SQD" id="item_obj_form">'
-                 html +='<input type="hidden" name="questionTypeCode" value="10001">'
-                 html +='<input type="hidden" name="surveySeq" value="'+data[i].SURVEYSEQ+'">'
-                 html +='<input type="hidden" name="questionSeq" value="'+data[i].QUESTIONSEQ+'">'
-                 html +='<div class="icon_line" id="obj_ItemAfter">'
-                 html +='<label><input type="text" name="itemContent" value="'+data[i].ITEMCONTENT+'" id="ic"></label> 점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEMSCORE+'" style="min-width: 20px; max-width: 40px;" id="is">'
-                 html +='</div>'
-                 html +='<div class="col-12">'
-                 html +='<input type="button" class="btn btn-primary" onclick="update_obj_item_btn()" value="수정">'
-                 html +='</div>'
-                 html +='</form:form>'
-                 html +='</div>'
-                 html +='</div>'
-                 html +='</div>'
-                 html +='<div id="mix_box_toggle" style="display:none;">'
-                 html +='<div class="col-12">'
-                 html +='<div class="Item_box">'
-                 html +='<button type="button" id="item_mix_copy">+</button>'
-                 html +='<form:form modelAttribute="SQD" id="item_mix_form">'
-                 html +='<input type="hidden" name="questionTypeCode" value="10003">'
-                 html +='<input type="hidden" name="surveySeq" value="'+${SLD.surveySeq}+'" id="surveyseq">'
-                 html +='   <input type="hidden" name="questionSeq" value="'+data[i].QUESTIONSEQ+'">'
-                 html +='<div class="icon_line" id="mix_ItemAfter">'
-                 html +='<label><input type="text" name="itemContent" value="'+data[i].ITEMCONTENT+'" id="ic"></label> 점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEMSCORE+'" style="min-width: 20px; max-width: 40px;" id="is">'
-                 html +='</div>'
-                 html +='<div class="icon_line">'
-                 html +='<label> <input type="text" id="ic" name="itemContent" placeholder="기타.." value="기타"></label>'
-                 html +='<input type="number" name="itemScore" value="0" style="display: none">'
-                 html +='</div>'
-                 html +='<div class="col-12">'
-                 html +='<input type="button" class="btn btn-primary" onclick="update_mix_item_btn()" value="수정">'
-                 html +='</div>'
-                 html +='</form:form>'
-                 html +='</div>'
-                 html +='</div>'
-                 html +='</div>'
-           }else if(data[i].QUESTIONTYPECODE=="10003"){
-             html +='<div id="obj_box_toggle" style="display:none;">'
-                 html +='<div class="col-12">'
-                 html +='<div class="Item_box">'
-                 html +='   <button type="button" id="item_obj_copy">+</button>'
-                 html +='<form:form modelAttribute="SQD" id="item_obj_form">'
-                 html +='<input type="hidden" name="questionTypeCode" value="10001">'
-                 html +='<input type="hidden" name="surveySeq" value="'+data[i].SURVEYSEQ+'">'
-                 html +='<input type="hidden" name="questionSeq" value="'+data[i].QUESTIONSEQ+'">'
-                 html +='<div class="icon_line" id="obj_ItemAfter">'
-                 html +='<label><input type="text" name="itemContent" value="'+data[i].ITEMCONTENT+'" id="ic"></label> 점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEMSCORE+'" style="min-width: 20px; max-width: 40px;" id="is">'
-                 html +='</div>'
-                 html +='<div class="col-12">'
-                 html +='<input type="button" class="btn btn-primary" onclick="update_obj_item_btn()" value="수정">'
-                 html +='</div>'
-                 html +='</form:form>'
-                 html +='</div>'
-                 html +='</div>'
-                 html +='</div>'
-                 html +='<div id="mix_box_toggle" >'
-                 html +='<div class="col-12">'
-                 html +='<div class="Item_box">'
-                 html +='<button type="button" id="item_mix_copy">+</button>'
-                 html +='<form:form modelAttribute="SQD" id="item_mix_form">'
-                 html +='<input type="hidden" name="questionTypeCode" value="10003">'
-                 html +='<input type="hidden" name="surveySeq" value="'+${SLD.surveySeq}+'" id="surveyseq">'
-                 html +='   <input type="hidden" name="questionSeq" value="'+data[i].QUESTIONSEQ+'">'
-                 html +='<div class="icon_line" id="mix_ItemAfter">'
-                 html +='<label><input type="text" name="itemContent" value="'+data[i].ITEMCONTENT+'" id="ic"></label> 점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEMSCORE+'" style="min-width: 20px; max-width: 40px;" id="is">'
-                 html +='</div>'
-                 html +='<div class="icon_line">'
-                 html +='<label> <input type="text" id="ic" name="itemContent" placeholder="기타.." value="기타"></label>'
-                 html +='<input type="number" name="itemScore" value="0" style="display: none">'
-                 html +='</div>'
-                 html +='<div class="col-12">'
-                 html +='<input type="button" class="btn btn-primary" onclick="update_mix_item_btn()" value="수정">'
-                 html +='</div>'
-                 html +='</form:form>'
-                 html +='</div>'
-                 html +='</div>'
-                 html +='</div>'
+           if(data[i].QUESTION_TYPE_CODE == "10001"){
+        	   if(data[i].ITEM_SEQ == 0){
+        	   $("#obj_ItemAfter").empty();
+        	  
+        	   html +='<div class="icon_line">';
+        	   html +='<input type="hidden" value="' + data[i].QUESTION_SEQ +'">';
+        	   html += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
+        	   html +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+        	   html += '</div>';
+               
+               var testDiv1 = document.getElementById('obj_ItemAfter');
+	
+               $('#obj_ItemAfter').append(html);
+        	   }else{
+        		   $("#mix_ItemAfter").empty();
+             	  
+            	   html +='<div class="icon_line">';
+            	   html +='<input type="hidden" value="' + data[i].QUESTION_SEQ +'">';
+            	   html += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic" value="'+data[i].ITEM_CONTENT+'">';
+            	   html +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
+            	   html += '</div>';
+                   
+                   var testDiv1 = document.getElementById('mix_ItemAfter');
+    	
+                   $('#mix_ItemAfter').append(html);
+        	   }
+           }else if(data[i].QUESTION_TYPE_CODE == "10003"){
+        	   alert("hi");
            }
-        }$('#item_div').append(html);
-    }
+
+           }
+        }
+    
 
     //var dltest = document.getElementById('delete_btn');
    //dltest.addEventListener('click', deleteQus);
@@ -663,10 +561,11 @@
        });
    }
     function touchQuestion(obj){
+    	var sq = $('#surveySequence').val();
       var questionid = $(obj).val();
       $.ajax({
          method:'get', //어떤 방식으로 보낼 지
-         url:'touchandselect.do/' + questionid, // qdiv를 보낼 경로 설정
+         url:'touchandselect.do/' + questionid+'/'+sq, // qdiv를 보낼 경로 설정
          dataType: "json",
           beforeSend : function() { //보내기 전 실행
          console.log("요청이 보내지는가?");
@@ -675,20 +574,9 @@
             console.log("으잉?"+data);
                oneQuestion(data);
                secondQuestion(data);
-               $.ajax({
-               method:'GET', //어떤 방식으로 보낼 지
-               url:'selectitems.do/'+ questionid, // qdiv를 보낼 경로 설정
-                dataType: "json",
-               beforeSend : function() { //보내기 전 실행
-               console.log("요청이 보내지는가?");
-               },
-               success:function (jsondata){    //전송 성공시 실행
-                  console.log("답은:"+jsondata[0].QUESTION_TYPE_CODE)
-//                   itemHtml(jsondata);
-               }, error:function(e) {   //실패, 에러
-                  console.log("Error", e);
-               }
-               });
+               console.log("답은:"+data[0].QUESTION_TYPE_CODE);
+               itemHtml(data);
+              
             }, error:function(e) {   //실패, 에러
                console.log("Error", e);
             }
@@ -726,7 +614,7 @@
    }
    function secondQuestion(data){
       console.log("secondQuestion");
-      console.log(data[0].SURVEYSEQ);
+      console.log(data[0].SURVEY_SEQ);
         var html = '';
       html += `</div>`;
       html += `<button type="button" class="btn btn-outline-primary" id="add_btn" onclick="insertQus()">문제추가</button>`;

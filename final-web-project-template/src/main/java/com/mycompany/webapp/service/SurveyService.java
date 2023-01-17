@@ -166,9 +166,9 @@ public class SurveyService implements ISurveyService{
 
 
 	@Override
-	public List<Map<String, Object>> selectQuestionBySeq(int questionSeq){
-		logger.info(surveyDao.selectQuestionBySeq(questionSeq).toString());
-		return surveyDao.selectQuestionBySeq(questionSeq);
+	public List<Map<String, Object>> selectQuestionBySeq(int questionSeq, int surveySeq){
+		logger.info(surveyDao.selectQuestionBySeq(questionSeq,surveySeq).toString());
+		return surveyDao.selectQuestionBySeq(questionSeq,surveySeq);
 	}
 
 	@Override
@@ -187,6 +187,8 @@ public class SurveyService implements ISurveyService{
 
 
 
+	
+	//진택
 	@Override
 	public void surveyInsertComplete(int surveySeq) {
 		surveyDao.surveyInsertComplete(surveySeq);

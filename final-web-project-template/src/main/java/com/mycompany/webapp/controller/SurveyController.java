@@ -276,7 +276,7 @@ public class SurveyController {
 			String checkCode = SQD.getQuestionTypeCode();
 			try {
 				if(checkCode.equals("10001")) {
-					surveyService.deleteItemByQSeq(SQD);
+//					surveyService.deleteItemByQSeq(SQD);
 					// 문제 id, 점수, 문항내용, itemid, 각 각 받아야 한다
 					// questionId, itemScore, itemContent, itemId
 
@@ -294,6 +294,8 @@ public class SurveyController {
 					for(int i = 0 ; i<=cntcontent;i++) {
 						SQD.setItemContent(itmencontent[i]);
 						SQD.setItemScore(itemscore[i]);
+						System.out.println("컨텐츠:"+SQD.getItemContent());
+						System.out.println("스코어"+SQD.getItemScore());
 						surveyService.updateItem(SQD);
 					}
 				}else if(checkCode.equals("10002")) {
@@ -405,12 +407,12 @@ public class SurveyController {
 		}
 
 	//문제 선택 시 데이터 가져오기
-	@RequestMapping(value="/touchandselect.do/{questionSeq}")
+	@RequestMapping(value="/touchandselect.do/{questionSeq}/{surveySeq}")
 	@ResponseBody
-	public List<Map<String, Object>> touchAndSelect(@PathVariable int questionSeq) {
+	public List<Map<String, Object>> touchAndSelect(@PathVariable int questionSeq, @PathVariable int surveySeq) {
 		logger.info("touchandselect 진입");
-
-		return surveyService.selectQuestionBySeq(questionSeq);
+		System.out.println(surveyService.selectQuestionBySeq(questionSeq,surveySeq));
+		return surveyService.selectQuestionBySeq(questionSeq,surveySeq);
 	}
 
 
@@ -422,7 +424,10 @@ public class SurveyController {
 	}
 
 
-
+	
+	
+	
+// 진택
 	// 등록완료 돌아가기
 	@RequestMapping("/surveyinsertcomplete.do/{surveyseq}")
 	public String SurveyInsertComplete (@PathVariable int surveyseq ) {
