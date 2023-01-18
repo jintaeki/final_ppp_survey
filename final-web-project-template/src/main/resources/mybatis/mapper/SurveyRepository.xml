@@ -165,7 +165,7 @@
 <!--    </update> -->
 
    <update id="sendMessage" parameterType="int">
-      UPDATE SURVEY_LIST SET    STATE_CODE='Y' WHERE SURVEY_SEQ =#{surveySeq}
+      UPDATE SURVEY_LIST SET    STATE_CODE='30004' WHERE SURVEY_SEQ =#{surveySeq}
    </update>
 <select id="searchListByKeyword" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="SLD">
    <![CDATA[
