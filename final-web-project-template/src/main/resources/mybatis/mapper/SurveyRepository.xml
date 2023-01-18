@@ -2,12 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.dao.ISurveyRepository">
 
-
       <insert id="insertQuestion" parameterType="SQD">
       <selectKey keyProperty="questionSeq" resultType="int" order="BEFORE">
          SELECT QUESTION_ID_SEQ.NEXTVAL FROM DUAL
       </selectKey>
-		
+
 				INSERT INTO SURVEY_QUESTION(QUESTION_SEQ
 				    ,SURVEY_SEQ
 				    ,QUESTION_CONTENT
@@ -19,7 +18,7 @@
 				    ,#{surveySeq}
 				    ,#{questionContent}
 				    ,#{questionTypeCode}
-				    ,(SELECT NVL2(MAX(QUESTION_NUM),MAX(QUESTION_NUM)+1,1) FROM SURVEY_QUESTION WHERE SURVEY_SEQ = #{surveySeq})
+				   		    ,(SELECT NVL2(MAX(QUESTION_NUM),MAX(QUESTION_NUM)+1,1) FROM SURVEY_QUESTION WHERE SURVEY_SEQ = #{surveySeq})
 				    ,SYSDATE
 				    ,SYSDATE)
 	</insert>
@@ -35,28 +34,23 @@
 			SELECT NVL(MAX(ITEM_SEQ	), 0) AS "itemSeq" FROM SURVEY_ITEM
    </select>
 
-	<insert id="insertItem" parameterType="SQD">
-
-
+<insert id="insertItem" parameterType="SQD">
 		<selectKey keyProperty="itemSeq" resultType="int" order="BEFORE">
 				SELECT ITEM_ID_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
-		
 			INSERT INTO SURVEY_ITEM(QUESTION_SEQ
 			     ,ITEM_SEQ
 			     ,ITEM_CONTENT
 			     ,ITEM_SCORE
-			     ,ITEM_NUM
 			     ,REG_DATE
 			     ,UPDATE_DATE)
 			VALUES (#{questionSeq}
 			     ,#{itemSeq}
 			     ,#{itemContent}
 			     ,#{itemScore}
-			     ,(SELECT NVL2(MAX(ITEM_NUM),MAX(ITEM_NUM)+1,1) FROM SURVEY_ITEM WHERE QUESTION_SEQ = #{questionSeq})
+                 ,(SELECT NVL2(MAX(ITEM_NUM),MAX(ITEM_NUM)+1,1) FROM SURVEY_ITEM WHERE QUESTION_SEQ = #{questionSeq})
 			     ,SYSDATE
 			     ,SYSDATE)
-			 
 	</insert>
 
 
@@ -123,6 +117,7 @@
       DELETE FROM SURVEY_QUESTION WHERE QUESTION_SEQ = #{questionSeq}
    </delete>
 
+
    <select id="selectQuestion" parameterType="int" resultType="hashmap">
       SELECT SURVEY_QUESTION.SURVEY_SEQ
        ,SURVEY_QUESTION.QUESTION_SEQ
@@ -131,10 +126,12 @@
            ,SURVEY_ITEM.ITEM_SEQ
            ,SURVEY_ITEM.ITEM_CONTENT
            ,SURVEY_ITEM.ITEM_SCORE
-      FROM  SURVEY_ITEM  right join SURVEY_QUESTION  
-      on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ 
+      FROM  SURVEY_ITEM  right join SURVEY_QUESTION
+      on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ
       where SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} ORDER BY SURVEY_QUESTION.QUESTION_SEQ DESC
    </select>
+
+
 
    <select id="selectSurvey" parameterType="int" resultType="SLD">
       SELECT SURVEY_SEQ
@@ -237,12 +234,10 @@
                 ,SURVEY_ITEM.ITEM_SEQ
                 ,SURVEY_ITEM.ITEM_CONTENT
                 ,SURVEY_ITEM.ITEM_SCORE
-          FROM  SURVEY_ITEM  right join SURVEY_QUESTION  
-          on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ 
+          FROM  SURVEY_ITEM  right join SURVEY_QUESTION
+          on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ
           WHERE SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} and SURVEY_QUESTION.QUESTION_SEQ = #{questionSeq} ORDER BY SURVEY_QUESTION.QUESTION_SEQ DESC
    </select>
-
-
 
 	<delete id="deleteItemByQSeq" parameterType="int">
 		DELETE FROM SURVEY_ITEM
@@ -273,6 +268,19 @@
 		DELETE FROM SURVEY_ITEM WHERE ITEM_SEQ = #{itemSeq}
 	</delete>
 	
-	
-	
+  <select id="selectSurveyEvaluate" parameterType="int" resultType="hashmap">
+  		SELECT
+              oc.department_name AS "departmentName"
+             ,g.grade_name AS "gradeName"
+             ,ui.employee_name AS "employeeName"
+             ,m.SURVEY_COMPLETE_YN AS "surveyCompleteYN"
+        FROM grade g
+             ,user_info ui
+             ,mapping m
+             ,ORGANIZATION_CHART oc
+        WHERE m.rater_id = ui.employee_id and g.grade_id = ui.grade_id
+        AND oc.department_id = ui.department_id and  m.survey_seq = #{surveySeq}
+  </select>
+
+
 </mapper>

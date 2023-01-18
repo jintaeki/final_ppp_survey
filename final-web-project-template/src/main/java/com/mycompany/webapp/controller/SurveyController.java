@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
@@ -51,8 +53,6 @@ public class SurveyController {
 	@Autowired
 	ICommonCodeService commonCodeService;
 
-
-
 	@RequestMapping("/surveydetails")
 	public String surveyDetails() {
 		logger.info("실행");
@@ -60,10 +60,15 @@ public class SurveyController {
 		return "survey_details";
 	}
 	@RequestMapping("/surveyevaluate/{surveySeq}")
-	public String surveyEvaluate(@PathVariable int surveySeq) {
+	public String surveyEvaluate(@PathVariable int surveySeq, HttpSession session, Model model
+			                     ,@RequestParam(defaultValue="1") int pageNo) {
 		logger.info("실행");
 		System.out.println(surveySeq);
+		List<Map<String, String>> EL = surveyService.selectSurveyEvaluate(surveySeq);
+		logger.info("EL" + EL);
 		//log.info("실행");
+		model.addAttribute("EL", EL);
+
 		return "survey_evaluate";
 	}
 
@@ -152,6 +157,7 @@ public class SurveyController {
 		//log.info("실행");
 		return "survey_result_team";
 	}
+
 	@RequestMapping("/surveyresult")
 	public String surveyResult() {
 		logger.info("실행");
@@ -197,9 +203,6 @@ public class SurveyController {
 			public SurveyQuestionDTO insertItem(@ModelAttribute ("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,Model model, RedirectAttributes redirectAttrs) {
 				logger.info("insertItem.do");
 				logger.info("문제번호 확인:"+SQD.toString());
-
-
-
 
 				String checkCode = SQD.getQuestionTypeCode();
 				try {
@@ -267,7 +270,7 @@ public class SurveyController {
 
 
 
-		
+
 
 	// 문제 비동기식으로 출력
 	@RequestMapping(value="/selectquestion.do/{surveySeq}")
@@ -340,6 +343,7 @@ public class SurveyController {
 			surveyService.DeleteQuestion(questionSeq);
 		}
 
+
 	//문제 선택 시 데이터 가져오기
 	@RequestMapping(value="/touchandselect.do/{questionSeq}/{surveySeq}")
 	@ResponseBody
@@ -350,6 +354,7 @@ public class SurveyController {
 	}
 
 
+
 	//문항 등록
 	public SurveyQuestionDTO itemInsert(@ModelAttribute ("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,Model model, RedirectAttributes redirectAttrs) {
 		logger.info("문항생성 Controller 진입");
@@ -358,25 +363,25 @@ public class SurveyController {
 	}
 
 
-	
-	
-	
+
+
+
 // 진택
 	// 등록완료 돌아가기
 	@RequestMapping("/surveyinsertcomplete.do/{surveyseq}")
 	public String SurveyInsertComplete (@PathVariable int surveyseq ) {
 		surveyService.surveyInsertComplete(surveyseq);
-		
+
 		return "redirect:/survey/surveysearch";
 	}
-	
+
 	@RequestMapping("/deletesurvey.do/{surveyseq}/{pageno}/{date}/{keyword}/{selection}")
-	public String DeleteSurvey (@PathVariable int surveyseq, 
+	public String DeleteSurvey (@PathVariable int surveyseq,
 								@PathVariable int pageno,
 								@PathVariable(required=false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
 								@PathVariable String selection,
 								@PathVariable String keyword){
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		String strDate = (String)sdf.format(date);
 		if(sdf.format(date).equals("1111-11-11")) {
@@ -385,7 +390,7 @@ public class SurveyController {
 		if(keyword.equals("empty")) {
 			keyword="";
 		}
-		
+
 		logger.info("deletesurvey 컨트롤러 진입");
 //		surveyService.deleteSurvey(surveyseq);
 		return "redirect:/survey/surveysearch?pageNo="+pageno+"&keyword="+keyword+"&selection="+selection+"&surveyStartDate="+strDate;
@@ -399,5 +404,6 @@ public class SurveyController {
 		surveyService.deleteItem(itemSeq);
 		
 	}
+
 
 	}

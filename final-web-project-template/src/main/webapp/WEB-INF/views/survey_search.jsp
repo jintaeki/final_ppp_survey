@@ -339,7 +339,7 @@
 
 								<td><c:if test="${list.stateCode eq '30004'}">
 										<button type="button" class="btn btn-link"
-											onclick="location.href='surveyevaluate/surveyseq">조회</button>
+											onclick="location.href='<c:url value='surveyevaluate/${list.surveySeq}'/>'">조회</button>
 									</c:if> <input type="hidden" id="pageNo" name=pageNo
 									value="${pagingdto.startPageNo}"></td>
 
@@ -398,4 +398,3 @@
 </div>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
-
