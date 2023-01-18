@@ -193,11 +193,11 @@ public class SurveyController {
 
 
 	//문항 등록
-			@RequestMapping(value="insertItem.do")
+			@RequestMapping("/insertItem.do")
 			@ResponseBody
 			public SurveyQuestionDTO insertItem(@ModelAttribute ("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,Model model, RedirectAttributes redirectAttrs) {
 				logger.info("insertItem.do");
-				logger.info(SQD.toString());
+				logger.info("문제번호 확인:"+SQD.toString());
 
 				String checkCode = SQD.getQuestionTypeCode();
 				try {
@@ -261,77 +261,8 @@ public class SurveyController {
 
 
 
-	// 문항 수정
-		@RequestMapping(value="/updateitem.do")
-		@ResponseBody
-		public SurveyQuestionDTO updateitem(@ModelAttribute ("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,Model model, RedirectAttributes redirectAttrs) {
-			logger.info("updateitem.do");
-			logger.info(SQD.toString());
 
-
-
-
-			String checkCode = SQD.getQuestionTypeCode();
-			try {
-				if(checkCode.equals("10001")) {
-//					surveyService.deleteItemByQSeq(SQD);
-					// 문제 id, 점수, 문항내용, itemid, 각 각 받아야 한다
-					// questionId, itemScore, itemContent, itemId
-
-					// 다중 값들 문자열로 표현
-					String itemcontents = SQD.getItemContent();
-					String itemscores = SQD.getItemScore();
-
-					// 문항 개수
-					int cntcontent = itemcontents.length()-itemcontents.replace(",", "").length();
-
-					// 다중 값들을 배열로 변환
-					String  [] itmencontent = itemcontents.split(",");
-					String  [] itemscore = itemscores.split(",");
-					// 문항 개수만큼 for문 실행하여 문항 등록
-					for(int i = 0 ; i<=cntcontent;i++) {
-						SQD.setItemContent(itmencontent[i]);
-						SQD.setItemScore(itemscore[i]);
-						System.out.println("컨텐츠:"+SQD.getItemContent());
-						System.out.println("스코어"+SQD.getItemScore());
-						surveyService.updateItem(SQD);
-					}
-				}else if(checkCode.equals("10002")) {
-					surveyService.deleteItemByQSeq(SQD);
-					surveyService.updateItem(SQD);
-
-				}else if(checkCode.equals("10003")) {
-					surveyService.deleteItemByQSeq(SQD);
-					// 문제 id, 점수, 문항내용, itemid, 각 각 받아야 한다
-					// questionId, itemScore, itemContent, itemId
-
-					// 다중 값들 문자열로 표현
-					String itemcontents = SQD.getItemContent();
-					String itemscores = SQD.getItemScore();
-
-					// 문항 개수
-					int cntcontent = itemcontents.length()-itemcontents.replace(",", "").length();
-
-					// 다중 값들을 배열로 변환
-					String  [] itmencontent = itemcontents.split(",");
-					String  [] itemscore = itemscores.split(",");
-
-					// 문항 개수만큼 for문 실행하여 문항 등록
-					for(int i = 0 ; i<=cntcontent;i++) {
-						SQD.setItemContent(itmencontent[i]);
-						SQD.setItemScore(itemscore[i]);
-						surveyService.updateItem(SQD);
-					}
-				}
-			}catch(Exception e) {
-				e.printStackTrace();
-				redirectAttrs.addFlashAttribute("message", e.getMessage());
-			}
-
-
-
-			return SQD;
-		}
+		
 
 	// 문제 비동기식으로 출력
 	@RequestMapping(value="/selectquestion.do/{surveySeq}")

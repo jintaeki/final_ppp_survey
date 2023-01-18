@@ -79,10 +79,7 @@
                   <input type="hidden" name="surveySeq" value="${SLD.surveySeq}">
                   <input type="hidden" name="questionSeq" value="${qlist.questionSeq}">
 					<div id="obj_ItemAfter">
-					  <div class="icon_line">
-                  		<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">
-                  		점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">
-                	  </div>
+
 					</div>
                   <div class="col-12">
 
@@ -105,7 +102,7 @@
                <form:form modelAttribute="SQD" id="item_mix_form">
                   <input type="hidden" name="questionTypeCode" value="10003">
                   <input type="hidden" name="surveySeq" value="${SLD.surveySeq}" id="surveyseq">
-                  <input type="hidden" name="questionSeq" value="${SQD.questionSeq}" id="questionseq">
+
                   <div id="mix_ItemAfter">
                   <div class="icon_line" id="add_mix" >
                      <label><input type="text" name="itemContent"
@@ -450,7 +447,7 @@
                         questionHtml(jsondata);
                         var surveyseq = jsondata[0].SURVEY_SEQ;
                         var questionseq = jsondata[0].QUESTION_SEQ;
-                        itemHtml(jsondata);
+   //                     itemHtml(jsondata);
 
                   }, error:function(e) {   //실패, 에러
                      console.log("Error", e);
@@ -488,28 +485,32 @@
     function itemHtml(data){
          let size = data.length;
          var html = '';
-
+           $("#mix_box_toggle").hide();
+         $("#obj_box_toggle").hide();
+         $("#obj_ItemAfter").empty();
+         $("#mix_ItemAfter").empty();
         console.log("답은:"+data[0].QUESTION_TYPE_CODE)
        // 10001 객 10002 주 10003 혼
         for(i=0; i<size; i++){
            if(data[i].QUESTION_TYPE_CODE == "10001"){
-        	   if(data[i].ITEM_SEQ == 0){
+        	   if(data[i].ITEM_SEQ == null){
         	   $("#obj_ItemAfter").empty();
 
         	   html +='<div class="icon_line">';
-        	   html +='<input type="hidden" value="' + data[i].QUESTION_SEQ +'">';
+        	   html +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
         	   html += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
         	   html +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
         	   html += '</div>';
 
-               var testDiv1 = document.getElementById('obj_ItemAfter');
+ //              var testDiv1 = document.getElementById('obj_ItemAfter');
 
                $('#obj_ItemAfter').append(html);
+                 $("#obj_box_toggle").show();
         	   }else{
-        		   $("#mix_ItemAfter").empty();
+        		    $("#obj_ItemAfter").empty();
 
-            	   html +='<div class="icon_line">';
-            	   html +='<input type="hidden" value="' + data[i].QUESTION_SEQ +'">';
+        		   html +='<div class="icon_line">';
+            	   html +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
             	   html += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic" value="'+data[i].ITEM_CONTENT+'">';
             	   html +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
             	   html += '</div>';
@@ -517,13 +518,27 @@
                    var testDiv1 = document.getElementById('mix_ItemAfter');
 
                    $('#mix_ItemAfter').append(html);
+                   $("#obj_box_toggle").show();
         	   }
-           }else if(data[i].QUESTION_TYPE_CODE == "10003"){
-        	   alert("hi");
+           }
+          //            		else if(data[i].QUESTION_TYPE_CODE == "10003"){
+//         	   $("#mix_ItemAfter").empty();
+
+//         	   html +='<div class="icon_line">';
+//         	   html +='<input type="hidden" value="' + data[i].QUESTION_SEQ +'">';
+//         	   html += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic" value="'+data[i].ITEM_CONTENT+'">';
+//         	   html +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
+//         	   html += '</div>';
+
+//                var testDiv1 = document.getElementById('mix_ItemAfter');
+
+//                $('#mix_ItemAfter').append(html);
+//                $("#mix_box_toggle").show();
+//            }
+
            }
 
            }
-        }
 
 
     //var dltest = document.getElementById('delete_btn');
