@@ -27,7 +27,7 @@
    /* 체크값이 없을 경우 알림 */
    function selectItem() {
       if ($("#resTb input[name='chk_res']:checked").length == 0) {
-         alert("추가할 인원을 선택해주세요");
+         alert("추가할 인원을 하이 선택해주세요");
          return false;
       }
       var resArr = new Array();
