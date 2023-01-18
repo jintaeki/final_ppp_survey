@@ -266,16 +266,16 @@
 
   <select id="selectSurveyEvaluate" parameterType="int" resultType="hashmap">
   		SELECT
-              oc.department_name
-             ,g.grade_name
-             ,ui.employee_name
-             ,m.SURVEY_COMPLETE_YN
-        from grade g
+              oc.department_name AS "departmentName"
+             ,g.grade_name AS "gradeName"
+             ,ui.employee_name AS "employeeName"
+             ,m.SURVEY_COMPLETE_YN AS "surveyCompleteYN"
+        FROM grade g
              ,user_info ui
              ,mapping m
              ,ORGANIZATION_CHART oc
-        where m.rater_id = ui.employee_id and g.grade_id = ui.grade_id
-        and oc.department_id = ui.department_id and  m.survey_seq = #{surveySeq}
+        WHERE m.rater_id = ui.employee_id and g.grade_id = ui.grade_id
+        AND oc.department_id = ui.department_id and  m.survey_seq = #{surveySeq}
   </select>
 
 

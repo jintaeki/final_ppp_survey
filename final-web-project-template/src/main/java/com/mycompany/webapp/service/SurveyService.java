@@ -199,7 +199,8 @@ public class SurveyService implements ISurveyService{
 	}
 
 	@Override
-	public List<Map<String, Object>> selectSurveyEvaluate(int surveySeq) {
+	public List<Map<String, String>> selectSurveyEvaluate(int surveySeq) {
+		logger.info("서비스: " +surveySeq);
 		return surveyDao.selectSurveyEvaluate(surveySeq);
 	}
 

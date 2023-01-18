@@ -37,7 +37,7 @@ public interface ISurveyService {
 
 	void UpdateQuestion(SurveyQuestionDTO sqd);
 
-	List<Map<String, Object>> selectSurveyEvaluate(int surveySeq);
+	List<Map<String, String>> selectSurveyEvaluate(int surveySeq);
 
 	List<Map<String, Object>> selectQuestion(int surveySeq);
 

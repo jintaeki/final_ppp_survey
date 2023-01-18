@@ -69,7 +69,7 @@ public interface ISurveyRepository {
 
 	void deleteSurvey(int surveySeq);
 
-	List<Map<String, Object>> selectSurveyEvaluate(int surveySeq);
+	List<Map<String, String>> selectSurveyEvaluate(int surveySeq);
 }
 
 

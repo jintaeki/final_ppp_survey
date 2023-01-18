@@ -60,10 +60,12 @@ public class SurveyController {
 		return "survey_details";
 	}
 	@RequestMapping("/surveyevaluate/{surveySeq}")
-	public String surveyEvaluate(@PathVariable int surveySeq, HttpSession session, Model model) {
+	public String surveyEvaluate(@PathVariable int surveySeq, HttpSession session, Model model
+			                     ,@RequestParam(defaultValue="1") int pageNo) {
 		logger.info("실행");
 		System.out.println(surveySeq);
-		List<Map<String, Object>> EL = surveyService.selectSurveyEvaluate(surveySeq);
+		List<Map<String, String>> EL = surveyService.selectSurveyEvaluate(surveySeq);
+		logger.info("EL" + EL);
 		//log.info("실행");
 		model.addAttribute("EL", EL);
 
