@@ -33,7 +33,7 @@ public interface IMappingRepository {
 	List<MappingDTO> ovrlpCheck(@Param("raterId") String raterId, @Param("appraiseeId") String appraiseeId);
 	
 	// 위에 선택된 피평가자를 데이터를 저장 
-	void insertAppraisee(int surveySeq, String raterId, String appraiseeId);
+	void insertAppraisee(@Param("surveySeq") int surveySeq, @Param("raterId") String raterId, @Param("appraiseeId") String appraiseeId);
 	
 	// 피평가자를 피평가자 목록에서 제외
 	void deleteAppraisee(@Param("surveySeq") int surveySeq, @Param("raterId") String raterId, @Param("appraiseeId") String appraiseeId);

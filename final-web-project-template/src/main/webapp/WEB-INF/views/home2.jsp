@@ -14,12 +14,18 @@ $(document).ready(function() {
     });
 });
  
-function popup()
-{
+function popup(){
 	var month = $('#month').val();
 	
 	let popUrl ="/springframework-xml-config-no-root/popup.do?surveySeq="+surveySeq+"&raterId="+raterId+"&month="+month;
-	let popOption = "width=800, height=600, left=500, top=100"
+	let popOption = "width=800, height=600, left=500, top=100";
+	window.open(popUrl, "다면평가 대상 추가", popOption);
+}
+
+function mapInsert(surveySeq){
+	
+	let popUrl ="/springframework-xml-config-no-root/another.do?surveySeq="+surveySeq;
+	let popOption = "width=800, height=600, left=500, top=100";
 	window.open(popUrl, "다면평가 대상 추가", popOption);
 }
 
@@ -50,19 +56,6 @@ function map_delete(surveySeq, raterId, appraiseeId){
 	};
 }
 
-function setResList(resArr){
-    for(var i=0; i<resArr.length; i++){
-            
-        var trCnt = $("#mapTb tbody tr").length;
-        $("#mapTb tbody").append($("#mapTb").html());
-        var lastTr = $("#mapTb tbody tr:last");	               
-        $(lastTr).find("td[name='raterId']").append(resArr[i].raterId);
-        $(lastTr).find("td[name='gradeName']").append(resArr[i].gradeName);
-        $(lastTr).find("td[name='raterName']").append(resArr[i].raterName);
-        $(lastTr).find("td[name='appraiseName']").append(resArr[i].appraiseName);
-    }
-}
-
 </script>
 
 <div class="card m-2">
@@ -73,7 +66,7 @@ function setResList(resArr){
 
 		<div class="container my-5">
 		<div>
-			<input type="button" id="map_insert" class="btn btn-primary" value="조건과 관계없이 추가">
+			<button type="button" id="map_insert" class="btn btn-primary" onclick="mapInsert('${mappingList[0].surveySeq}')">조건관 관계없이 추가</button>
 		</div>
 			<div class="row">
 				<table class="table" id="mapTb">
@@ -85,7 +78,7 @@ function setResList(resArr){
 							<th scope="col">삭제여부</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody id="mapTr">
 						<c:choose>
 							<c:when test="${empty mappingList}">
 								<tr>
@@ -112,15 +105,35 @@ function setResList(resArr){
 						</c:choose>
 					</tbody>
 				</table>
-				<ul class="pagination">
-					<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item"><a class="page-link" href="#">4</a></li>
-					<li class="page-item"><a class="page-link" href="#">5</a></li>
-					<li class="page-item"><a class="page-link" href="#">Next</a></li>
-				</ul>
+				<div class="page_wrap">
+					<div class="page_nation">
+						<%-- 맨처음 페이지 이동    
+      						<a class="arrow prev" href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a> --%>
+						<c:if test="${pagingdto.groupNo>1}">
+							<a class="arrow prev"
+								href="surveysearch?pageNo=${pagingdto.startPageNo-1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">이전</a>
+						</c:if>
+
+						<c:forEach var="i" begin="${pagingdto.startPageNo}"
+							end="${pagingdto.endPageNo}">
+							<c:if test="${pagingdto.pageNo != i}">
+								<a class="active"
+									href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
+							</c:if>
+							<c:if test="${pagingdto.pageNo == i}">
+								<a class="page_nation"
+									href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
+							</c:if>
+						</c:forEach>
+
+						<c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
+							<a class="arrow next"
+								href="surveysearch?pageNo=${pagingdto.endPageNo+1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">다음</a>
+						</c:if>
+						<%-- 맨마지막 페이지 이동 
+       						  <a class="arrow next" href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">맨끝</a> --%>
+					</div>
+				</div>
 			</div>
 		</div>
 			<input type="button" onclick="location.href='<c:url value='/survey/surveysearch'/>'" class="btn btn-primary" value="돌아가기">

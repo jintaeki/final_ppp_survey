@@ -2,6 +2,7 @@
    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <script
    src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <link rel="stylesheet" href="resources/css/popup.css"/>
@@ -27,30 +28,49 @@
    /* 체크값이 없을 경우 알림 */
    function selectItem() {
       if ($("#resTb input[name='chk_res']:checked").length == 0) {
-         alert("추가할 인원을 하이 선택해주세요");
+         alert("추가할 인원을 선택해주세요");
          return false;
       }
       var resArr = new Array();
       $("#resTb input[name='chk_res']:checked").each(
             function(index) {
-               var surveyName = $(this).val();
+               var plusId = $(this).val();
                var addObj = new Object();
-               $tr = $("#tr_" + surveyName);
-               addObj.survey_Name     = $tr.find("input[name='surveyName']").val();
-               addObj.department_Name = $tr.find("input[name='departmentName']").val();
-               addObj.appraisee_Name  = $tr.find("input[name='appraiseeName']").val();
-               addObj.survey_Name     = $tr.find("input[name='surveyName']").val();
-               addObj.department_Name = $tr.find("input[name='departmentName']").val();
-               addObj.appraisee_Name  = $tr.find("input[name='appraiseeName']").val();
-               addObj.survey_Name     = $tr.find("input[name='surveyName']").val();
-               addObj.department_Name = $tr.find("input[name='departmentName']").val();
-               addObj.appraisee_Name  = $tr.find("input[name='appraiseeName']").val();
-               addObj.survey_Name     = $tr.find("input[name='surveyName']").val();
-               addObj.department_Name = $tr.find("input[name='departmentName']").val();
-               resArr.push(resObj);
-            });
-      window.opener.setResList(resArr);    
-      window.close();
+               $tr = $("#tr_" + plusId);
+               addObj.projectId      = $tr.find("input[name='projectId']").val();
+               addObj.gradeId        = $tr.find("input[name='gradeId']").val();
+               addObj.departmentId   = $tr.find("input[name='departmentId']").val();
+               addObj.surveySeq      = $tr.find("input[name='surveySeq']").val();
+               addObj.raterId        = $tr.find("input[name='raterId']").val();
+               addObj.appraiseeId    = $tr.find("input[name='appraiseeId']").val();
+               addObj.projectName    = $tr.find("input[name='projectName']").val();
+               addObj.surveyName     = $tr.find("input[name='surveyName']").val();
+               addObj.departmentName = $tr.find("input[name='departmentName']").val();
+               addObj.raterName      = $tr.find("input[name='raterName']").val();
+               addObj.appraiseeName  = $tr.find("input[name='appraiseeName']").val();
+               addObj.gradeName      = $tr.find("input[name='gradeName']").val();
+               resArr.push(addObj);
+      console.log(plusId);
+      });
+      console.log(resArr);   
+     
+     $.ajax({
+		 url: "popup.do",
+		 type: "POST",
+		 contentType: "application/json;charset=UTF-8",
+		 data:JSON.stringify(resArr),
+		 dataType : "json"
+	   })
+	  .done(function(resMap) {
+	     alert(resMap.msg);
+		 opener.parent.location.reload();
+		 window.close();
+	  })
+	  .fail(function(e) {
+	 	 alert(resMap.msg);
+	  })
+	  always(function() {
+	  });   
    }
 </script>
 <div class="entire_popup">
@@ -63,7 +83,8 @@
                   <th><input type="checkbox" id="check_all" /></th>
                   <th>프로젝트</th>
                   <th>부서</th>
-                  <th>이름</th>
+                  <th>평가자</th>
+                  <th>피평가자</th>
                </tr>
             </thead>
             <tbody>
@@ -75,21 +96,23 @@
 					</c:when>
 					<c:otherwise>
 						<c:forEach var="result" items="${getPopup}">
-							<tr id="tr_${result.surveyName}">
+							<tr id="tr_${result.raterId}${result.appraiseeId}">
 								<input type="hidden" name="projectId" value="${result.projectId}" />
 								<input type="hidden" name="gradeId" value="${result.gradeId}" />
 								<input type="hidden" name="departmentId" value="${result.departmentId}" />
 								<input type="hidden" name="surveySeq" value="${result.surveySeq}" />
 								<input type="hidden" name="raterId" value="${result.raterId}" />
 								<input type="hidden" name="appraiseeId" value="${result.appraiseeId}" />
+								<input type="hidden" name="projectName" value="${result.projectName}" />
 								<input type="hidden" name="surveyName" value="${result.surveyName}" />
 								<input type="hidden" name="departmentName" value="${result.departmentName}" />
 								<input type="hidden" name="raterName" value="${result.raterName}" />
 								<input type="hidden" name="appraiseeName" value="${result.appraiseeName}" />
 								<input type="hidden" name="gradeName" value="${result.gradeName}" />
 								
-								<td><input type="checkbox" name="chk_res" value="${result.surveyName}" /></td>
-								<td class="surveyName"><c:out value="${result.surveyName}" /></td>
+								<td><input type="checkbox" name="chk_res" value="${result.raterId}${result.appraiseeId}"/></td>
+								<td class="projectName"><c:out value="${result.projectName}" /></td>
+								<td class="raterName"><c:out value="${result.raterName}" /></td>
 								<td class=departmentName><c:out value="${result.departmentName}" /></td>
 								<td class="appraiseeName"><c:out value="${result.appraiseeName}" /></td>
 							</tr>
