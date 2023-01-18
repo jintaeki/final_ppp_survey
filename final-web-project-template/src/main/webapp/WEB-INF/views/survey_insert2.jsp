@@ -523,6 +523,7 @@
                    htmlMix += '</div>';
                    htmlMix +='<div class="icon_line">';
                	   htmlMix += '<input type="text" name="itemContent" placeholder="기타" value="기타" id="ic" readonly>';
+               	   htmlMix +='<input type="hidden" name="itemScore"  value="0">';
              	   htmlMix += '</div>';
                    $('#mix_ItemAfter').append(htmlMix);
                }
@@ -545,7 +546,8 @@
              	  htmlMix += '</div>';
              	  htmlMix +='<div class="icon_line">';
               	  htmlMix += '<input type="text" name="itemContent" placeholder="기타" value="기타" id="ic" readonly>';
-            	  htmlMix += '</div>';
+              	  htmlMix +='<input type="hidden" name="itemScore"  value="0">';
+              	  htmlMix += '</div>';
              	  
              	  
                     $('#mix_ItemAfter').append(htmlMix);
@@ -553,18 +555,22 @@
              	   }else{
                  	   $("#mix_ItemAfter").empty();
 
-                 	  htmlMix +='<div class="icon_line">';
-                 	  htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
-                 	  htmlMix += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic" value="'+data[i].ITEM_CONTENT+'">';
-                	  htmlMix +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
-                	  htmlMix+='<button class="delete_btn" onclick="deleteItem(this)" value="'+data[i].ITEM_SEQ+'">';
-                	  htmlMix+= '<i class="fas fa-xmark"></i>';
-                	  htmlMix+=   '</button>';
-                	  htmlMix += '</div>';
                  	  
+                 	  if(data[i].ITEM_CONTENT =="기타"){
                  		  htmlMix +='<div class="icon_line">';
                      	  htmlMix += '<input type="text" name="itemContent" id="ic" value="'+data[i].ITEM_CONTENT+'" readonly>';
+                      	  htmlMix +='<input type="hidden" name="itemScore"  value="0">';
                      	  htmlMix += '</div>';
+                 	  }else{
+                 		 htmlMix +='<div class="icon_line">';
+                    	 htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
+                    	 htmlMix += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic" value="'+data[i].ITEM_CONTENT+'">';
+                   	     htmlMix +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
+                   	     htmlMix+='<button class="delete_btn" onclick="deleteItem(this)" value="'+data[i].ITEM_SEQ+'">';
+                   	     htmlMix+= '<i class="fas fa-xmark"></i>';
+                   	     htmlMix+=   '</button>';
+                   	     htmlMix += '</div>';
+                 	  }
                  	  
                  	  
                         

@@ -241,14 +241,16 @@ public class SurveyController {
 						int cntcontent = itemcontents.length()-itemcontents.replace(",", "").length();
 
 						// 다중 값들을 배열로 변환
-						String  [] itmencontent = itemcontents.split(",");
+						String  [] itemcontent = itemcontents.split(",");
 						String  [] itemscore = itemscores.split(",");
-
+						for(int i = 0; i<=cntcontent; i++) {
+							System.out.println(itemcontent[i]);
+							System.out.println(itemscore[i]);
+						}
 						// 문항 개수만큼 for문 실행하여 문항 등록
 						for(int i = 0 ; i<=cntcontent;i++) {
-							SQD.setItemContent(itmencontent[i]);
+							SQD.setItemContent(itemcontent[i]);
 							SQD.setItemScore(itemscore[i]);
-							System.out.println(itmencontent[i]);
 							surveyService.insertItem(SQD);
 						}
 					}
