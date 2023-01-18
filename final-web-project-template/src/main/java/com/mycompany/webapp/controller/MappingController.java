@@ -102,8 +102,10 @@ public class MappingController {
 				if(mappingService.ovrlpCheck(raterId, appraiseeId).size() != 0) {
 					resMap.put("res", "notice");
 					resMap.put("msg", "현재 진행중인 설문조사에서 이미 있는 조합입니다.");
-					logger.info("실행3");
-					return "home2";
+					response.setContentType("text/html; charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.print(resMap);
+					return null;
 				}
 				
 				//해당 데이터 매핑 테이블에 입력

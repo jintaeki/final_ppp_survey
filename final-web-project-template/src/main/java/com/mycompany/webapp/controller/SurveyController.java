@@ -405,5 +405,11 @@ public class SurveyController {
 		
 	}
 
+	@RequestMapping("")
+	public String home2() {
+		logger.info("실행");
+		//log.info("실행");
+		return "survey";
+	}
 
 	}

@@ -67,9 +67,11 @@
 		 window.close();
 	  })
 	  .fail(function(e) {
-	 	 alert(resMap.msg);
+	 	 alert("추가 실패용");
 	  })
 	  always(function() {
+		 alert(resMap.msg);
+
 	  });   
    }
 </script>
