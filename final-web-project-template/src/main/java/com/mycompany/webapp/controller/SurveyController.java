@@ -248,6 +248,7 @@ public class SurveyController {
 						for(int i = 0 ; i<=cntcontent;i++) {
 							SQD.setItemContent(itmencontent[i]);
 							SQD.setItemScore(itemscore[i]);
+							System.out.println(itmencontent[i]);
 							surveyService.insertItem(SQD);
 						}
 					}
@@ -389,5 +390,12 @@ public class SurveyController {
 
 	}
 	
+	@RequestMapping("/deleteItem.do/{itemSeq}")
+	@ResponseBody
+	public void DeleteItem(@PathVariable int itemSeq) {
+		logger.info("deleteItem 컨트롤러");
+		surveyService.deleteItem(itemSeq);
+		
+	}
 
 	}

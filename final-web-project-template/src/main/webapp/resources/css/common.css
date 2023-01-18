@@ -9,7 +9,6 @@ body {
 	background-color: #363940;
 }
 
-
 table {
 	line-height: 30px;
 	word-break: break-all;
@@ -85,6 +84,13 @@ select:disabled {
 	right: 200px;
 }
 
+.modal_class {
+	display: flex;
+	justify-content: space-between;
+	max-width: 420px;
+	align-items: center;
+	margin-bottom: 20px;
+}
 .seach_btn {
 	position: relative;
 	margin-left: 580px;
@@ -124,5 +130,4 @@ select:disabled {
 .create_btn:active {
 	position: relative;
 	top: 1px;
-
 }

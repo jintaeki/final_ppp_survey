@@ -65,6 +65,8 @@ public interface ISurveyRepository {
 	void surveyInsertComplete(int surveySeq);
 	
 	void deleteSurvey(int surveySeq);
+	
+	void deleteItem (int itemSeq);
 }
 
 

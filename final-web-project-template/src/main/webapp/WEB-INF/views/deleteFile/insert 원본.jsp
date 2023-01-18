@@ -6,11 +6,16 @@
 
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
+   
+<button class="btn btn-link" onclick="location.href='<c:url value='surveyinsertcomplete.do/${SLD.surveySeq}'/>'">등록완료</button>
+<input type="button" value="BACK" onClick="history.go(-1)"> 
 
-<div class="container" id="all_survey_dv">
 <!-- 설문지 설정 진택 -->
+<div class="container_flex">
 <form:form modelAttribute="SLD" id="survey_setting_form">
-   <div class="container" id="survey_setting_dv">
+	<span class = "insert_category">
+	
+	</span>
       <div class="row" id="survey_setting_row">
          <div class="col-3">설문지 이름
                <div class="form-group">
@@ -48,7 +53,7 @@
                   name="surveyContent">${SLD.surveyContent }</textarea>
             </div>
          </div>
-        <input type="hidden" name="stateCode" value="30001"> 
+        <input type="hidden" name="stateCode" value="30001">
         <input type="hidden" name="surveySeq" id="surveyseq" value="${SLD.surveySeq}">
 
          <div class="col-2">
@@ -76,14 +81,9 @@
                <form:form modelAttribute="SQD" id="item_obj_form">
                   <input type="hidden" name="questionTypeCode" value="10001">
                   <input type="hidden" name="surveySeq" value="${SLD.surveySeq}">
-
-                  <div class="icon_line" id="obj_ItemAfter">
-                     <label><input type="text" name="itemContent"
-                        placeholder="문항 입력..." id="ic"></label> 점수<input type="number"
-                        name="itemScore" min="0" value="0"
-                        style="min-width: 20px; max-width: 40px;" id="is">
-                  </div>
-
+					<div id="obj_ItemAfter">
+					  
+					</div>
                   <div class="col-12">
 
                      <input type="button" class="btn btn-primary"
@@ -104,20 +104,11 @@
                <button type="button" id="item_mix_copy">+</button>
                <form:form modelAttribute="SQD" id="item_mix_form">
                   <input type="hidden" name="questionTypeCode" value="10003">
-                  <input type="hidden" name="surveySeq" value="${SLD.surveySeq}"
-                     id="surveyseq">
-                  <input type="hidden" name="questionSeq" value="2">
-                  <div class="icon_line" id="mix_ItemAfter">
-                     <label><input type="text" name="itemContent"
-                        placeholder="문항 입력..." id="ic" required></label> 점수<input
-                        type="number" name="itemScore" min="0" value="0"
-                        style="min-width: 20px; max-width: 40px;" id="is">
+                  <input type="hidden" name="surveySeq" value="${SLD.surveySeq}" id="surveyseq">
+                  <div id="mix_ItemAfter">
+                  
                   </div>
-                  <div class="icon_line">
-                     <label> <input type="text" id="ic" name="itemContent"
-                        placeholder="기타.." value="기타"></label> <input type="number"
-                        name="itemScore" value="0" style="display: none">
-                  </div>
+                
                   <div class="col-12">
 
                      <input type="button" class="btn btn-primary"
@@ -166,7 +157,7 @@
             <div class="list-group-item list-group-item-action active py-3 lh-sm"
             id="queAfter">
 
-
+				<input type="hidden"  value="${qlist.surveySeq }" id="surveySequence">
                <input disabled type="text" id="input_qus"
                   value="${qlist.questionContent }">
                <button value="${qlist.questionSeq }"onclick="touchQuestion(this)">확인</button>
@@ -192,7 +183,7 @@
 
 
 
-  
+
 
 
 
@@ -260,11 +251,6 @@
       </form:form>
    </div>
 
-
-
-
-         <button type="button" class="btn btn-outline-primary" id="add_item_btn"
-                  onclick="insertItem()">문항 추가</button>
    </div>
 </div>
 
@@ -297,13 +283,46 @@
          }
       });
    }
+
+
+   //문항 비동기 등록
+   function insert_obj_item_btn() {
+      var form = $('#item_obj_form')[0];
+      var data = new FormData(form);
+      $.ajax({
+         method : "POST",
+         url : 'insertItem.do', // form을 전송할 실제 파일경로
+         data : data,
+         processData : false,
+         contentType : false,
+         cache : false,
+         timeout : 600000,
+         beforeSend : function() {
+            // 전송 전 실행 코드
+            console.log("문항 등록 전송 전");
+            console.log($('#questionSeq').val());
+         },
+         success : function(data) {
+            // 전송 후 성공 시 실행 코드
+            console.log("문항 등록 전송 성공");
+            console.log(data);
+         },
+         error : function(e) {
+            // 전송 후 에러 발생 시 실행 코드
+            console.log("ERROR : ", e);
+         }
+      });
+   }
+
+
+
    //문항 비동기 등록(수정)
    function update_obj_item_btn() {
       var form = $('#item_obj_form')[0];
       var data = new FormData(form);
       $.ajax({
          method : "POST",
-         url : 'updateitem.do', // form을 전송할 실제 파일경로
+         url : 'insertItem.do', // form을 전송할 실제 파일경로
          data : data,
          processData : false,
          contentType : false,
@@ -327,7 +346,7 @@
       var data = new FormData(form);
       $.ajax({
          method : "POST",
-         url : 'updateitem.do', // form을 전송할 실제 파일경로
+         url : 'insertItem.do', // form을 전송할 실제 파일경로
          data : data,
          processData : false,
          contentType : false,
@@ -357,28 +376,34 @@
    }
    //문제 추가 후 문항 추가
    $("#item_obj_copy").click(function() {
-      if (cnt < 1000) {
-         const testDiv = document.getElementById('new_obj_Item');
-         const testDiv1 = document.getElementById('obj_ItemAfter');
-         const newNode = testDiv.cloneNode(true);
-         newNode.style.display = 'inline-block';
-         cnt++;
-         testDiv1.append(newNode);
-      } else {
-         alert("문항은 최대 5개까지 생성 가능합니다.");
-      }
+    
+         var testDiv ='';
+         testDiv +='<div class="icon_line">';
+         testDiv += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
+   		 testDiv +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+   		 testDiv +='<button class="delete_btn" onclick="deleteItem_zero(this)" value="0">'
+   		 testDiv += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">' 
+   		 testDiv += '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /> </svg>'
+   		 testDiv += '</button>'
+   		 testDiv += '</div>';
+         
+         $('#obj_ItemAfter').append(testDiv);
+       
+    
    });
    $("#item_mix_copy").click(function() {
-      if (cnt < 1000) {
-         const testDiv = document.getElementById('new_mix_Item');
-         const testDiv1 = document.getElementById('mix_ItemAfter');
-         const newNode = testDiv.cloneNode(true);
-         newNode.style.display = 'inline-block';
-         cnt++;
-         testDiv1.after(newNode);
-      } else {
-         alert("문항은 최대 5개까지 생성 가능합니다.");
-      }
+  	   var testDiv ='';
+	   testDiv +='<div class="icon_line">';
+       testDiv += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
+ 	   testDiv +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+ 	   testDiv +='<button class="delete_btn_zero" onclick="deleteItem_zero(this)" value="0">'
+       testDiv += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">' 
+       testDiv += '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /> </svg>'
+       testDiv += '</button>'
+       testDiv += '</div>';
+       
+         $('#mix_ItemAfter').append(testDiv);
+     
    });
    //문항추가 끝
 //    var test = document.getElementById('add_btn');
@@ -414,20 +439,8 @@
                         questionHtml(jsondata);
                         var surveyseq = jsondata[0].SURVEY_SEQ;
                         var questionseq = jsondata[0].QUESTION_SEQ;
-                        $.ajax({
-                           method:'GET', //어떤 방식으로 보낼 지
-                           url:'selectitems.do/'+ questionseq, // qdiv를 보낼 경로 설정
-                            dataType: "json",
-                           beforeSend : function() { //보내기 전 실행
-                           console.log("요청이 보내지는가?");
-                           },
-                           success:function (jsondata){    //전송 성공시 실행
-                              console.log("답은:"+jsondata[0].QUESTIONTYPECODE)
-//                               itemHtml(jsondata);
-                           }, error:function(e) {   //실패, 에러
-                              console.log("Error", e);
-                           }
-                           });
+//                         itemHtml(jsondata);
+                       
                   }, error:function(e) {   //실패, 에러
                      console.log("Error", e);
                   }
@@ -445,153 +458,170 @@
         if(size < 1){
            html ='관리할 문제가 없어요~';
         }else{
+
             for(i=0; i<size; i++){
+            	if(i<size-1){
+            		if(data[i].QUESTION_SEQ==data[i+1].QUESTION_SEQ){
+            			console.log(i+"번째: "+data[i].QUESTION_SEQ);
+            			console.log(i+1+"번째: "+data[i+1].QUESTION_SEQ); 
+            			continue;
+            		}
+            	}
                 html+='<div class="list-group-item list-group-item-action active py-3 lh-sm" id="queAfter">'
-                html +='<input type="text" id="input_qus" value="'+data[i].QUESTION_CONTENT+'" disabled>';
-                html +='<button value="'+data[i].QUESTION_SEQ+'"onclick="touchQuestion(this)">확인</button>';
-               html +='<button class="delete_btn" onclick="deleteQus(this,'+data[i].SURVEY_SEQ+')" value="'+data[i].QUESTION_SEQ+'">';
-               html += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">';
-                 html += '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /></svg>';
-               html +=   '</button>';
-               html +='<div class="blank_under"></div></div>';
+                html+='<input type="hidden" value="'+data[i].SURVEY_SEQ+'" id="surveySequence">'
+                html+='<input type="text" id="input_qus" value="'+data[i].QUESTION_CONTENT+'" disabled>';
+                html+='<button value="'+data[i].QUESTION_SEQ+'"onclick="touchQuestion(this)">확인</button>';
+                html+='<button class="delete_btn" onclick="deleteQus(this,'+data[i].SURVEY_SEQ+')" value="'+data[i].QUESTION_SEQ+'">';
+                html+= '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">';
+                html+= '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /></svg>';
+                html+=   '</button>';
+                html+='<div class="blank_under"></div></div>';
                 }
+        	
         }
         $('#scroll_area').append(html);
    }
     function itemHtml(data){
          let size = data.length;
-         var html = '';
-        $("#item_div").empty();
-        console.log("답은:"+data[0].QUESTIONTYPECODE)
+         var htmlObj = '';
+         var htmlMix = '';
+         $("#mix_box_toggle").hide();
+         $("#obj_box_toggle").hide();
+         $("#obj_ItemAfter").empty();
+         $("#mix_ItemAfter").empty();
+        console.log("답은:"+data[0].QUESTION_TYPE_CODE)
        // 10001 객 10002 주 10003 혼
+			   
+              console.log(size);
+          var cnt=0 ;    
         for(i=0; i<size; i++){
-           if(data[i].QUESTIONTYPECODE == "10001"){
-                html +='<div id="obj_box_toggle" >'
-                 html +='<div class="col-12">'
-                 html +='<div class="Item_box">'
-                 html +='<button type="button" id="item_obj_copy">+</button>'
-                 html +='<form:form modelAttribute="SQD" id="item_obj_form">'
-                 html +='<input type="hidden" name="questionTypeCode" value="10001">'
-                 html +='<input type="hidden" name="surveySeq" value="'+data[i].SURVEYSEQ+'">'
-                 html +='<input type="hidden" name="questionSeq" value="'+data[i].QUESTIONSEQ+'">'
-                 html +='<div class="icon_line" id="obj_ItemAfter">'
-                 html +='<label><input type="text" name="itemContent" value="'+data[i].ITEMCONTENT+'" id="ic"></label> 점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEMSCORE+'" style="min-width: 20px; max-width: 40px;" id="is">'
-                 html +='</div>'
-                 html +='<div class="col-12">'
-                 html +='<input type="button" class="btn btn-primary" onclick="update_obj_item_btn()" value="수정">'
-                 html +='</div>'
-                 html +='</form:form>'
-                 html +='</div>'
-                 html +='</div>'
-                 html +='</div>'
-                 html +='<div id="mix_box_toggle" style="display:none;">'
-                 html +='<div class="col-12">'
-                 html +='<div class="Item_box">'
-                 html +='<button type="button" id="item_mix_copy">+</button>'
-                 html +='<form:form modelAttribute="SQD" id="item_mix_form">'
-                 html +='<input type="hidden" name="questionTypeCode" value="10003">'
-                 html +='<input type="hidden" name="surveySeq" value="'+${SLD.surveySeq}+'" id="surveyseq">'
-                 html +='   <input type="hidden" name="questionSeq" value="'+data[i].QUESTIONSEQ+'">'
-                 html +='<div class="icon_line" id="mix_ItemAfter">'
-                 html +='<label><input type="text" name="itemContent" value="'+data[i].ITEMCONTENT+'" id="ic"></label> 점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEMSCORE+'" style="min-width: 20px; max-width: 40px;" id="is">'
-                 html +='</div>'
-                 html +='<div class="icon_line">'
-                 html +='<label> <input type="text" id="ic" name="itemContent" placeholder="기타.." value="기타"></label>'
-                 html +='<input type="number" name="itemScore" value="0" style="display: none">'
-                 html +='</div>'
-                 html +='<div class="col-12">'
-                 html +='<input type="button" class="btn btn-primary" onclick="update_mix_item_btn()" value="수정">'
-                 html +='</div>'
-                 html +='</form:form>'
-                 html +='</div>'
-                 html +='</div>'
-                 html +='</div>'
-           }else if(data[i].QUESTIONTYPECODE=="10002"){
-             html +='<div id="obj_box_toggle" style="display:none;">'
-                 html +='<div class="col-12">'
-                 html +='<div class="Item_box">'
-                 html +='   <button type="button" id="item_obj_copy">+</button>'
-                 html +='<form:form modelAttribute="SQD" id="item_obj_form">'
-                 html +='<input type="hidden" name="questionTypeCode" value="10001">'
-                 html +='<input type="hidden" name="surveySeq" value="'+data[i].SURVEYSEQ+'">'
-                 html +='<input type="hidden" name="questionSeq" value="'+data[i].QUESTIONSEQ+'">'
-                 html +='<div class="icon_line" id="obj_ItemAfter">'
-                 html +='<label><input type="text" name="itemContent" value="'+data[i].ITEMCONTENT+'" id="ic"></label> 점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEMSCORE+'" style="min-width: 20px; max-width: 40px;" id="is">'
-                 html +='</div>'
-                 html +='<div class="col-12">'
-                 html +='<input type="button" class="btn btn-primary" onclick="update_obj_item_btn()" value="수정">'
-                 html +='</div>'
-                 html +='</form:form>'
-                 html +='</div>'
-                 html +='</div>'
-                 html +='</div>'
-                 html +='<div id="mix_box_toggle" style="display:none;">'
-                 html +='<div class="col-12">'
-                 html +='<div class="Item_box">'
-                 html +='<button type="button" id="item_mix_copy">+</button>'
-                 html +='<form:form modelAttribute="SQD" id="item_mix_form">'
-                 html +='<input type="hidden" name="questionTypeCode" value="10003">'
-                 html +='<input type="hidden" name="surveySeq" value="'+${SLD.surveySeq}+'" id="surveyseq">'
-                 html +='   <input type="hidden" name="questionSeq" value="'+data[i].QUESTIONSEQ+'">'
-                 html +='<div class="icon_line" id="mix_ItemAfter">'
-                 html +='<label><input type="text" name="itemContent" value="'+data[i].ITEMCONTENT+'" id="ic"></label> 점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEMSCORE+'" style="min-width: 20px; max-width: 40px;" id="is">'
-                 html +='</div>'
-                 html +='<div class="icon_line">'
-                 html +='<label> <input type="text" id="ic" name="itemContent" placeholder="기타.." value="기타"></label>'
-                 html +='<input type="number" name="itemScore" value="0" style="display: none">'
-                 html +='</div>'
-                 html +='<div class="col-12">'
-                 html +='<input type="button" class="btn btn-primary" onclick="update_mix_item_btn()" value="수정">'
-                 html +='</div>'
-                 html +='</form:form>'
-                 html +='</div>'
-                 html +='</div>'
-                 html +='</div>'
-           }else if(data[i].QUESTIONTYPECODE=="10003"){
-             html +='<div id="obj_box_toggle" style="display:none;">'
-                 html +='<div class="col-12">'
-                 html +='<div class="Item_box">'
-                 html +='   <button type="button" id="item_obj_copy">+</button>'
-                 html +='<form:form modelAttribute="SQD" id="item_obj_form">'
-                 html +='<input type="hidden" name="questionTypeCode" value="10001">'
-                 html +='<input type="hidden" name="surveySeq" value="'+data[i].SURVEYSEQ+'">'
-                 html +='<input type="hidden" name="questionSeq" value="'+data[i].QUESTIONSEQ+'">'
-                 html +='<div class="icon_line" id="obj_ItemAfter">'
-                 html +='<label><input type="text" name="itemContent" value="'+data[i].ITEMCONTENT+'" id="ic"></label> 점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEMSCORE+'" style="min-width: 20px; max-width: 40px;" id="is">'
-                 html +='</div>'
-                 html +='<div class="col-12">'
-                 html +='<input type="button" class="btn btn-primary" onclick="update_obj_item_btn()" value="수정">'
-                 html +='</div>'
-                 html +='</form:form>'
-                 html +='</div>'
-                 html +='</div>'
-                 html +='</div>'
-                 html +='<div id="mix_box_toggle" >'
-                 html +='<div class="col-12">'
-                 html +='<div class="Item_box">'
-                 html +='<button type="button" id="item_mix_copy">+</button>'
-                 html +='<form:form modelAttribute="SQD" id="item_mix_form">'
-                 html +='<input type="hidden" name="questionTypeCode" value="10003">'
-                 html +='<input type="hidden" name="surveySeq" value="'+${SLD.surveySeq}+'" id="surveyseq">'
-                 html +='   <input type="hidden" name="questionSeq" value="'+data[i].QUESTIONSEQ+'">'
-                 html +='<div class="icon_line" id="mix_ItemAfter">'
-                 html +='<label><input type="text" name="itemContent" value="'+data[i].ITEMCONTENT+'" id="ic"></label> 점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEMSCORE+'" style="min-width: 20px; max-width: 40px;" id="is">'
-                 html +='</div>'
-                 html +='<div class="icon_line">'
-                 html +='<label> <input type="text" id="ic" name="itemContent" placeholder="기타.." value="기타"></label>'
-                 html +='<input type="number" name="itemScore" value="0" style="display: none">'
-                 html +='</div>'
-                 html +='<div class="col-12">'
-                 html +='<input type="button" class="btn btn-primary" onclick="update_mix_item_btn()" value="수정">'
-                 html +='</div>'
-                 html +='</form:form>'
-                 html +='</div>'
-                 html +='</div>'
-                 html +='</div>'
+				console.log(data[0].QUESTION_SEQ);
+           if(data[i].QUESTION_TYPE_CODE == "10001"){
+        	   
+        	   
+               
+        	   if(data[i].ITEM_SEQ == null){
+        	   $("#obj_ItemAfter").empty();
+        	  
+        	   htmlObj +='<div class="icon_line">';
+        	   htmlObj +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
+        	   htmlObj += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
+        	   htmlObj +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+        	   htmlObj+='<button class="delete_btn" onclick="deleteItem_zero(this)" value="'+data[i].QUESTION_SEQ+'">';
+        	   htmlObj+= '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">';
+        	   htmlObj+= '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /></svg>';
+        	   htmlObj+=   '</button>';
+        	   htmlObj+= '</div>';
+
+        	   
+               $('#obj_ItemAfter').append(htmlObj);
+               $("#obj_box_toggle").show();
+        	   }else{
+            	   $("#obj_ItemAfter").empty();
+
+            	   htmlObj +='<div class="icon_line">';
+            	   htmlObj +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
+            	   htmlObj += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic" value="'+data[i].ITEM_CONTENT+'">';
+            	   htmlObj +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
+            	   htmlObj+='<button class="delete_btn" onclick="deleteItem(this)" value="'+data[i].ITEM_SEQ+'">';
+            	   htmlObj+= '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">';
+            	   htmlObj+= '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /></svg>';
+            	   htmlObj+=   '</button>';
+            	   htmlObj += '</div>';
+                  
+                   $('#obj_ItemAfter').append(htmlObj);
+                   $("#obj_box_toggle").show();
+        	   }
+        	   
+        	   cnt=cnt+1
+               if(cnt == size){
+            	   $("#mix_ItemAfter").empty();
+            	   htmlMix +='<div class="icon_line">';
+              	   htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
+                   htmlMix += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
+              	   htmlMix +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+              	   htmlMix+='<button class="delete_btn" onclick="deleteItem_zero(this)" value="'+data[i].ITEM_SEQ+'">';
+               	   htmlMix+= '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">';
+                   htmlMix+= '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /></svg>';
+                   htmlMix+=   '</button>';
+                   htmlMix += '</div>';
+                   htmlMix +='<div class="icon_line">';
+               	   htmlMix += '<input type="text" name="itemContent" placeholder="기타" id="ic" readonly>';
+             	   htmlMix += '</div>';
+                   $('#mix_ItemAfter').append(htmlMix);
+               }
+        	   
+               
+        	} else if(data[i].QUESTION_TYPE_CODE == "10003"){
+        		  
+             
+        		
+                  if(data[i].ITEM_SEQ == null){
+             	   $("#mix_ItemAfter").empty();
+             	  
+             	  htmlMix +='<div class="icon_line">';
+             	  htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
+               	  htmlMix += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
+             	  htmlMix +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+             	  htmlMix+='<button class="delete_btn" onclick="deleteItem_zero(this)" value="'+data[i].ITEM_SEQ+'">';
+             	  htmlMix+= '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">';
+             	  htmlMix+= '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /></svg>';
+             	  htmlMix+=   '</button>';
+             	  htmlMix += '</div>';
+             	  htmlMix +='<div class="icon_line">';
+              	  htmlMix += '<input type="text" name="itemContent" placeholder="기타" id="ic" readonly>';
+            	  htmlMix += '</div>';
+             	  
+             	  
+                    $('#mix_ItemAfter').append(htmlMix);
+                    $("#mix_box_toggle").show();
+             	   }else{
+                 	   $("#mix_ItemAfter").empty();
+
+                 	  htmlMix +='<div class="icon_line">';
+                 	  htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
+                 	  htmlMix += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic" value="'+data[i].ITEM_CONTENT+'">';
+                	  htmlMix +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
+                	  htmlMix+='<button class="delete_btn" onclick="deleteItem(this)" value="'+data[i].ITEM_SEQ+'">';
+                	  htmlMix+= '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">';
+                	  htmlMix+= '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /></svg>';
+                	  htmlMix+=   '</button>';
+                	  htmlMix += '</div>';
+                 	  if(data[i].ITEM_CONTENT!='기타'){
+                     	 
+                     	  
+                 	  }else{
+                 		  htmlMix +='<div class="icon_line">';
+                     	  htmlMix += '<input type="text" name="itemContent" id="ic" value="'+data[i].ITEM_CONTENT+'" readonly>';
+                     	  htmlMix += '</div>';
+                 	  }
+                 	  
+                        
+                        $('#mix_ItemAfter').append(htmlMix);
+                        $("#mix_box_toggle").show();
+             	   }
+  
+                  cnt=cnt+1
+                  if(cnt == size){
+                  $("#obj_ItemAfter").empty();
+          		    htmlObj +='<div class="icon_line">';
+         	        htmlObj +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
+         	        htmlObj += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
+         	        htmlObj +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+         	        htmlObj+='<button class="delete_btn" onclick="deleteItem_zero(this)" value="'+data[i].ITEM_SEQ+'">';
+         	        htmlObj+= '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">';
+         	        htmlObj+= '<path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" /></svg>';
+         	        htmlObj+=   '</button>';
+         	        htmlObj += '</div>';
+                  $('#obj_ItemAfter').append(htmlObj);
+                  }
            }
-        }$('#item_div').append(html);
-    }
-   
+        	   
+           }
+
+           }
+          
+
     //var dltest = document.getElementById('delete_btn');
    //dltest.addEventListener('click', deleteQus);
     function deleteQus(obj,surveySeq) {
@@ -629,11 +659,39 @@
             }
        });
    }
+    
+    function deleteItem_zero(obj){
+    	const tag = $(obj);
+    	tag.parent().remove();
+    }
+    
+    function deleteItem(obj){
+    	const tag = $(obj);
+    	tag.parent().remove();
+    	var itemSeq = $(obj).val();
+    	
+    	$.ajax({
+            method:'POST', //어떤 방식으로 보낼 지
+            url:'deleteItem.do/'+ itemSeq, // qdiv를 보낼 경로 설정
+            beforeSend : function() { //보내기 전 실행
+            console.log("요청이 보내지는가?");
+            },
+            success:function (){    //전송 성공시 실행
+				alert("삭제 성공");
+            }, error:function(e) {   //실패, 에러
+               console.log("Error", e);
+            	alert("삭제 실패");
+            }
+            });
+    	
+    }
+    
     function touchQuestion(obj){
+    	var sq = $('#surveySequence').val();
       var questionid = $(obj).val();
       $.ajax({
          method:'get', //어떤 방식으로 보낼 지
-         url:'touchandselect.do/' + questionid, // qdiv를 보낼 경로 설정
+         url:'touchandselect.do/' + questionid+'/'+sq, // qdiv를 보낼 경로 설정
          dataType: "json",
           beforeSend : function() { //보내기 전 실행
          console.log("요청이 보내지는가?");
@@ -642,20 +700,9 @@
             console.log("으잉?"+data);
                oneQuestion(data);
                secondQuestion(data);
-               $.ajax({
-               method:'GET', //어떤 방식으로 보낼 지
-               url:'selectitems.do/'+ questionid, // qdiv를 보낼 경로 설정
-                dataType: "json",
-               beforeSend : function() { //보내기 전 실행
-               console.log("요청이 보내지는가?");
-               },
-               success:function (jsondata){    //전송 성공시 실행
-                  console.log("답은:"+jsondata[0].QUESTION_TYPE_CODE)
-//                   itemHtml(jsondata);
-               }, error:function(e) {   //실패, 에러
-                  console.log("Error", e);
-               }
-               });
+               console.log("답은:"+data[0].QUESTION_TYPE_CODE);
+               itemHtml(data);
+              
             }, error:function(e) {   //실패, 에러
                console.log("Error", e);
             }
@@ -692,7 +739,8 @@
        $('#questioN_insert_form').append(html);
    }
    function secondQuestion(data){
-      console.log(data[0].SURVEYSEQ);
+      console.log("secondQuestion");
+      console.log(data[0].SURVEY_SEQ);
         var html = '';
       html += `</div>`;
       html += `<button type="button" class="btn btn-outline-primary" id="add_btn" onclick="insertQus()">문제추가</button>`;
@@ -752,23 +800,52 @@
                }
             });
          }
-   //채우 끝
+      /*
+     function insertItem(questionSeq) {
+         var idiv = $('#item_div')[0]
+         alert("문항 등록");
+          console.log("문항 등록 시작");
+         var data = new FormData(idiv);
+         $.ajax({
+            method: 'POST',
+            url: 'iteminsert.do',
+            data: data,
+            processData : false,
+            contentType : false,
+             cache : false,
+            beforeSend: function() {
+               console.log("요청 보냈음");
+               alert("업데이트 beforesend");
+               console.log("item data" + data);
+               console.log("idiv: " + idiv)
+            },
+            success: function(data) {
+               console.log($('#questionseq').val());
+               var surveyseq = $('#questionseq').val();
+              }, error:function(e) {
+                 console.log("Error", e)
+              }
+
+*/
+
+
+
+
     //문제 유형 선택 시  해당하는 유형의 문항form이 나오도록 하는 비동기
+   window.onloade=function(){
+     if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
+               $("#obj_box_toggle").show();
+      }
+   };
 
 
-	window.onloade=function(){
-	  if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
-	      	   $("#obj_box_toggle").show();
-	   }
-	};
-	   
    function checkit1() {
       if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
-    	   $("#obj_box_toggle").show();
-     	  $("#subj_box_toggle").hide();
-    	  $("#mix_box_toggle").hide();
+          $("#obj_box_toggle").show();
+          $("#subj_box_toggle").hide();
+         $("#mix_box_toggle").hide();
 
-    	   
+
        }
    };
    function checkit3() {
@@ -782,12 +859,12 @@
    };
 
    function checkit2() {
-	 if($("input[type=radio][id=subj_radio]:checked").is(':checked') == true){ // 체크 여부(checked)
+    if($("input[type=radio][id=subj_radio]:checked").is(':checked') == true){ // 체크 여부(checked)
         $("#subj_box_toggle").show();
-	 	$("#obj_box_toggle").hide();
+       $("#obj_box_toggle").hide();
         $("#mix_box_toggle").hide();
 
-	   }
+      }
 
    };
 </script>

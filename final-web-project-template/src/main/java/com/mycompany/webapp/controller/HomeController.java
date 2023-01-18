@@ -175,12 +175,12 @@ public class HomeController {
 		return "login_after_user";
 	}
 	
-//	@RequestMapping("/home2")
-//	public String home2() {
-//		logger.info("실행");
-//		//log.info("실행");
-//		return "home2";
-//	}
+	@RequestMapping("/gosurvey")
+	public String home2() {
+		logger.info("실행");
+		//log.info("실행");
+		return "survey";
+	}
 	
 	
 	

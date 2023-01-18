@@ -200,8 +200,15 @@ public class SurveyService implements ISurveyService{
 
 	}
 
+	@Override
+	public void deleteItem(int itemSeq) {
+		
+		surveyDao.deleteItem(itemSeq);
+		
+	}
 
 
+	
 
 }
 

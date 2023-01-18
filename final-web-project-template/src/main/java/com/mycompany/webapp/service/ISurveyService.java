@@ -61,6 +61,9 @@ public interface ISurveyService {
 	void surveyInsertComplete(int surveySeq);
 	
 	void deleteSurvey(int surveySeq);
+	
+	void deleteItem (int itemSeq);
+
 }
 
 
