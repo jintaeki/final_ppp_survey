@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
@@ -53,13 +55,18 @@ public interface ISurveyRepository {
 
 	List<SurveyListDTO> searchListByKeywordAndDate(PagingDTO pagingdto);
 
-	List<Map<String, Object>> selectQuestionBySeq(int questionSeq, int surveySeq);
+
+	List<Map<String, Object>> selectQuestionBySeq(@Param ("questionSeq") int questionSeq, @Param ("surveySeq") int surveySeq);
+
 
 	List<Map<String, Object>> selectItems(int questionSeq);
 
 	void UpdateQTypeBySeq(SurveyQuestionDTO SQD);
 
+	//진택
+	void surveyInsertComplete(int surveySeq);
 
+	void deleteSurvey(int surveySeq);
 }
 
 

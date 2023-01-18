@@ -2,41 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mycompany.webapp.dao.ISurveyRepository">
 
-		<insert id="insertQuestion" parameterType="SQD">
-		<selectKey keyProperty="questionSeq" resultType="int" order="BEFORE">
+      <insert id="insertQuestion" parameterType="SQD">
+      <selectKey keyProperty="questionSeq" resultType="int" order="BEFORE">
          SELECT QUESTION_ID_SEQ.NEXTVAL FROM DUAL
       </selectKey>
 
-            INSERT INTO SURVEY_QUESTION(QUESTION_SEQ
-                ,SURVEY_SEQ
-                ,QUESTION_CONTENT
-                ,QUESTION_TYPE_CODE
-                ,QUESTION_NUM
-                ,REG_DATE
-                ,UPDATE_DATE)
-            VALUES (#{questionSeq}
-                ,#{surveySeq}
-                ,#{questionContent}
-                ,#{questionTypeCode}
-                ,(select nvl2(max(QUESTION_NUM),max(question_num)+1,1) from survey_question where survey_seq = #{surveySeq})
-                ,SYSDATE
-                ,SYSDATE)
+				INSERT INTO SURVEY_QUESTION(QUESTION_SEQ
+				    ,SURVEY_SEQ
+				    ,QUESTION_CONTENT
+				    ,QUESTION_TYPE_CODE
+				    ,QUESTION_NUM
+				    ,REG_DATE
+				    ,UPDATE_DATE)
+				VALUES (#{questionSeq}
+				    ,#{surveySeq}
+				    ,#{questionContent}
+				    ,#{questionTypeCode}
+				    ,(select nvl2(max(QUESTION_NUM),max(question_num)+1,1) from survey_question where survey_seq = #{surveySeq})
+				    ,SYSDATE
+				    ,SYSDATE)
 	</insert>
 
-	<select id="selectMaxQuestionId" resultType="int">
+   <select id="selectMaxQuestionId" resultType="int">
 
-	<![CDATA[
-				SELECT NVL(MAX(QUESTION_SEQ), 0) AS "questionSeq" FROM SURVEY_QUESTION
-		]]>
-	</select>
+   <![CDATA[
+            SELECT NVL(MAX(QUESTION_SEQ), 0) AS "questionSeq" FROM SURVEY_QUESTION
+      ]]>
+   </select>
 
 	<select id="selectMaxItemId"  resultType="int">
-					SELECT NVL(MAX(ITEM_SEQ	), 0) AS "itemSeq" FROM SURVEY_ITEM
-
-	</select>
+			SELECT NVL(MAX(ITEM_SEQ	), 0) AS "itemSeq" FROM SURVEY_ITEM
+   </select>
 
 <insert id="insertItem" parameterType="SQD">
-
 		<selectKey keyProperty="itemSeq" resultType="int" order="BEFORE">
 				SELECT ITEM_ID_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
@@ -50,50 +48,56 @@
 			     ,#{itemSeq}
 			     ,#{itemContent}
 			     ,#{itemScore}
+
 			     ,SYSDATE
 			     ,SYSDATE)
 	</insert>
 
-	<insert id="setSurvey" parameterType="SLD" >
 
-		<selectKey keyProperty="surveySeq" resultType="int" order="BEFORE">
-			SELECT SURVEY_LIST_SEQ.NEXTVAL FROM DUAL
-		</selectKey>
 
-		INSERT INTO SURVEY_LIST (SURVEY_SEQ
-		       ,SURVEY_NAME
-		       ,SURVEY_CONTENT
-		       ,ANONYMITY_CHECK_CODE
-		       ,SURVEY_START_DATE
-		       ,SURVEY_CLOSED_DATE
-		       ,STATE_CODE
-		       ,REG_DATE
-		       ,UPDATE_DATE)
-		VALUES(#{surveySeq}
-		       ,#{surveyName}
-		       ,#{surveyContent}
-		       ,#{anonymityCheckCode}
-		       ,TO_CHAR(#{surveyStartDate},'YYYY.MM.dd')
-		       ,TO_CHAR(#{surveyClosedDate} , 'YYYY.MM.dd')
-		       ,#{stateCode}
-		       ,SYSDATE
-		       ,SYSDATE)
-	</insert>
 
-	<update id="updateSurvey" parameterType="SLD">
-		UPDATE SURVEY_LIST SET SURVEY_NAME=#{surveyName}
-		      ,SURVEY_CONTENT=#{surveyContent}
-		      ,ANONYMITY_CHECK_CODE=#{anonymityCheckCode}
-		      ,SURVEY_START_DATE=TO_CHAR(#{surveyStartDate},'YYYY.MM.dd')
-		      ,SURVEY_CLOSED_DATE=TO_CHAR(#{surveyClosedDate} , 'YYYY.MM.dd')
-		      ,UPDATE_DATE=sysdate  WHERE SURVEY_SEQ=#{surveySeq}
-	</update>
+   <insert id="setSurvey" parameterType="SLD" >
 
-	<insert id="updateItem" parameterType="SQD" >
+      <selectKey keyProperty="surveySeq" resultType="int" order="BEFORE">
+         SELECT SURVEY_LIST_SEQ.NEXTVAL FROM DUAL
+      </selectKey>
 
-		<selectKey keyProperty="itemSeq" resultType="int" order="BEFORE">
-			SELECT ITEM_ID_SEQ.NEXTVAL FROM DUAL
-		</selectKey>
+      INSERT INTO SURVEY_LIST (SURVEY_SEQ
+             ,SURVEY_NAME
+             ,SURVEY_CONTENT
+             ,ANONYMITY_CHECK_CODE
+             ,SURVEY_START_DATE
+             ,SURVEY_CLOSED_DATE
+             ,STATE_CODE
+             ,REG_DATE
+             ,UPDATE_DATE)
+      VALUES(#{surveySeq}
+             ,#{surveyName}
+             ,#{surveyContent}
+             ,#{anonymityCheckCode}
+             ,TO_CHAR(#{surveyStartDate},'YYYY.MM.dd')
+             ,TO_CHAR(#{surveyClosedDate} , 'YYYY.MM.dd')
+             ,#{stateCode}
+             ,SYSDATE
+             ,SYSDATE)
+   </insert>
+
+   <update id="updateSurvey" parameterType="SLD">
+      UPDATE SURVEY_LIST SET SURVEY_NAME=#{surveyName}
+            ,SURVEY_CONTENT=#{surveyContent}
+            ,ANONYMITY_CHECK_CODE=#{anonymityCheckCode}
+            ,SURVEY_START_DATE=TO_CHAR(#{surveyStartDate},'YYYY.MM.dd')
+            ,SURVEY_CLOSED_DATE=TO_CHAR(#{surveyClosedDate} , 'YYYY.MM.dd')
+            ,UPDATE_DATE=sysdate  WHERE SURVEY_SEQ=#{surveySeq}
+   </update>
+
+   <insert id="updateItem" parameterType="SQD" >
+
+
+      <selectKey keyProperty="itemSeq" resultType="int" order="BEFORE">
+         SELECT ITEM_ID_SEQ.NEXTVAL FROM DUAL
+      </selectKey>
+
 
 		INSERT INTO SURVEY_ITEM (QUESTION_SEQ
 		     ,ITEM_SEQ
@@ -108,12 +112,14 @@
 	</insert>
 
 
-<delete id="DeleteQuestion" parameterType="SQD">
-		DELETE FROM SURVEY_QUESTION WHERE QUESTION_SEQ = #{questionSeq}
-	</delete>
 
-	<select id="selectQuestion" parameterType="int" resultType="hashmap">
-	SELECT SURVEY_QUESTION.SURVEY_SEQ
+<delete id="DeleteQuestion" parameterType="SQD">
+      DELETE FROM SURVEY_QUESTION WHERE QUESTION_SEQ = #{questionSeq}
+   </delete>
+
+
+   <select id="selectQuestion" parameterType="int" resultType="hashmap">
+      SELECT SURVEY_QUESTION.SURVEY_SEQ
        ,SURVEY_QUESTION.QUESTION_SEQ
            ,SURVEY_QUESTION.QUESTION_CONTENT
            ,SURVEY_QUESTION.QUESTION_TYPE_CODE
@@ -123,103 +129,105 @@
       FROM  SURVEY_ITEM  right join SURVEY_QUESTION
       on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ
       where SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} ORDER BY SURVEY_QUESTION.QUESTION_SEQ DESC
-	</select>
-
-	<select id="selectSurvey" parameterType="int" resultType="SLD">
-		SELECT SURVEY_SEQ
-		     	,SURVEY_NAME
-		     ,SURVEY_CONTENT
-		     ,ANONYMITY_CHECK_CODE
-		     ,to_date(SURVEY_START_DATE, 'YYYY-MM-dd') as surveyStartDate
-		     ,to_date(SURVEY_CLOSED_DATE, 'YYYY-MM-dd' ) as surveyClosedDate
-		     ,STATE_CODE
-	   FROM SURVEY_LIST
-	   WHERE SURVEY_SEQ = #{surveySeq}
-
-	</select>
+   </select>
 
 
-	<select id="getQuestionList" resultType="com.mycompany.webapp.dto.SurveyQuestionDTO">
-		SELECT SURVEY_SEQ
-		    ,QUESTION_SEQ
-		    ,QUESTION_CONTENT
-		    ,QUESTION_TYPE_CODE
-		FROM SURVEY_QUESTION WHERE SURVEY_SEQ = #{surveySeq} order by question_seq desc
-	</select>
 
-	<update id="UpdateQuestion" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
-		UPDATE SURVEY_QUESTION SET QUESTION_CONTENT=#{questionContent}
-		    ,QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq}
-	</update>
+   <select id="selectSurvey" parameterType="int" resultType="SLD">
+      SELECT SURVEY_SEQ
+           ,SURVEY_NAME
+           ,SURVEY_CONTENT
+           ,ANONYMITY_CHECK_CODE
+           ,to_date(SURVEY_START_DATE, 'YYYY-MM-dd') as surveyStartDate
+           ,to_date(SURVEY_CLOSED_DATE, 'YYYY-MM-dd' ) as surveyClosedDate
+           ,STATE_CODE
+      FROM SURVEY_LIST
+      WHERE SURVEY_SEQ = #{surveySeq}
 
-<!-- 	<update id="UpdateQTypeBySeq" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO"> -->
-<!-- 		UPDATE SURVEY_QUESTION SET QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq} -->
-<!-- 	</update> -->
+   </select>
 
-	<update id="sendMessage" parameterType="int">
-		UPDATE SURVEY_LIST SET 	STATE_CODE='Y' WHERE SURVEY_SEQ =#{surveySeq}
-	</update>
+
+   <select id="getQuestionList" resultType="com.mycompany.webapp.dto.SurveyQuestionDTO">
+      SELECT SURVEY_SEQ
+          ,QUESTION_SEQ
+          ,QUESTION_CONTENT
+          ,QUESTION_TYPE_CODE
+      FROM SURVEY_QUESTION WHERE SURVEY_SEQ = #{surveySeq} order by question_seq desc
+   </select>
+
+   <update id="UpdateQuestion" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
+      UPDATE SURVEY_QUESTION SET QUESTION_CONTENT=#{questionContent}
+          ,QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq}
+   </update>
+
+<!--    <update id="UpdateQTypeBySeq" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO"> -->
+<!--       UPDATE SURVEY_QUESTION SET QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq} -->
+<!--    </update> -->
+
+   <update id="sendMessage" parameterType="int">
+      UPDATE SURVEY_LIST SET    STATE_CODE='Y' WHERE SURVEY_SEQ =#{surveySeq}
+   </update>
 <select id="searchListByKeyword" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="SLD">
-	<![CDATA[
-		 SELECT SURVEY_SEQ
-		      ,SURVEY_NAME
-		      ,SURVEY_CONTENT
-		      ,ANONYMITY_CHECK_CODE
-		      ,to_date(SURVEY_START_DATE, 'YYYY-MM-dd')  as surveyStartDate
-		      ,to_date(SURVEY_CLOSED_DATE, 'YYYY-MM-dd') as surveyClosedDate
-		      ,STATE_CODE
-		      ,CODE_DETAIL_NAME
-	    FROM COMMON_DETAIL cd, (
-			SELECT ROWNUM AS rnum
-		      	  ,SURVEY_SEQ
-		      	  ,SURVEY_NAME
-		      	  ,SURVEY_CONTENT
-		      	  ,ANONYMITY_CHECK_CODE
-	          	  ,SURVEY_START_DATE
-		      	  ,SURVEY_CLOSED_DATE
-		      	  ,STATE_CODE
-	    	FROM (SELECT SURVEY_SEQ
-	          	 ,SURVEY_NAME
-	          	 ,SURVEY_CONTENT
-	          	 ,ANONYMITY_CHECK_CODE
-	          	 ,SURVEY_START_DATE
-		      	 ,SURVEY_CLOSED_DATE
-	          	 ,STATE_CODE
-	          	 FROM SURVEY_LIST
-	          	 WHERE
-	          	 (SURVEY_START_DATE is null and
-	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%' and
-	          	  STATE_CODE LIKE (CASE
-      							   WHEN #{selection} = '30005'
-      							   THEN '%' || '' || '%'
+   <![CDATA[
+       SELECT SURVEY_SEQ
+            ,SURVEY_NAME
+            ,SURVEY_CONTENT
+            ,ANONYMITY_CHECK_CODE
+            ,to_date(SURVEY_START_DATE, 'YYYY-MM-dd')  as surveyStartDate
+            ,to_date(SURVEY_CLOSED_DATE, 'YYYY-MM-dd') as surveyClosedDate
+            ,STATE_CODE
+            ,CODE_DETAIL_NAME
+       FROM COMMON_DETAIL cd, (
+         SELECT ROWNUM AS rnum
+                 ,SURVEY_SEQ
+                 ,SURVEY_NAME
+                 ,SURVEY_CONTENT
+                 ,ANONYMITY_CHECK_CODE
+                  ,SURVEY_START_DATE
+                 ,SURVEY_CLOSED_DATE
+                 ,STATE_CODE
+          FROM (SELECT SURVEY_SEQ
+                 ,SURVEY_NAME
+                 ,SURVEY_CONTENT
+                 ,ANONYMITY_CHECK_CODE
+                 ,SURVEY_START_DATE
+                ,SURVEY_CLOSED_DATE
+                 ,STATE_CODE
+                 FROM SURVEY_LIST
+                 WHERE
+                 (SURVEY_START_DATE is null and
+                  SURVEY_NAME LIKE '%' || #{keyword} || '%' and
+                  STATE_CODE LIKE (CASE
+                              WHEN #{selection} = '30005'
+                              THEN '%' || '' || '%'
                                    ELSE '%' || #{selection} || '%'
                                    END)
-	          	 )
-	          	   or
-	          	 SURVEY_START_DATE >= (CASE
-	          	 						 WHEN #{surveyStartDate} is null
-	          	 						 THEN sysdate-99999
-	          	 						 WHEN #{surveyStartDate} is not null
-	          	 						 THEN to_date(to_char(#{surveyStartDate},'yyyy-MM-dd'),'yyyy-MM-dd')
-	          	 						 END) and
+                 )
+                   or
+                 SURVEY_START_DATE >= (CASE
+                                    WHEN #{surveyStartDate} is null
+                                    THEN sysdate-99999
+                                    WHEN #{surveyStartDate} is not null
+                                    THEN to_date(to_char(#{surveyStartDate},'yyyy-MM-dd'),'yyyy-MM-dd')
+                                    END) and
 
-	          	  STATE_CODE LIKE (CASE
-      							   WHEN #{selection} = '30005'
-      							   THEN '%' || '' || '%'
+                  STATE_CODE LIKE (CASE
+                              WHEN #{selection} = '30005'
+                              THEN '%' || '' || '%'
                                    ELSE '%' || #{selection} || '%'
                                    END) and
 
-	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%'
-				  ORDER BY ROWNUM  DESC
-			   	)
-			 WHERE ROWNUM <= #{endRowNo}
-			   	)
-		WHERE cd.code_detail_id = state_code and rnum  >= #{startRowNo}
-		]]>
-	</select>
+                  SURVEY_NAME LIKE '%' || #{keyword} || '%'
+              ORDER BY ROWNUM  DESC
+               )
+          WHERE ROWNUM <= #{endRowNo}
+               )
+      WHERE cd.code_detail_id = state_code and rnum  >= #{startRowNo}
+      ]]>
+   </select>
 
-	<select id="selectQuestionBySeq" resultType="hashmap">
-	      SELECT SURVEY_QUESTION.SURVEY_SEQ
+   <select id="selectQuestionBySeq"  resultType="hashmap">
+          SELECT SURVEY_QUESTION.SURVEY_SEQ
       		    ,SURVEY_QUESTION.QUESTION_SEQ
       		    ,SURVEY_QUESTION.QUESTION_CONTENT
                 ,SURVEY_QUESTION.QUESTION_TYPE_CODE
@@ -228,11 +236,8 @@
                 ,SURVEY_ITEM.ITEM_SCORE
           FROM  SURVEY_ITEM  right join SURVEY_QUESTION
           on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ
-          WHERE SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq}
-          and SURVEY_QUESTION.QUESTION_SEQ = #{questionSeq}
-          ORDER BY SURVEY_QUESTION.QUESTION_SEQ DESC
-	</select>
-
+          WHERE SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} and SURVEY_QUESTION.QUESTION_SEQ = #{questionSeq} ORDER BY SURVEY_QUESTION.QUESTION_SEQ DESC
+   </select>
 
 	<delete id="deleteItemByQSeq" parameterType="int">
 		DELETE FROM SURVEY_ITEM
@@ -240,18 +245,23 @@
 	</delete>
 
 
+   <select id="selectItems" parameterType="int" resultType="hashmap">
 
-
-
-	<select id="selectItems" parameterType="int" resultType="hashmap">
-
-		SELECT si.ITEM_SEQ
-			  ,si.QUESTION_SEQ
+      SELECT si.ITEM_SEQ
+           ,si.QUESTION_SEQ
               ,si.ITEM_CONTENT
               ,si.ITEM_SCORE
               ,sq.QUESTION_TYPE_CODE
-		FROM SURVEY_ITEM si, SURVEY_QUESTION sq
-		WHERE si.QUESTION_SEQ = sq.QUESTION_SEQ and si.QUESTION_SEQ = #{questionSeq}
-	</select>
+      FROM SURVEY_ITEM si, SURVEY_QUESTION sq
+      WHERE si.QUESTION_SEQ = sq.QUESTION_SEQ and si.QUESTION_SEQ = #{questionSeq}
+   </select>
+
+	<update id="surveyInsertComplete" parameterType="int">
+		UPDATE SURVEY_LIST SET STATE_CODE = '30002' WHERE SURVEY_SEQ = #{SURVEY_SEQ}
+	</update>
+
+	<delete id="deleteSurvey" parameterType="int">
+		DELETE FROM SURVEY_LIST WHERE SURVEY_SEQ = #{SURVEYSEQ}
+	</delete>
 
 </mapper>

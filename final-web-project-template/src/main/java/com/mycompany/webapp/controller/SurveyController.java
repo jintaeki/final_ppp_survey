@@ -2,7 +2,7 @@ package com.mycompany.webapp.controller;
 
 
 
-import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,12 +51,7 @@ public class SurveyController {
 	@Autowired
 	ICommonCodeService commonCodeService;
 
-//	@RequestMapping("")
-//	public String survey() {
-//		logger.info("실행");
-//		//log.info("실행");
-//		return "survey";
-//	}
+
 
 	@RequestMapping("/surveydetails")
 	public String surveyDetails() {
@@ -98,20 +94,7 @@ public class SurveyController {
 		return "성공";
 	}
 
-	// 설문지 목록으로 이동을 위한 컨트롤러
-//		@RequestMapping(value="/surveylist")
-//		public String survey_list(@RequestParam(defaultValue="1") int pageNo, Model model) {
-//			int totalRows= pagingService.getTotalBoardNum();
-	//
-//			PagingDTO pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
-//			logger.info(surveyService.selectSurveyList(pagingdto).toString());
-	//
-//			model.addAttribute("surveylist", surveyService.selectSurveyList(pagingdto));
-//			model.addAttribute("pagingdto",pagingdto);
-//			logger.info("실행");
-	//
-//			return "survey_list";
-//		}
+
 
 	@RequestMapping("/surveysearch")
 	public String search(@RequestParam(defaultValue="") String keyword,
@@ -124,8 +107,7 @@ public class SurveyController {
 		logger.info("지금 가져온 선택지:"+selection);
 		logger.info("페이지 수"+pageNo);
 		logger.info("키워드"+keyword);
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//		logger.info("날짜"+formatter.format(surveyStartDate));
+		logger.info("날짜"+surveyStartDate);
 		try {
 
 			List<SurveyListDTO> surveylist = null;
@@ -134,7 +116,7 @@ public class SurveyController {
 
 				int totalRows = pagingService.getTotalBoardNum(keyword, selection, surveyStartDate);
 				System.out.println("totolRows:" + totalRows);
-				pagingdto = new PagingDTO(5, 5, totalRows, pageNo);
+				pagingdto = new PagingDTO(7, 7, totalRows, pageNo);
 				pagingdto.setSelection(selection);
 				pagingdto.setKeyword(keyword);
 
@@ -158,6 +140,7 @@ public class SurveyController {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("하이?");
 		return "survey_search";
 	}
 
@@ -169,6 +152,7 @@ public class SurveyController {
 		//log.info("실행");
 		return "survey_result_team";
 	}
+
 	@RequestMapping("/surveyresult")
 	public String surveyResult() {
 		logger.info("실행");
@@ -214,9 +198,6 @@ public class SurveyController {
 			public SurveyQuestionDTO insertItem(@ModelAttribute ("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,Model model, RedirectAttributes redirectAttrs) {
 				logger.info("insertItem.do");
 				logger.info(SQD.toString());
-
-
-
 
 				String checkCode = SQD.getQuestionTypeCode();
 				try {
@@ -293,7 +274,7 @@ public class SurveyController {
 			String checkCode = SQD.getQuestionTypeCode();
 			try {
 				if(checkCode.equals("10001")) {
-					surveyService.deleteItemByQSeq(SQD);
+//					surveyService.deleteItemByQSeq(SQD);
 					// 문제 id, 점수, 문항내용, itemid, 각 각 받아야 한다
 					// questionId, itemScore, itemContent, itemId
 
@@ -311,6 +292,8 @@ public class SurveyController {
 					for(int i = 0 ; i<=cntcontent;i++) {
 						SQD.setItemContent(itmencontent[i]);
 						SQD.setItemScore(itemscore[i]);
+						System.out.println("컨텐츠:"+SQD.getItemContent());
+						System.out.println("스코어"+SQD.getItemScore());
 						surveyService.updateItem(SQD);
 					}
 				}else if(checkCode.equals("10002")) {
@@ -372,14 +355,6 @@ public class SurveyController {
 		return surveyService.selectItems(questionseq) ;
 	}
 
-
-	/*
-	@RequestMapping(value="survey/questioninsert.do/{surveyListDTO}", method=RequestMethod.GET)
-	public String getSurveyInfo(Model model){
-
-			return "common/survey_insert";
-		}
-	*/
 	//문제 등록
 		@RequestMapping(value="/insertquestion.do")
 		@ResponseBody
@@ -390,19 +365,6 @@ public class SurveyController {
 
 			return SQD;
 		}
-
-//	//문항 수정
-//	@RequestMapping(value="survey/iteminsert.do", method=RequestMethod.POST)
-//	public String updateItem(@ModelAttribute("SID") @Valid SurveyItemDTO SID, BindingResult result, Model model, RedirectAttributes RedirectAttrs) {
-//		logger.info("문항 수정 Controller 진입");
-//		model.addAttribute("SID", SID);
-//
-//		return null;
-//
-//	}
-
-
-
 
 	//문제 비동기 조회 채우
 	@RequestMapping(value="/questionList.do")
@@ -442,14 +404,59 @@ public class SurveyController {
 			surveyService.DeleteQuestion(questionSeq);
 		}
 
-		//문제 선택 시 데이터 가져오기
-		@RequestMapping(value="/touchandselect.do/{questionSeq}/{surveySeq}")
-		@ResponseBody
-		public List<Map<String, Object>> touchAndSelect(@PathVariable int questionSeq, @PathVariable int surveySeq) {
-			logger.info("touchandselect 진입");
-			System.out.println(surveySeq);
-			System.out.println(surveyService.selectQuestionBySeq(questionSeq,surveySeq));
-			return surveyService.selectQuestionBySeq(questionSeq,surveySeq);
+
+	//문제 선택 시 데이터 가져오기
+	@RequestMapping(value="/touchandselect.do/{questionSeq}/{surveySeq}")
+	@ResponseBody
+	public List<Map<String, Object>> touchAndSelect(@PathVariable int questionSeq, @PathVariable int surveySeq) {
+		logger.info("touchandselect 진입");
+		System.out.println(surveyService.selectQuestionBySeq(questionSeq,surveySeq));
+		return surveyService.selectQuestionBySeq(questionSeq,surveySeq);
+	}
+
+
+
+	//문항 등록
+	public SurveyQuestionDTO itemInsert(@ModelAttribute ("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,Model model, RedirectAttributes redirectAttrs) {
+		logger.info("문항생성 Controller 진입");
+
+		return SQD;
+	}
+
+
+
+
+
+// 진택
+	// 등록완료 돌아가기
+	@RequestMapping("/surveyinsertcomplete.do/{surveyseq}")
+	public String SurveyInsertComplete (@PathVariable int surveyseq ) {
+		surveyService.surveyInsertComplete(surveyseq);
+
+		return "redirect:/survey/surveysearch";
+	}
+
+	@RequestMapping("/deletesurvey.do/{surveyseq}/{pageno}/{date}/{keyword}/{selection}")
+	public String DeleteSurvey (@PathVariable int surveyseq,
+								@PathVariable int pageno,
+								@PathVariable(required=false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
+								@PathVariable String selection,
+								@PathVariable String keyword){
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String strDate = (String)sdf.format(date);
+		if(sdf.format(date).equals("1111-11-11")) {
+			strDate = "";
 		}
+		if(keyword.equals("empty")) {
+			keyword="";
+		}
+
+		logger.info("deletesurvey 컨트롤러 진입");
+//		surveyService.deleteSurvey(surveyseq);
+		return "redirect:/survey/surveysearch?pageNo="+pageno+"&keyword="+keyword+"&selection="+selection+"&surveyStartDate="+strDate;
+
+	}
+
 
 	}

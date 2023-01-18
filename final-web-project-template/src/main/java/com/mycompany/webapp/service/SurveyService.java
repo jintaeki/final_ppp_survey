@@ -185,7 +185,17 @@ public class SurveyService implements ISurveyService{
 		return surveyDao.selectItems(questionSeq);
 	}
 
+//진택
+	@Override
+	public void surveyInsertComplete(int surveySeq) {
+		surveyDao.surveyInsertComplete(surveySeq);
+	}
 
+	@Override
+	public void deleteSurvey(int surveySeq) {
+		surveyDao.deleteSurvey(surveySeq);
+
+	}
 
 
 }

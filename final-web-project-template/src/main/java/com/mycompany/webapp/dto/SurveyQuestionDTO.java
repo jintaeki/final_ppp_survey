@@ -3,6 +3,7 @@ package com.mycompany.webapp.dto;
 import java.util.Date;
 
 public class SurveyQuestionDTO {
+
 	//for 문제
 	private int surveySeq;
 	private int questionSeq;
@@ -87,6 +88,8 @@ public class SurveyQuestionDTO {
 				+ ", addDate=" + addDate + ", itemSeq=" + itemSeq + ", itemContent=" + itemContent + ", itemScore="
 				+ itemScore + ", itemNum=" + itemNum + "]";
 	}
+
+
 
 
 
