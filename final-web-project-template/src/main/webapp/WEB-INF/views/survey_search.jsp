@@ -19,9 +19,9 @@
 			const month = date.getMonth();
 			const day = date.getDate();
 
-			currentDay = new Date(year, month, day).toLocaleDateString();			
-			currentDay = currentDay.replaceAll('.','-');		
-			currentDay = currentDay.replaceAll(' ', '');			
+			currentDay = new Date(year, month, day).toLocaleDateString();
+			currentDay = currentDay.replaceAll('.','-');
+			currentDay = currentDay.replaceAll(' ', '');
 			currentDay = currentDay.slice(0,-1);
 
 			let firstTemp = currentDay.split('-')[0];
@@ -30,15 +30,15 @@
 			if(Number(firstTemp<10)) firstTemp = '0' +firstTemp;
 			if(Number(middleTemp<10)) middleTemp = '0' + middleTemp;
 			if(Number(lastTemp<10)) lastTemp = '0'+lastTemp;
-			
+
 			currentDay = firstTemp+'-'+middleTemp+'-'+lastTemp;
 			date = currentDay;
 
 		}if(keyword==''){
 			keyword= 'empty';
-			
+
 		}
-		
+
 		console.log(date);
 
 		$.ajax({
@@ -58,13 +58,13 @@
 	            location.href='http://localhost:8080/springframework-xml-config-no-root/survey/surveysearch?pageNo='+bpageno+'&keyword='+bkeyword+'&selection='+bselection+'&surveyStartDate='+bdate;
 	            }
 	       });
-		
-		
-		
+
+
+
 	};
 
 // function getList(){
-	 
+
 // 	$.ajax({
 //          method:'GET', //어떤 방식으로 보낼 지
 //          url:'surveysearch/'+ surveyseq, // qdiv를 보낼 경로 설정
@@ -80,19 +80,19 @@
 //             console.log("Error", e);
 //          }
 //          });
-	
+
 // }
 
-	
 
-	
+
+
 	function sendRe(obj){
 		var pageno = $('#pageNo').val();
   		var surveyseq = $(obj).val();
   		console.log(surveyseq)
 //   		$.ajax({
 // 			method:'POST', //어떤 방식으로 보낼 지
-// 			url:'sendmessage.do/'+surveyseq+'/'+pageno, // qdiv를 보낼 경로 설정	
+// 			url:'sendmessage.do/'+surveyseq+'/'+pageno, // qdiv를 보낼 경로 설정
 // 		    beforeSend : function() { //보내기 전 실행
 // 			console.log("요청이 보내지는가?");
 // 		   },
@@ -104,17 +104,17 @@
 
 // 			tag.parent().html(completeMsg);
 // 			tag.hide
-			   
+
 // 		   }, error:function(e) {	//실패, 에러
-// 			   console.log("Error", e); 
+// 			   console.log("Error", e);
 // 		   }
 // 			});
 	}
-	
-			
+
+
 
   	function send(obj) {
-  		
+
   		var pageno = $('#pageNo').val();
   		var surveyseq = $(obj).val();
 
@@ -122,7 +122,7 @@
 
 		$.ajax({
 			method:'POST', //어떤 방식으로 보낼 지
-			url:'sendmessage.do/'+surveyseq+'/'+pageno, // qdiv를 보낼 경로 설정	
+			url:'sendmessage.do/'+surveyseq+'/'+pageno, // qdiv를 보낼 경로 설정
 		    beforeSend : function() { //보내기 전 실행
 			console.log("요청이 보내지는가?");
 		   },
@@ -131,40 +131,40 @@
 			const tag = $(obj);
 			console.log(tag);
 			console.log(surveyseq);
- 			
-			const text = '<button type="button" class="btn btn-link" onclick="location.href='+'\'surveyevaluate/' +surveyseq+ '\'">조회</button>';	
- 			tag.parent().parent().next().append(text);	
- 									
+
+			const text = '<button type="button" class="btn btn-link" onclick="location.href='+'\'surveyevaluate/' +surveyseq+ '\'">조회</button>';
+ 			tag.parent().parent().next().append(text);
+
 
  			const complete = `알림발송완료`;
  			tag.parent().html(complete);
  			tag.parent().css('font-weight', 'bold');
  			tag.parent().css('color', '#F06');
- 										
+
 			tag.parent().parent().parent().closest('td').css('color', 'black');
 			tag.parent().parent().parent().closest('td').css('disabled', true);
 			const done=`매핑완룡`;
 			tag.parent().parent().next().next().append(done);
-			
+
 		   }, error:function(e) {	//실패, 에러
-			   console.log("Error", e); 
+			   console.log("Error", e);
 		   }
 			});
-		
+
 
 	}
-  	
+
   	function btn_for_mapping(surveySeq, stateCode){
   		console.log(surveySeq);
   		console.log(stateCode);
   	  if(stateCode == '30002'){
-  		newMapping(surveySeq)  
+  		newMapping(surveySeq)
   	  }else if(stateCode == '30003'){
-  		reMapping(surveySeq)  
+  		reMapping(surveySeq)
   	  }
   	}
-  	  
-  	  
+
+
   	function newMapping(serveySeq){
   		html ="";
   		html += '<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
@@ -183,7 +183,7 @@
   	    html += '</div></form:form></div></div></div></div>';
   	    $('#beforeModal').after(html);
   	}
-  	
+
   	function reMapping(serveySeq){
   		html ="";
   		html += '<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
@@ -197,8 +197,8 @@
   	   	html += '<input type="hidden" id="month" name="month" value="3">';
   	   	html += '<input type="hidden" id="number" name="number" value="3">';
   	   	html += '<br> <h5> 해당 다면평가의 매핑을 새로 하시겠습니까? </h5>';
-  	   	html += '<br><button type="submit" class="btn btn-outline-danger" id="newCheck" name="newCheck" value="1">삭제하고 새로 시작하기</button>';  	   	
-  	   	html += '<br><button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 매핑 데이터로 넘어가기</button>';  	   	
+  	   	html += '<br><button type="submit" class="btn btn-outline-danger" id="newCheck" name="newCheck" value="1">삭제하고 새로 시작하기</button>';
+  	   	html += '<br><button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 매핑 데이터로 넘어가기</button>';
   	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>';
   	    html += '</div></form:form></div></div></div></div>';
   	    $('#beforeModal').after(html);
@@ -280,7 +280,7 @@
 									</c:if>
 								</c:forEach>
 							</select> <input type="text" class="form-control" id="selectedKeyword" placeholder="search"
-								name="keyword" value="${pagingdto.keyword}" 
+								name="keyword" value="${pagingdto.keyword}"
 								aria-describedby="button-addon2"> <input type="hidden"
 								name="pageNo" value="1">
 							<div class="input-group-append">
@@ -313,7 +313,7 @@
 						<c:forEach var="list" items="${surveylist}">
 							<tr id="${list.surveySeq }">
 
-								<th scope="row"><button class="delete_survey_btn" 
+								<th scope="row"><button class="delete_survey_btn"
 								onclick="delete_survey_btn(this,${list.surveySeq}, ${pagingdto.selection},  ${pagingdto.pageNo})">
 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 											fill="currentColor" class="bi bi-x" viewBox="0 0 16 16"> <path

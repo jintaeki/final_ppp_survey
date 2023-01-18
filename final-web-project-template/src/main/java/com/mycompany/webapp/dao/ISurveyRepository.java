@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
@@ -67,6 +68,8 @@ public interface ISurveyRepository {
 	void surveyInsertComplete(int surveySeq);
 
 	void deleteSurvey(int surveySeq);
+
+	List<Map<String, Object>> selectSurveyEvaluate(int surveySeq);
 }
 
 

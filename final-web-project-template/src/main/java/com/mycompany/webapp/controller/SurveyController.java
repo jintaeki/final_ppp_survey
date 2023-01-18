@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
@@ -51,8 +53,6 @@ public class SurveyController {
 	@Autowired
 	ICommonCodeService commonCodeService;
 
-
-
 	@RequestMapping("/surveydetails")
 	public String surveyDetails() {
 		logger.info("실행");
@@ -60,10 +60,13 @@ public class SurveyController {
 		return "survey_details";
 	}
 	@RequestMapping("/surveyevaluate/{surveySeq}")
-	public String surveyEvaluate(@PathVariable int surveySeq) {
+	public String surveyEvaluate(@PathVariable int surveySeq, HttpSession session, Model model) {
 		logger.info("실행");
 		System.out.println(surveySeq);
+		List<Map<String, Object>> EL = surveyService.selectSurveyEvaluate(surveySeq);
 		//log.info("실행");
+		model.addAttribute("EL", EL);
+
 		return "survey_evaluate";
 	}
 
@@ -262,7 +265,7 @@ public class SurveyController {
 
 
 
-		
+
 
 	// 문제 비동기식으로 출력
 	@RequestMapping(value="/selectquestion.do/{surveySeq}")

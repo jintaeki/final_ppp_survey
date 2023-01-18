@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import com.mycompany.webapp.dao.ISurveyRepository;
+import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
@@ -195,6 +196,11 @@ public class SurveyService implements ISurveyService{
 	public void deleteSurvey(int surveySeq) {
 		surveyDao.deleteSurvey(surveySeq);
 
+	}
+
+	@Override
+	public List<Map<String, Object>> selectSurveyEvaluate(int surveySeq) {
+		return surveyDao.selectSurveyEvaluate(surveySeq);
 	}
 
 

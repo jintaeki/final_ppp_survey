@@ -264,4 +264,19 @@
 		DELETE FROM SURVEY_LIST WHERE SURVEY_SEQ = #{SURVEYSEQ}
 	</delete>
 
+  <select id="selectSurveyEvaluate" parameterType="int" resultType="hashmap">
+  		SELECT
+              oc.department_name
+             ,g.grade_name
+             ,ui.employee_name
+             ,m.SURVEY_COMPLETE_YN
+        from grade g
+             ,user_info ui
+             ,mapping m
+             ,ORGANIZATION_CHART oc
+        where m.rater_id = ui.employee_id and g.grade_id = ui.grade_id
+        and oc.department_id = ui.department_id and  m.survey_seq = #{surveySeq}
+  </select>
+
+
 </mapper>

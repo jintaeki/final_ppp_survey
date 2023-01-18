@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
@@ -35,6 +36,8 @@ public interface ISurveyService {
 	int selectMaxItemId();
 
 	void UpdateQuestion(SurveyQuestionDTO sqd);
+
+	List<Map<String, Object>> selectSurveyEvaluate(int surveySeq);
 
 	List<Map<String, Object>> selectQuestion(int surveySeq);
 
