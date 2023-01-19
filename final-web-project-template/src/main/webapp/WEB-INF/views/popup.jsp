@@ -67,7 +67,7 @@
 		 window.close();
 	  })
 	  .fail(function(e) {
-	 	 alert("추가 실패용");
+	 	 alert("추가 실패");
 	  })
 	  always(function() {
 		 alert(resMap.msg);
