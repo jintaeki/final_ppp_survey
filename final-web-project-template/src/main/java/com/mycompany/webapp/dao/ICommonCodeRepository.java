@@ -10,4 +10,6 @@ import com.mycompany.webapp.dto.CommonDTO;
 public interface ICommonCodeRepository {
 
 	public List<CommonDTO> selectStateCode();
+
+	public List<CommonDTO> selectEvaluateCode();
 }

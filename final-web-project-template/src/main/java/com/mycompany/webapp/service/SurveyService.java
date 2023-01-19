@@ -31,7 +31,7 @@ public class SurveyService implements ISurveyService{
 
 	@Autowired
 	IMappingRepository mappingrepository;
-	
+
 	@Override
 	public void setSurvey(SurveyListDTO surveylist) {
 		surveyDao.setSurvey(surveylist);
@@ -205,9 +205,9 @@ public class SurveyService implements ISurveyService{
 	@Override
 
 	public void deleteItem(int itemSeq) {
-		
+
 		surveyDao.deleteItem(itemSeq);
-		
+
 	}
 
 
@@ -218,14 +218,20 @@ public class SurveyService implements ISurveyService{
 
 	@Override
 	public List<PopupDTO> selectSurveyMapping(int surveySeq, int raterId) {
-		return surveyDao.selectSurveyMapping(surveySeq, raterId); 
+		return surveyDao.selectSurveyMapping(surveySeq, raterId);
 	}
 
 	@Override // 매칭 중복 조횐
 	public int mappingCheck(int surveySeq) {
 		return surveyDao.mappingCheck(surveySeq);
 	}
-	
+
+	@Override
+	public List<Map<String, String>> searchByEvaluate(PagingDTO pagingDto) {
+		// TODO Auto-generated method stub
+		logger.info("검색:" + surveyDao.searchByEvaluate(pagingDto).toString());
+		return surveyDao.searchByEvaluate(pagingDto);
+	}
 }
 
 

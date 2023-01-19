@@ -53,7 +53,7 @@ public class SurveyController {
 
 	@Autowired
 	IMappingService mappingService;
-	
+
 	@Autowired
 	ICommonCodeService commonCodeService;
 
@@ -107,11 +107,12 @@ public class SurveyController {
 
 	@RequestMapping("/surveysearch")
 	public String search(@RequestParam(defaultValue="") String keyword,
+			             @RequestParam(value="searchType", required = false, defaultValue="employeeName") String searchType,
 						 @RequestParam(defaultValue="1") int pageNo,
 						 @RequestParam(defaultValue="30005") String selection,
 						 @RequestParam(required=false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDate,
 						 HttpSession session, Model model) {
-
+			
 		model.addAttribute("commonCodeList",commonCodeService.selectStateCode());
 		logger.info("지금 가져온 선택지:"+selection);
 		logger.info("페이지 수"+pageNo);
@@ -400,24 +401,31 @@ public class SurveyController {
 		return "redirect:/survey/surveysearch?pageNo="+pageno+"&keyword="+keyword+"&selection="+selection+"&surveyStartDate="+strDate;
 
 	}
-	
+
 	@RequestMapping("/deleteItem.do/{itemSeq}")
 	@ResponseBody
 	public void DeleteItem(@PathVariable int itemSeq) {
 		logger.info("deleteItem 컨트롤러");
 		surveyService.deleteItem(itemSeq);
-		
+
 	}
 
 
-	
+	@RequestMapping("")
+	   public String selectSurveyMapping() {
+
+	      return "survey";
+	   }
+
+
 	/*설문 화면에서 왼쪽 그리드*/
+	/*
 	@RequestMapping(value="", method=RequestMethod.POST)
 	public String selectSurveyMapping(@RequestParam int surveySeq, @RequestParam int raterId,
 			Model model, RedirectAttributes redirectAttrs) {
-		logger.info("실행");			
+		logger.info("실행");
 		try {
-			if(surveyService.mappingCheck(raterId) == 0) {				
+			if(surveyService.mappingCheck(raterId) == 0) {
 				surveyService.selectSurveyMapping(surveySeq, raterId);
 			}
 			List<PopupDTO> SurveyMappingList = surveyService.selectSurveyMapping(surveySeq, raterId);
@@ -428,4 +436,58 @@ public class SurveyController {
 		}
 		return "/survey";
 	}
+	*/
+
+	@RequestMapping("/EvaluateSearch")
+	public String searchByEvaluate(@RequestParam(defaultValue="") String keyword,
+						 @RequestParam(defaultValue="1") int pageNo,
+						 @RequestParam(defaultValue="") String selection,
+						 @RequestParam("surveySeq") int surveySeq,
+						 HttpSession session, Model model) {
+		
+		logger.info("지금 가져온 선택지:"+selection);
+		logger.info("페이지 수"+pageNo);
+		logger.info("키워드"+keyword);
+		logger.info("설문 번호" + surveySeq);
+		try {
+
+			List<Map<String, String>> EL = null;
+			PagingDTO pagingdto = null;
+			String beforeKeyword = keyword;
+
+				int totalRows = pagingService.getEvaluateTotalBoardNum(keyword, selection, surveySeq);
+				System.out.println("totolRows:" + totalRows);
+				pagingdto = new PagingDTO(7, 7, totalRows, pageNo);
+				pagingdto.setSelection(selection);
+				pagingdto.setKeyword(keyword);
+
+				pagingdto.setSurveySeq(surveySeq);
+				logger.info("selection:" + pagingdto.getSelection());
+				logger.info("keyword: "+pagingdto.getKeyword());
+				EL = surveyService.searchByEvaluate(pagingdto);
+				logger.info("리스트:" +EL.toString());
+				pagingdto.setKeyword(beforeKeyword);
+				logger.info(pagingdto.toString());
+
+
+			model.addAttribute("EL", EL);
+
+			logger.info(keyword);
+			System.out.println(pageNo);
+
+			model.addAttribute("pagingdto", pagingdto);
+			model.addAttribute("keyword", keyword);
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("검색 테스트");
+		return "survey_search";
+	}
+
+
+
+
+
+
 	}

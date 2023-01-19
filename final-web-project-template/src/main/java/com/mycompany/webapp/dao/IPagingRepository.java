@@ -10,9 +10,10 @@ import org.apache.ibatis.annotations.Param;
 public interface IPagingRepository {
 
 	int getTotalBoardNum(@Param("keyword")String keyword,@Param("selection") String selection, @Param("surveyStartDate") Date surveyStartDate);
-	
+
 	int getTotalMappingNum(@Param("keyword")String keyword,@Param("selection") String selection, @Param("surveySeq") int surveySeq);
-	
+
 	int getTotalNonMappingNum(@Param("keyword")String keyword,@Param("selection") String selection, @Param("surveySeq") int surveySeq);
-	
+
+	int getEvaluateTotalBoardNum(@Param("keyword")String keyword,@Param("selection") String selection, @Param("surveySeq") int suveySeq);
 }

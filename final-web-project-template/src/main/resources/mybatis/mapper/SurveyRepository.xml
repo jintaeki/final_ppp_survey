@@ -263,11 +263,11 @@
 	<delete id="deleteSurvey" parameterType="int">
 		DELETE FROM SURVEY_LIST WHERE SURVEY_SEQ = #{surveySeq}
 	</delete>
-	
+
 	<delete id="deleteItem" parameterType="int">
 		DELETE FROM SURVEY_ITEM WHERE ITEM_SEQ = #{itemSeq}
 	</delete>
-	
+
   <select id="selectSurveyEvaluate" parameterType="int" resultType="hashmap">
   		SELECT
               oc.department_name AS "departmentName"
@@ -282,5 +282,43 @@
         AND oc.department_id = ui.department_id and  m.survey_seq = #{surveySeq}
   </select>
 
+<select id="searchByEvaluate" parameterType="com.mycompany.webapp.dto.PagingDTO">
+		 SELECT
+        department_name
+        ,grade_name
+        ,employee_name
+        ,SURVEY_COMPLETE_YN
+        ,cd.CODE_DETAIL_NAME
+
+        FROM COMMON_DETAIL cd ,(
+         SELECT ROWNUM AS rnum
+                ,survey_seq
+                ,department_name
+                ,grade_name
+                ,employee_name
+               ,survey_complete_yn
+          FROM ( SELECT  m.survey_seq
+                         ,oc.department_name
+                        ,g.grade_name
+                        ,ui.employee_name
+                        ,ui.employee_id
+                        ,m.survey_complete_yn
+                 FROM grade g ,user_info ui ,mapping m ,ORGANIZATION_CHART oc
+                 WHERE
+                     m.rater_id = ui.employee_id
+                    and
+                    m.survey_complete_yn LIKE '%' ||  #{keyword} || '%'
+                   or
+                   ui.employee_name LIKE '%' ||  #{keyword} || '%'
+                   or
+                    g.GRADE_NAME LIKE '%' ||  #{keyword} || '%'
+                   or
+                  oc.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%'
+              ORDER BY ROWNUM  DESC
+               )
+             )
+      WHERE cd.code_detail_id =  survey_complete_yn  and employee_name = cd.code_detail_id
+      and GRADE_NAME = cd.code_detail_id and DEPARTMENT_NAME = code_detail_id and rnum  >= 1;
+</select>
 
 </mapper>

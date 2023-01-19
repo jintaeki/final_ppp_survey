@@ -7,13 +7,31 @@
 		<div class="container my-5">
 			<div class="row">
 				<div class="hmenu">
-					<div class="input-group mb-3">
-						<input type="text" class="form-control " placeholder="search"
-							   aria-describedby="button-addon2">
-						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="button"
-									id="button-addon2">검색</button>
-						</div>
+					<div class="survey_list_form_upper_dv">
+						<form action="<c:url value='/survey/surveysearch'/>" method="GET"
+							class="survey_list_form">
+							<select name="selection">
+								
+									 <option value="" <c:out value="${searchType eq 'employeeName'}"/>>이름</option>
+                					 <option value="" <c:out value="${searchType eq 'departmentName'}"/>>부서명</option>
+                				     <option value="" <c:out value="${searchType eq 'gradeName'}"/>>직급</option>
+                					 <option value="" <c:out value="${searchType eq 'surveyCompleteYn}"/>>참여 여부</option>	
+							</select> <input type="text" class="form-control" id="selectedKeyword" placeholder="search"
+								name="keyword" value="${pagingdto.keyword}"
+								aria-describedby="button-addon2"> <input type="hidden"
+								name="pageNo" value="1">
+							<div class="input-group-append">
+								<input type="submit" class="btn btn-outline-secondary"
+									id="button-addon2" value="검색">
+								<input type="reset" class="btn btn-outline-secondary"
+									id="button-addon2" value="초기화">
+							</div>
+						</form>
+						<button id="upper_dv_btn" type="button" class="btn btn-primary"
+							data-toggle="modal" data-target="#exampleModal"
+							data-whatever="@mdo">등록</button>
+
+
 					</div>
 				</div>
 				<table class="table">

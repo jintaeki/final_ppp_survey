@@ -13,8 +13,8 @@ public class CommonCodeService implements ICommonCodeService{
 
 	@Autowired
 	ICommonCodeRepository CCR;
-	
-	
+
+
 	@Override
 	public List<CommonDTO> selectStateCode() {
 		// TODO Auto-generated method stub
@@ -22,6 +22,13 @@ public class CommonCodeService implements ICommonCodeService{
 
 	}
 
-	
-	
+
+	@Override
+	public List<CommonDTO> selectEvaluateCode() {
+		// TODO Auto-generated method stub
+		return CCR.selectEvaluateCode();
+	}
+
+
+
 }
