@@ -62,13 +62,6 @@
 
 	<!-- 상단 information 끝 -->
 
-
-	
-	
-
-
-
-
 	<div class="container_survey">
 		<div class="row">
 
@@ -77,10 +70,11 @@
 				관리</div>
 
 			<div class="input_title col-6">문항 관리</div>
+		</div>
+		
+			<div class="item_management">
 
-			<div class="item_management col-6">
-
-				<div class="question_inputdv" id="input_question">
+				<span class="question_inputdv" id="input_question">
 					<form:form modelAttribute="SQD" id="questioN_insert_form">
 						<!-- aa -->
 						<div id="insertQform">
@@ -120,15 +114,16 @@
 
 								<input type="hidden" name="itemScore" value="1"> <input
 									type="hidden" name="itemContent" value=" ">
+									<input type="reset" value="" id="reset_btn"  style="display:none">
 							</div>
 						</div>
 					</form:form>
-				</div>
+				</span>
 
-			</div>
+<!-- 			</div> -->
 
 			<!-- 객관식 -->
-			<div class="icon_div col-6" id="item_div">
+			<span class="icon_div" id="item_div" style="float:right; margin-right:200px;">
 				<c:forEach items="${SQL}" var="qlist">
 					<div id="obj_box_toggle" style="display: none;">
 						<div class="col-12">
@@ -162,7 +157,11 @@
 									<input type="hidden" name="surveySeq" value="${SLD.surveySeq}"
 										id="surveyseq">
 				
-									<div class="icon_line" id="mix_ItemAfter"></div>
+									<div id="mix_ItemAfter">
+									<div id="icon_line">
+									
+									</div>
+									</div>
 									<div class="col-12">
 
 										<input type="button" class="create_btn"
@@ -187,18 +186,19 @@
 					</div>
 
 				</c:forEach>
-			</div>
+			</span>
 
 
+		</div>
+
+		<div class="question_management col-6" style="margin-top: 30px;">
+
+			<div id="scroll_area"
+				style="overflow: auto; width: 500px; height: 450px; relation: fixed">
 
 
-			<div class="question_management col-6" style="margin-top:30px;">
-
-				<div id="scroll_area" style="overflow:auto; width:500px; height:450px; relation:fixed">
-
-
-					<!-- 여기까지 문제 div -->
-
+				<!-- 여기까지 문제 div -->
+				<div style= "height: 400x; relation: fixed">
 					<c:forEach items="${SQL}" var="qlist">
 						<div id="queAfter">
 
@@ -218,8 +218,7 @@
 
 							<button class="delete_btn"
 								onclick="deleteQus(this,${qlist.surveySeq})"
-								value="${qlist.questionSeq }"
-								>
+								value="${qlist.questionSeq }">
 								<i class="fa-regular fa-trash-can"></i>
 							</button>
 							<div class="blank_under"></div>
@@ -227,10 +226,11 @@
 					</c:forEach>
 				</div>
 			</div>
-
-			<!--  문제관리 끝 -->
-
 		</div>
+
+		<!--  문제관리 끝 -->
+
+		
 
 	</div>
 </div>
@@ -380,9 +380,17 @@
        testDiv += '</button>'
        testDiv += '</div>';
        
-         $('#ic').append(testDiv);
+         $('#guitar').before(testDiv);
      
    });
+   
+   function resetIt(){
+	   var evt = document.createEvent("MouseEvents");
+		evt.initMouseEvent("click", true, true, window,0, 0, 0, 0, 0, false, false, false, false, 0, null);
+		var reset = document.getElementById("reset_btn");
+		reset.dispatchEvent(evt);
+   }
+   
    //문항추가 끝
 //    var test = document.getElementById('add_btn');
 //       test.addEventListener('click', insertQus);
@@ -408,7 +416,7 @@
             $.ajax({
                   method:'GET', //어떤 방식으로 보낼 지
                   url:'selectquestion.do/'+ surveyseq, // qdiv를 보낼 경로 설정
-                   dataType: "json",
+                  dataType: "json",
                   beforeSend : function() { //보내기 전 실행
                   console.log("요청이 보내지는가?");
                   },
@@ -417,7 +425,8 @@
                         questionHtml(jsondata);
                         var surveyseq = jsondata[0].SURVEY_SEQ;
                         var questionseq = jsondata[0].QUESTION_SEQ;
-//                         itemHtml(jsondata);
+//                         resetIt();
+                        location.reload();
                        
                   }, error:function(e) {   //실패, 에러
                      console.log("Error", e);
@@ -522,7 +531,7 @@
                    htmlMix+=   '</button>';
                    htmlMix += '</div>';
                    htmlMix +='<div class="icon_line">';
-               	   htmlMix += '<input type="text" name="itemContent" placeholder="기타" value="기타" id="ic" readonly>';
+               	   htmlMix += '<input type="text" name="itemContent" placeholder="기타" value="기타" id="guitar" readonly>';
                	   htmlMix +='<input type="hidden" name="itemScore"  value="0">';
              	   htmlMix += '</div>';
                    $('#mix_ItemAfter').append(htmlMix);
@@ -545,7 +554,7 @@
              	  htmlMix+=   '</button>';
              	  htmlMix += '</div>';
              	  htmlMix +='<div class="icon_line">';
-              	  htmlMix += '<input type="text" name="itemContent" placeholder="기타" value="기타" id="ic" readonly>';
+              	  htmlMix += '<input type="text" name="itemContent" placeholder="기타" value="기타" id="guitar" readonly>';
               	  htmlMix +='<input type="hidden" name="itemScore"  value="0">';
               	  htmlMix += '</div>';
              	  
@@ -558,7 +567,7 @@
                  	  
                  	  if(data[i].ITEM_CONTENT =="기타"){
                  		  htmlMix +='<div class="icon_line">';
-                     	  htmlMix += '<input type="text" name="itemContent" id="ic" value="'+data[i].ITEM_CONTENT+'" readonly>';
+                     	  htmlMix += '<input type="text" name="itemContent" id="guitar" value="'+data[i].ITEM_CONTENT+'" readonly>';
                       	  htmlMix +='<input type="hidden" name="itemScore"  value="0">';
                      	  htmlMix += '</div>';
                  	  }else{
@@ -729,6 +738,8 @@
       html += `</div>`;
       html += `<input type="hidden" name="itemScore" value="1">`;
       html += `<input type="hidden" name="itemContent" value=" ">`;
+      html += `<input type="reset" value="" id="reset_btn"  style="display:none">
+`
       html += `</div>`;
       html += `</div>`;
       html += `</div>`;
@@ -760,6 +771,7 @@
                alert("업데이트 beforesend");
             },
             success: function(jsondata) {
+               
                var surveyseq = surveySeq;
                 $.ajax({
                      method:'GET', //어떤 방식으로 보낼 지
@@ -770,8 +782,10 @@
                      },
                      success:function (jsondata){    //전송 성공시 실행
                            questionHtml(jsondata);
-                           var surveyseq = jsondata[0].SURVEY_SEQ;
-                           var questionseq = jsondata[0].QUESTION_SEQ;
+
+
+                           oneQuestion(data);
+                           secondQuestion(data);
                      }, error:function(e) {   //실패, 에러
                         console.log("Error", e);
                      }

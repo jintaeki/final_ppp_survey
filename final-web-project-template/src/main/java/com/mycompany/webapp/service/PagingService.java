@@ -14,8 +14,8 @@ public class PagingService implements IPagingService{
 	IPagingRepository pagingRepo;
 
 	@Override
-	public int getTotalBoardNum(String keyword, String selection, Date surveyStartDate) {
-		return pagingRepo.getTotalBoardNum(keyword, selection, surveyStartDate);
+	public int getTotalBoardNum(String keyword, String selection, Date surveyStartDate, String anonyMityCheckCode) {
+		return pagingRepo.getTotalBoardNum(keyword, selection, surveyStartDate, anonyMityCheckCode);
 	}
 
 

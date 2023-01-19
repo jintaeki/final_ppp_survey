@@ -30,7 +30,12 @@
       							   WHEN #{selection} = '30005' 
       							   THEN '%' || '' || '%' 
                                    ELSE '%' || #{selection} || '%'
-                                   END) 
+                                   END) AND 
+                 ANONYMITY_CHECK_CODE LIKE (CASE
+                                                 WHEN #{anonyMityCheckCode} = '30005' 
+                                                 THEN '%' || '' || '%' 
+                                                 ELSE '%' || #{anonyMityCheckCode} || '%'
+                                                 END)
 	          	 )
 	          	   or  
 	          	 SURVEY_START_DATE >= (CASE
@@ -46,7 +51,12 @@
                                    ELSE '%' || #{selection} || '%'
                                    END) and
                   
-	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%' 
+	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%'and
+	          	  ANONYMITY_CHECK_CODE LIKE (CASE
+                                                 WHEN #{anonyMityCheckCode} = '30005' 
+                                                 THEN '%' || '' || '%' 
+                                                 ELSE '%' || #{anonyMityCheckCode} || '%'
+                                                 END)
 				  ORDER BY ROWNUM DESC
 			   	)
 

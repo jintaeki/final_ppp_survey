@@ -23,17 +23,6 @@
 				    ,SYSDATE)
 	</insert>
 
-   <select id="selectMaxQuestionId" resultType="int">
-
-   <![CDATA[
-            SELECT NVL(MAX(QUESTION_SEQ), 0) AS "questionSeq" FROM SURVEY_QUESTION
-      ]]>
-   </select>
-
-	<select id="selectMaxItemId"  resultType="int">
-			SELECT NVL(MAX(ITEM_SEQ	), 0) AS "itemSeq" FROM SURVEY_ITEM
-   </select>
-
 <insert id="insertItem" parameterType="SQD">
 		<selectKey keyProperty="itemSeq" resultType="int" order="BEFORE">
 				SELECT ITEM_ID_SEQ.NEXTVAL FROM DUAL
@@ -42,6 +31,7 @@
 			     ,ITEM_SEQ
 			     ,ITEM_CONTENT
 			     ,ITEM_SCORE
+			     ,ITEM_NUM
 			     ,REG_DATE
 			     ,UPDATE_DATE)
 			VALUES (#{questionSeq}
@@ -91,25 +81,7 @@
             ,UPDATE_DATE=sysdate  WHERE SURVEY_SEQ=#{surveySeq}
    </update>
 
-   <insert id="updateItem" parameterType="SQD" >
-
-
-      <selectKey keyProperty="itemSeq" resultType="int" order="BEFORE">
-         SELECT ITEM_ID_SEQ.NEXTVAL FROM DUAL
-      </selectKey>
-
-
-		INSERT INTO SURVEY_ITEM (QUESTION_SEQ
-		     ,ITEM_SEQ
-		     ,ITEM_CONTENT
-		     ,ITEM_SCORE
-		     ,UPDATE_DATE)
-		VALUES(#{questionSeq}
-		     ,#{itemSeq}
-		     ,#{itemContent}
-		     ,#{itemScore}
-		     ,SYSDATE)
-	</insert>
+   
 
 
 
@@ -186,43 +158,63 @@
                   ,SURVEY_START_DATE
                  ,SURVEY_CLOSED_DATE
                  ,STATE_CODE
-          FROM (SELECT SURVEY_SEQ
-                 ,SURVEY_NAME
-                 ,SURVEY_CONTENT
-                 ,ANONYMITY_CHECK_CODE
-                 ,SURVEY_START_DATE
-                ,SURVEY_CLOSED_DATE
-                 ,STATE_CODE
-                 FROM SURVEY_LIST
-                 WHERE
-                 (SURVEY_START_DATE is null and
-                  SURVEY_NAME LIKE '%' || #{keyword} || '%' and
-                  STATE_CODE LIKE (CASE
-                              WHEN #{selection} = '30005'
-                              THEN '%' || '' || '%'
+          FROM (SELECT ROWNUM AS rnum
+		      	  ,SURVEY_SEQ
+		      	  ,SURVEY_NAME
+		      	  ,SURVEY_CONTENT
+		      	  ,ANONYMITY_CHECK_CODE
+	          	  ,SURVEY_START_DATE
+		      	  ,SURVEY_CLOSED_DATE
+		      	  ,STATE_CODE
+	    	FROM (SELECT SURVEY_SEQ
+	          	 ,SURVEY_NAME
+	          	 ,SURVEY_CONTENT
+	          	 ,ANONYMITY_CHECK_CODE
+	          	 ,SURVEY_START_DATE
+		      	 ,SURVEY_CLOSED_DATE
+	          	 ,STATE_CODE  
+	          	 FROM SURVEY_LIST 
+	          	 WHERE 
+	          	 (SURVEY_START_DATE is null and
+	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%' and
+	          	  STATE_CODE LIKE (CASE  
+      							   WHEN #{selection} = '30005' 
+      							   THEN '%' || '' || '%' 
                                    ELSE '%' || #{selection} || '%'
-                                   END)
-                 )
-                   or
-                 SURVEY_START_DATE >= (CASE
-                                    WHEN #{surveyStartDate} is null
-                                    THEN sysdate-99999
-                                    WHEN #{surveyStartDate} is not null
-                                    THEN to_date(to_char(#{surveyStartDate},'yyyy-MM-dd'),'yyyy-MM-dd')
-                                    END) and
-
-                  STATE_CODE LIKE (CASE
-                              WHEN #{selection} = '30005'
-                              THEN '%' || '' || '%'
+                                   END) AND 
+                  ANONYMITY_CHECK_CODE LIKE (CASE
+                                                 WHEN #{anonyMityCheckCode} = '30005' 
+                                                 THEN '%' || '' || '%' 
+                                                 ELSE '%' || #{anonyMityCheckCode} || '%'
+                                                 END)
+	          	 )
+	          	   or  
+	          	 SURVEY_START_DATE >= (CASE
+	          	 						 WHEN #{surveyStartDate} is null
+	          	 						 THEN sysdate-99999
+	          	 						 WHEN #{surveyStartDate} is not null	          	 						 
+	          	 						 THEN to_date(to_char(#{surveyStartDate},'yyyy-MM-dd'),'yyyy-MM-dd')
+	          	 						 END) and
+	          	  
+	          	  STATE_CODE LIKE (CASE  
+      							   WHEN #{selection} = '30005' 
+      							   THEN '%' || '' || '%' 
                                    ELSE '%' || #{selection} || '%'
                                    END) and
-
-                  SURVEY_NAME LIKE '%' || #{keyword} || '%'
-              ORDER BY ROWNUM  DESC
+                  
+	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%'AND 
+	          	  
+	          	  ANONYMITY_CHECK_CODE LIKE (CASE
+                                                 WHEN #{anonyMityCheckCode} = '30005' 
+                                                 THEN '%' || '' || '%' 
+                                                 ELSE '%' || #{anonyMityCheckCode} || '%'
+                                                 END)
+				  ORDER BY ROWNUM DESC
+                )
+         	  WHERE ROWNUM <= #{endRowNo}
                )
-          WHERE ROWNUM <= #{endRowNo}
-               )
-      WHERE cd.code_detail_id = state_code and rnum  >= #{startRowNo}
+            WHERE rnum  >= #{startRowNo} 
+           ) WHERE cd.code_detail_id = state_code
       ]]>
    </select>
 
@@ -282,5 +274,15 @@
         AND oc.department_id = ui.department_id and  m.survey_seq = #{surveySeq}
   </select>
 
+	<select id="mappingCheck" resultType="int">
+      <![CDATA[
+         SELECT COUNT(*) FROM MAPPING
+         WHERE SURVEY_SEQ = #{surveySeq}
+      ]]>
+   </select>
+
+	<select id="selectSurveyMapping"  resultType="com.mycompany.webapp.dto.PopupDTO">
+		
+	</select>
 
 </mapper>

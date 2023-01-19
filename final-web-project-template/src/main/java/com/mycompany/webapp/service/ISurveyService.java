@@ -20,21 +20,11 @@ public interface ISurveyService {
 
 	void updateSurvey(SurveyListDTO surveylist);
 
-	void updateItem(SurveyQuestionDTO surveyquestion);
-
-	int selectMaxSurveyId();
-
-	void setItemDelete(SurveyQuestionDTO sqd);
-
-
-
 	void insertQuestion(SurveyQuestionDTO sqd);
 
-	int selectMaxQuestionId();
 
 	void insertItem(SurveyQuestionDTO sqd);
 
-	int selectMaxItemId();
 
 	void UpdateQuestion(SurveyQuestionDTO sqd);
 
@@ -42,7 +32,6 @@ public interface ISurveyService {
 
 	List<Map<String, Object>> selectQuestion(int surveySeq);
 
-	List<SurveyListDTO> selectSurveyList(PagingDTO pagingdto);
 
 	SurveyListDTO selectSurvey(int surveySeq);
 
@@ -62,8 +51,6 @@ public interface ISurveyService {
 	List<Map<String, Object>> selectQuestionBySeq(int questionSeq,int surveySeq);
 
 	List<Map<String, Object>> selectItems(int questionSeq);
-
-	//진택
 
 	void surveyInsertComplete(int surveySeq);
 

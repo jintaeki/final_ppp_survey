@@ -36,8 +36,7 @@ public class MappingController {
 	
 	// 매핑 출력
 	@RequestMapping(value="/mapping/set.do", method=RequestMethod.POST)
-	public String setMapping(@RequestParam int surveySeq, @RequestParam int month, @RequestParam int number,
-			@RequestParam String newCheck, Model model, RedirectAttributes redirectAttrs) {
+	public String setMapping(@RequestParam int surveySeq, @RequestParam int month, @RequestParam int number, @RequestParam String newCheck, Model model, RedirectAttributes redirectAttrs) {
 		logger.info("실행");
 		try {
 			if(Integer.parseInt(mappingService.stateCheck(surveySeq)) == 30002) {
@@ -56,7 +55,7 @@ public class MappingController {
 			e.printStackTrace();
 			redirectAttrs.addFlashAttribute("message", e.getMessage());
 		}
-		return "/home2";
+		return "home2";
 	}
 
 	// 평가자 한사람에 대하여 모든 조건에 맞게 출력
@@ -66,7 +65,7 @@ public class MappingController {
 		logger.info("실행");
 		model.addAttribute("getPopup", getPopup);
 		return "popup";
-		}
+	}
 	
 	// 제외된 리스트 전부 출력
 	@RequestMapping(value="/another.do", method=RequestMethod.GET)
@@ -79,9 +78,10 @@ public class MappingController {
 	
 	//리스트 입력 
 	@RequestMapping(value="/popup.do", method=RequestMethod.POST)
-	public String insertAppraise(@RequestBody String filterJSON,
-			HttpServletResponse response, ModelMap model) throws Exception {
+	public void insertAppraise(@RequestBody String filterJSON, HttpServletResponse response, ModelMap model) throws Exception {
 		logger.info("실행");
+		response.setContentType("application/json; charset=UTF-8");
+		PrintWriter out = response.getWriter();
 		JSONObject resMap = new JSONObject();
 		try {
 			ObjectMapper mapper = new ObjectMapper();
@@ -94,18 +94,16 @@ public class MappingController {
 				String appraiseeId = insertMap.get(i).getAppraiseeId();
 				logger.info("실행2");
 				
-				System.out.println(surveySeq);
-				System.out.println(raterId);
-				System.out.println(appraiseeId);
+				logger.info(String.valueOf(surveySeq));
+				logger.info(raterId);
+				logger.info(appraiseeId);
 				
 				// 이미 해당 조합이 현재 시행중인 설문조사에 이미 있는 경우 
 				if(mappingService.ovrlpCheck(raterId, appraiseeId).size() != 0) {
 					resMap.put("res", "notice");
 					resMap.put("msg", "현재 진행중인 설문조사에서 이미 있는 조합입니다.");
-					response.setContentType("text/html; charset=UTF-8");
-					PrintWriter out = response.getWriter();
 					out.print(resMap);
-					return null;
+					return;
 				}
 				
 				//해당 데이터 매핑 테이블에 입력
@@ -116,17 +114,14 @@ public class MappingController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			resMap.put("res", "fail");
 		}
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-		out.print(resMap);
-		return null;
+		out.print(resMap);  //{"res":"success", "msg":"추가를 완료하였습니다."}, {"res":"fail"}
 	}
 	
 	//리스트 삭제
 	@RequestMapping(value="/mapping/deleteMapping.do", method=RequestMethod.POST)
-	public @ResponseBody String deleteAppraiseeId(@RequestBody String filterJSON,
-			HttpServletResponse response, ModelMap model) throws Exception {
+	public void deleteAppraiseeId(@RequestBody String filterJSON, HttpServletResponse response, ModelMap model) throws Exception {
 		logger.info("실행");
 		JSONObject resMap = new JSONObject();
 		try {
@@ -144,12 +139,11 @@ public class MappingController {
 			resMap.put("res", "success");
 		    resMap.put("msg", "삭제를 완료하였습니다.");
 		} catch (Exception e) {
-
+			resMap.put("res", "fail");
 		}
-		response.setContentType("text/html; charset=UTF-8");
+		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		out.print(resMap);
-		return null;
 	}
 
 	@RequestMapping("/mappingview")

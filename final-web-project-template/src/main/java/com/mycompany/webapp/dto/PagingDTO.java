@@ -22,7 +22,7 @@ public class PagingDTO {
 		private int endRowIndex;	//페이지의 마지막 행 인덱스
 		private String keyword; 	//검색을 위한 변수
 		private String selection;	//
-
+		private String anonyMityCheckCode;
 		@DateTimeFormat(pattern="yyyy-MM-dd")
 		private Date surveyStartDate;
 
@@ -142,6 +142,15 @@ public class PagingDTO {
 			this.surveyStartDate = surveyStartDate;
 		}
 
+	
+		public String getAnonyMityCheckCode() {
+			return anonyMityCheckCode;
+		}
+
+		public void setAnonyMityCheckCode(String anonyMityCheckCode) {
+			this.anonyMityCheckCode = anonyMityCheckCode;
+		}
+
 		@Override
 		public String toString() {
 			return "PagingDTO [surveySeq=" + surveySeq + ", totalRows=" + totalRows + ", totalPageNo=" + totalPageNo
@@ -149,8 +158,12 @@ public class PagingDTO {
 					+ ", pageNo=" + pageNo + ", pagesPerGroup=" + pagesPerGroup + ", groupNo=" + groupNo
 					+ ", rowsPerPage=" + rowsPerPage + ", startRowNo=" + startRowNo + ", startRowIndex=" + startRowIndex
 					+ ", endRowNo=" + endRowNo + ", endRowIndex=" + endRowIndex + ", keyword=" + keyword
-					+ ", selection=" + selection + ", surveyStartDate=" + surveyStartDate + "]";
+					+ ", selection=" + selection + ", anonyMityCheckCode=" + anonyMityCheckCode + ", surveyStartDate="
+					+ surveyStartDate + "]";
 		}
+
+	
+		
 		
 }
 

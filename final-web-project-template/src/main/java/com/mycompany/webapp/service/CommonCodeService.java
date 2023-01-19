@@ -21,7 +21,4 @@ public class CommonCodeService implements ICommonCodeService{
 		return 	CCR.selectStateCode();
 
 	}
-
-	
-	
 }

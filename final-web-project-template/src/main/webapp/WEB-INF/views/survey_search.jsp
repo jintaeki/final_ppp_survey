@@ -6,6 +6,7 @@
 
 <script>
 
+	
 	function delete_survey_btn(obj,surveyseq,selection,pageno){
 		let bselection = selection;
 		let bpageno = pageno;
@@ -284,20 +285,39 @@
 			<div class="row">
 				<div class="hmenu">
 					<div class="survey_list_form_upper_dv">
-						<form action="<c:url value='/survey/surveysearch'/>" method="GET"
+						<form action="<c:url value='/survey/surveysearch'/>" method="POST"
 							class="survey_list_form">
 							<input type="date" name="surveyStartDate" id="selectedDate"
 								value="<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">
+							<select name="anonyMityCheckCode">
+								<c:forEach items="${commonCodeList}" var="commonCode">
+									<c:if test="${pagingdto.anonyMityCheckCode eq commonCode.codeDetailId}">
+										<c:if test="${commonCode.codeId eq '200' or commonCode.codeDetailId eq '30005'}">
+											<option selected value="${commonCode.codeDetailId}">${commonCode.codeDetailName }</option>
+										</c:if>
+									</c:if>
+									<c:if test="${pagingdto.anonyMityCheckCode ne commonCode.codeDetailId}">
+										<c:if test="${commonCode.codeId eq '200' or commonCode.codeDetailId eq '30005'}">
+											<option value="${commonCode.codeDetailId}">${commonCode.codeDetailName }</option>
+										</c:if>
+									</c:if>
+								</c:forEach>
+							</select>
 							<select name="selection">
 								<c:forEach items="${commonCodeList}" var="commonCode">
+									<c:if test="${commonCode.codeId eq '300' }">
 									<c:if test="${pagingdto.selection eq commonCode.codeDetailId }">
 										<option selected value="${pagingdto.selection}">${commonCode.codeDetailName }</option>
 									</c:if>
 									<c:if test="${pagingdto.selection ne commonCode.codeDetailId }">
 										<option value="${commonCode.codeDetailId}">${commonCode.codeDetailName }</option>
 									</c:if>
+									</c:if>
 								</c:forEach>
-							</select> <input type="text" class="form-control" id="selectedKeyword" placeholder="search"
+							</select> 
+							
+							
+							<input type="text" class="form-control" id="selectedKeyword" placeholder="search"
 								name="keyword" value="${pagingdto.keyword}" 
 								aria-describedby="button-addon2"> <input type="hidden"
 								name="pageNo" value="1">

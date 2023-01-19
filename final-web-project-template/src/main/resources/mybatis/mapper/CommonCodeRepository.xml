@@ -8,7 +8,8 @@
 			  ,cd.CODE_DETAIL_ID
 			  ,cd.CODE_DETAIL_NAME
 			  FROM COMMON c, COMMON_DETAIL cd
-			  WHERE cd.CODE_ID = c.CODE_ID and cd.CODE_ID = 300
+			  WHERE cd.CODE_ID = c.CODE_ID and (cd.CODE_ID = 300 or cd.CODE_ID = 200)
+			  ORDER BY c.CODE_ID DESC, cd.CODE_DETAIL_ID DESC
 	</select>
 
 

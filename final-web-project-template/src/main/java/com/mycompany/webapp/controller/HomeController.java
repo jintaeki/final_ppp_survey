@@ -171,28 +171,14 @@ public class HomeController {
 	@RequestMapping("/loginafter")
 	public String home() {
 		logger.info("실행");
-		//log.info("실행");
 		return "login_after_user";
 	}
 	
 	@RequestMapping("/gosurvey")
 	public String home2() {
 		logger.info("실행");
-		//log.info("실행");
 		return "survey";
 	}
 	
-	
-	
-//	@RequestMapping("/login")
-//	public String login() {
-//		logger.info("실행");
-//		//log.info("실행");
-//		return "login";
-//	}
-	
-
-	
-
 }
 
