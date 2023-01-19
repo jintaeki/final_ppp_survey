@@ -58,7 +58,9 @@ select:disabled {
 		-2px 6px 0px inset;
 	border-radius: 5px;
 }
-
+.mapping_container {
+	border: 1px solid;
+}
 /* 메뉴 */
 .menu_profile_img {
 	display: block;

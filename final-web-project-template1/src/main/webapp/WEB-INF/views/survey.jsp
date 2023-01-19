@@ -5,33 +5,49 @@
 <script src="resources/js/survey.js"></script>
 <script src="resources/js/surveycountdown.js"></script>
 <script type="text/javascript">
-	function surveyState(){
+/* 	function surveyState(){
 		console.log('surveyState 함수 실행');
 		
-		
 		$.ajax({
-			url: '문제 요청 url',
-			type: 'GET',
-			data: {
-				surveySeq: '',
-				raterId: '',
-				appraiseeId: ''
-			},
+			url: "http://localhost:8080/springframework-xml-config-no-root/survey",
+			type: "GET",
+			data : paramList, 
 			success: function(result){
-				// result는 컨트롤러 리턴값 
-				// result => survey_result table의 값이 담겨있음 List<SurveyResultVo>
-				//  document.getElementById("question-box");
-				// $("#question-box")
-				for(var i=0; i<result.length; i++){
-					// result.get(i).get("serveySeq") -> JAVA 형태
-					// result[i]['serveySeq'] -> 자바스크립트 형태
+					var gradeName = mapping.gradeName;
+					var appraiseeName = mapping.appraiseeName;
+					var list = mapping.list;
+					var temp = ""; */
 					
-					// result[i]['title'] -> 설문 문항
-					// $("#question-box .question-form").html(result[i]['title']); -> 태그에 설문 문항을 넣어줌
+					// result는 컨트롤러 리턴값 
+					// result => survey_result table의 값이 담겨있음 List<SurveyResultVo>
+					// document.getElementById("mapping_container");
+					// $("#mapping_container")
+					// for(var i=0; i<result.length; i++){
+						// temp += list[i].gradeName + " " + 
+					 // result[i]['serveySeq'] // 자바스크립트 형태
+					 // result.get(i).get("serveySeq") -> JAVA 형태
+					 // result[i]['title'] // 설문 문항
+					 // $("#mapping_container.question-form").html(result[i]['title']); // 태그에 설문 문항을 넣어줌
+					
+			/* error : function() {
+					alert("작업이 완료되지 않았습니다")
 				}
-			}
-		})
-	}	
+			});
+		}			
+			 success: function(result){
+				console.log(result) {
+					if (result) {
+						$("mapping_container").empty();
+						mappingtarget = result; 
+						$.each(mappingtarget. function (idx, post) {
+						$("mapping_container").append('<tr><td>${mapping.gradeName}</td>
+													   	   <td>${mapping.appraiseeName}</td>
+													   	   <td><td></tr>');	
+					});
+				}
+			},
+			error : function () */
+		 
 </script>
 <div class="container_flex">
 	<div class="survey_info">
@@ -45,7 +61,7 @@
 <!-- 문항 시작 -->
 <div class="container">
 	<div class="row">
-		<div class="col-3" style="border: 1px solid;">
+		<div class="mapping_container col-3">
 		  <table>
 		  	<thead>
 		  	   	<tr>
