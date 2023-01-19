@@ -2,7 +2,9 @@ package com.mycompany.webapp.service;
 
 import java.util.List;
 
+import com.mycompany.webapp.dto.GradeDTO;
 import com.mycompany.webapp.dto.MappingDTO;
+import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.PopupDTO;
 
 public interface IMappingService {
@@ -18,14 +20,17 @@ public interface IMappingService {
 	// 매핑 삭제
 	void deleteMapping(int surveySeq);
 	
+	// 직급 목록 출력
+	List<GradeDTO> selectGradeList();
+	
 	// 데이터 리스트 출력
-	List<PopupDTO> selectMappingData(int surveySeq);
+	List<PopupDTO> selectMappingData(PagingDTO pagingdto);
 	
 	// 추가할 피평가자 출력 (병준형 버전)
-	List<PopupDTO> getPopup(int surveySeq, String raterId, int month);	
+	List<PopupDTO> getPopup(PagingDTO pagingdto);	
 	
 	// 조건에 제외된 나머지 목록 띄우기
-	List<PopupDTO> getAnother(int surveySeq);
+	List<PopupDTO> getAnother(PagingDTO pagingdto);
 	
 	// 추가할때 해당 조합이 이미 있는경우 막기
 	List<MappingDTO> ovrlpCheck(String raterId, String appraiseeId);

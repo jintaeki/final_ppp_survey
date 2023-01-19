@@ -64,26 +64,94 @@
 		      	  ,SURVEY_SEQ
 	    	FROM (SELECT 
 	    	         SURVEY_SEQ
-	          	  FROM MAPPIN=
+	          	  FROM MAPPING
 	          	      ,USER_INFO UR
                       ,USER_INFO UA 
-	          	  WHERE RATER_ID = EMPLOYEE_ID 
+                      ,PROJECT P 
+                      ,PROJECT_HISTORY PH 
+                      ,ORGANIZATION_CHART O 
+                      ,GRADE G
+	          	  WHERE RATER_ID = UR.EMPLOYEE_ID
+	          	    AND UR.DEPARTMENT_ID = O.DEPARTMENT_ID
+	          	    AND UR.GRADE_ID = g.GRADE_ID
+	          	  	AND RATER_ID = PH.PARTICIPATION_EMPLOYEE_ID
+	          	  	AND PH.PROJECT_ID = P.PROJECT_ID 
 	          	    AND APPRAISEE_ID = UA.EMPLOYEE_ID
-	          	  	AND(
-	          	    	UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
-	          	        OR
-	          	        UA.EMPLOYEE_ID LIKE '%' || #{keyword} || '%')
-	          	    AND UR.GRADE_ID LIKE (
-	          	    	CASE WHEN #{selectGD} = '30005' 
-      				    	 THEN '%' || '' || '%' 
-                             ELSE '%' || #{selectGD} || '%'
-                             END) 
-	          	    AND SURVEY_SEQ = #{suveySeq}	
-		          ORDER BY ROWNUM DESC
+	          	  	AND ((#{selection} = '60001'
+                    	AND(UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
+                        	OR
+                        	UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'))
+                		OR (#{selection} = '60002'
+                        	AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
+                    	OR (#{selection} = '60003'
+                    		AND P.PROJECT_NAME LIKE '%' || #{keyword} || '%')    
+                    	OR(#{selection} = '60004')
+                        )
+                	AND UR.GRADE_ID LIKE (
+                    	CASE WHEN #{selectGD} = '30005' 
+                         	 THEN '%' || '' || '%' 
+                         	 ELSE '%' || #{selectGD} || '%'
+                    	END) 
+	          	 	AND SURVEY_SEQ = #{surveySeq}	
+		          	ORDER BY ROWNUM DESC
+				)
 			)
-		)
 	]]>
 	</select>
+	
+	<select id="getTotalInsertNum" resultType="int">
+	<![CDATA[
+	SELECT count(ROWNUM)
+	    FROM (
+	    	SELECT ROWNUM AS rnum
+		      	  ,PROJECT_NAME
+	    	FROM (SELECT
+            	 P.PROJECT_NAME
+       		FROM
+       			SURVEY_LIST S,
+            	PROJECT_HISTORY R,
+            	PROJECT_HISTORY A,
+            	PROJECT P,
+            	ORGANIZATION_CHART O,
+             	USER_INFO UA,
+             	USER_INFO UR,
+             	GRADE G
+       		WHERE R.PROJECT_ID = A.PROJECT_ID
+         	  AND R.PARTICIPATION_EMPLOYEE_ID <> A.PARTICIPATION_EMPLOYEE_ID
+         	  AND UA.GRADE_ID = 2
+         	  AND UR.GRADE_ID = G.GRADE_ID
+         	  AND UA.EMPLOYEE_ID = A.PARTICIPATION_EMPLOYEE_ID
+         	  AND UR.DEPARTMENT_ID = O.DEPARTMENT_ID
+              AND R.PARTICIPATION_EMPLOYEE_ID = UR.EMPLOYEE_ID
+              AND R.PROJECT_ID = P.PROJECT_ID
+         	  AND P.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE -(30 * #{month}), 'YYYY-MM-dd')
+              AND R.PARTICIPATION_EMPLOYEE_ID = #{raterId}
+              AND S.SURVEY_SEQ = #{surveySeq}
+              AND NOT EXISTS
+              	(SELECT 'X'
+                 FROM MAPPING M
+                 WHERE M.APPRAISEE_ID = UA.EMPLOYEE_ID
+                   AND M.RATER_ID = UR.EMPLOYEE_ID
+                   AND M.SURVEY_SEQ = #{surveySeq})
+              AND ((#{selection} = '60001'
+                    AND(UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
+                        OR
+                        UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'))
+                	OR (#{selection} = '60002'
+                        AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
+                    OR (#{selection} = '60003'
+                    	AND P.PROJECT_NAME LIKE '%' || #{keyword} || '%')    
+                    OR(#{selection} = '60004')
+                   )
+              AND UR.GRADE_ID LIKE (
+                    CASE WHEN #{selectGD} = '30005' 
+                         THEN '%' || '' || '%' 
+                         ELSE '%' || #{selectGD} || '%'
+                    END)
+              ) 
+        )
+    ]]>
+   	</select>
 	
 	<select id="getTotalNonMappingNum" resultType="int">
 	<![CDATA[
@@ -104,7 +172,7 @@
                  AND UR.EMPLOYEE_ID = H.participation_employee_id
                  AND UR.GRADE_ID = G.GRADE_ID
                  AND UA.DEPARTMENT_ID = O.DEPARTMENT_ID
-                 AND S.SURVEY_SEQ = #{survyeSeq}
+                 AND S.SURVEY_SEQ = #{surveySeq}
                  AND UA.GRADE_ID = 2
                  AND UA.EMPLOYEE_ID != UR.EMPLOYEE_ID
                  AND NOT EXISTS
@@ -112,26 +180,26 @@
                         FROM MAPPING M
                        WHERE M.APPRAISEE_ID = UA.EMPLOYEE_ID
                          AND M.RATER_ID = UR.EMPLOYEE_ID
-                         AND M.SURVEY_SEQ = 2241012
+                         AND M.SURVEY_SEQ = #{surveySeq}
 	          	  	)
-                AND(
-                   (#{selecKey} = 'people'
-                    AND UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
+                 AND((#{selection} = '60001'
+                    AND(UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
                         OR
-                        UA.EMPLOYEE_ID LIKE '%' || #{keyword} || '%')
-                OR (#{selecKey} = 'project'
-                    AND P.PROJECT_NAME LIKE '%' || #{keyword} || '%')
-                OR (#{selectKey} = 'department'
-                    AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
+                        UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'))
+                	OR (#{selection} = '60002'
+                        AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
+                    OR (#{selection} = '60003'
+                    	AND P.PROJECT_NAME LIKE '%' || #{keyword} || '%')    
+                    OR(#{selection} = '60004')
                     )
                 AND UR.GRADE_ID LIKE (
-                    CASE WHEN #{selecGD} = '30005' 
-                         THEN '%' || #{selecGD} || '%' 
-                         ELSE '%' || #{selecGD} || '%'
+                    CASE WHEN #{selectGD} = '30005' 
+                         THEN '%' || '' || '%' 
+                         ELSE '%' || #{selectGD} || '%'
                     END) 
               ORDER BY ROWNUM DESC
 			)
-		);
+		)
 		]]>
 	</select>
 	

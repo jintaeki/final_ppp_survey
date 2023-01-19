@@ -10,6 +10,26 @@
 			  FROM COMMON c, COMMON_DETAIL cd
 			  WHERE cd.CODE_ID = c.CODE_ID and cd.CODE_ID = 300
 	</select>
+	
+	<select id="selectDateCode" resultType="com.mycompany.webapp.dto.CommonDTO">
+		select cd.CODE_ID
+			  ,c.CODE_NAME
+			  ,cd.CODE_DETAIL_ID
+			  ,cd.CODE_DETAIL_NAME
+			  FROM COMMON c, COMMON_DETAIL cd
+			  WHERE cd.CODE_ID = c.CODE_ID and cd.CODE_ID = 400
+			  ORDER BY cd.CODE_DETAIL_ID
+	</select>
+	
+	<select id="selectMappingCode" resultType="com.mycompany.webapp.dto.CommonDTO">
+		select cd.CODE_ID
+			  ,c.CODE_NAME
+			  ,cd.CODE_DETAIL_ID
+			  ,cd.CODE_DETAIL_NAME
+			  FROM COMMON c, COMMON_DETAIL cd
+			  WHERE cd.CODE_ID = c.CODE_ID and cd.CODE_ID = 600
+			  ORDER BY cd.CODE_DETAIL_ID
+	</select>
 
 
 

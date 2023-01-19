@@ -21,7 +21,10 @@ public class PagingDTO {
 		private int endRowNo;		//페이지의 마지막 행 번호
 		private int endRowIndex;	//페이지의 마지막 행 인덱스
 		private String keyword; 	//검색을 위한 변수
-		private String selection;	//
+		private String selection;	// 검색 선택지 변수
+		private String selectGD;	// 직급 검색 변수
+		private String raterId;		// 매핑 추가를 위한 평가자 id
+		private int month;			// 매핑 추가를 위한 날짜 변수
 
 		@DateTimeFormat(pattern="yyyy-MM-dd")
 		private Date surveyStartDate;
@@ -123,16 +126,38 @@ public class PagingDTO {
 		public String getSelection() {
 			return selection;
 		}
+		public String getSelectGD() {
+			return selectGD;
+		}
+		
+		public String getRaterId() {
+			return raterId;
+		}
+		public int getMonth() {
+			return month;
+		}
 
 		public void setSelection(String selection) {
 			this.selection = selection;
+		}
+		
+		public void setSelectGD(String selectGD) {
+			this.selectGD = selectGD;
+		}
+		
+		public void setRaterId(String raterId) {
+			this.raterId = raterId;
+		}
+		
+		public void setMonth(int month) {
+			this.month = month;
 		}
 
 		public void setPageNo(int pageNo) {
 			this.pageNo = pageNo;
 		}
 
-
+		
 
 		public Date getSurveyStartDate() {
 			return surveyStartDate;
@@ -149,7 +174,8 @@ public class PagingDTO {
 					+ ", pageNo=" + pageNo + ", pagesPerGroup=" + pagesPerGroup + ", groupNo=" + groupNo
 					+ ", rowsPerPage=" + rowsPerPage + ", startRowNo=" + startRowNo + ", startRowIndex=" + startRowIndex
 					+ ", endRowNo=" + endRowNo + ", endRowIndex=" + endRowIndex + ", keyword=" + keyword
-					+ ", selection=" + selection + ", surveyStartDate=" + surveyStartDate + "]";
+					+ ", selection=" + selection + ", selectGD=" + selectGD + ", raterId=" + raterId + ", month=" + month
+					+ ", surveyStartDate=" + surveyStartDate + "]";
 		}
 		
 }

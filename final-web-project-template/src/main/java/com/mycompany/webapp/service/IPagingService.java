@@ -7,5 +7,9 @@ public interface IPagingService {
 
 	int getTotalBoardNum(String keyword, String selection, Date surveyStartDate);
 
+	int getTotalMappingNum(String keyword, String selection, int surveySeq, String selectGD);
 	
+	int getTotalNonMappingNum(String keyword, String selection, int surveySeq, String selectGD);
+	
+	int getTotalInsertNum(String keyword, String selection, int surveySeq, String selectGD, String raterId, int month);
 }
