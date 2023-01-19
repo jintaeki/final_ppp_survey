@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycompany.webapp.dao.IPagingRepository">
+
+	<select id="getTotalBoardNum" resultType="int">
+	<![CDATA[
+		SELECT count(ROWNUM)
+	    FROM (
+			SELECT ROWNUM AS rnum
+		      	  ,SURVEY_SEQ
+		      	  ,SURVEY_NAME
+		      	  ,SURVEY_CONTENT
+		      	  ,ANONYMITY_CHECK_CODE
+	          	  ,SURVEY_START_DATE
+		      	  ,SURVEY_CLOSED_DATE
+		      	  ,STATE_CODE
+	    	FROM (SELECT SURVEY_SEQ
+	          	 ,SURVEY_NAME
+	          	 ,SURVEY_CONTENT
+	          	 ,ANONYMITY_CHECK_CODE
+	          	 ,SURVEY_START_DATE
+		      	 ,SURVEY_CLOSED_DATE
+	          	 ,STATE_CODE  
+	          	 FROM SURVEY_LIST 
+	          	 WHERE 
+	          	 (SURVEY_START_DATE is null and
+	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%' and
+	          	  STATE_CODE LIKE (CASE  
+      							   WHEN #{selection} = '30005' 
+      							   THEN '%' || '' || '%' 
+                                   ELSE '%' || #{selection} || '%'
+                                   END) AND 
+                 ANONYMITY_CHECK_CODE LIKE (CASE
+                                                 WHEN #{anonyMityCheckCode} = '30005' 
+                                                 THEN '%' || '' || '%' 
+                                                 ELSE '%' || #{anonyMityCheckCode} || '%'
+                                                 END)
+	          	 )
+	          	   or  
+	          	 SURVEY_START_DATE >= (CASE
+	          	 						 WHEN #{surveyStartDate} is null
+	          	 						 THEN sysdate-99999
+	          	 						 WHEN #{surveyStartDate} is not null	          	 						 
+	          	 						 THEN to_date(to_char(#{surveyStartDate},'yyyy-MM-dd'),'yyyy-MM-dd')
+	          	 						 END) and
+	          	  
+	          	  STATE_CODE LIKE (CASE  
+      							   WHEN #{selection} = '30005' 
+      							   THEN '%' || '' || '%' 
+                                   ELSE '%' || #{selection} || '%'
+                                   END) and
+                  
+	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%'and
+	          	  ANONYMITY_CHECK_CODE LIKE (CASE
+                                                 WHEN #{anonyMityCheckCode} = '30005' 
+                                                 THEN '%' || '' || '%' 
+                                                 ELSE '%' || #{anonyMityCheckCode} || '%'
+                                                 END)
+				  ORDER BY ROWNUM DESC
+			   	)
+
+			   	)
+
+
+			   ]]>
+	</select>
+	
+	<select id="getTotalMappingNum" resultType="int">
+	<![CDATA[
+		SELECT count(ROWNUM)
+	    FROM (
+			SELECT ROWNUM AS rnum
+		      	  ,SURVEY_SEQ
+	    	FROM (SELECT 
+	    	         SURVEY_SEQ
+	          	  FROM MAPPIN=
+	          	      ,USER_INFO UR
+                      ,USER_INFO UA 
+	          	  WHERE RATER_ID = EMPLOYEE_ID 
+	          	    AND APPRAISEE_ID = UA.EMPLOYEE_ID
+	          	  	AND(
+	          	    	UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
+	          	        OR
+	          	        UA.EMPLOYEE_ID LIKE '%' || #{keyword} || '%')
+	          	    AND UR.GRADE_ID LIKE (
+	          	    	CASE WHEN #{selectGD} = '30005' 
+      				    	 THEN '%' || '' || '%' 
+                             ELSE '%' || #{selectGD} || '%'
+                             END) 
+	          	    AND SURVEY_SEQ = #{suveySeq}	
+		          ORDER BY ROWNUM DESC
+			)
+		)
+	]]>
+	</select>
+	
+	<select id="getTotalNonMappingNum" resultType="int">
+	<![CDATA[
+	SELECT count(ROWNUM)
+	    FROM (
+			SELECT ROWNUM AS rnum
+		      	  ,PROJECT_NAME
+	    	FROM (SELECT
+                  P.PROJECT_NAME
+                FROM PROJECT P,
+                     PROJECT_HISTORY H,
+                     GRADE G,
+                     USER_INFO UA,
+                     USER_INFO UR,
+                     SURVEY_LIST S,
+                     ORGANIZATION_CHART O
+               WHERE P.PROJECT_ID = H.PROJECT_ID
+                 AND UR.EMPLOYEE_ID = H.participation_employee_id
+                 AND UR.GRADE_ID = G.GRADE_ID
+                 AND UA.DEPARTMENT_ID = O.DEPARTMENT_ID
+                 AND S.SURVEY_SEQ = #{survyeSeq}
+                 AND UA.GRADE_ID = 2
+                 AND UA.EMPLOYEE_ID != UR.EMPLOYEE_ID
+                 AND NOT EXISTS
+                    (SELECT 'X'
+                        FROM MAPPING M
+                       WHERE M.APPRAISEE_ID = UA.EMPLOYEE_ID
+                         AND M.RATER_ID = UR.EMPLOYEE_ID
+                         AND M.SURVEY_SEQ = 2241012
+	          	  	)
+                AND(
+                   (#{selecKey} = 'people'
+                    AND UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
+                        OR
+                        UA.EMPLOYEE_ID LIKE '%' || #{keyword} || '%')
+                OR (#{selecKey} = 'project'
+                    AND P.PROJECT_NAME LIKE '%' || #{keyword} || '%')
+                OR (#{selectKey} = 'department'
+                    AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
+                    )
+                AND UR.GRADE_ID LIKE (
+                    CASE WHEN #{selecGD} = '30005' 
+                         THEN '%' || #{selecGD} || '%' 
+                         ELSE '%' || #{selecGD} || '%'
+                    END) 
+              ORDER BY ROWNUM DESC
+			)
+		);
+		]]>
+	</select>
+	
+</mapper>
