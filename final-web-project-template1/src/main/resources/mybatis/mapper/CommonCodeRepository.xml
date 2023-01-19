@@ -8,8 +8,12 @@
 			  ,cd.CODE_DETAIL_ID
 			  ,cd.CODE_DETAIL_NAME
 			  FROM COMMON c, COMMON_DETAIL cd
+<<<<<<< HEAD
 			  WHERE cd.CODE_ID = c.CODE_ID and (cd.CODE_ID = 300 or cd.CODE_ID = 200)
 			  ORDER BY c.CODE_ID DESC, cd.CODE_DETAIL_ID DESC
+=======
+			  WHERE cd.CODE_ID = c.CODE_ID and cd.CODE_ID = 300
+>>>>>>> branch 'master' of https://github.com/jintaeki/final_ppp_survey.git
 	</select>
 
 

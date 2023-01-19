@@ -58,6 +58,7 @@ select:disabled {
 		-2px 6px 0px inset;
 	border-radius: 5px;
 }
+<<<<<<< HEAD
 /* 로그인 */
 .container_login {
 	margin: 400px auto;
@@ -247,4 +248,78 @@ select:disabled {
 
 .item_form {
 	margin-left: 10px;
+=======
+
+/* 메뉴 */
+.menu_profile_img {
+	display: block;
+	margin: 50px auto 30px auto;
+	width: 100px;
+	text-align: center;
+}
+
+.menu_profile_text {
+	width: 100%;
+	float: left;
+	font-size: 18px;
+	text-align: center;
+	color: white;
+	margin-left: 0px;
+	font-weight: 450;
+	margin-left: 0px;
+}
+
+.seach_float {
+	position: absolute;
+	top: 45px;
+	right: 200px;
+}
+
+.modal_class {
+	display: flex;
+	justify-content: space-between;
+	max-width: 420px;
+	align-items: center;
+	margin-bottom: 20px;
+}
+.seach_btn {
+	position: relative;
+	margin-left: 580px;
+	padding: .6em 1.4em .5em .8em;
+	margin: 0;
+}
+
+}
+.search_form {
+	padding-bottom: 200px; ! important;
+	border-radius: 10px;
+	border: 1px #e8e8e8;
+}
+
+.create_btn {
+	box-shadow: inset 0px 0px 0px 0px #ffffff;
+	background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+	background-color: #ffffff;
+	border-radius: 20px;
+	border: 1px solid #dcdcdc;
+	display: inline-block;
+	cursor: pointer;
+	color: #ababab;
+	font-family: Arial;
+	font-size: 13px;
+	font-weight: bold;
+	padding: 10px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #ffffff;
+}
+
+.create_btn:hover {
+	background: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+	background-color: #f6f6f6;
+}
+
+.create_btn:active {
+	position: relative;
+	top: 1px;
+>>>>>>> branch 'master' of https://github.com/jintaeki/final_ppp_survey.git
 }

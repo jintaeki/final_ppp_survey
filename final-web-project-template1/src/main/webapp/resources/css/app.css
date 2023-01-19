@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 @charset "UTF-8";
 
 .error {
 	color: red;
 	font-size: 0.7rem;
+=======
+@charset "UTF-8";
+
+.error {
+	color: red;
+	font-size: 0.7rem;
+>>>>>>> branch 'master' of https://github.com/jintaeki/final_ppp_survey.git
 }

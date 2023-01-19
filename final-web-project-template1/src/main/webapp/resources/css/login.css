@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @charset "UTF-8";
 .form-group {
   position: relative;
@@ -47,4 +48,55 @@
     outline: 0;
     border-bottom: 2px solid #fff;
     box-shadow: 0 0 0 0.2rem transparent;
+=======
+@charset "UTF-8";
+.form-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.logintitle{
+	display: flex;
+	justify-content: center;
+	margin-bottom: 80px;
+}
+
+.buttonlogin{
+	margin-top: 100px;
+	text-align: center;
+}
+.card-body{
+	margin-top: 100px;
+	margin-bottom: 200px;
+}
+.form-control-placeholder {
+  position: absolute;
+  top: 0;
+  padding: 7px 0 0 10px;
+  transition: all 200ms;
+  opacity: 0.5;
+}	
+.form-control:focus + .form-control-placeholder,
+.form-control:valid + .form-control-placeholder {
+  font-size: 69%;
+  transform: translate3d(0, -100%, 0);
+  opacity: 1;
+  top:10px;
+}
+.form-control {
+  border: 0;
+  outline: 0;
+  border-bottom: 2px solid #eee;
+  font-size: 16px;
+  color: #ccc;
+  background-color: transparent;        
+}
+.form-control:focus {
+    border: 0;
+    color: #000000;
+    background-color: transparent;
+    outline: 0;
+    border-bottom: 2px solid #fff;
+    box-shadow: 0 0 0 0.2rem transparent;
+>>>>>>> branch 'master' of https://github.com/jintaeki/final_ppp_survey.git
 }

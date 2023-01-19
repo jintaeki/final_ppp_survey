@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycompany.webapp.dao.IPagingRepository">
+
+	<select id="getTotalBoardNum" resultType="int">
+	 select count(*) from survey_list
+	</select>
+	
+	<select id="getTotalListNumByKeyword" parameterType="hashmap" resultType="int">
+	
+		SELECT count(*)
+			   FROM (
+			   		select ROWNUM as rnum, SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
+			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN 
+			   		FROM (select SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
+			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN  from survey_list where survey_name LIKE #{keyword}
+			   		order by ROWNUM desc
+			   			)
+			   		)
+	
+	</select>
+	
+	<select id="getTotalListNumByKeywordAndDecideYN" parameterType="hashmap" resultType="int">
+	
+		SELECT count(*)
+			   FROM (
+			   		select ROWNUM as rnum, SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
+			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN 
+			   		FROM (select SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
+			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN  from survey_list where survey_name LIKE #{keyword} and DECIDE_YN = #{selection} 
+			   		order by ROWNUM desc
+			   	)
+			   	
+			   	)
+	
+	</select>
+	
+	<select id="getTotalListNumByKeywordAndDate" parameterType="hashmap" resultType="int">
+	
+		SELECT count(*)
+			   FROM (
+			   		select ROWNUM as rnum, SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
+			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN 
+			   		FROM (select SURVEY_SEQ, SURVEY_NAME,SURVEY_CONTENT, ANONYMITY_CHECK_CODE, 
+			   		SURVEY_STATR_DATE,SURVEY_CLOSED_DATE, DECIDE_YN  from survey_list where survey_name LIKE #{keyword}
+			   		order by SURVEY_STATR_DATE, ROWNUM  desc
+			   	)
+			  
+			   	)
+	
+	</select>
+
+</mapper>
