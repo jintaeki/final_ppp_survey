@@ -13,10 +13,11 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
-
+import com.mycompany.webapp.dao.IMappingRepository;
 import com.mycompany.webapp.dao.ISurveyRepository;
 import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.PagingDTO;
+import com.mycompany.webapp.dto.PopupDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
@@ -28,6 +29,9 @@ public class SurveyService implements ISurveyService{
 	@Autowired
 	ISurveyRepository surveyDao;
 
+	@Autowired
+	IMappingRepository mappingrepository;
+	
 	@Override
 	public void setSurvey(SurveyListDTO surveylist) {
 		surveyDao.setSurvey(surveylist);
@@ -212,7 +216,16 @@ public class SurveyService implements ISurveyService{
 		return surveyDao.selectSurveyEvaluate(surveySeq);
 	}
 
+	@Override
+	public List<PopupDTO> selectSurveyMapping(int surveySeq, int raterId) {
+		return surveyDao.selectSurveyMapping(surveySeq, raterId); 
+	}
 
+	@Override // 매칭 중복 조횐
+	public int mappingCheck(int surveySeq) {
+		return surveyDao.mappingCheck(surveySeq);
+	}
+	
 }
 
 

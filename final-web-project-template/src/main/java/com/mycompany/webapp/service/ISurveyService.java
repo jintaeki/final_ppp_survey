@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.PagingDTO;
+import com.mycompany.webapp.dto.PopupDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
@@ -69,7 +70,12 @@ public interface ISurveyService {
 	void deleteSurvey(int surveySeq);
 	
 	void deleteItem (int itemSeq);
-
+	
+	// 설문 화면 왼쪽 그리드 (평가 대상 출력)
+	List<PopupDTO> selectSurveyMapping(int surveySeq, int raterId);
+	
+	// 설문조사 중복 체크
+	int mappingCheck(int surveySeq);
 }
 
 

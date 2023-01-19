@@ -31,10 +31,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.PagingDTO;
+import com.mycompany.webapp.dto.PopupDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 import com.mycompany.webapp.service.ICommonCodeService;
+import com.mycompany.webapp.service.IMappingService;
 import com.mycompany.webapp.service.IPagingService;
 import com.mycompany.webapp.service.ISurveyService;
 
@@ -49,7 +51,9 @@ public class SurveyController {
 	@Autowired
 	IPagingService pagingService;
 
-
+	@Autowired
+	IMappingService mappingService;
+	
 	@Autowired
 	ICommonCodeService commonCodeService;
 
@@ -405,11 +409,23 @@ public class SurveyController {
 		
 	}
 
-	@RequestMapping("")
-	public String home2() {
-		logger.info("실행");
-		//log.info("실행");
-		return "survey";
-	}
 
+	
+	/*설문 화면에서 왼쪽 그리드*/
+	@RequestMapping(value="", method=RequestMethod.POST)
+	public String selectSurveyMapping(@RequestParam int surveySeq, @RequestParam int raterId,
+			Model model, RedirectAttributes redirectAttrs) {
+		logger.info("실행");			
+		try {
+			if(surveyService.mappingCheck(raterId) == 0) {				
+				surveyService.selectSurveyMapping(surveySeq, raterId);
+			}
+			List<PopupDTO> SurveyMappingList = surveyService.selectSurveyMapping(surveySeq, raterId);
+			model.addAttribute("SurveyMappingList", SurveyMappingList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			redirectAttrs.addFlashAttribute("message", e.getMessage());
+		}
+		return "/survey";
+	}
 	}
