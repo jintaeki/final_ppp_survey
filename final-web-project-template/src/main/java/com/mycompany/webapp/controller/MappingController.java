@@ -4,7 +4,6 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
@@ -15,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,10 +50,8 @@ public class MappingController {
 					return "redirect:/survey/surveysearch";	
 				}
 			}
-			System.out.println("할4로");
 			List<PopupDTO> mappingList = mappingService.selectMappingData(surveySeq);
 			model.addAttribute("mappingList", mappingList);
-			model.addAttribute("month", month);
 		} catch (Exception e) {
 			e.printStackTrace();
 			redirectAttrs.addFlashAttribute("message", e.getMessage());
@@ -76,33 +71,56 @@ public class MappingController {
 	// 제외된 리스트 전부 출력
 	@RequestMapping(value="/another.do", method=RequestMethod.GET)
 	public String anotherMapping(@RequestParam int surveySeq, Model model) {
-		List<PopupDTO> getAnother = mappingService.getAnother(surveySeq);
+		List<PopupDTO> getPopup = mappingService.getAnother(surveySeq);
 		logger.info("실행");
-		model.addAttribute("getAnother", getAnother);
+		model.addAttribute("getPopup", getPopup);
 		return "popup";
 	}
 	
 	//리스트 입력 
 	@RequestMapping(value="/popup.do", method=RequestMethod.POST)
-	public String insertAppraise(@ModelAttribute("map") @Valid MappingDTO map,
-			BindingResult result, RedirectAttributes redirectAttrs) {
+	public String insertAppraise(@RequestBody String filterJSON,
+			HttpServletResponse response, ModelMap model) throws Exception {
 		logger.info("실행");
+		JSONObject resMap = new JSONObject();
 		try {
-			int surveySeq = map.getSurveySeq();
-			String raterId = map.getRaterId();
-			String appraiseeId = map.getAppraiseeId();
+			ObjectMapper mapper = new ObjectMapper();
+			List<PopupDTO> insertMap = mapper.readValue(filterJSON,new TypeReference<List<PopupDTO>>(){ });
+			logger.info("실행1");
 			
-			// 이미 해당 조합이 현재 시행중인 설문조사에 이미 있는 경우 
-			if(mappingService.ovrlpCheck(raterId, appraiseeId) != null) {
-				return "home2";
+			for(int i=0; i<insertMap.size(); i++) {
+				int surveySeq = insertMap.get(i).getSurveySeq();
+				String raterId = insertMap.get(i).getRaterId();
+				String appraiseeId = insertMap.get(i).getAppraiseeId();
+				logger.info("실행2");
+				
+				System.out.println(surveySeq);
+				System.out.println(raterId);
+				System.out.println(appraiseeId);
+				
+				// 이미 해당 조합이 현재 시행중인 설문조사에 이미 있는 경우 
+				if(mappingService.ovrlpCheck(raterId, appraiseeId).size() != 0) {
+					resMap.put("res", "notice");
+					resMap.put("msg", "현재 진행중인 설문조사에서 이미 있는 조합입니다.");
+					response.setContentType("text/html; charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.print(resMap);
+					return null;
+				}
+				
+				//해당 데이터 매핑 테이블에 입력
+				mappingService.insertAppraiseId(surveySeq, raterId, appraiseeId);
+				resMap.put("res", "success");
+				resMap.put("msg", "추가를 완료하였습니다.");
+				logger.info("실행4");
 			}
-			
-			//해당 데이터 매핑 테이블에 입력
-			mappingService.insertAppraiseId(surveySeq, raterId, appraiseeId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "mappingpopup";
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.print(resMap);
+		return null;
 	}
 	
 	//리스트 삭제
@@ -115,9 +133,12 @@ public class MappingController {
 			ObjectMapper mapper = new ObjectMapper();
 			MappingDTO deleteMap = (MappingDTO)mapper.readValue(filterJSON,new TypeReference<MappingDTO>(){ });
 			
+			
 			int surveySeq = deleteMap.getSurveySeq();
 			String raterId = deleteMap.getRaterId();
 			String appraiseeId = deleteMap.getAppraiseeId();
+
+			//int cnt = ;
 
 			mappingService.deleteAppraisee(surveySeq, raterId, appraiseeId);
 			resMap.put("res", "success");

@@ -88,7 +88,7 @@
 			SELECT
 				P.PROJECT_ID,
 				UR.GRADE_ID,
-				UA.DEPARTMENT_ID,
+				UR.DEPARTMENT_ID,
 				M.SURVEY_SEQ,
 				M.RATER_ID,
 				M.APPRAISEE_ID,
@@ -109,8 +109,8 @@
 				  AND UR.GRADE_ID = G.GRADE_ID
 				  AND H.PARTICIPATION_EMPLOYEE_ID = M.APPRAISEE_ID
     			  AND UA.EMPLOYEE_ID = M.APPRAISEE_ID
-                  AND UA.DEPARTMENT_ID = O.DEPARTMENT_ID
     			  AND UR.EMPLOYEE_ID = M.RATER_ID
+                  AND UR.DEPARTMENT_ID = O.DEPARTMENT_ID
     			  AND M.SURVEY_SEQ = S.SURVEY_SEQ
     			  AND M.SURVEY_SEQ = #{surveySeq}
 			ORDER BY G.GRADE_ID DESC, UR.EMPLOYEE_NAME
@@ -121,14 +121,16 @@
      		SELECT
      			 A.PROJECT_ID,
      			 UR.GRADE_ID,
-     			 UA.DEPARTMENT_ID,
+     			 UR.DEPARTMENT_ID,
      			 S.SURVEY_SEQ ,
      			 UR.EMPLOYEE_ID   AS "raterId",
      			 UA.EMPLOYEE_ID   AS "appraiseeId",
+            	 P.PROJECT_NAME,
             	 S.SURVEY_NAME,
             	 O.DEPARTMENT_NAME,
             	 UR.EMPLOYEE_NAME AS "raterName",
-            	 UA.EMPLOYEE_NAME AS "appraiseeName"
+            	 UA.EMPLOYEE_NAME AS "appraiseeName",
+            	 G.GRADE_NAME
        		FROM
             	SURVEY_LIST S,
             	PROJECT_HISTORY R,
@@ -136,14 +138,15 @@
             	PROJECT P,
             	ORGANIZATION_CHART O,
              	USER_INFO UA,
-             	USER_INFO UR
+             	USER_INFO UR,
+             	GRADE G
        		WHERE R.PROJECT_ID = A.PROJECT_ID
          	  AND R.PARTICIPATION_EMPLOYEE_ID <> A.PARTICIPATION_EMPLOYEE_ID
-              AND R.PARTICIPATION_EMPLOYEE_ID = UR.EMPLOYEE_ID
-              AND R.PROJECT_ID = P.PROJECT_ID
          	  AND UA.GRADE_ID = 2
          	  AND UA.EMPLOYEE_ID = A.PARTICIPATION_EMPLOYEE_ID
-         	  AND UA.DEPARTMENT_ID = O.DEPARTMENT_ID
+         	  AND UR.DEPARTMENT_ID = O.DEPARTMENT_ID
+              AND R.PARTICIPATION_EMPLOYEE_ID = UR.EMPLOYEE_ID
+              AND R.PROJECT_ID = P.PROJECT_ID
          	  AND P.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE -(30 * #{month}), 'YYYY-MM-dd')
               AND R.PARTICIPATION_EMPLOYEE_ID = #{raterId}
               AND S.SURVEY_SEQ = #{surveySeq}
@@ -157,41 +160,41 @@
       	]]>
    	</select>
    	
-   	<select id="getAnother" parameterType="map" resultType="com.mycompany.webapp.dto.MappingDTO">
-   		SELECT
-			P.PROJECT_ID,
-			UR.GRADE_ID,
-			UA.DEPARTMENT_ID,
-			S.SURVEY_SEQ,
-			UR.EMPLOYEE_ID,
-			UA.EMPLOYEE_ID,
-			S.SURVEY_NAME,
-			O.DEPARTMENT_NAME,
-       		UR.EMPLOYEE_NAME AS "raterName",
-       		UA.EMPLOYEE_NAME AS "appraiseeName",
-     		G.GRADE_NAME
-		FROM PROJECT P,
-			PROJECT_HISTORY H,
-     		GRADE G,
-     	    USER_INFO UA,
-     	    USER_INFO UR,
-     	    SURVEY_LIST S,
-            ORGANIZATION_CHART O
-		WHERE P.PROJECT_ID = H.PROJECT_ID
-          AND UR.EMPLOYEE_ID = H.participation_employee_id
-          AND UR.GRADE_ID = G.GRADE_ID
-          AND UA.DEPARTMENT_ID = O.DEPARTMENT_ID
-          AND S.SURVEY_SEQ = 184
-          AND UA.GRADE_ID = 2
-          AND UA.EMPLOYEE_ID != UR.EMPLOYEE_ID
-          AND NOT EXISTS
-          (SELECT 'X'
-                 FROM MAPPING M
-                 WHERE M.APPRAISEE_ID = UA.EMPLOYEE_ID
-                   AND M.RATER_ID = UR.EMPLOYEE_ID
-                   AND M.SURVEY_SEQ = #{surveySeq})
-		ORDER BY G.GRADE_ID DESC, UR.EMPLOYEE_NAME
-		
+   	<select id="getAnother" parameterType="map" resultType="com.mycompany.webapp.dto.PopupDTO">
+	   		SELECT
+				P.PROJECT_ID,
+				UR.GRADE_ID,
+				UR.DEPARTMENT_ID,
+				S.SURVEY_SEQ,
+				UR.EMPLOYEE_ID   AS "raterId", 
+				UA.EMPLOYEE_ID   AS "appraiseeId",
+				P.PROJECT_NAME,
+				S.SURVEY_NAME,
+				O.DEPARTMENT_NAME,
+	       		UR.EMPLOYEE_NAME AS "raterName",
+	       		UA.EMPLOYEE_NAME AS "appraiseeName",
+	     		G.GRADE_NAME
+			FROM PROJECT P,
+				PROJECT_HISTORY H,
+	     		GRADE G,
+	     	    USER_INFO UA,
+	     	    USER_INFO UR,
+	     	    SURVEY_LIST S,
+	            ORGANIZATION_CHART O
+			WHERE P.PROJECT_ID = H.PROJECT_ID
+	          AND UR.EMPLOYEE_ID = H.participation_employee_id
+	          AND UR.GRADE_ID = G.GRADE_ID
+	          AND UR.DEPARTMENT_ID = O.DEPARTMENT_ID
+	          AND UA.GRADE_ID = 2
+	          AND UA.EMPLOYEE_ID != UR.EMPLOYEE_ID
+	          AND S.SURVEY_SEQ = #{surveySeq}
+	          AND NOT EXISTS
+	          (SELECT 'X'
+	                 FROM MAPPING M
+	                 WHERE M.APPRAISEE_ID = UA.EMPLOYEE_ID
+	                   AND M.RATER_ID = UR.EMPLOYEE_ID
+	                   AND M.SURVEY_SEQ = #{surveySeq})
+			ORDER BY G.GRADE_ID DESC, UR.EMPLOYEE_NAME		
    	</select>
    	
    	<select id="ovrlpCheck" parameterType="map" resultType="com.mycompany.webapp.dto.MappingDTO">
@@ -205,7 +208,7 @@
           AND S.SURVEY_START_DATE <= SYSDATE
           AND S.SURVEY_CLOSED_DATE >= SYSDATE
           AND M.RATER_ID = #{raterId}
-          AND M.APPRAISEE_ID = #{apprasieeId}
+          AND M.APPRAISEE_ID = #{appraiseeId}
           ]]>
    	</select>
 
@@ -214,7 +217,7 @@
 			(SURVEY_SEQ,
 			 RATER_ID,
 			 APPRAISEE_ID,
-			 SURVEY_COMPLETE_CHECK,
+			 SURVEY_COMPLETE_YN,
 			 REG_DATE,
 			 UPDATE_DATE)
  		VALUES

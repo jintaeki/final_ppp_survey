@@ -31,10 +31,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.PagingDTO;
+import com.mycompany.webapp.dto.PopupDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 import com.mycompany.webapp.service.ICommonCodeService;
+import com.mycompany.webapp.service.IMappingService;
 import com.mycompany.webapp.service.IPagingService;
 import com.mycompany.webapp.service.ISurveyService;
 
@@ -49,7 +51,9 @@ public class SurveyController {
 	@Autowired
 	IPagingService pagingService;
 
-
+	@Autowired
+	IMappingService mappingService;
+	
 	@Autowired
 	ICommonCodeService commonCodeService;
 
@@ -244,12 +248,15 @@ public class SurveyController {
 						int cntcontent = itemcontents.length()-itemcontents.replace(",", "").length();
 
 						// 다중 값들을 배열로 변환
-						String  [] itmencontent = itemcontents.split(",");
+						String  [] itemcontent = itemcontents.split(",");
 						String  [] itemscore = itemscores.split(",");
-
+						for(int i = 0; i<=cntcontent; i++) {
+							System.out.println(itemcontent[i]);
+							System.out.println(itemscore[i]);
+						}
 						// 문항 개수만큼 for문 실행하여 문항 등록
 						for(int i = 0 ; i<=cntcontent;i++) {
-							SQD.setItemContent(itmencontent[i]);
+							SQD.setItemContent(itemcontent[i]);
 							SQD.setItemScore(itemscore[i]);
 							surveyService.insertItem(SQD);
 						}
@@ -393,6 +400,32 @@ public class SurveyController {
 		return "redirect:/survey/surveysearch?pageNo="+pageno+"&keyword="+keyword+"&selection="+selection+"&surveyStartDate="+strDate;
 
 	}
+	
+	@RequestMapping("/deleteItem.do/{itemSeq}")
+	@ResponseBody
+	public void DeleteItem(@PathVariable int itemSeq) {
+		logger.info("deleteItem 컨트롤러");
+		surveyService.deleteItem(itemSeq);
+		
+	}
 
 
+	
+	/*설문 화면에서 왼쪽 그리드*/
+	@RequestMapping(value="", method=RequestMethod.POST)
+	public String selectSurveyMapping(@RequestParam int surveySeq, @RequestParam int raterId,
+			Model model, RedirectAttributes redirectAttrs) {
+		logger.info("실행");			
+		try {
+			if(surveyService.mappingCheck(raterId) == 0) {				
+				surveyService.selectSurveyMapping(surveySeq, raterId);
+			}
+			List<PopupDTO> SurveyMappingList = surveyService.selectSurveyMapping(surveySeq, raterId);
+			model.addAttribute("SurveyMappingList", SurveyMappingList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			redirectAttrs.addFlashAttribute("message", e.getMessage());
+		}
+		return "/survey";
+	}
 	}

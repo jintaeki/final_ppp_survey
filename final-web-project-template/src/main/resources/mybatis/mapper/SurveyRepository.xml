@@ -165,7 +165,7 @@
 <!--    </update> -->
 
    <update id="sendMessage" parameterType="int">
-      UPDATE SURVEY_LIST SET    STATE_CODE='Y' WHERE SURVEY_SEQ =#{surveySeq}
+      UPDATE SURVEY_LIST SET    STATE_CODE='30004' WHERE SURVEY_SEQ =#{surveySeq}
    </update>
 <select id="searchListByKeyword" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="SLD">
    <![CDATA[
@@ -257,13 +257,17 @@
    </select>
 
 	<update id="surveyInsertComplete" parameterType="int">
-		UPDATE SURVEY_LIST SET STATE_CODE = '30002' WHERE SURVEY_SEQ = #{SURVEY_SEQ}
+		UPDATE SURVEY_LIST SET STATE_CODE = '30002' WHERE SURVEY_SEQ = #{surveySeq}
 	</update>
 
 	<delete id="deleteSurvey" parameterType="int">
-		DELETE FROM SURVEY_LIST WHERE SURVEY_SEQ = #{SURVEYSEQ}
+		DELETE FROM SURVEY_LIST WHERE SURVEY_SEQ = #{surveySeq}
 	</delete>
-
+	
+	<delete id="deleteItem" parameterType="int">
+		DELETE FROM SURVEY_ITEM WHERE ITEM_SEQ = #{itemSeq}
+	</delete>
+	
   <select id="selectSurveyEvaluate" parameterType="int" resultType="hashmap">
   		SELECT
               oc.department_name AS "departmentName"

@@ -1,205 +1,114 @@
-/* 전체 div */
-#all_survey_dv{
-/*background-color: aqua;*/
-	height: 740px;
+@charset "UTF-8";
+
+input {
+	vertical-align: middle
 }
 
-#survey_setting_row{
-    position: relative;
-    text-align: center;
-    bottom: 46px;
+.container_flex {
+	display: inline-flex;
+	margin-top: 20px;
+    margin-bottom: 30px;
+	justify-content: space-around;
+	align-items: center !important;
 }
 
-#survey_setting_upd_btn{
-	top: 30%;
-    left: 10%;
-    position: relative;
+.container_survey {
+/* 	border: 1px solid red; */
+	height: -webkit-fill-available;
 }
 
-#question_setting_banner{
-	height:50px;
-	border-bottom: 1px dotted rgba(0,0,0,.38);
+.delete_btn{
+	border: 1px solid #fff;
+ 	border-radius: 35em;	
 }
 
-.scrollarea {
-  overflow-y: scroll;
-      height: 500px;
-}
-      .nav-scroller {
-        position: relative;
-        z-index: 2;
-        height: 2.75rem;
-        overflow-y: hidden;
-      }
-
-      .nav-scroller .nav {
-        display: flex;
-        flex-wrap: nowrap;
-        padding-bottom: 1rem;
-        margin-top: -1px;
-        overflow-x: auto;
-        text-align: center;
-        white-space: nowrap;
-        -webkit-overflow-scrolling: touch;
-      }
-
-.list-group.list-group-flush.border-bottom.scrollarea {
-     position: relative;
-     overflow-x: auto;
-}
-#survey_question_dv{
-	width: 42%;
-    position: relative;
-    margin: 15px;
-    left: 6.5%;
+.input_title {
+	width: 20px;
+	margin-bottom: 20px;
+	text-align: inline-flex;
+	font-weight: bold;
+	min-width: 6rem;
+	color: #0089ff;
+	font-size: 20px;
 }
 
-#question_item_dv {
-	width: 42%;
-    position: relative;
-    margin: 15px;
-    left: 52%;
-    /*background-color: yellow!important;*/
-    bottom: 580px;
-    height: 548px;
-    border: solid;
+.form-control {
+	width: 500px;
+	height: 80px !important;
+	font-size: 15px;
+	border: 1px solid rgb(233, 233, 233);
+	border-radius: 12px;
+	outline: none;
+}
+textarea.form-control {
+	max-width: 350px;
+	height: fit-content;
+	border: 2px solid #e8e8e8;
+	background-color: #ffffff;
+}
+input#input_qus{
+	width: 345px;
+	border: 2px solid #e8e8e8;
+	background-color: #ffffff;
 }
 
-.list-group-item.active{ /*이거 없애거나 건들면 이 클래스 싹 다 파래짐*/
-	background: transparent!important;
-	border: none!important;
-	border-bottom: 1px solid rgba(0,0,0,.125)!important;
-
+.input_qus {
+	display: inline-block;
+	height: 50px;
+	width: 350px;
 }
 
-.all_insertdv {
-	/*background-color: red;*/
-	display:block;
-	width:100%;
-/*     height: 545px; */
-}
-
-#block_box {
-left: 600px;
-    float: right;
-    background-color: white;
-    width: 600px;
-    margin-right: 10%;
-    margin-top: 5%;
-    padding: 20px;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: rgb(59 59 91 / 25%) 0px 6px 12px -2px, rgb(15 13 13 / 30%) 0px 3px 7px -3px;
-    position: relative;
- /*   top: 50px; */
-}
-
-#survey_setting_dv{
-	height:120px;
-    bottom: 25px;
-    position: relative;
-}
-
-.survey_date{
-	display: block;
-    text-align: center;
-    margin: auto;
-}
-
-.survey_radio{
-	position: relative;
-    margin: 15px;
-    vertical-align: middle;
-}
-
-#delete_btn {
-    left: 88%;
-    background-color: transparent;
-    border: none;
-    float: right;
-}
-
-#update_btn {
-	float:right;
-}
-
-#input_qus{
-	text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    background-color: transparent;
-    margin-top: 15px;
-    border: none;
-     outline: none;
-     width:70%
-}
-
-
-.blank_under{
-	background: none;
-    border-bottom: 1px dotted rgba(0,0,0,.38);
-    height: 1px;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    display: block;
-}
-
-#qus_isnert_button{
+.insert_category {
+	border-radius: 10px;
+	border: transparent;
 	background-color: transparent;
-    border: none;
-    left: 92.5%;
-    margin: 15px;
-    position: relative;
+	margin-right: 8px;
+	box-shadow: inset 2px 2px 5px #ededed, inset -5px -5px 10px #fff;
+	width: 100%;
+	box-sizing: border-box;
+	transition: all 0.2s ease-in-out;
+	appearance: none;
+	-webkit-appearance: none;
+	border: 0;
+	outline: 0;
+	font-size: 16px;
+	border-radius: 320px;
+	padding: 16px;
+	background-color: #f8f8f8;
+	text-shadow: 1px 1px 0 #fff;
 }
 
-.all_qus{
-	display:block;
-	background-color:#47FF9C;
+.form-check-input {
+	vertical-align: middle !important;
 }
 
-.question_inputdv {
-   /* background-color: yellow;*/
-    position: relative;
-    width: 43%;
-    left: 65%;
-    border: solid;
-    bottom: 450px;
+.update_btn {
+	box-shadow: inset 0px 0px 0px 0px #ffffff;
+	background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+	background-color: #ffffff;
+	border-radius: 20px;
+	border: 1px solid #dcdcdc;
+	display: inline-block;
+	cursor: pointer;
+	color: #ababab;
+	font-family: Arial;
+	font-size: 13px;
+	font-weight: bold;
+	padding: 10px 25px;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #ffffff;
 }
 
-
-#select_radio{
-   /*  background-color: blue;*/
-    text-align: left;
+.update_btn:hover {
+	background: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+	background-color: #f6f6f6;
 }
 
-.icon_div{
-	/*   background-color: aquamarine; */
-	/* position: relative;  */
-    width: 42.5%;
-    left: 49.7%;
-    border: solid;
-    height: 300px;
-}
-
-.icon_line{
-	margin:10px;
-}
-
-.question_add_btn_div{
-	text-align:right;
-}
-
-
-#all_insert_container{
+.update_btn:active {
 	position: relative;
-	bottom:40px;
+	top: 1px;
 }
-
-#answer_box {
-	left: 2%;
-    position: relative;
-    width: 500px;
-    float: right;
-	}
+.select_radio{
+	justify-content: space-around;
+	align-items: center;
 }

@@ -35,7 +35,7 @@
 							<td>"${EL.gradeName}"</td>
 							<td>"${EL.employeeName}"</td>
 							<td>"${EL.surveyCompleteYN}"</td>
-							<td><input type="button" class="btn btn-link" onclick="location.href='surveyresult'" value="조회"></td>
+							<td><input type="button" class="btn btn-link" onclick="location.href='<c:url value="/survey/surveyresult"/>'" value="조회"></td>
 						</tr>
 					</c:forEach>
 					</tbody>

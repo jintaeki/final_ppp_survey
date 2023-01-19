@@ -154,7 +154,7 @@ public class HomeController {
 				logger.info("평가자 진입");
 				List<UserCheckDTO> UCDList = ILCS.getUserInfo(UCD);
 				model.addAttribute("UCDList",UCDList);
-				return "login_after_user";
+				return "redirect:/survey";
 			}else {
 				logger.info("관리자 진입");
 				return "redirect:/survey/surveysearch";
@@ -175,12 +175,12 @@ public class HomeController {
 		return "login_after_user";
 	}
 	
-//	@RequestMapping("/home2")
-//	public String home2() {
-//		logger.info("실행");
-//		//log.info("실행");
-//		return "home2";
-//	}
+	@RequestMapping("/gosurvey")
+	public String home2() {
+		logger.info("실행");
+		//log.info("실행");
+		return "survey";
+	}
 	
 	
 	
