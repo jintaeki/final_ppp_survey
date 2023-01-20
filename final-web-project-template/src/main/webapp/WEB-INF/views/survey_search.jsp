@@ -324,8 +324,8 @@
 							<div class="input-group-append">
 								<input type="submit" class="btn btn-outline-secondary"
 									id="button-addon2" value="검색">
-								<input type="reset" class="btn btn-outline-secondary"
-									id="button-addon2" value="초기화">
+								<input type="button" class="btn btn-outline-secondary"
+									id="button-addon2" onclick="resetMenu(this)" value="초기화">
 							</div>
 						</form>
 						<button id="upper_dv_btn" type="button" class="btn btn-primary"
@@ -353,9 +353,9 @@
 							<tr id="${list.surveySeq }">
 
 
-								<th scope="row"><button class="delete_survey_btn"
-										style="border: 1px solid #fff; border-radius: 35em;"
-										onclick="delete_survey_btn(this,${list.surveySeq}, ${pagingdto.selection},  ${pagingdto.pageNo})">
+								<th scope="row">
+								<button class="delete_survey_btn" style="border: 1px solid #fff; border-radius: 35em;" onclick="delete_survey_btn(this,${list.surveySeq}, ${pagingdto.selection},  ${pagingdto.pageNo})">
+
 										<i class="fas fa-xmark"></i>
 									</button></th>
 								<td><c:if test="${list.stateCode ne '30004'}">
