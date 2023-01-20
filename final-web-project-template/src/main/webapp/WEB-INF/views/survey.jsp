@@ -40,38 +40,51 @@
 	   let cnt = 0;
 	   surveyQandA = '';
 	   for(let i = 0; i<size;i++){
-		   
-	
-		   
+
 		    if(i==size-1){
 		    	console.log(result[i].QUESTION_CONTENT);
 		    	surveyQandA += '<div class="question-form">';
+		    	surveyQandA+= '<input type="hidden" value="'+result[i].QUESTION_SEQ+'">';
 			    surveyQandA += result[i].QUESTION_CONTENT;
 			    surveyQandA +='</div>';
 			    console.log("마지막");
 			    console.log(cnt);
-			    for(var j = i-cnt;j<=i;j++ ){
-			    	
-				   	   surveyQandA += '<span class="item_form">'
-					   surveyQandA += '<button class="item_btn" type="submit">'+result[j].ITEM_CONTENT+'</button>'
-					   surveyQandA += '</span>'
+			    if(result[i].QUESTION_TYPE_CODE =="10002"){
+			    	surveyQandA += '<span class="item_form">';
+			    	surveyQandA+= '<input type="hidden" value="'+result[i].ITEM_SEQ+'">';
+					surveyQandA += '<textarea name="answerContent"></textarea>';
+					surveyQandA += '</span>';
+			    }else{
+			    	 for(var j = i-cnt;j<=i;j++ ){
+					    	
+					   	   surveyQandA += '<span class="item_form">'
+	 					   surveyQandA += '<button class="item_btn" type="submit">'+result[j].ITEM_CONTENT+'</button>'
+						   surveyQandA += '</span>'
+			    }
+			   
 					   
 			   	}
 			    break;
 			}else if(result[i].QUESTION_CONTENT != result[i+1].QUESTION_CONTENT){
-			console.log(result[i].QUESTION_CONTENT);
-			console.log(i+'번 문제');
-			console.log(cnt+'카운트');
+
 		    surveyQandA += '<div class="question-form">';
+	    	surveyQandA+= '<input type="hidden" value="'+result[i].QUESTION_SEQ+'">';
 		    surveyQandA += result[i].QUESTION_CONTENT;
 		    surveyQandA +='</div>';
+		    if(result[i].QUESTION_TYPE_CODE =="10002"){
+		    	surveyQandA += '<span class="item_form">';
+		    	surveyQandA+= '<input type="hidden" value="'+result[i].ITEM_SEQ+'">';
+				surveyQandA += '<textarea name="answerContent"></textarea>';
+				surveyQandA += '</span>';
+		    }else{
+		    
 		   	for(var j = i-cnt;j<=i;j++ ){
 			   	   surveyQandA += '<span class="item_form">'
 				   surveyQandA += '<button class="item_btn" type="submit">'+result[j].ITEM_CONTENT+'</button>'
 				   surveyQandA += '</span>'
 					   console.log(result[j].ITEM_CONTENT);
 		   	}
-		   	
+		    }
 		   	cnt=0;
 		   }else if(result[i].QUESTION_CONTENT == result[i+1].QUESTION_CONTENT){
 			   cnt = cnt + 1;
