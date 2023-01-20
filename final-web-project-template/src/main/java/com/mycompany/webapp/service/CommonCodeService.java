@@ -21,4 +21,18 @@ public class CommonCodeService implements ICommonCodeService{
 		return 	CCR.selectStateCode();
 
 	}
+
+
+	@Override
+	public List<CommonDTO> selectDateCode() {
+		// TODO Auto-generated method stub
+		return CCR.selectDateCode();
+	}
+
+	@Override
+	public List<CommonDTO> selectMappingCode() {
+		// TODO Auto-generated method stub
+		return CCR.selectMappingCode();
+	}
+
 }

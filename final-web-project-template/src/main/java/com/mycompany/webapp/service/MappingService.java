@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.IMappingRepository;
+import com.mycompany.webapp.dto.GradeDTO;
 import com.mycompany.webapp.dto.MappingDTO;
+import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.PopupDTO;
 
 @Service
@@ -20,7 +22,7 @@ public class MappingService implements IMappingService {
 		mappingrepository.setMapping(surveySeq, month, number);
 	}
 	
-	@Override
+	@Override // 매핑 상태 업데이트
 	public void updateState(int surveySeq, String stateCode) {
 		mappingrepository.updateState(surveySeq, stateCode);
 	}
@@ -30,27 +32,32 @@ public class MappingService implements IMappingService {
 		return mappingrepository.stateCheck(surveySeq);
 	}
 
-	@Override
+	@Override // 매핑 삭제
 	public void deleteMapping(int surveySeq) {
 		mappingrepository.deleteMapping(surveySeq);
 	}
 	
+	@Override // 직급 목록 출력
+	public List<GradeDTO> selectGradeList() {
+		return mappingrepository.selectGradeList();
+	}
+	
 	@Override // 매핑된 데이터 출력
-	public List<PopupDTO> selectMappingData(int surveySeq) {
-		return mappingrepository.selectMappingData(surveySeq);
+	public List<PopupDTO> selectMappingData(PagingDTO pagingdto) {
+		return mappingrepository.selectMappingData(pagingdto);
 	}
 	
 	@Override // 추가할 피평가자 검색 병준형
-	public List<PopupDTO> getPopup(int surveySeq, String raterId, int month) {
-		return mappingrepository.getPopup(surveySeq, raterId, month);
+	public List<PopupDTO> getPopup(PagingDTO pagingdto) {
+		return mappingrepository.getPopup(pagingdto);
 	}
 	
-	@Override
-	public List<PopupDTO> getAnother(int surveySeq){
-		return mappingrepository.getAnother(surveySeq);
+	@Override // 조건에 상관없는 인원 출력
+	public List<PopupDTO> getAnother(PagingDTO pagingdto){
+		return mappingrepository.getAnother(pagingdto);
 	}
 	
-	@Override
+	@Override // 중복체크
 	public List<MappingDTO> ovrlpCheck(String raterId, String appraiseeId) {
 		return mappingrepository.ovrlpCheck(raterId, appraiseeId);
 	}

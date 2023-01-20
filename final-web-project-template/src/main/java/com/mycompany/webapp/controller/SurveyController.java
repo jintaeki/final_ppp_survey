@@ -360,6 +360,7 @@ public class SurveyController {
 	@RequestMapping("")
 	public String selectSurveyMapping() {
 
+
 		return "survey";
 	}
 

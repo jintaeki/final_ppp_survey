@@ -18,5 +18,18 @@ public class PagingService implements IPagingService{
 		return pagingRepo.getTotalBoardNum(keyword, selection, surveyStartDate, anonyMityCheckCode);
 	}
 
+	@Override
+	public int getTotalMappingNum(String keyword, String selection, int surveySeq, String selectGD) {
+		return pagingRepo.getTotalMappingNum(keyword, selection, surveySeq, selectGD);
+	}
 
+	@Override
+	public int getTotalNonMappingNum(String keyword, String selection, int surveySeq, String selectGD) {
+		return pagingRepo.getTotalNonMappingNum(keyword, selection, surveySeq, selectGD);
+	}
+
+	@Override
+	public int getTotalInsertNum(String keyword, String selection, int surveySeq, String selectGD, String raterId, int month) {
+		return pagingRepo.getTotalInsertNum(keyword, selection, surveySeq, selectGD, raterId, month);
+	}
 }

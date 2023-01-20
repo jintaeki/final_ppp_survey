@@ -17,14 +17,16 @@ $(document).ready(function() {
 function popup(){
 	var month = $('#month').val();
 	
-	let popUrl ="/springframework-xml-config-no-root/popup.do?surveySeq="+surveySeq+"&raterId="+raterId+"&month="+month;
+	let popUrl ="/springframework-xml-config-no-root/mapping/popup.do?pageNo=1"+"&surveySeq="+surveySeq+"&raterId="+raterId
+			   +"&month="+month+"&keyword=&selection=60004&selectGD=30005";
 	let popOption = "width=800, height=600, left=500, top=100";
 	window.open(popUrl, "다면평가 대상 추가", popOption);
 }
 
 function mapInsert(surveySeq){
 	
-	let popUrl ="/springframework-xml-config-no-root/another.do?surveySeq="+surveySeq;
+	let popUrl ="/springframework-xml-config-no-root/mapping/another.do?pageNo=1"+"&surveySeq="+surveySeq
+			   +"&keyword=&selection=60004&selectGD=30005";
 	let popOption = "width=800, height=600, left=500, top=100";
 	window.open(popUrl, "다면평가 대상 추가", popOption);
 }
@@ -68,7 +70,48 @@ function map_delete(surveySeq, raterId, appraiseeId){
 		<div>
 			<button type="button" id="map_insert" class="btn btn-primary" onclick="mapInsert('${mappingList[0].surveySeq}')">조건관 관계없이 추가</button>
 		</div>
-			<div class="row">
+		<div class="row">
+			<div class="hmenu">
+				<div class="survey_list_form_upper_dv">
+					<form action="<c:url value='/mapping/set.do'/>" method="POST" class="survey_list_form">
+						<select name="selectGD">
+							<option value="30005">전체</option>
+							<c:forEach items="${gradeList}" var="grade">
+								<c:if test="${pagingdto.selectGD eq grade.gradeId}">
+									<option selected value="${pagingdto.selectGD}">${grade.gradeName}</option>
+								</c:if>
+								<c:if test="${pagingdto.selectGD ne grade.gradeId}">
+									<option value="${grade.gradeId}">${grade.gradeName}</option>
+								</c:if>
+							</c:forEach>
+						</select> 
+						<select name="selection">	
+							<c:forEach items="${commonMapList}" var="commonMap">
+								<c:if test="${pagingdto.selection eq commonMap.codeDetailId }">
+									<option selected value="${pagingdto.selection}">${commonMap.codeDetailName }</option>
+								</c:if>
+								<c:if test="${pagingdto.selection ne commonMap.codeDetailId }">
+									<option value="${commonMap.codeDetailId}">${commonMap.codeDetailName }</option>
+								</c:if>
+							</c:forEach>
+						</select> 
+						<input type="text" class="form-control" id="selectedKeyword" placeholder="search"
+								name="keyword" value="${pagingdto.keyword}" 
+								aria-describedby="button-addon2"> 
+						<input type="hidden" name="pageNo" value="1">
+						<input type="hidden" name="surveySeq" value="${pagingdto.surveySeq}">
+						<input type="hidden" name="month" value="${pagingdto.month}">
+						<input type="hidden" name="number" value="${number}">
+						<input type="hidden" name="newCheck" value="0">
+						<div class="input-group-append">
+							<input type="submit" class="btn btn-outline-secondary"
+								id="button-addon2" value="검색">
+							<input type="reset" class="btn btn-outline-secondary"
+								id="button-addon2" value="초기화">
+						</div>
+					</form>
+				</div>
+			</div>	
 				<table class="table" id="mapTb">
 					<thead>
 						<tr>
@@ -111,24 +154,28 @@ function map_delete(surveySeq, raterId, appraiseeId){
       						<a class="arrow prev" href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a> --%>
 						<c:if test="${pagingdto.groupNo>1}">
 							<a class="arrow prev"
-								href="surveysearch?pageNo=${pagingdto.startPageNo-1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">이전</a>
+								href="set.do?pageNo=${pagingdto.startPageNo-1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}
+									 &newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">이전</a>
 						</c:if>
 
 						<c:forEach var="i" begin="${pagingdto.startPageNo}"
 							end="${pagingdto.endPageNo}">
 							<c:if test="${pagingdto.pageNo != i}">
 								<a class="active"
-									href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
+									href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}
+									     &newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
 							</c:if>
 							<c:if test="${pagingdto.pageNo == i}">
 								<a class="page_nation"
-									href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
+									href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}
+									      &newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
 							</c:if>
 						</c:forEach>
 
 						<c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
 							<a class="arrow next"
-								href="surveysearch?pageNo=${pagingdto.endPageNo+1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">다음</a>
+								href="set.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}
+									 &newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">다음</a>
 						</c:if>
 						<%-- 맨마지막 페이지 이동 
        						  <a class="arrow next" href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">맨끝</a> --%>
