@@ -1,23 +1,22 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
-<link rel="stylesheet" type="text/css" href="/survey.css">
-<script src="resources/js/survey.js"></script>
-<script src="resources/js/surveycountdown.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="/survey.css"> -->
+<%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/survey.css" /> --%>
+
+<!-- <script src="resources/js/survey.js"></script> -->
+<!-- <script src="resources/js/surveycountdown.js"></script> -->
 <script type="text/javascript">
-   function surveyState(){
-      console.log('surveyState 함수 실행');
-      
-      
+   function gosurvey(obj,surveyseq){
+      console.log('gosurvey 함수 실행');
+      var surveySeq= surveyseq;
+      console.log(surveySeq);
       $.ajax({
-         url: '문제 요청 url',
+         method: 'getquestionforsurvey.do/'+surveySeq,
          type: 'GET',
-         data: {
-            surveySeq: '',
-            raterId: '',
-            appraiseeId: ''
-         },
+         dataType: 'json',
          success: function(result){
+        	 alert("성공");
             // result는 컨트롤러 리턴값 
             // result => survey_result table의 값이 담겨있음 List<SurveyResultVo>
             //  document.getElementById("question-box");

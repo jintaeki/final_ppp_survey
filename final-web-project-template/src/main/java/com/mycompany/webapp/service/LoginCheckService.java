@@ -1,6 +1,7 @@
 package com.mycompany.webapp.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class LoginCheckService implements ILoginCheckService{
 	}
 
 	@Override
-	public String getQuestion(int surveySeq) {
+	public List<Map<String, Object>> getQuestion(int surveySeq) {
 		
 		return loginCheckRepository.getQuestion(surveySeq);
 	}

@@ -2,6 +2,7 @@ package com.mycompany.webapp.dao;
 
 
 import java.util.List;
+import java.util.Map;
 
 import com.mycompany.webapp.dto.UserCheckDTO;
 
@@ -13,5 +14,5 @@ public interface ILoginCheckRepository {
 	
 	public String getUserManagerYN(UserCheckDTO UCD);
 	
-	public String getQuestion(int surveySeq);
+	public List<Map<String, Object>> getQuestion(int surveySeq);
 }
