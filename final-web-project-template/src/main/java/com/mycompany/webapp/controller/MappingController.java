@@ -18,26 +18,46 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.mycompany.webapp.dto.MappingDTO;
+import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.PopupDTO;
+import com.mycompany.webapp.service.ICommonCodeService;
 import com.mycompany.webapp.service.IMappingService;
-
-import lombok.extern.log4j.Log4j2;
+import com.mycompany.webapp.service.IPagingService;
 
 @Controller
-@Log4j2
+@RequestMapping("/mapping")
 public class MappingController {
 	private static final Logger logger = LoggerFactory.getLogger(MappingController.class);
 
 	@Autowired
 	IMappingService mappingService;
 	
+	@Autowired
+	ICommonCodeService commonService;
+	
+	@Autowired
+	IPagingService pagingService;
+	
 	// 매핑 출력
-	@RequestMapping(value="/mapping/set.do", method=RequestMethod.POST)
-	public String setMapping(@RequestParam int surveySeq, @RequestParam int month, @RequestParam int number, @RequestParam String newCheck, Model model, RedirectAttributes redirectAttrs) {
-		logger.info("실행");
+	@RequestMapping(value="/set.do")
+	public String setMapping(int surveySeq, int month, int number, 
+							 @RequestParam(defaultValue="0")String newCheck,
+							 @RequestParam(defaultValue="") String keyword,
+							 @RequestParam(defaultValue="1") int pageNo,
+							 @RequestParam(defaultValue="60004") String selection,
+							 @RequestParam(defaultValue="60004") String selectGD,
+							 Model model, RedirectAttributes redirectAttrs) {
+		model.addAttribute("commonMapList", commonService.selectMappingCode());
+		model.addAttribute("commonDateList", commonService.selectDateCode());
+		model.addAttribute("gradeList", mappingService.selectGradeList());
+		model.addAttribute("number", number);
+		model.addAttribute("newCheck", newCheck);
+		logger.info("지금 가져온 선택지:"+selection);
+		logger.info("페이지 수"+pageNo);
+		logger.info("키워드"+keyword);
+		logger.info("직급"+selectGD);
 		try {
 			if(Integer.parseInt(mappingService.stateCheck(surveySeq)) == 30002) {
 				mappingService.setMapping(surveySeq, month, number);
@@ -49,40 +69,120 @@ public class MappingController {
 					return "redirect:/survey/surveysearch";	
 				}
 			}
-			List<PopupDTO> mappingList = mappingService.selectMappingData(surveySeq);
+			List<PopupDTO> mappingList = null;
+			PagingDTO pagingdto = null;
+				
+			int totalRows = pagingService.getTotalMappingNum(keyword, selection, surveySeq, selectGD);
+			logger.info("줄수"+totalRows);
+			pagingdto = new PagingDTO(7, 7, totalRows, pageNo);
+			pagingdto.setKeyword(keyword);
+			pagingdto.setSelection(selection);
+			pagingdto.setSurveySeq(surveySeq);			
+			pagingdto.setSelectGD(selectGD);
+			pagingdto.setMonth(month);
+			
+			logger.info("페이징:" +pagingdto.toString());
+			
+			mappingList = mappingService.selectMappingData(pagingdto);
+			logger.info("리스트:" +mappingList.toString());
 			model.addAttribute("mappingList", mappingList);
+			
+			model.addAttribute("pagingdto", pagingdto);
+			model.addAttribute("keyword", keyword);
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 			redirectAttrs.addFlashAttribute("message", e.getMessage());
 		}
-		return "home2";
+		return "/mappingview";
 	}
 
 	// 평가자 한사람에 대하여 모든 조건에 맞게 출력
 	@RequestMapping(value="/popup.do", method=RequestMethod.GET)
-	public String plusMapping(@RequestParam int surveySeq, @RequestParam String raterId, @RequestParam int month,  Model model) {
-		List<PopupDTO> getPopup = mappingService.getPopup(surveySeq, raterId, month);
-		logger.info("실행");
-		model.addAttribute("getPopup", getPopup);
+	public String plusMapping(int surveySeq, String raterId, int month,
+							@RequestParam(defaultValue="") String keyword,
+							@RequestParam(defaultValue="1") int pageNo,
+							@RequestParam(defaultValue="60004") String selection,
+							@RequestParam(defaultValue="60004") String selectGD, Model model) {
+		model.addAttribute("commonMapList", commonService.selectMappingCode());
+		model.addAttribute("commonDateList", commonService.selectDateCode());
+		model.addAttribute("gradeList", mappingService.selectGradeList());
+		logger.info("지금 가져온 선택지:"+selection);
+		logger.info("페이지 수"+pageNo);
+		logger.info("키워드"+keyword+"1");
+		logger.info("직급"+selectGD);
+		try {
+			List<PopupDTO> getPopup = null;
+			PagingDTO pagingdto = null;
+			
+			int totalRows = pagingService.getTotalInsertNum(keyword, selection, surveySeq, selectGD, raterId, month);
+			logger.info("줄수"+totalRows);
+			pagingdto = new PagingDTO(7, 7, totalRows, pageNo);
+			pagingdto.setKeyword(keyword);
+			pagingdto.setSelection(selection);
+			pagingdto.setSurveySeq(surveySeq);
+			pagingdto.setSelectGD(selectGD);
+			pagingdto.setRaterId(raterId);
+			pagingdto.setMonth(month);
+			
+			getPopup = mappingService.getPopup(pagingdto);
+			logger.info("리스트:" +getPopup.toString());
+			model.addAttribute("getPopup", getPopup);
+			
+			model.addAttribute("pagingdto", pagingdto);
+			model.addAttribute("keyword", keyword);
+		
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		return "popup";
 	}
 	
 	// 제외된 리스트 전부 출력
 	@RequestMapping(value="/another.do", method=RequestMethod.GET)
-	public String anotherMapping(@RequestParam int surveySeq, Model model) {
-		List<PopupDTO> getPopup = mappingService.getAnother(surveySeq);
-		logger.info("실행");
-		model.addAttribute("getPopup", getPopup);
-		return "popup";
+	public String anotherMapping(int surveySeq, 
+								@RequestParam(defaultValue="") String keyword,
+								@RequestParam(defaultValue="1") int pageNo,
+								@RequestParam(defaultValue="60004") String selection,
+								@RequestParam(defaultValue="60004") String selectGD,Model model) {
+		model.addAttribute("commonMapList", commonService.selectMappingCode());
+		model.addAttribute("commonDateList", commonService.selectDateCode());
+		model.addAttribute("gradeList", mappingService.selectGradeList());
+		logger.info("지금 가져온 선택지:"+selection);
+		logger.info("페이지 수"+pageNo);
+		logger.info("키워드"+keyword+"1");
+		try {
+			List<PopupDTO> getPopup = null;
+			PagingDTO pagingdto = null;
+
+			int totalRows = pagingService.getTotalNonMappingNum(keyword, selection, surveySeq, selectGD);
+			logger.info("줄수"+totalRows);
+			pagingdto = new PagingDTO(7, 7, totalRows, pageNo);
+			pagingdto.setKeyword(keyword);
+			pagingdto.setSelection(selection);
+			pagingdto.setSurveySeq(surveySeq);
+			pagingdto.setSelectGD(selectGD);
+			
+			getPopup = mappingService.getAnother(pagingdto);
+			logger.info("리스트:" +getPopup.toString());
+			model.addAttribute("getPopup", getPopup);
+
+			model.addAttribute("pagingdto", pagingdto);
+			model.addAttribute("keyword", keyword);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "pop_another";
 	}
 	
 	//리스트 입력 
 	@RequestMapping(value="/popup.do", method=RequestMethod.POST)
-	public void insertAppraise(@RequestBody String filterJSON, HttpServletResponse response, ModelMap model) throws Exception {
+	public void insertAppraise(@RequestBody String filterJSON,
+			HttpServletResponse response, ModelMap model) throws Exception {
 		logger.info("실행");
+		JSONObject resMap = new JSONObject();
 		response.setContentType("application/json; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		JSONObject resMap = new JSONObject();
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			List<PopupDTO> insertMap = mapper.readValue(filterJSON,new TypeReference<List<PopupDTO>>(){ });
@@ -92,9 +192,8 @@ public class MappingController {
 				int surveySeq = insertMap.get(i).getSurveySeq();
 				String raterId = insertMap.get(i).getRaterId();
 				String appraiseeId = insertMap.get(i).getAppraiseeId();
-				logger.info("실행2");
 				
-				logger.info(String.valueOf(surveySeq));
+				logger.info("설문조사번호:" + surveySeq);
 				logger.info(raterId);
 				logger.info(appraiseeId);
 				
@@ -114,43 +213,34 @@ public class MappingController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			resMap.put("res", "fail");
 		}
-		out.print(resMap);  //{"res":"success", "msg":"추가를 완료하였습니다."}, {"res":"fail"}
+		out.print(resMap);
+		return;
 	}
 	
 	//리스트 삭제
-	@RequestMapping(value="/mapping/deleteMapping.do", method=RequestMethod.POST)
-	public void deleteAppraiseeId(@RequestBody String filterJSON, HttpServletResponse response, ModelMap model) throws Exception {
+	@RequestMapping(value="/deleteMapping.do", method=RequestMethod.POST)
+	public void deleteAppraiseeId(@RequestBody String filterJSON,
+			HttpServletResponse response, ModelMap model) throws Exception {
 		logger.info("실행");
 		JSONObject resMap = new JSONObject();
+		response.setContentType("application/json; charset=UTF-8");
+		PrintWriter out = response.getWriter();
 		try {
 			ObjectMapper mapper = new ObjectMapper();
 			MappingDTO deleteMap = (MappingDTO)mapper.readValue(filterJSON,new TypeReference<MappingDTO>(){ });
-			
-			
+				
 			int surveySeq = deleteMap.getSurveySeq();
 			String raterId = deleteMap.getRaterId();
 			String appraiseeId = deleteMap.getAppraiseeId();
-
-			//int cnt = ;
-
+			
 			mappingService.deleteAppraisee(surveySeq, raterId, appraiseeId);
 			resMap.put("res", "success");
 		    resMap.put("msg", "삭제를 완료하였습니다.");
 		} catch (Exception e) {
 			resMap.put("res", "fail");
 		}
-		response.setContentType("application/json; charset=UTF-8");
-		PrintWriter out = response.getWriter();
 		out.print(resMap);
+		return;
 	}
-
-	@RequestMapping("/mappingview")
-	public String mapping_view() {
-		logger.info("실행");
-		//log.info("실행");
-		return "home2";
-	}
-	
 }
