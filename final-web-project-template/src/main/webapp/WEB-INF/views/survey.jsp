@@ -48,7 +48,7 @@
       <div class="col-4" style="border: 1px solid;">
         <table class="survey_table">
            <thead class="survey_table_thead">
-              <tr>
+              <tr class="survey_table_tr">
                  <th class="col-4">부서</th>
                  <th class="col-3">직급</th>
                  <th class="col-4">피평가자</th>
@@ -66,11 +66,11 @@
 								</tr>
 							</c:when>
 							<c:otherwise>
-								<tr>
+								<tr class="survey_table_tr">
 									<td>${appraiseeList.appraiseeDepartmentName }</td>
 									<td>${appraiseeList.appraiseeGradeName }</td>
 									<td>${appraiseeList.appraiseeName }</td>
-									<td><input type="button" value="평가"></td>
+									<td><button onclick="gosurvey(this,${appraiseeList.surveySeq})" >평가</button></td>
 								</tr>
 							</c:otherwise>
 						</c:choose>

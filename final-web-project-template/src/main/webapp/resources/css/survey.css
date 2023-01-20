@@ -103,8 +103,10 @@
    border-radius: 10px;
 }
 
-.survey_table  th{
-	text-align: center;
-	font-size: 15px;
+.survey_table_tr > td{
+
+}
+.survey_table_tr > th{
+
 }
 
