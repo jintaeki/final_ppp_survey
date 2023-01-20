@@ -90,15 +90,22 @@
 	          	  	AND ((#{selection} = '60001'
                     	AND(UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
                         	OR
-                        	UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'))
+                        	UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
+                        	)
                 		OR (#{selection} = '60002'
                         	AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
                     	OR (#{selection} = '60003'
                     		AND P.PROJECT_NAME LIKE '%' || #{keyword} || '%')    
-                    	OR(#{selection} = '60004')
+                    	OR(#{selection} = '60004'
+                    	   AND((UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
+                        	   OR
+                        	   UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
+                            OR O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%'
+                            OR P.PROJECT_NAME LIKE '%' || #{keyword} || '%')
+                            )
                         )
                 	AND UR.GRADE_ID LIKE (
-                    	CASE WHEN #{selectGD} = '30005' 
+                    	CASE WHEN #{selectGD} = '60004' 
                          	 THEN '%' || '' || '%' 
                          	 ELSE '%' || #{selectGD} || '%'
                     	END) 
@@ -146,15 +153,22 @@
               AND ((#{selection} = '60001'
                     AND(UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
                         OR
-                        UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'))
+                        UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
+                        )
                 	OR (#{selection} = '60002'
                         AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
                     OR (#{selection} = '60003'
                     	AND P.PROJECT_NAME LIKE '%' || #{keyword} || '%')    
-                    OR(#{selection} = '60004')
+                    OR(#{selection} = '60004'
+                    	AND((UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
+                             OR
+                        	 UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
+                         OR O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%'
+                         OR P.PROJECT_NAME LIKE '%' || #{keyword} || '%')
+                        )
                    )
               AND UR.GRADE_ID LIKE (
-                    CASE WHEN #{selectGD} = '30005' 
+                    CASE WHEN #{selectGD} = '60004' 
                          THEN '%' || '' || '%' 
                          ELSE '%' || #{selectGD} || '%'
                     END)
@@ -200,10 +214,16 @@
                         AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
                     OR (#{selection} = '60003'
                     	AND P.PROJECT_NAME LIKE '%' || #{keyword} || '%')    
-                    OR(#{selection} = '60004')
+                    OR(#{selection} = '60004'
+                    	AND((UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
+                        	 OR
+                        	 UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
+                         OR O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%'
+                         OR P.PROJECT_NAME LIKE '%' || #{keyword} || '%')
+                        )
                     )
                 AND UR.GRADE_ID LIKE (
-                    CASE WHEN #{selectGD} = '30005' 
+                    CASE WHEN #{selectGD} = '60004' 
                          THEN '%' || '' || '%' 
                          ELSE '%' || #{selectGD} || '%'
                     END) 

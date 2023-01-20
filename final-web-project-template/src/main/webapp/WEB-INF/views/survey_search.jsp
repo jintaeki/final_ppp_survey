@@ -125,7 +125,7 @@
 			method:'POST', //어떤 방식으로 보낼 지
 			url:'sendmessage.do/'+surveyseq+'/'+pageno, // qdiv를 보낼 경로 설정	
 		    beforeSend : function() { //보내기 전 실행
-			console.log("요청이 보내지는가??");
+			console.log("요청이 보내지는가?");
 		   },
 		   success:function () {	 //전송 성공시 실행
 			console.log("굿");
@@ -138,7 +138,10 @@
  			
  			const done = `매핑완료`;
 			tag.parent().parent().next().next().append(done);
+			console.log(tag.parent().parent().next().next().children('button'));
 			tag.parent().parent().next().next().children().hide();
+			tag.parent().parent().prev().prev().children().click(function(){return false;});
+			tag.parent().parent().prev().prev().children().css('color', '#ccc');
  									
 
  			const complete = `알림발송완료`;
@@ -165,11 +168,7 @@
   	    stateCode.each((index, element) => {
   	    	const value = $(element).val();
   	    	console.log($(element).parent().prev().prev().prev().prev().children());
-  	    	if(value == 30004){
-	  	    	$(element).next().attr('disabled', 'disabled');
-  	    		$(element).parent().prev().prev().prev().prev().children().click(function () {return false;});
-  	    		$(element).parent().prev().prev().prev().prev().children().css('color', '#ccc');
-  	    	}else if(value == 30001){
+  	    	if(value == 30001){
 	  	    	$(element).next().attr('disabled', 'disabled');  	    		
   	    	}
   	    });
