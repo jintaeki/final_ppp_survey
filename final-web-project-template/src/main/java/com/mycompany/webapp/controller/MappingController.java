@@ -47,7 +47,7 @@ public class MappingController {
 							 @RequestParam(defaultValue="") String keyword,
 							 @RequestParam(defaultValue="1") int pageNo,
 							 @RequestParam(defaultValue="60004") String selection,
-							 @RequestParam(defaultValue="") String selectGD,
+							 @RequestParam(defaultValue="60004") String selectGD,
 							 Model model, RedirectAttributes redirectAttrs) {
 		model.addAttribute("commonMapList", commonService.selectMappingCode());
 		model.addAttribute("commonDateList", commonService.selectDateCode());
@@ -81,6 +81,8 @@ public class MappingController {
 			pagingdto.setSelectGD(selectGD);
 			pagingdto.setMonth(month);
 			
+			logger.info("페이징:" +pagingdto.toString());
+			
 			mappingList = mappingService.selectMappingData(pagingdto);
 			logger.info("리스트:" +mappingList.toString());
 			model.addAttribute("mappingList", mappingList);
@@ -92,7 +94,7 @@ public class MappingController {
 			e.printStackTrace();
 			redirectAttrs.addFlashAttribute("message", e.getMessage());
 		}
-		return "/home2";
+		return "/mappingview";
 	}
 
 	// 평가자 한사람에 대하여 모든 조건에 맞게 출력
@@ -101,13 +103,13 @@ public class MappingController {
 							@RequestParam(defaultValue="") String keyword,
 							@RequestParam(defaultValue="1") int pageNo,
 							@RequestParam(defaultValue="60004") String selection,
-							@RequestParam(defaultValue="30005") String selectGD, Model model) {
+							@RequestParam(defaultValue="60004") String selectGD, Model model) {
 		model.addAttribute("commonMapList", commonService.selectMappingCode());
 		model.addAttribute("commonDateList", commonService.selectDateCode());
 		model.addAttribute("gradeList", mappingService.selectGradeList());
 		logger.info("지금 가져온 선택지:"+selection);
 		logger.info("페이지 수"+pageNo);
-		logger.info("키워드"+keyword);
+		logger.info("키워드"+keyword+"1");
 		logger.info("직급"+selectGD);
 		try {
 			List<PopupDTO> getPopup = null;
@@ -142,13 +144,13 @@ public class MappingController {
 								@RequestParam(defaultValue="") String keyword,
 								@RequestParam(defaultValue="1") int pageNo,
 								@RequestParam(defaultValue="60004") String selection,
-								@RequestParam(defaultValue="") String selectGD,Model model) {
+								@RequestParam(defaultValue="60004") String selectGD,Model model) {
 		model.addAttribute("commonMapList", commonService.selectMappingCode());
 		model.addAttribute("commonDateList", commonService.selectDateCode());
 		model.addAttribute("gradeList", mappingService.selectGradeList());
 		logger.info("지금 가져온 선택지:"+selection);
 		logger.info("페이지 수"+pageNo);
-		logger.info("키워드"+keyword);
+		logger.info("키워드"+keyword+"1");
 		try {
 			List<PopupDTO> getPopup = null;
 			PagingDTO pagingdto = null;
@@ -160,7 +162,7 @@ public class MappingController {
 			pagingdto.setSelection(selection);
 			pagingdto.setSurveySeq(surveySeq);
 			pagingdto.setSelectGD(selectGD);
-
+			
 			getPopup = mappingService.getAnother(pagingdto);
 			logger.info("리스트:" +getPopup.toString());
 			model.addAttribute("getPopup", getPopup);

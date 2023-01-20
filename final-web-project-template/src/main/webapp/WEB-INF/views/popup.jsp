@@ -1,14 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <script
    src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<link rel="stylesheet" href="resources/css/popup.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/popup.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/paging.css" />
+
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!-- contextPath가 변경돼도 소스 수정없이 적용 (유지보수 용이) -->
 
@@ -81,7 +89,7 @@
 		<div class="survey_list_form_upper_dv">
 			<form action="<c:url value='/mapping/popup.do'/>" method="get" class="survey_list_form">
 				<select name="selectGD">
-					<option value="30005">전체</option>
+					<option value="60004">전체</option>
 					<c:forEach items="${gradeList}" var="grade">
 						<c:if test="${pagingdto.selectGD eq grade.gradeId}">
 							<option selected value="${pagingdto.selectGD}">${grade.gradeName}</option>
@@ -120,7 +128,7 @@
          <table id="resTb" class="table">
             <thead>
                <tr>
-                  <th><input type="checkbox" id="check_all" /></th>
+                  <th class="check"><input type="checkbox" id="check_all" /></th>
                   <th>프로젝트</th>
                   <th>평가자</th>
                   <th>부서</th>
@@ -160,7 +168,7 @@
 					</c:otherwise>
 				</c:choose>
 				<c:if test="${fn:length(popupList) == 0}">
-                  <tr>
+                  <tr class="center">
                      <td colspan="5">
                      <spring:message code="list.noResult" text="추가할 인원을 선택해주세요" />
                      </td>
@@ -173,8 +181,8 @@
       <div class="d-flex justify-content-between"></div>
 
       <!-- selectItem : 체크값이 없을 경우 체크하라는 유효성 검사 -->
-      <div class="d-grid gap-2">
-      <a class="btn btn-primary" onclick="selectItem();">추가</a>
+      <div id=button class="d-grid gap-2">
+      <button type="button" class="btn btn-primary" onclick="selectItem();">추가</button>
       </div>
       <div class="page_wrap">
 			<div class="page_nation">
@@ -182,25 +190,21 @@
       				<a class="arrow prev" href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a> --%>
 				<c:if test="${pagingdto.groupNo>1}">
 					<a class="arrow prev"
-					   href="popup.do?pageNo=${pagingdto.startPageNo-1}&surveySeq=${pagingdto.surveySeq}&raterId=${pagingdto.raterId}&month=${pagingdto.month}
-							 &keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">이전</a>
+					   href="popup.do?pageNo=${pagingdto.startPageNo-1}&surveySeq=${pagingdto.surveySeq}&raterId=${pagingdto.raterId}&month=${pagingdto.month}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">이전</a>
 				</c:if>
 				<c:forEach var="i" begin="${pagingdto.startPageNo}" end="${pagingdto.endPageNo}">
 					<c:if test="${pagingdto.pageNo != i}">
 						<a class="active" 
-						   href="popup.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&raterId=${pagingdto.raterId}&month=${pagingdto.month}
-							     &keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
+						   href="popup.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&raterId=${pagingdto.raterId}&month=${pagingdto.month}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
 					</c:if>
 					<c:if test="${pagingdto.pageNo == i}">
 					<a class="page_nation"
-						   href="popup.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&raterId=${pagingdto.raterId}&month=${pagingdto.month}
-							     &keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
+						   href="popup.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&raterId=${pagingdto.raterId}&month=${pagingdto.month}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
 					</c:if>
 				</c:forEach>
 				<c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
 					<a class="arrow next"
-					   href="popup.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&raterId=${pagingdto.raterId}&month=${pagingdto.month}
-							 &keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">다음</a>
+					   href="popup.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&raterId=${pagingdto.raterId}&month=${pagingdto.month}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">다음</a>
 				</c:if>
 				<%-- 맨마지막 페이지 이동 
        			<a class="arrow next" href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">맨끝</a> --%>

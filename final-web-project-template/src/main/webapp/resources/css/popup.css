@@ -10,3 +10,24 @@
 .table {
    padding: 0 100px;
    }
+.table th:not(.check){
+	text-align: center;
+}
+.center{
+	text-align: center;
+}
+.button{
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.survey_list_form_upper_dv{
+	display:flex;
+	margin-left: 200px;
+}
+.survey_list_form{
+	display: flex;
+}
+.survey_list_form select{
+	margin-right: 10px;
+}
