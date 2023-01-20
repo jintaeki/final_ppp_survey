@@ -124,7 +124,7 @@
 			method:'POST', //어떤 방식으로 보낼 지
 			url:'sendmessage.do/'+surveyseq+'/'+pageno, // qdiv를 보낼 경로 설정	
 		    beforeSend : function() { //보내기 전 실행
-			console.log("요청이 보내지는가??");
+			console.log("요청이 보내지는가?");
 		   },
 		   success:function () {	 //전송 성공시 실행
 			console.log("굿");
