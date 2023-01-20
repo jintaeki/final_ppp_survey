@@ -55,7 +55,7 @@ public interface ISurveyService {
 	void surveyInsertComplete(int surveySeq);
 
 	void deleteSurvey(int surveySeq);
-	
+
 	void deleteItem (int itemSeq);
 	
 //	// 설문 화면 왼쪽 그리드 (평가 대상 출력)
@@ -63,6 +63,11 @@ public interface ISurveyService {
 //	
 //	// 설문조사 중복 체크
 //	int mappingCheck(int surveySeq);
+
+
+	List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
+
+
 }
 
 

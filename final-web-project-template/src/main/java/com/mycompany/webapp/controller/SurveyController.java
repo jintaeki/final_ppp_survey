@@ -59,9 +59,12 @@ public class SurveyController {
 	public String surveyEvaluate(@PathVariable int surveySeq, HttpSession session, Model model,
 			@RequestParam(defaultValue = "1") int pageNo) {
 		logger.info("실행");
+		System.out.println(surveySeq);
 		List<Map<String, String>> EL = surveyService.selectSurveyEvaluate(surveySeq);
 		logger.info("EL" + EL);
+		// log.info("실행");
 		model.addAttribute("EL", EL);
+		model.addAttribute("surveySeq", surveySeq);
 
 		return "survey_evaluate";
 	}
@@ -381,4 +384,61 @@ public class SurveyController {
 	//		}
 	//		return "/survey";
 	//	}
+	
+	@RequestMapping("/EvaluateSearch")
+	public String searchByEvaluate(
+			             @RequestParam(defaultValue="") String keyword,
+						 @RequestParam(defaultValue="1") int pageNo,
+						 @RequestParam(defaultValue="") String selection,
+						 @RequestParam(value="employeeName", required=false) String employeeName,
+						 @RequestParam(value="departmentName", required=false) String departmentName,
+						 @RequestParam(value="CompleteYn", required=false) String surveyCompleteYn,
+						 @RequestParam(value="gradeName", required=false) String gradeName,
+						 @RequestParam(value="surveySeq") int surveySeq,
+						 HttpSession session, Model model) {
+		logger.info("지금 가져온 선택지:"+selection);
+		logger.info("페이지 수"+pageNo);
+		logger.info("키워드"+keyword);
+		logger.info("설문지 번호" + surveySeq);
+
+		try {
+
+			List<Map<String, Object>> EL = null;
+			PagingDTO pagingDto = null;
+			String beforeKeyword = keyword;
+
+			 	model.addAttribute("selecton", selection);
+			    logger.info("모델 :" + model);
+
+				int totalRows = pagingService.getEvaluateTotalBoardNum(keyword, selection);
+				System.out.println("totolRows:" + totalRows);
+			    pagingDto = new PagingDTO(7, 7, totalRows, pageNo);
+				pagingDto.setSelection(selection);
+				pagingDto.setKeyword(keyword);
+				pagingDto.setSurveySeq(surveySeq);
+
+				logger.info("selection:" + pagingDto.getSelection());
+				logger.info("keyword: "+pagingDto.getKeyword());
+				logger.info("paigingdto:" + pagingDto);
+				EL = surveyService.searchByEvaluate(pagingDto);
+				logger.info("리스트:" +EL.toString());
+				pagingDto.setKeyword(beforeKeyword);
+				logger.info(pagingDto.toString());
+				logger.info("EL: " + EL);
+
+			model.addAttribute("EL", EL);
+
+			logger.info(keyword);
+			System.out.println(pageNo);
+
+			model.addAttribute("pagingdto", pagingDto);
+			model.addAttribute("keyword", keyword);
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("검색 테스트");
+		return "survey_evaluate";
+	}
+	
 }
