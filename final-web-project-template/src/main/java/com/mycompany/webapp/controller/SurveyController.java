@@ -260,6 +260,10 @@ public class SurveyController {
 		logger.info("문제 생성 진입했나?");
 		model.addAttribute("SQD", SQD);
 		surveyService.insertQuestion(SQD);
+		if(SQD.getQuestionTypeCode().equals("10002")) {
+		SQD.setItemContent("주관식 문제입니다.");
+		surveyService.insertItem(SQD);
+		}
 		return SQD;
 	}
 

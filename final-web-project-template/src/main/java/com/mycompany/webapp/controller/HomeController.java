@@ -176,12 +176,13 @@ public class HomeController {
 		return "login_after_user";
 	}
 	
-	@RequestMapping("/getquestionforSurvey.do/{surveySeq}")
+	@RequestMapping("/getquestionforsurvey.do/{surveySeq}")
 	@ResponseBody
 	public List<Map<String, Object>> getQuestionForSurvey(@PathVariable int surveySeq) {
 		logger.info("실행");
 		logger.info(String.valueOf(surveySeq));
 		List<Map<String, Object>> QuestionForSurvey = loginCheckService.getQuestion(surveySeq);
+		
 		return QuestionForSurvey;
 	}
 	

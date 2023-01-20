@@ -10,27 +10,80 @@
    function gosurvey(obj,surveyseq){
       console.log('gosurvey 함수 실행');
       var surveySeq= surveyseq;
-      console.log(surveySeq);
       $.ajax({
-         method: 'getquestionforsurvey.do/'+surveySeq,
-         type: 'GET',
+         url: 'getquestionforsurvey.do/'+surveySeq,
+         method: 'GET',
          dataType: 'json',
          success: function(result){
-        	 alert("성공");
+        	 alert("문제요청성공");
+        	 questionHTML(result);
+        	 
             // result는 컨트롤러 리턴값 
             // result => survey_result table의 값이 담겨있음 List<SurveyResultVo>
             //  document.getElementById("question-box");
             // $("#question-box")
-            for(var i=0; i<result.length; i++){
+//             for(var i=0; i<result.length; i++){
                // result.get(i).get("serveySeq") -> JAVA 형태
                // result[i]['serveySeq'] -> 자바스크립트 형태
                
                // result[i]['title'] -> 설문 문항
                // $("#question-box .question-form").html(result[i]['title']); -> 태그에 설문 문항을 넣어줌
-            }
+//             }
          }
       })
-   }   
+   } 
+   
+   function questionHTML(result){
+	   const size= result.length;
+	   console.log(size);
+   	   $("#addQuestion").empty();
+	   let cnt = 0;
+	   surveyQandA = '';
+	   for(let i = 0; i<size;i++){
+		   
+	
+		   
+		    if(i==size-1){
+		    	console.log(result[i].QUESTION_CONTENT);
+		    	surveyQandA += '<div class="question-form">';
+			    surveyQandA += result[i].QUESTION_CONTENT;
+			    surveyQandA +='</div>';
+			    console.log("마지막");
+			    console.log(cnt);
+			    for(var j = i-cnt;j<=i;j++ ){
+			    	
+				   	   surveyQandA += '<span class="item_form">'
+					   surveyQandA += '<button class="item_btn" type="submit">'+result[j].ITEM_CONTENT+'</button>'
+					   surveyQandA += '</span>'
+					   
+			   	}
+			    break;
+			}else if(result[i].QUESTION_CONTENT != result[i+1].QUESTION_CONTENT){
+			console.log(result[i].QUESTION_CONTENT);
+			console.log(i+'번 문제');
+			console.log(cnt+'카운트');
+		    surveyQandA += '<div class="question-form">';
+		    surveyQandA += result[i].QUESTION_CONTENT;
+		    surveyQandA +='</div>';
+		   	for(var j = i-cnt;j<=i;j++ ){
+			   	   surveyQandA += '<span class="item_form">'
+				   surveyQandA += '<button class="item_btn" type="submit">'+result[j].ITEM_CONTENT+'</button>'
+				   surveyQandA += '</span>'
+					   console.log(result[j].ITEM_CONTENT);
+		   	}
+		   	
+		   	cnt=0;
+		   }else if(result[i].QUESTION_CONTENT == result[i+1].QUESTION_CONTENT){
+			   cnt = cnt + 1;
+		   }
+		
+	  
+		   
+	   }
+	   
+	   $('#addQuestion').append(surveyQandA);
+   }
+   
 </script>
 <div class="container_flex">
    <div class="survey_info">
@@ -91,30 +144,12 @@
 
 <div id="question-box" class="col-7" style="border: 1px solid;">
    <div class="survey_list">
-      <div class="form_area">
+      <div class="form_area" id="addQuestion">
             <div class="question-form">
-                  1. 평가자는 조직의 목표를 공유하고 스스로의 목표를 구체적으로 설정한다.
-            </div>
-         <span class="item_form">
-               <button class="item_btn" type="submit">매우 그렇지 않다</button>
-               <button class="item_btn" type="submit">그렇지 않다</button>
-               <button class="item_btn" type="submit">보통</button>
-               <button class="item_btn" type="submit">그렇다</button>
-               <button class="item_btn" type="submit">매우 그렇다</button>
-            </span>
-        </div>
+           
+      </div>
          
-         <div class="form_area">
-            <div class="question-form">
-                  1. 평가자는 조직의 목표를 공유하고 스스로의 목표를 구체적으로 설정한다.
-            </div>
-         <span class="item_form">
-               <button class="item_btn" type="submit">매우 그렇지 않다</button>
-               <button class="item_btn" type="submit">그렇지 않다</button>
-               <button class="item_btn" type="submit">보통</button>
-               <button class="item_btn" type="submit">그렇다</button>
-               <button class="item_btn" type="submit">매우 그렇다</button>
-            </span>
+
         </div>
          
    </div>

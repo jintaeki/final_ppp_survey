@@ -172,15 +172,13 @@
 						</div>
 					</div>
 
-					<%--       <c:if test="${ }"></c:if> --%>
-					<!-- 주관식 -->
-
 					<!-- 주관식은 문제 만들 때 id값 가장 큰 거 부여 -->
 					<div id="subj_box_toggle" style="display: none">
 						<div class="block_box">
-							<input type="text" class="input_qus" id="input_qus"
-								placeholder="주관식 문제입니다.">
-
+							<div class="subj_ItemAfter">
+								<input type="text" class="input_qus" id="input_qus"
+									placeholder="주관식 문제입니다.">
+							</div>
 							<div class="blank_under"></div>
 						</div>
 					</div>
@@ -473,10 +471,15 @@
          let size = data.length;
          var htmlObj = '';
          var htmlMix = '';
+         var htmlSubj='';
          $("#mix_box_toggle").hide();
          $("#obj_box_toggle").hide();
+         $("#subj_box_toggle").hide();
+
          $("#obj_ItemAfter").empty();
          $("#mix_ItemAfter").empty();
+         $("#subj_ItemAfter").empty();
+
         console.log("답은:"+data[0].QUESTION_TYPE_CODE)
        // 10001 객 10002 주 10003 혼
 			   
@@ -489,8 +492,7 @@
         	   
                
         	   if(data[i].ITEM_SEQ == null){
-        	   $("#obj_ItemAfter").empty();
-        	  
+        	   $("#obj_ItemAfter").empty(); 
         	   htmlObj +='<div class="icon_line">';
         	   htmlObj +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
         	   htmlObj += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
@@ -505,7 +507,6 @@
                $("#obj_box_toggle").show();
         	   }else{
             	   $("#obj_ItemAfter").empty();
-
             	   htmlObj +='<div class="icon_line">';
             	   htmlObj +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
             	   htmlObj += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic" value="'+data[i].ITEM_CONTENT+'">';
@@ -522,6 +523,7 @@
         	   cnt=cnt+1
                if(cnt == size){
             	   $("#mix_ItemAfter").empty();
+            	   $("#subj_ItemAfter").empty();
             	   htmlMix +='<div class="icon_line">';
               	   htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
                    htmlMix += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
@@ -534,6 +536,8 @@
                	   htmlMix += '<input type="text" name="itemContent" placeholder="기타" value="기타" id="guitar" readonly>';
                	   htmlMix +='<input type="hidden" name="itemScore"  value="0">';
              	   htmlMix += '</div>';
+             	   htmlSubj += '<input type="text" class="input_qus" id="input_qus"	placeholder="주관식 문제입니다.">'
+                   $('#subj_ItemAfter').append(htmlSubj);
                    $('#mix_ItemAfter').append(htmlMix);
                }
         	   
@@ -589,7 +593,8 @@
   
                   cnt=cnt+1
                   if(cnt == size){
-                  $("#obj_ItemAfter").empty();
+               	   $("#subj_ItemAfter").empty();
+                   $("#obj_ItemAfter").empty();
           		    htmlObj +='<div class="icon_line">';
          	        htmlObj +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
          	        htmlObj += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
@@ -598,9 +603,43 @@
          	        htmlObj+= '<i class="fas fa-xmark"></i>';
          	        htmlObj+=   '</button>';
          	        htmlObj += '</div>';
-                  $('#obj_ItemAfter').append(htmlObj);
+         	        htmlSubj += '<input type="text" class="input_qus" id="input_qus"	placeholder="주관식 문제입니다.">'
+                   $('#subj_ItemAfter').append(htmlSubj);
+                   $('#obj_ItemAfter').append(htmlObj);
                   }
-           }
+           }else if (data[i].QUESTION_TYPE_CODE == "10002"){
+    		   $("#subj_ItemAfter").empty();
+    		   htmlSubj += '<input type="text" class="input_qus" id="input_qus"	placeholder="주관식 문제입니다." value="'+data[0].QUESTION_SEQ+'">'
+               $('#subj_ItemAfter').append(htmlSubj);
+    		   
+    		   cnt=cnt+1
+               if(cnt == size){
+            	$("#mix_ItemAfter").empty();
+                $("#obj_ItemAfter").empty();
+       		    htmlObj +='<div class="icon_line">';
+      	        htmlObj +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
+      	        htmlObj += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
+      	        htmlObj +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+      	        htmlObj+='<button class="delete_btn" onclick="deleteItem_zero(this)" value="'+data[i].ITEM_SEQ+'">';
+      	        htmlObj+= '<i class="fas fa-xmark"></i>';
+      	        htmlObj+=   '</button>';
+      	        htmlObj += '</div>';
+      	        htmlMix +='<div class="icon_line">';
+         	    htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
+           	    htmlMix += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
+         	    htmlMix +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+         	    htmlMix+='<button class="delete_btn" onclick="deleteItem_zero(this)" value="'+data[i].ITEM_SEQ+'">';
+         	    htmlMix+= '<i class="fas fa-xmark"></i>';
+         	    htmlMix+=   '</button>';
+         	    htmlMix += '</div>';
+         	    htmlMix +='<div class="icon_line">';
+          	    htmlMix += '<input type="text" name="itemContent" placeholder="기타" value="기타" id="guitar" readonly>';
+          	    htmlMix +='<input type="hidden" name="itemScore"  value="0">';
+          	    htmlMix += '</div>';
+      	        $('#mix_ItemAfter').append(htmlMix);
+                $('#obj_ItemAfter').append(htmlObj);
+               }
+    	   }
         	   
            }
 
@@ -695,8 +734,6 @@
    }
    //문제 확인 시 객주흔중에서 문제에 해당하는 유형이 나오게
    function oneQuestion(data){
-      console.log(data[0].SURVEY_SEQ);
-//       let size = data.length;
         let html = '';
         $("#questioN_insert_form").empty();
          html +=` <div id="insertQform">
