@@ -164,15 +164,17 @@ public class SurveyService implements ISurveyService{
 		return surveyDao.selectSurveyEvaluate(surveySeq);
 	}
 
-	@Override
-	public List<PopupDTO> selectSurveyMapping(int surveySeq, int raterId) {
-		return surveyDao.selectSurveyMapping(surveySeq, raterId); 
-	}
+//	public List<PopupDTO> selectSurveyMapping(int surveySeq, int raterId) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	public int mappingCheck(int surveySeq) {
+//		// TODO Auto-generated method stub
+//		return 0;
+//	}
 
-	@Override // 매칭 중복 조횐
-	public int mappingCheck(int surveySeq) {
-		return surveyDao.mappingCheck(surveySeq);
-	}
+
 
 
 	

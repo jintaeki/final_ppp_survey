@@ -48,10 +48,7 @@ public class HomeController {
 	
 
 	@Autowired
-	ISurveyService ISS;
-
-	@Autowired
-	ILoginCheckService ILCS;
+	ILoginCheckService loginCheckService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
@@ -145,16 +142,17 @@ public class HomeController {
 							  HttpSession session, Model model) {
 		logger.info("실행");
 		logger.info(UCD.toString());
-		if(ILCS.checkUser(UCD)==1) {
+		if(loginCheckService.checkUser(UCD)==1) {
 			logger.info("로그인 가능");
-			String check =  ILCS.getUserManagerYN(UCD);
+			String check =  loginCheckService.getUserManagerYN(UCD);
 			
 			
 			if(check.equals("N")) {
 				logger.info("평가자 진입");
-				List<UserCheckDTO> UCDList = ILCS.getUserInfo(UCD);
+				List<UserCheckDTO> UCDList = loginCheckService.getUserInfo(UCD);
 				model.addAttribute("UCDList",UCDList);
-				return "redirect:/survey";
+				logger.info(UCDList.toString());
+				return "survey";
 			}else {
 				logger.info("관리자 진입");
 				return "redirect:/survey/surveysearch";
@@ -176,7 +174,7 @@ public class HomeController {
 	
 	@RequestMapping("/gosurvey")
 	public String home2() {
-		logger.info("실행");
+		logger.info("실행s");
 		return "survey";
 	}
 	

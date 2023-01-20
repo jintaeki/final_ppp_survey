@@ -11,4 +11,6 @@ public interface ILoginCheckService {
 	public List<UserCheckDTO> getUserInfo(UserCheckDTO UCD);
 	
 	public String getUserManagerYN(UserCheckDTO UCD);
+	
+	public String getQuestion(int surveySeq);
 }

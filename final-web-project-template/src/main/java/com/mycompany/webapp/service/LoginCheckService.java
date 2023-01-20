@@ -12,24 +12,30 @@ import com.mycompany.webapp.dto.UserCheckDTO;
 public class LoginCheckService implements ILoginCheckService{
 
 	@Autowired
-	ILoginCheckRepository LCR;
+	ILoginCheckRepository loginCheckRepository;
 	
 	@Override
 	public int checkUser(UserCheckDTO UCD) {
 		
-		return LCR.checkUser(UCD);
+		return loginCheckRepository.checkUser(UCD);
 	}
 
 	@Override
 	public List<UserCheckDTO> getUserInfo(UserCheckDTO UCD) {
 		
-		return LCR.getUserInfo(UCD);
+		return loginCheckRepository.getUserInfo(UCD);
 	}
 
 	@Override
 	public String getUserManagerYN(UserCheckDTO UCD) {
 	
-		return LCR.getUserManagerYN(UCD);
+		return loginCheckRepository.getUserManagerYN(UCD);
+	}
+
+	@Override
+	public String getQuestion(int surveySeq) {
+		
+		return loginCheckRepository.getQuestion(surveySeq);
 	}
 
 	

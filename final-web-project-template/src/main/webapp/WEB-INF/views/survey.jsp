@@ -49,91 +49,34 @@
         <table>
            <thead>
                  <tr>
-                 <th scope="col">직급</th>
-                 <th scope="col">피평가자</th>
-                 <th scope="col"></th>
+                 <th class="col">부서</th>
+                 <th class="col">직급</th>
+                 <th class="col">피평가자</th>
+                 <th class="col"></th>
               </tr>
            </thead>
         <tbody>
-           <c:choose>
-              <c:when test="${empty mappingList}">
-                 <!-- <tr>
-                    <td>평가 대상이 없습니다.
-                 </tr> -->
-                 <tr>
-                    <td>부장</td>
-                    <td>정영훈</td>
-                    <td>
-                       <input type="button" value="평가">
-                    </td>
-                 </tr>
-                 <tr>
-                    <td>부장</td>
-                    <td>정영훈</td>
-                    <td>
-                       <input type="button" value="평가">
-                    </td>
-                 </tr>
-                 <tr>
-                    <td>부장</td>
-                    <td>정영훈</td>
-                    <td>
-                       <input type="button" value="평가">
-                    </td>
-                 </tr>
-                 <tr>
-                    <td>부장</td>
-                    <td>정영훈</td>
-                    <td>
-                       <input type="button" value="평가">
-                    </td>
-                 </tr>
-                 <tr>
-                    <td>부장</td>
-                    <td>정영훈</td>
-                    <td>
-                       <input type="button" value="평가">
-                    </td>
-                 </tr>
-                 <tr>
-                    <td>부장</td>
-                    <td>정영훈</td>
-                    <td>
-                       <input type="button" value="평가">
-                    </td>
-                 </tr>
-                 <tr>
-                    <td>부장</td>
-                    <td>정영훈</td>
-                    <td>
-                       <input type="button" value="평가">
-                    </td>
-                 </tr>
-                 <tr>
-                    <td>부장</td>
-                    <td>정영훈</td>
-                    <td>
-                       <input type="button" value="평가">
-                    </td>
-                 </tr>
-              </c:when>
-              <c:otherwise>
-                 <c:forEach var="mapping" items="${SurveyMappingList}">
-                 <tr id="${mapping.appraiseeName}">
-                    <td>${mapping.gradeName}</td>
-                    
-                    <!-- 여기서부터 잘 모르겠습니다 -->
-                    <!-- 여기서부터 잘 모르겠습니다 -->
-                    <!-- 여기서부터 잘 모르겠습니다 -->
-                    <!-- 여기서부터 잘 모르겠습니다 -->
-                    <!-- 여기서부터 잘 모르겠습니다 -->
-                    <td>${mapping.appraiseeName}</td>
-                  <td><input type="button" class="state" onclick="surveyState()" value="상태">
-                  </td>
-               </tr>      
-                 </c:forEach>
-              </c:otherwise>
-           </c:choose>
+
+
+					<c:forEach items="${UCDList }" var="appraiseeList">
+						<c:choose>
+							<c:when test="${empty UCDList}">
+								<tr>
+									<td>평가 대상이 없습니다.
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<tr>
+									<td>${appraiseeList.appraiseeDepartmentName }</td>
+									<td>${appraiseeList.appraiseeGradeName }</td>
+									<td>${appraiseeList.appraiseeName }</td>
+									<td><input type="button" value="평가"></td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
+					</c:forEach>
+					
+					
         </tbody>
         
         </table>
