@@ -1,5 +1,12 @@
 @charset "UTF-8";
 
+.container{
+	padding: 20px 20px 50px 50px;
+    width: 1360px;
+    height: 900px;
+    max-width: 1600px;
+}
+
 .swal2-title {
    font-size: 1em;
    line-height: 2.0;
@@ -95,3 +102,9 @@
    padding: 10px 30px;
    border-radius: 10px;
 }
+
+.survey_table  th{
+	text-align: center;
+	font-size: 15px;
+}
+

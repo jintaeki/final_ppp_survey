@@ -21,17 +21,17 @@
 	</select>
 	
 	<select id="getUserInfo"
-		parameterType="com.mycompany.webapp.dto.UserCheckDTO" resultType="hashmap">
+		parameterType="com.mycompany.webapp.dto.UserCheckDTO" resultType="com.mycompany.webapp.dto.UserCheckDTO">
 		SELECT S.SURVEY_SEQ, 
                S.SURVEY_NAME, 
                M.RATER_ID, 
                UR.EMPLOYEE_NAME AS RATER_NAME, 
                GR.GRADE_NAME AS RATER_GRADE_NAME,
-               OCR.DEPARTMENT_NAME AS RATER_DEPRTMENT_NAME,
+               OCR.DEPARTMENT_NAME AS RATER_DEPARTMENT_NAME,
                M.APPRAISEE_ID, 
                UA.EMPLOYEE_NAME AS APPRAISEE_NAME,
                GA.GRADE_NAME AS APPRAISEE_GRADE_NAME,
-               OCA.DEPARTMENT_NAME AS APPRAISEE_DEPRTMENT_NAME,
+               OCA.DEPARTMENT_NAME AS APPRAISEE_DEPARTMENT_NAME,
                M.SURVEY_COMPLETE_YN,
                UR.EMAIL,
                UR.MANAGER_YN

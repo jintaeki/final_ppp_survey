@@ -45,20 +45,20 @@
 <!-- 문항 시작 -->
 <div class="container">
    <div class="row">
-      <div class="col-3" style="border: 1px solid;">
-        <table>
-           <thead>
-                 <tr>
-                 <th class="col">부서</th>
-                 <th class="col">직급</th>
-                 <th class="col">피평가자</th>
-                 <th class="col"></th>
+      <div class="col-4" style="border: 1px solid;">
+        <table class="survey_table">
+           <thead class="survey_table_thead">
+              <tr>
+                 <th class="col-4">부서</th>
+                 <th class="col-3">직급</th>
+                 <th class="col-4">피평가자</th>
+                 <th class="col-1"></th>
               </tr>
            </thead>
         <tbody>
+					
 
-
-					<c:forEach items="${UCDList }" var="appraiseeList">
+					<c:forEach items="${UCDList}" var="appraiseeList">
 						<c:choose>
 							<c:when test="${empty UCDList}">
 								<tr>
@@ -90,7 +90,7 @@
 
 
 
-<div id="question-box" class="col-8" style="border: 1px solid;">
+<div id="question-box" class="col-7" style="border: 1px solid;">
    <div class="survey_list">
       <div class="form_area">
             <div class="question-form">
