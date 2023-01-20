@@ -80,7 +80,7 @@ public interface ISurveyRepository {
 	// 중복 확인
 		int mappingCheck(@Param("surveySeq") int surveySeq);
 
-		List<Map<String, String>> searchByEvaluate(PagingDTO pagingdto);
+		List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
 }
 
 

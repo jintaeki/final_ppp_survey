@@ -15,5 +15,5 @@ public interface IPagingRepository {
 
 	int getTotalNonMappingNum(@Param("keyword")String keyword,@Param("selection") String selection, @Param("surveySeq") int surveySeq);
 
-	int getEvaluateTotalBoardNum(@Param("keyword")String keyword,@Param("selection") String selection, @Param("surveySeq") int suveySeq);
+	int getEvaluateTotalBoardNum(@Param("keyword")String keyword, @Param("selection") String selection);
 }

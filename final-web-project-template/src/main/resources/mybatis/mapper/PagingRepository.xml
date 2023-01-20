@@ -21,32 +21,32 @@
 	          	 ,ANONYMITY_CHECK_CODE
 	          	 ,SURVEY_START_DATE
 		      	 ,SURVEY_CLOSED_DATE
-	          	 ,STATE_CODE  
-	          	 FROM SURVEY_LIST 
-	          	 WHERE 
+	          	 ,STATE_CODE
+	          	 FROM SURVEY_LIST
+	          	 WHERE
 	          	 (SURVEY_START_DATE is null and
 	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%' and
-	          	  STATE_CODE LIKE (CASE  
-      							   WHEN #{selection} = '30005' 
-      							   THEN '%' || '' || '%' 
+	          	  STATE_CODE LIKE (CASE
+      							   WHEN #{selection} = '30005'
+      							   THEN '%' || '' || '%'
                                    ELSE '%' || #{selection} || '%'
-                                   END) 
+                                   END)
 	          	 )
-	          	   or  
+	          	   or
 	          	 SURVEY_START_DATE >= (CASE
 	          	 						 WHEN #{surveyStartDate} is null
 	          	 						 THEN sysdate-99999
-	          	 						 WHEN #{surveyStartDate} is not null	          	 						 
+	          	 						 WHEN #{surveyStartDate} is not null
 	          	 						 THEN to_date(to_char(#{surveyStartDate},'yyyy-MM-dd'),'yyyy-MM-dd')
 	          	 						 END) and
-	          	  
-	          	  STATE_CODE LIKE (CASE  
-      							   WHEN #{selection} = '30005' 
-      							   THEN '%' || '' || '%' 
+
+	          	  STATE_CODE LIKE (CASE
+      							   WHEN #{selection} = '30005'
+      							   THEN '%' || '' || '%'
                                    ELSE '%' || #{selection} || '%'
                                    END) and
-                  
-	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%' 
+
+	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%'
 				  ORDER BY ROWNUM DESC
 			   	)
 
@@ -55,36 +55,36 @@
 
 			   ]]>
 	</select>
-	
+
 	<select id="getTotalMappingNum" resultType="int">
 	<![CDATA[
 		SELECT count(ROWNUM)
 	    FROM (
 			SELECT ROWNUM AS rnum
 		      	  ,SURVEY_SEQ
-	    	FROM (SELECT 
+	    	FROM (SELECT
 	    	         SURVEY_SEQ
 	          	  FROM MAPPIN=
 	          	      ,USER_INFO UR
-                      ,USER_INFO UA 
-	          	  WHERE RATER_ID = EMPLOYEE_ID 
+                      ,USER_INFO UA
+	          	  WHERE RATER_ID = EMPLOYEE_ID
 	          	    AND APPRAISEE_ID = UA.EMPLOYEE_ID
 	          	  	AND(
 	          	    	UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
 	          	        OR
 	          	        UA.EMPLOYEE_ID LIKE '%' || #{keyword} || '%')
 	          	    AND UR.GRADE_ID LIKE (
-	          	    	CASE WHEN #{selectGD} = '30005' 
-      				    	 THEN '%' || '' || '%' 
+	          	    	CASE WHEN #{selectGD} = '30005'
+      				    	 THEN '%' || '' || '%'
                              ELSE '%' || #{selectGD} || '%'
-                             END) 
-	          	    AND SURVEY_SEQ = #{suveySeq}	
+                             END)
+	          	    AND SURVEY_SEQ = #{suveySeq}
 		          ORDER BY ROWNUM DESC
 			)
 		)
 	]]>
 	</select>
-	
+
 	<select id="getTotalNonMappingNum" resultType="int">
 	<![CDATA[
 	SELECT count(ROWNUM)
@@ -125,14 +125,60 @@
                     AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
                     )
                 AND UR.GRADE_ID LIKE (
-                    CASE WHEN #{selecGD} = '30005' 
-                         THEN '%' || #{selecGD} || '%' 
+                    CASE WHEN #{selecGD} = '30005'
+                         THEN '%' || #{selecGD} || '%'
                          ELSE '%' || #{selecGD} || '%'
-                    END) 
+                    END)
               ORDER BY ROWNUM DESC
 			)
 		);
 		]]>
 	</select>
-	
+
+	<select id="getEvaluateTotalBoardNum" parameterType="String" resultType="int">
+
+      select count(ROWNUM)
+      from (
+             SELECT
+        rnum
+        ,department_name
+        ,grade_name
+        ,employee_name
+        ,SURVEY_COMPLETE_YN
+        FROM (
+         SELECT
+                ROWNUM AS rnum
+                ,survey_seq
+                ,department_name
+                ,grade_name
+                ,employee_name
+                ,survey_complete_yn
+          FROM ( SELECT
+                        distinct
+                        m.survey_seq
+                         ,oc.department_name
+                        ,g.grade_name
+                        ,ui.employee_name
+                        ,ui.employee_id
+                        ,m.survey_complete_yn
+                 FROM grade g ,user_info ui ,mapping m ,ORGANIZATION_CHART oc
+                 WHERE
+                     m.rater_id = ui.employee_id
+                    and g.grade_id = ui.grade_id and oc.department_id = ui.department_id and
+                    (#{selection} LIKE '%' || #{keyword} || '%'
+                   or
+                   #{selection} LIKE '%' || #{keyword} || '%'
+                   or
+                    #{selection}  LIKE '%' || #{keyword} || '%'
+                   or
+                  #{selection} LIKE  '%' || #{keyword} || '%')
+
+               )
+               ORDER BY ROWNUM  DESC
+     )
+
+     )
+	</select>
+
+
 </mapper>

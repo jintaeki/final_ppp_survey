@@ -77,9 +77,9 @@ public interface ISurveyService {
 	// 설문조사 중복 체크
 	int mappingCheck(int surveySeq);
 
-	List<Map<String, String>> searchByEvaluate(PagingDTO pagingdto);
-	
-	
+	List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
+
+
 }
 
 

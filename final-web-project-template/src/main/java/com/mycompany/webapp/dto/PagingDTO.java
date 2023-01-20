@@ -26,6 +26,7 @@ public class PagingDTO {
 		@DateTimeFormat(pattern="yyyy-MM-dd")
 		private Date surveyStartDate;
 
+
 		public PagingDTO(int rowsPerPage, int pagesPerGroup, int totalRows, int pageNo) {
 			this.rowsPerPage = rowsPerPage;
 			this.pagesPerGroup = pagesPerGroup;
