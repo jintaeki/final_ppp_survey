@@ -137,7 +137,10 @@
  			
  			const done = `매핑완료`;
 			tag.parent().parent().next().next().append(done);
+			console.log(tag.parent().parent().next().next().children('button'));
 			tag.parent().parent().next().next().children().hide();
+			tag.parent().parent().prev().prev().children().click(function(){return false;});
+			tag.parent().parent().prev().prev().children().css('color', '#ccc');
  									
 
  			const complete = `알림발송완료`;
@@ -164,11 +167,7 @@
   	    stateCode.each((index, element) => {
   	    	const value = $(element).val();
   	    	console.log($(element).parent().prev().prev().prev().prev().children());
-  	    	if(value == 30004){
-	  	    	$(element).next().attr('disabled', 'disabled');
-  	    		$(element).parent().prev().prev().prev().prev().children().click(function () {return false;});
-  	    		$(element).parent().prev().prev().prev().prev().children().css('color', '#ccc');
-  	    	}else if(value == 30001){
+  	    	if(value == 30001){
 	  	    	$(element).next().attr('disabled', 'disabled');  	    		
   	    	}
   	    });

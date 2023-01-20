@@ -27,41 +27,59 @@
     					ROW_NUMBER() OVER (PARTITION BY RATER
     					                       ORDER BY RATER) AS NUM
 					FROM(
-    					SELECT DISTINCT
- 				    	   S.SURVEY_SEQ AS SSQ,
-        			 	   R.PARTICIPATION_EMPLOYEE_ID AS RATER,
-       				   	   A.PARTICIPATION_EMPLOYEE_ID AS APPRAISEE,
-        			   	  'N',
-                          SYSDATE AS REG_D,
-                          SYSDATE AS UPDATE_D
-    					FROM SURVEY_LIST S,
-    					     PROJECT_HISTORY R,
-    					     PROJECT_HISTORY A,
-    					     PROJECT P,
-    					     USER_INFO I
-         				WHERE R.PROJECT_ID = A.PROJECT_ID
-           				  AND R.PARTICIPATION_EMPLOYEE_ID != A.PARTICIPATION_EMPLOYEE_ID
-           				  AND I.EMPLOYEE_ID = A.PARTICIPATION_EMPLOYEE_ID
-            			  AND I.GRADE_ID = 2
-                          AND R.PROJECT_ID = P.PROJECT_ID
-           				  AND P.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE -(30 * #{month}) , 'YYYY-MM-dd')
-           			  	  AND S.SURVEY_SEQ = #{surveySeq}
-       				 ORDER BY DBMS_RANDOM.VALUE
-       				)
-                LEFT JOIN
-                   (SELECT 
-                       M.RATER_ID,
-                       M.APPRAISEE_ID
-                    FROM MAPPING M,
-                         SURVEY_LIST S
-                    WHERE M.SURVEY_SEQ = S.SURVEY_SEQ
-                      AND S.SURVEY_START_DATE <= SYSDATE
-                      AND S.SURVEY_CLOSED_DATE >= SYSDATE) M
-                ON F.RATER = M.RATER_ID 
-               AND F.APPRAISEE = M.APPRAISEE_ID
-               WHERE M.RATER_ID IS NULL
-                 AND M.APPRAISEE_ID IS NULL
-            )
+						SELECT
+    				    	SSQ,
+    						RATER,
+    						APPRAISEE,
+    						'N',
+                        	REG_D,
+                        	UPDATE_D
+                     	FROM(
+							SELECT
+    				    		SSQ,
+    							RATER,
+    							APPRAISEE,
+    							'N',
+                        		REG_D,
+                        		UPDATE_D
+							FROM(
+								SELECT DISTINCT
+ 				    			   S.SURVEY_SEQ AS SSQ,
+        			 			   R.PARTICIPATION_EMPLOYEE_ID AS RATER,
+       				   			   A.PARTICIPATION_EMPLOYEE_ID AS APPRAISEE,
+        			   			  'N',
+                        		  SYSDATE AS REG_D,
+                        		  SYSDATE AS UPDATE_D
+    							FROM SURVEY_LIST S,
+    					    		 PROJECT_HISTORY R,
+    					    		 PROJECT_HISTORY A,
+    					    		 PROJECT P,
+    					    		 USER_INFO I
+         						WHERE R.PROJECT_ID = A.PROJECT_ID
+           						  AND R.PARTICIPATION_EMPLOYEE_ID != A.PARTICIPATION_EMPLOYEE_ID
+           						  AND I.EMPLOYEE_ID = A.PARTICIPATION_EMPLOYEE_ID
+            					  AND I.GRADE_ID = 2
+                        		  AND R.PROJECT_ID = P.PROJECT_ID
+           						  AND P.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE -(30 * #{month}) , 'YYYY-MM-dd')
+           			  	  		AND S.SURVEY_SEQ = #{surveySeq}
+       						) 
+                		LEFT JOIN
+                   			(SELECT 
+                    	 	  M.RATER_ID,
+                    	 	  M.APPRAISEE_ID
+                    		FROM MAPPING M,
+                    	     	SURVEY_LIST SS
+                    		WHERE M.SURVEY_SEQ = SS.SURVEY_SEQ
+                    		  AND SS.SURVEY_START_DATE <= SYSDATE
+                    		  AND SS.SURVEY_CLOSED_DATE >= SYSDATE) M
+                		ON RATER = M.RATER_ID 
+               	   	   AND APPRAISEE = M.APPRAISEE_ID
+              	     WHERE M.RATER_ID IS NULL
+                       AND M.APPRAISEE_ID IS NULL
+            			)
+            		ORDER BY DBMS_RANDOM.VALUE
+            		)
+            	)
 			WHERE NUM <= #{number}
 		]]>
 	</select>
