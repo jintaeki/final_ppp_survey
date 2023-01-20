@@ -32,7 +32,8 @@ public class PagingDTO {
 			this.pagesPerGroup = pagesPerGroup;
 			this.totalRows = totalRows;
 			this.pageNo = pageNo;
-
+			if (totalRows == 0) totalRows=1;
+				
 			totalPageNo = totalRows / rowsPerPage;
 			if(totalRows % rowsPerPage != 0) totalPageNo++;
 
