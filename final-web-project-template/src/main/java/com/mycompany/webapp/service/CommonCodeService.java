@@ -24,7 +24,6 @@ public class CommonCodeService implements ICommonCodeService{
 
 
 	@Override
-<<<<<<< HEAD
 	public List<CommonDTO> selectDateCode() {
 		// TODO Auto-generated method stub
 		return CCR.selectDateCode();
@@ -35,13 +34,13 @@ public class CommonCodeService implements ICommonCodeService{
 		// TODO Auto-generated method stub
 		return CCR.selectMappingCode();
 	}
-=======
+
 	public List<CommonDTO> selectEvaluateCode() {
 		// TODO Auto-generated method stub
 		return CCR.selectEvaluateCode();
 	}
 
 
->>>>>>> refs/remotes/origin/min
+
 
 }
