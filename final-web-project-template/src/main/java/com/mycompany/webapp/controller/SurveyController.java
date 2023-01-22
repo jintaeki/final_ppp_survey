@@ -353,10 +353,10 @@ public class SurveyController {
 
 	@RequestMapping("/deleteItem.do/{itemSeq}")
 	@ResponseBody
-	public void DeleteItem(@PathVariable int itemSeq) {
+	public String DeleteItem(@PathVariable int itemSeq) {
 		logger.info("deleteItem 컨트롤러");
 		surveyService.deleteItem(itemSeq);
-
+		return "삭제 성공";
 	}
 
 	@RequestMapping("")
