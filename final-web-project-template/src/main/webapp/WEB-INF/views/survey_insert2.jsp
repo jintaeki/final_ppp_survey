@@ -23,6 +23,7 @@
    href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
    
 
+<!-- 주관식 문제 name 부여, question으로 삭제 후 저장되는 지 확인 -->
 
 <div class="container" style="padding: 20px 50px 50px 50px;">
 <input type="button" value="BACK" onClick="history.go(-1)" style="float:left;">
