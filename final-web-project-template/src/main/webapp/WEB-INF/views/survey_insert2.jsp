@@ -997,7 +997,7 @@
                }
             });
          }
-      /*
+     
      function insertItem(questionSeq) {
          var idiv = $('#item_div')[0]
          alert("문항 등록");
