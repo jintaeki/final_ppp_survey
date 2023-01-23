@@ -573,7 +573,7 @@
         	   htmlObj +='<div class="icon_line">';
         	   htmlObj +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
         	   htmlObj += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-        	   htmlObj +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+        	   htmlObj +='점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is">';
         	   htmlObj+='<button class="delete_btn" onclick="deleteItem_zero(this,'+data[i].QUESTION_TYPE_CODE+')" value="'+data[i].QUESTION_SEQ+'">';
         	   htmlObj+= '<i class="fas fa-xmark"></i>';
         	   htmlObj+=   '</button>';
@@ -587,7 +587,7 @@
             	   htmlObj +='<div class="icon_line">';
             	   htmlObj +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
             	   htmlObj += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic" value="'+data[i].ITEM_CONTENT+'">';
-            	   htmlObj +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
+            	   htmlObj +='점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
             	   htmlObj+='<button class="delete_btn" onclick="deleteItem(this,'+data[i].QUESTION_TYPE_CODE+')" value="'+data[i].ITEM_SEQ+'">';
             	   htmlObj+= '<i class="fas fa-xmark"></i>';
             	   htmlObj+=   '</button>';
@@ -607,7 +607,7 @@
             	   htmlMix +='<div class="icon_line">';
               	   htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
                    htmlMix += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-              	   htmlMix +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+              	   htmlMix +='점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is">';
               	   htmlMix+='<button class="delete_btn" onclick="deleteItem_zero(this,'+10003+')" value="'+data[i].ITEM_SEQ+'">';
                	   htmlMix+= '<i class="fas fa-xmark"></i>';
                    htmlMix+=   '</button>';
@@ -634,7 +634,7 @@
              	  htmlMix +='<div class="icon_line">';
              	  htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
                	  htmlMix += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-             	  htmlMix +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+             	  htmlMix +='점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is">';
              	  htmlMix+='<button class="delete_btn" onclick="deleteItem_zero(this,'+data[i].QUESTION_TYPE_CODE+')" value="'+data[i].ITEM_SEQ+'">';
              	  htmlMix+= '<i class="fas fa-xmark"></i>';
              	  htmlMix+=   '</button>';
@@ -663,7 +663,7 @@
                  		 htmlMix +='<div class="icon_line">';
                     	 htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
                     	 htmlMix += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic" value="'+data[i].ITEM_CONTENT+'">';
-                   	     htmlMix +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
+                   	     htmlMix +='점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
                    	     htmlMix+='<button class="delete_btn" onclick="deleteItem(this,'+data[i].QUESTION_TYPE_CODE+')" value="'+data[i].ITEM_SEQ+'">';
                    	     htmlMix+= '<i class="fas fa-xmark"></i>';
                    	     htmlMix+=   '</button>';
@@ -687,7 +687,7 @@
           		    htmlObj +='<div class="icon_line">';
          	        htmlObj +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
          	        htmlObj += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-         	        htmlObj +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+         	        htmlObj +='점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is">';
          	        htmlObj+='<button class="delete_btn" onclick="deleteItem_zero(this,'+10001+')" value="'+data[i].ITEM_SEQ+'">';
          	        htmlObj+= '<i class="fas fa-xmark"></i>';
          	        htmlObj+=   '</button>';
@@ -711,7 +711,7 @@
        		    htmlObj +='<div class="icon_line">';
       	        htmlObj +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
       	        htmlObj += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-      	        htmlObj +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+      	        htmlObj +='점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is">';
       	        htmlObj+='<button class="delete_btn" onclick="deleteItem_zero(this,'+10001+')" value="'+data[i].ITEM_SEQ+'">';
       	        htmlObj+= '<i class="fas fa-xmark"></i>';
       	        htmlObj+=   '</button>';
@@ -719,7 +719,7 @@
       	        htmlMix +='<div class="icon_line">';
          	    htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
            	    htmlMix += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-         	    htmlMix +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+         	    htmlMix +='점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is">';
          	    htmlMix+='<button class="delete_btn" onclick="deleteItem_zero(this,'+10003+')" value="'+data[i].ITEM_SEQ+'">';
          	    htmlMix+= '<i class="fas fa-xmark"></i>';
          	    htmlMix+=   '</button>';
