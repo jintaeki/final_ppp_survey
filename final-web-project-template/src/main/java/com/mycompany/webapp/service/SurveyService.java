@@ -55,8 +55,8 @@ public class SurveyService implements ISurveyService{
 
 
 
-	public void deleteItemByQSeq(SurveyQuestionDTO SQD) {
-		surveyDao.deleteItemByQSeq(SQD.getQuestionSeq());
+	public void deleteItemByQSeq(int questionSeq ) {
+		surveyDao.deleteItemByQSeq(questionSeq);
 	}
 
 
@@ -150,13 +150,7 @@ public class SurveyService implements ISurveyService{
 
 	}
 
-	@Override
 
-	public void deleteItem(int itemSeq) {
-
-		surveyDao.deleteItem(itemSeq);
-
-	}
 
 
 	public List<Map<String, String>> selectSurveyEvaluate(int surveySeq) {

@@ -23,7 +23,7 @@
    href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
    
 
-<!-- 주관식 문제 name 부여, question으로 삭제 후 저장되는 지 확인 -->
+																					<!-- 주관식 문제 name 부여, question으로 삭제 후 저장되는 지 확인 -->
 
 <div class="container" style="padding: 20px 50px 50px 50px;">
 <input type="button" value="BACK" onClick="history.go(-1)" style="float:left;">
@@ -574,7 +574,7 @@
         	   htmlObj +='<div class="icon_line">';
         	   htmlObj +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
         	   htmlObj += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-        	   htmlObj +='점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is">';
+        	   htmlObj +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
         	   htmlObj+='<button class="delete_btn" onclick="deleteItem_zero(this,'+data[i].QUESTION_TYPE_CODE+')" value="'+data[i].QUESTION_SEQ+'">';
         	   htmlObj+= '<i class="fas fa-xmark"></i>';
         	   htmlObj+=   '</button>';
@@ -608,7 +608,7 @@
             	   htmlMix +='<div class="icon_line">';
               	   htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
                    htmlMix += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-              	   htmlMix +='점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is">';
+              	   htmlMix +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
               	   htmlMix+='<button class="delete_btn" onclick="deleteItem_zero(this,'+10003+')" value="'+data[i].ITEM_SEQ+'">';
                	   htmlMix+= '<i class="fas fa-xmark"></i>';
                    htmlMix+=   '</button>';
@@ -635,7 +635,7 @@
              	  htmlMix +='<div class="icon_line">';
              	  htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
                	  htmlMix += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-             	  htmlMix +='점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is">';
+             	  htmlMix +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
              	  htmlMix+='<button class="delete_btn" onclick="deleteItem_zero(this,'+data[i].QUESTION_TYPE_CODE+')" value="'+data[i].ITEM_SEQ+'">';
              	  htmlMix+= '<i class="fas fa-xmark"></i>';
              	  htmlMix+=   '</button>';
@@ -688,7 +688,7 @@
           		    htmlObj +='<div class="icon_line">';
          	        htmlObj +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
          	        htmlObj += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-         	        htmlObj +='점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is">';
+         	        htmlObj +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
          	        htmlObj+='<button class="delete_btn" onclick="deleteItem_zero(this,'+10001+')" value="'+data[i].ITEM_SEQ+'">';
          	        htmlObj+= '<i class="fas fa-xmark"></i>';
          	        htmlObj+=   '</button>';
@@ -875,7 +875,7 @@
       html += '</textarea></div>';
       html += `<div class="question_add_btn_div">`;  
       html += '<button type="button" class="create_btn" id="add_btn" onclick="insertQus()">문제 추가</button>';
-      html += '&nbsp;&nbsp;<button type="button" class="create_btn"  id="update_btn" onclick="qusUpdate('+data[0].SURVEY_SEQ+')">문제 수정</button>';
+      html += '&nbsp;&nbsp;<button type="button" class="create_btn"  id="update_btn" onclick="qusUpdate('+data[0].SURVEY_SEQ+','+data[0].QUESTION_TYPE_CODE+')">문제 수정</button>';
       html += '<input type="hidden" name="surveySeq" id="seq" value="'+data[0].SURVEY_SEQ+'">';
       html += '<input type="hidden" name="questionSeq" value="'+data[0].QUESTION_SEQ +'">';
       html += `</div>`;
@@ -906,7 +906,7 @@
      html += '</textarea></div>';
      html += `<div class="question_add_btn_div">`;  
      html += '<button type="button" class="create_btn" id="add_btn" onclick="insertQus()">문제 추가</button>';
-     html += '&nbsp;&nbsp;<button type="button" class="create_btn"  id="update_btn" onclick="qusUpdate('+data[0].SURVEY_SEQ+')">문제 수정</button>';
+     html += '&nbsp;&nbsp;<button type="button" class="create_btn"  id="update_btn" onclick="qusUpdate('+data[0].SURVEY_SEQ+','+data[0].QUESTION_TYPE_CODE+')">문제 수정</button>';
      html += '<input type="hidden" name="surveySeq" id="seq" value="'+data[0].SURVEY_SEQ+'">';
      html += '<input type="hidden" name="questionSeq" value="'+data[0].QUESTION_SEQ +'">';
      html += `</div>`;
@@ -927,10 +927,34 @@
 //       const tag = $(obj);
 //       tag.parent().remove();
 //    }
-      function qusUpdate(surveySeq){
+      function qusUpdate(surveySeq,typeCode){
          var qdiv = $('#questioN_insert_form')[0]
           console.log("업데이트 시작");
          var data = new FormData(qdiv);
+         
+         if(typeCode !=data.get("questionTypeCode")){
+        	 $.ajax({
+                 method: 'POST',
+                 url: 'deleteItem.do/'+data.get("questionSeq"),
+                 data: data,
+                 processData : false,
+                 contentType : false,
+                  cache : false,
+                 beforeSend: function() {
+                    console.log("요청 보냈음");
+                    alert("업데이트 beforesend");
+                 },
+                 success: function(jsondata) {
+                    
+
+                 }, 
+               
+                 error: function(e) {
+                    console.log("Error", e);
+                    }
+                 });
+         }
+         
          $.ajax({
             method: 'POST',
             url: 'updatequestion.do/',

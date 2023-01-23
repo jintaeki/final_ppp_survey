@@ -259,9 +259,7 @@
 		DELETE FROM SURVEY_LIST WHERE SURVEY_SEQ = #{surveySeq}
 	</delete>
 
-	<delete id="deleteItem" parameterType="int">
-		DELETE FROM SURVEY_ITEM WHERE ITEM_SEQ = #{itemSeq}
-	</delete>
+
 
   <select id="selectSurveyEvaluate" parameterType="int" resultType="hashmap">
   		SELECT

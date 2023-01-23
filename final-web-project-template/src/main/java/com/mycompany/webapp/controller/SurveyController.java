@@ -181,7 +181,7 @@ public class SurveyController {
 		String checkCode = SQD.getQuestionTypeCode();
 		try {
 			if (checkCode.equals("10001")) {
-				surveyService.deleteItemByQSeq(SQD);
+				surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
 				// 문제 id, 점수, 문항내용, 각 각 받아야 한다
 				// questionId, itemScore, itemContent
 
@@ -202,11 +202,11 @@ public class SurveyController {
 					surveyService.insertItem(SQD);
 				}
 			} else if (checkCode.equals("10002")) {
-				surveyService.deleteItemByQSeq(SQD);
+				surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
 				surveyService.insertItem(SQD);
 
 			} else if (checkCode.equals("10003")) {
-				surveyService.deleteItemByQSeq(SQD);
+				surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
 				// 문제 id, 점수, 문항내용, itemid, 각 각 받아야 한다
 				// questionId, itemScore, itemContent, itemId
 
@@ -351,11 +351,11 @@ public class SurveyController {
 
 	}
 
-	@RequestMapping("/deleteItem.do/{itemSeq}")
+	@RequestMapping("/deleteItem.do/{questionSeq}")
 	@ResponseBody
-	public String DeleteItem(@PathVariable int itemSeq) {
+	public String DeleteItem(@PathVariable int questionSeq) {
 		logger.info("deleteItem 컨트롤러");
-		surveyService.deleteItem(itemSeq);
+		surveyService.deleteItemByQSeq(questionSeq);
 		return "삭제 성공";
 	}
 
