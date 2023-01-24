@@ -4,15 +4,39 @@ input {
 	vertical-align: middle
 }
 
+#queAfter{
+	border-bottom: 3px solid gainsboro;
+}
+.question_inputdv{
+	margin: auto;
+	box-shadow: 1px 1px 10px 0px;
+	border-radius: 20px;
+	padding: 10px;
+	width: 550px;
+	
+}
+.question_management{
+	margin: auto;
+	margin-top: 30px;
+	width: 550px;
+	box-shadow: 1px 1px 10px 0px;
+	border-radius: 20px;
+	padding: 10px;
+}
+.icon_line{
+	border-bottom: 3px solid gainsboro;
+}
+
 .container_flex {
-	display: inline-flex;
-	margin-top: 20px;
-    margin-bottom: 30px;
+/* 	display: inline-flex; */
+/* 	margin-top: 20px; */
+/*     margin-bottom: 30px; */
 	justify-content: space-around;
 	align-items: center !important;
 }
 
 .container_survey {
+	style:margin-left: 60px;
 /* 	border: 1px solid red; */
 	height: -webkit-fill-available;
 }
@@ -24,7 +48,7 @@ input {
 
 .input_title {
 	width: 20px;
-	margin-bottom: 20px;
+/* 	margin-bottom: 20px; */
 	text-align: inline-flex;
 	font-weight: bold;
 	min-width: 6rem;
@@ -47,7 +71,7 @@ textarea.form-control {
 	background-color: #ffffff;
 }
 input#input_qus{
-	width: 345px;
+	width:445px;
 	border: 2px solid #e8e8e8;
 	background-color: #ffffff;
 }
@@ -55,7 +79,7 @@ input#input_qus{
 .input_qus {
 	display: inline-block;
 	height: 50px;
-	width: 350px;
+	width:450px;
 }
 
 .insert_category {
@@ -73,7 +97,7 @@ input#input_qus{
 	outline: 0;
 	font-size: 16px;
 	border-radius: 320px;
-	padding: 16px;
+/* 	padding: 16px; */
 	background-color: #f8f8f8;
 	text-shadow: 1px 1px 0 #fff;
 }

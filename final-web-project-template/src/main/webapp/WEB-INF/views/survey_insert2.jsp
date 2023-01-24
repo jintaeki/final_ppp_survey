@@ -30,27 +30,40 @@
 <button style="float:right;"class="btn btn-link" onclick="location.href='<c:url value='surveyinsertcomplete.do/${SLD.surveySeq}'/>'">등록완료</button>
 	<!-- 설문지 설정 진택 -->
 	<!-- 상단 information -->
-<!-- 	<div class="container_flex"> -->
-<%-- 		<form:form modelAttribute="SLD" id="survey_setting_form"> --%>
-<!-- 			<span class="insert_category"><b>제목</b> <label -->
-<!-- 				for="survey_name"></label> <input type="text" id="survey_name" -->
-<%-- 				name="surveyName" style="width: 200px;" value="${SLD.surveyName}"> --%>
-<!-- 			</span> -->
+	
 
-<!-- 			<span class="insert_category"> <input type="date" -->
-<!-- 				name="surveyStartDate" class="survey_date" -->
-<%-- 				value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">- --%>
-<!-- 				<input type="date" name="surveyClosedDate" class="survey_date" -->
-<%-- 				value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />"> --%>
-<!-- 			</span> -->
 
-<%-- 			<span class="insert_category"> <c:if --%>
+
+<%-- 	<form:form modelAttribute="SLD" id="survey_setting_form"> --%>
+<!-- 	<table class= "insert2_table" style="margin: 60px 60px 0px 160px; text-align: center;"> -->
+<!-- 	<tr> -->
+<!-- 	<th>설문지 제목</th> -->
+<!-- 	<th>설문 시작 기간</th> -->
+<!-- 	<th>설문 마감 기간</th> -->
+<!-- 	<th>익명/기명</th> -->
+<!-- 	<th>상세 설명</th> -->
+<!-- 	<th style="border:none;"></th> -->
+<!-- 	<th style="border:none;"></th> -->
+<!-- 	</tr> -->
+	
+<!-- 	<tr> -->
+<!-- 	<td><input type="text"  -->
+<%-- 				name="surveyName" style="" value="${SLD.surveyName}"></td> --%>
+<!-- 	<td><input type="date" -->
+<!-- 				name="surveyStartDate"  -->
+<%-- 				value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />"></td> --%>
+<!-- 	<td><input type="date" name="surveyClosedDate"  -->
+<%-- 				value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />"></td> --%>
+<!-- 	<td> -->
+<%-- 	<c:if --%>
 <%-- 					test="${SLD.anonymityCheckCode eq '20001'}"> --%>
 <!-- 					<input type="radio" name="anonymityCheckCode" -->
 <!-- 						id="survey_type_check" value="20001" checked>익명 -->
 <!-- 					<input type="radio" name="anonymityCheckCode" -->
 <!-- 						id="survey_type_check" value="20002">기명 -->
-<%--          		    </c:if> <c:if test="${SLD.anonymityCheckCode eq '20002'}"> --%>
+<%--          		    </c:if>  --%>
+         		    
+<%--          		    <c:if test="${SLD.anonymityCheckCode eq '20002'}"> --%>
 <!-- 					<input type="radio" name="anonymityCheckCode" -->
 <!-- 						id="survey_type_check" value="20001"> -->
 <!-- 					<label for="survey_type_check">익명</label> -->
@@ -59,85 +72,29 @@
 <!-- 						id="survey_type_check" value="20002" checked> -->
 <!-- 					<label for="survey_type_check">기명</label> -->
 <%-- 				</c:if> --%>
-<!-- 			</span> -->
-			
-<!-- 			<span class="insert_category"><b>상세 설명</b></span> -->
-<%-- 			<textarea style="display:none;" class="visually-hidden"id="message-text" name="surveyContent">${SLD.surveyContent }</textarea> --%>
+<!-- 	</td> -->
 
-<!-- 				<input type="hidden" name="stateCode" value="30001"> <input -->
+<%-- 	<td><textarea  name="surveyContent">${SLD.surveyContent }</textarea></td> --%>
+<!-- 	<td style="border:none;"><input type="hidden" name="stateCode" value="30001"> <input -->
 <!-- 				type="hidden" name="surveySeq" id="surveyseq" -->
-<%-- 				value="${SLD.surveySeq}"> --%>
-				
-<%-- 		</form:form> --%>
-<!-- 		<input type="button" class="update_btn" style="margin-bottom:10px;" onclick="register()" -->
-<!-- 			value="적용"> -->
-		
-<!-- 	</div> -->
-	<form:form modelAttribute="SLD" id="survey_setting_form">
-	<table class= "insert2_table" style="margin: 60px 60px 0px 160px; text-align: center;">
-	<tr>
-	<th>설문지 제목</th>
-	<th>설문 시작 기간</th>
-	<th>설문 마감 기간</th>
-	<th>익명/기명</th>
-	<th>상세 설명</th>
-	<th style="border:none;"></th>
-	<th style="border:none;"></th>
-	</tr>
+<%-- 				value="${SLD.surveySeq}"></td> --%>
+<!-- 	<td style="border:none;"></td> -->
 	
-	<tr>
-	<td><input type="text" 
-				name="surveyName" style="" value="${SLD.surveyName}"></td>
-	<td><input type="date"
-				name="surveyStartDate" 
-				value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />"></td>
-	<td><input type="date" name="surveyClosedDate" 
-				value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />"></td>
-	<td>
-	<c:if
-					test="${SLD.anonymityCheckCode eq '20001'}">
-					<input type="radio" name="anonymityCheckCode"
-						id="survey_type_check" value="20001" checked>익명
-					<input type="radio" name="anonymityCheckCode"
-						id="survey_type_check" value="20002">기명
-         		    </c:if> 
-         		    
-         		    <c:if test="${SLD.anonymityCheckCode eq '20002'}">
-					<input type="radio" name="anonymityCheckCode"
-						id="survey_type_check" value="20001">
-					<label for="survey_type_check">익명</label>
+<!-- 	</tr> -->
 
-					<input type="radio" name="anonymityCheckCode" style=""
-						id="survey_type_check" value="20002" checked>
-					<label for="survey_type_check">기명</label>
-				</c:if>
-	</td>
-
-	<td><textarea  name="surveyContent">${SLD.surveyContent }</textarea></td>
-	<td style="border:none;"><input type="hidden" name="stateCode" value="30001"> <input
-				type="hidden" name="surveySeq" id="surveyseq"
-				value="${SLD.surveySeq}"></td>
-	<td style="border:none;"></td>
-	
-	</tr>
-
-	</table>
-	<input style= "margin-left: 800px;" type="button" class="update_btn" style="margin-bottom:10px;" onclick="register()" value="적용">
-	</form:form>
+<!-- 	</table> -->
+<!-- 	<input style= "margin-left: 800px;" type="button" class="update_btn" style="margin-bottom:10px;" onclick="register()" value="적용"> -->
+<%-- 	</form:form> --%>
 	<!-- 상단 information 끝 -->
 
 	<div class="container_survey">
-		<div class="row">
-
-			<!-- 문제 관리 -->
-			<div class="input_title col-6">문제 관리</div>
-
-			<div class="input_title col-6">문항 관리</div>
-		</div>
+		<div class="row" style="margin-top: 80px;">		</div>
 		
 			<div style="display: flex;">
-			<div>
-			<span class="question_inputdv" id="input_question">
+			<div style="width: 60%;border-radius: 20px;box-shadow: 1px 1px 10px 0px;padding: 15px 20px 20px 15px;">
+			<div class="question_inputdv" id="input_question">
+						<div class="input_title">문제 관리</div>
+			
 					<form:form modelAttribute="SQD" id="questioN_insert_form">
 						<!-- aa -->
 						<div id="insertQform">
@@ -181,12 +138,11 @@
 							</div>
 						</div>
 					</form:form>
-				</span>
+				</div>
 			
-		<div class="question_management col-6" style="margin-top: 10px;">
-
-			<div id="scroll_area"
-				style="overflow: auto; width: 500px; height: 450px; relation: fixed">
+		<div class="question_management">
+			<div class="input_title">문제 목록</div>			
+			<div id="scroll_area" style="overflow: auto;  height:450px;">
 
 
 				<!-- 여기까지 문제 div -->
@@ -196,8 +152,8 @@
 
 							<input type="hidden" value="${qlist.surveySeq }"
 								id="surveySequence">
-							<div class="input_qus">
-								<input disabled type="text" id="input_qus"
+							<div class="input_qus" >
+								<input disabled type="text" id="input_qus" 
 									value="${qlist.questionContent }">
 							</div>
 
@@ -221,8 +177,66 @@
 		</div>
 		</div>
 		
-			<div class="item_management" style="margin: ;">
+		<div style="margin-left: 40px;">
+		<div class="container_flex" style="border-radius: 20px;box-shadow: 1px 1px 10px 0px; padding: 10px; width:400px;">
+		<div class="input_title">기본 설정</div>
+		<form:form modelAttribute="SLD" id="survey_setting_form">
+		<table>
+		<tr style="border-bottom: 3px solid gainsboro;">
+			<td><span class="insert_category"><b>설문지 제목</b><label
+				for="survey_name"></label></span></td> <td><input type="text" id="survey_name"
+				name="surveyName" style="width: 200px;" value="${SLD.surveyName}"><td>
+			
+		</tr>
+			
+		<tr style="border-bottom: 3px solid gainsboro;">
+			<td><span class="insert_category"> <b>평가 기간</b> </span></td>
+			<td><input type="date"
+				name="surveyStartDate" class="survey_date"
+				value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">-
+				<input type="date" name="surveyClosedDate" class="survey_date"
+				value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />"></td>
+			
+		</tr>
+			
+		<tr style="border-bottom: 3px solid gainsboro;">
+			<td><span class="insert_category"> <b>익명/기명</b></span></td>
+			<td><c:if
+					test="${SLD.anonymityCheckCode eq '20001'}">
+					<input type="radio" name="anonymityCheckCode"
+						id="survey_type_check" value="20001" checked>익명
+					<input type="radio" name="anonymityCheckCode"
+						id="survey_type_check" value="20002">기명
+         		    </c:if> <c:if test="${SLD.anonymityCheckCode eq '20002'}">
+					<input type="radio" name="anonymityCheckCode"
+						id="survey_type_check" value="20001">
+					<label for="survey_type_check">익명</label>
 
+					<input type="radio" name="anonymityCheckCode" style=""
+						id="survey_type_check" value="20002" checked>
+					<label for="survey_type_check">기명</label>
+				</c:if>
+			</td>
+		</tr>
+			
+			</table>
+			<span class="insert_category"><b>상세 설명</b></span><br>
+			<textarea  class="visually-hidden"id="message-text" name="surveyContent" style="width:350px;height:100px;max-width:350px;">${SLD.surveyContent }</textarea>
+
+				<input type="hidden" name="stateCode" value="30001"> <input
+				type="hidden" name="surveySeq" id="surveyseq"
+				value="${SLD.surveySeq}">
+				
+		</form:form>
+		<input type="button" class="update_btn" style="margin-bottom:10px;" onclick="register()"
+			value="적용">
+		
+	</div>
+		
+		
+		
+			<div class="item_management" style="border-radius: 20px;box-shadow: 1px 1px 10px 0px;margin-top: 15px;padding: 10px;">
+			<div class="input_title">문항 관리</div>
 			<!-- 객관식 -->
 			<span class="icon_div" id="item_div" >
 				<c:forEach items="${SQL}" var="qlist">
@@ -230,7 +244,8 @@
 						<div class="col-12">
 							<div class="Item_box">
 								<button type="button" onclick="item_obj_copy(this, 10001)" style="border: 1px solid #fff; border-radius: 35em;"><i class="fas fa-plus"></i></button>
-								<input type="button" class="create_btn"
+								<b style="margin-left:150px;">점수</b>
+								<input type="button" class="create_btn" style="margin-left: 50px;"
 											onclick="update_obj_item_btn()" value="수정">
 								<form:form modelAttribute="SQD" id="item_obj_form">
 									<input type="hidden" name="questionTypeCode" value="10001">
@@ -277,7 +292,7 @@
 					<div id="subj_box_toggle" style="display: none">
 						<div class="block_box">
 							<div class="subj_ItemAfter">
-								<input type="text" class="input_qus" id="input_qus"
+								<input type="text" 
 									placeholder="주관식 문제입니다." readonly>
 							</div>
 							<div class="blank_under"></div>
@@ -289,7 +304,7 @@
 
 
 		</div>
-
+		</div>
 		
 </div>
 		<!--  문제관리 끝 -->
@@ -422,7 +437,7 @@
     	   var testDiv ='';
            testDiv +='<div class="icon_line">';
            testDiv += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-     		 testDiv +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+     		 testDiv +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
      		 testDiv +='<button class="delete_btn" onclick="deleteItem_zero(this,'+type+')" value="0">'
      		 testDiv += '<i class="fas fa-xmark"></i>' 
      		 testDiv += '</button>'
@@ -441,7 +456,7 @@
       	 var testDiv ='';
   	     testDiv +='<div class="icon_line">';
          testDiv += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-   	     testDiv +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+   	     testDiv +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
    	     testDiv +='<button class="delete_btn" onclick="deleteItem_zero(this,'+type+')" value="0">'
          testDiv += '<i class="fas fa-xmark"></i>' 
          testDiv += '</button>'
@@ -574,7 +589,7 @@
         	   htmlObj +='<div class="icon_line">';
         	   htmlObj +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
         	   htmlObj += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-        	   htmlObj +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+        	   htmlObj +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
         	   htmlObj+='<button class="delete_btn" onclick="deleteItem_zero(this,'+data[i].QUESTION_TYPE_CODE+')" value="'+data[i].QUESTION_SEQ+'">';
         	   htmlObj+= '<i class="fas fa-xmark"></i>';
         	   htmlObj+=   '</button>';
@@ -588,7 +603,7 @@
             	   htmlObj +='<div class="icon_line">';
             	   htmlObj +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
             	   htmlObj += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic" value="'+data[i].ITEM_CONTENT+'">';
-            	   htmlObj +='점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
+            	   htmlObj +='<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
             	   htmlObj+='<button class="delete_btn" onclick="deleteItem(this,'+data[i].QUESTION_TYPE_CODE+')" value="'+data[i].ITEM_SEQ+'">';
             	   htmlObj+= '<i class="fas fa-xmark"></i>';
             	   htmlObj+=   '</button>';
@@ -608,7 +623,7 @@
             	   htmlMix +='<div class="icon_line">';
               	   htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
                    htmlMix += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-              	   htmlMix +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+              	   htmlMix +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
               	   htmlMix+='<button class="delete_btn" onclick="deleteItem_zero(this,'+10003+')" value="'+data[i].ITEM_SEQ+'">';
                	   htmlMix+= '<i class="fas fa-xmark"></i>';
                    htmlMix+=   '</button>';
@@ -617,7 +632,7 @@
                	   htmlMix += '<input type="text" name="itemContent" placeholder="기타" value="기타" id="guitar" readonly>';
                	   htmlMix +='<input type="hidden" name="itemScore"  value="0">';
              	   htmlMix += '</div>';
-             	   htmlSubj += '<input type="text" class="input_qus" id="input_qus"	placeholder="주관식 문제입니다." readonly>'
+             	   htmlSubj += '<input type="text" 	placeholder="주관식 문제입니다." readonly>'
                    $('#subj_ItemAfter').append(htmlSubj);
                    $('#mix_ItemAfter').append(htmlMix);
                    
@@ -635,7 +650,7 @@
              	  htmlMix +='<div class="icon_line">';
              	  htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
                	  htmlMix += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-             	  htmlMix +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+             	  htmlMix +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
              	  htmlMix+='<button class="delete_btn" onclick="deleteItem_zero(this,'+data[i].QUESTION_TYPE_CODE+')" value="'+data[i].ITEM_SEQ+'">';
              	  htmlMix+= '<i class="fas fa-xmark"></i>';
              	  htmlMix+=   '</button>';
@@ -664,7 +679,7 @@
                  		 htmlMix +='<div class="icon_line">';
                     	 htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
                     	 htmlMix += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic" value="'+data[i].ITEM_CONTENT+'">';
-                   	     htmlMix +='점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
+                   	     htmlMix +='<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
                    	     htmlMix+='<button class="delete_btn" onclick="deleteItem(this,'+data[i].QUESTION_TYPE_CODE+')" value="'+data[i].ITEM_SEQ+'">';
                    	     htmlMix+= '<i class="fas fa-xmark"></i>';
                    	     htmlMix+=   '</button>';
@@ -688,12 +703,12 @@
           		    htmlObj +='<div class="icon_line">';
          	        htmlObj +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
          	        htmlObj += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-         	        htmlObj +='점수<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+         	        htmlObj +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
          	        htmlObj+='<button class="delete_btn" onclick="deleteItem_zero(this,'+10001+')" value="'+data[i].ITEM_SEQ+'">';
          	        htmlObj+= '<i class="fas fa-xmark"></i>';
          	        htmlObj+=   '</button>';
          	        htmlObj += '</div>';
-         	        htmlSubj += '<input type="text" class="input_qus" id="input_qus"	placeholder="주관식 문제입니다." readonly>'
+         	        htmlSubj += '<input type="text" 	placeholder="주관식 문제입니다." readonly>'
                    $('#subj_ItemAfter').append(htmlSubj);
                    $('#obj_ItemAfter').append(htmlObj);
                    cntObj = cntObj + 1;
@@ -701,7 +716,7 @@
                   }
            }else if (data[i].QUESTION_TYPE_CODE == "10002"){
     		   $("#subj_ItemAfter").empty();
-    		   htmlSubj += '<input type="text" class="input_qus" id="input_qus"	placeholder="주관식 문제입니다." value="'+data[0].QUESTION_SEQ+'" readonly>'
+    		   htmlSubj += '<input type="text" 	placeholder="주관식 문제입니다." value="'+data[0].QUESTION_SEQ+'" readonly>'
                $('#subj_ItemAfter').append(htmlSubj);
                $("#subj_box_toggle").show();
 
@@ -712,7 +727,7 @@
        		    htmlObj +='<div class="icon_line">';
       	        htmlObj +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
       	        htmlObj += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-      	        htmlObj +='점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is">';
+      	        htmlObj +='<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is">';
       	        htmlObj+='<button class="delete_btn" onclick="deleteItem_zero(this,'+10001+')" value="'+data[i].ITEM_SEQ+'">';
       	        htmlObj+= '<i class="fas fa-xmark"></i>';
       	        htmlObj+=   '</button>';
@@ -720,7 +735,7 @@
       	        htmlMix +='<div class="icon_line">';
          	    htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
            	    htmlMix += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-         	    htmlMix +='점수<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is">';
+         	    htmlMix +='<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is">';
          	    htmlMix+='<button class="delete_btn" onclick="deleteItem_zero(this,'+10003+')" value="'+data[i].ITEM_SEQ+'">';
          	    htmlMix+= '<i class="fas fa-xmark"></i>';
          	    htmlMix+=   '</button>';
