@@ -26,7 +26,8 @@
 																					<!-- 주관식 문제 name 부여, question으로 삭제 후 저장되는 지 확인 -->
 
 <div class="container" style="padding: 20px 50px 50px 50px; height:1000px;">
-<input type="button" value="BACK" onClick="history.go(-1)" style="float:left;">
+<!-- <input type="button" value="BACK" onClick="history.go(-1)" style="float:left;"> -->
+<button style="float:left;"class="btn btn-link" onclick="history.go(-1)">뒤로가기</button>
 <button style="float:right;"class="btn btn-link" onclick="location.href='<c:url value='surveyinsertcomplete.do/${SLD.surveySeq}'/>'">등록완료</button>
 	<!-- 설문지 설정 진택 -->
 	<!-- 상단 information -->
@@ -123,7 +124,7 @@
 
 									<button type="button" class="create_btn" id="add_qus_btn"
 										onclick="insertQus()">문제 추가</button>
-									<button type="button" class="create_btn" id="update_btn" style="margin-left:5px;"
+									<button type="button" class="create_btn" id="update_btn" style="margin-left:4.48px;"
 										onclick="qusUpdate(${SLD.surveySeq})">문제 수정</button>
 
 									<input type="hidden" name="surveySeq" id="seq"
@@ -258,8 +259,7 @@
 							<div class="Item_box">
 								<button type="button" onclick="item_obj_copy(this, 10001)" style="border: 1px solid #fff; border-radius: 35em;"><i class="fas fa-plus"></i></button>
 								<b style="margin-left:160px;">점수</b>
-								<input type="button" class="create_btn" style="margin-left: 50px;"
-											onclick="update_obj_item_btn()" value="수정">
+								
 								<form:form modelAttribute="SQD" id="item_obj_form">
 									<input type="hidden" name="questionTypeCode" value="10001">
 									<input type="hidden" name="surveySeq" value="${SLD.surveySeq}">
@@ -268,7 +268,8 @@
 								
 
 										
-									
+								<input type="button" class="create_btn" 
+											onclick="update_obj_item_btn()" value="수정">	
 								</form:form>
 							</div>
 						</div>
@@ -283,7 +284,6 @@
 							<div class="Item_box">
 								<button type="button" onclick="item_mix_copy(this,10003)" style="border: 1px solid #fff; border-radius: 35em;"><i class="fas fa-plus"></i></button>
 								<b style="margin-left:160px;">점수</b>
-								<input type="button" class="create_btn" style="margin-left: 50px;" onclick="update_mix_item_btn()" value="수정">
 								<form:form modelAttribute="SQD" id="item_mix_form">
 									<input type="hidden" name="questionTypeCode" value="10003">
 									<input type="hidden" name="surveySeq" value="${SLD.surveySeq}"
@@ -295,7 +295,7 @@
 									</div>
 									</div>
 								
-
+									<input type="button" class="create_btn"  onclick="update_mix_item_btn()" value="수정">
 										
 								</form:form>
 							</div>
@@ -644,7 +644,7 @@
                	   htmlMix+= '<i class="fas fa-xmark"></i>';
                    htmlMix+=   '</button>';
                    htmlMix += '</div>';
-                   htmlMix +='<div class="icon_line">';
+                   htmlMix +='<div class="icon_line" id="guitar">';
                	   htmlMix += '<input type="text" name="itemContent" placeholder="기타" value="기타" id="guitar" readonly>';
                	   htmlMix +='<input type="hidden" name="itemScore"  value="0">';
              	   htmlMix += '</div>';
@@ -671,7 +671,7 @@
              	  htmlMix+= '<i class="fas fa-xmark"></i>';
              	  htmlMix+=   '</button>';
              	  htmlMix += '</div>';
-             	  htmlMix +='<div class="icon_line">';
+             	  htmlMix +='<div class="icon_line" id="guitar">';
               	  htmlMix += '<input type="text" name="itemContent" placeholder="기타" value="기타" id="guitar" readonly>';
               	  htmlMix +='<input type="hidden" name="itemScore"  value="0">';
               	  htmlMix += '</div>';
@@ -686,7 +686,7 @@
 
                  	  
                  	  if(data[i].ITEM_CONTENT =="기타"){
-                 		  htmlMix +='<div class="icon_line">';
+                 		  htmlMix +='<div class="icon_line" id="guitar">';
                      	  htmlMix += '<input type="text" name="itemContent" id="guitar" value="'+data[i].ITEM_CONTENT+'" readonly>';
                       	  htmlMix +='<input type="hidden" name="itemScore"  value="0">';
                      	  htmlMix += '</div>';
@@ -756,8 +756,8 @@
          	    htmlMix+= '<i class="fas fa-xmark"></i>';
          	    htmlMix+=   '</button>';
          	    htmlMix += '</div>';
-         	    htmlMix +='<div class="icon_line">';
-          	    htmlMix += '<input type="text" name="itemContent" placeholder="기타" value="기타" id="guitar" readonly>';
+         	    htmlMix +='<div class="icon_line" id="guitar">';
+          	    htmlMix += '<input type="text" name="itemContent" placeholder="기타" value="기타"  readonly>';
           	    htmlMix +='<input type="hidden" name="itemScore"  value="0">';
           	    htmlMix += '</div>';
       	        $('#mix_ItemAfter').append(htmlMix);
