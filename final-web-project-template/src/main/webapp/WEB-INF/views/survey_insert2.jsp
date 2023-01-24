@@ -25,7 +25,7 @@
 
 																					<!-- 주관식 문제 name 부여, question으로 삭제 후 저장되는 지 확인 -->
 
-<div class="container" style="padding: 20px 50px 50px 50px;">
+<div class="container" style="padding: 20px 50px 50px 50px; height:875px;">
 <input type="button" value="BACK" onClick="history.go(-1)" style="float:left;">
 <button style="float:right;"class="btn btn-link" onclick="location.href='<c:url value='surveyinsertcomplete.do/${SLD.surveySeq}'/>'">등록완료</button>
 	<!-- 설문지 설정 진택 -->
@@ -91,7 +91,7 @@
 		<div class="row" style="margin-top: 65px;">		</div>
 		
 			<div style="display: flex;">
-			<div style="width: 60%;border-radius: 20px;box-shadow: 1px 1px 10px 0px;padding: 15px 20px 20px 15px;">
+			<div style="width: 60%;border-radius: 20px;box-shadow: 1px 1px 10px 0px;padding: 15px 20px 20px 15px; ">
 			<div class="question_inputdv" id="input_question">
 						<div class="input_title">문제 관리</div>
 			
