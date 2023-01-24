@@ -25,7 +25,7 @@
 
 																					<!-- 주관식 문제 name 부여, question으로 삭제 후 저장되는 지 확인 -->
 
-<div class="container" style="padding: 20px 50px 50px 50px; height:875px;">
+<div class="container" style="padding: 20px 50px 50px 50px; height:1000px;">
 <input type="button" value="BACK" onClick="history.go(-1)" style="float:left;">
 <button style="float:right;"class="btn btn-link" onclick="location.href='<c:url value='surveyinsertcomplete.do/${SLD.surveySeq}'/>'">등록완료</button>
 	<!-- 설문지 설정 진택 -->
@@ -91,7 +91,7 @@
 		<div class="row" style="margin-top: 65px;">		</div>
 		
 			<div style="display: flex;">
-			<div style="width: 60%;border-radius: 20px;box-shadow: 1px 1px 10px 0px;padding: 15px 20px 20px 15px; ">
+			<div style="width: 60%;border-radius: 20px;box-shadow: 1px 1px 10px 0px;padding: 20px 20px 20px 20px; ">
 			<div class="question_inputdv" id="input_question">
 						<div class="input_title">문제 관리</div>
 			
@@ -123,7 +123,7 @@
 
 									<button type="button" class="create_btn" id="add_qus_btn"
 										onclick="insertQus()">문제 추가</button>
-									<button type="button" class="create_btn" id="update_btn"
+									<button type="button" class="create_btn" id="update_btn" style="margin-left:5px;"
 										onclick="qusUpdate(${SLD.surveySeq})">문제 수정</button>
 
 									<input type="hidden" name="surveySeq" id="seq"
@@ -146,7 +146,7 @@
 
 
 				<!-- 여기까지 문제 div -->
-				<div style= "height: 400x; relation: fixed;">
+				<div id="appendQuestion">
 					<c:forEach items="${SQL}" var="qlist">
 						<div id="queAfter">
 
@@ -178,49 +178,62 @@
 		</div>
 		
 		<div style="margin-left: 40px;">
-		<div class="container_flex" style="border-radius: 20px;box-shadow: 1px 1px 10px 0px; padding: 10px; width:400px;">
+		<div class="container_flex" style="border-radius: 20px;box-shadow: 1px 1px 10px 0px; padding: 20px; width:450px;">
 		<div class="input_title">기본 설정</div>
 		<form:form modelAttribute="SLD" id="survey_setting_form">
-		<table>
-		<tr style="border-bottom: 3px solid gainsboro;">
+		<table style="border-collapse:collapse;">
+				<tr><th><div style="margin-top: 8px;"></div></th></tr>
+		
+		<tr>
+		
 			<td><span class="insert_category"><b>설문지 제목</b><label
 				for="survey_name"></label></span></td> <td><input type="text" id="survey_name"
-				name="surveyName" style="width: 200px;" value="${SLD.surveyName}"><td>
-			
+				name="surveyName" style="width: 200px;" value="${SLD.surveyName}"></td>
+				
 		</tr>
-			
-		<tr style="border-bottom: 3px solid gainsboro;">
+		
+		<tr style="border-bottom: 3px solid gainsboro;"><th><div style="margin-top: 8px;"></div></th></tr>
+		<tr><th><div style="margin-top: 8px;"></div></th></tr>
+		<tr>
 			<td><span class="insert_category"> <b>평가 기간</b> </span></td>
 			<td><input type="date"
 				name="surveyStartDate" class="survey_date"
 				value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">-
 				<input type="date" name="surveyClosedDate" class="survey_date"
 				value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />"></td>
-			
 		</tr>
-			
-		<tr style="border-bottom: 3px solid gainsboro;">
+		
+		<tr style="border-bottom: 3px solid gainsboro;"><th><div style="margin-top: 8px;"></div></th></tr>
+		<tr><th><div style="margin-top: 8px;"></div></th></tr>
+		
+		<tr>
 			<td><span class="insert_category"> <b>익명/기명</b></span></td>
 			<td><c:if
 					test="${SLD.anonymityCheckCode eq '20001'}">
 					<input type="radio" name="anonymityCheckCode"
-						id="survey_type_check" value="20001" checked>익명
+						id="survey_type_check" value="20001" checked>
+					<label style="margin-bottom:0px;" for="survey_type_check"><b>익명</b></label> 
 					<input type="radio" name="anonymityCheckCode"
-						id="survey_type_check" value="20002">기명
-         		    </c:if> <c:if test="${SLD.anonymityCheckCode eq '20002'}">
+						id="survey_type_check" value="20002">
+					<label style="margin-bottom:0px;" for="survey_type_check"><b>기명</b></label> 
+         		    </c:if> 
+         		    <c:if test="${SLD.anonymityCheckCode eq '20002'}">
 					<input type="radio" name="anonymityCheckCode"
 						id="survey_type_check" value="20001">
-					<label for="survey_type_check">익명</label>
+					<label style="margin-bottom:0px;" for="survey_type_check"><b>익명</b></label> 
 
 					<input type="radio" name="anonymityCheckCode" style=""
 						id="survey_type_check" value="20002" checked>
-					<label for="survey_type_check">기명</label>
+					<label style="margin-bottom:0px;" for="survey_type_check"><b>기명</b></label> 
 				</c:if>
 			</td>
 		</tr>
+		<tr style="border-bottom: 3px solid gainsboro;"><th><div style="margin-top: 8px;"></div></th></tr>
+		<tr><th><div style="margin-top: 8px;"></div></th></tr>
 			
 			</table>
-			<span class="insert_category"><b>상세 설명</b></span><br>
+		
+			<span class="insert_category"><b>상세 설명</b></span><br><div style="margin-top:8px;"></div>
 			<textarea  class="visually-hidden"id="message-text" name="surveyContent" style="width:350px;height:100px;max-width:350px;">${SLD.surveyContent }</textarea>
 
 				<input type="hidden" name="stateCode" value="30001"> <input
@@ -235,7 +248,7 @@
 		
 		
 		
-			<div class="item_management" style="border-radius: 20px;box-shadow: 1px 1px 10px 0px;margin-top: 15px;padding: 10px;">
+			<div class="item_management" >
 			<div class="input_title">문항 관리</div>
 			<!-- 객관식 -->
 			<span class="icon_div" id="item_div" >
@@ -244,7 +257,7 @@
 						<div class="col-12">
 							<div class="Item_box">
 								<button type="button" onclick="item_obj_copy(this, 10001)" style="border: 1px solid #fff; border-radius: 35em;"><i class="fas fa-plus"></i></button>
-								<b style="margin-left:150px;">점수</b>
+								<b style="margin-left:160px;">점수</b>
 								<input type="button" class="create_btn" style="margin-left: 50px;"
 											onclick="update_obj_item_btn()" value="수정">
 								<form:form modelAttribute="SQD" id="item_obj_form">
@@ -269,7 +282,8 @@
 						<div class="col-12">
 							<div class="Item_box">
 								<button type="button" onclick="item_mix_copy(this,10003)" style="border: 1px solid #fff; border-radius: 35em;"><i class="fas fa-plus"></i></button>
-								<input type="button" class="create_btn" onclick="update_mix_item_btn()" value="수정">
+								<b style="margin-left:160px;">점수</b>
+								<input type="button" class="create_btn" style="margin-left: 50px;" onclick="update_mix_item_btn()" value="수정">
 								<form:form modelAttribute="SQD" id="item_mix_form">
 									<input type="hidden" name="questionTypeCode" value="10003">
 									<input type="hidden" name="surveySeq" value="${SLD.surveySeq}"
@@ -524,7 +538,7 @@
         let size = data.length;
         console.log(size);
         var html = '';
-        $("#scroll_area").empty();
+        $('#appendQuestion').empty();
         if(size < 1){
            html ='관리할 문제가 없어요~';
         }else{
@@ -537,12 +551,14 @@
             			continue;
             		}
             	}
-                html+='<div  id="queAfter">'
+                html+='<div id="queAfter">';
                 html+='<input type="hidden" value="'+data[i].SURVEY_SEQ+'" id="surveySequence">'
+                html+='<div class="input_qus">'
                 html+='<input type="text" id="input_qus" value="'+data[i].QUESTION_CONTENT+'" disabled>';
-                html+='<button value="'+data[i].QUESTION_SEQ+'"onclick="touchQuestion(this)" style="border: 1px solid #fff; border-radius: 35em;"><i class="fas fa-search"></i></button>';
-                html+='<button class="delete_btn" onclick="deleteQus(this,'+data[i].SURVEY_SEQ+')" value="'+data[i].QUESTION_SEQ+'">';
-                html+= '<i class="fas fa-xmark"></i>';
+                html+='</div>'
+                html+='<button value="'+data[i].QUESTION_SEQ+'"onclick="touchQuestion(this)" style="border: 1px solid #fff; border-radius: 35em; margin-left:4px;"><i class="fas fa-search"></i></button>';
+                html+='<button class="delete_btn" onclick="deleteQus(this,'+data[i].SURVEY_SEQ+')" value="'+data[i].QUESTION_SEQ+'" style="margin-left:4px;">';
+                html+= '<i class="fa-regular fa-trash-can"></i>';
                 html+=   '</button>';
                 html+='<div class="blank_under"></div></div>';
 
@@ -550,7 +566,7 @@
                 }
         	
         }
-        $('#scroll_area').append(html);
+        $('#appendQuestion').append(html);
    }
     
  	
@@ -764,8 +780,7 @@
 //        var qdiv = $('#sv_qst_form')[0];
 //       var data = new FormData(qdiv);
       var questionSeq = $(obj).val()
-      console.log(questionSeq)
-      console.log("과연?:"+surveySeq);
+
       $.ajax({
          method:'POST', //어떤 방식으로 보낼 지
             url:'deletequestion.do/'+ questionSeq , // qdiv를 보낼 경로 설정

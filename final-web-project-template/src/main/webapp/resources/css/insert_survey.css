@@ -4,15 +4,29 @@ input {
 	vertical-align: middle
 }
 
-#queAfter{
+.blank_under{
 	border-bottom: 3px solid gainsboro;
+    margin-top: 10px;
 }
+
+.question_add_btn_div{
+	margin-top:10px;
+}
+
+.item_management{
+	border-radius: 20px;
+	box-shadow: 1px 1px 10px 0px;
+	margin-top: 15px;
+	padding: 20px;
+	
+}
+
 .question_inputdv{
 	margin: auto;
-	margin-top:10px;
-	box-shadow: 1px 1px 10px 0px;
+	margin-top:4px;
+	box-shadow: 1px 1px 5px 1px grey;
 	border-radius: 20px;
-	padding: 10px;
+	padding: 20px;
 	width: 550px;
 	
 }
@@ -20,12 +34,14 @@ input {
 	margin: auto;
 	margin-top: 30px;
 	width: 550px;
-	box-shadow: 1px 1px 10px 0px;
+	box-shadow: 1px 1px 5px 1px grey;
 	border-radius: 20px;
-	padding: 10px;
+	padding: 20px;
 }
 .icon_line{
-	border-bottom: 3px solid gainsboro;
+/* 	border-bottom: 3px solid gainsboro; */
+	padding:5px;
+
 }
 
 .container_flex {
@@ -37,7 +53,7 @@ input {
 }
 
 .container_survey {
-	style:margin-left: 60px;
+	margin-left: -18px;
 /* 	border: 1px solid red; */
 	height: -webkit-fill-available;
 }
@@ -72,15 +88,16 @@ textarea.form-control {
 	background-color: #ffffff;
 }
 input#input_qus{
-	width:445px;
+	width:440px;
 	border: 2px solid #e8e8e8;
 	background-color: #ffffff;
 }
 
 .input_qus {
-	display: inline-block;
+	display: inline-flex;
 	height: 50px;
-	width:450px;
+	width:440px;
+	flex-direction: column-reverse;
 }
 
 .insert_category {
@@ -88,7 +105,7 @@ input#input_qus{
 	border: transparent;
 	background-color: transparent;
 	margin-right: 8px;
-	box-shadow: inset 2px 2px 5px #ededed, inset -5px -5px 10px #fff;
+/* 	box-shadow: inset 2px 2px 5px #ededed, inset -5px -5px 10px #fff; */
 	width: 100%;
 	box-sizing: border-box;
 	transition: all 0.2s ease-in-out;
@@ -99,7 +116,7 @@ input#input_qus{
 	font-size: 16px;
 	border-radius: 320px;
 /* 	padding: 16px; */
-	background-color: #f8f8f8;
+/* 	background-color: #f8f8f8; */
 	text-shadow: 1px 1px 0 #fff;
 }
 
