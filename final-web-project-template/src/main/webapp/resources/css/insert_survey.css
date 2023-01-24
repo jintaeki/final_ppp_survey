@@ -9,6 +9,7 @@ input {
 }
 .question_inputdv{
 	margin: auto;
+	margin-top:10px;
 	box-shadow: 1px 1px 10px 0px;
 	border-radius: 20px;
 	padding: 10px;

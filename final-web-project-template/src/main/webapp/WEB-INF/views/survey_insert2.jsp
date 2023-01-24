@@ -88,7 +88,7 @@
 	<!-- 상단 information 끝 -->
 
 	<div class="container_survey">
-		<div class="row" style="margin-top: 80px;">		</div>
+		<div class="row" style="margin-top: 65px;">		</div>
 		
 			<div style="display: flex;">
 			<div style="width: 60%;border-radius: 20px;box-shadow: 1px 1px 10px 0px;padding: 15px 20px 20px 15px;">
