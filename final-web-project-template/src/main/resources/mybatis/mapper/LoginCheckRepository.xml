@@ -69,6 +69,7 @@
 	<![CDATA[
 	 SELECT DISTINCT M.SURVEY_SEQ
 	                ,SL.SURVEY_NAME 
+	                ,SL.ANONYMITY_CHECK_CODE
 	 FROM SURVEY_LIST SL
 	     ,MAPPING M 
 	 WHERE SL.SURVEY_SEQ = M.SURVEY_SEQ  AND 
@@ -109,9 +110,12 @@
 	       #{answerContent},
 	       sysdate,
 	       sysdate)
-	       
-	
+
 	</insert>
+
+	<select id="getAnonimityCode" parameterType="int" resultType="string">
+		SELECT ANONYMITY_CHECK_CODE FROM SURVEY_LIST WHERE SURVEY_SEQ = #{surveySeq}
 	
+	</select>	
 	
 </mapper>

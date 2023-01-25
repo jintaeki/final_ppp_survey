@@ -64,6 +64,12 @@ public class LoginCheckService implements ILoginCheckService{
 		loginCheckRepository.insertResult(SRD);
 	}
 
+	@Override
+	public String getAnonimityCode(int surveySeq) {
+		
+		return loginCheckRepository.getAnonimityCode(surveySeq);
+	}
+
 	
 	
 }

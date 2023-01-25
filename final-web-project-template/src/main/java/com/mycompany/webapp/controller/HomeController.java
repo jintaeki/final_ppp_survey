@@ -208,6 +208,15 @@ public class HomeController {
 	@ResponseBody
 	public String insertSurveyResult(@ModelAttribute ("surveyResult") SurveyResultDTO surveyResult ) {
 		logger.info(surveyResult.toString());
+		
+		String anonymityCodes = surveyResult.getAnonymityCode();
+		String[] anonymityCode = anonymityCodes.split(",");
+		//
+		if(anonymityCode[0].equals("20001")) {
+			
+		}else {
+			
+		}
 		String surveySeqs = surveyResult.getSurveySeq();
 		int cntcontent = (surveySeqs.length() - surveySeqs.replace(",", "").length())+1;
 	
@@ -227,7 +236,7 @@ public class HomeController {
 		// 익명 일련번호 설정
 				
 		
-		surveyResult.setAnonymitySeq(checknansu());
+		
 		
 		
 		// 행 마다 값 설정
@@ -239,7 +248,7 @@ public class HomeController {
 			surveyResult.setItemSeq(itemSeq[i]);
 			surveyResult.setAnswerContent(answerContent[i]);
 			
-			loginCheckService.insertResult(surveyResult);
+//			loginCheckService.insertResult(surveyResult);
 		}
 		System.out.println(surveyResult.getAnonymitySeq());
 		
@@ -247,8 +256,25 @@ public class HomeController {
 		return "성공";
 	}
 	
+	@RequestMapping("/getAnonymityCode.do/{surveySeq}")
+	@ResponseBody
+	public String getAnonimityCode(@PathVariable int surveySeq) {
+		
+		
+		
+		return loginCheckService.getAnonimityCode(surveySeq);
+		
+	}
 	
-	public int checknansu() {
+	
+	@RequestMapping("/getAnonySeq.do")
+	@ResponseBody
+	public String getAnonySeq() {
+		
+		return checknansu();
+	}
+	
+	public String checknansu() {
 		nansu = loginCheckService.getNansu();
 		System.out.println(loginCheckService.checkNansu(nansu));
 		if(loginCheckService.checkNansu(nansu)==0) {
@@ -256,7 +282,7 @@ public class HomeController {
 		}else {
 			checknansu();
 		}
-		return nansu;
+		return String.valueOf(nansu);
 			
 		}
 	

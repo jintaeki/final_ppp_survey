@@ -26,4 +26,6 @@ public interface ILoginCheckRepository {
 	public int checkNansu(int nanSu);
 	
 	public  void insertResult (SurveyResultDTO SRD);
+	
+	public String getAnonimityCode(int surveySeq);
 }

@@ -9,15 +9,19 @@
 <script type="text/javascript">
   
    
-   function questionHTML(result,raterId,appraiseeId){
+   function questionHTML(result,raterId,appraiseeId,anonymitycode){
 
 	   const size= result.length;
 	   console.log(size);
    	   $("#addQuestion").empty();
 	   let cnt = 0;
 	   surveyQandA = '';
+	   surveyQandA += '<input type="hidden" name="anonymityCode" value='+anonymitycode+'>';
+	   surveyQandA += '<input type="hidden" name="anonymitySeq" value='+theSeq+'>';
+
+	   	 $('#surveyForm').append(surveyQandA);
 	   for(let i = 0; i<size;i++){
-		   
+		   		
 		    if(i==size-1){
 		    	surveyQandA += '<div class="question-form">';
 		    	surveyQandA+= '<input type="hidden" name="questionSeq" value="'+result[i].QUESTION_SEQ+'">';
@@ -99,30 +103,61 @@
 	   console.log(raterId);
 	   console.log($(obj).val());
 	   var surveySeq = $(obj).val();
-	   if($(obj).val()==0){
-		   console.log("surveySeq is 0");
-		   var html='';
-		   html += '<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 평가 대상이 없습니다.</b>';
-		   $('#appendArea').empty();
-		   $('#appendArea').append(html);
-	   }else{
+	   
 	   $.ajax({
-	         url:'getAppraisee.do/'+raterId+"/"+surveySeq,
+	         url:'getAnonymityCode.do/'+surveySeq,
 	         method: 'GET',
-	         dataType: 'json',
+	        dataType: 'html',
 	         success: function(result){
 	        	 console.log('result '+result);
 
-	        	 appraisee(result);
+	        	 var anonymitycode = result;
+	        
+	        	 if($(obj).val()==0){
+	      		   console.log("surveySeq is 0");
+	      		   var html='';
+	      		   html += '<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 평가 대상이 없습니다.</b>';
+	      		   $('#appendArea').empty();
+	      		   $('#appendArea').append(html);
+	      	   }else{
+	      		   
+	      	   $.ajax({
+	      	         url:'getAppraisee.do/'+raterId+"/"+surveySeq,
+	      	         method: 'GET',
+	      	         dataType: 'json',
+	      	         success: function(result){
+	      	        	 console.log('result '+result);
+						 
+	      	        	 var appraisee = result;
+	      	        	 
+	      	        	$.ajax({
+	   	      	         url:'getAnonySeq.do',
+	   	      	         method: 'GET',
+	   	      	         dataType: 'html',
+	   	      	         success: function(theSeq){
+	   	      	        	 console.log('result '+result);
+	   						 
+	   	      	        	 appraisee(appraisee,anonymitycode,theSeq);
+	   	      	        	 
+	   	      	          		
+
+	   	      	         }
+	   	      	      });
+	      	          		
+
+	      	         }
+	      	      });
 	        	 
-	          		
 
 	         }
+	         }
 	      });
+	   
+	   
 	   }
-   }
    
-   function appraisee(data){
+   
+   function appraisee(data,anonymitycode,theSeq){
 	   var size = data.length;
 	   var html = '';
 	   $('#appendArea').empty();
@@ -131,13 +166,13 @@
 		   html +='<div class="col-4">'+data[i].appraiseeDepartmentName+'</div>';
 		   html +='<div class="col-2">'+data[i].appraiseeGradeName+'</div>';
 		   html +='<div class="col-3">'+data[i].appraiseeName+'</div>';
-		   html +='<div class="col-3"><button onclick="surveyStart(this,'+data[i].appraiseeId+','+data[i].raterId+')" value="'+data[i].surveySeq+'">평가</button></div>';
+		   html +='<div class="col-3"><button onclick="surveyStart(this,'+data[i].appraiseeId+','+data[i].raterId+','+anonymitycode+','+theSeq+')" value="'+data[i].surveySeq+'">평가</button></div>';
 	   	 
 	   }
 	   $('#appendArea').append(html);
    }
    
-   function surveyStart(obj,appraiseeId,raterId){
+   function surveyStart(obj,appraiseeId,raterId,anonymitycode,theSeq){
 	   var surveySeq = $(obj).val();
 	   
 	   
@@ -148,7 +183,7 @@
 	         success: function(result){
 
 	        	 alert("문제요청성공");
-	        	 questionHTML(result,raterId,appraiseeId);
+	        	 questionHTML(result,raterId,appraiseeId,anonymitycode,theSeq);
 	            
 	         }
 	      });
@@ -236,7 +271,7 @@
 	<select name="surveySeq" onclick="selectSurvey(this,${raterId})">
 		<option value="0">선택</option>
 		<c:forEach items="${surveySeqAndName}" var="surveySeqAndName">
-			<option  value="${surveySeqAndName.SURVEY_SEQ}">${surveySeqAndName.SURVEY_NAME}</option>
+			<option  value="${surveySeqAndName.SURVEY_SEQ}" >${surveySeqAndName.SURVEY_NAME}</option>
 		</c:forEach>
 	</select>
 	<div class="row">
