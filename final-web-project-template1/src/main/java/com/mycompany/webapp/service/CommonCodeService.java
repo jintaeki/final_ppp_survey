@@ -21,7 +21,10 @@ public class CommonCodeService implements ICommonCodeService{
 		return 	CCR.selectStateCode();
 
 	}
+<<<<<<< HEAD
+=======
 
 	
 	
+>>>>>>> branch 'master' of https://github.com/jintaeki/final_ppp_survey.git
 }

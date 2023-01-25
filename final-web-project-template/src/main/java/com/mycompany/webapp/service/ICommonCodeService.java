@@ -8,6 +8,12 @@ public interface ICommonCodeService {
 
 	public List<CommonDTO> selectStateCode();
 
+
+	public List<CommonDTO> selectDateCode();
+	
+	public List<CommonDTO> selectMappingCode();
+	
+
 	public List<CommonDTO> selectEvaluateCode();
 
 }

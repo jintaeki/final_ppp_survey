@@ -20,30 +20,18 @@ public interface ISurveyRepository {
 
 	void updateSurvey(SurveyListDTO surveylist);
 
-	void updateItem(SurveyQuestionDTO surveyquestion);
-	void setItemDelete(SurveyQuestionDTO sqd);
-
-	int selectMaxSurveyId();
-
 	void insertQuestion(SurveyQuestionDTO SQD);
-	int selectMaxQuestionId();
-	int selectMaxItemId();
+
 	void insertItem(SurveyQuestionDTO SQD);
 
 	//문제 비동기 조회 목적
 	List<Map<String, Object>> selectQuestion(int surveySeq);
 
-	List<SurveyListDTO> selectSurveyList(PagingDTO pagingdto);
-
 	SurveyListDTO selectSurvey(int surveyid);
 
-	//SurveyQuestionDTO getQuestionList(int surveyId);
 	void UpdateQuestion(SurveyQuestionDTO SQD);
 
-
 	List<SurveyQuestionDTO> getQuestionList(int surveySeq);
-
-	Date getAddDate(int serveySeq);
 
 	void sendMessage(int surveySeq);
 
@@ -53,19 +41,10 @@ public interface ISurveyRepository {
 
 	List<SurveyListDTO> searchListByKeyword(PagingDTO pagingdto);
 
-	List<SurveyListDTO> searchListByKeywordAndDicideYN(PagingDTO pagingdto);
-
-	List<SurveyListDTO> searchListByKeywordAndDate(PagingDTO pagingdto);
-
-
 	List<Map<String, Object>> selectQuestionBySeq(@Param ("questionSeq") int questionSeq, @Param ("surveySeq") int surveySeq);
-
 
 	List<Map<String, Object>> selectItems(int questionSeq);
 
-	void UpdateQTypeBySeq(SurveyQuestionDTO SQD);
-
-	//진택
 	void surveyInsertComplete(int surveySeq);
 
 	void deleteSurvey(int surveySeq);
@@ -78,9 +57,11 @@ public interface ISurveyRepository {
 	List<PopupDTO> selectSurveyMapping(@Param("surveySeq") int surveySeq, @Param("raterId") int raterId);
 
 	// 중복 확인
-		int mappingCheck(@Param("surveySeq") int surveySeq);
 
-		List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
+	int mappingCheck(@Param("surveySeq") int surveySeq);
+
+	List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
+
 }
 
 

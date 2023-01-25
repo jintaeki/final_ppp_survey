@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -26,8 +27,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -48,10 +52,7 @@ public class HomeController {
 	
 
 	@Autowired
-	ISurveyService ISS;
-
-	@Autowired
-	ILoginCheckService ILCS;
+	ILoginCheckService loginCheckService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
@@ -145,16 +146,17 @@ public class HomeController {
 							  HttpSession session, Model model) {
 		logger.info("실행");
 		logger.info(UCD.toString());
-		if(ILCS.checkUser(UCD)==1) {
+		if(loginCheckService.checkUser(UCD)==1) {
 			logger.info("로그인 가능");
-			String check =  ILCS.getUserManagerYN(UCD);
+			String check =  loginCheckService.getUserManagerYN(UCD);
 			
 			
 			if(check.equals("N")) {
 				logger.info("평가자 진입");
-				List<UserCheckDTO> UCDList = ILCS.getUserInfo(UCD);
+				List<UserCheckDTO> UCDList = loginCheckService.getUserInfo(UCD);
 				model.addAttribute("UCDList",UCDList);
-				return "redirect:/survey";
+				logger.info(UCDList.toString());
+				return "survey";
 			}else {
 				logger.info("관리자 진입");
 				return "redirect:/survey/surveysearch";
@@ -171,28 +173,20 @@ public class HomeController {
 	@RequestMapping("/loginafter")
 	public String home() {
 		logger.info("실행");
-		//log.info("실행");
 		return "login_after_user";
 	}
 	
-	@RequestMapping("/gosurvey")
-	public String home2() {
+	@RequestMapping("/getquestionforsurvey.do/{surveySeq}")
+	@ResponseBody
+	public List<Map<String, Object>> getQuestionForSurvey(@PathVariable int surveySeq) {
 		logger.info("실행");
-		//log.info("실행");
-		return "survey";
+		logger.info(String.valueOf(surveySeq));
+		List<Map<String, Object>> QuestionForSurvey = loginCheckService.getQuestion(surveySeq);
+		
+		return QuestionForSurvey;
 	}
 	
 	
 	
-//	@RequestMapping("/login")
-//	public String login() {
-//		logger.info("실행");
-//		//log.info("실행");
-//		return "login";
-//	}
-	
-
-	
-
 }
 

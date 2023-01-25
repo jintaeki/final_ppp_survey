@@ -21,6 +21,25 @@
 						<tr>
 							<th scope="col"></th>
 							<th scope="col">부서</th>
+<<<<<<< HEAD
+							<th scope="col">직급</th>
+							<th scope="col">이름</th>
+							<th scope="col">참여여부</th>
+							<th scope="col">결과</th>
+						</tr>
+					</thead>
+					<tbody>
+					<c:forEach items="${EL}" var="EL">
+						<tr>
+							<th scope="row">1 </th>
+							<td class="sv_name">"${EL.departmentName}"</td>
+							<td>"${EL.gradeName}"</td>
+							<td>"${EL.employeeName}"</td>
+							<td>"${EL.surveyCompleteYN}"</td>
+							<td><input type="button" class="btn btn-link" onclick="location.href='<c:url value="/survey/surveyresult"/>'" value="조회"></td>
+						</tr>
+					</c:forEach>
+=======
 							<th scope="col">소속</th>
 							<th scope="col">직급</th>
 							<th scope="col">이름</th>
@@ -119,6 +138,7 @@
 							<td>O</td>
 							<td></td>
 						</tr>
+>>>>>>> branch 'master' of https://github.com/jintaeki/final_ppp_survey.git
 					</tbody>
 				</table>
 				<ul class="pagination">

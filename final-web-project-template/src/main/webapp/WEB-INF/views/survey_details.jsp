@@ -3,16 +3,10 @@
 
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
-<head>
-<meta charset="utf-8">
+
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
-	
-	
-	
 
-</head>
-<body>
 	
 	<div class="all_insertdiv">
 		<div class="input-group mb-3">
@@ -322,4 +316,3 @@
 	
 	</script>
 
-</body>

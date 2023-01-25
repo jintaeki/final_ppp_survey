@@ -6,6 +6,7 @@
 
 <script>
 
+
 	function delete_survey_btn(obj,surveyseq,selection,pageno){
 		let bselection = selection;
 		let bpageno = pageno;
@@ -124,7 +125,7 @@
 			method:'POST', //어떤 방식으로 보낼 지
 			url:'sendmessage.do/'+surveyseq+'/'+pageno, // qdiv를 보낼 경로 설정
 		    beforeSend : function() { //보내기 전 실행
-			console.log("요청이 보내지는가??");
+			console.log("요청이 보내지는가?");
 		   },
 		   success:function () {	 //전송 성공시 실행
 			console.log("굿");
@@ -137,8 +138,10 @@
 
  			const done = `매핑완료`;
 			tag.parent().parent().next().next().append(done);
+			console.log(tag.parent().parent().next().next().children('button'));
 			tag.parent().parent().next().next().children().hide();
-
+			tag.parent().parent().prev().prev().children().click(function(){return false;});
+			tag.parent().parent().prev().prev().children().css('color', '#ccc');
 
  			const complete = `알림발송완료`;
  			tag.parent().html(complete);
@@ -164,12 +167,9 @@
   	    stateCode.each((index, element) => {
   	    	const value = $(element).val();
   	    	console.log($(element).parent().prev().prev().prev().prev().children());
-  	    	if(value == 30004){
+  	    	if(value == 30001){
 	  	    	$(element).next().attr('disabled', 'disabled');
-  	    		$(element).parent().prev().prev().prev().prev().children().click(function () {return false;});
-  	    		$(element).parent().prev().prev().prev().prev().children().css('color', '#ccc');
-  	    	}else if(value == 30001){
-	  	    	$(element).next().attr('disabled', 'disabled');
+
   	    	}
   	    });
   	});
@@ -284,28 +284,46 @@
 			<div class="row">
 				<div class="hmenu">
 					<div class="survey_list_form_upper_dv">
-						<form action="<c:url value='/survey/surveysearch'/>" method="GET"
+						<form action="<c:url value='/survey/surveysearch'/>" method="POST"
 							class="survey_list_form">
 							<input type="date" name="surveyStartDate" id="selectedDate"
 								value="<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">
+							<select name="anonyMityCheckCode">
+								<c:forEach items="${commonCodeList}" var="commonCode">
+									<c:if test="${pagingdto.anonyMityCheckCode eq commonCode.codeDetailId}">
+										<c:if test="${commonCode.codeId eq '200' or commonCode.codeDetailId eq '30005'}">
+											<option selected value="${commonCode.codeDetailId}">${commonCode.codeDetailName }</option>
+										</c:if>
+									</c:if>
+									<c:if test="${pagingdto.anonyMityCheckCode ne commonCode.codeDetailId}">
+										<c:if test="${commonCode.codeId eq '200' or commonCode.codeDetailId eq '30005'}">
+											<option value="${commonCode.codeDetailId}">${commonCode.codeDetailName }</option>
+										</c:if>
+									</c:if>
+								</c:forEach>
+							</select>
 							<select name="selection">
 								<c:forEach items="${commonCodeList}" var="commonCode">
+									<c:if test="${commonCode.codeId eq '300' }">
 									<c:if test="${pagingdto.selection eq commonCode.codeDetailId }">
 										<option selected value="${pagingdto.selection}">${commonCode.codeDetailName }</option>
 									</c:if>
 									<c:if test="${pagingdto.selection ne commonCode.codeDetailId }">
 										<option value="${commonCode.codeDetailId}">${commonCode.codeDetailName }</option>
 									</c:if>
+									</c:if>
 								</c:forEach>
-							</select> <input type="text" class="form-control" id="selectedKeyword" placeholder="search"
+							</select>
+
+							<input type="text" class="form-control" id="selectedKeyword" placeholder="search"
 								name="keyword" value="${pagingdto.keyword}"
 								aria-describedby="button-addon2"> <input type="hidden"
 								name="pageNo" value="1">
 							<div class="input-group-append">
 								<input type="submit" class="btn btn-outline-secondary"
 									id="button-addon2" value="검색">
-								<input type="reset" class="btn btn-outline-secondary"
-									id="button-addon2" value="초기화">
+								<input type="button" class="btn btn-outline-secondary"
+									id="button-addon2" onclick="resetMenu(this)" value="초기화">
 							</div>
 						</form>
 						<button id="upper_dv_btn" type="button" class="btn btn-primary"
@@ -333,9 +351,9 @@
 							<tr id="${list.surveySeq }">
 
 
-								<th scope="row"><button class="delete_survey_btn"
-										style="border: 1px solid #fff; border-radius: 35em;"
-										onclick="delete_survey_btn(this,${list.surveySeq}, ${pagingdto.selection},  ${pagingdto.pageNo})">
+								<th scope="row">
+								<button class="delete_survey_btn" style="border: 1px solid #fff; border-radius: 35em;" onclick="delete_survey_btn(this,${list.surveySeq}, ${pagingdto.selection},  ${pagingdto.pageNo})">
+
 										<i class="fas fa-xmark"></i>
 									</button></th>
 								<td><c:if test="${list.stateCode ne '30004'}">

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -8,3 +9,15 @@
 	      class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/> 
 
 </beans>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 모든 서블릿 버전에서 사용 가능한 방법: commons-fileupload 라이브러리 의존 설정 필요 -->
+	<bean id="multipartResolver" 
+	      class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/> 
+
+</beans>
+>>>>>>> branch 'master' of https://github.com/jintaeki/final_ppp_survey.git

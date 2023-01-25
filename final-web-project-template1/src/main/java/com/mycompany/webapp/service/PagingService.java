@@ -12,6 +12,15 @@ public class PagingService implements IPagingService{
 
 	@Autowired
 	IPagingRepository pagingRepo;
+<<<<<<< HEAD
+
+	@Override
+	public int getTotalBoardNum(String keyword, String selection, Date surveyStartDate, String anonyMityCheckCode) {
+		return pagingRepo.getTotalBoardNum(keyword, selection, surveyStartDate, anonyMityCheckCode);
+	}
+
+
+=======
 	
 	@Override
 	public int getTotalBoardNum(String keyword, String selection, Date surveyStartDate) {
@@ -19,4 +28,5 @@ public class PagingService implements IPagingService{
 	}
 
 	
+>>>>>>> branch 'master' of https://github.com/jintaeki/final_ppp_survey.git
 }

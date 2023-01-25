@@ -1,6 +1,8 @@
 package com.mycompany.webapp.dao;
 
+import com.mycompany.webapp.dto.GradeDTO;
 import com.mycompany.webapp.dto.MappingDTO;
+import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.PopupDTO;
 
 import java.util.List;
@@ -21,13 +23,16 @@ public interface IMappingRepository {
 	void deleteMapping(@Param("surveySeq") int surveySeq);
 	
 	// 매핑된 데이터를 출력
-	List<PopupDTO> selectMappingData(@Param("surveySeq") int surveySeq);
+	List<PopupDTO> selectMappingData(PagingDTO pagingdto);
+	
+	// 검색용 직급 목록 출력
+	List<GradeDTO> selectGradeList();
 	
 	// 랜덤에 제외된 나머지 목록 띄우기
-	List<PopupDTO> getPopup(@Param("surveySeq") int surveySeq,  @Param("raterId") String raterId,  @Param("month") int month);
+	List<PopupDTO> getPopup(PagingDTO pagingdto);
 	
 	// 조건에 제외된 나머지 목록 띄우기
-	List<PopupDTO> getAnother(@Param("surveySeq") int surveySeq);
+	List<PopupDTO> getAnother(PagingDTO pagingdto);
 	
 	// 데이터중 현재 시행되고 있는 설문지의 사람 제외 
 	List<MappingDTO> ovrlpCheck(@Param("raterId") String raterId, @Param("appraiseeId") String appraiseeId);

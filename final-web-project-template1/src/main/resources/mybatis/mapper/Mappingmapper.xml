@@ -6,6 +6,238 @@
 			INSERT INTO MAPPING (SURVEY_SEQ,
 			                     RATER_ID,
 			                     APPRAISEE_ID,
+<<<<<<< HEAD
+			                     SURVEY_COMPLETE_YN,
+			                     REG_DATE,
+			                     UPDATE_DATE)
+    		SELECT
+    			SSQ,
+   				RATER,
+    			APPRAISEE,
+    			'N',
+    			REG_D,
+    			UPDATE_D
+    			FROM(
+    			    SELECT
+    				    SSQ,
+    					RATER,
+    					APPRAISEE,
+    					'N',
+                        REG_D,
+                        UPDATE_D,
+    					ROW_NUMBER() OVER (PARTITION BY RATER
+    					                       ORDER BY RATER) AS NUM
+					FROM(
+    					SELECT DISTINCT
+ 				    	   S.SURVEY_SEQ AS SSQ,
+        			 	   R.PARTICIPATION_EMPLOYEE_ID AS RATER,
+       				   	   A.PARTICIPATION_EMPLOYEE_ID AS APPRAISEE,
+        			   	  'N',
+                          SYSDATE AS REG_D,
+                          SYSDATE AS UPDATE_D
+    					FROM SURVEY_LIST S,
+    					     PROJECT_HISTORY R,
+    					     PROJECT_HISTORY A,
+    					     PROJECT P,
+    					     USER_INFO I
+         				WHERE R.PROJECT_ID = A.PROJECT_ID
+           				  AND R.PARTICIPATION_EMPLOYEE_ID != A.PARTICIPATION_EMPLOYEE_ID
+           				  AND I.EMPLOYEE_ID = A.PARTICIPATION_EMPLOYEE_ID
+            			  AND I.GRADE_ID = 2
+                          AND R.PROJECT_ID = P.PROJECT_ID
+           				  AND P.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE -(30 * #{month}) , 'YYYY-MM-dd')
+           			  	  AND S.SURVEY_SEQ = #{surveySeq}
+       				 ORDER BY DBMS_RANDOM.VALUE
+       				)F
+                LEFT JOIN
+                   (SELECT 
+                       M.RATER_ID,
+                       M.APPRAISEE_ID
+                    FROM MAPPING M,
+                         SURVEY_LIST S
+                    WHERE M.SURVEY_SEQ = S.SURVEY_SEQ
+                      AND S.SURVEY_START_DATE <= SYSDATE
+                      AND S.SURVEY_CLOSED_DATE >= SYSDATE) M
+                ON F.RATER = M.RATER_ID 
+               AND F.APPRAISEE = M.APPRAISEE_ID
+               WHERE M.RATER_ID IS NULL
+                 AND M.APPRAISEE_ID IS NULL
+            )
+			WHERE NUM <= #{number}
+		]]>
+	</select>
+	
+	<update id="updateState" parameterType="SLD">
+		UPDATE SURVEY_LIST 
+		   SET STATE_CODE = #{stateCode},
+		       UPDATE_DATE = SYSDATE
+		 WHERE SURVEY_SEQ = #{surveySeq}
+	</update>
+	
+	<select id="stateCheck" resultType="String">
+		SELECT STATE_CODE
+		FROM SURVEY_LIST
+		WHERE SURVEY_SEQ = #{surveySeq}
+	</select>
+	
+	<delete id="deleteMapping" parameterType="com.mycompany.webapp.dto.MappingDTO">
+		DELETE FROM MAPPING
+		 WHERE SURVEY_SEQ = #{surveySeq}
+	</delete>
+
+	<select id="selectMappingData" parameterType="map" resultType="com.mycompany.webapp.dto.PopupDTO">
+			SELECT
+				P.PROJECT_ID,
+				UR.GRADE_ID,
+				UR.DEPARTMENT_ID,
+				M.SURVEY_SEQ,
+				M.RATER_ID,
+				M.APPRAISEE_ID,
+				S.SURVEY_NAME,
+				O.DEPARTMENT_NAME,
+       		  	UR.EMPLOYEE_NAME AS "raterName",
+       		  	UA.EMPLOYEE_NAME AS "appraiseeName",
+     		  	G.GRADE_NAME
+			FROM PROJECT P,
+				 PROJECT_HISTORY H,
+     			 GRADE G,
+     			 MAPPING M,
+     		     USER_INFO UA,
+     			 USER_INFO UR,
+     			 SURVEY_LIST S,
+                 ORGANIZATION_CHART O
+			WHERE P.PROJECT_ID = H.PROJECT_ID
+				  AND UR.GRADE_ID = G.GRADE_ID
+				  AND H.PARTICIPATION_EMPLOYEE_ID = M.APPRAISEE_ID
+    			  AND UA.EMPLOYEE_ID = M.APPRAISEE_ID
+    			  AND UR.EMPLOYEE_ID = M.RATER_ID
+                  AND UR.DEPARTMENT_ID = O.DEPARTMENT_ID
+    			  AND M.SURVEY_SEQ = S.SURVEY_SEQ
+    			  AND M.SURVEY_SEQ = #{surveySeq}
+			ORDER BY G.GRADE_ID DESC, UR.EMPLOYEE_NAME
+	</select>
+
+	<select id="getPopup" parameterType="map" resultType="com.mycompany.webapp.dto.PopupDTO">
+    	<![CDATA[
+     		SELECT
+     			 A.PROJECT_ID,
+     			 UR.GRADE_ID,
+     			 UR.DEPARTMENT_ID,
+     			 S.SURVEY_SEQ ,
+     			 UR.EMPLOYEE_ID   AS "raterId",
+     			 UA.EMPLOYEE_ID   AS "appraiseeId",
+            	 P.PROJECT_NAME,
+            	 S.SURVEY_NAME,
+            	 O.DEPARTMENT_NAME,
+            	 UR.EMPLOYEE_NAME AS "raterName",
+            	 UA.EMPLOYEE_NAME AS "appraiseeName",
+            	 G.GRADE_NAME
+       		FROM
+            	SURVEY_LIST S,
+            	PROJECT_HISTORY R,
+            	PROJECT_HISTORY A,
+            	PROJECT P,
+            	ORGANIZATION_CHART O,
+             	USER_INFO UA,
+             	USER_INFO UR,
+             	GRADE G
+       		WHERE R.PROJECT_ID = A.PROJECT_ID
+         	  AND R.PARTICIPATION_EMPLOYEE_ID <> A.PARTICIPATION_EMPLOYEE_ID
+         	  AND UA.GRADE_ID = 2
+         	  AND UA.EMPLOYEE_ID = A.PARTICIPATION_EMPLOYEE_ID
+         	  AND UR.DEPARTMENT_ID = O.DEPARTMENT_ID
+              AND R.PARTICIPATION_EMPLOYEE_ID = UR.EMPLOYEE_ID
+              AND R.PROJECT_ID = P.PROJECT_ID
+         	  AND P.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE -(30 * #{month}), 'YYYY-MM-dd')
+              AND R.PARTICIPATION_EMPLOYEE_ID = #{raterId}
+              AND S.SURVEY_SEQ = #{surveySeq}
+              AND NOT EXISTS
+              	(SELECT 'X'
+                 FROM MAPPING M
+                 WHERE M.APPRAISEE_ID = UA.EMPLOYEE_ID
+                   AND M.RATER_ID = UR.EMPLOYEE_ID
+                   AND M.SURVEY_SEQ = #{surveySeq})
+        	ORDER BY UA.EMPLOYEE_NAME
+      	]]>
+   	</select>
+   	
+   	<select id="getAnother" parameterType="map" resultType="com.mycompany.webapp.dto.PopupDTO">
+	   		SELECT
+				P.PROJECT_ID,
+				UR.GRADE_ID,
+				UR.DEPARTMENT_ID,
+				S.SURVEY_SEQ,
+				UR.EMPLOYEE_ID   AS "raterId", 
+				UA.EMPLOYEE_ID   AS "appraiseeId",
+				P.PROJECT_NAME,
+				S.SURVEY_NAME,
+				O.DEPARTMENT_NAME,
+	       		UR.EMPLOYEE_NAME AS "raterName",
+	       		UA.EMPLOYEE_NAME AS "appraiseeName",
+	     		G.GRADE_NAME
+			FROM PROJECT P,
+				PROJECT_HISTORY H,
+	     		GRADE G,
+	     	    USER_INFO UA,
+	     	    USER_INFO UR,
+	     	    SURVEY_LIST S,
+	            ORGANIZATION_CHART O
+			WHERE P.PROJECT_ID = H.PROJECT_ID
+	          AND UR.EMPLOYEE_ID = H.participation_employee_id
+	          AND UR.GRADE_ID = G.GRADE_ID
+	          AND UR.DEPARTMENT_ID = O.DEPARTMENT_ID
+	          AND UA.GRADE_ID = 2
+	          AND UA.EMPLOYEE_ID != UR.EMPLOYEE_ID
+	          AND S.SURVEY_SEQ = #{surveySeq}
+	          AND NOT EXISTS
+	          (SELECT 'X'
+	                 FROM MAPPING M
+	                 WHERE M.APPRAISEE_ID = UA.EMPLOYEE_ID
+	                   AND M.RATER_ID = UR.EMPLOYEE_ID
+	                   AND M.SURVEY_SEQ = #{surveySeq})
+			ORDER BY G.GRADE_ID DESC, UR.EMPLOYEE_NAME		
+   	</select>
+   	
+   	<select id="ovrlpCheck" parameterType="map" resultType="com.mycompany.webapp.dto.MappingDTO">
+   		<![CDATA[
+   		SELECT 
+            M.RATER_ID,
+            M.APPRAISEE_ID
+        FROM MAPPING M,
+             SURVEY_LIST S
+        WHERE M.SURVEY_SEQ = S.SURVEY_SEQ
+          AND S.SURVEY_START_DATE <= SYSDATE
+          AND S.SURVEY_CLOSED_DATE >= SYSDATE
+          AND M.RATER_ID = #{raterId}
+          AND M.APPRAISEE_ID = #{appraiseeId}
+          ]]>
+   	</select>
+
+	<insert id="insertAppraisee" parameterType="com.mycompany.webapp.dto.MappingDTO">
+		INSERT INTO MAPPING
+			(SURVEY_SEQ,
+			 RATER_ID,
+			 APPRAISEE_ID,
+			 SURVEY_COMPLETE_YN,
+			 REG_DATE,
+			 UPDATE_DATE)
+ 		VALUES
+ 			(#{surveySeq},
+ 			 #{raterId},
+ 			 #{appraiseeId},
+ 			 'N',
+ 			 SYSDATE,
+ 			 SYSDATE)
+	</insert>
+
+	<delete id="deleteAppraisee" parameterType="com.mycompany.webapp.dto.MappingDTO">
+		DELETE FROM MAPPING
+		 WHERE SURVEY_SEQ = #{surveySeq}
+		   AND RATER_ID = #{raterId}
+		   AND APPRAISEE_ID = #{appraiseeId}
+	</delete>
+	
+=======
 			                     SURVEY_COMPLETE_YN)
     		SELECT
     			SURVEY_SEQ,
@@ -148,4 +380,5 @@
          AND APPRAISEE_ID = #{appraiseeId}
    </delete>
 
+>>>>>>> branch 'master' of https://github.com/jintaeki/final_ppp_survey.git
 </mapper>
