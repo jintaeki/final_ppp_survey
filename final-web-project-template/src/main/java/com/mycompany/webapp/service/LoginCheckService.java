@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.ILoginCheckRepository;
+import com.mycompany.webapp.dto.SurveyResultDTO;
 import com.mycompany.webapp.dto.UserCheckDTO;
 
 @Service
@@ -55,6 +56,12 @@ public class LoginCheckService implements ILoginCheckService{
 	public int checkNansu(int nanSu) {
 		
 		return loginCheckRepository.checkNansu(nanSu);
+	}
+
+	@Override
+	public void insertResult(SurveyResultDTO SRD) {
+		
+		loginCheckRepository.insertResult(SRD);
 	}
 
 	

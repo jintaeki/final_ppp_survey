@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.mycompany.webapp.dto.SurveyResultDTO;
 import com.mycompany.webapp.dto.UserCheckDTO;
 
 public interface ILoginCheckRepository {
@@ -23,4 +24,6 @@ public interface ILoginCheckRepository {
 	public int getNansu();
 	
 	public int checkNansu(int nanSu);
+	
+	public  void insertResult (SurveyResultDTO SRD);
 }

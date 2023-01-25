@@ -85,13 +85,13 @@
 	</select>
 	
 	<select id="checkNansu" parameterType="int" resultType="int">
-	SELECT ANONYMITY_SEQ FROM SURVEY_RESULT WHERE ANONYMITY_SEQ = #{nanSu}
+	SELECT COUNT(ANONYMITY_SEQ) FROM SURVEY_RESULT WHERE ANONYMITY_SEQ = #{nanSu}
 	
 	</select>
 	
 	<insert id="insertResult" parameterType="com.mycompany.webapp.dto.SurveyResultDTO">
-	insert into table 
-	set (SURVEY_SEQ, 
+	INSERT INTO SURVEY_RESULT
+		(SURVEY_SEQ, 
 		 RATER_ID,
 		 APPRAISEE_ID,
 		 ANONYMITY_SEQ,
@@ -100,7 +100,7 @@
 		 ANSWER_CONTENT,
 		 REG_DATE,
 		 UPDATE_DATE )
-	values(#{surveySeq},
+	VALUES(#{surveySeq},
 	       #{raterId},
 	       #{appraiseeId},
 	       #{anonymitySeq},

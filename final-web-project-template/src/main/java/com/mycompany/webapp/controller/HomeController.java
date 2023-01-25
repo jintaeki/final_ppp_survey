@@ -226,11 +226,9 @@ public class HomeController {
 		
 		// 익명 일련번호 설정
 				
-		if(checkNansu()==0) {
-			surveyResult.setAnonymitySeq(nansu);
-		}else {
-			checkNansu();
-		}
+		
+		surveyResult.setAnonymitySeq(checknansu());
+		
 		
 		// 행 마다 값 설정
 		for(int i =0; i<cntcontent;i++) {
@@ -241,19 +239,25 @@ public class HomeController {
 			surveyResult.setItemSeq(itemSeq[i]);
 			surveyResult.setAnswerContent(answerContent[i]);
 			
-			
+			loginCheckService.insertResult(surveyResult);
 		}
-
+		System.out.println(surveyResult.getAnonymitySeq());
 		
 		
 		return "성공";
 	}
 	
 	
-	public int checkNansu() {
+	public int checknansu() {
 		nansu = loginCheckService.getNansu();
+		System.out.println(loginCheckService.checkNansu(nansu));
+		if(loginCheckService.checkNansu(nansu)==0) {
 			
-			return loginCheckService.checkNansu(nansu);
+		}else {
+			checknansu();
+		}
+		return nansu;
+			
 		}
 	
 }
