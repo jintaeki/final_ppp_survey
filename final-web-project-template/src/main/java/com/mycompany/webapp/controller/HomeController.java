@@ -209,48 +209,55 @@ public class HomeController {
 	public String insertSurveyResult(@ModelAttribute ("surveyResult") SurveyResultDTO surveyResult ) {
 		logger.info(surveyResult.toString());
 		
-		String anonymityCodes = surveyResult.getAnonymityCode();
-		String[] anonymityCode = anonymityCodes.split(",");
-		//
-		if(anonymityCode[0].equals("20001")) {
-			
-		}else {
-			
-		}
 		String surveySeqs = surveyResult.getSurveySeq();
 		int cntcontent = (surveySeqs.length() - surveySeqs.replace(",", "").length())+1;
-	
+		
+		String anonymityCodes = surveyResult.getAnonymityCode();	
 		String raterIds = surveyResult.getRaterId();
 		String appraiseeIds = surveyResult.getAppraiseeId();
 		String questionSeqs = surveyResult.getQuestionSeq();
 		String itemSeqs = surveyResult.getItemSeq();
 		String answerContents =surveyResult.getAnswerContent();
+		String anonymitySeqs = surveyResult.getAnonymitySeq();
 		
+		String[] anonymityCode = anonymityCodes.split(",");
 		String[] surveySeq = surveySeqs.split(",");
 		String[] raterId = raterIds.split(",");
 		String[] appraiseeId = appraiseeIds.split(",");
 		String[] questionSeq = questionSeqs.split(",");
 		String[] itemSeq = itemSeqs.split(",");
 		String[] answerContent = answerContents.split(",");
+		String[] anonymitySeq  = anonymitySeqs.split(",");
 		
-		// 익명 일련번호 설정
+		surveyResult.setSurveySeq(surveySeq[0]);
+		surveyResult.setAppraiseeId(appraiseeId[0]);
+		surveyResult.setRaterId(raterId[0]);
+
+		//
+		if(anonymityCode[0].equals("20001")) {
+			surveyResult.setAnonymitySeq(anonymitySeq[0]);
+//			surveyResult.setRaterId("null");
+
+			for(int i =0; i<cntcontent;i++) {
+				surveyResult.setQuestionSeq(questionSeq[i]);
+				surveyResult.setItemSeq(itemSeq[i]);
+				surveyResult.setAnswerContent(answerContent[i]);
 				
-		
-		
-		
-		
-		// 행 마다 값 설정
-		for(int i =0; i<cntcontent;i++) {
-			surveyResult.setSurveySeq(surveySeq[i]);
-			surveyResult.setRaterId(raterId[i]);
-			surveyResult.setAppraiseeId(appraiseeId[i]);
-			surveyResult.setQuestionSeq(questionSeq[i]);
-			surveyResult.setItemSeq(itemSeq[i]);
-			surveyResult.setAnswerContent(answerContent[i]);
-			
-//			loginCheckService.insertResult(surveyResult);
+				loginCheckService.insertResult(surveyResult);
+			}
+		}else {
+			for(int i =0; i<cntcontent;i++) {
+				surveyResult.setAnonymitySeq("0");
+//				surveyResult.setRaterId(raterId[i]);
+				surveyResult.setQuestionSeq(questionSeq[i]);
+				surveyResult.setItemSeq(itemSeq[i]);
+				surveyResult.setAnswerContent(answerContent[i]);
+				
+				loginCheckService.insertResult(surveyResult);
+			}
 		}
-		System.out.println(surveyResult.getAnonymitySeq());
+		
+
 		
 		
 		return "성공";

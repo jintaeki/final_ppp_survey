@@ -9,7 +9,7 @@
 <script type="text/javascript">
   
    
-   function questionHTML(result,raterId,appraiseeId,anonymitycode){
+   function questionHTML(result,raterId,appraiseeId,anonymitycode,theSeq){
 
 	   const size= result.length;
 	   console.log(size);
@@ -128,7 +128,7 @@
 	      	         success: function(result){
 	      	        	 console.log('result '+result);
 						 
-	      	        	 var appraisee = result;
+	      	        	 var appraisees = result;
 	      	        	 
 	      	        	$.ajax({
 	   	      	         url:'getAnonySeq.do',
@@ -137,7 +137,7 @@
 	   	      	         success: function(theSeq){
 	   	      	        	 console.log('result '+result);
 	   						 
-	   	      	        	 appraisee(appraisee,anonymitycode,theSeq);
+	   	      	        	 appraisee(appraisees,anonymitycode,theSeq);
 	   	      	        	 
 	   	      	          		
 
