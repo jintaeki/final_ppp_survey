@@ -15,6 +15,8 @@ public class UserCheckDTO {
 	private String surveyCompleteYN;
 	private String email;
 	private String managerYN;
+	private String anonymitySeq;
+	
 	public int getSurveySeq() {
 		return surveySeq;
 	}
@@ -53,6 +55,9 @@ public class UserCheckDTO {
 	}
 	public String getManagerYN() {
 		return managerYN;
+	}
+	public String getAnonymitySeq() {
+		return anonymitySeq;
 	}
 	public void setSurveySeq(int surveySeq) {
 		this.surveySeq = surveySeq;
@@ -93,6 +98,9 @@ public class UserCheckDTO {
 	public void setManagerYN(String managerYN) {
 		this.managerYN = managerYN;
 	}
+	public void setAnonymitySeq(String anonymitySeq) {
+		this.anonymitySeq = anonymitySeq;
+	}
 	
 	@Override
 	public String toString() {
@@ -100,7 +108,8 @@ public class UserCheckDTO {
 				+ ", raterName=" + raterName + ", raterDepartmentName=" + raterDepartmentName + ", raterGradeName="
 				+ raterGradeName + ", appraiseeId=" + appraiseeId + ", appraiseeName=" + appraiseeName
 				+ ", appraiseeDepartmentName=" + appraiseeDepartmentName + ", appraiseeGradeName=" + appraiseeGradeName
-				+ ", surveyCompleteYN=" + surveyCompleteYN + ", email=" + email + ", managerYN=" + managerYN + "]";
+				+ ", surveyCompleteYN=" + surveyCompleteYN + ", email=" + email + ", managerYN=" + managerYN
+				+ ", anonymitySeq=" + anonymitySeq + "]";
 	}
 	
 	

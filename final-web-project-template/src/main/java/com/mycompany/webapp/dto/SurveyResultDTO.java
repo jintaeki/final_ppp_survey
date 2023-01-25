@@ -1,14 +1,15 @@
 package com.mycompany.webapp.dto;
 
 public class SurveyResultDTO {
-	private int surveySeq;
+	private String surveySeq;
 	private String raterId;
 	private String appraiseeId;
 	private int anonymitySeq;
-	private int questionSeq;
-	private int itemSeq;
+	private String questionSeq;
+	private String itemSeq;
 	private String answerContent;
-	public int getSurveySeq() {
+	
+	public String getSurveySeq() {
 		return surveySeq;
 	}
 	public String getRaterId() {
@@ -20,16 +21,16 @@ public class SurveyResultDTO {
 	public int getAnonymitySeq() {
 		return anonymitySeq;
 	}
-	public int getQuestionSeq() {
+	public String getQuestionSeq() {
 		return questionSeq;
 	}
-	public int getItemSeq() {
+	public String getItemSeq() {
 		return itemSeq;
 	}
 	public String getAnswerContent() {
 		return answerContent;
 	}
-	public void setSurveySeq(int surveySeq) {
+	public void setSurveySeq(String surveySeq) {
 		this.surveySeq = surveySeq;
 	}
 	public void setRaterId(String raterId) {
@@ -41,21 +42,23 @@ public class SurveyResultDTO {
 	public void setAnonymitySeq(int anonymitySeq) {
 		this.anonymitySeq = anonymitySeq;
 	}
-	public void setQuestionSeq(int questionSeq) {
+	public void setQuestionSeq(String questionSeq) {
 		this.questionSeq = questionSeq;
 	}
-	public void setItemSeq(int itemSeq) {
+	public void setItemSeq(String itemSeq) {
 		this.itemSeq = itemSeq;
 	}
 	public void setAnswerContent(String answerContent) {
 		this.answerContent = answerContent;
 	}
+	
 	@Override
 	public String toString() {
 		return "SurveyResultDTO [surveySeq=" + surveySeq + ", raterId=" + raterId + ", appraiseeId=" + appraiseeId
 				+ ", anonymitySeq=" + anonymitySeq + ", questionSeq=" + questionSeq + ", itemSeq=" + itemSeq
 				+ ", answerContent=" + answerContent + "]";
 	}
+	
 	
 
 }

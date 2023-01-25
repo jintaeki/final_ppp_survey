@@ -22,9 +22,9 @@ public class LoginCheckService implements ILoginCheckService{
 	}
 
 	@Override
-	public List<UserCheckDTO> getUserInfo(UserCheckDTO UCD) {
+	public List<UserCheckDTO> getUserInfo(String raterId, int surveySeq) {
 		
-		return loginCheckRepository.getUserInfo(UCD);
+		return loginCheckRepository.getUserInfo(raterId,surveySeq);
 	}
 
 	@Override
@@ -37,6 +37,18 @@ public class LoginCheckService implements ILoginCheckService{
 	public List<Map<String, Object>> getQuestion(int surveySeq) {
 		
 		return loginCheckRepository.getQuestion(surveySeq);
+	}
+
+	@Override
+	public List<Map<String, Object>> getSurveySeqAndName(String raterId) {
+		
+		return loginCheckRepository.getSurveySeqAndName(raterId);
+	}
+
+	@Override
+	public int getNansu() {
+	
+		return loginCheckRepository.getNansu();
 	}
 
 	

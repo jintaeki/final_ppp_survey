@@ -365,24 +365,6 @@ public class SurveyController {
 
 		return "survey";
 	}
-
-	/* 설문 화면에서 왼쪽 그리드 */
-	//	@RequestMapping(value="", method=RequestMethod.GET)
-	//	public String selectSurveyMapping(@RequestParam int surveySeq, @RequestParam int raterId,
-	//			Model model, RedirectAttributes redirectAttrs) {
-	//		logger.info("실행");			
-	//		try {
-	//			if(surveyService.mappingCheck(raterId) == 0) {				
-	//				surveyService.selectSurveyMapping(surveySeq, raterId);
-	//			}
-	//			List<PopupDTO> SurveyMappingList = surveyService.selectSurveyMapping(surveySeq, raterId);
-	//			model.addAttribute("SurveyMappingList", SurveyMappingList);
-	//		} catch (Exception e) {
-	//			e.printStackTrace();
-	//			redirectAttrs.addFlashAttribute("message", e.getMessage());
-	//		}
-	//		return "/survey";
-	//	}
 	
 	@RequestMapping("/EvaluateSearch")
 	public String searchByEvaluate(

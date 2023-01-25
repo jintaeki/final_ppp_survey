@@ -61,6 +61,8 @@ public interface ISurveyRepository {
 	int mappingCheck(@Param("surveySeq") int surveySeq);
 
 	List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
+	
+
 
 }
 
