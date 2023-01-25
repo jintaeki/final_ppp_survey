@@ -135,7 +135,7 @@
 		]]>
 	</select>
 
-	<select id="getEvaluateTotalBoardNum" parameterType="String" resultType="int">
+	<select id="getEvaluateSearchBoardNum"  resultType="int">
 
       select count(ROWNUM)
       from (
@@ -164,19 +164,19 @@
                  FROM grade g ,user_info ui ,mapping m ,ORGANIZATION_CHART oc
                  WHERE
                      m.rater_id = ui.employee_id
-                    and g.grade_id = ui.grade_id and oc.department_id = ui.department_id and
-                    (#{selection} LIKE '%' || #{keyword} || '%'
+                     and g.grade_id = ui.grade_id and oc.department_id = ui.department_id and
+                     (oc.department_name LIKE '%' || #{keyword} || '%'
                    or
-                   #{selection} LIKE '%' || #{keyword} || '%'
+                     g.grade_name LIKE '%' || #{keyword} || '%'
                    or
-                    #{selection}  LIKE '%' || #{keyword} || '%'
+                    ui.employee_name  LIKE '%' || #{keyword} || '%'
                    or
-                  #{selection} LIKE  '%' || #{keyword} || '%')
+                 m.survey_complete_yn LIKE  '%' || #{keyword} || '%')
 
                )
                ORDER BY ROWNUM  DESC
      )
-
+		 where survey_seq = #{surveySeq}
      )
 	</select>
 

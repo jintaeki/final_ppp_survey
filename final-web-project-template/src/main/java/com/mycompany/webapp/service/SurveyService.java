@@ -21,6 +21,7 @@ import com.mycompany.webapp.dto.PopupDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
+import com.mycompany.webapp.dto.SurveyResultDTO;
 
 @Service
 public class SurveyService implements ISurveyService{
@@ -77,7 +78,6 @@ public class SurveyService implements ISurveyService{
 
 	}
 
-	@Transactional
 
 	public void insertQuestion(SurveyQuestionDTO sqd) {
 		logger.info("insertQuestion service: " + sqd );
@@ -234,6 +234,11 @@ public class SurveyService implements ISurveyService{
 		logger.info("검색:" + surveyDao.searchByEvaluate(pagingDto).toString());
 		return surveyDao.searchByEvaluate(pagingDto);
 	}
+	@Override
+	public List<SurveyResultDTO> surveyResult(SurveyResultDTO SRD) {
+		return null;
+	}
+
 }
 
 

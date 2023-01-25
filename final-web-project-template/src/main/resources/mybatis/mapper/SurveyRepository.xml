@@ -270,6 +270,7 @@
 
   <select id="selectSurveyEvaluate" parameterType="int" resultType="hashmap">
   		SELECT
+
               oc.department_name
              ,g.grade_name
              ,ui.employee_name
@@ -280,15 +281,18 @@
              ,ORGANIZATION_CHART oc
         WHERE m.rater_id = ui.employee_id and g.grade_id = ui.grade_id
         AND oc.department_id = ui.department_id and  m.survey_seq = #{surveySeq}
+
   </select>
 
 <select id="searchByEvaluate" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="hashmap">
+		<![CDATA[
 		SELECT
-        rnum
+		rnum
         ,department_name
         ,grade_name
         ,employee_name
         ,SURVEY_COMPLETE_YN
+        ,SURVEY_SEQ
         FROM ( SELECT
                  ROWNUM AS rnum
                 ,survey_seq
@@ -317,9 +321,11 @@
                   oc.DEPARTMENT_NAME LIKE  '%' || #{keyword} || '%')
 
                )
-               ORDER BY ROWNUM  DESC
+               where survey_seq = #{surveySeq}
+               ORDER BY ROWNUM  ASC
              )
-             where survey_seq = #{surveySeq}
+				WHERE rnum >= #{startRowNo} and rnum <= #{endRowNo}
+ ]]>
 </select>
 
 </mapper>

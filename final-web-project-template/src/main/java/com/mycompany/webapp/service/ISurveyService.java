@@ -13,6 +13,7 @@ import com.mycompany.webapp.dto.PopupDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
+import com.mycompany.webapp.dto.SurveyResultDTO;
 
 public interface ISurveyService {
 
@@ -78,6 +79,9 @@ public interface ISurveyService {
 	int mappingCheck(int surveySeq);
 
 	List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
+
+	List<SurveyResultDTO> surveyResult(SurveyResultDTO SRD);
+
 
 
 }

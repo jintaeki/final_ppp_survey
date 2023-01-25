@@ -32,6 +32,7 @@ import com.mycompany.webapp.dto.PopupDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
+import com.mycompany.webapp.dto.SurveyResultDTO;
 import com.mycompany.webapp.service.ICommonCodeService;
 import com.mycompany.webapp.service.IMappingService;
 import com.mycompany.webapp.service.IPagingService;
@@ -61,11 +62,13 @@ public class SurveyController {
 		return "survey_details";
 	}
 
+/*
 	@RequestMapping("/surveyevaluate/{surveySeq}")
 	public String surveyEvaluate(@PathVariable int surveySeq, HttpSession session, Model model,
-			@RequestParam(defaultValue = "1") int pageNo) {
+			@RequestParam(defaultValue = "1") int pageNo
+
+			) {
 		logger.info("실행");
-		System.out.println(surveySeq);
 		List<Map<String, String>> EL = surveyService.selectSurveyEvaluate(surveySeq);
 		logger.info("EL" + EL);
 		// log.info("실행");
@@ -74,6 +77,7 @@ public class SurveyController {
 
 		return "survey_evaluate";
 	}
+*/
 
 	// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
 	@RequestMapping("/surveyinsert2")
@@ -156,9 +160,11 @@ public class SurveyController {
 	}
 
 	@RequestMapping("/surveyresult")
-	public String surveyResult() {
+	public String surveyResult(@ModelAttribute("SRD") @Valid SurveyResultDTO SRD, BindingResult result, HttpSession session,
+			RedirectAttributes redirectAttrs) {
 		logger.info("실행");
-		// log.info("실행");
+		surveyService.surveyResult(SRD);
+
 		return "survey_result";
 	}
 
@@ -409,16 +415,18 @@ public class SurveyController {
 	 * "/survey"; }
 	 */
 
-	@RequestMapping("/EvaluateSearch")
+	@RequestMapping("/EvaluateSearch/{surveySeq}")
 	public String searchByEvaluate(
+						 @PathVariable("surveySeq") int surveySeq,
 			             @RequestParam(defaultValue="") String keyword,
 						 @RequestParam(defaultValue="1") int pageNo,
 						 @RequestParam(defaultValue="") String selection,
+						 @RequestParam(value = "searchType", required = false, defaultValue = "employeeName") String searchType,
 						 @RequestParam(value="employeeName", required=false) String employeeName,
 						 @RequestParam(value="departmentName", required=false) String departmentName,
 						 @RequestParam(value="CompleteYn", required=false) String surveyCompleteYn,
 						 @RequestParam(value="gradeName", required=false) String gradeName,
-						 @RequestParam(value="surveySeq") int surveySeq,
+						 //@RequestParam(value="surveySeq") int surveySeq,
 						 HttpSession session, Model model) {
 		logger.info("지금 가져온 선택지:"+selection);
 		logger.info("페이지 수"+pageNo);
@@ -432,11 +440,13 @@ public class SurveyController {
 			String beforeKeyword = keyword;
 
 			 	model.addAttribute("selecton", selection);
-			    logger.info("모델 :" + model);
 
-				int totalRows = pagingService.getEvaluateTotalBoardNum(keyword, selection);
+			    logger.info("모델 :" + model);
+				int totalRows = pagingService.getEvaluateSearchBoardNum(keyword, selection, surveySeq);
+
 				System.out.println("totolRows:" + totalRows);
 			    pagingDto = new PagingDTO(7, 7, totalRows, pageNo);
+
 				pagingDto.setSelection(selection);
 				pagingDto.setKeyword(keyword);
 				pagingDto.setSurveySeq(surveySeq);
@@ -445,6 +455,7 @@ public class SurveyController {
 				logger.info("keyword: "+pagingDto.getKeyword());
 				logger.info("paigingdto:" + pagingDto);
 				EL = surveyService.searchByEvaluate(pagingDto);
+				logger.info("스타트, 엔드로우 체크: " + pagingDto);
 				logger.info("리스트:" +EL.toString());
 				pagingDto.setKeyword(beforeKeyword);
 				logger.info(pagingDto.toString());
@@ -454,7 +465,6 @@ public class SurveyController {
 
 			logger.info(keyword);
 			System.out.println(pageNo);
-
 			model.addAttribute("pagingdto", pagingDto);
 			model.addAttribute("keyword", keyword);
 
