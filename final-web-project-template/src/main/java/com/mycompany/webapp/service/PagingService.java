@@ -27,8 +27,6 @@ public class PagingService implements IPagingService{
 		return pagingRepo.getTotalMappingNum(keyword, selection, surveySeq, selectGD);
 	}
 
-
-
 	@Override
 	public int getTotalNonMappingNum(String keyword, String selection, int surveySeq, String selectGD) {
 		return pagingRepo.getTotalNonMappingNum(keyword, selection, surveySeq, selectGD);
