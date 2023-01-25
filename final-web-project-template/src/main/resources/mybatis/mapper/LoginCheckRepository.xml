@@ -89,4 +89,29 @@
 	
 	</select>
 	
+	<insert id="insertResult" parameterType="com.mycompany.webapp.dto.SurveyResultDTO">
+	insert into table 
+	set (SURVEY_SEQ, 
+		 RATER_ID,
+		 APPRAISEE_ID,
+		 ANONYMITY_SEQ,
+		 QUESTION_SEQ,
+		 ITEM_SEQ,
+		 ANSWER_CONTENT,
+		 REG_DATE,
+		 UPDATE_DATE )
+	values(#{surveySeq},
+	       #{raterId},
+	       #{appraiseeId},
+	       #{anonymitySeq},
+	       #{questionSeq},
+	       #{itemSeq},
+	       #{answerContent},
+	       sysdate,
+	       sysdate)
+	       
+	
+	</insert>
+	
+	
 </mapper>
