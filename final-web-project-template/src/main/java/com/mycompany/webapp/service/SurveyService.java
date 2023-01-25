@@ -152,8 +152,6 @@ public class SurveyService implements ISurveyService{
 	}
 
 
-
-
 	public List<Map<String, String>> selectSurveyEvaluate(int surveySeq) {
 		logger.info("selectSurveyEvaluate 서비스 진입");
 		logger.info("서비스: " +surveySeq);
@@ -161,25 +159,22 @@ public class SurveyService implements ISurveyService{
 		return surveyDao.selectSurveyEvaluate(surveySeq);
 	}
 
-//	public List<PopupDTO> selectSurveyMapping(int surveySeq, int raterId) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	public int mappingCheck(int surveySeq) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-
-
 	@Override
 	public List<Map<String, Object>> searchByEvaluate(PagingDTO pagingDto) {
 		// TODO Auto-generated method stub
 		logger.info("검색:" + surveyDao.searchByEvaluate(pagingDto).toString());
 		return surveyDao.searchByEvaluate(pagingDto);
 	}
+
 	@Override
 	public List<SurveyResultDTO> surveyResult(SurveyResultDTO SRD) {
+		return null;
+	}
+
+
+	@Override
+	public List<Map<String, Object>> getSurveySeqAndName(int raterId) {
+
 		return null;
 	}
 

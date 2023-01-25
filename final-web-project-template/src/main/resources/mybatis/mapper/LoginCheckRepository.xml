@@ -20,8 +20,8 @@
 		
 	</select>
 	
-	<select id="getUserInfo"
-		parameterType="com.mycompany.webapp.dto.UserCheckDTO" resultType="com.mycompany.webapp.dto.UserCheckDTO">
+	<select id="getUserInfo" resultType="com.mycompany.webapp.dto.UserCheckDTO">
+		<![CDATA[
 		SELECT S.SURVEY_SEQ, 
                S.SURVEY_NAME, 
                M.RATER_ID, 
@@ -46,9 +46,9 @@
               UA.GRADE_ID = GA.GRADE_ID AND
               UA.DEPARTMENT_ID = OCA.DEPARTMENT_ID AND
               S.SURVEY_SEQ = M.SURVEY_SEQ AND
-              UR.EMAIL = #{email} AND
+              S.SURVEY_SEQ = #{surveySeq} AND
               UR.EMPLOYEE_ID = #{raterId}
-
+		]]>
 	</select>
 
 	<select id="getQuestion" parameterType="int" resultType="hashmap">
@@ -65,5 +65,23 @@
       SURVEY_ITEM.ITEM_SEQ 
    </select>
 	
+	<select id="getSurveySeqAndName" parameterType="string" resultType="hashmap">
+	<![CDATA[
+	 SELECT DISTINCT M.SURVEY_SEQ
+	                ,SL.SURVEY_NAME 
+	 FROM SURVEY_LIST SL
+	     ,MAPPING M 
+	 WHERE SL.SURVEY_SEQ = M.SURVEY_SEQ  AND 
+	      SL.SURVEY_START_DATE <= SYSDATE AND 
+	      SL.SURVEY_CLOSED_DATE >= SYSDATE AND 
+	      SL.STATE_CODE = '30004' AND 
+	      M.RATER_ID = #{raterId}
+
+	]]>
+	</select>
+	
+	<select id="getNansu" resultType="int">
+	SELECT CEIL(DBMS_RANDOM.VALUE(100000, 999999)) anonymitySeq  FROM DUAL ;
+	</select>
 	
 </mapper>

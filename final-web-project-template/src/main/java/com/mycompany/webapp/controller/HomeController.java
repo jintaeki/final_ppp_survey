@@ -28,6 +28,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +37,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import com.mycompany.webapp.dto.SurveyListDTO;
+import com.mycompany.webapp.dto.SurveyResultDTO;
 import com.mycompany.webapp.dto.UserCheckDTO;
 import com.mycompany.webapp.service.ISurveyService;
 
@@ -141,8 +143,8 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/logincheck")
-	public String login_after(@ModelAttribute("UCD")  @Valid UserCheckDTO UCD,
-							  BindingResult result, 
+	public String login_after(@ModelAttribute("UCD")  @Valid UserCheckDTO UCD, 
+							  BindingResult result,
 							  HttpSession session, Model model) {
 		logger.info("실행");
 		logger.info(UCD.toString());
@@ -153,9 +155,11 @@ public class HomeController {
 			
 			if(check.equals("N")) {
 				logger.info("평가자 진입");
-				List<UserCheckDTO> UCDList = loginCheckService.getUserInfo(UCD);
-				model.addAttribute("UCDList",UCDList);
-				logger.info(UCDList.toString());
+				// 평가자가 평가해야할 설문지 조회
+				List<Map<String,Object>> surveySeqAndName = loginCheckService.getSurveySeqAndName(UCD.getRaterId());
+				model.addAttribute("raterId",UCD.getRaterId());
+				model.addAttribute("surveySeqAndName",surveySeqAndName);
+				model.addAttribute("surveyResult", new SurveyResultDTO());
 				return "survey";
 			}else {
 				logger.info("관리자 진입");
@@ -168,6 +172,17 @@ public class HomeController {
 		}
 		
 		
+	}
+	
+	@RequestMapping("/getAppraisee.do/{raterId}/{surveySeq}")
+	@ResponseBody
+	public List<UserCheckDTO> getAppraisee (@PathVariable String raterId,@PathVariable int surveySeq, Model model){
+		logger.info(raterId);
+		// surveySeq 필요
+		List<UserCheckDTO> UCDList = loginCheckService.getUserInfo(raterId, surveySeq);
+		logger.info(UCDList.toString());
+		
+		return UCDList;
 	}
 
 	@RequestMapping("/loginafter")
@@ -187,6 +202,14 @@ public class HomeController {
 	}
 	
 	
+	@RequestMapping("/insertSurveyResult.do")
+	@ResponseBody
+	public String insertSurveyResult(@ModelAttribute ("surveyResult") SurveyResultDTO surveyResult ) {
+		logger.info(surveyResult.toString());
+//		logger.info(surveyResult);
+
+		return "성공";
+	}
 	
 }
 

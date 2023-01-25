@@ -9,9 +9,13 @@ public interface ILoginCheckService {
 
 	public int checkUser(UserCheckDTO UCD);
 	
-	public List<UserCheckDTO> getUserInfo(UserCheckDTO UCD);
+	public List<UserCheckDTO> getUserInfo(String raterId, int surveySeq);
 	
 	public String getUserManagerYN(UserCheckDTO UCD);
 	
 	public List<Map<String, Object>> getQuestion(int surveySeq);
+	
+	public List<Map<String, Object>> getSurveySeqAndName (String raterId);
+
+	public int getNansu ();
 }

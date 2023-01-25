@@ -25,7 +25,7 @@ function popup(){
 
 function mapInsert(surveySeq){
 	
-	let popUrl ="/springframework-xml-config-no-root/mapping/another.do?pageNo=1"+"&surveySeq="+surveySeq
+	let popUrl ="/manyface/mapping/another.do?pageNo=1"+"&surveySeq="+surveySeq
 			   +"&keyword=&selection=60004&selectGD=60004";	
 	let popOption = "width=800, height=820, left=470, top=100";
 	window.open(popUrl, "다면평가 대상 추가", popOption);
