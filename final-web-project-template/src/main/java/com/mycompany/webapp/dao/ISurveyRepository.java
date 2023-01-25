@@ -8,11 +8,14 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.mycompany.webapp.dto.MappingDTO;
+import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.PopupDTO;
+import com.mycompany.webapp.dto.ProjectDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
+import com.mycompany.webapp.dto.SurveyResultDTO;
 
 public interface ISurveyRepository {
 
@@ -34,6 +37,10 @@ public interface ISurveyRepository {
 	List<SurveyQuestionDTO> getQuestionList(int surveySeq);
 
 	void sendMessage(int surveySeq);
+	
+	// 메일 발송시 상태 업데이트
+	void updateEmail(int surveySeq);
+	void updateSMS(int surveySeq);
 
 	void DeleteQuestion(int questionSeq);
 
@@ -53,15 +60,16 @@ public interface ISurveyRepository {
 
 	List<Map<String, String>> selectSurveyEvaluate(int surveySeq);
 
-	// 설문 화면 왼쪽 그리드 (평가 대상 출력)
-	List<PopupDTO> selectSurveyMapping(@Param("surveySeq") int surveySeq, @Param("raterId") int raterId);
-
-	// 중복 확인
-
-	int mappingCheck(@Param("surveySeq") int surveySeq);
-
 	List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
-
+	
+	
+	// 결과 통계 페이지
+	List<SurveyListDTO> surveyList();
+	List<ProjectDTO> projectList();
+	List<OrganizationChartDTO> organList();
+	
+	//결과 목록
+	List<SurveyResultDTO> resultList(int surveySeq, String projectId, String departmentId);	
 }
 
 

@@ -62,10 +62,14 @@ public class MappingController {
 			if(Integer.parseInt(mappingService.stateCheck(surveySeq)) == 30002) {
 				mappingService.setMapping(surveySeq, month, number);
 				mappingService.updateState(surveySeq, "30003");
+				mappingService.insertEmail(surveySeq);
+				mappingService.insertSMS(surveySeq);
 			}else if(Integer.parseInt(mappingService.stateCheck(surveySeq)) == 30003) {
 				if(Integer.parseInt(newCheck) == 1) {
 					mappingService.deleteMapping(surveySeq);
 					mappingService.updateState(surveySeq, "30002");	
+					mappingService.deleteEmail(surveySeq);
+					mappingService.deleteSMS(surveySeq);
 					return "redirect:/survey/surveysearch";	
 				}
 			}
@@ -207,6 +211,11 @@ public class MappingController {
 				
 				//해당 데이터 매핑 테이블에 입력
 				mappingService.insertAppraiseId(surveySeq, raterId, appraiseeId);
+				mappingService.deleteEmail(surveySeq);
+				mappingService.deleteSMS(surveySeq);
+				mappingService.insertEmail(surveySeq);
+				mappingService.insertSMS(surveySeq);
+				
 				resMap.put("res", "success");
 				resMap.put("msg", "추가를 완료하였습니다.");
 				logger.info("실행4");
@@ -235,6 +244,11 @@ public class MappingController {
 			String appraiseeId = deleteMap.getAppraiseeId();
 			
 			mappingService.deleteAppraisee(surveySeq, raterId, appraiseeId);
+			mappingService.deleteEmail(surveySeq);
+			mappingService.deleteSMS(surveySeq);
+			mappingService.insertEmail(surveySeq);
+			mappingService.insertSMS(surveySeq);
+			
 			resMap.put("res", "success");
 		    resMap.put("msg", "삭제를 완료하였습니다.");
 		} catch (Exception e) {

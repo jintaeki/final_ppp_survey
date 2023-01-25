@@ -8,11 +8,14 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.mycompany.webapp.dto.MappingDTO;
+import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.PopupDTO;
+import com.mycompany.webapp.dto.ProjectDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
+import com.mycompany.webapp.dto.SurveyResultDTO;
 
 public interface ISurveyService {
 
@@ -40,6 +43,10 @@ public interface ISurveyService {
 	public List<SurveyQuestionDTO>questionList(int surveySeq);
 
 	void sendMessage(int surveySeq);
+	
+	// 메일 발송시 상태 업데이트
+	void updateEmail(int surveySeq);
+	void updateSMS(int surveySeq);
 
 	void DeleteQuestion(int questionSeq);
 
@@ -64,10 +71,15 @@ public interface ISurveyService {
 //	// 설문조사 중복 체크
 //	int mappingCheck(int surveySeq);
 
-
 	List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
 
-
+	// 결과 통계 페이지
+	List<SurveyListDTO> surveyList();
+	List<ProjectDTO> projectList();
+	List<OrganizationChartDTO> organList();
+			
+	//결과 목록
+	List<SurveyResultDTO> resultList(int surveySeq, String projectId, String departmentId);	
 }
 
 

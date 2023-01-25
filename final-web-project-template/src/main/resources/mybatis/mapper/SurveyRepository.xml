@@ -139,6 +139,32 @@
    <update id="sendMessage" parameterType="int">
       UPDATE SURVEY_LIST SET    STATE_CODE='30004' WHERE SURVEY_SEQ =#{surveySeq}
    </update>
+   
+   <update id="updateEmail" parameterType="int">
+   	  UPDATE NOTICE_EMAIL N
+   	  	 SET N.DELIVERY_YN = 'Y',
+   	  	 	 N.UPDATE_DATE = SYSDATE
+   	   WHERE EXISTS(
+          	SELECT 1
+              FROM SURVEY_LIST S
+          	 WHERE S.SURVEY_SEQ = #{surveySeq}
+               AND N.DELIVERY_CONTENT LIKE '%' || S.SURVEY_NAME || '%'
+        )
+   </update>
+   
+   <update id="updateSMS" parameterType="int">
+   	  UPDATE NOTICE_SMS N
+   	  	 SET N.DELIVERY_YN = 'Y',
+   	  	 	 N.UPDATE_DATE = SYSDATE
+   	   WHERE EXISTS(
+          	SELECT 1
+              FROM SURVEY_LIST S
+          	 WHERE S.SURVEY_SEQ = #{surveySeq}
+               AND N.DELIVERY_CONTENT LIKE '%' || S.SURVEY_NAME || '%'
+        )
+   </update>
+   
+   
 <select id="searchListByKeyword" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="SLD">
    <![CDATA[
        SELECT
@@ -326,4 +352,31 @@
              where survey_seq = #{surveySeq}
 	</select>
 
+	<select id="projectList" resultType="com.mycompany.webapp.dto.ProjectDTO">
+		SELECT * FROM PROJECT
+	</select>
+	
+	<select id="surveyList" resultType="SLD">
+		SELECT * FROM SURVEY_LIST
+	</select>
+	
+	<select id="organList" resultType="com.mycompany.webapp.dto.OrganizationChartDTO">
+		SELECT * FROM ORGANIZATION_CHART
+	</select>
+
+	<select id="resultList" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
+		SELECT SURVEY_RESULT
+		  FROM SUREY_RESULT S,
+		  	   PROJECT_HISTORY P,
+		  	   USER_INFO U
+		 WHERE S.APPRAISEE_ID = U.EMPLOYEE_ID
+		   AND S.APPRAISEE_ID = P.PARTICIPATION_EMPLOYEE_ID
+		   AND  ((#{selection} = '60001'
+                AND S.SURVEY_SEQ    = #{surveySeq})
+            OR  (#{selection} = '60002'
+                AND P.PROJECT_ID    = #{projectId})
+            OR  (#{selection} = '60003'
+                AND U.DEPARTMENT_ID = #{departmentId})    
+            )
+	</select>
 </mapper>

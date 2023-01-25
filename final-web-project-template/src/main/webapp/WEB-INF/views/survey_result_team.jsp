@@ -1,46 +1,41 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
-<link rel="stylesheet" type="text/css"
-	href="resources/css/surveyresult.css">
-<script src="resources/js/surveyresult.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/surveyresult.css">
+<script src="${pageContext.request.contextPath}resources/js/surveyresult.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/hierarchy.js"></script>
 <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 
-
 <div class="container">
-	<div class="row">
-		<div class="col-1">항목</div>
-		<div class="col-2" style="font-size: 90%; width: 100px">22년도 4분기 다면평가</div>
-		<div class="col-1">기간</div>
-		<div class="col-2" style="font-size: 90%">2022.10.01 - 2022.12.31</div>
-		<div class="col-1">부서</div>
-		<div class="col-2">사업지원팀</div>
-		<div class="col-1">소속</div>
-		<div class="col-2">1팀</div>
+	<div class="hmenu">
+		<div class="survey_list_form_upper_dv">
+			<form action="<c:url value='/survey/surveyresultteam'/>" method="get" class="survey_list_form">
+				<select onchange="categoryChange">
+					<c:forEach items="${Cdt}" var="cdt">
+							<option selected value="${commonCode.codeDetailId}">${commonCode.codeDetailName }</option>
+					</c:forEach>
+				</select> 
+				<select name="selection">
+					<option>통계를 원하는 것을 선택하시요</option>
+				</select> 
+				<div class="input-group-append">
+					<input type="submit" class="btn btn-outline-secondary"
+						id="button-addon2" value="검색">
+					<input type="reset" class="btn btn-outline-secondary"
+						id="button-addon2" value="초기화">
+				</div>
+			</form>
+		</div>
 	</div>
 </div>
-<div class="container">
-	<div class="row">
-		<div class="col-1">${name}</div>
-		<div class="col-2" style="font-size: 90%; width: 100px">22년도 4분기 다면평가</div>
-		<div class="col-1">기간</div>
-		<div class="col-2" style="font-size: 90%">2022.10.01 - 2022.12.31</div>
-		<div class="col-1">부서</div>
-		<div class="col-2">사업지원팀</div>
-		<div class="col-1">소속</div>
-		<div class="col-2">1팀</div>
-	</div>
-</div>
-<div class="graph">
-<div class="bar_chart">
-  <canvas id="resultChart"></canvas>
-</div>
-
-<div id="circle_chart"></div>
-</div>
+		<div class="graph">
+			<div class="bar_chart">
+  			<canvas id="resultChart"></canvas>
+			</div>
+			<div id="circle_chart"></div>
+		</div>
 
 <script>
   const ctx = document.getElementById('resultChart');

@@ -13,6 +13,18 @@ public interface IMappingRepository {
 	// 설문조사 팝업창의 조건을 받아 매핑데이터에 선택
 	void setMapping(@Param("surveySeq") int surveySeq, @Param("month") int month, @Param("number") int number);
 	
+	// 메일 데이터 생성
+	void insertEmail(@Param("surveySeq") int surveySeq);
+	
+	// SMS 데이터 생성
+	void insertSMS(@Param("surveySeq") int surveySeq);
+	
+	// 메일 데이터 삭제
+	void deleteEmail(@Param("surveySeq") int surveySeq);
+		
+	// SMS 데이터 삭제
+	void deleteSMS(@Param("surveySeq") int surveySeq);
+		
 	// 상태 코드 변경
 	void updateState(@Param("surveySeq") int surveySeq, @Param("stateCode") String stateCode);
 	
@@ -42,5 +54,7 @@ public interface IMappingRepository {
 	
 	// 피평가자를 피평가자 목록에서 제외
 	void deleteAppraisee(@Param("surveySeq") int surveySeq, @Param("raterId") String raterId, @Param("appraiseeId") String appraiseeId);
+	
+	
 
 }

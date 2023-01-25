@@ -84,6 +84,109 @@
 		]]>
 	</select>
 	
+	<insert id="insertEmail" parameterType="com.mycompany.webapp.dto.NoticeEmailDTO">
+		INSERT INTO NOTICE_EMAIL(
+			EMAIL_SEQ,
+			RATER_ID,
+			EMAIL,
+			SURVEY_LINK,
+			DELIVERY_DATE,
+			DELIVERY_YN,
+			DELIVERY_CONTENT,
+			REG_DATE,
+			UPDATE_DATE
+		)
+		SELECT 
+    		EMAIL_SEQ.NEXTVAL,
+            RATER_ID,
+			EMAIL,
+			SURVEY_LINK,
+			DELIVERY_DATE,
+			DELIVERY_YN,
+			DELIVERY_CONTENT,
+			REG_DATE,
+			UPDATE_DATE
+        FROM(SELECT DISTINCT
+                EMPLOYEE_ID AS RATER_ID,
+                EMAIL,
+                'localhost:8080/manyface' AS SURVEY_LINK,
+                SYSDATE AS DELIVERY_DATE,
+                'N' AS DELIVERY_YN,
+                CONCAT(survey_name, ' 다면평가 평가원으로 선정되셨습니다. 해당 주소로 들어가 로그인하여 다면 평가를 진행해주시길 바랍니다.') AS DELIVERY_CONTENT,
+                SYSDATE AS REG_DATE,
+                SYSDATE AS UPDATE_DATE
+            FROM USER_INFO,
+                 MAPPING,
+                 SURVEY_LIST
+            WHERE MAPPING.SURVEY_SEQ = #{surveySeq}
+              AND EMPLOYEE_ID = RATER_ID
+              AND MAPPING.SURVEY_SEQ = SURVEY_LIST.SURVEY_SEQ
+            ORDER BY EMPLOYEE_ID)
+	</insert>
+	
+	<insert id="insertSMS" parameterType="com.mycompany.webapp.dto.NoticeSmsDTO">
+		 INSERT INTO NOTICE_SMS(
+			SMS_SEQ,
+			RATER_ID,
+			PHONE,
+			SURVEY_LINK,
+			DELIVERY_DATE,
+			DELIVERY_YN,
+			DELIVERY_CONTENT,
+			REG_DATE,
+			UPDATE_DATE
+		)
+		SELECT 
+    		SMS_SEQ.NEXTVAL,
+            RATER_ID,
+			PHONE,
+			SURVEY_LINK,
+			DELIVERY_DATE,
+			DELIVERY_YN,
+			DELIVERY_CONTENT,
+			REG_DATE,
+			UPDATE_DATE
+        FROM(SELECT DISTINCT
+                EMPLOYEE_ID AS RATER_ID,
+                PHONE,
+                'localhost:8080/manyface' AS SURVEY_LINK,
+                SYSDATE AS DELIVERY_DATE,
+                'N' AS DELIVERY_YN,
+                CONCAT(survey_name, ' 다면평가 평가원으로 선정되셨습니다. 해당 주소로 들어가 로그인하여 다면 평가를 진행해주시길 바랍니다.') AS DELIVERY_CONTENT,
+                SYSDATE AS REG_DATE,
+                SYSDATE AS UPDATE_DATE
+            FROM USER_INFO,
+                 MAPPING,
+                 SURVEY_LIST
+            WHERE MAPPING.SURVEY_SEQ = #{surveySeq}
+              AND EMPLOYEE_ID = RATER_ID
+              AND MAPPING.SURVEY_SEQ = SURVEY_LIST.SURVEY_SEQ
+            ORDER BY EMPLOYEE_ID)
+	</insert>
+	
+	<delete id="deleteEmail" parameterType="com.mycompany.webapp.dto.NoticeEmailDTO">
+		DELETE 
+          FROM NOTICE_EMAIL N  
+         WHERE EXISTS(
+          	SELECT 1
+              FROM SURVEY_LIST S
+          	 WHERE S.SURVEY_SEQ = #{surveySeq}
+               AND N.DELIVERY_CONTENT LIKE '%' || S.SURVEY_NAME || '%'
+        )
+	</delete>
+	
+	<delete id="deleteSMS" parameterType="com.mycompany.webapp.dto.NoticeSmsDTO">
+		DELETE 
+          FROM NOTICE_SMS N  
+         WHERE EXISTS(
+          	SELECT 1
+              FROM SURVEY_LIST S
+          	 WHERE S.SURVEY_SEQ = #{surveySeq}
+               AND N.DELIVERY_CONTENT LIKE '%' || S.SURVEY_NAME || '%'
+        )
+	</delete>
+	
+	
 	<update id="updateState" parameterType="SLD">
 		UPDATE SURVEY_LIST 
 		   SET STATE_CODE = #{stateCode},

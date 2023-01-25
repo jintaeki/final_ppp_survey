@@ -23,7 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mycompany.webapp.dto.CommonDTO;
+import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.PagingDTO;
+import com.mycompany.webapp.dto.ProjectDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 import com.mycompany.webapp.service.ICommonCodeService;
@@ -88,6 +91,8 @@ public class SurveyController {
 	public String sendmessage(@PathVariable int surveyseq, @PathVariable int pageno) {
 
 		surveyService.sendMessage(surveyseq);
+		surveyService.updateEmail(surveyseq);
+		surveyService.updateSMS(surveyseq);
 
 		return "성공";
 	}
@@ -133,8 +138,20 @@ public class SurveyController {
 	}
 
 	@RequestMapping("/surveyresultteam")
-	public String surveySuccess() {
+	public String surveySuccess(Model model) {
 		logger.info("실행");
+		
+		List<CommonDTO> Cdt = commonCodeService.selectStatisticCode();
+		List<ProjectDTO> Pdt = surveyService.projectList();
+		List<SurveyListDTO> Sdt = surveyService.surveyList();
+		List<OrganizationChartDTO> Odt = surveyService.organList();
+		
+		
+		model.addAttribute("Cdt", Cdt);
+		model.addAttribute("Pdt", Pdt);
+		model.addAttribute("Sdt", Sdt);
+		model.addAttribute("Odt", Odt);
+		
 		return "survey_result_team";
 	}
 
@@ -346,6 +363,8 @@ public class SurveyController {
 
 		logger.info("deletesurvey 컨트롤러 진입");
 		//		surveyService.deleteSurvey(surveyseq);
+		//      mappingService.deleteEmail(surveyseq);
+		//      mappingService.deleteSMS(surveyseq);
 		return "redirect:/survey/surveysearch?pageNo=" + pageno + "&keyword=" + keyword + "&selection=" + selection
 				+ "&surveyStartDate=" + strDate;
 
