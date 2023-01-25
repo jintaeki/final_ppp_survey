@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
@@ -176,4 +177,66 @@
 
 
 >>>>>>> branch 'master' of https://github.com/jintaeki/final_ppp_survey.git
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mycompany.webapp.dao.IPagingRepository">
+
+	<select id="getTotalBoardNum" resultType="int">
+	<![CDATA[
+		SELECT count(ROWNUM)
+	    FROM (
+			SELECT ROWNUM AS rnum
+		      	  ,SURVEY_SEQ
+		      	  ,SURVEY_NAME
+		      	  ,SURVEY_CONTENT
+		      	  ,ANONYMITY_CHECK_CODE
+	          	  ,SURVEY_START_DATE
+		      	  ,SURVEY_CLOSED_DATE
+		      	  ,STATE_CODE
+	    	FROM (SELECT SURVEY_SEQ
+	          	 ,SURVEY_NAME
+	          	 ,SURVEY_CONTENT
+	          	 ,ANONYMITY_CHECK_CODE
+	          	 ,SURVEY_START_DATE
+		      	 ,SURVEY_CLOSED_DATE
+	          	 ,STATE_CODE  
+	          	 FROM SURVEY_LIST 
+	          	 WHERE 
+	          	 (SURVEY_START_DATE is null and
+	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%' and
+	          	  STATE_CODE LIKE (CASE  
+      							   WHEN #{selection} = '30005' 
+      							   THEN '%' || '' || '%' 
+                                   ELSE '%' || #{selection} || '%'
+                                   END) 
+	          	 )
+	          	   or  
+	          	 SURVEY_START_DATE >= (CASE
+	          	 						 WHEN #{surveyStartDate} is null
+	          	 						 THEN sysdate-99999
+	          	 						 WHEN #{surveyStartDate} is not null	          	 						 
+	          	 						 THEN to_date(to_char(#{surveyStartDate},'yyyy-MM-dd'),'yyyy-MM-dd')
+	          	 						 END) and
+	          	  
+	          	  STATE_CODE LIKE (CASE  
+      							   WHEN #{selection} = '30005' 
+      							   THEN '%' || '' || '%' 
+                                   ELSE '%' || #{selection} || '%'
+                                   END) and
+                  
+	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%' 
+				  ORDER BY ROWNUM DESC
+			   	)
+
+			   	)
+
+
+			   ]]>
+	</select>
+	
+
+
+>>>>>>> refs/remotes/origin/cbj2
 </mapper>

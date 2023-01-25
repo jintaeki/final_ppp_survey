@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 activeProfiles=
 eclipse.preferences.version=1
 resolveWorkspaceProjects=true
@@ -9,3 +10,9 @@ eclipse.preferences.version=1
 resolveWorkspaceProjects=true
 version=1
 >>>>>>> branch 'master' of https://github.com/jintaeki/final_ppp_survey.git
+=======
+activeProfiles=
+eclipse.preferences.version=1
+resolveWorkspaceProjects=true
+version=1
+>>>>>>> refs/remotes/origin/cbj2
