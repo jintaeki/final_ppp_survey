@@ -39,7 +39,7 @@
              <a class="text-white" href="<c:url value='/survey/surveyresultteam'/>">결과 통계</a>
          <div>
             <div>
-               <a class="btn btn-success btn-sm" href="<c:url value=''/>">로그인</a> 
+               <a class="btn btn-success btn-sm" href="<c:url value='/'/>">로그인</a> 
                   <!--<a class="btn btn-success btn-sm" href="#">로그아웃</a> -->
            </div>
          </div>

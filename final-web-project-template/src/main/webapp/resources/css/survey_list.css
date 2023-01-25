@@ -7,9 +7,12 @@
 
 .survey_list_form_upper_dv{
 	display:flex;
-	margin-left: 300px;
+	margin-left: 200px;
 }
 
+#selectedDate{
+	margin-right:10px;
+}
 
 .survey_list_form{
 	display: flex;
@@ -18,8 +21,13 @@
 	margin-right: 10px;
 }
 
+#button-addon2{
+		margin-left: 6px; 
+	
+}
+
 #upper_dv_btn{
-	margin-left: 10px; 
+	margin-left: 6px; 
 }
 
 

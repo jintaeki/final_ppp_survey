@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -59,9 +58,12 @@ public class SurveyController {
 	public String surveyEvaluate(@PathVariable int surveySeq, HttpSession session, Model model,
 			@RequestParam(defaultValue = "1") int pageNo) {
 		logger.info("실행");
+		System.out.println(surveySeq);
 		List<Map<String, String>> EL = surveyService.selectSurveyEvaluate(surveySeq);
 		logger.info("EL" + EL);
+		// log.info("실행");
 		model.addAttribute("EL", EL);
+		model.addAttribute("surveySeq", surveySeq);
 
 		return "survey_evaluate";
 	}
@@ -179,7 +181,7 @@ public class SurveyController {
 		String checkCode = SQD.getQuestionTypeCode();
 		try {
 			if (checkCode.equals("10001")) {
-				surveyService.deleteItemByQSeq(SQD);
+				surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
 				// 문제 id, 점수, 문항내용, 각 각 받아야 한다
 				// questionId, itemScore, itemContent
 
@@ -200,11 +202,11 @@ public class SurveyController {
 					surveyService.insertItem(SQD);
 				}
 			} else if (checkCode.equals("10002")) {
-				surveyService.deleteItemByQSeq(SQD);
+				surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
 				surveyService.insertItem(SQD);
 
 			} else if (checkCode.equals("10003")) {
-				surveyService.deleteItemByQSeq(SQD);
+				surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
 				// 문제 id, 점수, 문항내용, itemid, 각 각 받아야 한다
 				// questionId, itemScore, itemContent, itemId
 
@@ -349,12 +351,12 @@ public class SurveyController {
 
 	}
 
-	@RequestMapping("/deleteItem.do/{itemSeq}")
+	@RequestMapping("/deleteItem.do/{questionSeq}")
 	@ResponseBody
-	public void DeleteItem(@PathVariable int itemSeq) {
+	public String DeleteItem(@PathVariable int questionSeq) {
 		logger.info("deleteItem 컨트롤러");
-		surveyService.deleteItem(itemSeq);
-
+		surveyService.deleteItemByQSeq(questionSeq);
+		return "삭제 성공";
 	}
 
 	@RequestMapping("")
@@ -381,4 +383,61 @@ public class SurveyController {
 	//		}
 	//		return "/survey";
 	//	}
+	
+	@RequestMapping("/EvaluateSearch")
+	public String searchByEvaluate(
+			             @RequestParam(defaultValue="") String keyword,
+						 @RequestParam(defaultValue="1") int pageNo,
+						 @RequestParam(defaultValue="") String selection,
+						 @RequestParam(value="employeeName", required=false) String employeeName,
+						 @RequestParam(value="departmentName", required=false) String departmentName,
+						 @RequestParam(value="CompleteYn", required=false) String surveyCompleteYn,
+						 @RequestParam(value="gradeName", required=false) String gradeName,
+						 @RequestParam(value="surveySeq") int surveySeq,
+						 HttpSession session, Model model) {
+		logger.info("지금 가져온 선택지:"+selection);
+		logger.info("페이지 수"+pageNo);
+		logger.info("키워드"+keyword);
+		logger.info("설문지 번호" + surveySeq);
+
+		try {
+
+			List<Map<String, Object>> EL = null;
+			PagingDTO pagingDto = null;
+			String beforeKeyword = keyword;
+
+			 	model.addAttribute("selecton", selection);
+			    logger.info("모델 :" + model);
+
+				int totalRows = pagingService.getEvaluateTotalBoardNum(keyword, selection);
+				System.out.println("totolRows:" + totalRows);
+			    pagingDto = new PagingDTO(7, 7, totalRows, pageNo);
+				pagingDto.setSelection(selection);
+				pagingDto.setKeyword(keyword);
+				pagingDto.setSurveySeq(surveySeq);
+
+				logger.info("selection:" + pagingDto.getSelection());
+				logger.info("keyword: "+pagingDto.getKeyword());
+				logger.info("paigingdto:" + pagingDto);
+				EL = surveyService.searchByEvaluate(pagingDto);
+				logger.info("리스트:" +EL.toString());
+				pagingDto.setKeyword(beforeKeyword);
+				logger.info(pagingDto.toString());
+				logger.info("EL: " + EL);
+
+			model.addAttribute("EL", EL);
+
+			logger.info(keyword);
+			System.out.println(pageNo);
+
+			model.addAttribute("pagingdto", pagingDto);
+			model.addAttribute("keyword", keyword);
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("검색 테스트");
+		return "survey_evaluate";
+	}
+	
 }

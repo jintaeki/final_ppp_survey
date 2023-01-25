@@ -16,4 +16,6 @@ public interface ICommonCodeRepository {
 	
 	// 매핑 검색 조건
 	public List<CommonDTO> selectMappingCode();
+
+	public List<CommonDTO> selectEvaluateCode();
 }

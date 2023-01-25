@@ -48,16 +48,20 @@ public interface ISurveyRepository {
 	void surveyInsertComplete(int surveySeq);
 
 	void deleteSurvey(int surveySeq);
-	
+
 	void deleteItem (int itemSeq);
 
 	List<Map<String, String>> selectSurveyEvaluate(int surveySeq);
-	
+
 	// 설문 화면 왼쪽 그리드 (평가 대상 출력)
 	List<PopupDTO> selectSurveyMapping(@Param("surveySeq") int surveySeq, @Param("raterId") int raterId);
-	
+
 	// 중복 확인
+
 	int mappingCheck(@Param("surveySeq") int surveySeq);
+
+	List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
+
 }
 
 
