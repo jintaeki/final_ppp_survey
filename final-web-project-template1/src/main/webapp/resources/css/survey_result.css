@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 @charset "UTF-8";
 
 .info > div{
@@ -111,3 +112,60 @@
 	
 }
 >>>>>>> branch 'master' of https://github.com/jintaeki/final_ppp_survey.git
+=======
+@charset "UTF-8";
+
+.info > div{
+	border:1px solid black;
+}
+
+.info > .col-1{
+	background-color: #eeeeee;
+}
+
+
+}
+
+
+.result_table{
+	width:100%;
+	max-width:1140px;
+	margin: auto;
+	border:1px solid black;
+	text-align: center;
+}
+
+
+.result_table{
+	width:100%;
+	max-width:1140px;
+	margin: auto;
+	text-align: center;
+	border:1px solid black;
+
+}
+
+.result_table th, td{
+	padding: 0.75%;
+	border:1px solid black;
+}
+
+
+.result_table_list{
+		background-color: #eeeeee;
+}
+
+.result_sub{
+	margin-top: 60px;
+	width:100%;
+	max-width:600px;
+	margin-left:90px;
+	text-align: center;
+	
+}
+.result_sub  th{
+	border-top:none;
+	border-bottom: 1px solid #dee2e6;
+	
+}
+>>>>>>> refs/remotes/origin/cbj2

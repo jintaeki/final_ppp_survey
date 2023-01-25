@@ -357,7 +357,21 @@
 	</select>
 	
 	<select id="surveyList" resultType="SLD">
-		SELECT * FROM SURVEY_LIST
+		SELECT 
+			SURVEY_SEQ
+            ,SURVEY_NAME
+            ,SURVEY_CONTENT
+            ,ANONYMITY_CHECK_CODE
+            ,to_date(SURVEY_START_DATE, 'YYYY-MM-dd')  as surveyStartDate
+            ,to_date(SURVEY_CLOSED_DATE, 'YYYY-MM-dd') as surveyClosedDate
+        FROM (SELECT 
+        		SURVEY_SEQ
+                ,SURVEY_NAME
+                ,SURVEY_CONTENT
+                ,ANONYMITY_CHECK_CODE
+                ,SURVEY_START_DATE
+                ,SURVEY_CLOSED_DATE
+              FROM SURVEY_LIST)
 	</select>
 	
 	<select id="organList" resultType="com.mycompany.webapp.dto.OrganizationChartDTO">

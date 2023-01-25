@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
   <Appenders>
@@ -35,3 +36,22 @@
   </Loggers>
 </Configuration>
 >>>>>>> branch 'master' of https://github.com/jintaeki/final_ppp_survey.git
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+  <Appenders>
+    <Console name="Out" target="SYSTEM_OUT">
+      <PatternLayout pattern="%-5level: %logger{36}.%M() - %msg%n"/>
+    </Console>
+  </Appenders>
+  
+  <Loggers>
+    <Logger name="com.mycompany.webapp" level="info" additivity="false">
+      <AppenderRef ref="Out"/>
+    </Logger>
+    <Root level="error">
+      <AppenderRef ref="Out"/>
+    </Root>
+  </Loggers>
+</Configuration>
+>>>>>>> refs/remotes/origin/cbj2

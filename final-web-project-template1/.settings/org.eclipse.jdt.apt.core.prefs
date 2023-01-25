@@ -1,7 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 eclipse.preferences.version=1
 org.eclipse.jdt.apt.aptEnabled=false
 =======
 eclipse.preferences.version=1
 org.eclipse.jdt.apt.aptEnabled=false
 >>>>>>> branch 'master' of https://github.com/jintaeki/final_ppp_survey.git
+=======
+eclipse.preferences.version=1
+org.eclipse.jdt.apt.aptEnabled=false
+>>>>>>> refs/remotes/origin/cbj2

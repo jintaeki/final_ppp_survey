@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 Manifest-Version: 1.0
 Build-Jdk-Spec: 1.8
 Created-By: Maven Integration for Eclipse
@@ -9,3 +10,9 @@ Build-Jdk-Spec: 1.8
 Created-By: Maven Integration for Eclipse
 
 >>>>>>> branch 'master' of https://github.com/jintaeki/final_ppp_survey.git
+=======
+Manifest-Version: 1.0
+Build-Jdk-Spec: 1.8
+Created-By: Maven Integration for Eclipse
+
+>>>>>>> refs/remotes/origin/cbj2

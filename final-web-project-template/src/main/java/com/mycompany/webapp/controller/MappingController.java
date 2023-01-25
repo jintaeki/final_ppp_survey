@@ -227,7 +227,7 @@ public class MappingController {
 		return;
 	}
 	
-	//리스트 삭제
+	//리스트 삭제	
 	@RequestMapping(value="/deleteMapping.do", method=RequestMethod.POST)
 	public void deleteAppraiseeId(@RequestBody String filterJSON,
 			HttpServletResponse response, ModelMap model) throws Exception {
