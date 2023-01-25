@@ -15,6 +15,26 @@
 <div class="container">
 
 <div class="result_container">
+	<div class="hmenu">
+		<div class="survey_list_form_upper_dv">
+			<form action="<c:url value='/mapping/popup.do'/>" method="get" class="survey_list_form">
+				<select onchange="categoryChange(this)">
+					<c:forEach items="${Cdt}" var="Cdt">
+						<option value="${Cdt.codeDetailId}">${Cdt.codeDetailName}</option>
+					</c:forEach>
+				</select> 
+				<select id="selection">
+					<option>통계를 볼 선택지를 골라 주세요	</option>
+				</select> 
+				<div class="input-group-append">
+					<input type="submit" class="btn btn-outline-secondary"
+						id="button-addon2" value="검색">
+					<input type="reset" class="btn btn-outline-secondary"
+						id="button-addon2" value="초기화">
+				</div>
+			</form>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-1">프로젝트명</div>
 		<div class="col-2" style="font-size: 90%; width: 100px">${mapping.project_name}</div>
@@ -38,6 +58,25 @@
 </div>
 
 <script>
+function categoryChange(e) {
+    var good_a = ["하이"];
+    var good_b = [${Pdt.projectName}];
+    var good_c = [${Odt.departmentName}];
+    var target = document.getElementById("selection");
+ 
+    if(e.value == "70001") var d = good_a;
+    else if(e.value == "70002") var d = good_b;
+    else if(e.value == "70003") var d = good_c;
+ 
+    target.options.length = 0;
+ 
+    for (x in d) {
+        var opt = document.createElement("option");
+        opt.value = d[x];
+        opt.innerHTML = d[x];
+        target.appendChild(opt);
+    }    
+}
 /* CHART START */
 // Create the chart
 Highcharts.chart('chart_container', {

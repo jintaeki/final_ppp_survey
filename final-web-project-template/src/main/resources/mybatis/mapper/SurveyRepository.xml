@@ -371,7 +371,8 @@
                 ,ANONYMITY_CHECK_CODE
                 ,SURVEY_START_DATE
                 ,SURVEY_CLOSED_DATE
-              FROM SURVEY_LIST)
+              FROM SURVEY_LIST
+              WHERE STATE_CODE = '30004')
 	</select>
 	
 	<select id="organList" resultType="com.mycompany.webapp.dto.OrganizationChartDTO">
