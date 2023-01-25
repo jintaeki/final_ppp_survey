@@ -51,6 +51,12 @@ public class LoginCheckService implements ILoginCheckService{
 		return loginCheckRepository.getNansu();
 	}
 
+	@Override
+	public int checkNansu(int nanSu) {
+		
+		return loginCheckRepository.checkNansu(nanSu);
+	}
+
 	
 	
 }

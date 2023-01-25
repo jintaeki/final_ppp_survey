@@ -48,10 +48,12 @@ import com.mycompany.webapp.service.IMappingService;
 
 import lombok.extern.log4j.Log4j2;
 
+
 @Controller
 public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+	int nansu;
+
 
 	@Autowired
 	ILoginCheckService loginCheckService;
@@ -206,10 +208,54 @@ public class HomeController {
 	@ResponseBody
 	public String insertSurveyResult(@ModelAttribute ("surveyResult") SurveyResultDTO surveyResult ) {
 		logger.info(surveyResult.toString());
-//		logger.info(surveyResult);
+		String surveySeqs = surveyResult.getSurveySeq();
+		int cntcontent = (surveySeqs.length() - surveySeqs.replace(",", "").length())+1;
+	
+		String raterIds = surveyResult.getRaterId();
+		String appraiseeIds = surveyResult.getAppraiseeId();
+		String questionSeqs = surveyResult.getQuestionSeq();
+		String itemSeqs = surveyResult.getItemSeq();
+		String answerContents =surveyResult.getAnswerContent();
+		
+		String[] surveySeq = surveySeqs.split(",");
+		String[] raterId = raterIds.split(",");
+		String[] appraiseeId = appraiseeIds.split(",");
+		String[] questionSeq = questionSeqs.split(",");
+		String[] itemSeq = itemSeqs.split(",");
+		String[] answerContent = answerContents.split(",");
+		
+		// 익명 일련번호 설정
+				
+		if(checkNansu()==0) {
+			surveyResult.setAnonymitySeq(nansu);
+		}else {
+			checkNansu();
+		}
+		
+		// 행 마다 값 설정
+		for(int i =0; i<cntcontent;i++) {
+			surveyResult.setSurveySeq(surveySeq[i]);
+			surveyResult.setRaterId(raterId[i]);
+			surveyResult.setAppraiseeId(appraiseeId[i]);
+			surveyResult.setQuestionSeq(questionSeq[i]);
+			surveyResult.setItemSeq(itemSeq[i]);
+			surveyResult.setAnswerContent(answerContent[i]);
+			
+			
+		}
 
+		
+		
 		return "성공";
 	}
 	
+	
+	public int checkNansu() {
+		nansu = loginCheckService.getNansu();
+			
+			return loginCheckService.checkNansu(nansu);
+		}
+	
 }
+	
 

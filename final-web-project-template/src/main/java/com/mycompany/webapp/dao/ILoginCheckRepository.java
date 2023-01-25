@@ -21,4 +21,6 @@ public interface ILoginCheckRepository {
 	public List<Map<String, Object>> getSurveySeqAndName (String raterId);
 	
 	public int getNansu();
+	
+	public int checkNansu(int nanSu);
 }

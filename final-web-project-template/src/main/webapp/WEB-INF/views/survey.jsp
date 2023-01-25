@@ -32,7 +32,7 @@
 			    console.log(cnt);
 			    if(result[i].QUESTION_TYPE_CODE =="10002"){
 			    	surveyQandA += '<span class="item_form">';
-			    	surveyQandA+= '<input type="hidden" name="itemSeq" value="'+result[i].ITEM_SEQ+'">';
+			    	surveyQandA+= '<input type="hidden" name="'+(i+'num')+'" value="'+result[i].ITEM_SEQ+'">';
 					surveyQandA += '<textarea name="answerContent"></textarea>';
 					surveyQandA += '<input type="radio" name="'+(i+'num')+'" class="item_btn" value="'+result[i].ITEM_SEQ+'" style="display:none;">';
 					surveyQandA += '</span>';
@@ -64,7 +64,7 @@
 		    surveyQandA +='<input type="hidden" name="surveySeq" value="'+result[i].SURVEY_SEQ+'">';
 		    if(result[i].QUESTION_TYPE_CODE =="10002"){
 		    	surveyQandA += '<span class="item_form">';
-		    	surveyQandA+= '<input type="hidden" name="itemSeq" value="'+result[i].ITEM_SEQ+'">';
+		    	surveyQandA+= '<input type="hidden" name="'+(i+'num')+'" value="'+result[i].ITEM_SEQ+'">';
 
 				surveyQandA += '<textarea name="answerContent"></textarea>';
 				   surveyQandA += '<input type="radio" name="'+(i+'num')+'" class="item_btn" value="'+result[j].ITEM_SEQ+'" style="display:none;">';
@@ -146,7 +146,6 @@
 	         method: 'GET',
 	         dataType: 'json',
 	         success: function(result){
-	     		console.log(JSON.stringify(result));
 
 	        	 alert("문제요청성공");
 	        	 questionHTML(result,raterId,appraiseeId);
@@ -167,19 +166,34 @@
 	   var num = 'num';
 	
 		var cnt = 0;
-		var keyArray [] ;
-		for(const pairkeys of formData.keys()){
-			keyArray.push(pairkeys);
-			}
-		 	cnt = cnt+1;
-		}
-		
-   for(var i = 0; i<keyArray.length;i++){
-	   console.log(keyArray[i]);
-   }
-// 		console.log(cnt);
+		var cnt2=0
+		var keyArray=[];
+		var valueArray =[];
+	
 
 		
+	
+		
+		for(const pairkeys of formData.keys()){
+			keyArray.push(pairkeys);
+			
+		 	cnt = cnt+1;
+		}
+		for(const pairvalues of formData.values()){
+			console.log(pairvalues);
+			valueArray.push(pairvalues);
+			cnt2 = cnt2 +1;
+		}	
+   
+		
+		for(var i = 0; i<cnt;i++){
+			if(keyArray[i].substr(-3,3)=='num'){
+				console.log(keyArray[i]);
+				console.log(valueArray[i]);
+				formData.append('itemSeq',valueArray[i]);
+			}
+		}
+				
 		 
 	
 		

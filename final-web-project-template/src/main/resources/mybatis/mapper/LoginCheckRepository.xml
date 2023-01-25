@@ -81,7 +81,12 @@
 	</select>
 	
 	<select id="getNansu" resultType="int">
-	SELECT CEIL(DBMS_RANDOM.VALUE(100000, 999999)) anonymitySeq  FROM DUAL ;
+	SELECT CEIL(DBMS_RANDOM.VALUE(100000, 999999)) anonymitySeq  FROM DUAL 
+	</select>
+	
+	<select id="checkNansu" parameterType="int" resultType="int">
+	SELECT ANONYMITY_SEQ FROM SURVEY_RESULT WHERE ANONYMITY_SEQ = #{nanSu}
+	
 	</select>
 	
 </mapper>
