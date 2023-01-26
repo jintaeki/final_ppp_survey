@@ -16,11 +16,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mycompany.webapp.dao.IMappingRepository;
 import com.mycompany.webapp.dao.ISurveyRepository;
 import com.mycompany.webapp.dto.MappingDTO;
+import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.PopupDTO;
+import com.mycompany.webapp.dto.ProjectDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
+import com.mycompany.webapp.dto.SurveyResultDTO;
 
 @Service
 public class SurveyService implements ISurveyService{
@@ -110,6 +113,16 @@ public class SurveyService implements ISurveyService{
 	public void sendMessage(int surveySeq) {
 		surveyDao.sendMessage(surveySeq);
 	}
+	
+	@Override
+	public void updateEmail(int surveySeq) {
+		surveyDao.updateEmail(surveySeq);
+	}
+	
+	@Override
+	public void updateSMS(int surveySeq) {
+		surveyDao.updateSMS(surveySeq);
+	}
 
 	@Override
 	public List<SurveyListDTO> searchListByKeyword(PagingDTO pagingdto) {
@@ -164,12 +177,28 @@ public class SurveyService implements ISurveyService{
 		logger.info("검색:" + surveyDao.searchByEvaluate(pagingDto).toString());
 		return surveyDao.searchByEvaluate(pagingDto);
 	}
-
+	
 	@Override
-	public List<Map<String, Object>> getSurveySeqAndName(int raterId) {
-		
-		return null;
+	public List<SurveyListDTO> surveyList() {
+		return surveyDao.surveyList();
 	}
+	
+	@Override
+	public List<ProjectDTO> projectList() {
+		return surveyDao.projectList();
+	}
+	
+	@Override
+	public List<OrganizationChartDTO> organList() {
+		return surveyDao.organList();
+	}
+	
+	@Override
+	public List<SurveyResultDTO> resultList(int surveySeq, String projectId, String departmentId) {
+		return surveyDao.resultList(surveySeq, projectId, departmentId);
+	}
+
+
 }
 
 

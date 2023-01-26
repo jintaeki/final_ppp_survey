@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.mycompany.webapp.dao;
 
 import java.util.Date;
@@ -21,3 +22,20 @@ public interface IPagingRepository {
 >>>>>>> branch 'master' of https://github.com/jintaeki/final_ppp_survey.git
 	
 }
+=======
+package com.mycompany.webapp.dao;
+
+import java.util.Date;
+
+import org.apache.ibatis.annotations.Param;
+
+
+
+
+public interface IPagingRepository {
+
+	int getTotalBoardNum(@Param("keyword")String keyword,@Param("selection") String selection, @Param("surveyStartDate") Date surveyStartDate);
+	
+	
+}
+>>>>>>> refs/remotes/origin/cbj2

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <<<<<<< HEAD
@@ -14,3 +15,13 @@
 		<p class="menu_profile_text">이름</p>
 	</div>
 >>>>>>> branch 'master' of https://github.com/jintaeki/final_ppp_survey.git
+=======
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	<div class="menu_profile">
+	<img src="${pageContext.request.contextPath}/resources/images/profile_img.png">
+		
+		<p class="menu_profile_text">부서</p>
+		<p class="menu_profile_text">이름</p>
+	</div>
+>>>>>>> refs/remotes/origin/cbj2

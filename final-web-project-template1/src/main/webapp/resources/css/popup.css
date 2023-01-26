@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+.entire_popup {
+   text-align: center;
+}
+.popup-title {
+   padding: 20px;
+   font-size: 30px;
+   }
+.table {
+   padding: 0 100px;
+   }
