@@ -301,16 +301,6 @@
         AND oc.department_id = ui.department_id and  m.survey_seq = #{surveySeq}
   </select>
 
-	<select id="mappingCheck" resultType="int">
-      <![CDATA[
-         SELECT COUNT(*) FROM MAPPING
-         WHERE SURVEY_SEQ = #{surveySeq}
-      ]]>
-   </select>
-
-	<select id="selectSurveyMapping"  resultType="com.mycompany.webapp.dto.PopupDTO">
-		
-	</select>
 	
 	<select id="searchByEvaluate" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="hashmap">
 		SELECT
@@ -352,9 +342,6 @@
              where survey_seq = #{surveySeq}
 	</select>
 
-	<select id="projectList" resultType="com.mycompany.webapp.dto.ProjectDTO">
-		SELECT * FROM PROJECT
-	</select>
 	
 	<select id="surveyList" resultType="SLD">
 		SELECT 
@@ -374,24 +361,33 @@
               FROM SURVEY_LIST
               WHERE STATE_CODE = '30004')
 	</select>
-	
-	<select id="organList" resultType="com.mycompany.webapp.dto.OrganizationChartDTO">
-		SELECT * FROM ORGANIZATION_CHART
-	</select>
 
-	<select id="resultList" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
-		SELECT SURVEY_RESULT
-		  FROM SUREY_RESULT S,
-		  	   PROJECT_HISTORY P,
-		  	   USER_INFO U
-		 WHERE S.APPRAISEE_ID = U.EMPLOYEE_ID
-		   AND S.APPRAISEE_ID = P.PARTICIPATION_EMPLOYEE_ID
-		   AND  ((#{selection} = '60001'
-                AND S.SURVEY_SEQ    = #{surveySeq})
-            OR  (#{selection} = '60002'
-                AND P.PROJECT_ID    = #{projectId})
-            OR  (#{selection} = '60003'
-                AND U.DEPARTMENT_ID = #{departmentId})    
-            )
+	<select id="resultList" resultType="com.mycompany.webapp.dto.SurveyResultTeamDTO">
+		SELECT SUM(ITEM_SCORE) AS SCORE,
+    	       DEPARTMENT_NAME
+    	  FROM SURVEY_ITEM I,
+    	       SURVEY_RESULT R,
+        	   ORGANIZATION_CHART O,
+        	   USER_INFO U
+    	 WHERE I.ITEM_SEQ = R.ITEM_SEQ
+    	   AND R.SURVEY_SEQ = #{surveySeq}
+    	   AND R.APPRAISEE_ID = U.EMPLOYEE_ID 
+    	   AND U.DEPARTMENT_ID = O.DEPARTMENT_ID
+   	  GROUP BY U.DEPARTMENT_ID, DEPARTMENT_NAME
+	</select>
+	
+	<select id="resultDPList" resultType="com.mycompany.webapp.dto.SurveyResultTeamDTO">
+		SELECT SUM(ITEM_SCORE) AS SCORE,
+               EMPLOYEE_NAME,
+               DEPARTMENT_NAME
+          FROM SURVEY_ITEM I,
+               SURVEY_RESULT R,
+               ORGANIZATION_CHART O,
+               USER_INFO U
+         WHERE I.ITEM_SEQ = R.ITEM_SEQ
+           AND R.SURVEY_SEQ = #{surveySeq}
+           AND R.APPRAISEE_ID = U.EMPLOYEE_ID 
+           AND U.DEPARTMENT_ID = O.DEPARTMENT_ID
+      GROUP BY EMPLOYEE_NAME, DEPARTMENT_NAME
 	</select>
 </mapper>

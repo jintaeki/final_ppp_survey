@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,15 @@ import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.ProjectDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
+import com.mycompany.webapp.dto.SurveyResultDTO;
+import com.mycompany.webapp.dto.SurveyResultTeamDTO;
 import com.mycompany.webapp.service.ICommonCodeService;
 import com.mycompany.webapp.service.IMappingService;
 import com.mycompany.webapp.service.IPagingService;
 import com.mycompany.webapp.service.ISurveyService;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/survey")
@@ -141,16 +147,50 @@ public class SurveyController {
 	public String surveySuccess(Model model) {
 		logger.info("실행");
 		
-		List<CommonDTO> Cdt = commonCodeService.selectStatisticCode();
-		List<ProjectDTO> Pdt = surveyService.projectList();
 		List<SurveyListDTO> Sdt = surveyService.surveyList();
-		List<OrganizationChartDTO> Odt = surveyService.organList();
 		
-		
-		model.addAttribute("Cdt", Cdt);
-		model.addAttribute("Pdt", Pdt);
 		model.addAttribute("Sdt", Sdt);
-		model.addAttribute("Odt", Odt);
+		
+		return "survey_result_team";
+	}
+	
+	@RequestMapping("/surveyresultDetail")
+	public String surveyResultDetail(int surveySeq, Model model) {
+		logger.info("실행1");
+		
+		List<SurveyListDTO> Sdt = surveyService.surveyList();
+		List<SurveyResultTeamDTO> resultList = surveyService.resultList(surveySeq);
+		List<SurveyResultTeamDTO> resultDPList = surveyService.resultDPList(surveySeq);
+		
+		model.addAttribute("surveySeq", surveySeq);
+		model.addAttribute("Sdt", Sdt);
+//		model.addAttribute("resultList", resultList);
+//		model.addAttribute("resultDPList", resultDPList);
+		
+		
+		JSONArray cJsonArrResult = new JSONArray();
+		JSONObject cJsonObjResult = new JSONObject();
+		for(SurveyResultTeamDTO vo : resultList) {
+		        cJsonObjResult.put("s", vo.getScore());
+		        cJsonObjResult.put("d", vo.getDepartmentName());
+		        cJsonArrResult.add(cJsonObjResult);
+		}
+		
+		JSONArray cJsonArrDP = new JSONArray();
+		JSONObject cJsonObjDP = new JSONObject();
+		for(SurveyResultTeamDTO vo : resultDPList) {
+		        cJsonObjDP.put("s", vo.getScore());
+		        cJsonObjDP.put("e", vo.getEmployeeName());
+		        cJsonObjDP.put("d", vo.getDepartmentName());
+		        cJsonArrDP.add(cJsonObjDP);
+		}
+		
+		logger.info("d" + cJsonArrResult);
+		logger.info("d" + cJsonArrDP);
+		
+		model.addAttribute("chartJSONDp", cJsonArrDP);
+		model.addAttribute("chartJSONResult", cJsonArrResult);
+		
 		
 		return "survey_result_team";
 	}

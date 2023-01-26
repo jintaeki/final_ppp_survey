@@ -1,10 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
-<link rel="stylesheet" type="text/css" href="resources/css/common.css">
-<link rel="stylesheet" type="text/css" href="resources/css/survey_result_team.css">
-
-<script src="resources/js/surveyresult.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/survey_result_team.css">
+	
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/data.js"></script>
 <script src="https://code.highcharts.com/modules/drilldown.js"></script>
@@ -17,14 +15,16 @@
 <div class="result_container">
 	<div class="hmenu">
 		<div class="survey_list_form_upper_dv">
-			<form action="<c:url value='/mapping/popup.do'/>" method="get" class="survey_list_form">
-				<select onchange="categoryChange(this)">
-					<c:forEach items="${Cdt}" var="Cdt">
-						<option value="${Cdt.codeDetailId}">${Cdt.codeDetailName}</option>
-					</c:forEach>
-				</select> 
-				<select id="selection">
-					<option>통계를 볼 선택지를 골라 주세요	</option>
+			<form action="<c:url value='/survey/surveyresultDetail'/>" method="get" class="survey_list_form">
+				<select name="surveySeq">
+					<c:forEach items="${Sdt}" var="sdt">
+								<c:if test="${surveySeq eq sdt.surveySeq}">
+									<option selected value="${surveySeq}">${sdt.surveyName}</option>
+								</c:if>
+								<c:if test="${surveySeq ne sdt.surveySeq}">
+									<option value="${sdt.surveySeq}">${sdt.surveyName}</option>
+								</c:if>
+							</c:forEach>
 				</select> 
 				<div class="input-group-append">
 					<input type="submit" class="btn btn-outline-secondary"
@@ -36,13 +36,11 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-1">프로젝트명</div>
-		<div class="col-2" style="font-size: 90%; width: 100px">${mapping.project_name}</div>
+		<div class="col-2">설문조사 명</div>
+		<div id=svName class="col-2" style="font-size: 90%; width: 100px"></div>
 		<div class="col-1">기간</div>
-		<div class="col-2" style="font-size: 90%">${mapping.project_start_date}</div>
-		<div class="col-2" style="font-size: 90%">${mapping.project_closed_date}</div>
-		<div class="col-1">부서</div>
-		<div class="col-2">${mapping.departmentName}</div>
+		<div id=stDate class="col-2" style="font-size: 90%"></div>
+		<div id=clDate class="col-2" style="font-size: 90%"></div>
 	</div>
 </div>
 
@@ -58,25 +56,39 @@
 </div>
 
 <script>
-function categoryChange(e) {
-    var good_a = ["하이"];
-    var good_b = [${Pdt.projectName}];
-    var good_c = [${Odt.departmentName}];
-    var target = document.getElementById("selection");
- 
-    if(e.value == "70001") var d = good_a;
-    else if(e.value == "70002") var d = good_b;
-    else if(e.value == "70003") var d = good_c;
- 
-    target.options.length = 0;
- 
-    for (x in d) {
-        var opt = document.createElement("option");
-        opt.value = d[x];
-        opt.innerHTML = d[x];
-        target.appendChild(opt);
-    }    
-}
+	var todayInfo = null;
+	
+	function getPersonCnt(type){
+	    if(todayInfo==null) todayInfo=${chartJSONResult};	
+	    var todayInfoMap = resultProcLineChart(todayInfo);
+	    if(todayInfoMap==null) return null;
+	    if(type=="data"){
+	        return todayInfoMap.get("data");
+	    }else{
+	        return todayInfoMap.get("cateArr");
+	    }
+	}
+	
+	function resultProcLineChart($obj){
+	    if($obj==null) return null;        
+	    var resMap = new Map();
+	    
+	    var cateArr = new Array();
+	    var dataArr = new Array();
+	    
+	    for(var k in $obj){
+	        var xobj =$obj[k];
+	        
+	        cateArr.push(xobj.d);    
+	        dataArr.push(xobj.s);             
+	    }
+	    
+	    resMap.set("cateArr",cateArr);
+	    resMap.set("data",dataArr);
+	    
+	    return resMap;
+	} 
+
 /* CHART START */
 // Create the chart
 Highcharts.chart('chart_container', {
@@ -127,43 +139,8 @@ Highcharts.chart('chart_container', {
     {
       name: '전체',
       colorByPoint: true,
-      data: [
-        {
-          name: 'SI사업부 1팀',
-          y: 63.06, /* 팀 전체 스코어 */
-          drilldown: 'SI사업부 1팀'
-        },
-        {
-          name: 'SI사업부 2팀',
-          y: 19.84,
-          drilldown: 'SI사업부 2팀'
-        },
-        {
-          name: 'SI사업부 3팀',
-          y: 4.18,
-          drilldown: 'SI사업부 3팀'
-        },
-        {
-          name: 'SI사업부 4팀',
-          y: 4.12,
-          drilldown: 'SI사업부 4팀'
-        },
-        {
-          name: 'SI사업부 5팀',
-          y: 2.33,
-          drilldown: 'SI사업부 5팀'
-        },
-        {
-          name: 'SI사업부 6팀',
-          y: 50.45,
-          drilldown: 'SI사업부 6팀'
-        },
-        {
-          name: '정보기술연구소',
-          y: 1.582,
-          drilldown: null
-        }
-      ]
+      data: getPersonCnt("data")
+      
     }
   ],
   drilldown: {
@@ -178,76 +155,8 @@ Highcharts.chart('chart_container', {
         id: 'SI사업부 1팀',
         data: [
           [
-            'v65.0',
+            '양은석',
             0.1
-          ],
-          [
-            'v64.0',
-            1.3
-          ],
-          [
-            'v63.0',
-            53.02
-          ],
-          [
-            'v62.0',
-            1.4
-          ],
-          [
-            'v61.0',
-            0.88
-          ],
-          [
-            'v60.0',
-            0.56
-          ],
-          [
-            'v59.0',
-            0.45
-          ],
-          [
-            'v58.0',
-            0.49
-          ],
-          [
-            'v57.0',
-            0.32
-          ],
-          [
-            'v56.0',
-            0.29
-          ],
-          [
-            'v55.0',
-            0.79
-          ],
-          [
-            'v54.0',
-            0.18
-          ],
-          [
-            'v51.0',
-            0.13
-          ],
-          [
-            'v49.0',
-            2.16
-          ],
-          [
-            'v48.0',
-            0.13
-          ],
-          [
-            'v47.0',
-            0.11
-          ],
-          [
-            'v43.0',
-            0.17
-          ],
-          [
-            'v29.0',
-            0.26
           ]
         ]
       },
@@ -256,44 +165,8 @@ Highcharts.chart('chart_container', {
         id: 'SI사업부 2팀',
         data: [
           [
-            'v58.0',
+            '권성하',
             1.02
-          ],
-          [
-            'v57.0',
-            7.36
-          ],
-          [
-            'v56.0',
-            0.35
-          ],
-          [
-            'v55.0',
-            0.11
-          ],
-          [
-            'v54.0',
-            0.1
-          ],
-          [
-            'v52.0',
-            0.95
-          ],
-          [
-            'v51.0',
-            0.15
-          ],
-          [
-            'v50.0',
-            0.1
-          ],
-          [
-            'v48.0',
-            0.31
-          ],
-          [
-            'v47.0',
-            0.12
           ]
         ]
       },
@@ -302,20 +175,8 @@ Highcharts.chart('chart_container', {
         id: 'SI사업부 3팀',
         data: [
           [
-            'v11.0',
+            '손연재',
             6.2
-          ],
-          [
-            'v10.0',
-            0.29
-          ],
-          [
-            'v9.0',
-            0.27
-          ],
-          [
-            'v8.0',
-            0.47
           ]
         ]
       },
@@ -324,28 +185,8 @@ Highcharts.chart('chart_container', {
         id: 'SI사업부 4팀',
         data: [
           [
-            'v11.0',
+            '예선우',
             3.39
-          ],
-          [
-            'v10.1',
-            0.96
-          ],
-          [
-            'v10.0',
-            0.36
-          ],
-          [
-            'v9.1',
-            0.54
-          ],
-          [
-            'v9.0',
-            0.13
-          ],
-          [
-            'v5.1',
-            0.2
           ]
         ]
       },
@@ -354,20 +195,12 @@ Highcharts.chart('chart_container', {
         id: 'SI사업부 5팀',
         data: [
           [
-            'v16',
+            '최기혁',
             2.6
           ],
           [
-            'v15',
+            '백희철',
             0.92
-          ],
-          [
-            'v14',
-            0.4
-          ],
-          [
-            'v13',
-            0.1
           ]
         ]
       },
@@ -388,7 +221,40 @@ Highcharts.chart('chart_container', {
             0.14
           ]
         ]
-      }
+      },
+      {
+          name: '정보기술연구소',
+          id: '정보기술연구소',
+          data: [
+            [
+              '김민혁',
+              0.96
+            ],
+            [
+              '장시호',
+              0.82
+            ],
+            [
+              '문은혜',
+              0.14
+            ]
+            ,
+            [
+              '황정현',
+              0.14
+            ]
+            ,
+            [
+              '윤미정',
+              0.14
+            ]
+            ,
+            [
+              '윤창환',
+              0.14
+            ]
+          ]
+        }
     ]
   }
 });

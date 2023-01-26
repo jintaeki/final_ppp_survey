@@ -24,6 +24,7 @@ import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 import com.mycompany.webapp.dto.SurveyResultDTO;
+import com.mycompany.webapp.dto.SurveyResultTeamDTO;
 
 @Service
 public class SurveyService implements ISurveyService{
@@ -195,20 +196,15 @@ public class SurveyService implements ISurveyService{
 	public List<SurveyListDTO> surveyList() {
 		return surveyDao.surveyList();
 	}
-	
+		
 	@Override
-	public List<ProjectDTO> projectList() {
-		return surveyDao.projectList();
+	public List<SurveyResultTeamDTO> resultList(int surveySeq) {
+		return surveyDao.resultList(surveySeq);
 	}
 	
 	@Override
-	public List<OrganizationChartDTO> organList() {
-		return surveyDao.organList();
-	}
-	
-	@Override
-	public List<SurveyResultDTO> resultList(int surveySeq, String projectId, String departmentId) {
-		return surveyDao.resultList(surveySeq, projectId, departmentId);
+	public List<SurveyResultTeamDTO> resultDPList(int surveySeq) {
+		return surveyDao.resultDPList(surveySeq);
 	}
 }
 
