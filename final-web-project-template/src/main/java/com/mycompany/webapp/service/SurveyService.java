@@ -89,16 +89,6 @@ public class SurveyService implements ISurveyService{
 	}
 
 	@Override
-	public List<Map<String, Object>> selectQuestion(int surveySeq) {
-
-		logger.info("문제 찾을 설문지:" + surveySeq);
-		return surveyDao.selectQuestion(surveySeq);
-
-	}
-
-
-
-	@Override
 	public List<SurveyQuestionDTO> questionList(int surveySeq) {
 
 		return surveyDao.getQuestionList(surveySeq);

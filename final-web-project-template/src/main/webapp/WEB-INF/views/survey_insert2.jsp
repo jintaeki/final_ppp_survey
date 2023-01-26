@@ -461,65 +461,14 @@
                console.log(data);
                console.log($('#surveyseq').val());
                var surveyseq = $('#surveyseq').val();
-            $.ajax({
-                  method:'GET', //어떤 방식으로 보낼 지
-                  url:'selectquestion.do/'+ surveyseq, // qdiv를 보낼 경로 설정
-                  dataType: "json",
-                  beforeSend : function() { //보내기 전 실행
-                  console.log("요청이 보내지는가?");
-                  },
-                  success:function (jsondata){    //전송 성공시 실행
-                     console.log(jsondata);
-                        questionHtml(jsondata);
-                        var surveyseq = jsondata[0].SURVEY_SEQ;
-                        var questionseq = jsondata[0].QUESTION_SEQ;
-//                         resetIt();
-                        location.reload();
-                       
-                  }, error:function(e) {   //실패, 에러
-                     console.log("Error", e);
-                  }
-                  });
+               location.reload();
+
+           
             }, error:function(e) {   //실패, 에러
                console.log("Error", e);
             }
             });
          }
-    function questionHtml(data){
-        let size = data.length;
-        console.log(size);
-        var html = '';
-        $('#appendQuestion').empty();
-        if(size < 1){
-           html ='관리할 문제가 없어요~';
-        }else{
-
-            for(i=0; i<size; i++){
-            	if(i<size-1){
-            		if(data[i].QUESTION_SEQ==data[i+1].QUESTION_SEQ){
-            			console.log(i+"번째: "+data[i].QUESTION_SEQ);
-            			console.log(i+1+"번째: "+data[i+1].QUESTION_SEQ); 
-            			continue;
-            		}
-            	}
-                html+='<div id="queAfter">';
-                html+='<input type="hidden" value="'+data[i].SURVEY_SEQ+'" id="surveySequence">'
-                html+='<div class="input_qus" value="'+data[i].QUESTION_SEQ+'"onclick="touchQuestion(this)">'
-                html+='<input type="text" id="input_qus" value="'+data[i].QUESTION_CONTENT+'" disabled>';
-                html+='</div>'
-                html+='<button type="button" value="'+data[i].QUESTION_SEQ+'"onclick="touchQuestion(this)" style="border: 1px solid #fff; border-radius: 35em; margin-left:4px;background:white;"><i class="fas fa-search"></i></button>';
-                html+='<button type="button"  class="delete_btn" onclick="deleteQus(this,'+data[i].SURVEY_SEQ+')" value="'+data[i].QUESTION_SEQ+'" style="margin-left:4px;background:white;">';
-                html+= '<i class="fa-regular fa-trash-can"></i>';
-                html+=   '</button>';
-                html+='<div class="blank_under"></div></div>';
-
-			
-                }
-        	
-        }
-        $('#appendQuestion').append(html);
-   }
-    
  	
  		 let cntObj=0;
   	     let cntMix=0; 
@@ -741,21 +690,8 @@
          },
             success:function (data) {    //전송 성공시 실행
                var surveyseq = surveySeq;
-                $.ajax({
-                     method:'GET', //어떤 방식으로 보낼 지
-                     url:'selectquestion.do/'+ surveyseq, // qdiv를 보낼 경로 설정
-                      dataType: "json",
-                     beforeSend : function() { //보내기 전 실행
-                     console.log("요청이 보내지는가?");
-                     },
-                     success:function (jsondata){    //전송 성공시 실행
-                           questionHtml(jsondata);
-                           var surveyseq = jsondata[0].SURVEY_SEQ;
-                           var questionseq = jsondata[0].QUESTION_SEQ;
-                     }, error:function(e) {   //실패, 에러
-                        console.log("Error", e);
-                     }
-                     });
+               location.reload();
+
             }
        });
 	}
@@ -842,9 +778,9 @@
          success:function (data) {    //전송 성공시 실행
 				cntObj=0;
 				cntMix=0;
-               oneQuestion(data);
+                oneQuestion(data);
 
-               itemHtml(data);
+                itemHtml(data);
               
               
             }, error:function(e) {   //실패, 에러
@@ -973,61 +909,16 @@
             success: function(jsondata) {
                
                var surveyseq = surveySeq;
-                $.ajax({
-                     method:'GET', //어떤 방식으로 보낼 지
-                     url:'selectquestion.do/'+ surveySeq, // qdiv를 보낼 경로 설정
-                      dataType: "json",
-                     beforeSend : function() { //보내기 전 실행
-                     console.log("요청이 보내지는가?");
-                     },
-                     success:function (jsondata){    //전송 성공시 실행
-                           questionHtml(jsondata);
-                           NewQuestion(jsondata);
-                    	   $("#subj_ItemAfter").empty(); 
-                    	   $("#obj_ItemAfter").empty(); 
-                    	   $("#mix_ItemAfter").empty(); 
-                           $("#subj_box_toggle").hide();
-                           $("#mix_box_toggle").hide();
-                           $("#obj_box_toggle").hide();
+               location.reload();
 
 
-                     }, error:function(e) {   //실패, 에러
-                        console.log("Error", e);
-                     }
-                     });
             },
             error: function(e) {
                console.log("Error", e);
                }
             });
          }
-      /*
-     function insertItem(questionSeq) {
-         var idiv = $('#item_div')[0]
-         alert("문항 등록");
-          console.log("문항 등록 시작");
-         var data = new FormData(idiv);
-         $.ajax({
-            method: 'POST',
-            url: 'iteminsert.do',
-            data: data,
-            processData : false,
-            contentType : false,
-             cache : false,
-            beforeSend: function() {
-               console.log("요청 보냈음");
-               alert("업데이트 beforesend");
-               console.log("item data" + data);
-               console.log("idiv: " + idiv)
-            },
-            success: function(data) {
-               console.log($('#questionseq').val());
-               var surveyseq = $('#questionseq').val();
-              }, error:function(e) {
-                 console.log("Error", e)
-              }
-
-*/
+     
 
 
 

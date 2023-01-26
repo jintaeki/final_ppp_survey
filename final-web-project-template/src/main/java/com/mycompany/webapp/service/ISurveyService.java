@@ -33,9 +33,6 @@ public interface ISurveyService {
 
 	List<Map<String, String>> selectSurveyEvaluate(int surveySeq);
 
-	List<Map<String, Object>> selectQuestion(int surveySeq);
-
-
 	SurveyListDTO selectSurvey(int surveySeq);
 
 	public List<SurveyQuestionDTO> getQuestionList(int surveySeq);

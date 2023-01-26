@@ -81,29 +81,9 @@
             ,UPDATE_DATE=sysdate  WHERE SURVEY_SEQ=#{surveySeq}
    </update>
 
-
-
-
-
 <delete id="DeleteQuestion" parameterType="SQD">
       DELETE FROM SURVEY_QUESTION WHERE QUESTION_SEQ = #{questionSeq}
    </delete>
-
-
-   <select id="selectQuestion" parameterType="int" resultType="hashmap">
-      SELECT SURVEY_QUESTION.SURVEY_SEQ
-       ,SURVEY_QUESTION.QUESTION_SEQ
-           ,SURVEY_QUESTION.QUESTION_CONTENT
-           ,SURVEY_QUESTION.QUESTION_TYPE_CODE
-           ,SURVEY_ITEM.ITEM_SEQ
-           ,SURVEY_ITEM.ITEM_CONTENT
-           ,SURVEY_ITEM.ITEM_SCORE
-      FROM  SURVEY_ITEM  right join SURVEY_QUESTION
-      on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ
-      where SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} ORDER BY SURVEY_QUESTION.QUESTION_SEQ DESC
-   </select>
-
-
 
    <select id="selectSurvey" parameterType="int" resultType="SLD">
       SELECT SURVEY_SEQ
@@ -131,10 +111,6 @@
       UPDATE SURVEY_QUESTION SET QUESTION_CONTENT=#{questionContent}
           ,QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq}
    </update>
-
-<!--    <update id="UpdateQTypeBySeq" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO"> -->
-<!--       UPDATE SURVEY_QUESTION SET QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq} -->
-<!--    </update> -->
 
    <update id="sendMessage" parameterType="int">
       UPDATE SURVEY_LIST SET    STATE_CODE='30004' WHERE SURVEY_SEQ =#{surveySeq}
@@ -258,6 +234,7 @@
           FROM  SURVEY_ITEM  right join SURVEY_QUESTION
           on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ
           WHERE SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} and SURVEY_QUESTION.QUESTION_SEQ = #{questionSeq} ORDER BY SURVEY_QUESTION.QUESTION_SEQ DESC
+   
    </select>
 
 	<delete id="deleteItemByQSeq" parameterType="int">

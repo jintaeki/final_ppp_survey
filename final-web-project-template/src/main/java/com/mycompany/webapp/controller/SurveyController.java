@@ -259,14 +259,8 @@ public class SurveyController {
 		return SQD;
 	}
 
-	// 문제 비동기식으로 출력
-	@RequestMapping(value = "/selectquestion.do/{surveySeq}")
-	@ResponseBody
-	public List<Map<String, Object>> selectQuestion(@PathVariable int surveySeq, Model model) {
-		logger.info("문제 뿌리기 컨트롤 ");
 
-		return surveyService.selectQuestion(surveySeq);
-	}
+
 
 	// 문항 비동기식으로 출력
 	@RequestMapping(value = "/selectitems.do/{questionseq}")

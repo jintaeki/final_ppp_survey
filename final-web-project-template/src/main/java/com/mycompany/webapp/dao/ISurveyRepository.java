@@ -27,9 +27,6 @@ public interface ISurveyRepository {
 
 	void insertItem(SurveyQuestionDTO SQD);
 
-	//문제 비동기 조회 목적
-	List<Map<String, Object>> selectQuestion(int surveySeq);
-
 	SurveyListDTO selectSurvey(int surveyid);
 
 	void UpdateQuestion(SurveyQuestionDTO SQD);
