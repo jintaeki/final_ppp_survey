@@ -287,6 +287,8 @@
 	<div class="row" style="width: 1360px;">
 
 		<div class="appraiseeList col-4">
+			<div class="input_title">피평가자 목록</div>			
+		
 			<div id="scroll_area" style="overflow: auto;">
 
 
@@ -318,6 +320,7 @@
 
 
 		<div class="question-box col-7">
+		
 		<div class="submit_btn"><button class="create_btn" onclick="submit()">제출</button></div>
 			<div id="scroll_area"
 				style="overflow: auto; height: 670px; ">

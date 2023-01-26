@@ -28,6 +28,16 @@
 	
 }
 
+.input_title {
+width: 130px;
+    text-align: inline-flex;
+    font-weight: bold;
+    color: #0089ff;
+    font-size: 20px;
+    margin-left: 130px;
+    margin-bottom: 10px;
+}
+
 #survey_btn {
    text-align: center;
    margin-top: 10%;
