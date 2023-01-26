@@ -271,7 +271,7 @@
 					
 
 <!-- 문항 시작 -->
-<div class="container" style="padding: 40px 20px 20px 40px;">
+<div class="container" style="padding: 40px 40px 40px 40px;">
 	<select name="surveySeq" onclick="selectSurvey(this,${raterId})">
 		<option value="0">선택</option>
 		<c:forEach items="${surveySeqAndName}" var="surveySeqAndName">
@@ -279,8 +279,8 @@
 		</c:forEach>
 	</select>
 	<div class="row">
-		
-		<div class="col-4" style="font-size: 14px; text-align: center">
+
+		<div class="col-5" style="font-size: 14px; text-align: center">
 			<div id="scroll_area" style="overflow: auto;">
 
 
@@ -291,8 +291,9 @@
 					<div class="col-3"></div>
 				</div>
 				<div id="appendArea" class="row">
-	
-				<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 평가 대상이 없습니다.</b>
+
+					<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 평가
+						대상이 없습니다.</b>
 				</div>
 
 
@@ -310,19 +311,23 @@
 
 
 
+
 		<div id="question-box" class="col-7" style="border: 1px solid;">
-			<div class="survey_list">
-			
-				<form:form id="surveyForm" modelAttribute="surveyResult">
+			<div id="scroll_area"
+				style="overflow: auto; height: 800px; ">
+				<div class="survey_list">
 
-					<div class="form_area" id="addQuestion">
-						<div class="question-form"></div>
+					<form:form id="surveyForm" modelAttribute="surveyResult">
+
+						<div class="form_area1" id="addQuestion">
+							<div class="question-form"></div>
 
 
-					</div>
-				</form:form>
-									<button onclick="submit()">제출</button>
-				
+						</div>
+					</form:form>
+					<button onclick="submit()">제출</button>
+
+				</div>
 			</div>
 		</div>
 	</div>
