@@ -324,16 +324,8 @@
 				<div class="survey_list">
 
 					<form:form id="surveyForm" modelAttribute="surveyResult">
-					<div class="item_form" style=" display: flex; align-items: flex-end;">
-					<input type="radio" class="item_btn" id="radiolabel"><label for="radiolabel" style="margin-right: 15px">혼합식1</label>
-					<input type="radio" class="item_btn" id="radiolabel"><label for="radiolabel" style="margin-right: 15px">혼합식1</label>
-					<input type="radio" class="item_btn" id="radiolabel"><label for="radiolabel" style="margin-right: 15px">혼합식1</label>
-					<input type="radio" class="item_btn" id="radiolabel"><label for="radiolabel" style="margin-right: 15px">혼합식1</label>
-					<input type="radio" class="item_btn" id="radiolabel"><label for="radiolabel" style="margin-right: 15px">혼합식1</label>					
-					</div>
+					<!-- 문제 들어가는 곳 -->
 					</form:form>
-					
-
 				</div>
 			</div>
 		</div>
