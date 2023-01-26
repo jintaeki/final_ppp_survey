@@ -353,7 +353,7 @@
 
 
 								<th scope="row">
-								<button class="delete_survey_btn" style="border: 1px solid #fff; border-radius: 35em;" onclick="delete_survey_btn(this,${list.surveySeq}, ${pagingdto.selection},  ${pagingdto.pageNo})">
+								<button class="delete_survey_btn" style="background: white;border: 1px solid #fff; border-radius: 35em;" onclick="delete_survey_btn(this,${list.surveySeq}, ${pagingdto.selection},  ${pagingdto.pageNo})">
 
 										<i class="fas fa-xmark"></i>
 									</button></th>
