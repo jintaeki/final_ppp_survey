@@ -2,18 +2,17 @@
 
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <!-- <link rel="stylesheet" type="text/css" href="/survey.css"> -->
-<%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/survey.css" /> --%>
+   <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/survey.css" />
 
 <!-- <script src="resources/js/survey.js"></script> -->
 <!-- <script src="resources/js/surveycountdown.js"></script> -->
 <script type="text/javascript">
   
-   
    function questionHTML(result,raterId,appraiseeId,anonymitycode,theSeq){
-
+		var itemNum = 0;
 	   const size= result.length;
 	   console.log(size);
-   	   $("#addQuestion").empty();
+   	   $("#surveyForm").empty();
 	   let cnt = 0;
 	   surveyQandA = '';
 	   surveyQandA += '<input type="hidden" name="anonymityCode" value='+anonymitycode+'>';
@@ -25,7 +24,7 @@
 		    if(i==size-1){
 		    	surveyQandA += '<div class="question-form">';
 		    	surveyQandA+= '<input type="hidden" name="questionSeq" value="'+result[i].QUESTION_SEQ+'">';
-			    surveyQandA += result[i].QUESTION_CONTENT;
+			    surveyQandA += '<p style="margin-bottom: 0px; color:dimgray;">'+(i-itemNum +1)+'.'+ result[i].QUESTION_CONTENT+'</p>';
 			    surveyQandA +='</div>';
 			    surveyQandA +='<input type="hidden" name="raterId" value="'+raterId+'">';
 			    surveyQandA +='<input type="hidden" name="appraiseeId" value="'+appraiseeId+'">';
@@ -35,20 +34,22 @@
 			    console.log("마지막");
 			    console.log(cnt);
 			    if(result[i].QUESTION_TYPE_CODE =="10002"){
-			    	surveyQandA += '<span class="item_form">';
+			    	surveyQandA += '<div class="item_form" style=" display: flex; align-items: flex-end;">';
 			    	surveyQandA+= '<input type="hidden" name="'+(i+'num')+'" value="'+result[i].ITEM_SEQ+'">';
 					surveyQandA += '<textarea name="answerContent"></textarea>';
-					surveyQandA += '<input type="radio" name="'+(i+'num')+'" class="item_btn" value="'+result[i].ITEM_SEQ+'" style="display:none;">';
-					surveyQandA += '</span>';
+					surveyQandA += '<input type="hidden" name="'+(i+'num')+'" class="item_btn" value="'+result[i].ITEM_SEQ+'">';
+					surveyQandA += '</div>';
 			    }else{
+			    	surveyQandA += '<div class="item_form" style=" display: flex; align-items: flex-end;">';
+
 			    	 for(var j = i-cnt;j<=i;j++ ){
 					    	
-					   	   surveyQandA += '<span class="item_form">'
-	 					   surveyQandA += '<input type="radio" name="'+(i+'num')+'" class="item_btn" value="'+result[j].ITEM_SEQ+'">'+result[j].ITEM_CONTENT;
-						   surveyQandA += '</span>'
+	 					   surveyQandA += '<input type="radio" name="'+(i+'num')+'" class="item_btn" value="'+result[j].ITEM_SEQ+'"id="'+result[j].ITEM_SEQ+'"><label for="'+result[j].ITEM_SEQ+'" style="margin-right: 15px">'+result[j].ITEM_CONTENT+'</label>';
 					
 						   if(j==i){
 						   surveyQandA +='<input type="hidden" name="answerContent" value="선택형 문제입니다.">';
+						   surveyQandA += '</div>'
+
 						   }
 			    }
 			   
@@ -61,53 +62,56 @@
 			
 		    surveyQandA += '<div class="question-form">';
 	    	surveyQandA+= '<input type="hidden" name="questionSeq" value="'+result[i].QUESTION_SEQ+'">';
-		    surveyQandA += result[i].QUESTION_CONTENT;
+		    surveyQandA += '<p style="margin-bottom: 0px; color:dimgray;">'+(i-itemNum +1)+'.'+ result[i].QUESTION_CONTENT+'</p>';
 		    surveyQandA +='</div>';
 		    surveyQandA +='<input type="hidden" name="raterId" value="'+raterId+'">';
 		    surveyQandA +='<input type="hidden" name="appraiseeId" value="'+appraiseeId+'">';
 		    surveyQandA +='<input type="hidden" name="surveySeq" value="'+result[i].SURVEY_SEQ+'">';
 		    if(result[i].QUESTION_TYPE_CODE =="10002"){
-		    	surveyQandA += '<span class="item_form">';
+		    	surveyQandA += '<div class="item_form" style=" display: flex; align-items: flex-end;">';
 		    	surveyQandA+= '<input type="hidden" name="'+(i+'num')+'" value="'+result[i].ITEM_SEQ+'">';
 
 				surveyQandA += '<textarea name="answerContent"></textarea>';
-				   surveyQandA += '<input type="radio" name="'+(i+'num')+'" class="item_btn" value="'+result[j].ITEM_SEQ+'" style="display:none;">';
+				surveyQandA += '<input type="hidden" name="'+(i+'num')+'" class="item_btn" value="'+result[i].ITEM_SEQ+'">';
 
-				surveyQandA += '</span>';
+				surveyQandA += '</div>';
 		    }else{
-		    
+		    	surveyQandA += '<div class="item_form" style=" display: flex; align-items: flex-end;">';
 		   	for(var j = i-cnt;j<=i;j++ ){
-			   	   surveyQandA += '<span class="item_form">'
- 					   surveyQandA += '<input type="radio" name="'+(i+'num')+'" class="item_btn" value="'+result[j].ITEM_SEQ+'">'+result[j].ITEM_CONTENT;
-				   surveyQandA += '</span>'
+		    	
+				   surveyQandA += '<input type="radio" name="'+(i+'num')+'" class="item_btn" value="'+result[j].ITEM_SEQ+'"id="'+result[j].ITEM_SEQ+'"><label for="'+result[j].ITEM_SEQ+'" style="margin-right: 15px">'+result[j].ITEM_CONTENT+'</label>';
 				   
+					  
 				   if(j==i){
 				   surveyQandA +='<input type="hidden" name="answerContent" value="선택형 문제입니다.">';
+				   surveyQandA += '</div>'
 
 				   }
 		   	}
 		    }
 		   	cnt=0;
+		   	
 		   }else if(result[i].QUESTION_CONTENT == result[i+1].QUESTION_CONTENT){
 			   cnt = cnt + 1;
+			   itemNum= itemNum + 1;
 		   }
 		
 	  
-		   
+		    
 	   }
 	   
-	   $('#addQuestion').append(surveyQandA);
+	   $('#surveyForm').append(surveyQandA);
    }
    
    function selectSurvey(obj,raterId){
 	   console.log(raterId);
 	   console.log($(obj).val());
 	   var surveySeq = $(obj).val();
-	   $("#addQuestion").empty();
+	   $("#surveyForm").empty();
 	   $.ajax({
 	         url:'getAnonymityCode.do/'+surveySeq,
 	         method: 'GET',
-	        dataType: 'html',
+	         dataType: 'html',
 	         success: function(result){
 	        	 console.log('result '+result);
 
@@ -116,10 +120,10 @@
 	        	 if($(obj).val()==0){
 	      		   console.log("surveySeq is 0");
 	      		   var html='';
-	      		   html += '<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 평가 대상이 없습니다.</b>';
+	    		   html += '<div class="noAppraisee"><b>평가 대상이 없습니다.</b></div>'
 	      		   $('#appendArea').empty();
 	      		   $('#appendArea').append(html);
-	      	   }else{
+	      	     }else{
 	      		   
 	      	   $.ajax({
 	      	         url:'getAppraisee.do/'+raterId+"/"+surveySeq,
@@ -161,17 +165,19 @@
 	   var size = data.length;
 	   var html = '';
 	   $('#appendArea').empty();
-	   for(var i=0; i<size; i++){
+	  
+	   		for(var i=0; i<size; i++){
 		   
-		   html +='<div class="col-4">'+data[i].appraiseeDepartmentName+'</div>';
-		   html +='<div class="col-2">'+data[i].appraiseeGradeName+'</div>';
-		   html +='<div class="col-3">'+data[i].appraiseeName+'</div>';
-		   if(data[i].surveyCompleteYN=='N'){
-		   html +='<div class="col-3"><button id="'+data[i].appraiseeId+'" onclick="surveyStart(this,'+data[i].appraiseeId+','+data[i].raterId+','+anonymitycode+','+theSeq+')" value="'+data[i].surveySeq+'">평가</button></div>';
-		   }else{
-		   html +='<div class="col-3"><button disabled>평가완료</button></div>';
-		   }
-	   }
+		   		html +='<div class="col-4">'+data[i].appraiseeDepartmentName+'</div>';
+		   		html +='<div class="col-2">'+data[i].appraiseeGradeName+'</div>';
+		   		html +='<div class="col-3">'+data[i].appraiseeName+'</div>';
+		   		if(data[i].surveyCompleteYN=='N'){
+		   		html +='<div class="col-3"><button  class="create_btn" id="'+data[i].appraiseeId+'" onclick="surveyStart(this,'+data[i].appraiseeId+','+data[i].raterId+','+anonymitycode+','+theSeq+')" value="'+data[i].surveySeq+'">평가</button></div>';
+		   		}else{
+		   		html +='<div class="col-3"><button style="padding: 10px 13px; color:green;" class="create_btn" disabled>평가완료</button></div>';
+		   		}
+	  		}
+	   
 	   $('#appendArea').append(html);
    }
    
@@ -278,9 +284,9 @@
 			<option  value="${surveySeqAndName.SURVEY_SEQ}" >${surveySeqAndName.SURVEY_NAME}</option>
 		</c:forEach>
 	</select>
-	<div class="row">
+	<div class="row" style="width: 1360px;">
 
-		<div class="col-5" style="font-size: 14px; text-align: center">
+		<div class="appraiseeList col-4">
 			<div id="scroll_area" style="overflow: auto;">
 
 
@@ -292,8 +298,7 @@
 				</div>
 				<div id="appendArea" class="row">
 
-					<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 평가
-						대상이 없습니다.</b>
+					<div class="noAppraisee"><b>평가 대상이 없습니다.</b></div>
 				</div>
 
 
@@ -305,27 +310,29 @@
 
 
 
+<!-- 	<div class="col-1">하이</div> -->
 
 
 
 
 
 
-
-		<div id="question-box" class="col-7" style="border: 1px solid;">
+		<div class="question-box col-7">
+		<div class="submit_btn"><button class="create_btn" onclick="submit()">제출</button></div>
 			<div id="scroll_area"
-				style="overflow: auto; height: 800px; ">
+				style="overflow: auto; height: 670px; ">
 				<div class="survey_list">
 
 					<form:form id="surveyForm" modelAttribute="surveyResult">
-
-						<div class="form_area1" id="addQuestion">
-							<div class="question-form"></div>
-
-
-						</div>
+					<div class="item_form" style=" display: flex; align-items: flex-end;">
+					<input type="radio" class="item_btn" id="radiolabel"><label for="radiolabel" style="margin-right: 15px">혼합식1</label>
+					<input type="radio" class="item_btn" id="radiolabel"><label for="radiolabel" style="margin-right: 15px">혼합식1</label>
+					<input type="radio" class="item_btn" id="radiolabel"><label for="radiolabel" style="margin-right: 15px">혼합식1</label>
+					<input type="radio" class="item_btn" id="radiolabel"><label for="radiolabel" style="margin-right: 15px">혼합식1</label>
+					<input type="radio" class="item_btn" id="radiolabel"><label for="radiolabel" style="margin-right: 15px">혼합식1</label>					
+					</div>
 					</form:form>
-					<button onclick="submit()">제출</button>
+					
 
 				</div>
 			</div>
