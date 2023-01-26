@@ -21,71 +21,11 @@
 </style>
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
-   
-
-																					<!-- 주관식 문제 name 부여, question으로 삭제 후 저장되는 지 확인 -->
 
 <div class="container" style="padding: 20px 50px 50px 50px; height:1000px;">
 <button style="float:left;"class="btn btn-link" onclick="history.go(-1)">뒤로가기</button>
 <button style="float:right;"class="btn btn-link" onclick="location.href='<c:url value='surveyinsertcomplete.do/${SLD.surveySeq}'/>'">등록완료</button>
 	<!-- 설문지 설정 진택 -->
-	<!-- 상단 information -->
-	
-
-
-
-<%-- 	<form:form modelAttribute="SLD" id="survey_setting_form"> --%>
-<!-- 	<table class= "insert2_table" style="margin: 60px 60px 0px 160px; text-align: center;"> -->
-<!-- 	<tr> -->
-<!-- 	<th>설문지 제목</th> -->
-<!-- 	<th>설문 시작 기간</th> -->
-<!-- 	<th>설문 마감 기간</th> -->
-<!-- 	<th>익명/기명</th> -->
-<!-- 	<th>상세 설명</th> -->
-<!-- 	<th style="border:none;"></th> -->
-<!-- 	<th style="border:none;"></th> -->
-<!-- 	</tr> -->
-	
-<!-- 	<tr> -->
-<!-- 	<td><input type="text"  -->
-<%-- 				name="surveyName" style="" value="${SLD.surveyName}"></td> --%>
-<!-- 	<td><input type="date" -->
-<!-- 				name="surveyStartDate"  -->
-<%-- 				value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />"></td> --%>
-<!-- 	<td><input type="date" name="surveyClosedDate"  -->
-<%-- 				value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />"></td> --%>
-<!-- 	<td> -->
-<%-- 	<c:if --%>
-<%-- 					test="${SLD.anonymityCheckCode eq '20001'}"> --%>
-<!-- 					<input type="radio" name="anonymityCheckCode" -->
-<!-- 						id="survey_type_check" value="20001" checked>익명 -->
-<!-- 					<input type="radio" name="anonymityCheckCode" -->
-<!-- 						id="survey_type_check" value="20002">기명 -->
-<%--          		    </c:if>  --%>
-         		    
-<%--          		    <c:if test="${SLD.anonymityCheckCode eq '20002'}"> --%>
-<!-- 					<input type="radio" name="anonymityCheckCode" -->
-<!-- 						id="survey_type_check" value="20001"> -->
-<!-- 					<label for="survey_type_check">익명</label> -->
-
-<!-- 					<input type="radio" name="anonymityCheckCode" style="" -->
-<!-- 						id="survey_type_check" value="20002" checked> -->
-<!-- 					<label for="survey_type_check">기명</label> -->
-<%-- 				</c:if> --%>
-<!-- 	</td> -->
-
-<%-- 	<td><textarea  name="surveyContent">${SLD.surveyContent }</textarea></td> --%>
-<!-- 	<td style="border:none;"><input type="hidden" name="stateCode" value="30001"> <input -->
-<!-- 				type="hidden" name="surveySeq" id="surveyseq" -->
-<%-- 				value="${SLD.surveySeq}"></td> --%>
-<!-- 	<td style="border:none;"></td> -->
-	
-<!-- 	</tr> -->
-
-<!-- 	</table> -->
-<!-- 	<input style= "margin-left: 800px;" type="button" class="update_btn" style="margin-bottom:10px;" onclick="register()" value="적용"> -->
-<%-- 	</form:form> --%>
-	<!-- 상단 information 끝 -->
 
 	<div class="container_survey">
 		<div class="row" style="margin-top: 65px;">		</div>
@@ -152,7 +92,7 @@
 
 							<input type="hidden" value="${qlist.surveySeq }"
 								id="surveySequence">
-							<div class="input_qus" >
+							<div class="input_qus" id="checkTouch">
 								<input disabled type="text" id="input_qus" 
 									value="${qlist.questionContent }">
 							</div>
@@ -193,8 +133,9 @@
 				
 		</tr>
 		
-		<tr style="border-bottom: 3px solid gainsboro;"><th><div style="margin-top: 8px;"></div></th></tr>
-		<tr><th><div style="margin-top: 8px;"></div></th></tr>
+		<tr style="border-bottom: 3px solid gainsboro;">
+		<th><div style="margin-top: 8px;"></div></th></tr>
+		<tr><th><div style="margin-top:8px;"></div></th></tr>
 		<tr>
 			<td><span class="insert_category"> <b>평가 기간</b> </span></td>
 			<td><input type="date"
@@ -329,6 +270,16 @@
 </div>
 </div>
 <script>
+
+	// 문제 누르면 touch버튼(돋보기) 활성화
+	$(document).ready(function(){
+		  $('div#checkTouch').click(function(){
+			  $(this).next('button').click();
+
+		  });
+		});
+		
+
    //진택
    var cnt = 0;
 
@@ -553,7 +504,7 @@
             	}
                 html+='<div id="queAfter">';
                 html+='<input type="hidden" value="'+data[i].SURVEY_SEQ+'" id="surveySequence">'
-                html+='<div class="input_qus">'
+                html+='<div class="input_qus" value="'+data[i].QUESTION_SEQ+'"onclick="touchQuestion(this)">'
                 html+='<input type="text" id="input_qus" value="'+data[i].QUESTION_CONTENT+'" disabled>';
                 html+='</div>'
                 html+='<button type="button" value="'+data[i].QUESTION_SEQ+'"onclick="touchQuestion(this)" style="border: 1px solid #fff; border-radius: 35em; margin-left:4px;background:white;"><i class="fas fa-search"></i></button>';
@@ -889,12 +840,10 @@
          console.log("요청이 보내지는가?");
          },
          success:function (data) {    //전송 성공시 실행
-            console.log("으잉?"+data);
 				cntObj=0;
 				cntMix=0;
                oneQuestion(data);
 
-               console.log("답은:"+data[0].QUESTION_TYPE_CODE);
                itemHtml(data);
               
               

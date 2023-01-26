@@ -286,6 +286,7 @@ public class SurveyController {
 		model.addAttribute("SQD", SQD);
 		surveyService.insertQuestion(SQD);
 		if(SQD.getQuestionTypeCode().equals("10002")) {
+		surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
 		SQD.setItemContent("주관식 문제입니다.");
 		surveyService.insertItem(SQD);
 		}
@@ -313,7 +314,10 @@ public class SurveyController {
 		logger.info("sqd값" + SQD.toString());
 		// int questionId = SQD.getQuestionId();
 		surveyService.UpdateQuestion(SQD);
-
+		if(SQD.getQuestionTypeCode().equals("10002")) {
+			SQD.setItemContent("주관식 문제입니다.");
+			surveyService.insertItem(SQD);
+			}
 		logger.info(SQD.toString());
 		// surveyService.getQuestionList(surveyId);
 		logger.info("업데이트 성공");
