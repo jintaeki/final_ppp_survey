@@ -118,4 +118,12 @@
 	
 	</select>	
 	
+	<update id="completeSurvey">
+	
+		UPDATE MAPPING 
+		SET SURVEY_COMPLETE_YN = 'Y'
+		WHERE SURVEY_SEQ = #{surveySeq} and RATER_ID = #{raterId} and APPRAISEE_ID = #{appraiseeId}
+	
+	</update>
+	
 </mapper>

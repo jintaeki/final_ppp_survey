@@ -17,10 +17,10 @@
 	   let cnt = 0;
 	   surveyQandA = '';
 	   surveyQandA += '<input type="hidden" name="anonymityCode" value='+anonymitycode+'>';
-	   surveyQandA += '<input type="hidden" name="anonymitySeq" value='+theSeq+'>';
+	   surveyQandA += '<input type="hidden" name="anonymitySeq" value='+theSeq+'>'; 
 
 	   	 $('#surveyForm').append(surveyQandA);
-	   for(let i = 0; i<size;i++){
+	   for(let i = 0; i<size;i++){ 
 		   		
 		    if(i==size-1){
 		    	surveyQandA += '<div class="question-form">';
@@ -103,7 +103,7 @@
 	   console.log(raterId);
 	   console.log($(obj).val());
 	   var surveySeq = $(obj).val();
-	   
+	   $("#addQuestion").empty();
 	   $.ajax({
 	         url:'getAnonymityCode.do/'+surveySeq,
 	         method: 'GET',
@@ -166,8 +166,11 @@
 		   html +='<div class="col-4">'+data[i].appraiseeDepartmentName+'</div>';
 		   html +='<div class="col-2">'+data[i].appraiseeGradeName+'</div>';
 		   html +='<div class="col-3">'+data[i].appraiseeName+'</div>';
-		   html +='<div class="col-3"><button onclick="surveyStart(this,'+data[i].appraiseeId+','+data[i].raterId+','+anonymitycode+','+theSeq+')" value="'+data[i].surveySeq+'">평가</button></div>';
-	   	 
+		   if(data[i].surveyCompleteYN=='N'){
+		   html +='<div class="col-3"><button id="'+data[i].appraiseeId+'" onclick="surveyStart(this,'+data[i].appraiseeId+','+data[i].raterId+','+anonymitycode+','+theSeq+')" value="'+data[i].surveySeq+'">평가</button></div>';
+		   }else{
+		   html +='<div class="col-3"><button disabled>평가완료</button></div>';
+		   }
 	   }
 	   $('#appendArea').append(html);
    }
@@ -205,9 +208,6 @@
 		var keyArray=[];
 		var valueArray =[];
 	
-
-		
-	
 		
 		for(const pairkeys of formData.keys()){
 			keyArray.push(pairkeys);
@@ -215,7 +215,7 @@
 		 	cnt = cnt+1;
 		}
 		for(const pairvalues of formData.values()){
-			console.log(pairvalues);
+// 			console.log(pairvalues);
 			valueArray.push(pairvalues);
 			cnt2 = cnt2 +1;
 		}	
@@ -223,32 +223,36 @@
 		
 		for(var i = 0; i<cnt;i++){
 			if(keyArray[i].substr(-3,3)=='num'){
-				console.log(keyArray[i]);
-				console.log(valueArray[i]);
+// 				console.log(keyArray[i]);
+// 				console.log(valueArray[i]);
 				formData.append('itemSeq',valueArray[i]);
 			}
 		}
-				
-		 
-	
 		
+		var object = {};	
+		formData.forEach((value, key) => object[key] = value);
 		
-		
-
-	   $.ajax({
-	         url: 'insertSurveyResult.do',
-	         method: 'POST',
-	         data : formData,
-	         processData : false,
-	         contentType : false,
-	         cache : false,
-	         timeout : 600000,
-	         success: function(result){
-	        	 alert("결과저장성공");
-// 	        	 questionHTML(result,raterId,appraiseeId);
-	            
-	         }
-	      });
+// 		console.log("설문아이디"+object['surveySeq']);
+// 		console.log("평가자아이디"+object['raterId']);
+		 var tag = $('#'+object['appraiseeId']);
+// 	        	 tag.replaceAll('<div class="col-3"><button disabled>평가완료</button></div>');
+// 				 tag.remove();
+				 tag.parent().html('<button disabled>평가완료</button>');
+// 	   $.ajax({
+// 	         url: 'insertSurveyResult.do',
+// 	         method: 'POST',
+// 	         data : formData,
+// 	         processData : false,
+// 	         contentType : false,
+// 	         cache : false,
+// 	         timeout : 600000,
+// 	         success: function(result){
+// 	        	 alert("결과저장성공");
+// 	        	 selectSurvey(object['surveySeq'],object['raterId']);
+// 	        	 var tag = $('#'+surveyBtn);
+// 	        	 tag.remove();
+// 	         }
+// 	      });
    } 
   
 </script>

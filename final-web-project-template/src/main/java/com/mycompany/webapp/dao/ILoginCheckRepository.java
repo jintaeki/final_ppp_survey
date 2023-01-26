@@ -28,4 +28,6 @@ public interface ILoginCheckRepository {
 	public  void insertResult (SurveyResultDTO SRD);
 	
 	public String getAnonimityCode(int surveySeq);
+	
+	public void completeSurvey(@Param("surveySeq") String surveySeq,@Param("appraiseeId") String appraiseeId,@Param("raterId") String raterId);
 }

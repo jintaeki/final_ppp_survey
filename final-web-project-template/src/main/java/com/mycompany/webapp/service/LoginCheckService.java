@@ -70,6 +70,12 @@ public class LoginCheckService implements ILoginCheckService{
 		return loginCheckRepository.getAnonimityCode(surveySeq);
 	}
 
+	@Override
+	public void completeSurvey(String surveySeq, String appraiseeId, String raterId) {
+	
+		loginCheckRepository.completeSurvey(surveySeq, appraiseeId, raterId);
+	}
+
 	
 	
 }

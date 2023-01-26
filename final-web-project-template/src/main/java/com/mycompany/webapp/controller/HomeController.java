@@ -244,6 +244,7 @@ public class HomeController {
 				surveyResult.setAnswerContent(answerContent[i]);
 				
 				loginCheckService.insertResult(surveyResult);
+				loginCheckService.completeSurvey(surveyResult.getSurveySeq(),surveyResult.getAppraiseeId(),surveyResult.getRaterId());
 			}
 		}else {
 			for(int i =0; i<cntcontent;i++) {
@@ -254,6 +255,8 @@ public class HomeController {
 				surveyResult.setAnswerContent(answerContent[i]);
 				
 				loginCheckService.insertResult(surveyResult);
+				loginCheckService.completeSurvey(surveyResult.getSurveySeq(),surveyResult.getAppraiseeId(),surveyResult.getRaterId());
+
 			}
 		}
 		
