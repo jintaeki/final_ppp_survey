@@ -8,6 +8,7 @@
 
 
 	function delete_survey_btn(obj,surveyseq,selection,pageno){
+		if(confirm("삭제하시겠습니까?")){
 		let bselection = selection;
 		let bpageno = pageno;
 		let bdate = $('#selectedDate').val();
@@ -61,7 +62,7 @@
 	       });
 
 
-
+		}
 	};
 
 // function getList(){
