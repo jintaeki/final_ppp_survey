@@ -84,12 +84,15 @@
 			<div class="input_title">문제 목록</div>			
 			<div id="scroll_area" style="overflow: auto;  height:450px;">
 
-
+							<c:if test="${empty SQL}">
+								<br>
+								<b>${NoQuestion}</b>							
+							</c:if> 
 				<!-- 여기까지 문제 div -->
-				<div id="appendQuestion">
+				
 					<c:forEach items="${SQL}" var="qlist">
 						<div id="queAfter">
-
+							
 							<input type="hidden" value="${qlist.surveySeq }"
 								id="surveySequence">
 							<div class="input_qus" id="checkTouch">
@@ -113,7 +116,7 @@
 							<div class="blank_under"></div>
 						</div>
 					</c:forEach>
-				</div>
+				
 			</div>
 		</div>
 		</div>

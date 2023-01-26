@@ -82,9 +82,11 @@ public class SurveyController {
 			SurveyListDTO SLD = (SurveyListDTO) session.getAttribute("SLD");
 			session.removeAttribute("SLD");
 			model.addAttribute("SLD", SLD);
+			model.addAttribute("NoQuestion","저장된 문제가 없습니다.");
 		} else {
 			model.addAttribute("SLD", surveyService.selectSurvey(surveySeq));
 			model.addAttribute("SQL", surveyService.getQuestionList(surveySeq));
+			model.addAttribute("NoQuestion","저장된 문제가 없습니다.");
 		}
 
 		return "survey_insert2";
