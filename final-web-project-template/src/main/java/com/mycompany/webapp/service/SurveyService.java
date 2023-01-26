@@ -72,7 +72,6 @@ public class SurveyService implements ISurveyService{
 
 
 	@Override
-
 	public void insertItem(SurveyQuestionDTO sqd) {
 		logger.info("insertItem: " + sqd);
 		logger.info("문항 id가 들어갔냐 안갔냐"  + sqd);
@@ -167,15 +166,22 @@ public class SurveyService implements ISurveyService{
 	}
 
 	@Override
-	public List<SurveyResultDTO> surveyResult(SurveyResultDTO SRD) {
-		return null;
-	}
-
-
-	@Override
 	public List<Map<String, Object>> getSurveySeqAndName(int raterId) {
 
 		return null;
+	}
+
+	@Override
+	public List<SurveyResultDTO> surveyResult(int employeeId, int surveySeq) {
+			logger.info("개인별 설문 결과 페이지 서비스 진입");
+			logger.info("employeeId: "  + employeeId);
+		return surveyDao.surveyResult(employeeId, surveySeq);
+	}
+
+	@Override
+	public SurveyResultDTO getResultTarget(int employeeId) {
+
+		return surveyDao.getResultTarget(employeeId);
 	}
 
 }

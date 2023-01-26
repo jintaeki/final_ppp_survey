@@ -13,6 +13,7 @@ import com.mycompany.webapp.dto.PopupDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
+import com.mycompany.webapp.dto.SurveyResultDTO;
 
 public interface ISurveyRepository {
 
@@ -61,8 +62,10 @@ public interface ISurveyRepository {
 	int mappingCheck(@Param("surveySeq") int surveySeq);
 
 	List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
-	
 
+	List<SurveyResultDTO> surveyResult (@Param("employeeId") int employeeId, @Param("surveySeq") int surveySeq);
+
+	SurveyResultDTO getResultTarget(int employeeId);
 
 }
 

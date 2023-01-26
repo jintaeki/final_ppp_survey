@@ -297,6 +297,7 @@
         ,employee_name
         ,SURVEY_COMPLETE_YN
         ,SURVEY_SEQ
+        ,employee_id
         FROM ( SELECT
                  ROWNUM AS rnum
                 ,survey_seq
@@ -304,6 +305,7 @@
                 ,grade_name
                 ,employee_name
                 ,survey_complete_yn
+                ,employee_id
         FROM ( SELECT
                         distinct
                         m.survey_seq
@@ -331,6 +333,50 @@
 
 				WHERE rnum >= #{startRowNo} and rnum <= #{endRowNo}
  ]]>
+
 </select>
+
+			<select id="surveyResult" parameterType="int" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
+	SELECT  sr.APPRAISEE_ID
+        ,sr.RATER_ID
+        ,sr.ANONYMITY_SEQ
+        ,ui.EMPLOYEE_NAME
+        ,oc.DEPARTMENT_NAME
+        ,g.GRADE_NAME
+        ,sq.QUESTION_TYPE_CODE
+        ,sr.QUESTION_SEQ
+        ,sr.ITEM_SEQ
+        ,sr.ANSWER_CONTENT
+        ,sq.QUESTION_CONTENT
+        ,si.ITEM_CONTENT
+        ,si.ITEM_SCORE
+        FROM SURVEY_RESULT sr
+            ,SURVEY_QUESTION sq
+            ,SURVEY_ITEM si
+            ,USER_INFO ui
+            ,GRADE g
+            ,ORGANIZATION_CHART oc
+WHERE sr.QUESTION_SEQ = sq.QUESTION_SEQ
+             AND sr.ITEM_SEQ = si.ITEM_SEQ
+             AND sr.APPRAISEE_ID = ui.EMPLOYEE_ID
+             AND ui.GRADE_ID = g.GRADE_ID
+             AND ui.DEPARTMENT_ID = oc.DEPARTMENT_ID
+             AND sr.SURVEY_SEQ= ${surveySeq}  AND ui.EMPLOYEE_ID= ${employeeId}
+             ORDER BY RATER_ID, ANONYMITY_SEQ, QUESTION_SEQ
+</select>
+
+
+<select id="getResultTarget" parameterType="int" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
+		      SELECT EMPLOYEE_NAME
+                    ,GRADE_NAME
+                    ,DEPARTMENT_NAME
+                FROM USER_INFO ui
+                    ,GRADE g
+                    ,ORGANIZATION_CHART oc
+                WHERE ui.GRADE_ID = g.GRADE_ID
+                AND  ui.DEPARTMENT_ID = oc.DEPARTMENT_ID
+                AND ui.EMPLOYEE_ID = ${employeeId}
+</select>
+
 
 </mapper>

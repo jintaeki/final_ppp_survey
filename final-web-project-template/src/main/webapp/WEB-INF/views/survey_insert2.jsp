@@ -21,7 +21,7 @@
 </style>
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
-   
+
 
 																					<!-- 주관식 문제 name 부여, question으로 삭제 후 저장되는 지 확인 -->
 
@@ -31,7 +31,7 @@
 <button style="float:right;"class="btn btn-link" onclick="location.href='<c:url value='surveyinsertcomplete.do/${SLD.surveySeq}'/>'">등록완료</button>
 	<!-- 설문지 설정 진택 -->
 	<!-- 상단 information -->
-	
+
 
 
 
@@ -46,7 +46,7 @@
 <!-- 	<th style="border:none;"></th> -->
 <!-- 	<th style="border:none;"></th> -->
 <!-- 	</tr> -->
-	
+
 <!-- 	<tr> -->
 <!-- 	<td><input type="text"  -->
 <%-- 				name="surveyName" style="" value="${SLD.surveyName}"></td> --%>
@@ -63,7 +63,7 @@
 <!-- 					<input type="radio" name="anonymityCheckCode" -->
 <!-- 						id="survey_type_check" value="20002">기명 -->
 <%--          		    </c:if>  --%>
-         		    
+
 <%--          		    <c:if test="${SLD.anonymityCheckCode eq '20002'}"> --%>
 <!-- 					<input type="radio" name="anonymityCheckCode" -->
 <!-- 						id="survey_type_check" value="20001"> -->
@@ -80,7 +80,7 @@
 <!-- 				type="hidden" name="surveySeq" id="surveyseq" -->
 <%-- 				value="${SLD.surveySeq}"></td> --%>
 <!-- 	<td style="border:none;"></td> -->
-	
+
 <!-- 	</tr> -->
 
 <!-- 	</table> -->
@@ -90,12 +90,12 @@
 
 	<div class="container_survey">
 		<div class="row" style="margin-top: 65px;">		</div>
-		
+
 			<div style="display: flex;">
 			<div style="width: 60%;border-radius: 20px;box-shadow: 1px 1px 10px 0px;padding: 20px 20px 20px 20px; ">
 			<div class="question_inputdv" id="input_question">
 						<div class="input_title">문제 관리</div>
-			
+
 					<form:form modelAttribute="SQD" id="questioN_insert_form">
 						<!-- aa -->
 						<div id="insertQform">
@@ -140,9 +140,9 @@
 						</div>
 					</form:form>
 				</div>
-			
+
 		<div class="question_management">
-			<div class="input_title">문제 목록</div>			
+			<div class="input_title">문제 목록</div>
 			<div id="scroll_area" style="overflow: auto;  height:450px;">
 
 
@@ -154,7 +154,7 @@
 							<input type="hidden" value="${qlist.surveySeq }"
 								id="surveySequence">
 							<div class="input_qus" >
-								<input disabled type="text" id="input_qus" 
+								<input disabled type="text" id="input_qus"
 									value="${qlist.questionContent }">
 							</div>
 
@@ -177,22 +177,22 @@
 			</div>
 		</div>
 		</div>
-		
+
 		<div style="margin-left: 40px;">
 		<div class="container_flex" style="border-radius: 20px;box-shadow: 1px 1px 10px 0px; padding: 20px; width:450px;">
 		<div class="input_title">기본 설정</div>
 		<form:form modelAttribute="SLD" id="survey_setting_form">
 		<table style="border-collapse:collapse;">
 				<tr><th><div style="margin-top: 8px;"></div></th></tr>
-		
+
 		<tr>
-		
+
 			<td><span class="insert_category"><b>설문지 제목</b><label
 				for="survey_name"></label></span></td> <td><input type="text" id="survey_name"
 				name="surveyName" style="width: 200px;" value="${SLD.surveyName}"></td>
-				
+
 		</tr>
-		
+
 		<tr style="border-bottom: 3px solid gainsboro;"><th><div style="margin-top: 8px;"></div></th></tr>
 		<tr><th><div style="margin-top: 8px;"></div></th></tr>
 		<tr>
@@ -203,52 +203,52 @@
 				<input type="date" name="surveyClosedDate" class="survey_date"
 				value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />"></td>
 		</tr>
-		
+
 		<tr style="border-bottom: 3px solid gainsboro;"><th><div style="margin-top: 8px;"></div></th></tr>
 		<tr><th><div style="margin-top: 8px;"></div></th></tr>
-		
+
 		<tr>
 			<td><span class="insert_category"> <b>익명/기명</b></span></td>
 			<td><c:if
 					test="${SLD.anonymityCheckCode eq '20001'}">
 					<input type="radio" name="anonymityCheckCode"
 						id="survey_type_check" value="20001" checked>
-					<label style="margin-bottom:0px;" for="survey_type_check"><b>익명</b></label> 
+					<label style="margin-bottom:0px;" for="survey_type_check"><b>익명</b></label>
 					<input type="radio" name="anonymityCheckCode"
 						id="survey_type_check" value="20002">
-					<label style="margin-bottom:0px;" for="survey_type_check"><b>기명</b></label> 
-         		    </c:if> 
+					<label style="margin-bottom:0px;" for="survey_type_check"><b>기명</b></label>
+         		    </c:if>
          		    <c:if test="${SLD.anonymityCheckCode eq '20002'}">
 					<input type="radio" name="anonymityCheckCode"
 						id="survey_type_check" value="20001">
-					<label style="margin-bottom:0px;" for="survey_type_check"><b>익명</b></label> 
+					<label style="margin-bottom:0px;" for="survey_type_check"><b>익명</b></label>
 
 					<input type="radio" name="anonymityCheckCode" style=""
 						id="survey_type_check" value="20002" checked>
-					<label style="margin-bottom:0px;" for="survey_type_check"><b>기명</b></label> 
+					<label style="margin-bottom:0px;" for="survey_type_check"><b>기명</b></label>
 				</c:if>
 			</td>
 		</tr>
 		<tr style="border-bottom: 3px solid gainsboro;"><th><div style="margin-top: 8px;"></div></th></tr>
 		<tr><th><div style="margin-top: 8px;"></div></th></tr>
-			
+
 			</table>
-		
+
 			<span class="insert_category"><b>상세 설명</b></span><br><div style="margin-top:8px;"></div>
 			<textarea  class="visually-hidden"id="message-text" name="surveyContent" style="width:350px;height:100px;max-width:350px;">${SLD.surveyContent }</textarea>
 
 				<input type="hidden" name="stateCode" value="30001"> <input
 				type="hidden" name="surveySeq" id="surveyseq"
 				value="${SLD.surveySeq}">
-				
+
 		</form:form>
 		<input type="button" class="update_btn" style="margin-bottom:10px;" onclick="register()"
 			value="적용">
-		
+
 	</div>
-		
-		
-		
+
+
+
 			<div class="item_management" >
 			<div class="input_title">문항 관리</div>
 			<!-- 객관식 -->
@@ -259,17 +259,17 @@
 							<div class="Item_box">
 								<button type="button" onclick="item_obj_copy(this, 10001)" style="border: 1px solid #fff; border-radius: 35em;"><i class="fas fa-plus"></i></button>
 								<b style="margin-left:160px;">점수</b>
-								
+
 								<form:form modelAttribute="SQD" id="item_obj_form">
 									<input type="hidden" name="questionTypeCode" value="10001">
 									<input type="hidden" name="surveySeq" value="${SLD.surveySeq}">
 									<div id="obj_ItemAfter"></div>
 
-								
 
-										
-								<input type="button" class="create_btn" 
-											onclick="update_obj_item_btn()" value="수정">	
+
+
+								<input type="button" class="create_btn"
+											onclick="update_obj_item_btn()" value="수정">
 								</form:form>
 							</div>
 						</div>
@@ -288,15 +288,15 @@
 									<input type="hidden" name="questionTypeCode" value="10003">
 									<input type="hidden" name="surveySeq" value="${SLD.surveySeq}"
 										id="surveyseq">
-				
+
 									<div id="mix_ItemAfter">
 									<div id="icon_line">
-									
+
 									</div>
 									</div>
-								
+
 									<input type="button" class="create_btn"  onclick="update_mix_item_btn()" value="수정">
-										
+
 								</form:form>
 							</div>
 						</div>
@@ -306,7 +306,7 @@
 					<div id="subj_box_toggle" style="display: none">
 						<div class="block_box">
 							<div class="subj_ItemAfter">
-								<input type="text" 
+								<input type="text"
 									placeholder="주관식 문제입니다." readonly>
 							</div>
 							<div class="blank_under"></div>
@@ -319,13 +319,13 @@
 
 		</div>
 		</div>
-		
+
 </div>
 		<!--  문제관리 끝 -->
 
-		
 
-	
+
+
 </div>
 </div>
 <script>
@@ -439,11 +439,11 @@
          }
       });
    }
-   
- 
+
+
    //문제 추가 후 문항 추가
   function item_obj_copy(obj,type){
-  		
+
 
        if(cntObj ==5){
     	   alert("객관식 문항은 최대 5개까지 생성 가능합니다.")
@@ -453,14 +453,14 @@
            testDiv += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
      		 testDiv +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
      		 testDiv +='<button class="delete_btn" onclick="deleteItem_zero(this,'+type+')" value="0">'
-     		 testDiv += '<i class="fas fa-xmark"></i>' 
+     		 testDiv += '<i class="fas fa-xmark"></i>'
      		 testDiv += '</button>'
      		 testDiv += '</div>';
      		 $('#obj_ItemAfter').append(testDiv);
      		cntObj = cntObj + 1;
        }
-       
-    
+
+
    };
    function item_mix_copy(obj,type) {
          if(cntMix ==5){
@@ -472,22 +472,22 @@
          testDiv += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
    	     testDiv +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
    	     testDiv +='<button class="delete_btn" onclick="deleteItem_zero(this,'+type+')" value="0">'
-         testDiv += '<i class="fas fa-xmark"></i>' 
+         testDiv += '<i class="fas fa-xmark"></i>'
          testDiv += '</button>'
          testDiv += '</div>';
-         
+
            $('#guitar').before(testDiv);
            cntMix = cntMix + 1;
          }
    };
-   
+
 //    function resetIt(){
 // 	   var evt = document.createEvent("MouseEvents");
 // 		evt.initMouseEvent("click", true, true, window,0, 0, 0, 0, 0, false, false, false, false, 0, null);
 // 		var reset = document.getElementById("reset_btn");
 // 		reset.dispatchEvent(evt);
 //    }
-   
+
    //문항추가 끝
 //    var test = document.getElementById('add_btn');
 //       test.addEventListener('click', insertQus);
@@ -524,7 +524,7 @@
                         var questionseq = jsondata[0].QUESTION_SEQ;
 //                         resetIt();
                         location.reload();
-                       
+
                   }, error:function(e) {   //실패, 에러
                      console.log("Error", e);
                   }
@@ -547,7 +547,7 @@
             	if(i<size-1){
             		if(data[i].QUESTION_SEQ==data[i+1].QUESTION_SEQ){
             			console.log(i+"번째: "+data[i].QUESTION_SEQ);
-            			console.log(i+1+"번째: "+data[i+1].QUESTION_SEQ); 
+            			console.log(i+1+"번째: "+data[i+1].QUESTION_SEQ);
             			continue;
             		}
             	}
@@ -562,20 +562,20 @@
                 html+=   '</button>';
                 html+='<div class="blank_under"></div></div>';
 
-			
+
                 }
-        	
+
         }
         $('#appendQuestion').append(html);
    }
-    
- 	
+
+
  		 let cntObj=0;
-  	     let cntMix=0; 
- 	
+  	     let cntMix=0;
+
     function itemHtml(data){
     	   //문제 개수 설정
-    	   
+
 
          let size = data.length;
          var htmlObj = '';
@@ -591,17 +591,17 @@
 
         console.log("답은:"+data[0].QUESTION_TYPE_CODE)
        // 10001 객 10002 주 10003 혼
-			   
+
               console.log(size);
-          var cnt=0 ;    
+          var cnt=0 ;
         for(i=0; i<size; i++){
 				console.log(data[0].QUESTION_SEQ);
            if(data[i].QUESTION_TYPE_CODE == "10001"){
-        	   
-        	   
-               
+
+
+
         	   if(data[i].ITEM_SEQ == null){
-        	   $("#obj_ItemAfter").empty(); 
+        	   $("#obj_ItemAfter").empty();
         	   htmlObj +='<div class="icon_line">';
         	   htmlObj +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
         	   htmlObj += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
@@ -611,7 +611,7 @@
         	   htmlObj+=   '</button>';
         	   htmlObj+= '</div>';
         	   cntObj = cntObj + 1;
-        	   
+
                $('#obj_ItemAfter').append(htmlObj);
                $("#obj_box_toggle").show();
         	   }else{
@@ -624,15 +624,15 @@
             	   htmlObj+= '<i class="fas fa-xmark"></i>';
             	   htmlObj+=   '</button>';
             	   htmlObj += '</div>';
-                  
+
                    $('#obj_ItemAfter').append(htmlObj);
                    $("#obj_box_toggle").show();
                    cntObj = cntObj + 1;
         	   }
-        	   
+
         	   cnt=cnt+1
                if(cnt == size){
-            	   
+
             	   cntMix = cntMix + 2;
             	   $("#mix_ItemAfter").empty();
             	   $("#subj_ItemAfter").empty();
@@ -651,18 +651,18 @@
              	   htmlSubj += '<input type="text" 	placeholder="주관식 문제입니다." readonly>'
                    $('#subj_ItemAfter').append(htmlSubj);
                    $('#mix_ItemAfter').append(htmlMix);
-                   
-            
+
+
                }
-        	   
-               
+
+
         	} else if(data[i].QUESTION_TYPE_CODE == "10003"){
-        		  
-             
-        		
+
+
+
                   if(data[i].ITEM_SEQ == null){
              	   $("#mix_ItemAfter").empty();
-             	  
+
              	  htmlMix +='<div class="icon_line">';
              	  htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
                	  htmlMix += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
@@ -677,14 +677,14 @@
               	  htmlMix += '</div>';
                   cntMix = cntMix + 2;
 
-             	  
+
                     $('#mix_ItemAfter').append(htmlMix);
                     $("#mix_box_toggle").show();
                     console.log('10003인 문제를 불러왔는데 저장된 문제가 없을 때:'+ cntMix);
              	   }else{
                  	   $("#mix_ItemAfter").empty();
 
-                 	  
+
                  	  if(data[i].ITEM_CONTENT =="기타"){
                  		  htmlMix +='<div class="icon_line" id="guitar">';
                      	  htmlMix += '<input type="text" name="itemContent" id="guitar" value="'+data[i].ITEM_CONTENT+'" readonly>';
@@ -702,13 +702,13 @@
                    	     htmlMix += '</div>';
                    	     cntMix = cntMix + 1;
                  	  }
-                 	  
-                 	  
-                        
+
+
+
                         $('#mix_ItemAfter').append(htmlMix);
                         $("#mix_box_toggle").show();
              	   }
-                  
+
   				  // 미리 만든 문항의 개수를 체크(cnt는 문항의 개수)
   				  // cnt가 size와 동일해지면 출력되는 문항의 타입과 다른 타입의 문항들이 하나만 출려되고 숨겨진다
   				  // radio 버튼을 누를 때 하나씩 출력되는 것을 볼 수 있다
@@ -765,14 +765,14 @@
                 cntObj = cntObj + 1;
                 cntMix = cntMix + 2;
 
-                
+
                }
     	   }
-        	   
+
            }
 
            }
-          
+
 
     //var dltest = document.getElementById('delete_btn');
    //dltest.addEventListener('click', deleteQus);
@@ -810,27 +810,27 @@
             }
        });
    }
-    
+
     function deleteItem_zero(obj,type){
-    	if(type=='10001'){		
+    	if(type=='10001'){
     		cntObj = cntObj - 1;
     	}else if (type=='10003'){
     		cntMix = cntMix - 1;
     	}
     	const tag = $(obj,type);
     	tag.parent().remove();
-    	
-    	
-    	
+
+
+
     }
-    
+
     function deleteItem(obj,type){
     	if(type=='10001'){
-    		cntObj = cntObj - 1;		
+    		cntObj = cntObj - 1;
     	}else if (type=='10003'){
     		cntMix = cntMix - 1;
     	}
-    	
+
     	var itemSeq = $(obj).val();
     	const tag = $(obj,type);
     	console.log(tag);
@@ -844,15 +844,15 @@
 //             },
 //             success:function (){    //전송 성공시 실행
 //  				alert("삭제 성공");
-            	
+
 //             }, error:function(e) {   //실패, 에러
 //                console.log("Error", e);
 //             	alert("삭제 실패");
 //             }
 //             });
-    	
+
     }
-    
+
     function touchQuestion(obj){
     	var sq = $('#surveySequence').val();
       var questionid = $(obj).val();
@@ -871,8 +871,8 @@
 
                console.log("답은:"+data[0].QUESTION_TYPE_CODE);
                itemHtml(data);
-              
-              
+
+
             }, error:function(e) {   //실패, 에러
                console.log("Error", e);
             }
@@ -903,7 +903,7 @@
       html += '<textarea class="form-control" aria-label="문제 입력칸" id="hi" name="questionContent">'
       html += data[0].QUESTION_CONTENT;
       html += '</textarea></div>';
-      html += `<div class="question_add_btn_div">`;  
+      html += `<div class="question_add_btn_div">`;
       html += '<button type="button" class="create_btn" id="add_btn" onclick="insertQus()">문제 추가</button>';
       html += '&nbsp;&nbsp;<button type="button" class="create_btn"  id="update_btn" onclick="qusUpdate('+data[0].SURVEY_SEQ+','+data[0].QUESTION_TYPE_CODE+')">문제 수정</button>';
       html += '<input type="hidden" name="surveySeq" id="seq" value="'+data[0].SURVEY_SEQ+'">';
@@ -918,23 +918,23 @@
       html += `</div>`;
       $('#questioN_insert_form').append(html);
    }
-	
+
    function NewQuestion(data){
        let html = '';
        $("#questioN_insert_form").empty();
         html +=` <div id="insertQform">
         		<div class="select_radio" id="select_radio">`;
-   
+
         html += '<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1()" checked value="10001">&nbsp;객관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
         html += '<input type="radio" name="questionTypeCode" id="subj_radio" onclick="checkit2()" value="10002"> &nbsp;주관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
         html += '<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3()" value="10003"> &nbsp;혼합식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
-  
+
      html += `</div>`;
      html += '<div class="question_content_area" id="question_add"> <div class="input-group" id="question_content">';
 
      html += '<textarea class="form-control" aria-label="문제 입력칸" id="hi" name="questionContent">'
      html += '</textarea></div>';
-     html += `<div class="question_add_btn_div">`;  
+     html += `<div class="question_add_btn_div">`;
      html += '<button type="button" class="create_btn" id="add_btn" onclick="insertQus()">문제 추가</button>';
      html += '&nbsp;&nbsp;<button type="button" class="create_btn"  id="update_btn" onclick="qusUpdate('+data[0].SURVEY_SEQ+','+data[0].QUESTION_TYPE_CODE+')">문제 수정</button>';
      html += '<input type="hidden" name="surveySeq" id="seq" value="'+data[0].SURVEY_SEQ+'">';
@@ -961,7 +961,7 @@
          var qdiv = $('#questioN_insert_form')[0]
           console.log("업데이트 시작");
          var data = new FormData(qdiv);
-         
+
          if(typeCode !=data.get("questionTypeCode")){
         	 $.ajax({
                  method: 'POST',
@@ -975,16 +975,16 @@
                     alert("업데이트 beforesend");
                  },
                  success: function(jsondata) {
-                    
 
-                 }, 
-               
+
+                 },
+
                  error: function(e) {
                     console.log("Error", e);
                     }
                  });
          }
-         
+
          $.ajax({
             method: 'POST',
             url: 'updatequestion.do/',
@@ -997,7 +997,7 @@
                alert("업데이트 beforesend");
             },
             success: function(jsondata) {
-               
+
                var surveyseq = surveySeq;
                 $.ajax({
                      method:'GET', //어떤 방식으로 보낼 지
@@ -1009,9 +1009,9 @@
                      success:function (jsondata){    //전송 성공시 실행
                            questionHtml(jsondata);
                            NewQuestion(jsondata);
-                    	   $("#subj_ItemAfter").empty(); 
-                    	   $("#obj_ItemAfter").empty(); 
-                    	   $("#mix_ItemAfter").empty(); 
+                    	   $("#subj_ItemAfter").empty();
+                    	   $("#obj_ItemAfter").empty();
+                    	   $("#mix_ItemAfter").empty();
                            $("#subj_box_toggle").hide();
                            $("#mix_box_toggle").hide();
                            $("#obj_box_toggle").hide();

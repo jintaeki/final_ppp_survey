@@ -7,8 +7,7 @@
 <!-- <script src="resources/js/survey.js"></script> -->
 <!-- <script src="resources/js/surveycountdown.js"></script> -->
 <script type="text/javascript">
-  
-   
+
    function questionHTML(result,raterId,appraiseeId){
 
 	   const size= result.length;
@@ -17,7 +16,7 @@
 	   let cnt = 0;
 	   surveyQandA = '';
 	   for(let i = 0; i<size;i++){
-		   
+
 		    if(i==size-1){
 		    	surveyQandA += '<div class="question-form">';
 		    	surveyQandA+= '<input type="hidden" name="questionSeq" value="'+result[i].QUESTION_SEQ+'">';
@@ -27,7 +26,7 @@
 			    surveyQandA +='<input type="hidden" name="appraiseeId" value="'+appraiseeId+'">';
 			    surveyQandA +='<input type="hidden" name="surveySeq" value="'+result[i].SURVEY_SEQ+'">';
 
-			    
+
 			    console.log("마지막");
 			    console.log(cnt);
 			    if(result[i].QUESTION_TYPE_CODE =="10002"){
@@ -38,23 +37,23 @@
 					surveyQandA += '</span>';
 			    }else{
 			    	 for(var j = i-cnt;j<=i;j++ ){
-					    	
+
 					   	   surveyQandA += '<span class="item_form">'
 	 					   surveyQandA += '<input type="radio" name="'+(i+'num')+'" class="item_btn" value="'+result[j].ITEM_SEQ+'">'+result[j].ITEM_CONTENT;
 						   surveyQandA += '</span>'
-					
+
 						   if(j==i){
 						   surveyQandA +='<input type="hidden" name="answerContent" value="선택형 문제입니다.">';
 						   }
 			    }
-			   
-					   
+
+
 			   	}
 			    break;
 			}else if(result[i].QUESTION_CONTENT != result[i+1].QUESTION_CONTENT){
 
-				
-			
+
+
 		    surveyQandA += '<div class="question-form">';
 	    	surveyQandA+= '<input type="hidden" name="questionSeq" value="'+result[i].QUESTION_SEQ+'">';
 		    surveyQandA += result[i].QUESTION_CONTENT;
@@ -71,12 +70,12 @@
 
 				surveyQandA += '</span>';
 		    }else{
-		    
+
 		   	for(var j = i-cnt;j<=i;j++ ){
 			   	   surveyQandA += '<span class="item_form">'
  					   surveyQandA += '<input type="radio" name="'+(i+'num')+'" class="item_btn" value="'+result[j].ITEM_SEQ+'">'+result[j].ITEM_CONTENT;
 				   surveyQandA += '</span>'
-				   
+
 				   if(j==i){
 				   surveyQandA +='<input type="hidden" name="answerContent" value="선택형 문제입니다.">';
 
@@ -87,14 +86,14 @@
 		   }else if(result[i].QUESTION_CONTENT == result[i+1].QUESTION_CONTENT){
 			   cnt = cnt + 1;
 		   }
-		
-	  
-		   
+
+
+
 	   }
-	   
+
 	   $('#addQuestion').append(surveyQandA);
    }
-   
+
    function selectSurvey(obj,raterId){
 	   console.log(raterId);
 	   console.log($(obj).val());
@@ -114,33 +113,33 @@
 	        	 console.log('result '+result);
 
 	        	 appraisee(result);
-	        	 
-	          		
+
+
 
 	         }
 	      });
 	   }
    }
-   
+
    function appraisee(data){
 	   var size = data.length;
 	   var html = '';
 	   $('#appendArea').empty();
 	   for(var i=0; i<size; i++){
-		   
+
 		   html +='<div class="col-4">'+data[i].appraiseeDepartmentName+'</div>';
 		   html +='<div class="col-2">'+data[i].appraiseeGradeName+'</div>';
 		   html +='<div class="col-3">'+data[i].appraiseeName+'</div>';
 		   html +='<div class="col-3"><button onclick="surveyStart(this,'+data[i].appraiseeId+','+data[i].raterId+')" value="'+data[i].surveySeq+'">평가</button></div>';
-	   	 
+
 	   }
 	   $('#appendArea').append(html);
    }
-   
+
    function surveyStart(obj,appraiseeId,raterId){
 	   var surveySeq = $(obj).val();
-	   
-	   
+
+
 	   $.ajax({
 	         url: 'getquestionforsurvey.do/'+surveySeq,
 	         method: 'GET',
@@ -150,22 +149,22 @@
 
 	        	 alert("문제요청성공");
 	        	 questionHTML(result,raterId,appraiseeId);
-	            
+
 	         }
 	      });
    }
-   
 
-   
 
-   
+
+
+
    function submit(){
 	   var data = $('#surveyForm')[0];
 	   var formData = new FormData(data);
-		
-	   
+
+
 	   var num = 'num';
-	
+
 		var cnt = 0;
 		var keyArray [] ;
 		for(const pairkeys of formData.keys()){
@@ -173,18 +172,18 @@
 			}
 		 	cnt = cnt+1;
 		}
-		
+
    for(var i = 0; i<keyArray.length;i++){
 	   console.log(keyArray[i]);
    }
 // 		console.log(cnt);
 
-		
-		 
-	
-		
-		
-		
+
+
+
+
+
+
 
 	   $.ajax({
 	         url: 'insertSurveyResult.do',
@@ -197,11 +196,11 @@
 	         success: function(result){
 	        	 alert("결과저장성공");
 // 	        	 questionHTML(result,raterId,appraiseeId);
-	            
+
 	         }
 	      });
-   } 
-  
+   }
+
 </script>
 
 
@@ -215,7 +214,7 @@
    </div>
 </div>
 
-					
+
 
 <!-- 문항 시작 -->
 <div class="container" style="padding: 40px 20px 20px 40px;">
@@ -226,7 +225,7 @@
 		</c:forEach>
 	</select>
 	<div class="row">
-		
+
 		<div class="col-4" style="font-size: 14px; text-align: center">
 			<div id="scroll_area" style="overflow: auto;">
 
@@ -238,7 +237,7 @@
 					<div class="col-3"></div>
 				</div>
 				<div id="appendArea" class="row">
-	
+
 				<b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 평가 대상이 없습니다.</b>
 				</div>
 
@@ -259,7 +258,7 @@
 
 		<div id="question-box" class="col-7" style="border: 1px solid;">
 			<div class="survey_list">
-			
+
 				<form:form id="surveyForm" modelAttribute="surveyResult">
 
 					<div class="form_area" id="addQuestion">
@@ -269,7 +268,7 @@
 					</div>
 				</form:form>
 									<button onclick="submit()">제출</button>
-				
+
 			</div>
 		</div>
 	</div>

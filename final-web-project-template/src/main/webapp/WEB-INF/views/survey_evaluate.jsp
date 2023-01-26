@@ -49,7 +49,8 @@
 							<td>${EL.GRADE_NAME}</td>
 							<td>${EL.EMPLOYEE_NAME}</td>
 							<td>${EL.SURVEY_COMPLETE_YN}</td>
-							<td><input type="button" class="btn btn-link" onclick="location.href='<c:url value="/survey/surveyresult"/>'" value="조회"></td>
+							<td><input type="hidden" id="employeeId" name="employeeId" value="${EL.EMPLOYEE_ID}"></td>
+							<td><input type="button" class="btn btn-link" onclick="location.href='<c:url value="surveyResult/${EL.SURVEY_SEQ}/${EL.EMPLOYEE_ID}"/>'" value="조회"></td>
 						</tr>
 					</c:forEach>
 

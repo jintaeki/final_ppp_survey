@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -31,6 +32,7 @@ import com.mycompany.webapp.service.ICommonCodeService;
 import com.mycompany.webapp.service.IMappingService;
 import com.mycompany.webapp.service.IPagingService;
 import com.mycompany.webapp.service.ISurveyService;
+import com.mycompany.webapp.service.SurveyService;
 
 @Controller
 @RequestMapping("/survey")
@@ -140,15 +142,6 @@ public class SurveyController {
 	public String surveySuccess() {
 		logger.info("실행");
 		return "survey_result_team";
-	}
-
-	@RequestMapping("/surveyresult")
-	public String surveyResult(@ModelAttribute("SRD") @Valid SurveyResultDTO SRD, BindingResult result, HttpSession session,
-			RedirectAttributes redirectAttrs) {
-		logger.info("실행");
-		surveyService.surveyResult(SRD);
-
-		return "survey_result";
 	}
 
 	// 모달창을 통해 설문지 설정 데이터 입력
@@ -430,5 +423,23 @@ public class SurveyController {
 		logger.info("검색 테스트");
 		return "survey_evaluate";
 	}
+
+		@RequestMapping("/surveyResult/{surveySeq}/{employeeId}")
+		public String surveyResult (
+				@PathVariable int surveySeq,
+				@PathVariable int employeeId,
+				                   HttpSession session, Model model) {
+			SurveyResultDTO SRD = null;
+			logger.info("employeeId:" + employeeId);
+			List<SurveyResultDTO> SurveyResultList = surveyService.surveyResult(employeeId, surveySeq);
+			List<SurveyResultDTO> SRL = SurveyResultList.stream().distinct().collect(Collectors.toList());
+			logger.info("SRL: " + SRL);
+			model.addAttribute("SRL" , SRL);
+			SRD = surveyService.getResultTarget(employeeId);
+			model.addAttribute("SRD", SRD);
+			logger.info("Result Model: " + SRD);
+			return "survey_result";
+		}
+
 
 }

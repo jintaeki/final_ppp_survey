@@ -23,16 +23,13 @@ public interface ISurveyService {
 
 	void insertQuestion(SurveyQuestionDTO sqd);
 
-
 	void insertItem(SurveyQuestionDTO sqd);
-
 
 	void UpdateQuestion(SurveyQuestionDTO sqd);
 
 	List<Map<String, String>> selectSurveyEvaluate(int surveySeq);
 
 	List<Map<String, Object>> selectQuestion(int surveySeq);
-
 
 	SurveyListDTO selectSurvey(int surveySeq);
 
@@ -48,7 +45,6 @@ public interface ISurveyService {
 
 	List<SurveyListDTO> searchListByKeyword(PagingDTO pagingdto);
 
-
 	List<Map<String, Object>> selectQuestionBySeq(int questionSeq,int surveySeq);
 
 	List<Map<String, Object>> selectItems(int questionSeq);
@@ -59,8 +55,9 @@ public interface ISurveyService {
 
 	List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
 
+	List<SurveyResultDTO> surveyResult(int employeeId, int surveyId);
 
-	List<SurveyResultDTO> surveyResult(SurveyResultDTO SRD);
+	SurveyResultDTO getResultTarget(int employeeId);
 
 	List<Map<String, Object>> getSurveySeqAndName (int raterId);
 }

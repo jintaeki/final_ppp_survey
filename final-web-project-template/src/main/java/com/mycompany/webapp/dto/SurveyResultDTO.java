@@ -5,60 +5,107 @@ public class SurveyResultDTO {
 	private String raterId;
 	private String appraiseeId;
 	private int anonymitySeq;
+	private String employeeName;
+	private String gradeName;
+	private int questionTypeCode;
+	private String questionContent;
+	private String itemContent;
+	private int itemScore;
+	private String departmentName;
 	private String questionSeq;
 	private String itemSeq;
 	private String answerContent;
-	
+
 	public String getSurveySeq() {
 		return surveySeq;
-	}
-	public String getRaterId() {
-		return raterId;
-	}
-	public String getAppraiseeId() {
-		return appraiseeId;
-	}
-	public int getAnonymitySeq() {
-		return anonymitySeq;
-	}
-	public String getQuestionSeq() {
-		return questionSeq;
-	}
-	public String getItemSeq() {
-		return itemSeq;
-	}
-	public String getAnswerContent() {
-		return answerContent;
 	}
 	public void setSurveySeq(String surveySeq) {
 		this.surveySeq = surveySeq;
 	}
+	public String getRaterId() {
+		return raterId;
+	}
 	public void setRaterId(String raterId) {
 		this.raterId = raterId;
+	}
+	public String getAppraiseeId() {
+		return appraiseeId;
 	}
 	public void setAppraiseeId(String appraiseeId) {
 		this.appraiseeId = appraiseeId;
 	}
+	public int getAnonymitySeq() {
+		return anonymitySeq;
+	}
 	public void setAnonymitySeq(int anonymitySeq) {
 		this.anonymitySeq = anonymitySeq;
+	}
+	public String getEmployeeName() {
+		return employeeName;
+	}
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
+	public String getGradeName() {
+		return gradeName;
+	}
+	public void setGradeName(String gradeName) {
+		this.gradeName = gradeName;
+	}
+	public int getQuestionTypeCode() {
+		return questionTypeCode;
+	}
+	public void setQuestionTypeCode(int questionTypeCode) {
+		this.questionTypeCode = questionTypeCode;
+	}
+	public String getQuestionContent() {
+		return questionContent;
+	}
+	public void setQuestionContent(String questionContent) {
+		this.questionContent = questionContent;
+	}
+	public String getItemContent() {
+		return itemContent;
+	}
+	public void setItemContent(String itemContent) {
+		this.itemContent = itemContent;
+	}
+	public int getItemScore() {
+		return itemScore;
+	}
+	public void setItemScore(int itemScore) {
+		this.itemScore = itemScore;
+	}
+	public String getDepartmentName() {
+		return departmentName;
+	}
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
+	public String getQuestionSeq() {
+		return questionSeq;
 	}
 	public void setQuestionSeq(String questionSeq) {
 		this.questionSeq = questionSeq;
 	}
+	public String getItemSeq() {
+		return itemSeq;
+	}
 	public void setItemSeq(String itemSeq) {
 		this.itemSeq = itemSeq;
+	}
+	public String getAnswerContent() {
+		return answerContent;
 	}
 	public void setAnswerContent(String answerContent) {
 		this.answerContent = answerContent;
 	}
-	
 	@Override
 	public String toString() {
 		return "SurveyResultDTO [surveySeq=" + surveySeq + ", raterId=" + raterId + ", appraiseeId=" + appraiseeId
-				+ ", anonymitySeq=" + anonymitySeq + ", questionSeq=" + questionSeq + ", itemSeq=" + itemSeq
-				+ ", answerContent=" + answerContent + "]";
+				+ ", anonymitySeq=" + anonymitySeq + ", employeeName=" + employeeName + ", gradeName=" + gradeName
+				+ ", questionTypeCode=" + questionTypeCode + ", questionContent=" + questionContent + ", itemContent="
+				+ itemContent + ", itemScore=" + itemScore + ", departmentName=" + departmentName + ", questionSeq="
+				+ questionSeq + ", itemSeq=" + itemSeq + ", answerContent=" + answerContent + "]";
 	}
-	
-	
-
 }
