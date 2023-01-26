@@ -19,13 +19,13 @@ public class PagingService implements IPagingService{
 	}
 
 	@Override
+	public int getEvaluateSearchBoardNum(String keyword, String selection, int surveySeq) {
+		return pagingRepo.getEvaluateSearchBoardNum(keyword, selection, surveySeq);
+	}
+	@Override
 	public int getTotalMappingNum(String keyword, String selection, int surveySeq, String selectGD) {
 		return pagingRepo.getTotalMappingNum(keyword, selection, surveySeq, selectGD);
 	}
-	public int getEvaluateTotalBoardNum(String keyword, String selection) {
-		return pagingRepo.getEvaluateTotalBoardNum(keyword, selection);
-	}
-
 
 	@Override
 	public int getTotalNonMappingNum(String keyword, String selection, int surveySeq, String selectGD) {

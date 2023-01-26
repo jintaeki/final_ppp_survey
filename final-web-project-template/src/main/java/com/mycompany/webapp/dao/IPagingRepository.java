@@ -19,5 +19,5 @@ public interface IPagingRepository {
 			@Param("surveySeq") int surveySeq, @Param("selectGD") String selectGD);
 	
 
-	int getEvaluateTotalBoardNum(@Param("keyword")String keyword, @Param("selection") String selection);
+	int getEvaluateSearchBoardNum(@Param("keyword")String keyword, @Param("selection") String selection, @Param("surveySeq") int surveySeq);
 }

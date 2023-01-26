@@ -81,7 +81,7 @@
             ,UPDATE_DATE=sysdate  WHERE SURVEY_SEQ=#{surveySeq}
    </update>
 
-   
+
 
 
 
@@ -168,7 +168,7 @@
 <select id="searchListByKeyword" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="SLD">
    <![CDATA[
        SELECT
-       		 rnum 
+       		 rnum
        		,SURVEY_SEQ
             ,SURVEY_NAME
             ,SURVEY_CONTENT
@@ -201,49 +201,49 @@
 	          	 ,SURVEY_START_DATE
 		      	 ,SURVEY_CLOSED_DATE
 	          	 ,STATE_CODE
-	          	 ,REG_DATE  
-	          	 FROM SURVEY_LIST 
-	          	 WHERE 
+	          	 ,REG_DATE
+	          	 FROM SURVEY_LIST
+	          	 WHERE
 	          	 (SURVEY_START_DATE is null and
 	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%' and
-	          	  STATE_CODE LIKE (CASE  
-      							   WHEN #{selection} = '30005' 
-      							   THEN '%' || '' || '%' 
+	          	  STATE_CODE LIKE (CASE
+      							   WHEN #{selection} = '30005'
+      							   THEN '%' || '' || '%'
                                    ELSE '%' || #{selection} || '%'
-                                   END) AND 
+                                   END) AND
                   ANONYMITY_CHECK_CODE LIKE (CASE
-                                                 WHEN #{anonyMityCheckCode} = '30005' 
-                                                 THEN '%' || '' || '%' 
+                                                 WHEN #{anonyMityCheckCode} = '30005'
+                                                 THEN '%' || '' || '%'
                                                  ELSE '%' || #{anonyMityCheckCode} || '%'
                                                  END)
 	          	 )
-	          	   or  
+	          	   or
 	          	 SURVEY_START_DATE >= (CASE
 	          	 						 WHEN #{surveyStartDate} is null
 	          	 						 THEN sysdate-99999
-	          	 						 WHEN #{surveyStartDate} is not null	          	 						 
+	          	 						 WHEN #{surveyStartDate} is not null
 	          	 						 THEN to_date(to_char(#{surveyStartDate},'yyyy-MM-dd'),'yyyy-MM-dd')
 	          	 						 END) and
-	          	  
-	          	  STATE_CODE LIKE (CASE  
-      							   WHEN #{selection} = '30005' 
-      							   THEN '%' || '' || '%' 
+
+	          	  STATE_CODE LIKE (CASE
+      							   WHEN #{selection} = '30005'
+      							   THEN '%' || '' || '%'
                                    ELSE '%' || #{selection} || '%'
                                    END) and
-                  
-	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%'AND 
-	          	  
+
+	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%'AND
+
 	          	  ANONYMITY_CHECK_CODE LIKE (CASE
-                                                 WHEN #{anonyMityCheckCode} = '30005' 
-                                                 THEN '%' || '' || '%' 
+                                                 WHEN #{anonyMityCheckCode} = '30005'
+                                                 THEN '%' || '' || '%'
                                                  ELSE '%' || #{anonyMityCheckCode} || '%'
                                                  END)
 				  ORDER BY TO_DATE(REG_DATE, 'YYYY-MM-DD') DESC , ROWNUM DESC
                 )
          	  WHERE ROWNUM <= #{endRowNo}
                )
-            WHERE rnum  >= #{startRowNo} 
-           ) WHERE cd.code_detail_id = state_code 
+            WHERE rnum  >= #{startRowNo}
+           ) WHERE cd.code_detail_id = state_code
       ]]>
    </select>
 
@@ -289,6 +289,7 @@
 
   <select id="selectSurveyEvaluate" parameterType="int" resultType="hashmap">
   		SELECT
+
               oc.department_name
              ,g.grade_name
              ,ui.employee_name
@@ -299,20 +300,20 @@
              ,ORGANIZATION_CHART oc
         WHERE m.rater_id = ui.employee_id and g.grade_id = ui.grade_id
         AND oc.department_id = ui.department_id and  m.survey_seq = #{surveySeq}
+
   </select>
 
 
 
-		
-	
-	
 	<select id="searchByEvaluate" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="hashmap">
+ 	<![CDATA[
 		SELECT
-        rnum
+		rnum
         ,department_name
         ,grade_name
         ,employee_name
         ,SURVEY_COMPLETE_YN
+        ,SURVEY_SEQ
         FROM ( SELECT
                  ROWNUM AS rnum
                 ,survey_seq
@@ -341,10 +342,13 @@
                   oc.DEPARTMENT_NAME LIKE  '%' || #{keyword} || '%')
 
                )
-               ORDER BY ROWNUM  DESC
+               where survey_seq = #{surveySeq}
+               ORDER BY ROWNUM  ASC
              )
-             where survey_seq = #{surveySeq}
-	</select>
+
+				WHERE rnum >= #{startRowNo} and rnum <= #{endRowNo}
+ ]]>
+</select>
 
 	<select id="projectList" resultType="com.mycompany.webapp.dto.ProjectDTO">
 		SELECT * FROM PROJECT

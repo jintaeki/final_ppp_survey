@@ -13,5 +13,5 @@ public interface IPagingService {
 	
 	int getTotalInsertNum(String keyword, String selection, int surveySeq, String selectGD, String raterId, int month);
 
-	int getEvaluateTotalBoardNum(String keyword, String selection);
+	int getEvaluateSearchBoardNum(String keyword, String selection, int surveySeq);
 }

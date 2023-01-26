@@ -21,40 +21,40 @@
 	          	 ,ANONYMITY_CHECK_CODE
 	          	 ,SURVEY_START_DATE
 		      	 ,SURVEY_CLOSED_DATE
-	          	 ,STATE_CODE  
-	          	 FROM SURVEY_LIST 
-	          	 WHERE 
+	          	 ,STATE_CODE
+	          	 FROM SURVEY_LIST
+	          	 WHERE
 	          	 (SURVEY_START_DATE is null and
 	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%' and
-	          	  STATE_CODE LIKE (CASE  
-      							   WHEN #{selection} = '30005' 
-      							   THEN '%' || '' || '%' 
+	          	  STATE_CODE LIKE (CASE
+      							   WHEN #{selection} = '30005'
+      							   THEN '%' || '' || '%'
                                    ELSE '%' || #{selection} || '%'
-                                   END) AND 
+                                   END) AND
                  ANONYMITY_CHECK_CODE LIKE (CASE
-                                                 WHEN #{anonyMityCheckCode} = '30005' 
-                                                 THEN '%' || '' || '%' 
+                                                 WHEN #{anonyMityCheckCode} = '30005'
+                                                 THEN '%' || '' || '%'
                                                  ELSE '%' || #{anonyMityCheckCode} || '%'
                                                  END)
 	          	 )
-	          	   or  
+	          	   or
 	          	 SURVEY_START_DATE >= (CASE
 	          	 						 WHEN #{surveyStartDate} is null
 	          	 						 THEN sysdate-99999
-	          	 						 WHEN #{surveyStartDate} is not null	          	 						 
+	          	 						 WHEN #{surveyStartDate} is not null
 	          	 						 THEN to_date(to_char(#{surveyStartDate},'yyyy-MM-dd'),'yyyy-MM-dd')
 	          	 						 END) and
-	          	  
-	          	  STATE_CODE LIKE (CASE  
-      							   WHEN #{selection} = '30005' 
-      							   THEN '%' || '' || '%' 
+
+	          	  STATE_CODE LIKE (CASE
+      							   WHEN #{selection} = '30005'
+      							   THEN '%' || '' || '%'
                                    ELSE '%' || #{selection} || '%'
                                    END) and
-                  
+
 	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%'and
 	          	  ANONYMITY_CHECK_CODE LIKE (CASE
-                                                 WHEN #{anonyMityCheckCode} = '30005' 
-                                                 THEN '%' || '' || '%' 
+                                                 WHEN #{anonyMityCheckCode} = '30005'
+                                                 THEN '%' || '' || '%'
                                                  ELSE '%' || #{anonyMityCheckCode} || '%'
                                                  END)
 				  ORDER BY ROWNUM DESC
@@ -65,27 +65,27 @@
 
 			   ]]>
 	</select>
-	
+
 	<select id="getTotalMappingNum" resultType="int">
 	<![CDATA[
 		SELECT count(ROWNUM)
 	    FROM (
 			SELECT ROWNUM AS rnum
 		      	  ,SURVEY_SEQ
-	    	FROM (SELECT 
+	    	FROM (SELECT
 	    	         SURVEY_SEQ
 	          	  FROM MAPPING
 	          	      ,USER_INFO UR
-                      ,USER_INFO UA 
-                      ,PROJECT P 
-                      ,PROJECT_HISTORY PH 
-                      ,ORGANIZATION_CHART O 
+                      ,USER_INFO UA
+                      ,PROJECT P
+                      ,PROJECT_HISTORY PH
+                      ,ORGANIZATION_CHART O
                       ,GRADE G
 	          	  WHERE RATER_ID = UR.EMPLOYEE_ID
 	          	    AND UR.DEPARTMENT_ID = O.DEPARTMENT_ID
 	          	    AND UR.GRADE_ID = g.GRADE_ID
 	          	  	AND RATER_ID = PH.PARTICIPATION_EMPLOYEE_ID
-	          	  	AND PH.PROJECT_ID = P.PROJECT_ID 
+	          	  	AND PH.PROJECT_ID = P.PROJECT_ID
 	          	    AND APPRAISEE_ID = UA.EMPLOYEE_ID
 	          	  	AND ((#{selection} = '60001'
                     	AND(UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
@@ -95,7 +95,7 @@
                 		OR (#{selection} = '60002'
                         	AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
                     	OR (#{selection} = '60003'
-                    		AND P.PROJECT_NAME LIKE '%' || #{keyword} || '%')    
+                    		AND P.PROJECT_NAME LIKE '%' || #{keyword} || '%')
                     	OR(#{selection} = '60004'
                     	   AND((UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
                         	   OR
@@ -105,17 +105,17 @@
                             )
                         )
                 	AND UR.GRADE_ID LIKE (
-                    	CASE WHEN #{selectGD} = '60004' 
-                         	 THEN '%' || '' || '%' 
+                    	CASE WHEN #{selectGD} = '60004'
+                         	 THEN '%' || '' || '%'
                          	 ELSE '%' || #{selectGD} || '%'
-                    	END) 
-	          	 	AND SURVEY_SEQ = #{surveySeq}	
+                    	END)
+	          	 	AND SURVEY_SEQ = #{surveySeq}
 		          	ORDER BY ROWNUM DESC
 				)
 			)
 	]]>
 	</select>
-	
+
 	<select id="getTotalInsertNum" resultType="int">
 	<![CDATA[
 	SELECT count(ROWNUM)
@@ -158,7 +158,7 @@
                 	OR (#{selection} = '60002'
                         AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
                     OR (#{selection} = '60003'
-                    	AND P.PROJECT_NAME LIKE '%' || #{keyword} || '%')    
+                    	AND P.PROJECT_NAME LIKE '%' || #{keyword} || '%')
                     OR(#{selection} = '60004'
                     	AND((UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
                              OR
@@ -168,15 +168,15 @@
                         )
                    )
               AND UR.GRADE_ID LIKE (
-                    CASE WHEN #{selectGD} = '60004' 
-                         THEN '%' || '' || '%' 
+                    CASE WHEN #{selectGD} = '60004'
+                         THEN '%' || '' || '%'
                          ELSE '%' || #{selectGD} || '%'
                     END)
-              ) 
+              )
         )
     ]]>
    	</select>
-	
+
 	<select id="getTotalNonMappingNum" resultType="int">
 	<![CDATA[
 	SELECT count(ROWNUM)
@@ -213,7 +213,7 @@
                 	OR (#{selection} = '60002'
                         AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
                     OR (#{selection} = '60003'
-                    	AND P.PROJECT_NAME LIKE '%' || #{keyword} || '%')    
+                    	AND P.PROJECT_NAME LIKE '%' || #{keyword} || '%')
                     OR(#{selection} = '60004'
                     	AND((UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
                         	 OR
@@ -223,17 +223,17 @@
                         )
                     )
                 AND UR.GRADE_ID LIKE (
-                    CASE WHEN #{selectGD} = '60004' 
-                         THEN '%' || '' || '%' 
+                    CASE WHEN #{selectGD} = '60004'
+                         THEN '%' || '' || '%'
                          ELSE '%' || #{selectGD} || '%'
-                    END) 
+                    END)
               ORDER BY ROWNUM DESC
 			)
 		)
 		]]>
 	</select>
-	
-	<select id="getEvaluateTotalBoardNum" parameterType="String" resultType="int">
+
+	<select id="getEvaluateSearchBoardNum"  resultType="int">
 
       select count(ROWNUM)
       from (
@@ -262,20 +262,20 @@
                  FROM grade g ,user_info ui ,mapping m ,ORGANIZATION_CHART oc
                  WHERE
                      m.rater_id = ui.employee_id
-                    and g.grade_id = ui.grade_id and oc.department_id = ui.department_id and
-                    (#{selection} LIKE '%' || #{keyword} || '%'
+                     and g.grade_id = ui.grade_id and oc.department_id = ui.department_id and
+                     (oc.department_name LIKE '%' || #{keyword} || '%'
                    or
-                   #{selection} LIKE '%' || #{keyword} || '%'
+                     g.grade_name LIKE '%' || #{keyword} || '%'
                    or
-                    #{selection}  LIKE '%' || #{keyword} || '%'
+                    ui.employee_name  LIKE '%' || #{keyword} || '%'
                    or
-                  #{selection} LIKE  '%' || #{keyword} || '%')
+                 m.survey_complete_yn LIKE  '%' || #{keyword} || '%')
 
                )
                ORDER BY ROWNUM  DESC
      )
-
+		 where survey_seq = #{surveySeq}
      )
 	</select>
-	
+
 </mapper>

@@ -8,7 +8,7 @@
 			<div class="row">
 				<div class="hmenu">
 					<div class="survey_list_form_upper_dv">
-						<form action="<c:url value='/survey/EvaluateSearch'/>" method="GET"
+						<form action="<c:url value='/survey/EvaluateSearch/${surveySeq}'/>" method="GET"
 							class="survey_list_form">
 							<select name="selection">
 									 <option value="employeeName" <c:if test="${pagingDto.selection eq 'employeeName'}">selected</c:if>>이름</option>
@@ -22,7 +22,7 @@
 								name="pageNo" value="1">
 								<input type="hidden" name="surveySeq" value="${surveySeq}"/>
 							<div class="input-group-append">
-								<input type="submit" class="btn btn-outline-secondary"
+								<input type="submit" class=	"btn btn-outline-secondary"
 									id="button-addon2" value="검색">
 								<input type="reset" class="btn btn-outline-secondary"
 									id="button-addon2" value="초기화">
@@ -64,30 +64,30 @@
 							<div style="margin-left: 170px;">
 
 								<a class="btn btn-outline-primary btn-sm"
-									href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a>
+									href="EvaluateSearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}&surveySeq=${pagingdto.surveySeq}">처음</a>
 								<c:if test="${pagingdto.groupNo>1}">
 									<a class="btn btn-outline-info btn-sm"
-										href="surveysearch?pageNo=${pagingdto.startPageNo-1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">이전</a>
+										href="EvaluateSearch?pageNo=${pagingdto.startPageNo-1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}">이전</a>
 								</c:if>
 
 								<c:forEach var="i" begin="${pagingdto.startPageNo}"
 									end="${pagingdto.endPageNo}">
 									<c:if test="${pagingdto.pageNo != i}">
 										<a class="btn btn-outline-success btn-sm"
-											href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
+											href="${surveySeq}?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}">${i}</a>
 									</c:if>
 									<c:if test="${pagingdto.pageNo == i}">
 										<a class="btn btn-danger btn-sm"
-											href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
+											href="${surveySeq}?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}">${i}</a>
 									</c:if>
 								</c:forEach>
 
 								<c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
 									<a class="btn btn-outline-info btn-sm"
-										href="surveysearch?pageNo=${pagingdto.endPageNo+1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">다음</a>
+										href="EvaluateSearch?pageNo=${pagingdto.endPageNo+1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}">다음</a>
 								</c:if>
 								<a class="btn btn-outline-primary btn-sm"
-									href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">맨끝</a>
+									href="EvaluateSearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&surveySeq=${pagingdto.surveySeq}">맨끝</a>
 							</div>
 						</td>
 					</tr>

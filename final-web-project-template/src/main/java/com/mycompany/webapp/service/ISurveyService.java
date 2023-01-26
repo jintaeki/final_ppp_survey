@@ -66,6 +66,7 @@ public interface ISurveyService {
 	List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
 
 
+
 	// 결과 통계 페이지
 	List<SurveyListDTO> surveyList();
 	List<ProjectDTO> projectList();
@@ -73,6 +74,9 @@ public interface ISurveyService {
 			
 	//결과 목록
 	List<SurveyResultDTO> resultList(int surveySeq, String projectId, String departmentId);	
+
+	List<SurveyResultDTO> surveyResult(SurveyResultDTO SRD);
+
 }
 
 

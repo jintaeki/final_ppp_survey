@@ -64,7 +64,7 @@ public class SurveyService implements ISurveyService{
 
 
 
-	@Transactional
+	@Override
 	public void insertQuestion(SurveyQuestionDTO sqd) {
 		logger.info("insertQuestion service: " + sqd );
 		surveyDao.insertQuestion(sqd);
@@ -196,6 +196,12 @@ public class SurveyService implements ISurveyService{
 	@Override
 	public List<SurveyResultDTO> resultList(int surveySeq, String projectId, String departmentId) {
 		return surveyDao.resultList(surveySeq, projectId, departmentId);
+	}
+
+	@Override
+	public List<SurveyResultDTO> surveyResult(SurveyResultDTO SRD) {
+		
+		return null;
 	}
 
 
