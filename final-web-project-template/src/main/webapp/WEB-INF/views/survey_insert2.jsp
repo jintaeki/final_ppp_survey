@@ -680,7 +680,7 @@
 
     function deleteQus(obj,surveySeq) {
 	if(confirm("삭제하시겠습니까?")){
-      var questionSeq = $(obj).val()
+      var questionSeq = $(obj).val();
 
       $.ajax({
          method:'POST', //어떤 방식으로 보낼 지

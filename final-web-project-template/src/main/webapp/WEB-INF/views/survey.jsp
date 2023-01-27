@@ -7,18 +7,25 @@
 <!-- <script src="resources/js/survey.js"></script> -->
 <!-- <script src="resources/js/surveycountdown.js"></script> -->
 <script type="text/javascript">
-  
+		submitBtn = '';
+		submitBtn='<button type="button" class="create_btn" onclick="submit()">제출</button>';
+		
    function questionHTML(result,raterId,appraiseeId,anonymitycode,theSeq){
 		var itemNum = 0;
 	   const size= result.length;
 	   console.log(size);
+	   
+	   //문제 전송버튼 삭제 및 생성
+	   $('.submit_btn').empty();
+	   $('.submit_btn').append(submitBtn);
+	   
    	   $("#surveyForm").empty();
 	   let cnt = 0;
 	   surveyQandA = '';
 	   surveyQandA += '<input type="hidden" name="anonymityCode" value='+anonymitycode+'>';
 	   surveyQandA += '<input type="hidden" name="anonymitySeq" value='+theSeq+'>'; 
 
-	   	 $('#surveyForm').append(surveyQandA);
+	   $('#surveyForm').append(surveyQandA);
 	   for(let i = 0; i<size;i++){ 
 		   		
 		    if(i==size-1){
@@ -104,6 +111,7 @@
    }
    
    function selectSurvey(obj,raterId){
+	   $('.submit_btn').empty();
 	   console.log(raterId);
 	   console.log($(obj).val());
 	   var surveySeq = $(obj).val();
@@ -116,13 +124,17 @@
 	        	 console.log('result '+result);
 
 	        	 var anonymitycode = result;
-	        
+	        	 var htmlQuestion = '';
+	      		   $('#surveyForm').empty();
+	      		          	
 	        	 if($(obj).val()==0){
 	      		   console.log("surveySeq is 0");
 	      		   var html='';
 	    		   html += '<div class="noAppraisee"><b>평가 대상이 없습니다.</b></div>'
 	      		   $('#appendArea').empty();
 	      		   $('#appendArea').append(html);
+	      		   var htmlQuestion='<div class="noQuestion"><b>설문을 먼저 선택하세요.</b></div>';
+	      		   $('#surveyForm').append(htmlQuestion);	
 	      	     }else{
 	      		   
 	      	   $.ajax({
@@ -142,7 +154,8 @@
 	   	      	        	 console.log('result '+result);
 	   						 
 	   	      	        	 appraisee(appraisees,anonymitycode,theSeq);
-	   	      	        	 
+	   		      		     var htmlQuestion='<div class="noQuestion"><b>평가 버튼을 눌러 평가를 진행해주세요.</b></div>';
+	   	      	        	 $('#surveyForm').append(htmlQuestion);	
 	   	      	          		
 
 	   	      	         }
@@ -203,12 +216,11 @@
 
    
    function submit(){
+	   if(confirm("제출하시겠습니까?")){
+	   
 	   var data = $('#surveyForm')[0];
 	   var formData = new FormData(data);
-		
-	   
-	   var num = 'num';
-	
+			
 		var cnt = 0;
 		var cnt2=0
 		var keyArray=[];
@@ -221,7 +233,6 @@
 		 	cnt = cnt+1;
 		}
 		for(const pairvalues of formData.values()){
-// 			console.log(pairvalues);
 			valueArray.push(pairvalues);
 			cnt2 = cnt2 +1;
 		}	
@@ -229,22 +240,23 @@
 		
 		for(var i = 0; i<cnt;i++){
 			if(keyArray[i].substr(-3,3)=='num'){
-// 				console.log(keyArray[i]);
-// 				console.log(valueArray[i]);
+
 				formData.append('itemSeq',valueArray[i]);
 			}
 		}
 		
+		//formData에 담은 데이터를 object map에 담는다
 		var object = {};	
 		formData.forEach((value, key) => object[key] = value);
 		
-// 		console.log("설문아이디"+object['surveySeq']);
-// 		console.log("평가자아이디"+object['raterId']);
-		 var tag = $('#'+object['appraiseeId']);
-// 	        	 tag.replaceAll('<div class="col-3"><button disabled>평가완료</button></div>');
-// 				 tag.remove();
-				 tag.parent().html('<button disabled>평가완료</button>');
-// 	   $.ajax({
+		$("#surveyForm").empty();
+		var htmlQuestion='<div class="noQuestion"><b>평가 버튼을 눌러 평가를 진행해주세요.</b></div>';
+	    $('#surveyForm').append(htmlQuestion);	
+	    $('.submit_btn').empty();	
+		var tag = $('#'+object['appraiseeId']);
+		tag.parent().html('<button type="button" class="create_btn" style="padding: 10px 13px; color:green;" disabled>평가완료</button>');
+
+		// 	   $.ajax({
 // 	         url: 'insertSurveyResult.do',
 // 	         method: 'POST',
 // 	         data : formData,
@@ -254,11 +266,15 @@
 // 	         timeout : 600000,
 // 	         success: function(result){
 // 	        	 alert("결과저장성공");
-// 	        	 selectSurvey(object['surveySeq'],object['raterId']);
-// 	        	 var tag = $('#'+surveyBtn);
-// 	        	 tag.remove();
+// 			$("#surveyForm").empty();
+// 			var htmlQuestion='<div class="noQuestion"><b>평가 버튼을 눌러 평가를 진행해주세요.</b></div>';
+// 			$('#surveyForm').append(htmlQuestion);	
+// 	    	$('.submit_btn').empty();	
+// 			var tag = $('#'+object['appraiseeId']);
+// 			tag.parent().html('<button type="button" class="create_btn" style="padding: 10px 13px; color:green;" disabled>평가완료</button>');
 // 	         }
 // 	      });
+	   }
    } 
   
 </script>
@@ -279,7 +295,7 @@
 <!-- 문항 시작 -->
 <div class="container" style="padding: 40px 40px 40px 40px;">
 	<select name="surveySeq" onclick="selectSurvey(this,${raterId})">
-		<option value="0">선택</option>
+		<option value="0">설문 선택</option>
 		<c:forEach items="${surveySeqAndName}" var="surveySeqAndName">
 			<option  value="${surveySeqAndName.SURVEY_SEQ}" >${surveySeqAndName.SURVEY_NAME}</option>
 		</c:forEach>
@@ -289,7 +305,7 @@
 		<div class="appraiseeList col-4">
 			<div class="input_title">피평가자 목록</div>			
 		
-			<div id="scroll_area" style="overflow: auto;">
+			<div id="scroll_area">
 
 
 				<div class="row">
@@ -321,9 +337,8 @@
 
 		<div class="question-box col-7">
 		
-		<div class="submit_btn"><button class="create_btn" onclick="submit()">제출</button></div>
-			<div id="scroll_area"
-				style="overflow: auto; height: 670px; ">
+		<div class="submit_btn"></div>
+			<div id="scroll_area" style="max-height: 670px; ">
 				<div class="survey_list">
 
 					<form:form id="surveyForm" modelAttribute="surveyResult">
