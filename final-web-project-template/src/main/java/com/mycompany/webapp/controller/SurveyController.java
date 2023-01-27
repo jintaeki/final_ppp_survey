@@ -1,23 +1,28 @@
 package com.mycompany.webapp.controller;
 
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -144,7 +149,7 @@ public class SurveyController {
 	}
 
 	@RequestMapping("/surveyresultteam")
-	public String surveySuccess(Model model) {
+	public String surveySuccess( Model model) {
 		logger.info("실행");
 		
 		List<SurveyListDTO> Sdt = surveyService.surveyList();
@@ -155,19 +160,25 @@ public class SurveyController {
 	}
 	
 	@RequestMapping("/surveyresultDetail")
-	public String surveyResultDetail(int surveySeq, Model model) {
+	public String surveyResultDetail(@RequestParam int surveySeq,
+			                         @RequestParam(defaultValue = "") String departmentId, Model model) {
 		logger.info("실행1");
 		
 		List<SurveyListDTO> Sdt = surveyService.surveyList();
 		List<SurveyResultTeamDTO> resultList = surveyService.resultList(surveySeq);
-		List<SurveyResultTeamDTO> resultDPList = surveyService.resultDPList(surveySeq);
+		List<SurveyResultTeamDTO> resultDPList = surveyService.resultDPList(surveySeq, departmentId);
+		
+		String surveyName = null;
+		for(int i=0; i<Sdt.size(); i++) {
+			if(surveySeq == Sdt.get(i).getSurveySeq()) {
+			surveyName = Sdt.get(i).getSurveyName();
+			}
+		}
 		
 		model.addAttribute("surveySeq", surveySeq);
-		model.addAttribute("Sdt", Sdt);
-//		model.addAttribute("resultList", resultList);
-//		model.addAttribute("resultDPList", resultDPList);
-		
-		
+		model.addAttribute("Sdt", Sdt);		
+		model.addAttribute("surveyName", surveyName);		
+
 		JSONArray cJsonArrResult = new JSONArray();
 		JSONObject cJsonObjResult = new JSONObject();
 		for(SurveyResultTeamDTO vo : resultList) {
@@ -181,19 +192,44 @@ public class SurveyController {
 		for(SurveyResultTeamDTO vo : resultDPList) {
 		        cJsonObjDP.put("s", vo.getScore());
 		        cJsonObjDP.put("e", vo.getEmployeeName());
-		        cJsonObjDP.put("d", vo.getDepartmentName());
 		        cJsonArrDP.add(cJsonObjDP);
 		}
-		
-		logger.info("d" + cJsonArrResult);
-		logger.info("d" + cJsonArrDP);
 		
 		model.addAttribute("chartJSONDp", cJsonArrDP);
 		model.addAttribute("chartJSONResult", cJsonArrResult);
 		
-		
 		return "survey_result_team";
 	}
+	
+	@RequestMapping(value = "/select_ajax.do")
+	@ResponseBody
+	public String select_ajax(@RequestBody String filterJSON,
+	        HttpServletResponse response, ModelMap model ) throws Exception { 
+		logger.info("실행1");
+		JSONObject obj = new JSONObject();
+		List<OrganizationChartDTO> Odt  = null;
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+	 
+		try{            
+			ObjectMapper mapper = new ObjectMapper();
+			SurveyListDTO searchVO = (SurveyListDTO)mapper.readValue(filterJSON,new TypeReference<SurveyListDTO>(){ });
+			
+			int surveySeq = searchVO.getSurveySeq();
+			
+			Odt = surveyService.organList(surveySeq);
+	    
+			obj.put("Odt", Odt);
+	    
+		}catch(Exception e){
+			logger.info(e.toString());
+			obj.put("res", "error");
+		} 
+		out.print(obj);
+		return null;
+	}
+
+	
 
 	@RequestMapping("/surveyresult")
 	public String surveyResult() {

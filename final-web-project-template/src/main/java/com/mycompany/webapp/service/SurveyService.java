@@ -196,6 +196,11 @@ public class SurveyService implements ISurveyService{
 	public List<SurveyListDTO> surveyList() {
 		return surveyDao.surveyList();
 	}
+	
+	@Override
+	public List<OrganizationChartDTO> organList(int surveySeq) {
+		return surveyDao.organList(surveySeq);
+	}
 		
 	@Override
 	public List<SurveyResultTeamDTO> resultList(int surveySeq) {
@@ -203,8 +208,8 @@ public class SurveyService implements ISurveyService{
 	}
 	
 	@Override
-	public List<SurveyResultTeamDTO> resultDPList(int surveySeq) {
-		return surveyDao.resultDPList(surveySeq);
+	public List<SurveyResultTeamDTO> resultDPList(int surveySeq, String departmentId) {
+		return surveyDao.resultDPList(surveySeq, departmentId);
 	}
 }
 

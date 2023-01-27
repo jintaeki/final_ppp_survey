@@ -11,36 +11,37 @@
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 <div class="container">
-
 <div class="result_container">
+	
 	<div class="hmenu">
-		<div class="survey_list_form_upper_dv">
-			<form action="<c:url value='/survey/surveyresultDetail'/>" method="get" class="survey_list_form">
-				<select name="surveySeq">
-					<c:forEach items="${Sdt}" var="sdt">
-								<c:if test="${surveySeq eq sdt.surveySeq}">
-									<option selected value="${surveySeq}">${sdt.surveyName}</option>
-								</c:if>
-								<c:if test="${surveySeq ne sdt.surveySeq}">
-									<option value="${sdt.surveySeq}">${sdt.surveyName}</option>
-								</c:if>
-							</c:forEach>
-				</select> 
-				<div class="input-group-append">
-					<input type="submit" class="btn btn-outline-secondary"
-						id="button-addon2" value="검색">
-					<input type="reset" class="btn btn-outline-secondary"
-						id="button-addon2" value="초기화">
-				</div>
-			</form>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-2">설문조사 명</div>
-		<div id=svName class="col-2" style="font-size: 90%; width: 100px"></div>
-		<div class="col-1">기간</div>
-		<div id=stDate class="col-2" style="font-size: 90%"></div>
-		<div id=clDate class="col-2" style="font-size: 90%"></div>
+	<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">
+		<form action="<c:url value='/survey/surveyresultDetail'/>" method="get" class="survey_list_form">
+			<select name="surveySeq" id="surveySeq" onchange="typeFn();">
+				<option>--선택--</option>
+				<c:forEach items="${Sdt}" var="sdt">
+					<option value="${sdt.surveySeq}">${sdt.surveyName}</option>
+				</c:forEach>
+			</select>
+			<div id="select" style="display:none;">
+			<select name="departmentId" id="departmentId">
+			</select>
+			</div>	
+			<div class="input-group-append">
+				<input type="submit" class="btn btn-outline-secondary"
+					id="button-addon2" value="검색">
+				<input type="reset" class="btn btn-outline-secondary"
+					id="button-addon2" value="초기화">
+			</div>
+		</form>
+      </th>
+      <th scope="col">${surveyName}</th>
+    </tr>
+  </thead>
+  </table>
+		
 	</div>
 </div>
 
@@ -48,7 +49,12 @@
 <figure class="highcharts-figure">
   <div id="chart_container"></div>
   <p class="highcharts-description">
-  다면평가에 대한 팀별 결과를 조회합니다. <br>부서명을 선택하면 소속 팀원들의 결과를 조회할 수 있습니다.
+  다면평가에 대한 팀별 결과를 조회합니다. 
+  </p>
+  
+  <div id="chart_container2"></div>
+  <p class="highcharts-description">
+ 부서별 소속 팀원들의 결과를 조회할 수 있습니다.
   </p>
 </figure>
 
@@ -56,16 +62,70 @@
 </div>
 
 <script>
-	var todayInfo = null;
+	/* 선택지 비동기 부분 */
+function typeFn() {
+	$("#departmentId").attr("disabled",true);
 	
-	function getPersonCnt(type){
-	    if(todayInfo==null) todayInfo=${chartJSONResult};	
-	    var todayInfoMap = resultProcLineChart(todayInfo);
-	    if(todayInfoMap==null) return null;
+	console.log($("#surveySeq").val());
+	 
+	if($("select[name=surveySeq] > option:selected").val() != null){
+	$("#select").show();
+	$("#departmentId > option").remove();
+	$("#departmentId").attr("disabled",true);
+	$("#departmentId").append("<option value=\"\">--선택--</option>");
+	 
+	var surveySeq = $("#surveySeq").val();
+	 
+	var submitObj = new Object();
+	submitObj.surveySeq= surveySeq;
+	 
+	$.ajax({ 
+	      url: "select_ajax.do", 
+	      type: "POST", 
+	      contentType: "application/json;charset=UTF-8",
+	      data:JSON.stringify(submitObj),
+	      dataType : "json",
+	      progress: true
+	     }) 
+	     .done(function(data) {
+
+	$('#departmentId').children('option:not(:first)').remove();
+	        
+	        var laborOption = "";
+	        for(var k in data.Odt){
+	          var obj = data.Odt[k];
+	          var departmentName = obj.departmentName;
+	          var departmentId = obj.departmentId;
+	          
+	          laborOption = "<option value='" + departmentId + "'>" + departmentName + "</option>";
+	          $("#departmentId").append(laborOption);
+	      }
+
+	$("#departmentId").attr("disabled",false);
+       
+	     }) 
+	     .fail(function(e) {  
+	         alert("FAIL - "+e);
+	     }) 
+	     .always(function() { 
+	      $("#departmentId").attr("disabled",false);
+	     }); 
+		}
+	}
+
+	
+	/* CHART 설정부분 */
+
+	var scoreInfo = null;
+	
+	function getScoreCnt(type){
+	    if(scoreInfo==null) scoreInfo=${chartJSONResult};	
+	    var scoreInfoMap = resultProcLineChart(scoreInfo);
+	    if(scoreInfoMap==null) return null;
 	    if(type=="data"){
-	        return todayInfoMap.get("data");
+	        return scoreInfoMap.get("data");
 	    }else{
-	        return todayInfoMap.get("cateArr");
+	        return scoreInfoMap.get("cateArr");
 	    }
 	}
 	
@@ -77,7 +137,7 @@
 	    var dataArr = new Array();
 	    
 	    for(var k in $obj){
-	        var xobj =$obj[k];
+	        var xobj =$obj[k];	
 	        
 	        cateArr.push(xobj.d);    
 	        dataArr.push(xobj.s);             
@@ -88,8 +148,54 @@
 	    
 	    return resMap;
 	} 
+	
+	var todayInfo = null;
+	
+	function getDPScoreCnt(type){
+	    if(todayInfo==null) todayInfo=${chartJSONDp};	
+	    var todayInfoMap = resultDPProcLineChart(todayInfo);
+	    if(todayInfoMap==null) return null;
+	    if(type=="data"){
+	        return todayInfoMap.get("data");
+	    }else{
+	        return todayInfoMap.get("cateArr");
+	    }
+	}
+	
+	function resultDPProcLineChart($obj){
+	    if($obj==null) return null;        
+	    var resMap = new Map();
+	    
+	    var cateArr = new Array();
+	    var dataArr = new Array();
+	    
+	    for(var k in $obj){
+	        var xobj =$obj[k];
+	        
+	        cateArr.push(xobj.e);      
+	        dataArr.push(xobj.s);             
+	    }
+	    
+	    resMap.set("cateArr",cateArr);
+	    resMap.set("data",dataArr);
+	    
+	    return resMap;
+	} 
+	
+$(document).ready(function() {
+	console.log(getScoreCnt("cateArr")[0]);
+	console.log(getScoreCnt("data")[0]);
+	console.log(getDPScoreCnt("cateArr")[0]);
+	console.log(getDPScoreCnt("data")[0]);
+	
+	console.log(getScoreCnt("cateArr"));
+	console.log(getScoreCnt("data"));
+	console.log(getDPScoreCnt("cateArr"));
+	console.log(getDPScoreCnt("data"));
+});
+/* CHART 설정 끝 */
 
-/* CHART START */
+/* CHART 전체 START */
 // Create the chart
 Highcharts.chart('chart_container', {
   chart: {
@@ -109,7 +215,7 @@ Highcharts.chart('chart_container', {
     }
   },
   xAxis: {
-    type: 'category'
+	 categories: getScoreCnt("cateArr")
   },
   yAxis: {
     title: {
@@ -125,140 +231,82 @@ Highcharts.chart('chart_container', {
       borderWidth: 0,
       dataLabels: {
         enabled: true,
-        format: '{point.y:.1f}%'
+        format: '{point.y:.1f}'
       }
     }
   },
 
   tooltip: {
     headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> 점<br/>'
   },
 
   series: [
     {
       name: '전체',
       colorByPoint: true,
-      data: getPersonCnt("data")
-      
-    }
+      data:getScoreCnt("data")
+     }
   ],
-  drilldown: {
-    breadcrumbs: {
-      position: {
-        align: 'right'
-      }
-    },
-    series: [
-      {
-        name: 'SI사업부 1팀',
-        id: 'SI사업부 1팀',
-        data: [
-          [
-            '양은석',
-            0.1
-          ]
-        ]
-      },
-      {
-        name: 'SI사업부 2팀',
-        id: 'SI사업부 2팀',
-        data: [
-          [
-            '권성하',
-            1.02
-          ]
-        ]
-      },
-      {
-        name: 'SI사업부 3팀',
-        id: 'SI사업부 3팀',
-        data: [
-          [
-            '손연재',
-            6.2
-          ]
-        ]
-      },
-      {
-        name: 'SI사업부 4팀',
-        id: 'SI사업부 4팀',
-        data: [
-          [
-            '예선우',
-            3.39
-          ]
-        ]
-      },
-      {
-        name: 'SI사업부 5팀',
-        id: 'SI사업부 5팀',
-        data: [
-          [
-            '최기혁',
-            2.6
-          ],
-          [
-            '백희철',
-            0.92
-          ]
-        ]
-      },
-      {
-        name: 'SI사업부 6팀',
-        id: 'SI사업부 6팀',
-        data: [
-          [
-            'v50.0',
-            0.96
-          ],
-          [
-            'v49.0',
-            0.82
-          ],
-          [
-            'v12.1',
-            0.14
-          ]
-        ]
-      },
-      {
-          name: '정보기술연구소',
-          id: '정보기술연구소',
-          data: [
-            [
-              '김민혁',
-              0.96
-            ],
-            [
-              '장시호',
-              0.82
-            ],
-            [
-              '문은혜',
-              0.14
-            ]
-            ,
-            [
-              '황정현',
-              0.14
-            ]
-            ,
-            [
-              '윤미정',
-              0.14
-            ]
-            ,
-            [
-              '윤창환',
-              0.14
-            ]
-          ]
-        }
-    ]
-  }
 });
-/* CHART END */
+/* CHART 전체 END */
+
+/* CHART 팀별 START */
+// Create the chart
+Highcharts.chart('chart_container2', {
+  chart: {
+    type: 'column'
+  },
+  title: {
+    align: 'left',
+    text: '다면평가 결과 통계'
+  },
+  subtitle: {
+    align: 'left',
+    text: '평가 결과는 소중한 직원을 나타내는 수치가 아니므로, <br>체계적인 코칭과 피드백 수립을 위한 목적으로만 참고하시길 바랍니다.'
+  },
+  accessibility: {
+    announceNewData: {
+      enabled: true
+    }
+  },
+  xAxis: {
+	 categories: getDPScoreCnt("cateArr")
+  },
+  yAxis: {
+    title: {
+      text: 'score'
+    }
+
+  },
+  legend: {
+    enabled: false
+  },
+  plotOptions: {
+    series: {
+      borderWidth: 0,
+      dataLabels: {
+        enabled: true,
+        format: '{point.y:.1f}'
+      }
+    }
+  },
+
+  tooltip: {
+    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> 점<br/>'
+  },
+
+  series: [
+    {
+      name: '전체',
+      colorByPoint: true,
+      data: getDPScoreCnt("data")
+     }
+  ],
+});
+/* CHART 팀별 END */
+
 </script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>

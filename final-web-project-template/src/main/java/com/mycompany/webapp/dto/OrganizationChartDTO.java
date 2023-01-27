@@ -3,7 +3,7 @@ package com.mycompany.webapp.dto;
 public class OrganizationChartDTO {
 	private String highDepartmentId;
 	private String departmentId;
-	private String departmentNAME;
+	private String departmentName;
 	
 	public String getHighDepartmentId() {
 		return highDepartmentId;
@@ -11,8 +11,8 @@ public class OrganizationChartDTO {
 	public String getDepartmentId() {
 		return departmentId;
 	}
-	public String getDepartmentNAME() {
-		return departmentNAME;
+	public String getDepartmentName() {
+		return departmentName;
 	}
 	public void setHighDepartmentId(String highDepartmentId) {
 		this.highDepartmentId = highDepartmentId;
@@ -20,13 +20,13 @@ public class OrganizationChartDTO {
 	public void setDepartmentId(String departmentId) {
 		this.departmentId = departmentId;
 	}
-	public void setDepartmentNAME(String departmentNAME) {
-		this.departmentNAME = departmentNAME;
+	public void setDepartmentNAME(String departmentName) {
+		this.departmentName = departmentName;
 	}
 	@Override
 	public String toString() {
 		return "OrganizationChartDTO [highDepartmentId=" + highDepartmentId + ", departmentId=" + departmentId
-				+ ", departmentNAME=" + departmentNAME + "]";
+				+ ", departmentName=" + departmentName + "]";
 	}
 	
 	

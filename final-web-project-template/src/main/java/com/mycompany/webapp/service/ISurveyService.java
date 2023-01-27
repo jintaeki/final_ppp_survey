@@ -76,10 +76,11 @@ public interface ISurveyService {
 
 	// 결과 통계 페이지
 	List<SurveyListDTO> surveyList();
-		
+	List<OrganizationChartDTO> organList(int surveySeq);
+	
 	//결과 목록
 	List<SurveyResultTeamDTO> resultList(int surveySeq);
-	List<SurveyResultTeamDTO> resultDPList(int surveySeq);
+	List<SurveyResultTeamDTO> resultDPList(int surveySeq, String departmentId);
 }
 
 
