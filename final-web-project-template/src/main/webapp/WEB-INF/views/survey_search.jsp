@@ -57,7 +57,7 @@
 
 	    		const tag= $('#'+surveyseq);
 	        	tag.remove();
-	            location.href='http://localhost:8080/springframework-xml-config-no-root/survey/surveysearch?pageNo='+bpageno+'&keyword='+bkeyword+'&selection='+bselection+'&surveyStartDate='+bdate;
+	            location.href='/survey/surveysearch?pageNo='+bpageno+'&keyword='+bkeyword+'&selection='+bselection+'&surveyStartDate='+bdate;
 	            }
 	       });
 

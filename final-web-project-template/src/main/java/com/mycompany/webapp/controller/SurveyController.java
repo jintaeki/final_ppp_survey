@@ -368,9 +368,9 @@ public class SurveyController {
 		}
 
 		logger.info("deletesurvey 컨트롤러 진입");
-		//		surveyService.deleteSurvey(surveyseq);
-		//      mappingService.deleteEmail(surveyseq);
-		//      mappingService.deleteSMS(surveyseq);
+				surveyService.deleteSurvey(surveyseq);
+		      mappingService.deleteEmail(surveyseq);
+		      mappingService.deleteSMS(surveyseq);
 		return "redirect:/survey/surveysearch?pageNo=" + pageno + "&keyword=" + keyword + "&selection=" + selection
 				+ "&surveyStartDate=" + strDate;
 
