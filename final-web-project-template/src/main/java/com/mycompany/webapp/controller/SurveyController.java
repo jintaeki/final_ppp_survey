@@ -551,9 +551,9 @@ public class SurveyController {
 		// 설문 저장			
 		surveyService.setSurvey(SLD);
 		//설문지의 문제 조회
-		List<SurveyQuestionDTO> SQD = surveyService.getQuestionList(surveySeq);
-		
-		surveyService.insertQuestionsAndItems(SQD);
+//		List<SurveyQuestionDTO> SQD = surveyService.getQuestionList(surveySeq);
+//		
+//		surveyService.insertQuestionsAndItems(SQD);
 		
 		
 	
