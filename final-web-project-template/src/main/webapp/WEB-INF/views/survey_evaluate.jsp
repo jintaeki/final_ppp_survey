@@ -8,8 +8,8 @@
 			<div class="row">
 				<div class="hmenu">
 					<div class="survey_list_form_upper_dv">
-						<form action="<c:url value='/survey/EvaluateSearch/${surveySeq}'/>" method="GET"
-							class="survey_list_form">
+						<form action="<c:url value='/survey/evaluatesearch/${surveySeq}'/>" method="GET"
+							class="survey_list_form" id="survey_list_form_id">
 							<select name="selection">
 									 <option value="employeeName" <c:if test="${pagingDto.selection eq 'employeeName'}">selected</c:if>>이름</option>
                 					 <option value="departmentName" <c:if test="${pagingDto.selection eq 'departmentName'}">selected</c:if>>부서명</option>
@@ -42,23 +42,18 @@
 						</tr>
 					</thead>
 					<tbody>
-					<c:forEach items="${EL}" var="EL">
+					<c:forEach items="${evaluateList}" var="EL">
 						<tr>
 							<th scope="row">1</th>
 							<td class="sv_name">${EL.DEPARTMENT_NAME}</td>
 							<td>${EL.GRADE_NAME}</td>
 							<td>${EL.EMPLOYEE_NAME}</td>
 							<td>${EL.SURVEY_COMPLETE_YN}</td>
-							<td><input type="button" class="btn btn-link" onclick="location.href='<c:url value="/survey/surveyresult"/>'" value="조회"></td>
+							<td><input type="button" class="btn btn-link" onclick="location.href='<c:url value="/survey/surveyresult/${EL.SURVEY_SEQ}/${EL.EMPLOYEE_ID}"/>'" value="조회"></td>
 						</tr>
 					</c:forEach>
 
-
-
-
-
 					</tbody>
-
 						<tr>
 						<td colspan="4" class="text-center">
 							<div style="margin-left: 170px;">
@@ -92,9 +87,6 @@
 						</td>
 					</tr>
 				</table>
-				<div class="lmenu">
-					<button type="button" class="btn btn-primary" onclick="location.href='surveyresultteam'">통계</button>
-				</div>
 			</div>
 		</div>
 	</div>

@@ -18,6 +18,7 @@ import com.mycompany.webapp.dto.SurveyQuestionDTO;
 import com.mycompany.webapp.dto.SurveyResultDTO;
 import com.mycompany.webapp.dto.SurveyResultTeamDTO;
 
+
 public interface ISurveyRepository {
 
 	void setSurvey(SurveyListDTO surveylist);
@@ -67,6 +68,11 @@ public interface ISurveyRepository {
 	//결과 목록
 	List<SurveyResultTeamDTO> resultList(int surveySeq);
 	List<SurveyResultTeamDTO> resultDPList(@Param("surveySeq") int surveySeq, @Param("departmentId") String departmentId);
+
+	List<SurveyResultDTO> surveyResult(@Param("employeeId") int employeeId, @Param("surveySeq") int surveySeq);
+
+	List<Map<String, Object>> getResultTarget(int employeeId);
+
 }
 
 

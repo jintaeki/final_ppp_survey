@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -43,6 +44,7 @@ import com.mycompany.webapp.service.ICommonCodeService;
 import com.mycompany.webapp.service.IMappingService;
 import com.mycompany.webapp.service.IPagingService;
 import com.mycompany.webapp.service.ISurveyService;
+import com.mycompany.webapp.service.SurveyService;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -251,15 +253,6 @@ public class SurveyController {
 	}
 
 	
-
-	@RequestMapping("/surveyresult")
-	public String surveyResult(@ModelAttribute("SRD") @Valid SurveyResultDTO SRD, BindingResult result, HttpSession session,
-			RedirectAttributes redirectAttrs) {
-		logger.info("실행");
-		surveyService.surveyResult(SRD);
-
-		return "survey_result";
-	}
 
 	// 모달창을 통해 설문지 설정 데이터 입력
 	@RequestMapping(value = "/set.do", method = RequestMethod.POST)
@@ -482,7 +475,8 @@ public class SurveyController {
 		return "survey";
 	}
 
-	@RequestMapping("/EvaluateSearch/{surveySeq}")
+
+		@RequestMapping("/evaluatesearch/{surveySeq}")
 	public String searchByEvaluate(
 						 @PathVariable("surveySeq") int surveySeq,
 			             @RequestParam(defaultValue="") String keyword,
@@ -493,7 +487,7 @@ public class SurveyController {
 						 @RequestParam(value="departmentName", required=false) String departmentName,
 						 @RequestParam(value="CompleteYn", required=false) String surveyCompleteYn,
 						 @RequestParam(value="gradeName", required=false) String gradeName,
-						 HttpSession session, Model model) {
+						  Model model) {
 		logger.info("지금 가져온 선택지:"+selection);
 		logger.info("페이지 수"+pageNo);
 		logger.info("키워드"+keyword);
@@ -501,7 +495,7 @@ public class SurveyController {
 
 		try {
 
-			List<Map<String, Object>> EL = null;
+			List<Map<String, Object>> evaluateList = null;
 			PagingDTO pagingDto = null;
 			String beforeKeyword = keyword;
 
@@ -520,14 +514,14 @@ public class SurveyController {
 				logger.info("selection:" + pagingDto.getSelection());
 				logger.info("keyword: "+pagingDto.getKeyword());
 				logger.info("paigingdto:" + pagingDto);
-				EL = surveyService.searchByEvaluate(pagingDto);
+				evaluateList = surveyService.searchByEvaluate(pagingDto);
 				logger.info("스타트, 엔드로우 체크: " + pagingDto);
-				logger.info("리스트:" +EL.toString());
+				logger.info("리스트:" +evaluateList.toString());
 				pagingDto.setKeyword(beforeKeyword);
 				logger.info(pagingDto.toString());
-				logger.info("EL: " + EL);
+				logger.info("evaluateList: " + evaluateList);
 
-			model.addAttribute("EL", EL);
+			model.addAttribute("evaluateList", evaluateList);
 
 			logger.info(keyword);
 			System.out.println(pageNo);
@@ -540,6 +534,7 @@ public class SurveyController {
 		logger.info("검색 테스트");
 		return "survey_evaluate";
 	}
+
 
 	//문제 복사를 위한 메소드
 	@RequestMapping("/copysurvey.do/{surveySeq}")
@@ -562,4 +557,25 @@ public class SurveyController {
 	
 
 		
+
+		@RequestMapping("/surveyresult/{surveySeq}/{employeeId}")
+		public String surveyResult (
+				@PathVariable int surveySeq,
+				@PathVariable int employeeId,
+				                   HttpSession session, Model model) {
+			List<Map<String, Object>> surveyResultTarget = null;
+			logger.info("employeeId:" + employeeId);
+			logger.info("surveySeq: " + surveySeq);
+			List<SurveyResultDTO> surveyResultList = surveyService.surveyResult(employeeId, surveySeq);
+			//List<SurveyResultDTO> SRL = SurveyResultList.stream().distinct().collect(Collectors.toList());
+			model.addAttribute("surveyResultList",surveyResultList);
+			surveyResultTarget = surveyService.getResultTarget(employeeId);
+			model.addAttribute("surveyResultTarget",surveyResultTarget);
+
+			logger.info("Result Model: " + surveyResultList.get(1).toString());
+
+			return "survey_result";
+		}
+
+
 }

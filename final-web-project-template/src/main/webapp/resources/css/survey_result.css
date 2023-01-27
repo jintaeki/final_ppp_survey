@@ -9,24 +9,14 @@
 }
 
 
-}
-
-
-.result_table{
-	width:100%;
-	max-width:1140px;
-	margin: auto;
-	border:1px solid black;
-	text-align: center;
-}
-
-
 .result_table{
 	width:100%;
 	max-width:1140px;
 	margin: auto;
 	text-align: center;
 	border:1px solid black;
+	position: relative;
+	bottom:740px;
 
 }
 
@@ -46,10 +36,10 @@
 	max-width:600px;
 	margin-left:90px;
 	text-align: center;
-	
+
 }
 .result_sub  th{
 	border-top:none;
 	border-bottom: 1px solid #dee2e6;
-	
+
 }
