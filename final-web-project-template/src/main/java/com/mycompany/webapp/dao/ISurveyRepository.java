@@ -16,6 +16,7 @@ import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 import com.mycompany.webapp.dto.SurveyResultDTO;
+import com.mycompany.webapp.dto.SurveyResultTeamDTO;
 
 public interface ISurveyRepository {
 
@@ -61,11 +62,11 @@ public interface ISurveyRepository {
 		
 	// 결과 통계 페이지
 	List<SurveyListDTO> surveyList();
-	List<ProjectDTO> projectList();
-	List<OrganizationChartDTO> organList();
+	List<OrganizationChartDTO> organList(int surveySeq);
 	
 	//결과 목록
-	List<SurveyResultDTO> resultList(int surveySeq, String projectId, String departmentId);	
+	List<SurveyResultTeamDTO> resultList(int surveySeq);
+	List<SurveyResultTeamDTO> resultDPList(@Param("surveySeq") int surveySeq, @Param("departmentId") String departmentId);
 }
 
 

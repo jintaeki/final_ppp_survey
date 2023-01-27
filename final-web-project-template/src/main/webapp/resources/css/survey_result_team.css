@@ -45,3 +45,14 @@
 .highcharts-data-table tr:hover {
   background: #f1f7ff;
 }
+
+.survey_list_form_upper_dv{
+	display:flex;
+	margin-left: 200px;
+}
+.survey_list_form{
+	display: flex;
+}
+.survey_list_form select{
+	margin-right: 10px;
+}

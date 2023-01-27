@@ -16,6 +16,7 @@ import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 import com.mycompany.webapp.dto.SurveyResultDTO;
+import com.mycompany.webapp.dto.SurveyResultTeamDTO;
 
 public interface ISurveyService {
 
@@ -66,17 +67,18 @@ public interface ISurveyService {
 
 	// 결과 통계 페이지
 	List<SurveyListDTO> surveyList();
-	List<ProjectDTO> projectList();
-	List<OrganizationChartDTO> organList();
-			
+	List<OrganizationChartDTO> organList(int surveySeq);
+	
 	//결과 목록
-	List<SurveyResultDTO> resultList(int surveySeq, String projectId, String departmentId);	
-
 	List<SurveyResultDTO> surveyResult(SurveyResultDTO SRD);
 
 	
 	//설문 복사를 위한 문제 및 문항 복사
 	void insertQuestionsAndItems(List<SurveyQuestionDTO> SQD);
+
+	List<SurveyResultTeamDTO> resultList(int surveySeq);
+	List<SurveyResultTeamDTO> resultDPList(int surveySeq, String departmentId);
+
 }
 
 
