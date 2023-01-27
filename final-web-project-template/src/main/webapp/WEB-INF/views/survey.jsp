@@ -233,7 +233,6 @@
 
    
 
-   
    function submit(itemSeqArray, itemSubjSeq){
 	   if(confirm("제출하시겠습니까?")){
 		   
@@ -268,15 +267,18 @@
     			}
     		}
 		   
-		var cntCheckedAnswer=0;
+		var cntCheckedAnswer=1;
 		
-		       for(var i =1 ; i<itemSeqArray.length; i++){
-		           if( !$('input[name="'+itemSeqArray[i]+'num"]').is(':checked') ) { 		       
-		        		   if($('textarea[name="'+i+'answerContent"]').val()==""){
+		       for(var i =1; i<itemSeqArray.length; i++){
+
+		    	   if ($('input[name="'+itemSeqArray[i]+'num"]').is(':checked')){
+		        	   cntCheckedAnswer = cntCheckedAnswer + 1;
+		           }else if(!$('input[name="'+itemSeqArray[i]+'num"]').is(':checked') ) { 		 
+		        		   if($('textarea[name="'+i+'answerContent"]').val()==''){
 		        			   alert(i+"번을 채워주세요.");
 			        		   $('input[name="'+itemSeqArray[i]+'num"]').focus();
 				                break;         
-		        		   }else if($('textarea[name="'+i+'answerContent"]').val()=="선택형 문제입니다."){
+		        		   }else if($('input[name="'+i+'answerContent"]').val()=='선택형 문제입니다.'){
 		        			alert(i+"번을 선택해주세요.");
 		        		    $('input[name="'+itemSeqArray[i]+'num"]').focus();
 			                	break;
@@ -284,11 +286,11 @@
 		           
 		           
 		           
-		           } else if ($('input[name="'+itemSeqArray[i]+'num"]').is(':checked')){
-		        	   cntCheckedAnswer = cntCheckedAnswer + 1;
-		           }
+		           }else if ($('textarea[name="'+i+'answerContent"]').val()!=''){
+	        	   		cntCheckedAnswer = cntCheckedAnswer + 1;
+		           } 
 		       }
-		        	if(cntCheckedAnswer == itemSeqArray.length - 1){   
+		        	 if(cntCheckedAnswer == itemSeqArray.length - 1){   
 		        	   
 		        		
 		        		//formData에 담은 데이터를 object map에 담는다
@@ -302,31 +304,31 @@
 		        		var tag = $('#'+object['appraiseeId']);
 		        		tag.parent().html('<button type="button" class="create_btn" style="padding: 10px 13px; color:green;" disabled>평가완료</button>');
 
-		        	   
+		        		// 	   $.ajax({
+//		    	         url: 'insertSurveyResult.do',
+//		    	         method: 'POST',
+//		    	         data : formData,
+//		    	         processData : false,
+//		    	         contentType : false,
+//		    	         cache : false,
+//		    	         timeout : 600000,
+//		    	         success: function(result){
+//		    	        	 alert("결과저장성공");
+//		    			$("#surveyForm").empty();
+//		    			var htmlQuestion='<div class="noQuestion"><b>평가 버튼을 눌러 평가를 진행해주세요.</b></div>';
+//		    			$('#surveyForm').append(htmlQuestion);	
+//		    	    	$('.submit_btn').empty();	
+//		    			var tag = $('#'+object['appraiseeId']);
+//		    			tag.parent().html('<button type="button" class="create_btn" style="padding: 10px 13px; color:green;" disabled>평가완료</button>');
+//		    	         }
+//		    	      });
 		           }
 		    
 
 		      
 		   
 	   
-		// 	   $.ajax({
-// 	         url: 'insertSurveyResult.do',
-// 	         method: 'POST',
-// 	         data : formData,
-// 	         processData : false,
-// 	         contentType : false,
-// 	         cache : false,
-// 	         timeout : 600000,
-// 	         success: function(result){
-// 	        	 alert("결과저장성공");
-// 			$("#surveyForm").empty();
-// 			var htmlQuestion='<div class="noQuestion"><b>평가 버튼을 눌러 평가를 진행해주세요.</b></div>';
-// 			$('#surveyForm').append(htmlQuestion);	
-// 	    	$('.submit_btn').empty();	
-// 			var tag = $('#'+object['appraiseeId']);
-// 			tag.parent().html('<button type="button" class="create_btn" style="padding: 10px 13px; color:green;" disabled>평가완료</button>');
-// 	         }
-// 	      });
+
 	   }
    } 
   
