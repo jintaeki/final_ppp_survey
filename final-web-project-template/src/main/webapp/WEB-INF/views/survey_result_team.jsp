@@ -10,9 +10,8 @@
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
-<div class="container">
+<div class="container" style="height: 1100px;">
 <div class="result_container">
-	
 	<div class="hmenu">
 	<table class="table table-bordered">
   <thead>
@@ -38,6 +37,7 @@
 		</form>
       </th>
       <th scope="col">${surveyName}</th>
+      <th scope="col">${departmentName}</th>
     </tr>
   </thead>
   </table>
@@ -119,16 +119,17 @@ function typeFn() {
 	var scoreInfo = null;
 	
 	function getScoreCnt(type){
-	    if(scoreInfo==null) scoreInfo=${chartJSONResult};	
-	    var scoreInfoMap = resultProcLineChart(scoreInfo);
-	    if(scoreInfoMap==null) return null;
-	    if(type=="data"){
-	        return scoreInfoMap.get("data");
-	    }else{
-	        return scoreInfoMap.get("cateArr");
-	    }
+		if(${chartJSONResult} != null) {
+	    	if(scoreInfo==null) scoreInfo=${chartJSONResult};	
+	    	var scoreInfoMap = resultProcLineChart(scoreInfo);
+	    	if(scoreInfoMap==null) return null;
+	    	if(type=="data"){
+	    	    return scoreInfoMap.get("data");
+	    	}else{
+	    	    return scoreInfoMap.get("cateArr");
+	    	}
+		}
 	}
-	
 	function resultProcLineChart($obj){
 	    if($obj==null) return null;        
 	    var resMap = new Map();
@@ -152,16 +153,17 @@ function typeFn() {
 	var todayInfo = null;
 	
 	function getDPScoreCnt(type){
-	    if(todayInfo==null) todayInfo=${chartJSONDp};	
-	    var todayInfoMap = resultDPProcLineChart(todayInfo);
-	    if(todayInfoMap==null) return null;
-	    if(type=="data"){
-	        return todayInfoMap.get("data");
-	    }else{
-	        return todayInfoMap.get("cateArr");
-	    }
+		if(${chartJSONDp} != null) {
+	    	if(todayInfo==null) todayInfo=${chartJSONDp};	
+	    	var todayInfoMap = resultDPProcLineChart(todayInfo);
+	    	if(todayInfoMap==null) return null;
+	    	if(type=="data"){
+	    	    return todayInfoMap.get("data");
+	    	}else{
+	    	    return todayInfoMap.get("cateArr");
+	    	}
+		}
 	}
-	
 	function resultDPProcLineChart($obj){
 	    if($obj==null) return null;        
 	    var resMap = new Map();

@@ -153,6 +153,11 @@ public class SurveyController {
 		logger.info("실행");
 		
 		List<SurveyListDTO> Sdt = surveyService.surveyList();
+		JSONArray cJsonArrDP = new JSONArray();
+		JSONArray cJsonArrResult = new JSONArray();
+		
+		model.addAttribute("chartJSONDp", cJsonArrDP);
+		model.addAttribute("chartJSONResult", cJsonArrResult);
 		
 		model.addAttribute("Sdt", Sdt);
 		
@@ -167,6 +172,7 @@ public class SurveyController {
 		List<SurveyListDTO> Sdt = surveyService.surveyList();
 		List<SurveyResultTeamDTO> resultList = surveyService.resultList(surveySeq);
 		List<SurveyResultTeamDTO> resultDPList = surveyService.resultDPList(surveySeq, departmentId);
+		List<OrganizationChartDTO> OList = surveyService.organList(surveySeq); 
 		
 		String surveyName = null;
 		for(int i=0; i<Sdt.size(); i++) {
@@ -175,9 +181,17 @@ public class SurveyController {
 			}
 		}
 		
+		String departmentName = null;
+		for(int i=0; i<OList.size(); i++) {
+			if(departmentId.equals(OList.get(i).getDepartmentId())) {
+			   departmentName = OList.get(i).getDepartmentName();
+			}
+		}
+		
 		model.addAttribute("surveySeq", surveySeq);
 		model.addAttribute("Sdt", Sdt);		
-		model.addAttribute("surveyName", surveyName);		
+		model.addAttribute("surveyName", surveyName);
+		model.addAttribute("departmentName", departmentName);
 
 		JSONArray cJsonArrResult = new JSONArray();
 		JSONObject cJsonObjResult = new JSONObject();
