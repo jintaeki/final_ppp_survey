@@ -19,7 +19,6 @@
 		<div class="col-12">&nbsp;</div>
 	</div>
 </div>
-<c:if test="${not empty SRL}">${SRL}</c:if>
 <table class="result_table">
 
 	<tr class="result_table_list">
@@ -32,12 +31,19 @@
 	</tr>
 
 	<c:forEach var="SRL" items="${surveyResultList}">
+		<tr>
 		<td>${SRL.raterName}</td>
+
 		<td>${SRL.raterDepartmentName}</td>
+
 		<td>${SRL.raterGrade}</td>
+
 		<td>${SRL.questionContent}</td>
+
 		<td>${SRL.itemContent}</td>
+
 		<td>${SRL.itemScore}</td>
+		</tr>
 	</c:forEach>
 </table>
 <%@ include file="/WEB-INF/views/common/footer.jsp"%>
