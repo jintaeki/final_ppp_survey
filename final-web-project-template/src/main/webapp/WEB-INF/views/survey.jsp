@@ -11,11 +11,15 @@
 		
    function questionHTML(result,raterId,appraiseeId,anonymitycode,theSeq){
 		var itemNum = 0;
+		// radio required 기능을 위한 배열
 		var itemSeqArray=[];
+		// 주관식 문제 required 기능을 위한 배열
+		var itemSubjSeq = [];
+		var itemSubjSeqIndex=0;
 	   const size= result.length;
 	   console.log(size);
 	   
-		
+		var subjNum = 0;
 	   
    	   $("#surveyForm").empty();
 	   let cnt = 0;
@@ -40,11 +44,12 @@
 			    console.log(cnt);
 			    if(result[i].QUESTION_TYPE_CODE =="10002"){
 			    	surveyQandA += '<div class="item_form" style=" display: flex; align-items: flex-end;">';
-			    	surveyQandA+= '<input type="hidden" name="'+(i+'num')+'" value="'+result[i].ITEM_SEQ+'">';
-					surveyQandA += '<textarea name="answerContent" required></textarea>';
-					surveyQandA += '<input type="hidden" name="'+(i+'num')+'" class="item_btn" value="'+result[i].ITEM_SEQ+'">';
+			    	surveyQandA += '<input type="hidden" name="'+(i+'num')+'" value="'+result[i].ITEM_SEQ+'">';
+					surveyQandA += '<textarea name="'+(i-itemNum +1)+'answerContent" ></textarea>';
 					surveyQandA += '</div>';
 					itemSeqArray[i-itemNum +1]=i;
+					itemSubjSeq[itemSubjSeqIndex]=result[i].ITEM_SEQ;
+					itemSubjSeqIndex = itemSubjSeqIndex + 1;
 			    }else{
 			    	surveyQandA += '<div class="item_form" style=" display: flex; align-items: flex-end;">';
 
@@ -53,7 +58,7 @@
 	 					   surveyQandA += '<input type="radio" name="'+(i+'num')+'" class="item_btn" value="'+result[j].ITEM_SEQ+'"id="'+result[j].ITEM_SEQ+'"><label for="'+result[j].ITEM_SEQ+'" style="margin-right: 15px" required>'+result[j].ITEM_CONTENT+'</label>';
 					
 						   if(j==i){
-						   surveyQandA +='<input type="hidden" name="answerContent" value="선택형 문제입니다.">';
+						   surveyQandA +='<input type="hidden" name="'+(i-itemNum +1)+'answerContent" value="선택형 문제입니다.">';
 						   surveyQandA += '</div>'
 
 						   }
@@ -78,11 +83,12 @@
 		    	surveyQandA += '<div class="item_form" style=" display: flex; align-items: flex-end;">';
 		    	surveyQandA+= '<input type="hidden" name="'+(i+'num')+'" value="'+result[i].ITEM_SEQ+'">';
 
-				surveyQandA += '<textarea name="answerContent" required></textarea>';
-				surveyQandA += '<input type="hidden" name="'+(i+'num')+'" class="item_btn" value="'+result[i].ITEM_SEQ+'">';
+				surveyQandA += '<textarea name="'+(i-itemNum +1)+'answerContent"></textarea>';
 
 				surveyQandA += '</div>';
 				itemSeqArray[i-itemNum +1]=i;
+				itemSubjSeq[itemSubjSeqIndex]=result[i].ITEM_SEQ;
+				itemSubjSeqIndex = itemSubjSeqIndex + 1;
 		    }else{
 		    	surveyQandA += '<div class="item_form" style=" display: flex; align-items: flex-end;">';
 		    	itemSeqArray[i-itemNum +1]=i;
@@ -92,7 +98,7 @@
 				   
 					  
 				   if(j==i){
-				   surveyQandA +='<input type="hidden" name="answerContent" value="선택형 문제입니다.">';
+				   surveyQandA +='<input type="hidden" name="'+(i-itemNum +1)+'answerContent" value="선택형 문제입니다.">';
 				   surveyQandA += '</div>'
 
 				   }
@@ -114,7 +120,7 @@
 		console.log(itemSeqArray);	    //[null,4,5,10,15,20,25,30,35,40,45,50,55]
 	   
 	   submitBtn = '';
-	   submitBtn='<button type="button" class="create_btn" onclick="submit('+itemSeqArray+')">제출</button>';
+	   submitBtn='<button type="button" class="create_btn" onclick="submit('+JSON.stringify(itemSeqArray)+','+JSON.stringify(itemSubjSeq)+')">제출</button>';
 	   
 	   //문제 전송버튼 삭제 및 생성
 	   $('.submit_btn').empty();
@@ -228,62 +234,79 @@
    
 
    
-   function submit(size){
+   function submit(itemSeqArray, itemSubjSeq){
 	   if(confirm("제출하시겠습니까?")){
-	var check = size.length;
-	alert(size);
-	alert(check);
-		  
-		       for(var i =1 ; i<size.length; i++){
-		           if( !$('input[name="'+i+'num"]').is(':checked') ) { 
-		                alert(i+"번을 선택해주세요.");
-		                $('input[name="'+i+'num"]').focus();
-		                
-		           } else {
-		        	   
-		        	   
-		        	   
+		   
+		   var data = $('#surveyForm')[0];
+    	   var formData = new FormData(data);
+    			
+    		var cnt = 0;
+    		var cnt2=0
+    		var keyArray=[];
+    		var valueArray =[];
+    	
+    		
+    		for(const pairkeys of formData.keys()){
+    			keyArray.push(pairkeys);
+    			
+    		 	cnt = cnt+1;
+    		}
+    		for(const pairvalues of formData.values()){
+    			valueArray.push(pairvalues);
+    			cnt2 = cnt2 +1;
+    		}	
+       
+    		
+    		for(var i = 0; i<cnt;i++){
+    			if(keyArray[i].substr(-13,13)=='answerContent'){
+    				formData.append('answerContent',valueArray[i]);
+    			}
+    			
+    			if(keyArray[i].substr(-3,3)=='num'){
+
+    				formData.append('answerContent',valueArray[i]);
+    			}
+    		}
+		   
+		var cntCheckedAnswer=0;
+		
+		       for(var i =1 ; i<itemSeqArray.length; i++){
+		           if( !$('input[name="'+itemSeqArray[i]+'num"]').is(':checked') ) { 		       
+		        		   if($('textarea[name="'+i+'answerContent"]').val()==""){
+		        			   alert(i+"번을 채워주세요.");
+			        		   $('input[name="'+itemSeqArray[i]+'num"]').focus();
+				                break;         
+		        		   }else if($('textarea[name="'+i+'answerContent"]').val()=="선택형 문제입니다."){
+		        			alert(i+"번을 선택해주세요.");
+		        		    $('input[name="'+itemSeqArray[i]+'num"]').focus();
+			                	break;
+		        		   }
+		           
+		           
+		           
+		           } else if ($('input[name="'+itemSeqArray[i]+'num"]').is(':checked')){
+		        	   cntCheckedAnswer = cntCheckedAnswer + 1;
 		           }
 		       }
+		        	if(cntCheckedAnswer == itemSeqArray.length - 1){   
+		        	   
+		        		
+		        		//formData에 담은 데이터를 object map에 담는다
+		        		var object = {};	
+		        		formData.forEach((value, key) => object[key] = value);
+		        		
+		        		$("#surveyForm").empty();
+		        		var htmlQuestion='<div class="noQuestion"><b>평가 버튼을 눌러 평가를 진행해주세요.</b></div>';
+		        	    $('#surveyForm').append(htmlQuestion);	
+		        	    $('.submit_btn').empty();	
+		        		var tag = $('#'+object['appraiseeId']);
+		        		tag.parent().html('<button type="button" class="create_btn" style="padding: 10px 13px; color:green;" disabled>평가완료</button>');
 
-		       var data = $('#surveyForm')[0];
-        	   var formData = new FormData(data);
-        			
-        		var cnt = 0;
-        		var cnt2=0
-        		var keyArray=[];
-        		var valueArray =[];
-        	
-        		
-        		for(const pairkeys of formData.keys()){
-        			keyArray.push(pairkeys);
-        			
-        		 	cnt = cnt+1;
-        		}
-        		for(const pairvalues of formData.values()){
-        			valueArray.push(pairvalues);
-        			cnt2 = cnt2 +1;
-        		}	
-           
-        		
-        		for(var i = 0; i<cnt;i++){
-        			if(keyArray[i].substr(-3,3)=='num'){
+		        	   
+		           }
+		    
 
-        				formData.append('itemSeq',valueArray[i]);
-        			}
-        		}
-        		
-        		//formData에 담은 데이터를 object map에 담는다
-        		var object = {};	
-        		formData.forEach((value, key) => object[key] = value);
-        		
-        		$("#surveyForm").empty();
-        		var htmlQuestion='<div class="noQuestion"><b>평가 버튼을 눌러 평가를 진행해주세요.</b></div>';
-        	    $('#surveyForm').append(htmlQuestion);	
-        	    $('.submit_btn').empty();	
-        		var tag = $('#'+object['appraiseeId']);
-        		tag.parent().html('<button type="button" class="create_btn" style="padding: 10px 13px; color:green;" disabled>평가완료</button>');
-
+		      
 		   
 	   
 		// 	   $.ajax({
