@@ -337,36 +337,56 @@
 </select>
 
 			<select id="surveyResult" parameterType="int" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
-	SELECT  sr.APPRAISEE_ID
-        ,sr.RATER_ID
-        ,sr.ANONYMITY_SEQ
-        ,ui.EMPLOYEE_NAME
-        ,oc.DEPARTMENT_NAME
-        ,g.GRADE_NAME
-        ,sq.QUESTION_TYPE_CODE
-        ,sr.QUESTION_SEQ
-        ,sr.ITEM_SEQ
-        ,sr.ANSWER_CONTENT
-        ,sq.QUESTION_CONTENT
-        ,si.ITEM_CONTENT
-        ,si.ITEM_SCORE
-        FROM SURVEY_RESULT sr
-            ,SURVEY_QUESTION sq
-            ,SURVEY_ITEM si
-            ,USER_INFO ui
-            ,GRADE g
-            ,ORGANIZATION_CHART oc
+SELECT  sr.APPRAISEE_ID
+       ,sr.RATER_ID
+       ,sr.ANONYMITY_SEQ
+       ,(SELECT
+              DEPARTMENT_NAME
+         FROM ORGANIZATION_CHART oc
+              ,USER_INFO ui
+         WHERE
+              ui.EMPLOYEE_ID = RATER_ID
+         AND ui.DEPARTMENT_ID = oc.DEPARTMENT_ID) RATER_DEPARTMENT_NAME
+       ,(SELECT
+               EMPLOYEE_NAME
+         FROM
+               USER_INFO
+         WHERE
+               EMPLOYEE_ID = RATER_ID) RATER_NAME
+       ,(SELECT
+               GRADE_NAME
+         FROM
+               GRADE g
+              ,USER_INFO ui
+         WHERE
+               ui.EMPLOYEE_ID = RATER_ID
+         AND ui.GRADE_ID = g.GRADE_ID) RATER_GRADE
+       ,sq.QUESTION_TYPE_CODE
+       ,sr.QUESTION_SEQ
+       ,sr.ITEM_SEQ
+       ,sr.ANSWER_CONTENT
+       ,sq.QUESTION_CONTENT
+       ,si.ITEM_CONTENT
+       ,si.ITEM_SCORE
+FROM
+       SURVEY_RESULT sr
+      ,SURVEY_QUESTION sq
+      ,SURVEY_ITEM si
+      ,USER_INFO ui
+      ,GRADE g
+      ,ORGANIZATION_CHART oc
 WHERE sr.QUESTION_SEQ = sq.QUESTION_SEQ
-             AND sr.ITEM_SEQ = si.ITEM_SEQ
-             AND sr.APPRAISEE_ID = ui.EMPLOYEE_ID
-             AND ui.GRADE_ID = g.GRADE_ID
-             AND ui.DEPARTMENT_ID = oc.DEPARTMENT_ID
-             AND sr.SURVEY_SEQ= ${surveySeq}  AND ui.EMPLOYEE_ID= ${employeeId}
-             ORDER BY RATER_ID, ANONYMITY_SEQ, QUESTION_SEQ
+        AND sr.ITEM_SEQ = si.ITEM_SEQ
+        AND sr.APPRAISEE_ID = ui.employee_id
+        AND ui.GRADE_ID = g.GRADE_ID
+        AND ui.DEPARTMENT_ID = oc.DEPARTMENT_ID
+        AND sr.APPRAISEE_ID=#{employeeId} and sr.survey_seq = #{surveySeq}
+order by RATER_ID, ANONYMITY_SEQ, QUESTION_SEQ
+
 </select>
 
 
-<select id="getResultTarget" parameterType="int" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
+<select id="getResultTarget" parameterType="int" resultType="hashmap">
 		      SELECT EMPLOYEE_NAME
                     ,GRADE_NAME
                     ,DEPARTMENT_NAME

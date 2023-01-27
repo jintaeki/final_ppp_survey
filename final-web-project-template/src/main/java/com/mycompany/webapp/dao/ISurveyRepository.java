@@ -63,9 +63,9 @@ public interface ISurveyRepository {
 
 	List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
 
-	List<SurveyResultDTO> surveyResult (@Param("employeeId") int employeeId, @Param("surveySeq") int surveySeq);
+	List<SurveyResultDTO> surveyResult(@Param("employeeId") int employeeId, @Param("surveySeq") int surveySeq);
 
-	SurveyResultDTO getResultTarget(int employeeId);
+	List<Map<String, Object>> getResultTarget(int employeeId);
 
 }
 

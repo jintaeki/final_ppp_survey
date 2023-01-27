@@ -365,7 +365,7 @@ public class SurveyController {
 		return "survey";
 	}
 
-		@RequestMapping("/EvaluateSearch/{surveySeq}")
+		@RequestMapping("/evaluatesearch/{surveySeq}")
 	public String searchByEvaluate(
 						 @PathVariable("surveySeq") int surveySeq,
 			             @RequestParam(defaultValue="") String keyword,
@@ -376,7 +376,7 @@ public class SurveyController {
 						 @RequestParam(value="departmentName", required=false) String departmentName,
 						 @RequestParam(value="CompleteYn", required=false) String surveyCompleteYn,
 						 @RequestParam(value="gradeName", required=false) String gradeName,
-						 HttpSession session, Model model) {
+						  Model model) {
 		logger.info("지금 가져온 선택지:"+selection);
 		logger.info("페이지 수"+pageNo);
 		logger.info("키워드"+keyword);
@@ -384,7 +384,7 @@ public class SurveyController {
 
 		try {
 
-			List<Map<String, Object>> EL = null;
+			List<Map<String, Object>> evaluateList = null;
 			PagingDTO pagingDto = null;
 			String beforeKeyword = keyword;
 
@@ -403,14 +403,14 @@ public class SurveyController {
 				logger.info("selection:" + pagingDto.getSelection());
 				logger.info("keyword: "+pagingDto.getKeyword());
 				logger.info("paigingdto:" + pagingDto);
-				EL = surveyService.searchByEvaluate(pagingDto);
+				evaluateList = surveyService.searchByEvaluate(pagingDto);
 				logger.info("스타트, 엔드로우 체크: " + pagingDto);
-				logger.info("리스트:" +EL.toString());
+				logger.info("리스트:" +evaluateList.toString());
 				pagingDto.setKeyword(beforeKeyword);
 				logger.info(pagingDto.toString());
-				logger.info("EL: " + EL);
+				logger.info("evaluateList: " + evaluateList);
 
-			model.addAttribute("EL", EL);
+			model.addAttribute("evaluateList", evaluateList);
 
 			logger.info(keyword);
 			System.out.println(pageNo);
@@ -424,20 +424,22 @@ public class SurveyController {
 		return "survey_evaluate";
 	}
 
-		@RequestMapping("/surveyResult/{surveySeq}/{employeeId}")
+		@RequestMapping("/surveyresult/{surveySeq}/{employeeId}")
 		public String surveyResult (
 				@PathVariable int surveySeq,
 				@PathVariable int employeeId,
 				                   HttpSession session, Model model) {
-			SurveyResultDTO SRD = null;
+			List<Map<String, Object>> surveyResultTarget = null;
 			logger.info("employeeId:" + employeeId);
-			List<SurveyResultDTO> SurveyResultList = surveyService.surveyResult(employeeId, surveySeq);
-			List<SurveyResultDTO> SRL = SurveyResultList.stream().distinct().collect(Collectors.toList());
-			logger.info("SRL: " + SRL);
-			model.addAttribute("SRL" , SRL);
-			SRD = surveyService.getResultTarget(employeeId);
-			model.addAttribute("SRD", SRD);
-			logger.info("Result Model: " + SRD);
+			logger.info("surveySeq: " + surveySeq);
+			List<SurveyResultDTO> surveyResultList = surveyService.surveyResult(employeeId, surveySeq);
+			//List<SurveyResultDTO> SRL = SurveyResultList.stream().distinct().collect(Collectors.toList());
+			model.addAttribute("surveyResultList",surveyResultList);
+			surveyResultTarget = surveyService.getResultTarget(employeeId);
+			model.addAttribute("surveyResultTarget",surveyResultTarget);
+
+			logger.info("Result Model: " + surveyResultList.get(1).toString());
+
 			return "survey_result";
 		}
 

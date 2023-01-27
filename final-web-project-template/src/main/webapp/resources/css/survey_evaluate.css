@@ -1,9 +1,20 @@
 @charset "UTF-8";
 .hmenu{
-	margin-left:750px;
-	margin-right:58px;
-	width:400px;	
+display: flex;
+	margin-bottom: 20px;
 }
+
+.survey_list_form_upper_dv{
+	display:flex;
+	margin-left:200px;
+}
+
+#survey_list_form_id{
+	display: flex;
+    margin-left: 360px;
+}
+
+
 .table{
 	max-width: 900px;
 	margin-left: auto;
@@ -20,8 +31,8 @@
 .table td, .table th{
 	height: 65px;
 	vertical-align: middle;
-	border-top: 1px solid #dee2e6;	
-}  
+	border-top: 1px solid #dee2e6;
+}
 
 .pagination{
 	margin-top: 20px;

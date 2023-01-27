@@ -15,7 +15,9 @@ public class SurveyResultDTO {
 	private String questionSeq;
 	private String itemSeq;
 	private String answerContent;
-
+	private String raterName;
+	private String raterGrade;
+	private String raterDepartmentName;
 	public String getSurveySeq() {
 		return surveySeq;
 	}
@@ -100,12 +102,43 @@ public class SurveyResultDTO {
 	public void setAnswerContent(String answerContent) {
 		this.answerContent = answerContent;
 	}
+	public String getRaterName() {
+		return raterName;
+	}
+	public void setRaterName(String raterName) {
+		this.raterName = raterName;
+	}
+	public String getRaterGrade() {
+		return raterGrade;
+	}
+	public void setRaterGrade(String raterGrade) {
+		this.raterGrade = raterGrade;
+	}
+	public String getRaterDepartmentName() {
+		return raterDepartmentName;
+	}
+	public void setRaterDepartmentName(String raterDepartmentName) {
+		this.raterDepartmentName = raterDepartmentName;
+	}
 	@Override
 	public String toString() {
 		return "SurveyResultDTO [surveySeq=" + surveySeq + ", raterId=" + raterId + ", appraiseeId=" + appraiseeId
 				+ ", anonymitySeq=" + anonymitySeq + ", employeeName=" + employeeName + ", gradeName=" + gradeName
 				+ ", questionTypeCode=" + questionTypeCode + ", questionContent=" + questionContent + ", itemContent="
 				+ itemContent + ", itemScore=" + itemScore + ", departmentName=" + departmentName + ", questionSeq="
-				+ questionSeq + ", itemSeq=" + itemSeq + ", answerContent=" + answerContent + "]";
+				+ questionSeq + ", itemSeq=" + itemSeq + ", answerContent=" + answerContent + ", raterName=" + raterName
+				+ ", raterGrade=" + raterGrade + ", raterDepartmentName=" + raterDepartmentName + ", getSurveySeq()="
+				+ getSurveySeq() + ", getRaterId()=" + getRaterId() + ", getAppraiseeId()=" + getAppraiseeId()
+				+ ", getAnonymitySeq()=" + getAnonymitySeq() + ", getEmployeeName()=" + getEmployeeName()
+				+ ", getGradeName()=" + getGradeName() + ", getQuestionTypeCode()=" + getQuestionTypeCode()
+				+ ", getQuestionContent()=" + getQuestionContent() + ", getItemContent()=" + getItemContent()
+				+ ", getItemScore()=" + getItemScore() + ", getDepartmentName()=" + getDepartmentName()
+				+ ", getQuestionSeq()=" + getQuestionSeq() + ", getItemSeq()=" + getItemSeq() + ", getAnswerContent()="
+				+ getAnswerContent() + ", getRaterName()=" + getRaterName() + ", getRaterGrade()=" + getRaterGrade()
+				+ ", getRaterDepartmentName()=" + getRaterDepartmentName() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
+
+
+
 }

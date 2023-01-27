@@ -2,7 +2,7 @@
 .hmenu{
 	display: flex;
 	margin-bottom: 20px;
-	
+
 }
 
 .survey_list_form_upper_dv{
@@ -22,12 +22,12 @@
 }
 
 #button-addon2{
-		margin-left: 6px; 
-	
+		margin-left: 6px;
+
 }
 
 #upper_dv_btn{
-	margin-left: 6px; 
+	margin-left: 6px;
 }
 
 
@@ -47,14 +47,14 @@
 .table td, .table th{
 	height: 65px;
 	vertical-align: middle;
-	border-top: 1px solid #dee2e6;	
-}  
+	border-top: 1px solid #dee2e6;
+}
 .wait{
 		color: #F06;
-		font-weight: bold;	
+		font-weight: bold;
 }
 .comp{
-		font-weight: bold;	
+		font-weight: bold;
 }
 .pagination{
 	margin-top: 20px;

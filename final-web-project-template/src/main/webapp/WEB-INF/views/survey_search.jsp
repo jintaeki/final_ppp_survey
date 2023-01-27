@@ -133,7 +133,7 @@
 			console.log(tag);
 			console.log(surveyseq);
 
-			const text = '<button type="button" class="btn btn-link" onclick="location.href='+'\'EvaluateSearch/' +surveyseq+ '\'">조회</button>';
+			const text = '<button type="button" class="btn btn-link" onclick="location.href='+'\'evaluateSearch/' +surveyseq+ '\'">조회</button>';
  			tag.parent().parent().next().append(text);
 
  			const done = `매핑완료`;
@@ -285,7 +285,7 @@
 				<div class="hmenu">
 					<div class="survey_list_form_upper_dv">
 						<form action="<c:url value='/survey/surveysearch'/>" method="POST"
-							class="survey_list_form">
+							class="survey_list_form" style="display: flex;">
 							<input type="date" name="surveyStartDate" id="selectedDate"
 								value="<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">
 							<select name="anonyMityCheckCode">
@@ -377,7 +377,7 @@
 
 								<td><c:if test="${list.stateCode eq '30004'}">
 										<button type="button" class="btn btn-link"
-											onclick="location.href='<c:url value='EvaluateSearch/${list.surveySeq}'/>'">조회</button>
+											onclick="location.href='<c:url value='evaluatesearch/${list.surveySeq}'/>'">조회</button>
 									</c:if> <input type="hidden" id="pageNo" name=pageNo
 									value="${pagingdto.startPageNo}"></td>
 

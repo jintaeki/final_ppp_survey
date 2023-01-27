@@ -179,7 +179,7 @@ public class SurveyService implements ISurveyService{
 	}
 
 	@Override
-	public SurveyResultDTO getResultTarget(int employeeId) {
+	public List<Map<String, Object>> getResultTarget(int employeeId) {
 
 		return surveyDao.getResultTarget(employeeId);
 	}

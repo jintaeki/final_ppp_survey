@@ -57,7 +57,7 @@ public interface ISurveyService {
 
 	List<SurveyResultDTO> surveyResult(int employeeId, int surveyId);
 
-	SurveyResultDTO getResultTarget(int employeeId);
+	List<Map<String, Object>> getResultTarget(int employeeId);
 
 	List<Map<String, Object>> getSurveySeqAndName (int raterId);
 }
