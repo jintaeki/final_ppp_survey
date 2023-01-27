@@ -194,6 +194,29 @@ public class SurveyService implements ISurveyService{
 		return null;
 	}
 
+	@Override
+	public void insertQuestionsAndItems(List<SurveyQuestionDTO> SQDList) {
+		int SQDListsize = SQDList.size();
+		
+		SurveyQuestionDTO SQD = new SurveyQuestionDTO() ;
+		for(int i = 0; i<SQDListsize;i++) {
+			SQD.setQuestionContent(SQDList.get(i).getQuestionContent());
+			SQD.setQuestionTypeCode(SQDList.get(i).getQuestionTypeCode());
+			SQD.setSurveySeq(SQDList.get(i).getSurveySeq());
+			surveyDao.insertQuestion(SQD);
+			List<Map<String,Object>> items =surveyDao.selectItems(SQD.getQuestionSeq());
+			System.out.println("문제 입력"+i);
+			System.out.println("문제들"+SQD.toString());
+			for(int j = 0; j<items.size();j++) {
+				SQD.setItemContent(items.get(j).get("itemContent").toString());
+				SQD.setItemScore(items.get(j).get("itemScore").toString());
+				surveyDao.insertItem(SQD);
+				System.out.println("문항 입력"+i);
+			}
+		}
+		
+	}
+
 
 }
 

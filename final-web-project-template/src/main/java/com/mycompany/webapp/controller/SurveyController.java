@@ -391,7 +391,7 @@ public class SurveyController {
 		return "survey";
 	}
 
-		@RequestMapping("/EvaluateSearch/{surveySeq}")
+	@RequestMapping("/EvaluateSearch/{surveySeq}")
 	public String searchByEvaluate(
 						 @PathVariable("surveySeq") int surveySeq,
 			             @RequestParam(defaultValue="") String keyword,
@@ -450,4 +450,25 @@ public class SurveyController {
 		return "survey_evaluate";
 	}
 
+	//문제 복사를 위한 메소드
+	@RequestMapping("/copysurvey.do/{surveySeq}")
+	public void copySurvey(@PathVariable int surveySeq) {
+		
+		// seq로 설문 내용 불러오기
+		SurveyListDTO SLD = surveyService.selectSurvey(surveySeq);
+		logger.info("복사할 설문 내용: "+SLD.toString());
+		// 설문 저장			
+		surveyService.setSurvey(SLD);
+		//설문지의 문제 조회
+		List<SurveyQuestionDTO> SQD = surveyService.getQuestionList(surveySeq);
+		
+		surveyService.insertQuestionsAndItems(SQD);
+		
+		
+	
+//		return "redirect:/survey/surveysearch"; 
+	}
+	
+
+		
 }

@@ -153,22 +153,19 @@
 		
 		<tr>
 			<td><span class="insert_category"> <b>익명/기명</b></span></td>
-			<td><c:if
-					test="${SLD.anonymityCheckCode eq '20001'}">
-					<input type="radio" name="anonymityCheckCode"
-						id="survey_type_check" value="20001" checked>
+			<td>
+				<c:if test="${SLD.anonymityCheckCode eq '20001'}">
+					<input type="radio" name="anonymityCheckCode" id="survey_type_check" value="20001" checked>
 					<label style="margin-bottom:0px;" for="survey_type_check"><b>익명</b></label> 
-					<input type="radio" name="anonymityCheckCode"
-						id="survey_type_check" value="20002">
+					<input type="radio" name="anonymityCheckCode" id="survey_type_check" value="20002">
 					<label style="margin-bottom:0px;" for="survey_type_check"><b>기명</b></label> 
-         		    </c:if> 
-         		    <c:if test="${SLD.anonymityCheckCode eq '20002'}">
-					<input type="radio" name="anonymityCheckCode"
-						id="survey_type_check" value="20001">
+         		</c:if> 
+         		    
+         		<c:if test="${SLD.anonymityCheckCode eq '20002'}">
+					<input type="radio" name="anonymityCheckCode" id="survey_type_check" value="20001">
 					<label style="margin-bottom:0px;" for="survey_type_check"><b>익명</b></label> 
 
-					<input type="radio" name="anonymityCheckCode" style=""
-						id="survey_type_check" value="20002" checked>
+					<input type="radio" name="anonymityCheckCode"  id="survey_type_check" value="20002" checked>
 					<label style="margin-bottom:0px;" for="survey_type_check"><b>기명</b></label> 
 				</c:if>
 			</td>

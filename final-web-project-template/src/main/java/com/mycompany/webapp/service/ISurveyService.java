@@ -74,6 +74,9 @@ public interface ISurveyService {
 
 	List<SurveyResultDTO> surveyResult(SurveyResultDTO SRD);
 
+	
+	//설문 복사를 위한 문제 및 문항 복사
+	void insertQuestionsAndItems(List<SurveyQuestionDTO> SQD);
 }
 
 
