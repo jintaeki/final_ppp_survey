@@ -6,75 +6,6 @@
 
 <script>
 	
-	// survey복사
-	
-	function copysurvey(obj,surveySeq){
-		
-		$.ajax({
-	         method:'GET', //어떤 방식으로 보낼 지
-	            url:'copysurvey.do/'+ surveySeq,
-	            processData : false,
-	            async: false,
-	            contentType : false,
-	            cache : false,
-	            beforeSend : function() { //보내기 전 실행
-	            console.log("삭제 요청이 보내지는가?");
-	         },
-	            success:function (data) {    //전송 성공시 실행
-				html='';
-	            html+='<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-				html+='<div class="modal-dialog">';
-				html+='<div class="modal-content">';
-				html+='<div class="modal-header">';
-				html+='<h5 class="modal-title" id="exampleModalLabel">설문지 설정</h5>';
-				html+='<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
-				html+='<span aria-hidden="true">&times;</span>';
-				html+='</button>';
-				html+='</div>';
-				html+='<div class="modal-body">';
-				html+='<c:url value="/survey/updatesurvey.do" var="actionURL" scope="page" />';
-				html+='<form:form action="${actionURL}" modelAttribute="SLD">';
-				html+='<div class="form-group">';
-				html+='<label for="recipient-name" class="col-form-label">설문지 이름</label>';
-				html+='<input type="text" class="form-control" id="recipient-name" name="surveyName"value="'+data.surveyName+'">';
-				html+='</div>';
-				html+='<div class="form-group">';
-				html+='<label for="message-text" class="col-form-label">설문 부가 설명</label> <textarea class="form-control" id="message-text" name="surveyContent" value="'+data.surveyContent+'"></textarea>';
-				html+='</div>';
-				html+='<input type="hidden" name="stateCode" value="30001">';
-				html+='<input type="hidden" name="surveySeq" value="1"> 설문 진행 기간<br>';
-
-				html+='<br>';
-				if(data.anonymityCheckCode=='20001'){
-					html+='	<input type="radio" name="anonymityCheckCode" id="survey_type_check" value="20001" checked>';
-					html+='	<label style="margin-bottom:0px;" for="survey_type_check"><b>익명</b></label> ';
-					html+='	<input type="radio" name="anonymityCheckCode" id="survey_type_check" value="20002">';
-					html+='	<label style="margin-bottom:0px;" for="survey_type_check"><b>기명</b></label> ';
-				}else{
-					html+='<input type="radio" name="anonymityCheckCode" id="survey_type_check" value="20001" checked>';
-					html+='<label style="margin-bottom:0px;" for="survey_type_check"><b>익명</b></label> ';
-					html+='<input type="radio" name="anonymityCheckCode" id="survey_type_check" value="20002">';
-					html+='<label style="margin-bottom:0px;" for="survey_type_check"><b>기명</b></label> ';
-				}
-				html+='<div class="modal-footer">';
-				html+='<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>';
-				html+='<input type="submit" class="btn btn-primary" value="등록">';
-				html+='</div>';
-				html+='</form:form>';
-				html+='</div>';
-				html+='</div>';
-				html+='</div>';
-				html+='</div>';
-	            	
-	            	
-	            }
-	       });
-		
-		
-	}
-
-	
-
 	function delete_survey_btn(obj,surveyseq,selection,pageno){
 		if(confirm("삭제하시겠습니까?")){
 		let bselection = selection;
@@ -132,28 +63,6 @@
 
 		}
 	};
-
-// function getList(){
-
-// 	$.ajax({
-//          method:'GET', //어떤 방식으로 보낼 지
-//          url:'surveysearch/'+ surveyseq, // qdiv를 보낼 경로 설정
-//           dataType: "json",
-//          beforeSend : function() { //보내기 전 실행
-//          console.log("요청이 보내지는가?");
-//          },
-//          success:function (jsondata){    //전송 성공시 실행
-//                questionHtml(jsondata);
-//                var surveyseq = jsondata[0].SURVEY_SEQ;
-//                var questionseq = jsondata[0].QUESTION_SEQ;
-//          }, error:function(e) {   //실패, 에러
-//             console.log("Error", e);
-//          }
-//          });
-
-// }
-
-
 
 
 	function sendRe(obj){

@@ -152,7 +152,6 @@ public class SurveyService implements ISurveyService{
 
 	@Override
 	public List<Map<String, Object>> searchByEvaluate(PagingDTO pagingDto) {
-		// TODO Auto-generated method stub
 		logger.info("검색:" + surveyDao.searchByEvaluate(pagingDto).toString());
 		return surveyDao.searchByEvaluate(pagingDto);
 	}
@@ -191,15 +190,10 @@ public class SurveyService implements ISurveyService{
 			System.out.println(items.toString());
 			surveyDao.insertQuestion(SQD);
 			
-//			System.out.println("문제 입력"+i);
-//			System.out.println("문제들"+SQD.toString());
 			for(int j = 0; j<items.size();j++) {
-//				System.out.println(items.get(j).get("ITEM_CONTENT").toString());
-//				System.out.println(items.get(j).get("ITEM_SCORE").toString());
 				SQD.setItemContent(items.get(j).get("ITEM_CONTENT").toString());
 				SQD.setItemScore(items.get(j).get("ITEM_SCORE").toString());
 				surveyDao.insertItem(SQD);
-//				System.out.println("문항 입력"+i);
 			}
 		}
 		

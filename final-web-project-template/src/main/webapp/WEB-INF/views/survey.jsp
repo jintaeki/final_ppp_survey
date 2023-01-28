@@ -6,9 +6,25 @@
 
 <!-- <script src="resources/js/survey.js"></script> -->
 <!-- <script src="resources/js/surveycountdown.js"></script> -->
-<script type="text/javascript">
+<script>
 
-      
+   function answerBox_on(obj){
+	   var radioItemSeq = $(obj).val();
+	   var tag = $(obj);
+	   tag.parent().next().show();
+
+	   
+   }  
+     
+   function answerBox_off(obj){
+	   var radioItemSeq = $(obj).val();
+	   var tag = $(obj);
+	   tag.parent().next().val('선택형 문제입니다.');
+	   tag.parent().next().hide();
+
+
+   }
+   
    function questionHTML(result,raterId,appraiseeId,anonymitycode,theSeq){
       var itemNum = 0;
       // radio required 기능을 위한 배열
@@ -45,29 +61,50 @@
              if(result[i].QUESTION_TYPE_CODE =="10002"){
                 surveyQandA += '<div class="item_form" style=" display: flex; align-items: flex-end;">';
                 surveyQandA += '<input type="hidden" name="'+(i+'num')+'" value="'+result[i].ITEM_SEQ+'">';
-               surveyQandA += '<textarea name="'+(i-itemNum +1)+'answerContent" ></textarea>';
-               surveyQandA += '</div>';
-               itemSeqArray[i-itemNum +1]=i;
-               itemSubjSeq[itemSubjSeqIndex]=result[i].ITEM_SEQ;
-               itemSubjSeqIndex = itemSubjSeqIndex + 1;
+                surveyQandA += '<textarea name="'+(i-itemNum +1)+'answerContent" ></textarea>';
+                surveyQandA += '</div>';
+                itemSeqArray[i-itemNum +1]=i;
+                itemSubjSeq[itemSubjSeqIndex]=result[i].ITEM_SEQ;
+                itemSubjSeqIndex = itemSubjSeqIndex + 1;
+             }else if(result[i].QUESTION_TYPE_CODE =="10003"){
+            	 surveyQandA += '<div class="item_form">';
+                 surveyQandA += '<div style=" display: flex; align-items: flex-end;">';
+
+                 for(var j = i-cnt;j<=i;j++ ){
+                                     		 
+                     if(result[j].ITEM_CONTENT=="기타"){
+                         surveyQandA += '<input type="radio" onclick = "answerBox_on(this)" name="'+(i+'num')+'" class="item_btn" value="'+result[j].ITEM_SEQ+'"id="'+result[j].ITEM_SEQ+'"><label for="'+result[j].ITEM_SEQ+'" style="margin-right: 15px" required>'+result[j].ITEM_CONTENT+'</label>';
+                     }else{
+                         surveyQandA += '<input type="radio" onclick ="answerBox_off(this)" name="'+(i+'num')+'" class="item_btn" value="'+result[j].ITEM_SEQ+'"id="'+result[j].ITEM_SEQ+'"><label for="'+result[j].ITEM_SEQ+'" style="margin-right: 15px" required>'+result[j].ITEM_CONTENT+'</label>';
+                     }
+                     
+                     if(j==i){
+                     surveyQandA += '</div>';	 
+                     surveyQandA +='<textarea name="'+(i-itemNum +1)+'answerContent" value="선택형 문제입니다." id="'+(i-itemNum +1)+'answerContent" style="display:none;"></textarea>';
+                     surveyQandA += '</div>';
+                     }
+             	 }
+            
+                 itemSeqArray[i-itemNum +1]=i;
+            	 
              }else{
                 surveyQandA += '<div class="item_form" style=" display: flex; align-items: flex-end;">';
 
                  for(var j = i-cnt;j<=i;j++ ){
                       
-                      surveyQandA += '<input type="radio" name="'+(i+'num')+'" class="item_btn" value="'+result[j].ITEM_SEQ+'"id="'+result[j].ITEM_SEQ+'"><label for="'+result[j].ITEM_SEQ+'" style="margin-right: 15px" required>'+result[j].ITEM_CONTENT+'</label>';
+                     surveyQandA += '<input type="radio" name="'+(i+'num')+'" class="item_btn" value="'+result[j].ITEM_SEQ+'"id="'+result[j].ITEM_SEQ+'"><label for="'+result[j].ITEM_SEQ+'" style="margin-right: 15px" required>'+result[j].ITEM_CONTENT+'</label>';
                
                      if(j==i){
                      surveyQandA +='<input type="hidden" name="'+(i-itemNum +1)+'answerContent" value="선택형 문제입니다.">';
                      surveyQandA += '</div>'
 
                      }
-             }
+             	 }
             
                  itemSeqArray[i-itemNum +1]=i;
-               }
+              }
              
-             break;
+             	break;
          }else if(result[i].QUESTION_CONTENT != result[i+1].QUESTION_CONTENT){
 
             
@@ -79,34 +116,55 @@
           surveyQandA +='<input type="hidden" name="raterId" value="'+raterId+'">';
           surveyQandA +='<input type="hidden" name="appraiseeId" value="'+appraiseeId+'">';
           surveyQandA +='<input type="hidden" name="surveySeq" value="'+result[i].SURVEY_SEQ+'">';
-          if(result[i].QUESTION_TYPE_CODE =="10002"){
-             surveyQandA += '<div class="item_form" style=" display: flex; align-items: flex-end;">';
-             surveyQandA+= '<input type="hidden" name="'+(i+'num')+'" value="'+result[i].ITEM_SEQ+'">';
+          		if(result[i].QUESTION_TYPE_CODE =="10002"){
+             		surveyQandA += '<div class="item_form" style=" display: flex; align-items: flex-end;">';
+             		surveyQandA+= '<input type="hidden" name="'+(i+'num')+'" value="'+result[i].ITEM_SEQ+'">';
 
-            surveyQandA += '<textarea name="'+(i-itemNum +1)+'answerContent"></textarea>';
+            		surveyQandA += '<textarea name="'+(i-itemNum +1)+'answerContent"></textarea>';
 
-            surveyQandA += '</div>';
-            itemSeqArray[i-itemNum +1]=i;
-            itemSubjSeq[itemSubjSeqIndex]=result[i].ITEM_SEQ;
-            itemSubjSeqIndex = itemSubjSeqIndex + 1;
-          }else{
-             surveyQandA += '<div class="item_form" style=" display: flex; align-items: flex-end;">';
-             itemSeqArray[i-itemNum +1]=i;
-            for(var j = i-cnt;j<=i;j++ ){
+            		surveyQandA += '</div>';
+            		itemSeqArray[i-itemNum +1]=i;
+            		itemSubjSeq[itemSubjSeqIndex]=result[i].ITEM_SEQ;
+            		itemSubjSeqIndex = itemSubjSeqIndex + 1;
+          		}else if(result[i].QUESTION_TYPE_CODE =="10003"){
+            	 surveyQandA += '<div class="item_form" >';
+                 surveyQandA += '<div style=" display: flex; align-items: flex-end;">';
+
+                 for(var j = i-cnt;j<=i;j++ ){
+                                     		 
+                     if(result[j].ITEM_CONTENT=="기타"){
+                         surveyQandA += '<input type="radio" onclick = "answerBox_on(this)" name="'+(i+'num')+'" class="item_btn" value="'+result[j].ITEM_SEQ+'"id="'+result[j].ITEM_SEQ+'"><label for="'+result[j].ITEM_SEQ+'" style="margin-right: 15px" required>'+result[j].ITEM_CONTENT+'</label>';
+                     }else{
+                         surveyQandA += '<input type="radio" onclick ="answerBox_off(this)" name="'+(i+'num')+'" class="item_btn" value="'+result[j].ITEM_SEQ+'"id="'+result[j].ITEM_SEQ+'"><label for="'+result[j].ITEM_SEQ+'" style="margin-right: 15px" required>'+result[j].ITEM_CONTENT+'</label>';
+                     }
+                     
+                     if(j==i){
+                     surveyQandA += '</div>';	 
+                     surveyQandA +='<textarea name="'+(i-itemNum +1)+'answerContent" value="선택형 문제입니다." id="'+(i-itemNum +1)+'answerContent" style="display:none;"></textarea>';
+                     surveyQandA += '</div>';
+                     }
+             	 }
+            
+                 itemSeqArray[i-itemNum +1]=i;
+            	 
+             }else{
+             		surveyQandA += '<div class="item_form" style=" display: flex; align-items: flex-end;">';
+             		itemSeqArray[i-itemNum +1]=i;
+            		for(var j = i-cnt;j<=i;j++ ){
              
-               surveyQandA += '<input type="radio" name="'+(i+'num')+'" class="item_btn" value="'+result[j].ITEM_SEQ+'"id="'+result[j].ITEM_SEQ+'"><label for="'+result[j].ITEM_SEQ+'" style="margin-right: 15px" required>'+result[j].ITEM_CONTENT+'</label>';
+               			surveyQandA += '<input type="radio" name="'+(i+'num')+'" class="item_btn" value="'+result[j].ITEM_SEQ+'"id="'+result[j].ITEM_SEQ+'"><label for="'+result[j].ITEM_SEQ+'" style="margin-right: 15px" required>'+result[j].ITEM_CONTENT+'</label>';
                
                  
-               if(j==i){
-               surveyQandA +='<input type="hidden" name="'+(i-itemNum +1)+'answerContent" value="선택형 문제입니다.">';
-               surveyQandA += '</div>'
+               			if(j==i){
+               				surveyQandA +='<input type="hidden" name="'+(i-itemNum +1)+'answerContent" value="선택형 문제입니다.">';
+               				surveyQandA += '</div>'
 
-               }
+              			}
                
-            }
-          }
-
-            cnt=0;
+            		}
+          		}
+					
+            		cnt=0;
             
          }else if(result[i].QUESTION_CONTENT == result[i+1].QUESTION_CONTENT){
             cnt = cnt + 1;
@@ -117,15 +175,14 @@
           
       }
       itemSeqArray[0] = itemSeqArray.length;
-      console.log(itemSeqArray);       //[null,4,5,10,15,20,25,30,35,40,45,50,55]
+    
       
       submitBtn = '';
       submitBtn='<button type="button" class="create_btn" onclick="submit('+JSON.stringify(itemSeqArray)+','+JSON.stringify(itemSubjSeq)+')">제출</button>';
       
       //문제 전송버튼 삭제 및 생성
       $('.submit_btn').empty();
-      $('.submit_btn').append(submitBtn);
-      
+      $('.submit_btn').append(submitBtn); 
       $('#surveyForm').append(surveyQandA);
    }
    
@@ -297,31 +354,24 @@
                     var object = {};   
                     formData.forEach((value, key) => object[key] = value);
                     
-                    $("#surveyForm").empty();
-                    var htmlQuestion='<div class="noQuestion"><b>평가 버튼을 눌러 평가를 진행해주세요.</b></div>';
-                     $('#surveyForm').append(htmlQuestion);   
-                     $('.submit_btn').empty();   
-                    var tag = $('#'+object['appraiseeId']);
-                    tag.parent().html('<button type="button" class="create_btn" style="padding: 10px 13px; color:green;" disabled>평가완료</button>');
-
-                    //       $.ajax({
-//                      url: 'insertSurveyResult.do',
-//                      method: 'POST',
-//                      data : formData,
-//                      processData : false,
-//                      contentType : false,
-//                      cache : false,
-//                      timeout : 600000,
-//                      success: function(result){
-//                         alert("결과저장성공");
-//                   $("#surveyForm").empty();
-//                   var htmlQuestion='<div class="noQuestion"><b>평가 버튼을 눌러 평가를 진행해주세요.</b></div>';
-//                   $('#surveyForm').append(htmlQuestion);   
-//                    $('.submit_btn').empty();   
-//                   var tag = $('#'+object['appraiseeId']);
-//                   tag.parent().html('<button type="button" class="create_btn" style="padding: 10px 13px; color:green;" disabled>평가완료</button>');
-//                      }
-//                   });
+					$.ajax({
+                     url: 'insertSurveyResult.do',
+                     method: 'POST',
+                     data : formData,
+                     processData : false,
+                     contentType : false,
+                     cache : false,
+                     timeout : 600000,
+                     success: function(result){
+                        alert("결과저장성공");
+                  		$("#surveyForm").empty();
+                  		var htmlQuestion='<div class="noQuestion"><b>평가 버튼을 눌러 평가를 진행해주세요.</b></div>';
+                 		$('#surveyForm').append(htmlQuestion);   
+                 		$('.submit_btn').empty();   
+                 		var tag = $('#'+object['appraiseeId']);
+                		tag.parent().html('<button type="button" class="create_btn" style="padding: 10px 13px; color:green;" disabled>평가완료</button>');
+                     }
+                  });
                  }
           
 

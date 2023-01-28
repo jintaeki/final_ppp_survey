@@ -72,22 +72,7 @@ public class SurveyController {
 		return "survey_details";
 	}
 
-/*
-	@RequestMapping("/surveyevaluate/{surveySeq}")
-	public String surveyEvaluate(@PathVariable int surveySeq, HttpSession session, Model model,
-			@RequestParam(defaultValue = "1") int pageNo
 
-			) {
-		logger.info("실행");
-		List<Map<String, String>> EL = surveyService.selectSurveyEvaluate(surveySeq);
-		logger.info("EL" + EL);
-		// log.info("실행");
-		model.addAttribute("EL", EL);
-		model.addAttribute("surveySeq", surveySeq);
-
-		return "survey_evaluate";
-	}
-*/
 
 	// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
 	@RequestMapping("/surveyinsert2")
@@ -373,18 +358,6 @@ public class SurveyController {
 		return SQD;
 	}
 
-	// 문제 비동기 조회 채우
-//	@RequestMapping(value = "/questionList.do")
-//	@ResponseBody
-//	public List<SurveyQuestionDTO> questionList(@RequestParam("surveySeq") int surveySeq) {
-//		List<SurveyQuestionDTO> ql = surveyService.getQuestionList(surveySeq);
-//		logger.info("비동기 조회 진입");
-//		logger.info("조회 seq:" + surveySeq);
-//		logger.info("문제 비동기 조회 dto: " + ql);
-//
-//		return ql;
-//	}
-
 	// 문제 업데이트
 	@RequestMapping("/updatequestion.do")
 	@ResponseBody
@@ -450,7 +423,7 @@ public class SurveyController {
 		}
 
 		logger.info("deletesurvey 컨트롤러 진입");
-				surveyService.deleteSurvey(surveyseq);
+			  surveyService.deleteSurvey(surveyseq);
 		      mappingService.deleteEmail(surveyseq);
 		      mappingService.deleteSMS(surveyseq);
 		return "redirect:/survey/surveysearch?pageNo=" + pageno + "&keyword=" + keyword + "&selection=" + selection
