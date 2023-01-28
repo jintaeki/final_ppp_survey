@@ -89,17 +89,6 @@ public class SurveyService implements ISurveyService{
 	}
 
 	@Override
-	public List<SurveyQuestionDTO> questionList(int surveySeq) {
-
-		return surveyDao.getQuestionList(surveySeq);
-	}
-	@Override
-	public List<SurveyQuestionDTO> getQuestionList(int surveySeq) {
-		logger.info("문제 조회 서비스: " + surveySeq);
-		return surveyDao.getQuestionList(surveySeq);
-	}
-
-	@Override
 	public void sendMessage(int surveySeq) {
 		surveyDao.sendMessage(surveySeq);
 	}
@@ -198,15 +187,19 @@ public class SurveyService implements ISurveyService{
 			SQD.setQuestionContent(SQDList.get(i).getQuestionContent());
 			SQD.setQuestionTypeCode(SQDList.get(i).getQuestionTypeCode());
 			SQD.setSurveySeq(SQDList.get(i).getSurveySeq());
+			List<Map<String,Object>> items =surveyDao.selectItems(SQDList.get(i).getQuestionSeq());
+			System.out.println(items.toString());
 			surveyDao.insertQuestion(SQD);
-			List<Map<String,Object>> items =surveyDao.selectItems(SQD.getQuestionSeq());
-			System.out.println("문제 입력"+i);
-			System.out.println("문제들"+SQD.toString());
+			
+//			System.out.println("문제 입력"+i);
+//			System.out.println("문제들"+SQD.toString());
 			for(int j = 0; j<items.size();j++) {
-				SQD.setItemContent(items.get(j).get("itemContent").toString());
-				SQD.setItemScore(items.get(j).get("itemScore").toString());
+//				System.out.println(items.get(j).get("ITEM_CONTENT").toString());
+//				System.out.println(items.get(j).get("ITEM_SCORE").toString());
+				SQD.setItemContent(items.get(j).get("ITEM_CONTENT").toString());
+				SQD.setItemScore(items.get(j).get("ITEM_SCORE").toString());
 				surveyDao.insertItem(SQD);
-				System.out.println("문항 입력"+i);
+//				System.out.println("문항 입력"+i);
 			}
 		}
 		
@@ -225,6 +218,19 @@ public class SurveyService implements ISurveyService{
 	public List<Map<String, Object>> getResultTarget(int employeeId) {
 
 		return surveyDao.getResultTarget(employeeId);
+	}
+
+	
+	// 등록관리에서 문제 조회할 때 desc
+	@Override
+	public List<SurveyQuestionDTO> getQuestionListOrderByDesc(int surveySeq) {
+		return surveyDao.getQuestionListOrderByDesc(surveySeq);
+	}
+
+	// 설문지 복사하려고 문제 조회할 때 asc
+	@Override
+	public List<SurveyQuestionDTO> getQuestionListOrderByAsc(int surveySeq) {
+		return surveyDao.getQuestionListOrderByAsc(surveySeq);
 	}
 
 

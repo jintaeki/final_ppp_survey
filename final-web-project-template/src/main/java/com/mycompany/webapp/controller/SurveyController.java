@@ -99,7 +99,7 @@ public class SurveyController {
 			model.addAttribute("NoQuestion","저장된 문제가 없습니다.");
 		} else {
 			model.addAttribute("SLD", surveyService.selectSurvey(surveySeq));
-			model.addAttribute("SQL", surveyService.getQuestionList(surveySeq));
+			model.addAttribute("SQL", surveyService.getQuestionListOrderByDesc(surveySeq));
 			model.addAttribute("NoQuestion","저장된 문제가 없습니다.");
 		}
 
@@ -374,16 +374,16 @@ public class SurveyController {
 	}
 
 	// 문제 비동기 조회 채우
-	@RequestMapping(value = "/questionList.do")
-	@ResponseBody
-	public List<SurveyQuestionDTO> questionList(@RequestParam("surveySeq") int surveySeq) {
-		List<SurveyQuestionDTO> ql = surveyService.getQuestionList(surveySeq);
-		logger.info("비동기 조회 진입");
-		logger.info("조회 seq:" + surveySeq);
-		logger.info("문제 비동기 조회 dto: " + ql);
-
-		return ql;
-	}
+//	@RequestMapping(value = "/questionList.do")
+//	@ResponseBody
+//	public List<SurveyQuestionDTO> questionList(@RequestParam("surveySeq") int surveySeq) {
+//		List<SurveyQuestionDTO> ql = surveyService.getQuestionList(surveySeq);
+//		logger.info("비동기 조회 진입");
+//		logger.info("조회 seq:" + surveySeq);
+//		logger.info("문제 비동기 조회 dto: " + ql);
+//
+//		return ql;
+//	}
 
 	// 문제 업데이트
 	@RequestMapping("/updatequestion.do")
@@ -392,14 +392,12 @@ public class SurveyController {
 			Model model) {
 		logger.info("업데이트 진입");
 		logger.info("sqd값" + SQD.toString());
-		// int questionId = SQD.getQuestionId();
 		surveyService.UpdateQuestion(SQD);
 		if(SQD.getQuestionTypeCode().equals("10002")) {
 			SQD.setItemContent("주관식 문제입니다.");
 			surveyService.insertItem(SQD);
 			}
 		logger.info(SQD.toString());
-		// surveyService.getQuestionList(surveyId);
 		logger.info("업데이트 성공");
 		return SQD;
 	}
@@ -538,21 +536,27 @@ public class SurveyController {
 
 	//문제 복사를 위한 메소드
 	@RequestMapping("/copysurvey.do/{surveySeq}")
-	public void copySurvey(@PathVariable int surveySeq) {
+	public String copySurvey(@PathVariable int surveySeq) {
 		
 		// seq로 설문 내용 불러오기
 		SurveyListDTO SLD = surveyService.selectSurvey(surveySeq);
 		logger.info("복사할 설문 내용: "+SLD.toString());
 		// 설문 저장			
+		SLD.setStateCode("30001");
 		surveyService.setSurvey(SLD);
+		System.out.println(SLD.getSurveySeq());
+				
 		//설문지의 문제 조회
-//		List<SurveyQuestionDTO> SQD = surveyService.getQuestionList(surveySeq);
-//		
-//		surveyService.insertQuestionsAndItems(SQD);
+		List<SurveyQuestionDTO> SQD = surveyService.getQuestionListOrderByAsc(surveySeq);
+		for(int i = 0 ; i< SQD.size();i++) {
+			SQD.get(i).setSurveySeq(SLD.getSurveySeq());
+		}
+		
+		surveyService.insertQuestionsAndItems(SQD);
 		
 		
 	
-//		return "redirect:/survey/surveysearch"; 
+		return "redirect:/survey/surveysearch"; 
 	}
 	
 
