@@ -18,6 +18,7 @@ public class SurveyResultDTO {
 	private String raterName;
 	private String raterGrade;
 	private String raterDepartmentName;
+
 	public String getSurveySeq() {
 		return surveySeq;
 	}
