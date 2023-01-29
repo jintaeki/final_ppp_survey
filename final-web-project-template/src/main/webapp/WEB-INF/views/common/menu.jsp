@@ -3,6 +3,7 @@
    <div class="menu_profile">
    <img src="${pageContext.request.contextPath}/resources/images/profile_img.png">
       
-      <p class="menu_profile_text">부서</p>
-      <p class="menu_profile_text">이름</p>
+      <div class="menu_profile_text">부서</div>
+<!--       <br> -->
+      <div class="menu_profile_text">이름</div>
    </div>

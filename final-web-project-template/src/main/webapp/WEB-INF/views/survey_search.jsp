@@ -203,8 +203,7 @@
 
 </script>
 
-
-<div class="all" style="width: 1800px; margin-left: 50px;">
+<div class="col-11" style="width: 1800px;">
 <!-- modal(설문 등록 시 뜨는 팝업창) -->
 <div class="modal fade" id="exampleModal" tabindex="-1"
 	aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -256,7 +255,7 @@
 <!-- modal(설문 등록 시 뜨는 팝업창) 끝-->
 
 
-<div class="card m-2" id="beforeModal">
+<div class="card" style="width: 1600px;" id="beforeModal">
 	<div class="card-body" style="height: 800px; background: darkgray;">
 		<div class="forshadowing" style="background-color: white;
     box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px, rgb(10 37 64 / 35%) 0px -2px 6px 0px inset;

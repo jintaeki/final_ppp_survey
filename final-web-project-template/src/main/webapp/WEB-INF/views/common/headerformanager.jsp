@@ -28,26 +28,27 @@
 </head>
 <body>
    <div class="d-flex flex-column">
-      <nav class="navbar navbar-dark bg-dark text-white font-weight-bold">
-         <a class="navbar-brand">
-         <img src="${pageContext.request.contextPath}/resources/images/logo_img.png"
-            width="30" height="30" class="d-inline-block align-top">&nbsp;Survey50 </a>
-             <a class="text-white" href="<c:url value='/loginafter'/>">피평가자 리스트</a>
-             <a class="text-white" href="<c:url value='/survey/surveysearch'/>">설문지 목록</a>
-             <a class="text-white" href="<c:url value='/survey/surveyresult'/>">설문 결과</a>
-             <a class="text-white" href="<c:url value='/survey/surveyresultteam'/>">결과 통계</a>
+     
+<%--              <a class="text-white" href="<c:url value='/loginafter'/>">피평가자 리스트</a> --%>
+<%--              <a class="text-white" href="<c:url value='/survey/surveysearch'/>">설문지 목록</a> --%>
+<%--              <a class="text-white" href="<c:url value='/survey/surveyresult'/>">설문 결과</a> --%>
+<%--              <a class="text-white" href="<c:url value='/survey/surveyresultteam'/>">결과 통계</a> --%>
          <div>
             <div>
                <a class="btn btn-success btn-sm" href="<c:url value='/'/>">로그인</a>
                   <!--<a class="btn btn-success btn-sm" href="#">로그아웃</a> -->
            </div>
 			</div>
-		</nav>
+		
 
 		<div class="flex-grow-1 container-fluid">
 			<div class="row h-100">
-				
+				<div class="col-1" >
+					<div class="h-100 d-flex flex-column" style="width:160px; border:1px white solid;">
+						<div class="flex-grow-1" style="padding:20px 20px 20px 20px;">
+							<%@ include file="/WEB-INF/views/common/menuformanager.jsp"%>
+						</div>
+					</div>
+				</div>
 
-				<div class="col-md-10 p-3">
-					<div class=" h-100 d-flex flex-column">
-						<div class="flex-grow-1 pr-3" style="height: 0px">
+<!-- 				<div class="col-1 "> -->
