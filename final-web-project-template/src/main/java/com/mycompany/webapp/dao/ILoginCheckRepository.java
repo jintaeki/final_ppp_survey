@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.mycompany.webapp.dto.SurveyListDTO;
+import com.mycompany.webapp.dto.SurveyResultDTO;
 import com.mycompany.webapp.dto.UserCheckDTO;
 
 public interface ILoginCheckRepository {
@@ -14,11 +16,19 @@ public interface ILoginCheckRepository {
 	
 	public List<UserCheckDTO> getUserInfo(@Param("raterId") String raterId, @Param("surveySeq") int surveySeq);
 	
-	public String getUserManagerYN(UserCheckDTO UCD);
+	public UserCheckDTO getUserManagerYN(UserCheckDTO UCD);
 	
 	public List<Map<String, Object>> getQuestion(int surveySeq);
 	
 	public List<Map<String, Object>> getSurveySeqAndName (String raterId);
 	
 	public int getNansu();
+	
+	public int checkNansu(int nanSu);
+	
+	public  void insertResult (SurveyResultDTO SRD);
+	
+	public SurveyListDTO getAnonimityCode(int surveySeq);
+	
+	public void completeSurvey(@Param("surveySeq") String surveySeq,@Param("appraiseeId") String appraiseeId,@Param("raterId") String raterId);
 }

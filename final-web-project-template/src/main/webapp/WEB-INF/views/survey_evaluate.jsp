@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/survey_evaluate.css"/>
 
 <div class="card m-2">
@@ -49,7 +49,7 @@
 							<td>${EL.GRADE_NAME}</td>
 							<td>${EL.EMPLOYEE_NAME}</td>
 							<td>${EL.SURVEY_COMPLETE_YN}</td>
-							<td><input type="button" class="btn btn-link" onclick="location.href='<c:url value="surveyresult/${EL.SURVEY_SEQ}/${EL.EMPLOYEE_ID}"/>'" value="조회"></td>
+							<td><input type="button" class="btn btn-link" onclick="location.href='<c:url value="/survey/surveyresult/${EL.SURVEY_SEQ}/${EL.EMPLOYEE_ID}"/>'" value="조회"></td>
 						</tr>
 					</c:forEach>
 
@@ -92,4 +92,4 @@
 	</div>
 </div>
 
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+<%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>

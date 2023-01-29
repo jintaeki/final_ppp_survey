@@ -48,10 +48,12 @@ import com.mycompany.webapp.service.IMappingService;
 
 import lombok.extern.log4j.Log4j2;
 
+
 @Controller
 public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
+	int nansu;
+
 
 	@Autowired
 	ILoginCheckService loginCheckService;
@@ -150,19 +152,22 @@ public class HomeController {
 		logger.info(UCD.toString());
 		if(loginCheckService.checkUser(UCD)==1) {
 			logger.info("로그인 가능");
-			String check =  loginCheckService.getUserManagerYN(UCD);
+			UserCheckDTO check =  loginCheckService.getUserManagerYN(UCD);
 			
 			
-			if(check.equals("N")) {
+			if(check.getManagerYN().equals("N")) {
 				logger.info("평가자 진입");
 				// 평가자가 평가해야할 설문지 조회
 				List<Map<String,Object>> surveySeqAndName = loginCheckService.getSurveySeqAndName(UCD.getRaterId());
 				model.addAttribute("raterId",UCD.getRaterId());
 				model.addAttribute("surveySeqAndName",surveySeqAndName);
 				model.addAttribute("surveyResult", new SurveyResultDTO());
+				session.setAttribute("checked", check);
+
 				return "survey";
 			}else {
 				logger.info("관리자 진입");
+				session.setAttribute("checked", UCD.getRaterId());
 				return "redirect:/survey/surveysearch";
 			}
 			
@@ -173,6 +178,13 @@ public class HomeController {
 		
 		
 	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "login";
+	}
+	
 	
 	@RequestMapping("/getAppraisee.do/{raterId}/{surveySeq}")
 	@ResponseBody
@@ -206,10 +218,94 @@ public class HomeController {
 	@ResponseBody
 	public String insertSurveyResult(@ModelAttribute ("surveyResult") SurveyResultDTO surveyResult ) {
 		logger.info(surveyResult.toString());
-//		logger.info(surveyResult);
+		
+		String surveySeqs = surveyResult.getSurveySeq();
+		int cntcontent = (surveySeqs.length() - surveySeqs.replace(",", "").length())+1;
+		
+		String anonymityCodes = surveyResult.getAnonymityCode();	
+		String raterIds = surveyResult.getRaterId();
+		String appraiseeIds = surveyResult.getAppraiseeId();
+		String questionSeqs = surveyResult.getQuestionSeq();
+		String itemSeqs = surveyResult.getItemSeq();
+		String answerContents =surveyResult.getAnswerContent();
+		String anonymitySeqs = surveyResult.getAnonymitySeq();
+		
+		String[] anonymityCode = anonymityCodes.split(",");
+		String[] surveySeq = surveySeqs.split(",");
+		String[] raterId = raterIds.split(",");
+		String[] appraiseeId = appraiseeIds.split(",");
+		String[] questionSeq = questionSeqs.split(",");
+		String[] itemSeq = itemSeqs.split(",");
+		String[] answerContent = answerContents.split(",");
+		String[] anonymitySeq  = anonymitySeqs.split(",");
+		
+		surveyResult.setSurveySeq(surveySeq[0]);
+		surveyResult.setAppraiseeId(appraiseeId[0]);
+		surveyResult.setRaterId(raterId[0]);
 
+		//
+		if(anonymityCode[0].equals("20001")) {
+			surveyResult.setAnonymitySeq(anonymitySeq[0]);
+//			surveyResult.setRaterId("null");
+
+			for(int i =0; i<cntcontent;i++) {
+				surveyResult.setQuestionSeq(questionSeq[i]);
+				surveyResult.setItemSeq(itemSeq[i]);
+				surveyResult.setAnswerContent(answerContent[i]);
+				
+				loginCheckService.insertResult(surveyResult);
+				loginCheckService.completeSurvey(surveyResult.getSurveySeq(),surveyResult.getAppraiseeId(),surveyResult.getRaterId());
+			}
+		}else {
+			for(int i =0; i<cntcontent;i++) {
+				surveyResult.setAnonymitySeq("0");
+//				surveyResult.setRaterId(raterId[i]);
+				surveyResult.setQuestionSeq(questionSeq[i]);
+				surveyResult.setItemSeq(itemSeq[i]);
+				surveyResult.setAnswerContent(answerContent[i]);
+				
+				loginCheckService.insertResult(surveyResult);
+				loginCheckService.completeSurvey(surveyResult.getSurveySeq(),surveyResult.getAppraiseeId(),surveyResult.getRaterId());
+
+			}
+		}
+		
+
+		
+		
 		return "성공";
 	}
 	
+	@RequestMapping("/getAnonymityCode.do/{surveySeq}")
+	@ResponseBody
+	public SurveyListDTO getAnonimityCode(@PathVariable int surveySeq) {
+		
+		
+		
+		return loginCheckService.getAnonimityCode(surveySeq);
+		
+	}
+	
+	
+	@RequestMapping("/getAnonySeq.do")
+	@ResponseBody
+	public String getAnonySeq() {
+		
+		return checknansu();
+	}
+	
+	public String checknansu() {
+		nansu = loginCheckService.getNansu();
+		System.out.println(loginCheckService.checkNansu(nansu));
+		if(loginCheckService.checkNansu(nansu)==0) {
+			
+		}else {
+			checknansu();
+		}
+		return String.valueOf(nansu);
+			
+		}
+	
 }
+	
 

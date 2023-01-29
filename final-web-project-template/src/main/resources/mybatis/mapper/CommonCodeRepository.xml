@@ -41,5 +41,13 @@
 			      WHERE CD.CODE_ID = C.CODE_ID AND CD.CODE_ID = 500
 	</select>
 
+	<select id="selectStatisticCode" resultType="com.mycompany.webapp.dto.CommonDTO">
+			SELECT CD.CODE_ID
+			      ,C.CODE_NAME
+			      ,CD.CODE_DETAIL_ID
+			      ,CD.CODE_DETAIL_NAME
+			      FROM COMMON C, COMMON_DETAIL CD
+			      WHERE CD.CODE_ID = C.CODE_ID AND CD.CODE_ID = 700
+	</select>
 
 </mapper>

@@ -13,10 +13,10 @@
 	</select>
 	
 		<select id="getUserManagerYN"
-		parameterType="com.mycompany.webapp.dto.UserCheckDTO" resultType="string">
-		SELECT MANAGER_YN 
-		FROM user_info
-        WHERE  EMAIL =  #{email} AND EMPLOYEE_ID = #{raterId}
+		parameterType="com.mycompany.webapp.dto.UserCheckDTO" resultType="com.mycompany.webapp.dto.UserCheckDTO">
+		SELECT u.MANAGER_YN as managerYN, o.DEPARTMENT_NAME as raterDepartmentName, u.EMPLOYEE_NAME as raterName 
+		FROM user_info u, organization_chart o
+        WHERE  u.EMAIL = #{email} AND u.EMPLOYEE_ID = #{raterId} and u.DEPARTMENT_ID = o.DEPARTMENT_ID
 		
 	</select>
 	
@@ -61,7 +61,7 @@
             ,SURVEY_ITEM.ITEM_SCORE
       FROM  SURVEY_ITEM  right join SURVEY_QUESTION
       on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ
-      where SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} ORDER BY SURVEY_QUESTION.QUESTION_SEQ DESC,SURVEY_ITEM.ITEM_SCORE DESC,
+      where SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} ORDER BY SURVEY_QUESTION.QUESTION_SEQ ASC,SURVEY_ITEM.ITEM_SCORE ASC,
       SURVEY_ITEM.ITEM_SEQ 
    </select>
 	
@@ -69,6 +69,7 @@
 	<![CDATA[
 	 SELECT DISTINCT M.SURVEY_SEQ
 	                ,SL.SURVEY_NAME 
+	                ,SL.ANONYMITY_CHECK_CODE
 	 FROM SURVEY_LIST SL
 	     ,MAPPING M 
 	 WHERE SL.SURVEY_SEQ = M.SURVEY_SEQ  AND 
@@ -81,7 +82,52 @@
 	</select>
 	
 	<select id="getNansu" resultType="int">
-	SELECT CEIL(DBMS_RANDOM.VALUE(100000, 999999)) anonymitySeq  FROM DUAL ;
+	SELECT CEIL(DBMS_RANDOM.VALUE(100000, 999999)) anonymitySeq  FROM DUAL 
 	</select>
+	
+	<select id="checkNansu" parameterType="int" resultType="int">
+	SELECT COUNT(ANONYMITY_SEQ) FROM SURVEY_RESULT WHERE ANONYMITY_SEQ = #{nanSu}
+	
+	</select>
+	
+	<insert id="insertResult" parameterType="com.mycompany.webapp.dto.SurveyResultDTO">
+	INSERT INTO SURVEY_RESULT
+		(SURVEY_SEQ, 
+		 RATER_ID,
+		 APPRAISEE_ID,
+		 ANONYMITY_SEQ,
+		 QUESTION_SEQ,
+		 ITEM_SEQ,
+		 ANSWER_CONTENT,
+		 REG_DATE,
+		 UPDATE_DATE )
+	VALUES(#{surveySeq},
+	       #{raterId},
+	       #{appraiseeId},
+	       #{anonymitySeq},
+	       #{questionSeq},
+	       #{itemSeq},
+	       #{answerContent},
+	       sysdate,
+	       sysdate)
+
+	</insert>
+
+	<select id="getAnonimityCode" parameterType="int" resultType="com.mycompany.webapp.dto.SurveyListDTO">
+		SELECT ANONYMITY_CHECK_CODE
+		      ,SURVEY_NAME
+		      ,to_date(SURVEY_START_DATE, 'YYYY-MM-dd') as surveyStartDate
+              ,to_date(SURVEY_CLOSED_DATE, 'YYYY-MM-dd' ) as surveyClosedDate 
+        FROM SURVEY_LIST WHERE SURVEY_SEQ = #{surveySeq}
+	
+	</select>	
+	
+	<update id="completeSurvey">
+	
+		UPDATE MAPPING 
+		SET SURVEY_COMPLETE_YN = 'Y'
+		WHERE SURVEY_SEQ = #{surveySeq} and RATER_ID = #{raterId} and APPRAISEE_ID = #{appraiseeId}
+	
+	</update>
 	
 </mapper>

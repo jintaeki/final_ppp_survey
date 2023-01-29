@@ -47,10 +47,12 @@ select:disabled {
 	opacity: 0.5;
 }
 
+
+
 .container {
 	margin: 0 auto;
 	padding: 100px 50px 50px 50px;
-	width: 2000px;
+	width: 1500px;
 	height: 900px;
 	background-color: white;
 	box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
@@ -60,7 +62,7 @@ select:disabled {
 }
 /* 로그인 */
 .container_login {
-	margin: 400px auto;
+	margin: 200px auto;
     width: 500px;
     height: 500px;
 	background-color: white;

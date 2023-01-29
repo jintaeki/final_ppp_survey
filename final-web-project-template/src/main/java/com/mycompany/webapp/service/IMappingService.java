@@ -11,6 +11,18 @@ public interface IMappingService {
 	// 조건, 데이터 입력 후 메핑
 	void setMapping(int surveySeq, int month, int number);
 	
+	// 메일 데이터 생성
+	void insertEmail(int surveySeq);
+	
+	// SMS 데이터 생성
+	void insertSMS(int surveySeq);
+	
+	// 메일 데이터 삭제
+	void deleteEmail(int surveySeq);
+			
+	// SMS 데이터 삭제
+	void deleteSMS(int surveySeq);
+	
 	// 상태 코드 변경
 	void updateState(int surveySeq, String stateCode);
 	

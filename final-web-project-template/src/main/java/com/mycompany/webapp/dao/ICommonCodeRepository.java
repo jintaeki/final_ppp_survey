@@ -18,4 +18,6 @@ public interface ICommonCodeRepository {
 	public List<CommonDTO> selectMappingCode();
 
 	public List<CommonDTO> selectEvaluateCode();
+	
+	public List<CommonDTO> selectStatisticCode();
 }

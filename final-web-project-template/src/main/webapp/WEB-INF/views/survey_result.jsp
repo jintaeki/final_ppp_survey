@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/survey_result.css" />
  <div class="col-11">
@@ -57,10 +57,8 @@
    </table>
    <!-- table_container_flex 종료 -->
  </div>
-
     <!-- forshadowing 종료 -->
 </div>
-
    <!--card-body 종료  -->
 </div>
    <!-- col-11 종료 -->

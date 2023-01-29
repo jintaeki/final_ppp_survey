@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.ILoginCheckRepository;
+import com.mycompany.webapp.dto.SurveyListDTO;
+import com.mycompany.webapp.dto.SurveyResultDTO;
 import com.mycompany.webapp.dto.UserCheckDTO;
 
 @Service
@@ -28,7 +30,7 @@ public class LoginCheckService implements ILoginCheckService{
 	}
 
 	@Override
-	public String getUserManagerYN(UserCheckDTO UCD) {
+	public UserCheckDTO getUserManagerYN(UserCheckDTO UCD) {
 	
 		return loginCheckRepository.getUserManagerYN(UCD);
 	}
@@ -49,6 +51,30 @@ public class LoginCheckService implements ILoginCheckService{
 	public int getNansu() {
 	
 		return loginCheckRepository.getNansu();
+	}
+
+	@Override
+	public int checkNansu(int nanSu) {
+		
+		return loginCheckRepository.checkNansu(nanSu);
+	}
+
+	@Override
+	public void insertResult(SurveyResultDTO SRD) {
+		
+		loginCheckRepository.insertResult(SRD);
+	}
+
+	@Override
+	public SurveyListDTO getAnonimityCode(int surveySeq) {
+		
+		return loginCheckRepository.getAnonimityCode(surveySeq);
+	}
+
+	@Override
+	public void completeSurvey(String surveySeq, String appraiseeId, String raterId) {
+	
+		loginCheckRepository.completeSurvey(surveySeq, appraiseeId, raterId);
 	}
 
 	

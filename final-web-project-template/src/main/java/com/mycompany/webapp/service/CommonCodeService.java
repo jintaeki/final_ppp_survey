@@ -41,6 +41,9 @@ public class CommonCodeService implements ICommonCodeService{
 	}
 
 
-
+	@Override
+	public List<CommonDTO> selectStatisticCode() {
+		return CCR.selectStatisticCode();
+	}
 
 }

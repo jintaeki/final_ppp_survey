@@ -22,6 +22,26 @@ public class MappingService implements IMappingService {
 		mappingrepository.setMapping(surveySeq, month, number);
 	}
 	
+	@Override // 이메일 추가
+	public void insertEmail(int surveySeq) {
+		mappingrepository.insertEmail(surveySeq);
+	}
+	
+	@Override // SMS 추가
+	public void insertSMS(int surveySeq) {
+		mappingrepository.insertSMS(surveySeq);
+	}
+	
+	@Override
+	public void deleteEmail(int surveySeq) {
+		mappingrepository.deleteEmail(surveySeq);
+	}
+	
+	@Override
+	public void deleteSMS(int surveySeq) {
+		mappingrepository.deleteSMS(surveySeq);
+	}
+	
 	@Override // 매핑 상태 업데이트
 	public void updateState(int surveySeq, String stateCode) {
 		mappingrepository.updateState(surveySeq, stateCode);

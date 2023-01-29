@@ -16,12 +16,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mycompany.webapp.dao.IMappingRepository;
 import com.mycompany.webapp.dao.ISurveyRepository;
 import com.mycompany.webapp.dto.MappingDTO;
+import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.PopupDTO;
+import com.mycompany.webapp.dto.ProjectDTO;
 import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 import com.mycompany.webapp.dto.SurveyResultDTO;
+import com.mycompany.webapp.dto.SurveyResultTeamDTO;
 
 @Service
 public class SurveyService implements ISurveyService{
@@ -86,29 +89,18 @@ public class SurveyService implements ISurveyService{
 	}
 
 	@Override
-	public List<Map<String, Object>> selectQuestion(int surveySeq) {
-
-		logger.info("문제 찾을 설문지:" + surveySeq);
-		return surveyDao.selectQuestion(surveySeq);
-
-	}
-
-
-
-	@Override
-	public List<SurveyQuestionDTO> questionList(int surveySeq) {
-
-		return surveyDao.getQuestionList(surveySeq);
-	}
-	@Override
-	public List<SurveyQuestionDTO> getQuestionList(int surveySeq) {
-		logger.info("문제 조회 서비스: " + surveySeq);
-		return surveyDao.getQuestionList(surveySeq);
-	}
-
-	@Override
 	public void sendMessage(int surveySeq) {
 		surveyDao.sendMessage(surveySeq);
+	}
+	
+	@Override
+	public void updateEmail(int surveySeq) {
+		surveyDao.updateEmail(surveySeq);
+	}
+	
+	@Override
+	public void updateSMS(int surveySeq) {
+		surveyDao.updateSMS(surveySeq);
 	}
 
 	@Override
@@ -160,16 +152,54 @@ public class SurveyService implements ISurveyService{
 
 	@Override
 	public List<Map<String, Object>> searchByEvaluate(PagingDTO pagingDto) {
-		// TODO Auto-generated method stub
 		logger.info("검색:" + surveyDao.searchByEvaluate(pagingDto).toString());
 		return surveyDao.searchByEvaluate(pagingDto);
 	}
+	
+	@Override
+	public List<SurveyListDTO> surveyList() {
+		return surveyDao.surveyList();
+	}
+	
+	@Override
+	public List<OrganizationChartDTO> organList(int surveySeq) {
+		return surveyDao.organList(surveySeq);
+	}
+		
+	@Override
+	public List<SurveyResultTeamDTO> resultList(int surveySeq) {
+		return surveyDao.resultList(surveySeq);
+	}
+	
+	@Override
+	public List<SurveyResultTeamDTO> resultDPList(int surveySeq, String departmentId) {
+		return surveyDao.resultDPList(surveySeq, departmentId);
+	}
+
 
 	@Override
-	public List<Map<String, Object>> getSurveySeqAndName(int raterId) {
+	public void insertQuestionsAndItems(List<SurveyQuestionDTO> SQDList) {
+		int SQDListsize = SQDList.size();
+		
+		SurveyQuestionDTO SQD = new SurveyQuestionDTO() ;
+		for(int i = 0; i<SQDListsize;i++) {
+			SQD.setQuestionContent(SQDList.get(i).getQuestionContent());
+			SQD.setQuestionTypeCode(SQDList.get(i).getQuestionTypeCode());
+			SQD.setSurveySeq(SQDList.get(i).getSurveySeq());
+			List<Map<String,Object>> items =surveyDao.selectItems(SQDList.get(i).getQuestionSeq());
+			System.out.println(items.toString());
+			surveyDao.insertQuestion(SQD);
+			
+			for(int j = 0; j<items.size();j++) {
+				SQD.setItemContent(items.get(j).get("ITEM_CONTENT").toString());
+				SQD.setItemScore(items.get(j).get("ITEM_SCORE").toString());
+				surveyDao.insertItem(SQD);
+			}
+		}
+		
 
-		return null;
 	}
+
 
 	@Override
 	public List<SurveyResultDTO> surveyResult(int employeeId, int surveySeq) {
@@ -183,6 +213,22 @@ public class SurveyService implements ISurveyService{
 
 		return surveyDao.getResultTarget(employeeId);
 	}
+
+	
+	// 등록관리에서 문제 조회할 때 desc
+	@Override
+	public List<SurveyQuestionDTO> getQuestionListOrderByDesc(int surveySeq) {
+		return surveyDao.getQuestionListOrderByDesc(surveySeq);
+	}
+
+	// 설문지 복사하려고 문제 조회할 때 asc
+	@Override
+	public List<SurveyQuestionDTO> getQuestionListOrderByAsc(int surveySeq) {
+		return surveyDao.getQuestionListOrderByAsc(surveySeq);
+	}
+
+
+
 
 }
 
