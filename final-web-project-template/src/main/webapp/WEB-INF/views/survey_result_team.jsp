@@ -205,7 +205,7 @@ Highcharts.chart('chart_container', {
   },
   title: {
     align: 'left',
-    text: '다면평가 결과 통계'
+    text: '다면평가 전체 결과 통계'
   },
   subtitle: {
     align: 'left',
@@ -261,7 +261,7 @@ Highcharts.chart('chart_container2', {
   },
   title: {
     align: 'left',
-    text: '다면평가 결과 통계'
+    text: '다면평가 부서 결과 통계'
   },
   subtitle: {
     align: 'left',
