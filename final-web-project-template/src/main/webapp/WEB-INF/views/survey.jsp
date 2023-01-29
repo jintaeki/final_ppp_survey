@@ -195,11 +195,12 @@
       $.ajax({
             url:'getAnonymityCode.do/'+surveySeq,
             method: 'GET',
-            dataType: 'html',
             success: function(result){
-               console.log('result '+result);
-
-               var anonymitycode = result;
+               console.log('result '+result.anonymityCheckCode);
+			   var surveyName = result.surveyName;
+			   var startDate = result.surveyStartDate;
+			   var closedDate = result.surveyClosedDate;
+               var anonymitycode = result.anonymityCheckCode;
                var htmlQuestion = '';
                   $('#surveyForm').empty();
                             
@@ -210,9 +211,16 @@
                   $('#appendArea').empty();
                   $('#appendArea').append(html);
                   var htmlQuestion='<div class="noQuestion"><b>설문을 먼저 선택하세요.</b></div>';
-                  $('#surveyForm').append(htmlQuestion);   
+                  $('#surveyForm').append(htmlQuestion);  
+                  showSurveyInfo("","","");
                  }else{
-                  
+                	 
+                	  showSurveyInfo(surveyName,startDate,closedDate);
+                
+                // 설문지 정보 출력
+                
+              
+                	 
                $.ajax({
                      url:'getAppraisee.do/'+raterId+"/"+surveySeq,
                      method: 'GET',
@@ -382,23 +390,34 @@
       }
    } 
   
+   function showSurveyInfo(surveyName,startDate,closedDate){
+	   let html ='';
+	   html +='<br><b>설문 참여가능 기간</b><br>';
+	   html +='<p>'+startDate+' ~ '+ closedDate+'</p>';
+	   html +='<p><b>참여 중인 설문</b><br> '+surveyName +'<br></p>';
+	   
+	$('.survey_info').empty();
+	$('.survey_info').append(html);
+	   
+   }
+   
 </script>
 
 
 
 <div class="container_flex">
    <div class="survey_info">
+   <br>
       <b>설문 참여가능 기간</b><br>
-      <div id="countdown"></div>
-      <br> <b>프로젝트</b> <br> 22년도 전체 다면 평가 <br>
-      <br> <b>평가대상</b><br> 임진택 님
+      <p>~</p>
+      <b>참여 중인 설문</b> <br>  <br>
    </div>
 </div>
 
                
 
 <!-- 문항 시작 -->
-<div class="container" style="padding: 40px 40px 40px 40px;">
+<div class="container" style="padding: 40px 40px 40px 40px; margin:0;">
    <select name="surveySeq" onclick="selectSurvey(this,${raterId})">
       <option value="0">설문 선택</option>
       <c:forEach items="${surveySeqAndName}" var="surveySeqAndName">

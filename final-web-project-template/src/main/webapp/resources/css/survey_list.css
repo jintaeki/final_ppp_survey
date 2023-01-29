@@ -17,6 +17,7 @@ color:green;
 
 
 
+
 .survey_list_form_upper_dv{
 	display:flex;
 	margin-left: 200px;
@@ -42,11 +43,19 @@ color:green;
 	margin-left: 6px;
 }
 
+.table td {
+/* 	width: 350px; */
+	
+}
+
+.table th {
+/* 	width: 150px; */
+	
+}
 
 .table{
-	max-width: 900px;
-	margin-left: auto;
-	margin-right: auto;
+	max-width: 1500px;
+	margin:auto;
 }
 .table td:not(.sv_name){
 	text-align: center;

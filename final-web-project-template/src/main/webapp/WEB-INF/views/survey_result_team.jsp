@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 
-<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/survey_result_team.css">
 	
 <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -311,4 +311,4 @@ Highcharts.chart('chart_container2', {
 
 </script>
 
-<%@ include file="/WEB-INF/views/common/footer.jsp"%>
+<%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>

@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/survey_list.css" />
 
@@ -203,8 +203,7 @@
 
 </script>
 
-
-
+<div class="col-11" style="width: 1800px;">
 <!-- modal(설문 등록 시 뜨는 팝업창) -->
 <div class="modal fade" id="exampleModal" tabindex="-1"
 	aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -256,11 +255,15 @@
 <!-- modal(설문 등록 시 뜨는 팝업창) 끝-->
 
 
-<div class="card m-2" id="beforeModal">
-	<div class="card-body">
-		<div class="container my-5">
+<div class="card" style="width: 1600px;" id="beforeModal">
+	<div class="card-body" style="height: 800px; background: darkgray;">
+		<div class="forshadowing" style="background-color: white;
+    box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px, rgb(10 37 64 / 35%) 0px -2px 6px 0px inset;
+    border-radius: 5px;
+    height: 750px;
+    padding: 3em;">
 			<div class="row">
-				<div class="hmenu">
+				<div class="hmenu" style="margin-left: 600px;">
 					<div class="survey_list_form_upper_dv">
 						<form action="<c:url value='/survey/surveysearch'/>" method="POST"
 							class="survey_list_form" style="display: flex;">
@@ -304,9 +307,9 @@
 									id="button-addon2" onclick="resetMenu(this)" value="초기화">
 							</div>
 						</form>
-						<button id="upper_dv_btn" type="button" class="btn btn-primary"
-							data-toggle="modal" data-target="#exampleModal"
-							data-whatever="@mdo">등록</button>
+<!-- 						<button id="upper_dv_btn" type="button" class="btn btn-primary" -->
+<!-- 							data-toggle="modal" data-target="#exampleModal" -->
+<!-- 							data-whatever="@mdo">등록</button> -->
 
 
 					</div>
@@ -374,46 +377,58 @@
 							</tr>
 						</c:forEach>
 					</tbody>
+						<tbody>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td style="float:right;"><button id="upper_dv_btn" type="button"
+										class="btn btn-primary" data-toggle="modal"
+										data-target="#exampleModal" data-whatever="@mdo">등록</button></td>
+							</tr>
+						</tbody>
+						<tbody style="border: none;">
+						<tr >
+							<td colspan="12" class="text-center" style="border: none;">
+								<div>
 
-					<tr>
-						<td colspan="4" class="text-center">
-							<div style="margin-left: 170px;">
-
-								<a class="btn btn-outline-primary btn-sm"
-									href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a>
-								<c:if test="${pagingdto.groupNo>1}">
-									<a class="btn btn-outline-info btn-sm"
-										href="surveysearch?pageNo=${pagingdto.startPageNo-1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">이전</a>
-								</c:if>
-
-								<c:forEach var="i" begin="${pagingdto.startPageNo}"
-									end="${pagingdto.endPageNo}">
-									<c:if test="${pagingdto.pageNo != i}">
-										<a class="btn btn-outline-success btn-sm"
-											href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
+									<a class="btn btn-outline-primary btn-sm"
+										href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a>
+									<c:if test="${pagingdto.groupNo>1}">
+										<a class="btn btn-outline-info btn-sm"
+											href="surveysearch?pageNo=${pagingdto.startPageNo-1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">이전</a>
 									</c:if>
-									<c:if test="${pagingdto.pageNo == i}">
-										<a class="btn btn-danger btn-sm"
-											href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
+
+									<c:forEach var="i" begin="${pagingdto.startPageNo}"
+										end="${pagingdto.endPageNo}">
+										<c:if test="${pagingdto.pageNo != i}">
+											<a class="btn btn-outline-success btn-sm"
+												href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
+										</c:if>
+										<c:if test="${pagingdto.pageNo == i}">
+											<a class="btn btn-danger btn-sm"
+												href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
+										</c:if>
+									</c:forEach>
+
+									<c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
+										<a class="btn btn-outline-info btn-sm"
+											href="surveysearch?pageNo=${pagingdto.endPageNo+1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">다음</a>
 									</c:if>
-								</c:forEach>
-
-								<c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
-									<a class="btn btn-outline-info btn-sm"
-										href="surveysearch?pageNo=${pagingdto.endPageNo+1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">다음</a>
-								</c:if>
-								<a class="btn btn-outline-primary btn-sm"
-									href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">맨끝</a>
-							</div>
-						</td>
-					</tr>
-
-				</table>
-
+									<a class="btn btn-outline-primary btn-sm"
+										href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">맨끝</a>
+								</div>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+			
 
 			</div>
 		</div>
 	</div>
 </div>
-
-<%@ include file="/WEB-INF/views/common/footer.jsp"%>
+</div>
+<%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
