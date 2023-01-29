@@ -152,17 +152,18 @@ public class HomeController {
 		logger.info(UCD.toString());
 		if(loginCheckService.checkUser(UCD)==1) {
 			logger.info("로그인 가능");
-			String check =  loginCheckService.getUserManagerYN(UCD);
+			UserCheckDTO check =  loginCheckService.getUserManagerYN(UCD);
 			
 			
-			if(check.equals("N")) {
+			if(check.getManagerYN().equals("N")) {
 				logger.info("평가자 진입");
 				// 평가자가 평가해야할 설문지 조회
 				List<Map<String,Object>> surveySeqAndName = loginCheckService.getSurveySeqAndName(UCD.getRaterId());
 				model.addAttribute("raterId",UCD.getRaterId());
 				model.addAttribute("surveySeqAndName",surveySeqAndName);
 				model.addAttribute("surveyResult", new SurveyResultDTO());
-				session.setAttribute("checked", UCD.getRaterId());
+				session.setAttribute("checked", check);
+
 				return "survey";
 			}else {
 				logger.info("관리자 진입");
@@ -277,7 +278,7 @@ public class HomeController {
 	
 	@RequestMapping("/getAnonymityCode.do/{surveySeq}")
 	@ResponseBody
-	public String getAnonimityCode(@PathVariable int surveySeq) {
+	public SurveyListDTO getAnonimityCode(@PathVariable int surveySeq) {
 		
 		
 		

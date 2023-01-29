@@ -28,22 +28,26 @@
 </head>
 <body>
    <div class="d-flex flex-column">
-      <nav class="navbar navbar-dark bg-dark text-white font-weight-bold">
-         <a class="navbar-brand">
-         <img src="${pageContext.request.contextPath}/resources/images/logo_img.png"
-            width="30" height="30" class="d-inline-block align-top">&nbsp;Survey50 </a>
-             <a class="text-white" href="<c:url value='/loginafter'/>">피평가자 리스트</a>
-             <a class="text-white" href="<c:url value='/survey/surveysearch'/>">설문지 목록</a>
-             <a class="text-white" href="<c:url value='/survey/surveyresult'/>">설문 결과</a>
-             <a class="text-white" href="<c:url value='/survey/surveyresultteam'/>">결과 통계</a>
-         <div>
-            <div>
-               <a class="btn btn-success btn-sm" href="<c:url value='/'/>">로그인</a>
-                  <!--<a class="btn btn-success btn-sm" href="#">로그아웃</a> -->
+<!--       <nav class="navbar navbar-dark bg-dark text-white font-weight-bold"> -->
+<!--          <a class="navbar-brand"> -->
+<%--          <img src="${pageContext.request.contextPath}/resources/images/logo_img.png" --%>
+<!--             width="30" height="30" class="d-inline-block align-top">&nbsp;Survey50 </a> -->
+<%--              <a class="text-white" href="<c:url value='/loginafter'/>">피평가자 리스트</a> --%>
+<%--              <a class="text-white" href="<c:url value='/survey/surveysearch'/>">설문지 목록</a> --%>
+<%--              <a class="text-white" href="<c:url value='/survey/surveyresult'/>">설문 결과</a> --%>
+<%--              <a class="text-white" href="<c:url value='/survey/surveyresultteam'/>">결과 통계</a> --%>
+<!--          <div> -->
+<!--             <div> -->
+<%--                <a class="btn btn-success btn-sm" href="<c:url value='/'/>">로그인</a> --%>
+<!--                   <a class="btn btn-success btn-sm" href="#">로그아웃</a> -->
+<!--            </div> -->
+<!-- 			</div> -->
+<!-- 		</nav> -->
+     <div class="col-12">
+				&nbsp;
+				<br>
+				<br>
            </div>
-			</div>
-		</nav>
-
 		<div class="flex-grow-1 container-fluid">
 			<div class="row h-100">
 				<div class="col-md-2 p-3 bg-dark">

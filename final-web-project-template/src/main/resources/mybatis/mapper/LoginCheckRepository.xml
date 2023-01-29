@@ -13,10 +13,10 @@
 	</select>
 	
 		<select id="getUserManagerYN"
-		parameterType="com.mycompany.webapp.dto.UserCheckDTO" resultType="string">
-		SELECT MANAGER_YN 
-		FROM user_info
-        WHERE  EMAIL =  #{email} AND EMPLOYEE_ID = #{raterId}
+		parameterType="com.mycompany.webapp.dto.UserCheckDTO" resultType="com.mycompany.webapp.dto.UserCheckDTO">
+		SELECT u.MANAGER_YN as managerYN, o.DEPARTMENT_NAME as raterDepartmentName, u.EMPLOYEE_NAME as raterName 
+		FROM user_info u, organization_chart o
+        WHERE  u.EMAIL = #{email} AND u.EMPLOYEE_ID = #{raterId} and u.DEPARTMENT_ID = o.DEPARTMENT_ID
 		
 	</select>
 	
@@ -113,8 +113,12 @@
 
 	</insert>
 
-	<select id="getAnonimityCode" parameterType="int" resultType="string">
-		SELECT ANONYMITY_CHECK_CODE FROM SURVEY_LIST WHERE SURVEY_SEQ = #{surveySeq}
+	<select id="getAnonimityCode" parameterType="int" resultType="com.mycompany.webapp.dto.SurveyListDTO">
+		SELECT ANONYMITY_CHECK_CODE
+		      ,SURVEY_NAME
+		      ,to_date(SURVEY_START_DATE, 'YYYY-MM-dd') as surveyStartDate
+              ,to_date(SURVEY_CLOSED_DATE, 'YYYY-MM-dd' ) as surveyClosedDate 
+        FROM SURVEY_LIST WHERE SURVEY_SEQ = #{surveySeq}
 	
 	</select>	
 	
