@@ -29,23 +29,18 @@
 <body>
    <div class="d-flex flex-column">
      
-<%--              <a class="text-white" href="<c:url value='/loginafter'/>">피평가자 리스트</a> --%>
-<%--              <a class="text-white" href="<c:url value='/survey/surveysearch'/>">설문지 목록</a> --%>
-<%--              <a class="text-white" href="<c:url value='/survey/surveyresult'/>">설문 결과</a> --%>
-<%--              <a class="text-white" href="<c:url value='/survey/surveyresultteam'/>">결과 통계</a> --%>
-         <div>
-            <div>
-               <a class="btn btn-success btn-sm" href="<c:url value='/'/>">로그인</a>
-                  <!--<a class="btn btn-success btn-sm" href="#">로그아웃</a> -->
+            <div class="col-12">
+				&nbsp;
+				<br>
+				<br>
            </div>
-			</div>
 		
 
-		<div class="flex-grow-1 container-fluid">
+		<div class="flex-grow-1 container-fluid" style="margin-left:50px;">
 			<div class="row h-100">
 				<div class="col-1" >
-					<div class="h-100 d-flex flex-column" style="width:160px; border:1px white solid;">
-						<div class="flex-grow-1" style="padding:20px 20px 20px 20px;">
+					<div class="h-100 d-flex flex-column" style="width:160px;background:#121745;">
+						<div class="flex-grow-1">
 							<%@ include file="/WEB-INF/views/common/menuformanager.jsp"%>
 						</div>
 					</div>

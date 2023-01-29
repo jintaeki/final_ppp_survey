@@ -21,6 +21,7 @@
 </style>
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
+   <div class="col-11">
 <div class="card-body">
 <div class="forshadowing" >
 <button style="float:left;"class="btn btn-link" onclick="history.go(-1)">뒤로가기</button>
@@ -265,7 +266,7 @@
 
       
 
-   
+   </div>
 </div>
 </div>
 </div>

@@ -17,8 +17,8 @@ input {
 }
 .card-body{
 	height: 865px; 
-	width:1800px; 
-	margin-left:50px;
+	width:1600px; 
+/* 	margin-left:50px; */
 	background: darkgray;
 }
 
