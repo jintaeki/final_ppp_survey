@@ -6,6 +6,7 @@
 
 <script>
 	
+	
 	function delete_survey_btn(obj,surveyseq,selection,pageno){
 		if(confirm("삭제하시겠습니까?")){
 		let bselection = selection;
@@ -332,10 +333,13 @@
 								<button class="delete_survey_btn" style="background: white;border: 1px solid #fff; border-radius: 35em;" onclick="delete_survey_btn(this,${list.surveySeq}, ${pagingdto.selection},  ${pagingdto.pageNo})">
 
 										<i class="fas fa-xmark"></i>
-									</button></th>
+									</button>
+									<a href='<c:url value='copysurvey.do/${list.surveySeq}'/>'><i id="copySurvey_btn_plus" class="fas fa-plus"></i></a> 
+									</th>
+								
 								<td><c:if test="${list.stateCode ne '30004'}">
 										<a href="surveyinsert2?surveyseq=${list.surveySeq}">${list.surveyName }</a> &nbsp;
-										<a href='<c:url value='copysurvey.do/${list.surveySeq}'/>'>복사</a> 
+										
 									</c:if> <c:if test="${list.stateCode eq '30004'}">
 									${list.surveyName }
 								</c:if></td>
