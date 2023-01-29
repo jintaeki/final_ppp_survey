@@ -5,6 +5,18 @@
 
 }
 
+#copySurvey_btn_plus{
+/* 	display:none; */
+
+color:green;
+}
+
+.copySurvey_btn:hover #copySurvey_btn_plus{
+    display: block;
+}
+
+
+
 .survey_list_form_upper_dv{
 	display:flex;
 	margin-left: 200px;

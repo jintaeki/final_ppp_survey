@@ -33,7 +33,10 @@ public interface ISurveyRepository {
 
 	void UpdateQuestion(SurveyQuestionDTO SQD);
 
-	List<SurveyQuestionDTO> getQuestionList(int surveySeq);
+	List<SurveyQuestionDTO> getQuestionListOrderByDesc(int surveySeq);
+	
+	List<SurveyQuestionDTO> getQuestionListOrderByAsc(int surveySeq);
+
 
 	void sendMessage(int surveySeq);
 	

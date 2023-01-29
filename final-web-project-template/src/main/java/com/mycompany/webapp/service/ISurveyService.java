@@ -34,10 +34,11 @@ public interface ISurveyService {
 	
 	SurveyListDTO selectSurvey(int surveySeq);
 
-	public List<SurveyQuestionDTO> getQuestionList(int surveySeq);
+	public List<SurveyQuestionDTO> getQuestionListOrderByDesc(int surveySeq);
 
-	public List<SurveyQuestionDTO>questionList(int surveySeq);
+	public List<SurveyQuestionDTO> getQuestionListOrderByAsc(int surveySeq);
 
+	
 	void sendMessage(int surveySeq);
 	
 	// 메일 발송시 상태 업데이트
