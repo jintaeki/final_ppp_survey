@@ -9,22 +9,41 @@ input {
     margin-top: 10px;
 }
 
+
+.inner_container{
+	display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+.card-body{
+	height: 865px; 
+	width:1800px; 
+	margin-left:50px;
+	background: darkgray;
+}
+
+.forshadowing{
+	background-color: white;
+    box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px, rgb(10 37 64 / 35%) 0px -2px 6px 0px inset;
+    border-radius: 5px;
+    height: 840px;
+    padding: 1em;
+}
+
 .question_add_btn_div{
-	margin-top:10px;
 }
 
 .item_management{
 	border-radius: 20px;
 	box-shadow: 1px 1px 10px 0px;
-	margin-top: 15px;
 	padding: 20px;
+	width:400px;
 	
 }
 
 .question_inputdv{
 	margin: auto;
-	margin-top:4px;
-	box-shadow: 1px 1px 5px 1px grey;
+	box-shadow: 1px 1px 10px 0px;
 	border-radius: 20px;
 	padding: 20px;
 	width: 550px;
@@ -34,7 +53,7 @@ input {
 	margin: auto;
 	margin-top: 30px;
 	width: 550px;
-	box-shadow: 1px 1px 5px 1px grey;
+	box-shadow: 1px 1px 10px 0px;
 	border-radius: 20px;
 	padding: 20px;
 }
@@ -45,17 +64,17 @@ input {
 }
 
 .container_flex {
-/* 	display: inline-flex; */
-/* 	margin-top: 20px; */
-/*     margin-bottom: 30px; */
-	justify-content: space-around;
+	border-radius: 20px;
+	box-shadow: 1px 1px 10px 0px; 
+	padding: 20px; 
+	width:450px;
 	align-items: center !important;
 }
 
 .container_survey {
-	margin-left: -18px;
+/* 	margin-left: -18px; */
 /* 	border: 1px solid red; */
-	height: -webkit-fill-available;
+/* 	height: -webkit-fill-available; */
 }
 
 .delete_btn{

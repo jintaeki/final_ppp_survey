@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 
-<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
 
 <style>
 .insert2_table  tr{
@@ -21,17 +21,84 @@
 </style>
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
-
-<div class="container" style="padding: 20px 50px 50px 50px; height:1000px;">
+<div class="card-body">
+<div class="forshadowing" >
 <button style="float:left;"class="btn btn-link" onclick="history.go(-1)">뒤로가기</button>
 <button style="float:right;"class="btn btn-link" onclick="location.href='<c:url value='surveyinsertcomplete.do/${SLD.surveySeq}'/>'">등록완료</button>
    <!-- 설문지 설정 진택 -->
 
    <div class="container_survey">
-      <div class="row" style="margin-top: 65px;">      </div>
+      <div class="row" style="margin-top: 45px;">      </div>
       
-         <div style="display: flex;">
-         <div style="width: 60%;border-radius: 20px;box-shadow: 1px 1px 10px 0px;padding: 20px 20px 20px 20px; ">
+         <div class="inner_container">
+         <div class="container_flex" style="border-radius: 20px;box-shadow: 1px 1px 10px 0px; padding: 20px; width:450px;">
+      <div class="input_title">기본 설정</div>
+      <form:form modelAttribute="SLD" id="survey_setting_form">
+      <table style="border-collapse:collapse;">
+            <tr><th><div style="margin-top: 8px;"></div></th></tr>
+      
+      <tr>
+      
+         <td><span class="insert_category"><b>설문지 제목</b><label
+            for="survey_name"></label></span></td> <td><input type="text" id="survey_name"
+            name="surveyName" style="width: 200px;" value="${SLD.surveyName}"></td>
+            
+      </tr>
+      
+      <tr style="border-bottom: 3px solid gainsboro;">
+      <th><div style="margin-top: 8px;"></div></th></tr>
+      <tr><th><div style="margin-top:8px;"></div></th></tr>
+      <tr>
+         <td><span class="insert_category"> <b>평가 기간</b> </span></td>
+         <td><input type="date"
+            name="surveyStartDate" class="survey_date"
+            value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">-
+            <input type="date" name="surveyClosedDate" class="survey_date"
+            value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />"></td>
+      </tr>
+      
+      <tr style="border-bottom: 3px solid gainsboro;"><th><div style="margin-top: 8px;"></div></th></tr>
+      <tr><th><div style="margin-top: 8px;"></div></th></tr>
+      
+      <tr>
+         <td><span class="insert_category"> <b>익명/기명</b></span></td>
+         <td>
+            <c:if test="${SLD.anonymityCheckCode eq '20001'}">
+               <input type="radio" name="anonymityCheckCode" id="survey_type_check" value="20001" checked>
+               <label style="margin-bottom:0px;" for="survey_type_check"><b>익명</b></label> 
+               <input type="radio" name="anonymityCheckCode" id="survey_type_check" value="20002">
+               <label style="margin-bottom:0px;" for="survey_type_check"><b>기명</b></label> 
+               </c:if> 
+                   
+               <c:if test="${SLD.anonymityCheckCode eq '20002'}">
+               <input type="radio" name="anonymityCheckCode" id="survey_type_check" value="20001">
+               <label style="margin-bottom:0px;" for="survey_type_check"><b>익명</b></label> 
+
+               <input type="radio" name="anonymityCheckCode"  id="survey_type_check" value="20002" checked>
+               <label style="margin-bottom:0px;" for="survey_type_check"><b>기명</b></label> 
+            </c:if>
+         </td>
+      </tr>
+      <tr style="border-bottom: 3px solid gainsboro;"><th><div style="margin-top: 8px;"></div></th></tr>
+      <tr><th><div style="margin-top: 8px;"></div></th></tr>
+         
+         </table>
+      
+         <span class="insert_category"><b>상세 설명</b></span><br><div style="margin-top:8px;"></div>
+         <textarea  class="visually-hidden"id="message-text" name="surveyContent" style="width:350px;height:100px;max-width:350px;">${SLD.surveyContent }</textarea>
+
+            <input type="hidden" name="stateCode" value="30001"> <input
+            type="hidden" name="surveySeq" id="surveyseq"
+            value="${SLD.surveySeq}">
+            
+      </form:form>
+      <input type="button" class="update_btn" style="margin-bottom:10px; float:right;" onclick="register()"
+         value="적용">
+      
+   </div>
+         
+         
+         <div>
          <div class="question_inputdv" id="input_question">
                   <div class="input_title">문제 관리</div>
          
@@ -121,75 +188,7 @@
       </div>
       </div>
       
-      <div style="margin-left: 40px;">
-      <div class="container_flex" style="border-radius: 20px;box-shadow: 1px 1px 10px 0px; padding: 20px; width:450px;">
-      <div class="input_title">기본 설정</div>
-      <form:form modelAttribute="SLD" id="survey_setting_form">
-      <table style="border-collapse:collapse;">
-            <tr><th><div style="margin-top: 8px;"></div></th></tr>
-      
-      <tr>
-      
-         <td><span class="insert_category"><b>설문지 제목</b><label
-            for="survey_name"></label></span></td> <td><input type="text" id="survey_name"
-            name="surveyName" style="width: 200px;" value="${SLD.surveyName}"></td>
-            
-      </tr>
-      
-      <tr style="border-bottom: 3px solid gainsboro;">
-      <th><div style="margin-top: 8px;"></div></th></tr>
-      <tr><th><div style="margin-top:8px;"></div></th></tr>
-      <tr>
-         <td><span class="insert_category"> <b>평가 기간</b> </span></td>
-         <td><input type="date"
-            name="surveyStartDate" class="survey_date"
-            value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">-
-            <input type="date" name="surveyClosedDate" class="survey_date"
-            value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />"></td>
-      </tr>
-      
-      <tr style="border-bottom: 3px solid gainsboro;"><th><div style="margin-top: 8px;"></div></th></tr>
-      <tr><th><div style="margin-top: 8px;"></div></th></tr>
-      
-      <tr>
-         <td><span class="insert_category"> <b>익명/기명</b></span></td>
-         <td>
-            <c:if test="${SLD.anonymityCheckCode eq '20001'}">
-               <input type="radio" name="anonymityCheckCode" id="survey_type_check" value="20001" checked>
-               <label style="margin-bottom:0px;" for="survey_type_check"><b>익명</b></label> 
-               <input type="radio" name="anonymityCheckCode" id="survey_type_check" value="20002">
-               <label style="margin-bottom:0px;" for="survey_type_check"><b>기명</b></label> 
-               </c:if> 
-                   
-               <c:if test="${SLD.anonymityCheckCode eq '20002'}">
-               <input type="radio" name="anonymityCheckCode" id="survey_type_check" value="20001">
-               <label style="margin-bottom:0px;" for="survey_type_check"><b>익명</b></label> 
-
-               <input type="radio" name="anonymityCheckCode"  id="survey_type_check" value="20002" checked>
-               <label style="margin-bottom:0px;" for="survey_type_check"><b>기명</b></label> 
-            </c:if>
-         </td>
-      </tr>
-      <tr style="border-bottom: 3px solid gainsboro;"><th><div style="margin-top: 8px;"></div></th></tr>
-      <tr><th><div style="margin-top: 8px;"></div></th></tr>
-         
-         </table>
-      
-         <span class="insert_category"><b>상세 설명</b></span><br><div style="margin-top:8px;"></div>
-         <textarea  class="visually-hidden"id="message-text" name="surveyContent" style="width:350px;height:100px;max-width:350px;">${SLD.surveyContent }</textarea>
-
-            <input type="hidden" name="stateCode" value="30001"> <input
-            type="hidden" name="surveySeq" id="surveyseq"
-            value="${SLD.surveySeq}">
-            
-      </form:form>
-      <input type="button" class="update_btn" style="margin-bottom:10px;" onclick="register()"
-         value="적용">
-      
-   </div>
-      
-      
-      
+  
          <div class="item_management" >
          <div class="input_title">문항 관리</div>
          <!-- 객관식 -->
@@ -210,7 +209,7 @@
 
                               
                         <input type="button" class="create_btn" 
-                                 onclick="update_obj_item_btn()" value="수정">   
+                                 onclick="update_obj_item_btn()" style="float:right;"value="수정">   
                         </form:form>
                      </div>
                   </div>
@@ -259,7 +258,7 @@
 
 
       </div>
-      </div>
+ 
       
 </div>
       <!--  문제관리 끝 -->
@@ -267,6 +266,7 @@
       
 
    
+</div>
 </div>
 </div>
 <script>
@@ -961,4 +961,4 @@
    };
 </script>
 
-<%@ include file="/WEB-INF/views/common/footer.jsp"%>
+<%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
