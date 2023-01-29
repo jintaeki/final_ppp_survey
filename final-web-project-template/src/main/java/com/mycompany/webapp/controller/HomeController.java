@@ -162,9 +162,11 @@ public class HomeController {
 				model.addAttribute("raterId",UCD.getRaterId());
 				model.addAttribute("surveySeqAndName",surveySeqAndName);
 				model.addAttribute("surveyResult", new SurveyResultDTO());
+				session.setAttribute("checked", UCD.getRaterId());
 				return "survey";
 			}else {
 				logger.info("관리자 진입");
+				session.setAttribute("checked", UCD.getRaterId());
 				return "redirect:/survey/surveysearch";
 			}
 			
@@ -175,6 +177,13 @@ public class HomeController {
 		
 		
 	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "login";
+	}
+	
 	
 	@RequestMapping("/getAppraisee.do/{raterId}/{surveySeq}")
 	@ResponseBody

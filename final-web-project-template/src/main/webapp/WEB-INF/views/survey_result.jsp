@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/survey_result.css" />
 <div class="container">
@@ -48,4 +48,4 @@
    </c:forEach>
 </table>
 </div>
-<%@ include file="/WEB-INF/views/common/footer.jsp"%>
+<%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>

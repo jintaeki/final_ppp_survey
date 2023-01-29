@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/survey_evaluate.css"/>
 
 <div class="card m-2">
@@ -92,4 +92,4 @@
 	</div>
 </div>
 
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+<%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
