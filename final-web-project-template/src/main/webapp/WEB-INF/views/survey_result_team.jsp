@@ -11,86 +11,65 @@
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 <div class="col-11">
-<div class="card-body">
-<div class="forshadowing">
-<div class="result_container">
-	<div class="hmenu">
-	<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th scope="col">
-		<form action="<c:url value='/survey/surveyresultDetail'/>" method="get" class="survey_list_form">
-			<select name="surveySeq" id="surveySeq" onchange="typeFn();">
-				<option>--선택--</option>
-				<c:forEach items="${Sdt}" var="sdt">
-					<option value="${sdt.surveySeq}">${sdt.surveyName}</option>
-				</c:forEach>
-			</select>
-			<div id="select" style="display:none;">
-			<select name="departmentId" id="departmentId">
-			</select>
-			</div>	
-			<div class="input-group-append">
-				<input type="submit" class="btn btn-outline-secondary"
-					id="button-addon2" value="검색">
-				<input type="reset" class="btn btn-outline-secondary"
-					id="button-addon2" value="초기화">
+	<div class="card">
+		<div class="card-body">
+			<div class="forshadowing">
+				<div class="result_container">
+					<div class="hmenu">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th scope="col">
+										<form action="<c:url value='/survey/surveyresultDetail'/>"
+											method="get" class="survey_list_form">
+											<select name="surveySeq" id="surveySeq" onchange="typeFn();">
+												<option>--선택--</option>
+												<c:forEach items="${Sdt}" var="sdt">
+													<option value="${sdt.surveySeq}">${sdt.surveyName}</option>
+												</c:forEach>
+											</select>
+											<div id="select" style="display: none;">
+												<select name="departmentId" id="departmentId">
+												</select>
+											</div>
+											<div class="input-group-append">
+												<input type="submit" class="btn btn-outline-secondary"
+													id="button-addon2" value="검색"> <input type="reset"
+													class="btn btn-outline-secondary" id="button-addon2"
+													value="초기화">
+											</div>
+										</form>
+									</th>
+									<th scope="col">${surveyName}</th>
+									<th scope="col">${departmentName}</th>
+								</tr>
+							</thead>
+						</table>
+
+					</div>
+				</div>
+
+				<!-- CHART -->
+				<figure class="highcharts-figure"
+					style="overflow: auto; height: 500px; width: 800px; display: flex;">
+					<div class="scroll_body">
+						<div style="min-width: 800px;">
+							<div id="chart_container"></div>
+							<p class="highcharts-description">다면평가에 대한 팀별 결과를 조회합니다.</p>
+						</div>
+						<div style="min-width: 800px;">
+							<div id="chart_container2"></div>
+							<p class="highcharts-description">부서별 소속 팀원들의 결과를 조회할 수 있습니다.
+							</p>
+						</div>
+					</div>
+				</figure>
+
 			</div>
-		</form>
-      </th>
-      <th scope="col">${surveyName}</th>
-      <th scope="col">${departmentName}</th>
-    </tr>
-  </thead>
-  </table>
-		
+		</div>
 	</div>
 </div>
-
-<!-- CHART -->
-<figure class="highcharts-figure" style="overflow: auto;height: 500px;width: 800px;display: flex;">
-<div class="scroll_body">
-	<div style="min-width:800px;">
-  <div id="chart_container"></div>
-  <p class="highcharts-description">
-  다면평가에 대한 팀별 결과를 조회합니다. 
-  </p>
-  </div>
-  <div style="min-width:800px;">
-  <div id="chart_container2"></div>
-  <p class="highcharts-description">
- 부서별 소속 팀원들의 결과를 조회할 수 있습니다.
-  </p>
-  </div>
-</div>
-</figure>
-
-</div>
-</div>
-</div>
 <script>
-
-var x,left,down;
-
-
-
-$(".highcharts-figure").mousedown(function(e){
-  e.preventDefault();
-  down = true;
-  x = e.pageX;
-  left = $(this).scrollLeft();
-});
-
-$(".scroll_body").mousemove(function(e){
-	  if(down){
-	    var newX = e.pageX;
-	    $(".highcharts-figure").scrollLeft(left - newX + x);
-	  }
-	});
-
-$(".scroll_body").mouseup(function(e){down = false;});
-
-
 	/* 선택지 비동기 부분 */
 function typeFn() {
 	$("#departmentId").attr("disabled",true);
