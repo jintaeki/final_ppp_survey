@@ -159,14 +159,14 @@ select:disabled {
 }
 
 .menu_profile_text {
-	width: 100%;
-	float: left;
-	font-size: 18px;
-	text-align: center;
+/* 	width: 100%; */
+/* 	float: left; */
+/* 	font-size: 18px; */
+/* 	text-align: center; */
 	color: white;
-	margin-left: 0px;
-	font-weight: 450;
-	margin-left: 0px;
+/* 	margin-left: 0px; */
+/* 	font-weight: 450; */
+/* 	margin-left: 0px; */
 }
 
 .seach_float {

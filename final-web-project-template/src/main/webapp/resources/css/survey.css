@@ -81,6 +81,7 @@ width: 130px;
     display: flex;
     flex-direction: column-reverse;
     justify-content: space-between;
+    z-index: 1;
 }
 .appraiseeList{
 	height: 100%;
@@ -90,7 +91,9 @@ width: 130px;
     border-radius: 20px;
     padding: 20px;
     font-size: 17px; 
-    text-align: center
+    text-align: center;
+    z-index: 1;
+    
 }
 .submit_btn button{
 	float:right;

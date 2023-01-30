@@ -333,14 +333,15 @@
 
 										<i class="fas fa-xmark"></i>
 									</button>
-									<a href='<c:url value='copysurvey.do/${list.surveySeq}'/>'><i id="copySurvey_btn_plus" class="fas fa-plus"></i></a> 
+									
 									</th>
 								
 								<td><c:if test="${list.stateCode ne '30004'}">
-										<a href="surveyinsert2?surveyseq=${list.surveySeq}">${list.surveyName }</a> &nbsp;
-										
+										<a href="surveyinsert2?surveyseq=${list.surveySeq}">${list.surveyName }</a>
+										<a class="menu_profile_text" href='<c:url value='copysurvey.do/${list.surveySeq}'/>'>복사</a>
 									</c:if> <c:if test="${list.stateCode eq '30004'}">
 									${list.surveyName }
+									
 								</c:if></td>
 								<td><fmt:formatDate value="${list.surveyStartDate }"
 										pattern='yyyy-MM-dd' /> &nbsp;~&nbsp; <fmt:formatDate
