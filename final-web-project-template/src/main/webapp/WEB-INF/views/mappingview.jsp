@@ -59,13 +59,14 @@ function map_delete(surveySeq, raterId, appraiseeId){
 
 </script>
 
-<div class="card m-2">
+<div class="col-11">
 	<div class="card-body">
+		
+
+		<div class="forshadowing">
 		<div>
 			<h3 style="text-align: center;">${mappingList[0].surveyName} 매핑 목록</h3>
 		</div>
-
-		<div class="container my-5">
 		<div>
 			<button type="button" id="map_insert" class="btn btn-primary" onclick="mapInsert('${mappingList[0].surveySeq}')">조건관 관계없이 추가</button>
 		</div>
