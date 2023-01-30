@@ -255,8 +255,8 @@ select:disabled {
 /* survey */
 .survey_info {
 	position: fixed;
-	left: 30px;
-	top: 450px;
+	left: 20px;
+	top: 400px;
 	width: 250px;
 	height: 250px;
 	padding: 40px 0;

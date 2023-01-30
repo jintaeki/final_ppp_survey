@@ -458,6 +458,7 @@
 
 
 
+         
 
       <div class="question-box col-7">
       
@@ -471,6 +472,8 @@
             </div>
          </div>
       </div>
+      <img src="${pageContext.request.contextPath}/resources/images/evaluate.jpg" 
+      style="width: 600px;margin-top: 200px; margin-left: 300px; position: fixed; opacity: 0.3;">
    </div>
 </div>
 
