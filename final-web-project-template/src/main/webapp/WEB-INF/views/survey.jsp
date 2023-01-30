@@ -175,8 +175,7 @@
 
       }
       itemSeqArray[0] = itemSeqArray.length;
-
-
+      console.log(itemSeqArray);
       submitBtn = '';
       submitBtn='<button type="button" class="create_btn" onclick="submit('+JSON.stringify(itemSeqArray)+','+JSON.stringify(itemSubjSeq)+')">제출</button>';
 

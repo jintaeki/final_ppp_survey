@@ -55,9 +55,9 @@
 
 					</tbody>
 						<tr>
-						<td colspan="4" class="text-center">
-							<div class="pagingdiv" style="margin-left: 170px;">
 
+						<td colspan="12" class="text-center">
+							<div>
 								<a class="btn btn-outline-primary btn-sm"
 									href="EvaluateSearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}&surveySeq=${pagingdto.surveySeq}">처음</a>
 								<c:if test="${pagingdto.groupNo>1}">

@@ -12,12 +12,11 @@
 		
 	</select>
 	
-		<select id="getUserManagerYN"
+	<select id="getUserManagerYN"
 		parameterType="com.mycompany.webapp.dto.UserCheckDTO" resultType="com.mycompany.webapp.dto.UserCheckDTO">
 		SELECT u.MANAGER_YN as managerYN, o.DEPARTMENT_NAME as raterDepartmentName, u.EMPLOYEE_NAME as raterName 
 		FROM user_info u, organization_chart o
-        WHERE  u.EMAIL = #{email} AND u.EMPLOYEE_ID = #{raterId} and u.DEPARTMENT_ID = o.DEPARTMENT_ID
-		
+        WHERE  u.EMAIL = #{email} AND u.EMPLOYEE_ID = #{raterId} and u.DEPARTMENT_ID = o.DEPARTMENT_ID	
 	</select>
 	
 	<select id="getUserInfo" resultType="com.mycompany.webapp.dto.UserCheckDTO">

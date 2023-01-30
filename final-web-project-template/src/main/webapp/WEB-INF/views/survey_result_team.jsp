@@ -10,7 +10,9 @@
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
-<div class="container" style="height: 1100px;">
+<div class="col-11">
+<div class="card-body">
+<div class="forshadowing">
 <div class="result_container">
 	<div class="hmenu">
 	<table class="table table-bordered">
@@ -46,22 +48,49 @@
 </div>
 
 <!-- CHART -->
-<figure class="highcharts-figure">
+<figure class="highcharts-figure" style="overflow: auto;height: 500px;width: 800px;display: flex;">
+<div class="scroll_body">
+	<div style="min-width:800px;">
   <div id="chart_container"></div>
   <p class="highcharts-description">
   다면평가에 대한 팀별 결과를 조회합니다. 
   </p>
-  
+  </div>
+  <div style="min-width:800px;">
   <div id="chart_container2"></div>
   <p class="highcharts-description">
  부서별 소속 팀원들의 결과를 조회할 수 있습니다.
   </p>
+  </div>
+</div>
 </figure>
 
-
 </div>
-
+</div>
+</div>
 <script>
+
+var x,left,down;
+
+
+
+$(".highcharts-figure").mousedown(function(e){
+  e.preventDefault();
+  down = true;
+  x = e.pageX;
+  left = $(this).scrollLeft();
+});
+
+$(".scroll_body").mousemove(function(e){
+	  if(down){
+	    var newX = e.pageX;
+	    $(".highcharts-figure").scrollLeft(left - newX + x);
+	  }
+	});
+
+$(".scroll_body").mouseup(function(e){down = false;});
+
+
 	/* 선택지 비동기 부분 */
 function typeFn() {
 	$("#departmentId").attr("disabled",true);

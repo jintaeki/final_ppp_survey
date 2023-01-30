@@ -255,15 +255,11 @@
 <!-- modal(설문 등록 시 뜨는 팝업창) 끝-->
 
 
-<div class="card" style="width: 1600px;" id="beforeModal">
-	<div class="card-body" style="height: 800px; background: darkgray;">
-		<div class="forshadowing" style="background-color: white;
-    box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px, rgb(10 37 64 / 35%) 0px -2px 6px 0px inset;
-    border-radius: 5px;
-    height: 750px;
-    padding: 3em;">
+<div class="card" id="beforeModal">
+	<div class="card-body">
+		<div class="forshadowing">
 			<div class="row">
-				<div class="hmenu" style="margin-left: 600px;">
+				<div class="hmenu">
 					<div class="survey_list_form_upper_dv">
 						<form action="<c:url value='/survey/surveysearch'/>" method="POST"
 							class="survey_list_form" style="display: flex;">
