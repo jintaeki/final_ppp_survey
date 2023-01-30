@@ -455,7 +455,7 @@ public class SurveyController {
 			List<Map<String, Object>> evaluateList = null;
 			PagingDTO pagingDto = null;
 			String beforeKeyword = keyword;
-
+				
 			 	model.addAttribute("selecton", selection);
 
 			    logger.info("모델 :" + model);
@@ -467,7 +467,7 @@ public class SurveyController {
 				pagingDto.setSelection(selection);
 				pagingDto.setKeyword(keyword);
 				pagingDto.setSurveySeq(surveySeq);
-
+				
 				logger.info("selection:" + pagingDto.getSelection());
 				logger.info("keyword: "+pagingDto.getKeyword());
 				logger.info("paigingdto:" + pagingDto);

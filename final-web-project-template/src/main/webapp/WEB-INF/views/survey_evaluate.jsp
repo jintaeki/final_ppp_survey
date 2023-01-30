@@ -44,7 +44,7 @@
 					<tbody>
 					<c:forEach items="${evaluateList}" var="EL">
 						<tr>
-							<th scope="row">1</th>
+							<th scope="row">${EL.RNUM}</th>
 							<td class="sv_name">${EL.DEPARTMENT_NAME}</td>
 							<td>${EL.GRADE_NAME}</td>
 							<td>${EL.EMPLOYEE_NAME}</td>

@@ -28,6 +28,7 @@
    <table class="table  table-bordered" style="word-break:break-all">
       <thead>
             <tr>
+               <th scope="col">#</th>
                <th scope="col">평가자</th>
                <th scope="col">부서</th>
                <th scope="col">직책</th>
@@ -39,6 +40,8 @@
           <tbody>
              <c:forEach items="${surveyResultList}" var="SRL">
                <tr>
+               		 <td>${SRL.rnum}</td>
+
                      <td>${SRL.raterName}</td>
 
                      <td>${SRL.raterDepartmentName}</td>
