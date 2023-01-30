@@ -125,27 +125,18 @@
    </update>
    
    <update id="updateEmail" parameterType="int">
-   	  UPDATE NOTICE_EMAIL N
-   	  	 SET N.DELIVERY_YN = 'Y',
-   	  	 	 N.UPDATE_DATE = SYSDATE
-   	   WHERE EXISTS(
-          	SELECT 1
-              FROM SURVEY_LIST S
-          	 WHERE S.SURVEY_SEQ = #{surveySeq}
-               AND N.DELIVERY_CONTENT LIKE '%' || S.SURVEY_NAME || '%'
-        )
+   	  UPDATE NOTICE_EMAIL 
+   	  	 SET DELIVERY_YN = 'Y',
+   	  	 	 UPDATE_DATE = SYSDATE
+   	   WHERE SURVEY_SEQ = #{surveySeq}
+             
    </update>
    
    <update id="updateSMS" parameterType="int">
-   	  UPDATE NOTICE_SMS N
-   	  	 SET N.DELIVERY_YN = 'Y',
-   	  	 	 N.UPDATE_DATE = SYSDATE
-   	   WHERE EXISTS(
-          	SELECT 1
-              FROM SURVEY_LIST S
-          	 WHERE S.SURVEY_SEQ = #{surveySeq}
-               AND N.DELIVERY_CONTENT LIKE '%' || S.SURVEY_NAME || '%'
-        )
+   	  UPDATE NOTICE_SMS 
+   	  	 SET DELIVERY_YN = 'Y',
+   	  	 	 UPDATE_DATE = SYSDATE
+       WHERE SURVEY_SEQ = #{surveySeq}
    </update>
    
    
@@ -316,7 +307,7 @@
                         ,m.survey_complete_yn
                  FROM grade g ,user_info ui ,mapping m ,ORGANIZATION_CHART oc
                  WHERE
-                     m.rater_id = ui.employee_id
+                     m.appraisee_id = ui.employee_id
                     and g.grade_id = ui.grade_id and oc.department_id = ui.department_id and
                     (m.survey_complete_yn LIKE '%' || #{keyword} || '%'
                    or
@@ -378,11 +369,14 @@
           FROM SURVEY_ITEM I,
                SURVEY_RESULT R,
                ORGANIZATION_CHART O,
-               USER_INFO U
+               USER_INFO U,
+               SURVEY_QUESTION Q
          WHERE I.ITEM_SEQ = R.ITEM_SEQ
            AND R.SURVEY_SEQ = #{surveySeq}
            AND R.APPRAISEE_ID = U.EMPLOYEE_ID 
            AND U.DEPARTMENT_ID = O.DEPARTMENT_ID
+           AND I.QUESTION_SEQ = Q.QUESTION_SEQ
+           AND Q.QUESTION_TYPE_CODE = 10001
       GROUP BY EMPLOYEE_NAME, DEPARTMENT_NAME
    	      )
    	  GROUP BY EMPLOYEE_NAME, DEPARTMENT_NAME
@@ -393,13 +387,17 @@
                EMPLOYEE_NAME
           FROM SURVEY_ITEM I,
                SURVEY_RESULT R,
-               USER_INFO U
+               USER_INFO U,
+               SURVEY_QUESTION Q
          WHERE I.ITEM_SEQ = R.ITEM_SEQ
            AND R.SURVEY_SEQ = #{surveySeq}
            AND R.APPRAISEE_ID = U.EMPLOYEE_ID 
            AND U.DEPARTMENT_ID = #{departmentId}
+           AND I.QUESTION_SEQ = Q.QUESTION_SEQ
+           AND Q.QUESTION_TYPE_CODE = 10001
       GROUP BY EMPLOYEE_NAME
 	</select>
+	
 	<select id="surveyResult" parameterType="int" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
 SELECT  sr.APPRAISEE_ID
        ,sr.RATER_ID
@@ -462,5 +460,82 @@ order by RATER_ID, ANONYMITY_SEQ, QUESTION_SEQ
                 AND ui.EMPLOYEE_ID = ${employeeId}
 </select>
 
+<select id="personalStats" parameterType="int" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
+<![CDATA[
+SELECT EMPLOYEE_NAME
+     , SCORE
+     , GRD
+     , MAX
+     , AVG
+     , MIN
+FROM(
+    SELECT EMPLOYEE_ID
+         , SCORE
+         , SURVEY_SEQ
+         , rk
+         , rk2
+         , rat
+         , CASE WHEN              rat <= 10 THEN 1
+                WHEN rat > 10 AND rat <= 50 THEN 2
+                WHEN rat > 50 AND rat <= 90 THEN 3
+                WHEN rat > 90 AND rat <= 100 THEN 4
+            END grd
+    FROM (
+       SELECT EMPLOYEE_ID
+            , SCORE
+            , SURVEY_SEQ
+            , rk
+            , (rk + (cnt - 1) / 2) rk2
+            , (rk + (cnt - 1) / 2) / tot * 100 rat
+         FROM (
+             SELECT EMPLOYEE_ID
+                  , SCORE 
+                  , SURVEY_SEQ
+                  , RANK() OVER(PARTITION BY SURVEY_SEQ ORDER BY score DESC) rk
+                  , COUNT(*) OVER(PARTITION BY SURVEY_SEQ, score) cnt
+                  , COUNT(*) OVER(PARTITION BY SURVEY_SEQ) tot
+                  FROM (
+                   SELECT SUM(ITEM_SCORE) AS SCORE,
+                           EMPLOYEE_ID,
+                           R.SURVEY_SEQ 
+                      FROM SURVEY_ITEM I,
+                           SURVEY_RESULT R,
+                           USER_INFO U,
+                           SURVEY_QUESTION Q
+                     WHERE I.ITEM_SEQ = R.ITEM_SEQ
+                       AND R.APPRAISEE_ID = U.EMPLOYEE_ID 
+                       AND I.QUESTION_SEQ = Q.QUESTION_SEQ
+                       AND Q.QUESTION_TYPE_CODE = 10001
+                  GROUP BY EMPLOYEE_ID, R.SURVEY_SEQ) t
+                )
+            )
+        ) S 
+        ,(SELECT AVG(SCORE) AS AVG,
+                 MAX(SCORE) AS MAX,
+                 MIN(SCORE) AS MIN,
+                 SURVEY_SEQ
+             FROM(
+                 SELECT SUM(ITEM_SCORE) AS SCORE,
+                        EMPLOYEE_NAME,
+                        R.SURVEY_SEQ
+                   FROM SURVEY_ITEM I,
+                        SURVEY_RESULT R,
+                        USER_INFO U,
+                        SURVEY_QUESTION Q
+                  WHERE I.ITEM_SEQ = R.ITEM_SEQ
+                    AND R.APPRAISEE_ID = U.EMPLOYEE_ID 
+                    AND I.QUESTION_SEQ = Q.QUESTION_SEQ
+                    AND Q.QUESTION_TYPE_CODE = 10001
+                    AND R.SURVEY_SEQ = #{surveySeq}
+                  GROUP BY EMPLOYEE_NAME, R.SURVEY_SEQ
+                  )
+            GROUP BY SURVEY_SEQ
+         ) A
+        ,USER_INFO U
+WHERE S.EMPLOYEE_ID = U.EMPLOYEE_ID
+  AND S.EMPLOYEE_ID = #{employeeId}
+  AND A.SURVEY_SEQ = #{surveySeq}
+]]>
+</select>
 
 </mapper>

@@ -64,7 +64,6 @@
 						</div>
 					</div>
 				</figure>
-
 			</div>
 		</div>
 	</div>
@@ -192,17 +191,6 @@ function typeFn() {
 	    return resMap;
 	} 
 	
-$(document).ready(function() {
-	console.log(getScoreCnt("cateArr")[0]);
-	console.log(getScoreCnt("data")[0]);
-	console.log(getDPScoreCnt("cateArr")[0]);
-	console.log(getDPScoreCnt("data")[0]);
-	
-	console.log(getScoreCnt("cateArr"));
-	console.log(getScoreCnt("data"));
-	console.log(getDPScoreCnt("cateArr"));
-	console.log(getDPScoreCnt("data"));
-});
 /* CHART 설정 끝 */
 
 /* CHART 전체 START */
@@ -213,7 +201,7 @@ Highcharts.chart('chart_container', {
   },
   title: {
     align: 'left',
-    text: '다면평가 결과 통계'
+    text: '다면평가 전체 결과 통계'
   },
   subtitle: {
     align: 'left',
@@ -269,7 +257,7 @@ Highcharts.chart('chart_container2', {
   },
   title: {
     align: 'left',
-    text: '다면평가 결과 통계'
+    text: '다면평가 부서 결과 통계'
   },
   subtitle: {
     align: 'left',
