@@ -106,7 +106,7 @@
           ,QUESTION_TYPE_CODE
       FROM SURVEY_QUESTION WHERE SURVEY_SEQ = #{surveySeq} order by question_seq desc
    </select>
-   
+
    <select id="getQuestionListOrderByAsc" parameterType="int" resultType="com.mycompany.webapp.dto.SurveyQuestionDTO">
       SELECT SURVEY_SEQ
           ,QUESTION_SEQ
@@ -123,7 +123,7 @@
    <update id="sendMessage" parameterType="int">
       UPDATE SURVEY_LIST SET    STATE_CODE='30004' WHERE SURVEY_SEQ =#{surveySeq}
    </update>
-   
+
    <update id="updateEmail" parameterType="int">
    	  UPDATE NOTICE_EMAIL N
    	  	 SET N.DELIVERY_YN = 'Y',
@@ -135,7 +135,7 @@
                AND N.DELIVERY_CONTENT LIKE '%' || S.SURVEY_NAME || '%'
         )
    </update>
-   
+
    <update id="updateSMS" parameterType="int">
    	  UPDATE NOTICE_SMS N
    	  	 SET N.DELIVERY_YN = 'Y',
@@ -147,8 +147,8 @@
                AND N.DELIVERY_CONTENT LIKE '%' || S.SURVEY_NAME || '%'
         )
    </update>
-   
-   
+
+
 <select id="searchListByKeyword" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="SLD">
    <![CDATA[
        SELECT
@@ -242,7 +242,7 @@
           FROM  SURVEY_ITEM  right join SURVEY_QUESTION
           on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ
           WHERE SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} and SURVEY_QUESTION.QUESTION_SEQ = #{questionSeq} ORDER BY SURVEY_QUESTION.QUESTION_SEQ DESC
-   
+
    </select>
 
 	<delete id="deleteItemByQSeq" parameterType="int">
@@ -335,16 +335,16 @@
  ]]>
 
 </select>
-	
+
 	<select id="surveyList" resultType="SLD">
-		SELECT 
+		SELECT
 			SURVEY_SEQ
             ,SURVEY_NAME
             ,SURVEY_CONTENT
             ,ANONYMITY_CHECK_CODE
             ,to_date(SURVEY_START_DATE, 'YYYY-MM-dd')  as surveyStartDate
             ,to_date(SURVEY_CLOSED_DATE, 'YYYY-MM-dd') as surveyClosedDate
-        FROM (SELECT 
+        FROM (SELECT
         		SURVEY_SEQ
                 ,SURVEY_NAME
                 ,SURVEY_CONTENT
@@ -354,7 +354,7 @@
               FROM SURVEY_LIST
               WHERE STATE_CODE = '30004')
 	</select>
-	
+
 	<select id="organList" resultType="com.mycompany.webapp.dto.OrganizationChartDTO">
 		SELECT DISTINCT
     		   U.DEPARTMENT_ID AS departmentId,
@@ -370,7 +370,7 @@
 
 	<select id="resultList" resultType="com.mycompany.webapp.dto.SurveyResultTeamDTO">
 		SELECT AVG(SCORE) AS SCORE,
-         	   DEPARTMENT_NAME   
+         	   DEPARTMENT_NAME
   		  FROM(
   		  	SELECT SUM(ITEM_SCORE) AS SCORE,
                EMPLOYEE_NAME,
@@ -381,13 +381,13 @@
                USER_INFO U
          WHERE I.ITEM_SEQ = R.ITEM_SEQ
            AND R.SURVEY_SEQ = #{surveySeq}
-           AND R.APPRAISEE_ID = U.EMPLOYEE_ID 
+           AND R.APPRAISEE_ID = U.EMPLOYEE_ID
            AND U.DEPARTMENT_ID = O.DEPARTMENT_ID
       GROUP BY EMPLOYEE_NAME, DEPARTMENT_NAME
    	      )
    	  GROUP BY EMPLOYEE_NAME, DEPARTMENT_NAME
 	</select>
-	
+
 	<select id="resultDPList" resultType="com.mycompany.webapp.dto.SurveyResultTeamDTO">
 		SELECT SUM(ITEM_SCORE) AS SCORE,
                EMPLOYEE_NAME
@@ -396,7 +396,7 @@
                USER_INFO U
          WHERE I.ITEM_SEQ = R.ITEM_SEQ
            AND R.SURVEY_SEQ = #{surveySeq}
-           AND R.APPRAISEE_ID = U.EMPLOYEE_ID 
+           AND R.APPRAISEE_ID = U.EMPLOYEE_ID
            AND U.DEPARTMENT_ID = #{departmentId}
       GROUP BY EMPLOYEE_NAME
 	</select>
@@ -441,11 +441,11 @@ FROM
       ,ORGANIZATION_CHART oc
 WHERE sr.QUESTION_SEQ = sq.QUESTION_SEQ
         AND sr.ITEM_SEQ = si.ITEM_SEQ
-        AND sr.APPRAISEE_ID = ui.employee_id
+        AND sr.APPRAISEE_ID = ui.EMPLOYEE_ID
         AND ui.GRADE_ID = g.GRADE_ID
         AND ui.DEPARTMENT_ID = oc.DEPARTMENT_ID
-        AND sr.APPRAISEE_ID=#{employeeId} and sr.survey_seq = #{surveySeq}
-order by RATER_ID, ANONYMITY_SEQ, QUESTION_SEQ
+        AND sr.APPRAISEE_ID=#{employeeId} AND sr.SURVEY_SEQ = #{surveySeq}
+ORDER BY RATER_ID, ANONYMITY_SEQ, QUESTION_SEQ
 
 </select>
 

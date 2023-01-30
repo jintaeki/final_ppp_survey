@@ -1,45 +1,75 @@
 @charset "UTF-8";
 
-.info > div{
-	border:1px solid black;
+.card-body{
+   height: 865px;
+   width:1500px;
+   background: darkgray;
+   display: flex;
+    justify-content: center;
+}
+
+.forshadowing{
+   background-color: white;
+    box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px, rgb(10 37 64 / 35%) 0px -2px 6px 0px inset;
+    border-radius: 5px;
+    height: 840px;
+    width: 100%;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.individual {
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+    flex-grow: 0;
+}
+
+.row {
+    justify-content: center;
+}
+
+.container_flex{
+   display:flex;
+   justify-content: center;
+   border-radius: 20px;
+   box-shadow: 1px 1px 10px 0px;
+   padding: 20px;
+   margin:20px;
+   height:200px;
+}
+
+.table_container_flex{
+   display:flex;
+   justify-content: center;
+   border-radius: 20px;
+   box-shadow: 1px 1px 10px 0px;
+   padding: 20px;
+   margin:20px;
+   margin-top: 0px;
+   overflow:scroll;
 }
 
 .info > .col-1{
-	background-color: #eeeeee;
-}
-
-
-.result_table{
-	width:100%;
-	max-width:1140px;
-	margin: auto;
-	text-align: center;
-	border:1px solid black;
-	position: relative;
-	bottom:740px;
-
-}
-
-.result_table th, td{
-	padding: 0.75%;
-	border:1px solid black;
+   background-color: #eeeeee;
 }
 
 
 .result_table_list{
-		background-color: #eeeeee;
+      background-color: #eeeeee;
 }
 
 .result_sub{
-	margin-top: 60px;
-	width:100%;
-	max-width:600px;
-	margin-left:90px;
-	text-align: center;
+   margin-top: 60px;
+   width:100%;
+   max-width:600px;
+   margin-left:90px;
+   text-align: center;
 
 }
 .result_sub  th{
-	border-top:none;
-	border-bottom: 1px solid #dee2e6;
+   border-top:none;
+   border-bottom: 1px solid #dee2e6;
 
 }

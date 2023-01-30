@@ -15,9 +15,6 @@ color:green;
     display: block;
 }
 
-
-
-
 .survey_list_form_upper_dv{
 	display:flex;
 	margin-left: 200px;
@@ -45,12 +42,12 @@ color:green;
 
 .table td {
 /* 	width: 350px; */
-	
+
 }
 
 .table th {
 /* 	width: 150px; */
-	
+
 }
 
 .table{

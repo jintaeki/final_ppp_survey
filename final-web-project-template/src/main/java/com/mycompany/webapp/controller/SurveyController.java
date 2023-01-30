@@ -145,45 +145,45 @@ public class SurveyController {
 	@RequestMapping("/surveyresultteam")
 	public String surveySuccess( Model model) {
 		logger.info("실행");
-		
+
 		List<SurveyListDTO> Sdt = surveyService.surveyList();
 		JSONArray cJsonArrDP = new JSONArray();
 		JSONArray cJsonArrResult = new JSONArray();
-		
+
 		model.addAttribute("chartJSONDp", cJsonArrDP);
 		model.addAttribute("chartJSONResult", cJsonArrResult);
-		
+
 		model.addAttribute("Sdt", Sdt);
-		
+
 		return "survey_result_team";
 	}
-	
+
 	@RequestMapping("/surveyresultDetail")
 	public String surveyResultDetail(@RequestParam int surveySeq,
 			                         @RequestParam(defaultValue = "") String departmentId, Model model) {
 		logger.info("실행1");
-		
+
 		List<SurveyListDTO> Sdt = surveyService.surveyList();
 		List<SurveyResultTeamDTO> resultList = surveyService.resultList(surveySeq);
 		List<SurveyResultTeamDTO> resultDPList = surveyService.resultDPList(surveySeq, departmentId);
-		List<OrganizationChartDTO> OList = surveyService.organList(surveySeq); 
-		
+		List<OrganizationChartDTO> OList = surveyService.organList(surveySeq);
+
 		String surveyName = null;
 		for(int i=0; i<Sdt.size(); i++) {
 			if(surveySeq == Sdt.get(i).getSurveySeq()) {
 			surveyName = Sdt.get(i).getSurveyName();
 			}
 		}
-		
+
 		String departmentName = null;
 		for(int i=0; i<OList.size(); i++) {
 			if(departmentId.equals(OList.get(i).getDepartmentId())) {
 			   departmentName = OList.get(i).getDepartmentName();
 			}
 		}
-		
+
 		model.addAttribute("surveySeq", surveySeq);
-		model.addAttribute("Sdt", Sdt);		
+		model.addAttribute("Sdt", Sdt);
 		model.addAttribute("surveyName", surveyName);
 		model.addAttribute("departmentName", departmentName);
 
@@ -194,7 +194,7 @@ public class SurveyController {
 		        cJsonObjResult.put("d", vo.getDepartmentName());
 		        cJsonArrResult.add(cJsonObjResult);
 		}
-		
+
 		JSONArray cJsonArrDP = new JSONArray();
 		JSONObject cJsonObjDP = new JSONObject();
 		for(SurveyResultTeamDTO vo : resultDPList) {
@@ -202,42 +202,43 @@ public class SurveyController {
 		        cJsonObjDP.put("e", vo.getEmployeeName());
 		        cJsonArrDP.add(cJsonObjDP);
 		}
-		
+
 		model.addAttribute("chartJSONDp", cJsonArrDP);
 		model.addAttribute("chartJSONResult", cJsonArrResult);
-		
+
 		return "survey_result_team";
 	}
-	
+
+
 	@RequestMapping(value = "/select_ajax.do")
 	@ResponseBody
 	public String select_ajax(@RequestBody String filterJSON,
-	        HttpServletResponse response, ModelMap model ) throws Exception { 
+	        HttpServletResponse response, ModelMap model ) throws Exception {
 		logger.info("실행1");
 		JSONObject obj = new JSONObject();
 		List<OrganizationChartDTO> Odt  = null;
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-	 
-		try{            
+
+		try{
 			ObjectMapper mapper = new ObjectMapper();
 			SurveyListDTO searchVO = (SurveyListDTO)mapper.readValue(filterJSON,new TypeReference<SurveyListDTO>(){ });
-			
+
 			int surveySeq = searchVO.getSurveySeq();
-			
+
 			Odt = surveyService.organList(surveySeq);
-	    
+
 			obj.put("Odt", Odt);
-	    
+
 		}catch(Exception e){
 			logger.info(e.toString());
 			obj.put("res", "error");
-		} 
+		}
 		out.print(obj);
 		return null;
 	}
 
-	
+
 
 	// 모달창을 통해 설문지 설정 데이터 입력
 	@RequestMapping(value = "/set.do", method = RequestMethod.POST)
@@ -380,7 +381,7 @@ public class SurveyController {
 	public void questionDelete(@PathVariable int questionSeq) {
 		logger.info("문제 삭제 진입");
 		logger.info("삭제할 문제 id: " + questionSeq);
-		surveyService.DeleteQuestion(questionSeq);
+		surveyService.deleteQuestion(questionSeq);
 	}
 
 	// 문제 선택 시 데이터 가져오기
@@ -391,15 +392,7 @@ public class SurveyController {
 		return surveyService.selectQuestionBySeq(questionSeq, surveySeq);
 	}
 
-	// 문항 등록
-	public SurveyQuestionDTO itemInsert(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,
-			Model model, RedirectAttributes redirectAttrs) {
-		logger.info("문항생성 Controller 진입");
 
-		return SQD;
-	}
-
-	// 진택
 	// 등록완료 돌아가기
 	@RequestMapping("/surveyinsertcomplete.do/{surveyseq}")
 	public String SurveyInsertComplete(@PathVariable int surveyseq) {
@@ -433,17 +426,10 @@ public class SurveyController {
 
 	@RequestMapping("/deleteItem.do/{questionSeq}")
 	@ResponseBody
-	public String DeleteItem(@PathVariable int questionSeq) {
+	public String deleteItem(@PathVariable int questionSeq) {
 		logger.info("deleteItem 컨트롤러");
 		surveyService.deleteItemByQSeq(questionSeq);
 		return "삭제 성공";
-	}
-
-	@RequestMapping("")
-	public String selectSurveyMapping() {
-
-
-		return "survey";
 	}
 
 
@@ -510,30 +496,27 @@ public class SurveyController {
 	//문제 복사를 위한 메소드
 	@RequestMapping("/copysurvey.do/{surveySeq}")
 	public String copySurvey(@PathVariable int surveySeq) {
-		
+
 		// seq로 설문 내용 불러오기
 		SurveyListDTO SLD = surveyService.selectSurvey(surveySeq);
 		logger.info("복사할 설문 내용: "+SLD.toString());
-		// 설문 저장			
+		// 설문 저장
 		SLD.setStateCode("30001");
 		surveyService.setSurvey(SLD);
 		System.out.println(SLD.getSurveySeq());
-				
+
 		//설문지의 문제 조회
 		List<SurveyQuestionDTO> SQD = surveyService.getQuestionListOrderByAsc(surveySeq);
 		for(int i = 0 ; i< SQD.size();i++) {
 			SQD.get(i).setSurveySeq(SLD.getSurveySeq());
 		}
-		
-		surveyService.insertQuestionsAndItems(SQD);
-		
-		
-	
-		return "redirect:/survey/surveysearch"; 
-	}
-	
 
-		
+		surveyService.insertQuestionsAndItems(SQD);
+		return "redirect:/survey/surveysearch";
+	}
+
+
+
 
 		@RequestMapping("/surveyresult/{surveySeq}/{employeeId}")
 		public String surveyResult (
@@ -548,8 +531,8 @@ public class SurveyController {
 			model.addAttribute("surveyResultList",surveyResultList);
 			surveyResultTarget = surveyService.getResultTarget(employeeId);
 			model.addAttribute("surveyResultTarget",surveyResultTarget);
-
-			logger.info("Result Model: " + surveyResultList.get(1).toString());
+			logger.info("SRT: " + surveyResultTarget.get(0).toString());
+			logger.info("Result Model: " + surveyResultList.get(0).toString());
 
 			return "survey_result";
 		}

@@ -6,24 +6,22 @@
  <div class="col-11">
    <div class="card-body">
       <div class="forshadowing" >
-            <div class="individual">
-               <div class="row" style="text-align: center">
-                  <div class="info" style="display: contents;">
-                     <div class="col-1">소속</div>
-                     <div class="col-2">연구실 1팀</div>
-                     <div class="col-1">직급</div>
-                     <div class="col-2">부장</div>
-                     <div class="col-1">이름</div>
-                     <div class="col-2">윤미정</div>
-                  </div>
-               </div>
-         </div>
-
           <div class="container_flex">
-
-                </div>
-
-
+			  <div class="individual">
+               <div class="row" style="text-align: center">
+                  <c:forEach items="${surveyResultTarget}" var="SRT">
+                  <div class="info" style="display: contents;">
+                     	<div class="col-1">소속</div>
+                     	<div class="col-2">${SRT.DEPARTMENT_NAME}</div>
+                     	<div class="col-1">직급</div>
+                     	<div class="col-2">${SRT.GRADE_NAME}</div>
+                     	<div class="col-1">이름</div>
+                    	<div class="col-2">${SRT.EMPLOYEE_NAME}</div>
+                  </div>
+				 </c:forEach>
+               </div>
+         	</div>
+          </div>
 
  <div class="table_container_flex">
    <table class="table  table-bordered" style="word-break:break-all">
@@ -38,7 +36,7 @@
             </tr>
          </thead>
           <tbody>
-          	<c:forEach items="${surveyResultTarget}" var="SRT">
+          	<c:forEach items="${surveyResultList}" var="SRL">
             	<tr>
                		<td>${SRL.raterName}</td>
 
