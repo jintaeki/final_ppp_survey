@@ -23,7 +23,7 @@
 										<form action="<c:url value='/survey/surveyresultDetail'/>"
 											method="get" class="survey_list_form">
 											<select name="surveySeq" id="surveySeq" onchange="typeFn();">
-												<option>--선택--</option>
+												<option value="1">--선택--</option>
 												<c:forEach items="${Sdt}" var="sdt">
 													<option value="${sdt.surveySeq}">${sdt.surveyName}</option>
 												</c:forEach>
