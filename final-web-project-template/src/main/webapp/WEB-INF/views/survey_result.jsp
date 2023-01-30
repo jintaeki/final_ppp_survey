@@ -38,6 +38,11 @@
 						<div class="col-12">&nbsp;</div>
 					</div>
 				</div>
+
+
+
+
+				<div class="container_flex"></div>
 				<div class="table_container_flex">
 					<table class="table  table-bordered" style="word-break: break-all">
 						<thead>
@@ -73,13 +78,12 @@
 					</table>
 					<!-- table_container_flex 종료 -->
 				</div>
-				<!-- forshadowing 종료 -->
 			</div>
-
-			<!--card-body 종료  -->
+			<!-- forshadowing 종료 -->
 		</div>
+		<!--card-body 종료  -->
 	</div>
 	<!-- col-11 종료 -->
-
 </div>
-<%@ include file="/WEB-INF/views/common/footer.jsp"%>
+
+<%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
