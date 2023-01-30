@@ -92,12 +92,12 @@ public class SurveyService implements ISurveyService{
 	public void sendMessage(int surveySeq) {
 		surveyDao.sendMessage(surveySeq);
 	}
-	
+
 	@Override
 	public void updateEmail(int surveySeq) {
 		surveyDao.updateEmail(surveySeq);
 	}
-	
+
 	@Override
 	public void updateSMS(int surveySeq) {
 		surveyDao.updateSMS(surveySeq);
@@ -118,7 +118,7 @@ public class SurveyService implements ISurveyService{
 	}
 
 	@Override
-	public void DeleteQuestion(int questionSeq) {
+	public void deleteQuestion(int questionSeq) {
 		logger.info("문제삭제 서비스 진입");
 		surveyDao.deleteItemByQSeq(questionSeq);
 		surveyDao.DeleteQuestion(questionSeq);
@@ -155,22 +155,22 @@ public class SurveyService implements ISurveyService{
 		logger.info("검색:" + surveyDao.searchByEvaluate(pagingDto).toString());
 		return surveyDao.searchByEvaluate(pagingDto);
 	}
-	
+
 	@Override
 	public List<SurveyListDTO> surveyList() {
 		return surveyDao.surveyList();
 	}
-	
+
 	@Override
 	public List<OrganizationChartDTO> organList(int surveySeq) {
 		return surveyDao.organList(surveySeq);
 	}
-		
+
 	@Override
 	public List<SurveyResultTeamDTO> resultList(int surveySeq) {
 		return surveyDao.resultList(surveySeq);
 	}
-	
+
 	@Override
 	public List<SurveyResultTeamDTO> resultDPList(int surveySeq, String departmentId) {
 		return surveyDao.resultDPList(surveySeq, departmentId);
@@ -180,7 +180,7 @@ public class SurveyService implements ISurveyService{
 	@Override
 	public void insertQuestionsAndItems(List<SurveyQuestionDTO> SQDList) {
 		int SQDListsize = SQDList.size();
-		
+
 		SurveyQuestionDTO SQD = new SurveyQuestionDTO() ;
 		for(int i = 0; i<SQDListsize;i++) {
 			SQD.setQuestionContent(SQDList.get(i).getQuestionContent());
@@ -189,14 +189,13 @@ public class SurveyService implements ISurveyService{
 			List<Map<String,Object>> items =surveyDao.selectItems(SQDList.get(i).getQuestionSeq());
 			System.out.println(items.toString());
 			surveyDao.insertQuestion(SQD);
-			
+
 			for(int j = 0; j<items.size();j++) {
 				SQD.setItemContent(items.get(j).get("ITEM_CONTENT").toString());
 				SQD.setItemScore(items.get(j).get("ITEM_SCORE").toString());
 				surveyDao.insertItem(SQD);
 			}
 		}
-		
 
 	}
 
@@ -220,7 +219,7 @@ public class SurveyService implements ISurveyService{
 		return surveyDao.personalStats(surveySeq, employeeId);
 	}
 
-	
+
 	// 등록관리에서 문제 조회할 때 desc
 	@Override
 	public List<SurveyQuestionDTO> getQuestionListOrderByDesc(int surveySeq) {

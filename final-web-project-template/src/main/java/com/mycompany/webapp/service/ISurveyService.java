@@ -31,21 +31,21 @@ public interface ISurveyService {
 	void UpdateQuestion(SurveyQuestionDTO sqd);
 
 	List<Map<String, String>> selectSurveyEvaluate(int surveySeq);
-	
+
 	SurveyListDTO selectSurvey(int surveySeq);
 
 	public List<SurveyQuestionDTO> getQuestionListOrderByDesc(int surveySeq);
 
 	public List<SurveyQuestionDTO> getQuestionListOrderByAsc(int surveySeq);
 
-	
+
 	void sendMessage(int surveySeq);
-	
+
 	// 메일 발송시 상태 업데이트
 	void updateEmail(int surveySeq);
 	void updateSMS(int surveySeq);
 
-	void DeleteQuestion(int questionSeq);
+	void deleteQuestion(int questionSeq);
 
 	void deleteItemByQSeq(int questionSeq);
 
@@ -68,13 +68,13 @@ public interface ISurveyService {
 	// 결과 통계 페이지
 	List<SurveyListDTO> surveyList();
 	List<OrganizationChartDTO> organList(int surveySeq);
-	
+
 	//결과 목록
 	List<Map<String, Object>> getResultTarget(int employeeId);
 	
 	// 개인 결과 요약
 	List<SurveyResultDTO> personalStats(int surveySeq, int employeeId);
-	
+
 	//설문 복사를 위한 문제 및 문항 복사
 	void insertQuestionsAndItems(List<SurveyQuestionDTO> SQD);
 

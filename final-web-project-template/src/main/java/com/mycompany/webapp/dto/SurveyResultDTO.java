@@ -19,7 +19,7 @@ public class SurveyResultDTO {
 	private String raterName;
 	private String raterGrade;
 	private String raterDepartmentName;
-	
+
 	//설문 통계용
 	private int score; //총점수
 	private String grd; //등급
@@ -27,7 +27,8 @@ public class SurveyResultDTO {
 	private float avg; //설문지 내 평균
 	private int min; //설문지 내 최저점
 	
-	
+	private String rnum;
+
 	public String getSurveySeq() {
 		return surveySeq;
 	}
@@ -167,6 +168,13 @@ public class SurveyResultDTO {
 		this.min = min;
 	}
 	
+	public String getRnum() {
+		return rnum;
+	}
+	public void setRnum(String rnum) {
+		this.rnum = rnum;
+	}
+	
 	@Override
 	public String toString() {
 		return "SurveyResultDTO [surveySeq=" + surveySeq + ", raterId=" + raterId + ", appraiseeId=" + appraiseeId
@@ -176,6 +184,9 @@ public class SurveyResultDTO {
 				+ questionSeq + ", itemSeq=" + itemSeq + ", answerContent=" + answerContent + ", anonymityCode="
 				+ anonymityCode + ", raterName=" + raterName + ", raterGrade=" + raterGrade + ", raterDepartmentName="
 				+ raterDepartmentName + ", score=" + score + ", grd=" + grd + ", max=" + max + ", avg=" + avg + ", min="
-				+ min + "]";
+				+ min + ", rnum=" + rnum + "]";
 	}
+
+
+	
 }

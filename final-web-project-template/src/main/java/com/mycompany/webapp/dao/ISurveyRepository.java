@@ -34,12 +34,12 @@ public interface ISurveyRepository {
 	void UpdateQuestion(SurveyQuestionDTO SQD);
 
 	List<SurveyQuestionDTO> getQuestionListOrderByDesc(int surveySeq);
-	
+
 	List<SurveyQuestionDTO> getQuestionListOrderByAsc(int surveySeq);
 
 
 	void sendMessage(int surveySeq);
-	
+
 	// 메일 발송시 상태 업데이트
 	void updateEmail(int surveySeq);
 	void updateSMS(int surveySeq);
@@ -63,11 +63,11 @@ public interface ISurveyRepository {
 	List<Map<String, String>> selectSurveyEvaluate(int surveySeq);
 
 	List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
-		
+
 	// 결과 통계 페이지
 	List<SurveyListDTO> surveyList();
 	List<OrganizationChartDTO> organList(int surveySeq);
-	
+
 	//결과 목록
 	List<SurveyResultTeamDTO> resultList(int surveySeq);
 	List<SurveyResultTeamDTO> resultDPList(@Param("surveySeq") int surveySeq, @Param("departmentId") String departmentId);
@@ -78,6 +78,7 @@ public interface ISurveyRepository {
 	
 	// 개인 점수 요악본
 	List<SurveyResultDTO> personalStats(@Param("surveySeq") int surveySeq, @Param("employeeId") int employeeId);
+
 
 }
 

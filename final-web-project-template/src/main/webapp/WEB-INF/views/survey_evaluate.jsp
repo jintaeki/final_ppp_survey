@@ -36,6 +36,7 @@
 							</form>
 						</div>
 					</div>
+
 					<table class="table">
 						<thead>
 							<tr>
@@ -50,7 +51,7 @@
 						<tbody>
 							<c:forEach items="${evaluateList}" var="EL">
 								<tr>
-									<th scope="row">1</th>
+									<th scope="row">${EL.RNUM}</th>
 									<td class="sv_name">${EL.DEPARTMENT_NAME}</td>
 									<td>${EL.GRADE_NAME}</td>
 									<td>${EL.EMPLOYEE_NAME}</td>
@@ -63,9 +64,9 @@
 
 						</tbody>
 						<tr>
+
 							<td colspan="12" class="text-center">
 								<div>
-
 									<a class="btn btn-outline-primary btn-sm"
 										href="EvaluateSearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}&surveySeq=${pagingdto.surveySeq}">처음</a>
 									<c:if test="${pagingdto.groupNo>1}">
@@ -100,5 +101,4 @@
 		</div>
 	</div>
 </div>
-
-<%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
+	<%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
