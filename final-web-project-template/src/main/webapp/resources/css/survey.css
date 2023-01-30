@@ -104,21 +104,6 @@ width: 130px;
     margin: auto;
 }
 
-
-/* .survey_info { */
-/*    float: left; */
-/*    width: 250px; */
-/*    height: 700px; */
-/*    display: flex; */
-/*    color: white; */
-/*    background-color: #007bff; */
-/*    justify-content: center; */
-/*    flex-direction: column; */
-/*    align-content: center; */
-/*    align-items: center; */
-/*    border-radius: 30px; */
-/* } */
-
 .survey_info_text {
    padding: 35px;
    text-align: center;
