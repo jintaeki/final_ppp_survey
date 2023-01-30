@@ -1,7 +1,23 @@
 @charset "UTF-8";
 .hmenu{
-display: flex;
+	display: flex;
 	margin-bottom: 20px;
+	margin-left: 530px;
+}
+
+.card-body{
+	height: 865px; 
+	width:1500px; 
+/* 	margin-left:50px; */
+	background: darkgray;
+}
+
+.forshadowing{
+	background-color: white;
+    box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px, rgb(10 37 64 / 35%) 0px -2px 6px 0px inset;
+    border-radius: 5px;
+    height: 820px;
+    padding: 1em;
 }
 
 .survey_list_form_upper_dv{
@@ -16,11 +32,10 @@ display: flex;
 
 
 .table{
-	max-width: 900px;
-	margin-left: auto;
-	margin-right: auto;
+	max-width: 1500px;
+	margin:auto;
 }
-.table td:not(.sv_name){
+.sv_name{
 	text-align: center;
 }
 .table thead th{
@@ -32,6 +47,8 @@ display: flex;
 	height: 65px;
 	vertical-align: middle;
 	border-top: 1px solid #dee2e6;
+	text-align: center;
+	
 }
 
 .pagination{

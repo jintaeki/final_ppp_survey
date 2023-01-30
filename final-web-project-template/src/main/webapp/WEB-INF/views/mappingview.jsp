@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ include file="/WEB-INF/views/common/headerformanager.jsp" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/survey_list.css"/>
 
 <script>
@@ -25,7 +25,7 @@ function popup(){
 
 function mapInsert(surveySeq){
 	
-	let popUrl ="/manyface/mapping/another.do?pageNo=1"+"&surveySeq="+surveySeq
+	let popUrl ="/mapping/another.do?pageNo=1"+"&surveySeq="+surveySeq
 			   +"&keyword=&selection=60004&selectGD=60004";	
 	let popOption = "width=800, height=820, left=470, top=100";
 	window.open(popUrl, "다면평가 대상 추가", popOption);
@@ -182,7 +182,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 		</div>
 	</div>
 </div>
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+<%@ include file="/WEB-INF/views/common/footerformanager.jsp" %>
 
 <!-- Modal -->
 <div class="modal fade" id="popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

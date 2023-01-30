@@ -145,7 +145,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/logincheck")
-	public String login_after(@ModelAttribute("UCD")  @Valid UserCheckDTO UCD, 
+	public String loginAfter(@ModelAttribute("UCD")  @Valid UserCheckDTO UCD, 
 							  BindingResult result,
 							  HttpSession session, Model model) {
 		logger.info("실행");
@@ -195,12 +195,6 @@ public class HomeController {
 		logger.info(UCDList.toString());
 		
 		return UCDList;
-	}
-
-	@RequestMapping("/loginafter")
-	public String home() {
-		logger.info("실행");
-		return "login_after_user";
 	}
 	
 	@RequestMapping("/getquestionforsurvey.do/{surveySeq}")
@@ -294,6 +288,7 @@ public class HomeController {
 		return checknansu();
 	}
 	
+	// 일련번호 발급 및 중복 확인 메소드, 재귀함수
 	public String checknansu() {
 		nansu = loginCheckService.getNansu();
 		System.out.println(loginCheckService.checkNansu(nansu));

@@ -2,9 +2,9 @@
 <%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/survey_evaluate.css"/>
 
-<div class="card m-2">
+<div class="col-11">
 	<div class="card-body">
-		<div class="container my-5">
+		<div class="forshadowing">
 			<div class="row">
 				<div class="hmenu">
 					<div class="survey_list_form_upper_dv">
@@ -55,8 +55,8 @@
 
 					</tbody>
 						<tr>
-						<td colspan="4" class="text-center">
-							<div style="margin-left: 170px;">
+						<td colspan="12" class="text-center">
+							<div>
 
 								<a class="btn btn-outline-primary btn-sm"
 									href="EvaluateSearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}&surveySeq=${pagingdto.surveySeq}">처음</a>

@@ -21,24 +21,13 @@
 	<![CDATA[
 		INSERT INTO 
 		PROJECT_HISTORY 
-			(PARTICIPATION_EMPLOYEE_ID, PROJECT_ID, 
-			PROJECT_START_DATE, PROJECT_CLOSED_DATE)  
+			(PARTICIPATION_EMPLOYEE_ID
+		   , PROJECT_ID)  
 		VALUES 
 			(#{participationEmployeeId},
-			#{projectId}, #{projectStartDate}, #{projectClosedDate})
+			 #{projectId})
 	]]>
 	</insert>
 
-
-<!-- <insert id="insert_into_mappingtable"> -->
-<!-- 	<![CDATA[ -->
-<!-- 		INSERT INTO  -->
-<!-- 		mappingtable  -->
-<!-- 			(ratorid, surveyid, -->
-<!-- 			projectid, evaluatedid  -->
-<!-- 			)   -->
-		
-<!-- 	]]> -->
-<!-- 	</insert> -->
 
 </mapper>

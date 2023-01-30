@@ -35,10 +35,10 @@
 				<br>
            </div>
 		
-		<div class="flex-grow-1 container-fluid" style="margin-left:50px;">
+		<div class="flex-grow-1 container-fluid">
 			<div class="row h-100">
 				<div class="col-1" >
-					<div class="h-100 d-flex flex-column" style="width:160px;background:#031436;">
+					<div class="h-100 d-flex flex-column" style="width:160px;background:#031436; border-radius: 0.25rem;">
 						<div class="flex-grow-1">
 							<%@ include file="/WEB-INF/views/common/menuformanager.jsp"%>
 						</div>
