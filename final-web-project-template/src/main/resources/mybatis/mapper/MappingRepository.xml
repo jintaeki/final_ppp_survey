@@ -93,6 +93,7 @@
 			DELIVERY_DATE,
 			DELIVERY_YN,
 			DELIVERY_CONTENT,
+			SURVEY_SEQ,
 			REG_DATE,
 			UPDATE_DATE
 		)
@@ -104,15 +105,17 @@
 			DELIVERY_DATE,
 			DELIVERY_YN,
 			DELIVERY_CONTENT,
+			SURVEY_SEQ,
 			REG_DATE,
 			UPDATE_DATE
         FROM(SELECT DISTINCT
                 EMPLOYEE_ID AS RATER_ID,
                 EMAIL,
-                'localhost:8080/manyface' AS SURVEY_LINK,
+                'localhost/manyface' AS SURVEY_LINK,
                 SYSDATE AS DELIVERY_DATE,
                 'N' AS DELIVERY_YN,
-                CONCAT(survey_name, ' 다면평가 평가원으로 선정되셨습니다. 해당 주소로 들어가 로그인하여 다면 평가를 진행해주시길 바랍니다.') AS DELIVERY_CONTENT,
+                '다면평가 평가원으로 선정되셨습니다. 해당 주소로 들어가 로그인하여 다면 평가를 진행해주시길 바랍니다.' AS DELIVERY_CONTENT,
+                MAPPING.SURVEY_SEQ,
                 SYSDATE AS REG_DATE,
                 SYSDATE AS UPDATE_DATE
             FROM USER_INFO,
@@ -133,6 +136,7 @@
 			DELIVERY_DATE,
 			DELIVERY_YN,
 			DELIVERY_CONTENT,
+			SURVEY_SEQ,
 			REG_DATE,
 			UPDATE_DATE
 		)
@@ -144,15 +148,17 @@
 			DELIVERY_DATE,
 			DELIVERY_YN,
 			DELIVERY_CONTENT,
+			SURVEY_SEQ,
 			REG_DATE,
 			UPDATE_DATE
         FROM(SELECT DISTINCT
                 EMPLOYEE_ID AS RATER_ID,
                 PHONE,
-                'localhost:8080/manyface' AS SURVEY_LINK,
+                'localhost/manyface' AS SURVEY_LINK,
                 SYSDATE AS DELIVERY_DATE,
                 'N' AS DELIVERY_YN,
-                CONCAT(survey_name, ' 다면평가 평가원으로 선정되셨습니다. 해당 주소로 들어가 로그인하여 다면 평가를 진행해주시길 바랍니다.') AS DELIVERY_CONTENT,
+                '다면평가 평가원으로 선정되셨습니다. 해당 주소로 들어가 로그인하여 다면 평가를 진행해주시길 바랍니다.' AS DELIVERY_CONTENT,
+                MAPPING.SURVEY_SEQ,
                 SYSDATE AS REG_DATE,
                 SYSDATE AS UPDATE_DATE
             FROM USER_INFO,
@@ -166,24 +172,14 @@
 	
 	<delete id="deleteEmail" parameterType="com.mycompany.webapp.dto.NoticeEmailDTO">
 		DELETE 
-          FROM NOTICE_EMAIL N  
-         WHERE EXISTS(
-          	SELECT 1
-              FROM SURVEY_LIST S
-          	 WHERE S.SURVEY_SEQ = #{surveySeq}
-               AND N.DELIVERY_CONTENT LIKE '%' || S.SURVEY_NAME || '%'
-        )
+          FROM NOTICE_EMAIL 
+         WHERE SURVEY_SEQ = #{surveySeq}
 	</delete>
 	
 	<delete id="deleteSMS" parameterType="com.mycompany.webapp.dto.NoticeSmsDTO">
 		DELETE 
-          FROM NOTICE_SMS N  
-         WHERE EXISTS(
-          	SELECT 1
-              FROM SURVEY_LIST S
-          	 WHERE S.SURVEY_SEQ = #{surveySeq}
-               AND N.DELIVERY_CONTENT LIKE '%' || S.SURVEY_NAME || '%'
-        )
+          FROM NOTICE_SMS  
+         WHERE SURVEY_SEQ = #{surveySeq}
 	</delete>
 	
 	

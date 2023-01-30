@@ -19,7 +19,7 @@
       <th scope="col">
 		<form action="<c:url value='/survey/surveyresultDetail'/>" method="get" class="survey_list_form">
 			<select name="surveySeq" id="surveySeq" onchange="typeFn();">
-				<option>--선택--</option>
+				<option value="1">--선택--</option>
 				<c:forEach items="${Sdt}" var="sdt">
 					<option value="${sdt.surveySeq}">${sdt.surveyName}</option>
 				</c:forEach>
@@ -184,17 +184,6 @@ function typeFn() {
 	    return resMap;
 	} 
 	
-$(document).ready(function() {
-	console.log(getScoreCnt("cateArr")[0]);
-	console.log(getScoreCnt("data")[0]);
-	console.log(getDPScoreCnt("cateArr")[0]);
-	console.log(getDPScoreCnt("data")[0]);
-	
-	console.log(getScoreCnt("cateArr"));
-	console.log(getScoreCnt("data"));
-	console.log(getDPScoreCnt("cateArr"));
-	console.log(getDPScoreCnt("data"));
-});
 /* CHART 설정 끝 */
 
 /* CHART 전체 START */

@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ include file="/WEB-INF/views/common/headerformanager.jsp" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/survey_list.css"/>
 
 <script>
@@ -182,7 +182,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 		</div>
 	</div>
 </div>
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+<%@ include file="/WEB-INF/views/common/footerformanager.jsp" %>
 
 <!-- Modal -->
 <div class="modal fade" id="popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

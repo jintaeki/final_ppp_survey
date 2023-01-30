@@ -141,7 +141,8 @@ public class SurveyController {
 
 		return "survey_search";
 	}
-
+	
+	//처음 들어왔을때 용 화면, 아무런 데이터 없이 선택지만 가동 
 	@RequestMapping("/surveyresultteam")
 	public String surveySuccess( Model model) {
 		logger.info("실행");
@@ -158,8 +159,9 @@ public class SurveyController {
 		return "survey_result_team";
 	}
 	
+	//선택지를 통해 전송받은 파라미터로 데이터를 추출, json화하여 전송
 	@RequestMapping("/surveyresultDetail")
-	public String surveyResultDetail(@RequestParam int surveySeq,
+	public String surveyResultDetail(@RequestParam(defaultValue = "") int surveySeq,
 			                         @RequestParam(defaultValue = "") String departmentId, Model model) {
 		logger.info("실행1");
 		
@@ -209,6 +211,7 @@ public class SurveyController {
 		return "survey_result_team";
 	}
 	
+	//선택한 설문지 토대로 참여한 부서 목록 불러오는 함수
 	@RequestMapping(value = "/select_ajax.do")
 	@ResponseBody
 	public String select_ajax(@RequestBody String filterJSON,
@@ -548,8 +551,10 @@ public class SurveyController {
 			model.addAttribute("surveyResultList",surveyResultList);
 			surveyResultTarget = surveyService.getResultTarget(employeeId);
 			model.addAttribute("surveyResultTarget",surveyResultTarget);
-
-			logger.info("Result Model: " + surveyResultList.get(1).toString());
+			List<SurveyResultDTO> personalStats = surveyService.personalStats(surveySeq, employeeId);
+			model.addAttribute("personalStats", personalStats);
+			
+			//logger.info("Result Model: " + surveyResultList.get(1).toString());
 
 			return "survey_result";
 		}

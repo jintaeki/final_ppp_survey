@@ -213,6 +213,12 @@ public class SurveyService implements ISurveyService{
 
 		return surveyDao.getResultTarget(employeeId);
 	}
+	
+	//개인별 점수 요약
+	@Override
+	public List<SurveyResultDTO> personalStats(int surveySeq, int employeeId) {
+		return surveyDao.personalStats(surveySeq, employeeId);
+	}
 
 	
 	// 등록관리에서 문제 조회할 때 desc

@@ -261,7 +261,7 @@
                         ,m.survey_complete_yn
                  FROM grade g ,user_info ui ,mapping m ,ORGANIZATION_CHART oc
                  WHERE
-                     m.rater_id = ui.employee_id
+                     m.appraisee_id = ui.employee_id
                      and g.grade_id = ui.grade_id and oc.department_id = ui.department_id and
                      (oc.department_name LIKE '%' || #{keyword} || '%'
                    or

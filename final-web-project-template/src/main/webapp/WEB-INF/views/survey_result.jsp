@@ -14,6 +14,19 @@
          <div class="col-1">이름</div>
          <div class="col-2">${SRT.EMPLOYEE_NAME}</div>
       </c:forEach>
+       <c:forEach items="${personalStats}" var="PS">
+         <div class="col-1">점수</div>
+         <div class="col-2">${PS.score}</div>
+         <div class="w-100"></div>
+         <div class="col-1">등급</div>
+         <div class="col-2">${PS.grd}</div>
+         <div class="col-1">설문 내 최소점</div>
+         <div class="col-2">${PS.min}</div>
+         <div class="col-1">설문 평균 점수</div>
+         <div class="col-2">${PS.avg}</div>
+         <div class="col-1">설문 내 최고점</div>
+         <div class="col-2">${PS.max}</div>
+      </c:forEach>
       </div>
       <div class="col-12">&nbsp;</div>
       <div class="col-12">&nbsp;</div>

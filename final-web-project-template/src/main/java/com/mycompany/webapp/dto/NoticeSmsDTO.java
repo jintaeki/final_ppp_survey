@@ -10,55 +10,62 @@ public class NoticeSmsDTO {
 	private Date deliveryDate;
 	private String deliveyYN;
 	private String deliveryContent;
+	private int survey_seq;
+	
 	public int getSmsSeq() {
 		return smsSeq;
-	}
-	public String getRaterId() {
-		return raterId;
-	}
-	public String getPhone() {
-		return phone;
-	}
-	public String getSurveyLink() {
-		return surveyLink;
-	}
-	public Date getDeliveryDate() {
-		return deliveryDate;
-	}
-	public String getDeliveyYN() {
-		return deliveyYN;
-	}
-	public String getDeliveryContent() {
-		return deliveryContent;
 	}
 	public void setSmsSeq(int smsSeq) {
 		this.smsSeq = smsSeq;
 	}
+	public String getRaterId() {
+		return raterId;
+	}
 	public void setRaterId(String raterId) {
 		this.raterId = raterId;
+	}
+	public String getPhone() {
+		return phone;
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	public String getSurveyLink() {
+		return surveyLink;
+	}
 	public void setSurveyLink(String surveyLink) {
 		this.surveyLink = surveyLink;
+	}
+	public Date getDeliveryDate() {
+		return deliveryDate;
 	}
 	public void setDeliveryDate(Date deliveryDate) {
 		this.deliveryDate = deliveryDate;
 	}
+	public String getDeliveyYN() {
+		return deliveyYN;
+	}
 	public void setDeliveyYN(String deliveyYN) {
 		this.deliveyYN = deliveyYN;
+	}
+	public String getDeliveryContent() {
+		return deliveryContent;
 	}
 	public void setDeliveryContent(String deliveryContent) {
 		this.deliveryContent = deliveryContent;
 	}
+	public int getSurvey_seq() {
+		return survey_seq;
+	}
+	public void setSurvey_seq(int survey_seq) {
+		this.survey_seq = survey_seq;
+	}
+	
 	@Override
 	public String toString() {
 		return "NoticeSmsDTO [smsSeq=" + smsSeq + ", raterId=" + raterId + ", phone=" + phone + ", surveyLink="
 				+ surveyLink + ", deliveryDate=" + deliveryDate + ", deliveyYN=" + deliveyYN + ", deliveryContent="
-				+ deliveryContent + "]";
+				+ deliveryContent + ", survey_seq=" + survey_seq + "]";
 	}
-	
-
 }
 
