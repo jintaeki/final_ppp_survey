@@ -56,9 +56,17 @@
                            <td>${EL.GRADE_NAME}</td>
                            <td>${EL.EMPLOYEE_NAME}</td>
                            <td>${EL.SURVEY_COMPLETE_YN}</td>
+                           <c:if test="${EL.GRADE_NAME eq '부장'}">
                            <td><input type="button" class="btn btn-link"
                               onclick="result_search_btn(${surveySeq},${EL.EMPLOYEE_ID})"
                               value="조회"></td>
+                           </c:if>
+                           <c:if test="${EL.GRADE_NAME ne '부장'}">
+                           <td><input type="button" class="btn btn-link"                             
+                              value="조회" disabled></td>
+                           </c:if>
+                           
+                           
                         </tr>
                      </c:forEach>
 

@@ -261,15 +261,19 @@
                         ,m.survey_complete_yn
                  FROM grade g ,user_info ui ,mapping m ,ORGANIZATION_CHART oc
                  WHERE
-                     m.appraisee_id = ui.employee_id
-                     and g.grade_id = ui.grade_id and oc.department_id = ui.department_id and
-                     (oc.department_name LIKE '%' || #{keyword} || '%'
-                   or
-                     g.grade_name LIKE '%' || #{keyword} || '%'
-                   or
-                    ui.employee_name  LIKE '%' || #{keyword} || '%'
-                   or
-                 m.survey_complete_yn LIKE  '%' || #{keyword} || '%')
+                     m.rater_id = ui.employee_id
+                     and g.grade_id = ui.grade_id and oc.department_id = ui.department_id 
+                     
+                     AND ((#{selection} = 'employeeName'
+                    	AND ui.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
+                		OR (#{selection} = 'departmentName'
+                        	AND oc.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
+                    	OR (#{selection} = 'gradeName'
+                    		AND g.GRADE_NAME LIKE '%' || #{keyword} || '%')    
+                    	OR(#{selection} = 'surveyCompleteYn'
+                    	   AND m.survey_complete_YN LIKE '%' || #{keyword} || '%')
+                        
+                            )
 
                )
                ORDER BY ROWNUM  DESC

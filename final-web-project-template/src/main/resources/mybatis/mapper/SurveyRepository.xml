@@ -321,7 +321,6 @@
         ,SURVEY_COMPLETE_YN
         ,SURVEY_SEQ
         ,EMPLOYEE_ID
-        ,SURVEY_COMPLETE_YN
         FROM ( SELECT
                  ROWNUM AS rnum
                 ,SURVEY_SEQ
@@ -341,17 +340,19 @@
                  FROM GRADE g ,USER_INFO ui ,MAPPING m ,ORGANIZATION_CHART oc
                  WHERE
                      m.RATER_ID = ui.EMPLOYEE_ID
-                    and g.grade_id = ui.grade_id and oc.department_id = ui.department_id
-                 AND(
-                    m.SURVEY_COMPLETE_YN LIKE '%' || #{keyword} || '%'
-	               OR
-                   ui.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
-                   OR
-                    g.GRADE_NAME LIKE  '%' || #{keyword} || '%'
-                   OR
-                  oc.DEPARTMENT_NAME LIKE  '%' || #{keyword} || '%')
-
-               )
+                    and g.grade_id = ui.grade_id and oc.department_id = ui.department_id 
+                 
+                 AND ((#{selection} = 'employeeName'
+                    	AND ui.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
+                		OR (#{selection} = 'departmentName'
+                        	AND oc.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
+                    	OR (#{selection} = 'gradeName'
+                    		AND g.GRADE_NAME LIKE '%' || #{keyword} || '%')    
+                    	OR(#{selection} = 'surveyCompleteYn'
+                    	   AND m.survey_complete_YN LIKE '%' || #{keyword} || '%')
+                       	  
+                            )
+                   		)
                where survey_seq = #{surveySeq}
                ORDER BY ROWNUM  ASC
              )

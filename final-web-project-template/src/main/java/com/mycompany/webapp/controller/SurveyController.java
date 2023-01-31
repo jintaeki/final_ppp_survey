@@ -472,7 +472,7 @@ public class SurveyController {
 						 @PathVariable("surveySeq") int surveySeq,
 			             @RequestParam(defaultValue="") String keyword,
 						 @RequestParam(defaultValue="1") int pageNo,
-						 @RequestParam(defaultValue="") String selection,
+						 @RequestParam(defaultValue="employeeName") String selection,
 						 @RequestParam(value = "searchType", required = false, defaultValue = "employeeName") String searchType,
 						 @RequestParam(value="employeeName", required=false) String employeeName,
 						 @RequestParam(value="departmentName", required=false) String departmentName,
