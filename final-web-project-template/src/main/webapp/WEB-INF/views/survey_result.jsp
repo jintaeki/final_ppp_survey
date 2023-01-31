@@ -6,6 +6,8 @@
  <div class="col-11">
    <div class="card-body">
       <div class="forshadowing" >
+      
+      
             <div class="individual">
                <div class="row" style="text-align: center">
                   <c:forEach items="${surveyResultTarget}" var="SRT">
