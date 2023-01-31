@@ -37,7 +37,6 @@
                   </div>
                </div>
 
-<<<<<<< HEAD
                <table class="table">
                   <thead>
                      <tr>
@@ -72,7 +71,7 @@
 								<td></td>
 								<td></td>
 								<td style="float: right;"><button id="upper_dv_btn"
-										type="button" class="btn btn-primary" data-toggle="modal"
+										type="button" class="btn btn-outline-primary" data-toggle="modal"
 										data-target="#exampleModal" >재전송</button></td>
 							</tr>
 						</tbody>
@@ -115,7 +114,6 @@
       </div>
    </div>
 </div>
-<<<<<<< HEAD
 
 <script>
 //평가 유무 비동기 체크
@@ -152,8 +150,6 @@ function result_search_btn(surveySeq, employeeId) {
    }
 </script>
    <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
-=======
-	<%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
 	
 	
 
@@ -191,4 +187,3 @@ function result_search_btn(surveySeq, employeeId) {
 	</div>
 
 	<!-- modal(설문 등록 시 뜨는 팝업창) 끝-->
->>>>>>> refs/remotes/origin/chansoo_2

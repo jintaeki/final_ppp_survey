@@ -75,8 +75,8 @@ function map_delete(surveySeq, raterId, appraiseeId){
 								
 				<input type="button" style="margin-left: 50px;"
 					onclick="location.href='<c:url value='/survey/surveysearch'/>'"
-					class="btn btn-primary" value="돌아가기">
-					<button type="button" id="map_insert" class="btn btn-primary" style="margin-left: 1050px;"
+					class="btn btn-outline-primary" value="돌아가기">
+					<button type="button" id="map_insert" class="btn btn-outline-primary" style="margin-left: 1050px;"
 						onclick="mapInsert('${mappingList[0].surveySeq}')">조건과 관계없이 추가</button>
 							
 				
@@ -149,7 +149,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 													${mapping.raterName}</button></td>
 											<td>${mapping.appraiseeName}</td>
 											<td><input type="button" id="map_delete"
-												class="btn btn-primary"
+												class="btn btn-outline-danger"
 												onclick="map_delete('${mapping.surveySeq}', '${mapping.raterId}', '${mapping.appraiseeId}');"
 												value="삭제"></td>
 										</tr>

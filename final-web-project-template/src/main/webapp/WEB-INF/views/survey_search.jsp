@@ -372,7 +372,7 @@
 
 									<td><span class="wait" id="stateCode"> <c:if
 												test="${list.stateCode eq '30003'}">
-												<button class="btn btn-primary" data-toggle="modal"
+												<button class="btn btn-outline-primary" data-toggle="modal"
 													data-target="#exampleModal1" id="${list.surveySeq}_send"
 													onclick="updatemessage('${list.surveySeq}')">발송</button>
 											</c:if> <c:if test="${list.stateCode ne '30003'}">
@@ -390,12 +390,12 @@
 									<td><c:if test="${list.stateCode ne '30004'}">
 											<input type="hidden" class="stateCode"
 												value="${list.stateCode}">
-											<button type="button" class="btn btn-outline-secondary"
+											<button type="button" class="btn btn-outline-primary"
 												id="btn_for_mapping" data-toggle="modal"
 												data-target="#exampleModal1"
 												onclick="btn_for_mapping('${list.surveySeq}', '${list.stateCode}')">매핑</button>
 										</c:if> <c:if test="${list.stateCode eq '30004'}">
-									매핑완료
+									<button type="button" class="btn btn-secondary" disabled>매핑완료</button>
 								</c:if></td>
 								</tr>
 							</c:forEach>
