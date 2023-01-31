@@ -163,11 +163,11 @@
 
 												<input type="hidden" name="surveySeq" id="seq"
 													value="${SLD.surveySeq }"> <input type="hidden"
-													name="questionSeq" value="2">
+													name="questionSeq" value="0">
 												<!-- 비동기로 바꿔 넣어보자 -> 문항도 마찬가지 -->
 											</div>
 
-											<input type="hidden" name="itemScore" value="1"> <input
+											<input type="hidden" name="itemScore" value="0"> <input
 												type="hidden" name="itemContent" value=" "> <input
 												type="reset" value="" id="reset_btn" style="display: none">
 										</div>
@@ -374,38 +374,6 @@
       });
    }
 
-
-   //문항 비동기 등록
-   function insert_obj_item_btn() {
-      var form = $('#item_obj_form')[0];
-      var data = new FormData(form);
-      $.ajax({
-         method : "POST",
-         url : 'insertItem.do', // form을 전송할 실제 파일경로
-         data : data,
-         processData : false,
-         contentType : false,
-         cache : false,
-         timeout : 600000,
-         beforeSend : function() {
-            // 전송 전 실행 코드
-            console.log("문항 등록 전송 전");
-            console.log($('#questionSeq').val());
-         },
-         success : function(data) {
-            // 전송 후 성공 시 실행 코드
-            console.log("문항 등록 전송 성공");
-            console.log(data);
-         },
-         error : function(e) {
-            // 전송 후 에러 발생 시 실행 코드
-            console.log("ERROR : ", e);
-         }
-      });
-   }
-
-
-
    //문항 비동기 등록(수정)
    function update_obj_item_btn() {
       var form = $('#item_obj_form')[0];
@@ -610,6 +578,7 @@
                    htmlMix+=   '</button>';
                    htmlMix += '</div>';
                    htmlMix +='<div class="icon_line" id="guitar">';
+                   htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
                      htmlMix += '<input type="text" name="itemContent" placeholder="기타" value="기타" id="guitar" readonly>';
                      htmlMix +='<input type="hidden" name="itemScore"  value="0">';
                    htmlMix += '</div>';
@@ -637,6 +606,7 @@
                   htmlMix+=   '</button>';
                   htmlMix += '</div>';
                   htmlMix +='<div class="icon_line" id="guitar">';
+                  htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
                    htmlMix += '<input type="text" name="itemContent" placeholder="기타" value="기타" id="guitar" readonly>';
                    htmlMix +='<input type="hidden" name="itemScore"  value="0">';
                    htmlMix += '</div>';
@@ -652,6 +622,7 @@
                       
                       if(data[i].ITEM_CONTENT =="기타"){
                          htmlMix +='<div class="icon_line" id="guitar">';
+                         htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
                           htmlMix += '<input type="text" name="itemContent" id="guitar" value="'+data[i].ITEM_CONTENT+'" readonly>';
                            htmlMix +='<input type="hidden" name="itemScore"  value="0">';
                           htmlMix += '</div>';
@@ -722,6 +693,7 @@
                 htmlMix+=   '</button>';
                 htmlMix += '</div>';
                 htmlMix +='<div class="icon_line" id="guitar">';
+                htmlMix +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
                  htmlMix += '<input type="text" name="itemContent" placeholder="기타" value="기타"  readonly>';
                  htmlMix +='<input type="hidden" name="itemScore"  value="0">';
                  htmlMix += '</div>';
@@ -884,7 +856,7 @@
       html += '<input type="hidden" name="surveySeq" id="seq" value="'+data[0].SURVEY_SEQ+'">';
       html += '<input type="hidden" name="questionSeq" value="'+data[0].QUESTION_SEQ +'">';
       html += `</div>`;
-      html += `<input type="hidden" name="itemScore" value="1">`;
+      html += `<input type="hidden" name="itemScore" value="0">`;
       html += `<input type="hidden" name="itemContent" value=" ">`;
       html += `<input type="reset" value="" id="reset_btn"  style="display:none">
 `
@@ -894,44 +866,6 @@
       $('#questioN_insert_form').append(html);
    }
    
-   function NewQuestion(data){
-       let html = '';
-       $("#questioN_insert_form").empty();
-        html +=` <div id="insertQform">
-              <div class="select_radio" id="select_radio">`;
-   
-        html += '<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1()" checked value="10001">&nbsp;객관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
-        html += '<input type="radio" name="questionTypeCode" id="subj_radio" onclick="checkit2()" value="10002"> &nbsp;주관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
-        html += '<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3()" value="10003"> &nbsp;혼합식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
-  
-     html += `</div>`;
-     html += '<div class="question_content_area" id="question_add"> <div class="input-group" id="question_content">';
-
-     html += '<textarea class="form-control" aria-label="문제 입력칸" id="hi" name="questionContent">'
-     html += '</textarea></div>';
-     html += `<div class="question_add_btn_div">`;  
-     html += '<button type="button" class="create_btn" id="add_btn" onclick="insertQus()">문제 추가</button>';
-     html += '&nbsp;&nbsp;<button type="button" class="create_btn"  id="update_btn" onclick="qusUpdate('+data[0].SURVEY_SEQ+','+data[0].QUESTION_TYPE_CODE+')">문제 수정</button>';
-     html += '<input type="hidden" name="surveySeq" id="seq" value="'+data[0].SURVEY_SEQ+'">';
-     html += '<input type="hidden" name="questionSeq" value="'+data[0].QUESTION_SEQ +'">';
-     html += `</div>`;
-     html += `<input type="hidden" name="itemScore" value="1">`;
-     html += `<input type="hidden" name="itemContent" value=" ">`;
-     html += `<input type="reset" value="" id="reset_btn"  style="display:none">
-`
-     html += `</div>`;
-     html += `</div>`;
-     html += `</div>`;
-     $('#questioN_insert_form').append(html);
-  }
-   //문제 입력 채우 코드에 추가한 것 끝
-   // 진택 끝
-   //채우
-   /*문제 삭제*/
-//    function delete_btn(obj) {
-//       const tag = $(obj);
-//       tag.parent().remove();
-//    }
       function qusUpdate(surveySeq,typeCode){
          var qdiv = $('#questioN_insert_form')[0]
           console.log("업데이트 시작");

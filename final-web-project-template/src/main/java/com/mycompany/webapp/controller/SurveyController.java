@@ -66,30 +66,8 @@ public class SurveyController {
 	@Autowired
 	ICommonCodeService commonCodeService;
 
-	@RequestMapping("/surveydetails")
-	public String surveyDetails() {
-		logger.info("실행");
-		return "survey_details";
-	}
 
 
-
-	// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
-	@RequestMapping("/surveyinsert2")
-	public String survey_insert2(@RequestParam("surveyseq") int surveySeq, Model model, HttpSession session) {
-		if (!String.valueOf(session.getAttribute("SLD")).equals("null")) {
-			SurveyListDTO SLD = (SurveyListDTO) session.getAttribute("SLD");
-			session.removeAttribute("SLD");
-			model.addAttribute("SLD", SLD);
-			model.addAttribute("NoQuestion","저장된 문제가 없습니다.");
-		} else {
-			model.addAttribute("SLD", surveyService.selectSurvey(surveySeq));
-			model.addAttribute("SQL", surveyService.getQuestionListOrderByDesc(surveySeq));
-			model.addAttribute("NoQuestion","저장된 문제가 없습니다.");
-		}
-
-		return "survey_insert2";
-	}
 
 	@RequestMapping("/sendmessage.do/{surveyseq}/{pageno}")
 	@ResponseBody
@@ -102,45 +80,7 @@ public class SurveyController {
 		return "성공";
 	}
 
-	@RequestMapping("/surveysearch")
-	public String search(@RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "1") int pageNo,
-			@RequestParam(defaultValue = "30005") String selection,
-			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDate,
-			@RequestParam(defaultValue = "") String anonyMityCheckCode, HttpSession session, Model model) {
-
-		model.addAttribute("commonCodeList", commonCodeService.selectStateCode());
-		logger.info("지금 가져온 선택지:" + selection);
-		logger.info("페이지 수" + pageNo);
-		logger.info("키워드" + keyword);
-		logger.info("날짜" + surveyStartDate);
-		logger.info("anonyMityCheckCode" + anonyMityCheckCode);
-		try {
-
-			List<SurveyListDTO> surveylist = null;
-			PagingDTO pagingdto = null;
-
-			int totalRows = pagingService.getTotalBoardNum(keyword, selection, surveyStartDate, anonyMityCheckCode);
-
-			pagingdto = new PagingDTO(7, 7, totalRows, pageNo);
-			pagingdto.setSelection(selection);
-			pagingdto.setKeyword(keyword);
-			pagingdto.setSurveyStartDate(surveyStartDate);
-			pagingdto.setAnonyMityCheckCode(anonyMityCheckCode);
-
-			surveylist = surveyService.searchListByKeyword(pagingdto);
-
-
-			model.addAttribute("surveylist", surveylist);
-
-			model.addAttribute("pagingdto", pagingdto);
-			model.addAttribute("keyword", keyword);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return "survey_search";
-	}
+	
 	
 	//처음 들어왔을때 용 화면, 아무런 데이터 없이 선택지만 가동 
 	@RequestMapping("/surveyresultteam")
@@ -243,7 +183,7 @@ public class SurveyController {
 	}
 
 
-
+	// survey_insert jsp
 	// 모달창을 통해 설문지 설정 데이터 입력
 	@RequestMapping(value = "/set.do", method = RequestMethod.POST)
 	public String setSurvey(@ModelAttribute("SLD") @Valid SurveyListDTO SLD, BindingResult result, HttpSession session,
@@ -269,6 +209,23 @@ public class SurveyController {
 
 	}
 
+	// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
+	@RequestMapping("/surveyinsert2")
+	public String survey_insert2(@RequestParam("surveyseq") int surveySeq, Model model, HttpSession session) {
+		if (!String.valueOf(session.getAttribute("SLD")).equals("null")) {
+			SurveyListDTO SLD = (SurveyListDTO) session.getAttribute("SLD");
+			session.removeAttribute("SLD");
+			model.addAttribute("SLD", SLD);
+			model.addAttribute("NoQuestion","저장된 문제가 없습니다.");
+		} else {
+			model.addAttribute("SLD", surveyService.selectSurvey(surveySeq));
+			model.addAttribute("SQL", surveyService.getQuestionListOrderByDesc(surveySeq));
+			model.addAttribute("NoQuestion","저장된 문제가 없습니다.");
+		}
+
+		return "survey_insert2";
+	}
+	
 	// 문항 등록
 	@RequestMapping("/insertItem.do")
 	@ResponseBody
@@ -280,7 +237,6 @@ public class SurveyController {
 		String checkCode = SQD.getQuestionTypeCode();
 		try {
 			if (checkCode.equals("10001")) {
-				surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
 				// 문제 id, 점수, 문항내용, 각 각 받아야 한다
 				// questionId, itemScore, itemContent
 
@@ -294,6 +250,10 @@ public class SurveyController {
 				// 다중 값들을 배열로 변환
 				String[] itemcontent = itemcontents.split(",");
 				String[] itemscore = itemscores.split(",");
+				
+				// 기존 문항 삭제
+				surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
+
 				// 문항 개수만큼 for문 실행하여 문항 등록
 				for (int i = 0; i <= cntcontent; i++) {
 					if(itemcontent[i].equals("")){
@@ -305,11 +265,11 @@ public class SurveyController {
 					surveyService.insertItem(SQD);
 				}
 			} else if (checkCode.equals("10002")) {
+				// 기존 문항 삭제
 				surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
 				surveyService.insertItem(SQD);
 
 			} else if (checkCode.equals("10003")) {
-				surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
 				// 문제 id, 점수, 문항내용, itemid, 각 각 받아야 한다
 				// questionId, itemScore, itemContent, itemId
 
@@ -324,6 +284,9 @@ public class SurveyController {
 				String[] itemcontent = itemcontents.split(",");
 				String[] itemscore = itemscores.split(",");
 
+				// 기존 문항 삭제
+				surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
+				
 				// 문항 개수만큼 for문 실행하여 문항 등록
 				for (int i = 0; i <= cntcontent; i++) {
 					if(itemcontent[i].equals("")){
@@ -342,19 +305,6 @@ public class SurveyController {
 		}
 
 		return SQD;
-	}
-
-
-
-
-	// 문항 비동기식으로 출력
-	@RequestMapping(value = "/selectitems.do/{questionseq}")
-	@ResponseBody
-	public List<Map<String, Object>> selectItems(@PathVariable int questionseq, Model model) {
-		logger.info("문항 뿌리기 컨트롤 ");
-
-		logger.info(surveyService.selectItems(questionseq).toString());
-		return surveyService.selectItems(questionseq);
 	}
 
 	// 문제 등록
@@ -425,6 +375,30 @@ public class SurveyController {
 		
 	}
 
+	
+	//survey_list.jsp
+	//문제 복사를 위한 메소드
+	@RequestMapping("/copysurvey.do/{surveySeq}")
+	public String copySurvey(@PathVariable int surveySeq) {
+
+		// seq로 설문 내용 불러오기
+		SurveyListDTO SLD = surveyService.selectSurvey(surveySeq);
+		logger.info("복사할 설문 내용: "+SLD.toString());
+		// 설문 저장
+		SLD.setStateCode("30001");
+		surveyService.setSurvey(SLD);
+		System.out.println(SLD.getSurveySeq());
+
+		//설문지의 문제 조회
+		List<SurveyQuestionDTO> SQD = surveyService.getQuestionListOrderByAsc(surveySeq);
+		for(int i = 0 ; i< SQD.size();i++) {
+			SQD.get(i).setSurveySeq(SLD.getSurveySeq());
+		}
+
+		surveyService.insertQuestionsAndItems(SQD);
+		return "redirect:/survey/surveysearch";
+	}
+
 	@RequestMapping("/deletesurvey.do/{surveyseq}/{pageno}/{date}/{keyword}/{selection}")
 	public String DeleteSurvey(@PathVariable int surveyseq, @PathVariable int pageno,
 			@PathVariable(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
@@ -447,17 +421,49 @@ public class SurveyController {
 				+ "&surveyStartDate=" + strDate;
 
 	}
+	
+	@RequestMapping("/surveysearch")
+	public String search(@RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "1") int pageNo,
+			@RequestParam(defaultValue = "30005") String selection,
+			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDate,
+			@RequestParam(defaultValue = "") String anonyMityCheckCode, HttpSession session, Model model) {
 
-	@RequestMapping("/deleteItem.do/{questionSeq}")
-	@ResponseBody
-	public String deleteItem(@PathVariable int questionSeq) {
-		logger.info("deleteItem 컨트롤러");
-		surveyService.deleteItemByQSeq(questionSeq);
-		return "삭제 성공";
+		model.addAttribute("commonCodeList", commonCodeService.selectStateCode());
+		logger.info("지금 가져온 선택지:" + selection);
+		logger.info("페이지 수" + pageNo);
+		logger.info("키워드" + keyword);
+		logger.info("날짜" + surveyStartDate);
+		logger.info("anonyMityCheckCode" + anonyMityCheckCode);
+		try {
+
+			List<SurveyListDTO> surveylist = null;
+			PagingDTO pagingdto = null;
+
+			int totalRows = pagingService.getTotalBoardNum(keyword, selection, surveyStartDate, anonyMityCheckCode);
+
+			pagingdto = new PagingDTO(7, 7, totalRows, pageNo);
+			pagingdto.setSelection(selection);
+			pagingdto.setKeyword(keyword);
+			pagingdto.setSurveyStartDate(surveyStartDate);
+			pagingdto.setAnonyMityCheckCode(anonyMityCheckCode);
+
+			surveylist = surveyService.searchListByKeyword(pagingdto);
+
+
+			model.addAttribute("surveylist", surveylist);
+
+			model.addAttribute("pagingdto", pagingdto);
+			model.addAttribute("keyword", keyword);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "survey_search";
 	}
-
-
-		@RequestMapping("/evaluatesearch/{surveySeq}")
+	
+	// survey evaluate.sjp
+	@RequestMapping("/evaluatesearch/{surveySeq}")
 	public String searchByEvaluate(
 						 @PathVariable("surveySeq") int surveySeq,
 			             @RequestParam(defaultValue="") String keyword,
@@ -515,32 +521,6 @@ public class SurveyController {
 		logger.info("검색 테스트");
 		return "survey_evaluate";
 	}
-
-
-	//문제 복사를 위한 메소드
-	@RequestMapping("/copysurvey.do/{surveySeq}")
-	public String copySurvey(@PathVariable int surveySeq) {
-
-		// seq로 설문 내용 불러오기
-		SurveyListDTO SLD = surveyService.selectSurvey(surveySeq);
-		logger.info("복사할 설문 내용: "+SLD.toString());
-		// 설문 저장
-		SLD.setStateCode("30001");
-		surveyService.setSurvey(SLD);
-		System.out.println(SLD.getSurveySeq());
-
-		//설문지의 문제 조회
-		List<SurveyQuestionDTO> SQD = surveyService.getQuestionListOrderByAsc(surveySeq);
-		for(int i = 0 ; i< SQD.size();i++) {
-			SQD.get(i).setSurveySeq(SLD.getSurveySeq());
-		}
-
-		surveyService.insertQuestionsAndItems(SQD);
-		return "redirect:/survey/surveysearch";
-	}
-
-
-
 
 		@RequestMapping("/surveyresult/{surveySeq}/{employeeId}")
 		public String surveyResult (
