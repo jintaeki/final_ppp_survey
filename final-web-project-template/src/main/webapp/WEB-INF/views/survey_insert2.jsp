@@ -28,7 +28,7 @@
 				<button style="float: left;" class="btn btn-link"
 					onclick="history.go(-1)">뒤로가기</button>
 				<button style="float: right;" class="btn btn-link"
-					onclick="location.href='<c:url value='surveyinsertcomplete.do/${SLD.surveySeq}'/>'">등록완료</button>
+					onclick="insertComplete(${SLD.surveySeq})">등록완료</button>
 				<!-- 설문지 설정 진택 -->
 
 				<div class="container_survey">
@@ -303,6 +303,38 @@
 	</div>
 </div>
 <script>
+
+	//surveyinsertcomplete.do/${SLD.surveySeq}
+	function insertComplete(surveySeq){
+		
+		$.ajax({
+			method : "POST",
+	         url : 'surveyinsertcomplete.do/'+surveySeq, // form을 전송할 실제 파일경로
+	         async : false,
+	         dataType: 'html',
+	         processData : false,
+	         contentType : false,
+	         cache : false,
+	         timeout : 600000,
+	         beforeSend : function() {
+	            // 전송 전 실행 코드
+	         },
+	         success : function(data) {
+	        	 console.log(data);
+	            if(data == '0'){
+	            	alert("문항이 최소 1개는 존재해야 합니다.")
+	            }else{
+	            	window.location.replace("/survey/surveysearch");
+	            }
+	            
+	         },
+	         error : function(e) {
+	            // 전송 후 에러 발생 시 실행 코드
+	            console.log("ERROR : ", e);
+	         }
+		})
+	}
+	
 
    // 문제 누르면 touch버튼(돋보기) 활성화
    $(document).ready(function(){

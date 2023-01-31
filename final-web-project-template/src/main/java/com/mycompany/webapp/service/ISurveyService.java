@@ -81,6 +81,8 @@ public interface ISurveyService {
 	List<SurveyResultTeamDTO> resultList(int surveySeq);
 	List<SurveyResultTeamDTO> resultDPList(int surveySeq, String departmentId);
 
+	int getItemCnt(int surveySeq);
+	
 }
 
 

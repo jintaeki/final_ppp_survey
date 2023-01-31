@@ -340,7 +340,7 @@
 										</button>
 									<td><c:if test="${list.stateCode ne '30004'}">
 											<a href="surveyinsert2?surveyseq=${list.surveySeq}">${list.surveyName }</a>
-											<a class="menu_profile_text"
+											<a class="menu_profile_text" style="position:fixed;"
 												href='<c:url value='copysurvey.do/${list.surveySeq}'/>'>복사</a>
 
 										</c:if> <c:if test="${list.stateCode eq '30004'}">

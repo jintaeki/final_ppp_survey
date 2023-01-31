@@ -541,4 +541,14 @@ WHERE S.EMPLOYEE_ID = U.EMPLOYEE_ID
 </select>
 
 
+	<select id ="getItemCnt" parameterType="int" resultType="int">
+	SELECT COUNT(*) 
+	FROM  SURVEY_LIST SL, 
+	      SURVEY_QUESTION SQ, 
+	      SURVEY_ITEM SI 
+    WHERE SQ.QUESTION_SEQ = SI.QUESTION_SEQ AND 
+          SQ.SURVEY_SEQ = SL.SURVEY_SEQ AND
+          SL.SURVEY_SEQ = #{surveySeq}
+	</select>
+
 </mapper>

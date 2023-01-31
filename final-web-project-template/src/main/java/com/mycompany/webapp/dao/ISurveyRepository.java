@@ -79,6 +79,8 @@ public interface ISurveyRepository {
 	// 개인 점수 요악본
 	List<SurveyResultDTO> personalStats(@Param("surveySeq") int surveySeq, @Param("employeeId") int employeeId);
 
+	// 문항 수 체크 for 등록완료 가능 여부
+	int getItemCnt(int surveySeq);
 
 }
 

@@ -292,11 +292,15 @@ public class SurveyController {
 				int cntcontent = itemcontents.length() - itemcontents.replace(",", "").length();
 
 				// 다중 값들을 배열로 변환
-				String[] itmencontent = itemcontents.split(",");
+				String[] itemcontent = itemcontents.split(",");
 				String[] itemscore = itemscores.split(",");
 				// 문항 개수만큼 for문 실행하여 문항 등록
 				for (int i = 0; i <= cntcontent; i++) {
-					SQD.setItemContent(itmencontent[i]);
+					if(itemcontent[i].equals("")){
+						System.out.println(i+"번째가 비어있음");
+						continue;
+					}
+					SQD.setItemContent(itemcontent[i]);
 					SQD.setItemScore(itemscore[i]);
 					surveyService.insertItem(SQD);
 				}
@@ -322,6 +326,11 @@ public class SurveyController {
 
 				// 문항 개수만큼 for문 실행하여 문항 등록
 				for (int i = 0; i <= cntcontent; i++) {
+					if(itemcontent[i].equals("")){
+						System.out.println(i+"번째가 비어있음");
+						continue;
+					}
+
 					SQD.setItemContent(itemcontent[i]);
 					SQD.setItemScore(itemscore[i]);
 					surveyService.insertItem(SQD);
@@ -398,11 +407,22 @@ public class SurveyController {
 
 
 	// 등록완료 돌아가기
-	@RequestMapping("/surveyinsertcomplete.do/{surveyseq}")
-	public String SurveyInsertComplete(@PathVariable int surveyseq) {
-		surveyService.surveyInsertComplete(surveyseq);
+	@RequestMapping("/surveyinsertcomplete.do/{surveySeq}")
+	@ResponseBody
+	public String SurveyInsertComplete(@PathVariable int surveySeq) {
+		logger.info(String.valueOf(surveySeq));
+		int cnt = surveyService.getItemCnt(surveySeq);
+		if(cnt == 0 ) {
+			logger.info("0을반환");
+			return "0";
+		}else {
+			logger.info(String.valueOf(cnt)+"을반환");
+			surveyService.surveyInsertComplete(surveySeq);	
+			return "1";
+		}
+		
 
-		return "redirect:/survey/surveysearch";
+		
 	}
 
 	@RequestMapping("/deletesurvey.do/{surveyseq}/{pageno}/{date}/{keyword}/{selection}")

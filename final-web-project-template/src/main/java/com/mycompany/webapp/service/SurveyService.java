@@ -232,8 +232,15 @@ public class SurveyService implements ISurveyService{
 		return surveyDao.getQuestionListOrderByAsc(surveySeq);
 	}
 
+	// 문항 수 체크하여 등록완료 여부 확인
+	@Override
+	public int getItemCnt(int surveySeq) {
+		
+		return surveyDao.getItemCnt(surveySeq);
+	}
 
 
+	
 
 }
 
