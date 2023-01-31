@@ -537,12 +537,24 @@ public class SurveyController {
 			model.addAttribute("surveyResultTarget",surveyResultTarget);
 			List<SurveyResultDTO> personalStats = surveyService.personalStats(surveySeq, employeeId);
 			model.addAttribute("personalStats", personalStats);
-			logger.info("SRT: " + surveyResultTarget.get(0).toString());
-			logger.info("Result Model: " + surveyResultList.get(0).toString());
+//			logger.info("SRT: " + surveyResultTarget.get(0).toString());
+//			logger.info("Result Model: " + surveyResultList.get(0).toString());
 
 
 			return "survey_result";
 		}
 
+		@RequestMapping("/surveyresult1/{surveySeq}/{employeeId}")
+		@ResponseBody
+		public List<SurveyResultDTO> surveyResult2 (
+				@PathVariable int surveySeq,
+				@PathVariable int employeeId,
+				                   HttpSession session, Model model) {
 
+			List<SurveyResultDTO> surveyResultList = surveyService.surveyResult(employeeId, surveySeq);
+
+			return surveyResultList ;
+		}
+		
+		
 }
