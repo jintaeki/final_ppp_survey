@@ -345,7 +345,7 @@
 
 										</c:if> <c:if test="${list.stateCode eq '30004'}">
 									${list.surveyName }
-									
+
 								</c:if></td>
 									<td><fmt:formatDate value="${list.surveyStartDate }"
 											pattern='yyyy-MM-dd' /> &nbsp;~&nbsp; <fmt:formatDate

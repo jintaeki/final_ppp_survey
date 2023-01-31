@@ -7,41 +7,38 @@
 	<div class="card">
 		<div class="card-body">
 			<div class="forshadowing">
+			  <div class="container_flex">
 				<div class="individual">
-
 					<div class="row" style="text-align: center">
 						<div class="info" style="display: contents;">
 							<c:forEach items="${surveyResultTarget}" var="SRT">
-								<div class="col-1">소속</div>
-								<div class="col-2">${SRT.DEPARTMENT_NAME}</div>
-								<div class="col-1">직급</div>
-								<div class="col-2">${SRT.GRADE_NAME}</div>
-								<div class="col-1">이름</div>
-								<div class="col-2">${SRT.EMPLOYEE_NAME}</div>
+								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">소속</div></div>
+								<div class="col-2"><div class="infodiv">${SRT.DEPARTMENT_NAME}</div></div>
+								<div class="input-group-text col-1" id="basic-addon1"><div style="margin:auto;">직급</div></div>
+								<div class="col-2"><div class="infodiv">${SRT.GRADE_NAME}</div></div>
+								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">이름</div></div>
+								<div class="col-2"><div class="infodiv">${SRT.EMPLOYEE_NAME}</div></div>
 							</c:forEach>
+
 							<c:forEach items="${personalStats}" var="PS">
-								<div class="col-1">점수</div>
-								<div class="col-2">${PS.score}</div>
-								<div class="w-100"></div>
-								<div class="col-1">등급</div>
-								<div class="col-2">${PS.grd}</div>
-								<div class="col-1">설문 내 최소점</div>
-								<div class="col-2">${PS.min}</div>
-								<div class="col-1">설문 평균 점수</div>
-								<div class="col-2">${PS.avg}</div>
-								<div class="col-1">설문 내 최고점</div>
-								<div class="col-2">${PS.max}</div>
+								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">점수</div></div>
+								<div class="col-2"><div class="infodiv">${PS.score}</div></div>
+								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">등급</div></div>
+								<div class="col-2"><div class="infodiv">${PS.grd}</div></div>
+								<div class="input-group-text col-1" id="basic-addon1"><div style="margin:auto;">설문 내<br>최소점</div></div>
+								<div class="col-2"><div class="infodiv">${PS.min}</div></div>
+								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">설문 평균 <br>점수</div></div>
+								<div class="col-2"><div class="infodiv">${PS.avg}</div></div>
+								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">설문 내<br>최고점</div></div>
+								<div class="col-2"><div class="infodiv">${PS.max}</div></div>
 							</c:forEach>
 						</div>
 						<div class="col-12">&nbsp;</div>
 						<div class="col-12">&nbsp;</div>
 					</div>
 				</div>
+			 </div>
 
-
-
-
-				<div class="container_flex"></div>
 				<div class="table_container_flex">
 					<table class="table  table-bordered" style="word-break: break-all">
 						<thead>

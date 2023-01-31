@@ -19,9 +19,9 @@
 										<c:if test="${pagingDto.selection eq 'departmentName'}">selected</c:if>>부서명</option>
 									<option value="gradeName"
 										<c:if test="${pagingDto.selection eq 'gradeName'}">selected</c:if>>직급</option>
-									<option value="surveyCompleteYn"
-										<c:if test="${pagingDto.selection eq 'surveyCompleteYn'}">selected</c:if>>참여
-										여부</option>
+									<option value="gradeName"
+										<c:if test="${pagingDto.selection eq 'surveyCompleteYn'}">selected</c:if>>참여여부</option>
+
 								</select> <input type="text" class="form-control" id="selectedKeyword"
 									placeholder="search" name="keyword"
 									value="${pagingDto.keyword}" aria-describedby="button-addon2">
@@ -57,7 +57,7 @@
 									<td>${EL.EMPLOYEE_NAME}</td>
 									<td>${EL.SURVEY_COMPLETE_YN}</td>
 									<td><input type="button" class="btn btn-link"
-										onclick="location.href='<c:url value="/survey/surveyresult/${EL.SURVEY_SEQ}/${EL.EMPLOYEE_ID}"/>'"
+										onclick="result_search_btn(${surveySeq},${EL.EMPLOYEE_ID})"
 										value="조회"></td>
 								</tr>
 							</c:forEach>
@@ -101,4 +101,39 @@
 		</div>
 	</div>
 </div>
+
+<script>
+//평가 유무 비동기 체크
+function result_search_btn(surveySeq, employeeId) {
+	   var data =$('#surveyResultList')[0]
+	   let empid = employeeId;
+	   let surseq = surveySeq;
+	   $.ajax({
+	    method: 'POST',
+	    url: '/survey/surveyresultcheck/' + surveySeq + '/' + employeeId,
+	    processData : false,
+	    contentType : false,
+	     cache : false,
+	     beforeSend: function() {
+	         console.log("surveyresult 비동기 요청");
+	         console.log(employeeId);
+	         console.log(surveySeq);
+
+	      },
+	      success: function(data){
+	    if(data[0] != null){
+
+//	        console.log(data);
+//	       console.log(empid);
+//	       console.log(surseq);
+	       location.href="/survey/surveyresult/"+surseq+'/'+empid;
+	    }else{
+	         alert("평가 데이터가 없습니다.");
+	    }
+	       },error : function(e) {   //실패, 에러
+	           console.log("Error", e);
+	       }
+	   });
+	}
+</script>
 	<%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
