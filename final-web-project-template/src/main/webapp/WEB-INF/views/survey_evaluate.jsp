@@ -121,11 +121,8 @@ function result_search_btn(surveySeq, employeeId) {
       },
       success: function(data){
     if(data[0] != null){
-    
-//        console.log(data);
-//       console.log(empid);
-//       console.log(surseq);
-       window.location.replace('/survey/surveyresult/'+surseq+'/'+empid);
+
+       location.href='/survey/surveyresult/'+surseq+'/'+empid';
     }else{
          alert("평가 데이터가 없습니다.");
     }
