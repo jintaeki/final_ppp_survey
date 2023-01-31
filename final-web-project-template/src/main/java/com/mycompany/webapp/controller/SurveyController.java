@@ -93,11 +93,13 @@ public class SurveyController {
 
 	@RequestMapping("/sendmessage.do/{surveyseq}/{pageno}")
 	@ResponseBody
-	public String sendmessage(@PathVariable int surveyseq, @PathVariable int pageno) {
+	public String sendmessage(@PathVariable int surveyseq, @PathVariable int pageno,
+			                  @RequestParam("deliveryContent") String deliveryContent) {
 
+		logger.info(deliveryContent);
+		surveyService.updateEmail(surveyseq, deliveryContent);
+		surveyService.updateSMS(surveyseq, deliveryContent);
 		surveyService.sendMessage(surveyseq);
-		surveyService.updateEmail(surveyseq);
-		surveyService.updateSMS(surveyseq);
 
 		return "성공";
 	}
@@ -488,6 +490,7 @@ public class SurveyController {
 			System.out.println(pageNo);
 			model.addAttribute("pagingdto", pagingDto);
 			model.addAttribute("keyword", keyword);
+			model.addAttribute("surveySeq", surveySeq);
 
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -495,6 +498,16 @@ public class SurveyController {
 		logger.info("검색 테스트");
 		return "survey_evaluate";
 	}
+		
+		
+	@RequestMapping("/remessage.do")
+	public String remessage(@RequestParam int surveySeq, @RequestParam String deliveryContent) {
+		surveyService.sendReEmail(surveySeq, deliveryContent);
+		surveyService.sendReSMS(surveySeq, deliveryContent);;
+
+		return "redirect:/survey/evaluatesearch/"+surveySeq;
+	}
+		
 
 
 	//문제 복사를 위한 메소드

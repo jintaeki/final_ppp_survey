@@ -71,7 +71,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 				</div>
 				<div>
 					<button type="button" id="map_insert" class="btn btn-primary"
-						onclick="mapInsert('${mappingList[0].surveySeq}')">조건관
+						onclick="mapInsert('${mappingList[0].surveySeq}')">조건과
 						관계없이 추가</button>
 				</div>
 				<div class="row">

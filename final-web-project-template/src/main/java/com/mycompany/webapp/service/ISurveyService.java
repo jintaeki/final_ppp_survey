@@ -42,8 +42,12 @@ public interface ISurveyService {
 	void sendMessage(int surveySeq);
 
 	// 메일 발송시 상태 업데이트
-	void updateEmail(int surveySeq);
-	void updateSMS(int surveySeq);
+	void updateEmail(int surveyseq, String deliveryContent);
+	void updateSMS(int surveyseq, String deliveryContent);
+	
+	// 메일 재 발송 
+	void sendReEmail(int surveySeq, String deliveryContent);
+	void sendReSMS(int surveySeq, String deliveryContent);
 
 	void deleteQuestion(int questionSeq);
 

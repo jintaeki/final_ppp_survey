@@ -94,13 +94,23 @@ public class SurveyService implements ISurveyService{
 	}
 
 	@Override
-	public void updateEmail(int surveySeq) {
-		surveyDao.updateEmail(surveySeq);
+	public void updateEmail(int surveyseq, String deliveryContent) {
+		surveyDao.updateEmail(surveyseq, deliveryContent);
 	}
 
 	@Override
-	public void updateSMS(int surveySeq) {
-		surveyDao.updateSMS(surveySeq);
+	public void updateSMS(int surveyseq, String deliveryContent) {
+		surveyDao.updateSMS(surveyseq, deliveryContent);
+	}
+	
+	@Override
+	public void sendReEmail(int surveySeq, String deliveryContent) {
+		surveyDao.sendReEmail(surveySeq, deliveryContent);
+	}
+	
+	@Override
+	public void sendReSMS(int surveySeq, String deliveryContent) {
+		surveyDao.sendReSMS(surveySeq, deliveryContent);
 	}
 
 	@Override

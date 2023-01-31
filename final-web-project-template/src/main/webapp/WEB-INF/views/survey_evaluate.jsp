@@ -63,8 +63,19 @@
 							</c:forEach>
 
 						</tbody>
+						<tbody>
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td style="float: right;"><button id="upper_dv_btn"
+										type="button" class="btn btn-primary" data-toggle="modal"
+										data-target="#exampleModal" >재전송</button></td>
+							</tr>
+						</tbody>
 						<tr>
-
 							<td colspan="12" class="text-center">
 								<div>
 									<a class="btn btn-outline-primary btn-sm"
@@ -102,3 +113,40 @@
 	</div>
 </div>
 	<%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
+	
+	
+
+	<!-- modal(이메일 보낼시) -->
+	<div class="modal fade" id="exampleModal" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">평가 공시 재전송</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<c:url value="/survey/remessage.do" var="actionURL" scope="page" />
+					<form:form action="${actionURL}" modelAttribute="map">
+						<input type="hidden" name="surveySeq" value="${surveySeq}">
+						<div class="form-group">
+    						<label for="exampleFormControlTextarea1">
+    							평가를 하지 않은 평가자에게 재전송할 메세지를 입력하시오
+    						</label>
+    						<textarea class="form-control" name="deliveryContent" rows="3"></textarea>
+  						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">취소</button>
+							<input type="submit" class="btn btn-primary" value="등록">
+						</div>
+					</form:form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- modal(설문 등록 시 뜨는 팝업창) 끝-->

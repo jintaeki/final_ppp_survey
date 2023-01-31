@@ -9,7 +9,7 @@ public class NoticeEmailDTO {
 	private String surveyLink;
 	private Date deliveryDate;
 	private String deliveryYN;
-	private String deliveyContent;
+	private String deliveryContent;
 	private int survey_seq;
 	
 	public int getEmailSeq() {
@@ -49,10 +49,10 @@ public class NoticeEmailDTO {
 		this.deliveryYN = deliveryYN;
 	}
 	public String getDeliveyContent() {
-		return deliveyContent;
+		return deliveryContent;
 	}
 	public void setDeliveyContent(String deliveyContent) {
-		this.deliveyContent = deliveyContent;
+		this.deliveryContent = deliveyContent;
 	}
 	public int getSurvey_seq() {
 		return survey_seq;
@@ -65,7 +65,7 @@ public class NoticeEmailDTO {
 	public String toString() {
 		return "NoticeEmailDTO [emailSeq=" + emailSeq + ", raterId=" + raterId + ", email=" + email + ", surveyLink="
 				+ surveyLink + ", deliveryDate=" + deliveryDate + ", deliveryYN=" + deliveryYN + ", deliveyContent="
-				+ deliveyContent + ", survey_seq=" + survey_seq + "]";
+				+ deliveryContent + ", survey_seq=" + survey_seq + "]";
 	}
 
 }

@@ -41,8 +41,11 @@ public interface ISurveyRepository {
 	void sendMessage(int surveySeq);
 
 	// 메일 발송시 상태 업데이트
-	void updateEmail(int surveySeq);
-	void updateSMS(int surveySeq);
+	void updateEmail(@Param("surveySeq") int surveySeq, @Param("deliveryContent") String deliveryContent);
+	void updateSMS(@Param("surveySeq") int surveySeq, @Param("deliveryContent") String deliveryContent);
+	// 메일 재 발송 
+	void sendReEmail(@Param("surveySeq") int surveySeq, @Param("deliveryContent") String deliveryContent);
+	void sendReSMS(@Param("surveySeq") int surveySeq, @Param("deliveryContent") String deliveryContent);
 
 	void DeleteQuestion(int questionSeq);
 
