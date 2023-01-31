@@ -194,7 +194,7 @@ public class SurveyController {
 		surveyService.setSurvey(SLD);
 		session.setAttribute("SLD", SLD);
 
-		return "redirect:/survey/surveyinsert2?surveyseq=" + SLD.getSurveySeq();
+		return "redirect:/survey/surveyinsert?surveyseq=" + SLD.getSurveySeq();
 
 	}
 
@@ -212,8 +212,8 @@ public class SurveyController {
 	}
 
 	// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
-	@RequestMapping("/surveyinsert2")
-	public String survey_insert2(@RequestParam("surveyseq") int surveySeq, Model model, HttpSession session) {
+	@RequestMapping("/surveyinsert")
+	public String survey_insert(@RequestParam("surveyseq") int surveySeq, Model model, HttpSession session) {
 		if (!String.valueOf(session.getAttribute("SLD")).equals("null")) {
 			SurveyListDTO SLD = (SurveyListDTO) session.getAttribute("SLD");
 			session.removeAttribute("SLD");
@@ -225,7 +225,7 @@ public class SurveyController {
 			model.addAttribute("NoQuestion","저장된 문제가 없습니다.");
 		}
 
-		return "survey_insert2";
+		return "survey_insert";
 	}
 	
 	// 문항 등록
