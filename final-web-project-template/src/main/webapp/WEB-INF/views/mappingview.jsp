@@ -69,10 +69,18 @@ function map_delete(surveySeq, raterId, appraiseeId){
 					<h3 style="text-align: center;">${mappingList[0].surveyName}
 						매핑 목록</h3>
 				</div>
+
+				
 				<div>
-					<button type="button" id="map_insert" class="btn btn-primary"
+								
+				<input type="button" style="margin-left: 50px;"
+					onclick="location.href='<c:url value='/survey/surveysearch'/>'"
+					class="btn btn-primary" value="돌아가기">
+					<button type="button" id="map_insert" class="btn btn-primary" style="margin-left: 1050px;"
 						onclick="mapInsert('${mappingList[0].surveySeq}')">조건관
 						관계없이 추가</button>
+							
+				
 				</div>
 				<div class="row">
 					<div class="hmenu">
@@ -183,9 +191,8 @@ function map_delete(surveySeq, raterId, appraiseeId){
 						</tr>
 					</table>
 				</div>
-				<input type="button"
-					onclick="location.href='<c:url value='/survey/surveysearch'/>'"
-					class="btn btn-primary" value="돌아가기">
+			
+					
 			</div>
 		</div>
 	</div>

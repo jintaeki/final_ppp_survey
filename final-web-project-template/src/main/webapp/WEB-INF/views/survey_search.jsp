@@ -411,7 +411,7 @@
 													href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
 											</c:if>
 											<c:if test="${pagingdto.pageNo == i}">
-												<a class="btn btn-outline-secondary"
+												<a class="btn btn-secondary"
 													href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
 											</c:if>
 										</c:forEach>
