@@ -4,8 +4,10 @@
 
 * {
 	box-sizing: border-box;
+font-family: 'Gothic A1', sans-serif;
 font-family: 'Nanum Gothic', sans-serif;
 font-family: 'Nanum Gothic Coding', monospace;
+font-family: 'Noto Serif KR', serif;
 }
 
 .card{
@@ -48,7 +50,7 @@ font-family: 'Nanum Gothic Coding', monospace;
 body {
 	margin: 0px;
 	background-color: #363940;
-	font-size:1.1rem;
+	font-size:1rem;
 }
 
 table {
