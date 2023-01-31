@@ -75,7 +75,12 @@ public interface ISurveyRepository {
 	List<SurveyResultDTO> surveyResult(@Param("employeeId") int employeeId, @Param("surveySeq") int surveySeq);
 
 	List<Map<String, Object>> getResultTarget(int employeeId);
+	
+	// 개인 점수 요악본
+	List<SurveyResultDTO> personalStats(@Param("surveySeq") int surveySeq, @Param("employeeId") int employeeId);
 
+	// 문항 수 체크 for 등록완료 가능 여부
+	int getItemCnt(int surveySeq);
 
 }
 

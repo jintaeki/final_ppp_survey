@@ -19,6 +19,14 @@ public class SurveyResultDTO {
 	private String raterName;
 	private String raterGrade;
 	private String raterDepartmentName;
+
+	//설문 통계용
+	private int score; //총점수
+	private String grd; //등급
+	private int max; //설문지 내 최고점
+	private float avg; //설문지 내 평균
+	private int min; //설문지 내 최저점
+	
 	private String rnum;
 
 	public String getSurveySeq() {
@@ -129,12 +137,44 @@ public class SurveyResultDTO {
 	public void setRaterDepartmentName(String raterDepartmentName) {
 		this.raterDepartmentName = raterDepartmentName;
 	}
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
+	public String getGrd() {
+		return grd;
+	}
+	public void setGrd(String grd) {
+		this.grd = grd;
+	}
+	public int getMax() {
+		return max;
+	}
+	public void setMax(int max) {
+		this.max = max;
+	}
+	public float getAvg() {
+		return avg;
+	}
+	public void setAvg(float avg) {
+		this.avg = avg;
+	}
+	public int getMin() {
+		return min;
+	}
+	public void setMin(int min) {
+		this.min = min;
+	}
+	
 	public String getRnum() {
 		return rnum;
 	}
 	public void setRnum(String rnum) {
 		this.rnum = rnum;
 	}
+	
 	@Override
 	public String toString() {
 		return "SurveyResultDTO [surveySeq=" + surveySeq + ", raterId=" + raterId + ", appraiseeId=" + appraiseeId
@@ -143,6 +183,10 @@ public class SurveyResultDTO {
 				+ itemContent + ", itemScore=" + itemScore + ", departmentName=" + departmentName + ", questionSeq="
 				+ questionSeq + ", itemSeq=" + itemSeq + ", answerContent=" + answerContent + ", anonymityCode="
 				+ anonymityCode + ", raterName=" + raterName + ", raterGrade=" + raterGrade + ", raterDepartmentName="
-				+ raterDepartmentName + ", rnum=" + rnum + "]";
+				+ raterDepartmentName + ", score=" + score + ", grd=" + grd + ", max=" + max + ", avg=" + avg + ", min="
+				+ min + ", rnum=" + rnum + "]";
 	}
+
+
+	
 }

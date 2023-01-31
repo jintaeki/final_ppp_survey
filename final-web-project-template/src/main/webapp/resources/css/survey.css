@@ -81,6 +81,7 @@ width: 130px;
     display: flex;
     flex-direction: column-reverse;
     justify-content: space-between;
+    z-index: 1;
 }
 .appraiseeList{
 	height: 100%;
@@ -90,7 +91,9 @@ width: 130px;
     border-radius: 20px;
     padding: 20px;
     font-size: 17px; 
-    text-align: center
+    text-align: center;
+    z-index: 1;
+    
 }
 .submit_btn button{
 	float:right;
@@ -100,21 +103,6 @@ width: 130px;
 	padding: 90px;
     margin: auto;
 }
-
-
-/* .survey_info { */
-/*    float: left; */
-/*    width: 250px; */
-/*    height: 700px; */
-/*    display: flex; */
-/*    color: white; */
-/*    background-color: #007bff; */
-/*    justify-content: center; */
-/*    flex-direction: column; */
-/*    align-content: center; */
-/*    align-items: center; */
-/*    border-radius: 30px; */
-/* } */
 
 .survey_info_text {
    padding: 35px;

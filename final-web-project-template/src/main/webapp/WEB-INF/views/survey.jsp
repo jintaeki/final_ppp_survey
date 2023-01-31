@@ -417,12 +417,17 @@
 
 <!-- 문항 시작 -->
 <div class="container" style="padding: 40px 40px 40px 40px; margin:0;">
+	<div style="display:flex;">
    <select name="surveySeq" onclick="selectSurvey(this,${raterId})">
       <option value="0">설문 선택</option>
       <c:forEach items="${surveySeqAndName}" var="surveySeqAndName">
          <option  value="${surveySeqAndName.SURVEY_SEQ}" >${surveySeqAndName.SURVEY_NAME}</option>
       </c:forEach>
    </select>
+				<div style="margin-left: 1090px;">
+					<a href="/logout">로그아웃</a>
+				</div>
+			</div>
    <div class="row" style="width: 1360px;">
 
       <div class="appraiseeList col-4">
@@ -457,6 +462,7 @@
 
 
 
+         
 
       <div class="question-box col-7">
 
@@ -470,6 +476,8 @@
             </div>
          </div>
       </div>
+      <img src="${pageContext.request.contextPath}/resources/images/evaluate.png" 
+      style="width: 600px; margin-top: 300px; margin-left: -28px; position: fixed; opacity: 0.1;">
    </div>
 </div>
 

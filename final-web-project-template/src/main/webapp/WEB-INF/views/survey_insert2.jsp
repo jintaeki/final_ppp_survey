@@ -21,256 +21,320 @@
 </style>
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
-   <div class="col-11">
-<div class="card-body">
-<div class="forshadowing" >
-<button style="float:left;"class="btn btn-link" onclick="history.go(-1)">뒤로가기</button>
-<button style="float:right;"class="btn btn-link" onclick="location.href='<c:url value='surveyinsertcomplete.do/${SLD.surveySeq}'/>'">등록완료</button>
-   <!-- 설문지 설정 진택 -->
+<div class="col-11">
+	<div class="card" >
+		<div class="card-body" style="height:890px;">
+			<div class="forshadowing" style="height:860px;">
+				<button style="float: left;" class="btn btn-link"
+					onclick="history.go(-1)">뒤로가기</button>
+				<button style="float: right;" class="btn btn-link"
+					onclick="insertComplete(${SLD.surveySeq})">등록완료</button>
+				<!-- 설문지 설정 진택 -->
 
-   <div class="container_survey">
-      <div class="row" style="margin-top: 45px;">      </div>
-      
-         <div class="inner_container">
-         <div class="container_flex" style="border-radius: 20px;box-shadow: 1px 1px 10px 0px; padding: 20px; width:450px;">
-      <div class="input_title">기본 설정</div>
-      <form:form modelAttribute="SLD" id="survey_setting_form">
-      <table style="border-collapse:collapse;">
-            <tr><th><div style="margin-top: 8px;"></div></th></tr>
-      
-      <tr>
-      
-         <td><span class="insert_category"><b>설문지 제목</b><label
-            for="survey_name"></label></span></td> <td><input type="text" id="survey_name"
-            name="surveyName" style="width: 200px;" value="${SLD.surveyName}"></td>
-            
-      </tr>
-      
-      <tr style="border-bottom: 3px solid gainsboro;">
-      <th><div style="margin-top: 8px;"></div></th></tr>
-      <tr><th><div style="margin-top:8px;"></div></th></tr>
-      <tr>
-         <td><span class="insert_category"> <b>평가 기간</b> </span></td>
-         <td><input type="date"
-            name="surveyStartDate" class="survey_date"
-            value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">-
-            <input type="date" name="surveyClosedDate" class="survey_date"
-            value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />"></td>
-      </tr>
-      
-      <tr style="border-bottom: 3px solid gainsboro;"><th><div style="margin-top: 8px;"></div></th></tr>
-      <tr><th><div style="margin-top: 8px;"></div></th></tr>
-      
-      <tr>
-         <td><span class="insert_category"> <b>익명/기명</b></span></td>
-         <td>
-            <c:if test="${SLD.anonymityCheckCode eq '20001'}">
-               <input type="radio" name="anonymityCheckCode" id="survey_type_check" value="20001" checked>
-               <label style="margin-bottom:0px;" for="survey_type_check"><b>익명</b></label> 
-               <input type="radio" name="anonymityCheckCode" id="survey_type_check" value="20002">
-               <label style="margin-bottom:0px;" for="survey_type_check"><b>기명</b></label> 
-               </c:if> 
-                   
-               <c:if test="${SLD.anonymityCheckCode eq '20002'}">
-               <input type="radio" name="anonymityCheckCode" id="survey_type_check" value="20001">
-               <label style="margin-bottom:0px;" for="survey_type_check"><b>익명</b></label> 
+				<div class="container_survey">
+					<div class="row" style="margin-top: 45px;"></div>
 
-               <input type="radio" name="anonymityCheckCode"  id="survey_type_check" value="20002" checked>
-               <label style="margin-bottom:0px;" for="survey_type_check"><b>기명</b></label> 
-            </c:if>
-         </td>
-      </tr>
-      <tr style="border-bottom: 3px solid gainsboro;"><th><div style="margin-top: 8px;"></div></th></tr>
-      <tr><th><div style="margin-top: 8px;"></div></th></tr>
-         
-         </table>
-      
-         <span class="insert_category"><b>상세 설명</b></span><br><div style="margin-top:8px;"></div>
-         <textarea  class="visually-hidden"id="message-text" name="surveyContent" style="width:350px;height:100px;max-width:350px;">${SLD.surveyContent }</textarea>
+					<div class="inner_container">
+						<div class="container_flex"
+							style="border-radius: 20px; box-shadow: 1px 1px 10px 0px; padding: 20px; width: 450px;">
+							<div class="input_title">기본 설정</div>
+							<form:form modelAttribute="SLD" id="survey_setting_form">
+								<table style="border-collapse: collapse;">
+									<tr>
+										<th><div style="margin-top: 8px;"></div></th>
+									</tr>
 
-            <input type="hidden" name="stateCode" value="30001"> <input
-            type="hidden" name="surveySeq" id="surveyseq"
-            value="${SLD.surveySeq}">
-            
-      </form:form>
-      <input type="button" class="update_btn" style="margin-bottom:10px; float:right;" onclick="register()"
-         value="적용">
-      
-   </div>
-         
-         
-         <div>
-         <div class="question_inputdv" id="input_question">
-                  <div class="input_title">문제 관리</div>
-         
-               <form:form modelAttribute="SQD" id="questioN_insert_form">
-                  <!-- aa -->
-                  <div id="insertQform">
+									<tr>
 
-                     <div class="select_radio" id="select_radio">
-                        <input type="radio" name="questionTypeCode" id="obj_radio"
-                           onclick="checkit1()" value="10001" checked>&nbsp;객관식
-                        &nbsp;&nbsp;&nbsp; <input type="radio" name="questionTypeCode"
-                           id="subj_radio" onclick="checkit2()" value="10002">
-                        &nbsp;주관식 &nbsp;&nbsp;&nbsp; <input type="radio"
-                           name="questionTypeCode" id="mix_radio" onclick="checkit3()"
-                           value="10003"> &nbsp;혼합식 &nbsp;&nbsp;&nbsp;
-                     </div>
-                     <div class="question_content_area" id="question_add">
-                        <div class="input-group" id="question_content">
-                           <textarea class="form-control" aria-label="문제 입력칸"
-                              name="questionContent">${SQD.questionContent}</textarea>
-                        </div>
+										<td><span class="insert_category"><b>설문지 제목</b><label
+												for="survey_name"></label></span></td>
+										<td><input type="text" id="survey_name" name="surveyName"
+											style="width: 200px;" value="${SLD.surveyName}"></td>
+
+									</tr>
+
+									<tr style="border-bottom: 3px solid gainsboro;">
+										<th><div style="margin-top: 8px;"></div></th>
+									</tr>
+									<tr>
+										<th><div style="margin-top: 8px;"></div></th>
+									</tr>
+									<tr>
+										<td><span class="insert_category"> <b>평가 기간</b>
+										</span></td>
+										<td><input type="date" name="surveyStartDate"
+											class="survey_date"
+											value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">-
+											<input type="date" name="surveyClosedDate"
+											class="survey_date"
+											value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />"></td>
+									</tr>
+
+									<tr style="border-bottom: 3px solid gainsboro;">
+										<th><div style="margin-top: 8px;"></div></th>
+									</tr>
+									<tr>
+										<th><div style="margin-top: 8px;"></div></th>
+									</tr>
+
+									<tr>
+										<td><span class="insert_category"> <b>익명/기명</b></span></td>
+										<td><c:if test="${SLD.anonymityCheckCode eq '20001'}">
+												<input type="radio" name="anonymityCheckCode"
+													id="survey_type_check" value="20001" checked>
+												<label style="margin-bottom: 0px;" for="survey_type_check"><b>익명</b></label>
+												<input type="radio" name="anonymityCheckCode"
+													id="survey_type_check" value="20002">
+												<label style="margin-bottom: 0px;" for="survey_type_check"><b>기명</b></label>
+											</c:if> <c:if test="${SLD.anonymityCheckCode eq '20002'}">
+												<input type="radio" name="anonymityCheckCode"
+													id="survey_type_check" value="20001">
+												<label style="margin-bottom: 0px;" for="survey_type_check"><b>익명</b></label>
+
+												<input type="radio" name="anonymityCheckCode"
+													id="survey_type_check" value="20002" checked>
+												<label style="margin-bottom: 0px;" for="survey_type_check"><b>기명</b></label>
+											</c:if></td>
+									</tr>
+									<tr style="border-bottom: 3px solid gainsboro;">
+										<th><div style="margin-top: 8px;"></div></th>
+									</tr>
+									<tr>
+										<th><div style="margin-top: 8px;"></div></th>
+									</tr>
+
+								</table>
+
+								<span class="insert_category"><b>상세 설명</b></span>
+								<br>
+								<div style="margin-top: 8px;"></div>
+								<textarea class="visually-hidden" id="message-text"
+									name="surveyContent"
+									style="width: 350px; height: 100px; max-width: 350px;">${SLD.surveyContent }</textarea>
+
+								<input type="hidden" name="stateCode" value="30001">
+								<input type="hidden" name="surveySeq" id="surveyseq"
+									value="${SLD.surveySeq}">
+
+							</form:form>
+							<input type="button" class="update_btn"
+								style="margin-bottom: 10px; float: right;" onclick="register()"
+								value="적용">
+
+						</div>
 
 
+						<div>
+							<div class="question_inputdv" id="input_question">
+								<div class="input_title">문제 관리</div>
 
+								<form:form modelAttribute="SQD" id="questioN_insert_form">
+									<!-- aa -->
+									<div id="insertQform">
 
-                        <!-- 문제 추가 버튼  -->
-                        <!-- onclick="insertQus()" -->
-                        <div class="question_add_btn_div">
-
-                           <button type="button" class="create_btn" id="add_qus_btn"
-                              onclick="insertQus()">문제 추가</button>
-                           <button type="button" class="create_btn" id="update_btn" style="margin-left:4.48px;"
-                              onclick="qusUpdate(${SLD.surveySeq})">문제 수정</button>
-
-                           <input type="hidden" name="surveySeq" id="seq"
-                              value="${SLD.surveySeq }"> <input type="hidden"
-                              name="questionSeq" value="2">
-                           <!-- 비동기로 바꿔 넣어보자 -> 문항도 마찬가지 -->
-                        </div>
-
-                        <input type="hidden" name="itemScore" value="1"> <input
-                           type="hidden" name="itemContent" value=" ">
-                           <input type="reset" value="" id="reset_btn"  style="display:none">
-                     </div>
-                  </div>
-               </form:form>
-            </div>
-         
-      <div class="question_management">
-         <div class="input_title">문제 목록</div>         
-         <div id="scroll_area" style="overflow: auto;  height:450px;">
-
-                     <c:if test="${empty SQL}">
-                        <br>
-                        <b>${NoQuestion}</b>                     
-                     </c:if> 
-            <!-- 여기까지 문제 div -->
-            
-               <c:forEach items="${SQL}" var="qlist">
-                  <div id="queAfter">
-                     
-                     <input type="hidden" value="${qlist.surveySeq }"
-                        id="surveySequence">
-                     <div class="input_qus" id="checkTouch">
-                        <input disabled type="text" id="input_qus" 
-                           value="${qlist.questionContent }">
-                     </div>
-
-                     <!-- 조회 버튼 -->
-                     <button value="${qlist.questionSeq }" 
-                        onclick="touchQuestion(this)"
-                        style="border: 1px solid #fff; border-radius: 35em;background:white;">
-                        <i class="fas fa-search"></i>
-                     </button>
-
-                     <button class="delete_btn"
-                        onclick="deleteQus(this,${qlist.surveySeq})"
-                        style="background:white;"
-                        value="${qlist.questionSeq }">
-                        <i class="fa-regular fa-trash-can"></i>
-                     </button>
-                     <div class="blank_under"></div>
-                  </div>
-               </c:forEach>
-            
-         </div>
-      </div>
-      </div>
-      
-  
-         <div class="item_management" >
-         <div class="input_title">문항 관리</div>
-         <!-- 객관식 -->
-         <span class="icon_div" id="item_div" >
-            <c:forEach items="${SQL}" var="qlist">
-               <div id="obj_box_toggle" style="display: none;">
-                  <div class="col-12">
-                     <div class="Item_box">
-                        <button type="button" onclick="item_obj_copy(this, 10001)" style=" background:white;border: 1px solid #fff; border-radius: 35em;"><i class="fas fa-plus"></i></button>
-                        <b style="margin-left:160px;">점수</b>
-                        
-                        <form:form modelAttribute="SQD" id="item_obj_form">
-                           <input type="hidden" name="questionTypeCode" value="10001">
-                           <input type="hidden" name="surveySeq" value="${SLD.surveySeq}">
-                           <div id="obj_ItemAfter"></div>
-
-                        
-
-                              
-                        <input type="button" class="create_btn" 
-                                 onclick="update_obj_item_btn()" style="float:right;"value="수정">   
-                        </form:form>
-                     </div>
-                  </div>
-               </div>
+										<div class="select_radio" id="select_radio">
+											<input type="radio" name="questionTypeCode" id="obj_radio"
+												onclick="checkit1()" value="10001" checked>&nbsp;객관식
+											&nbsp;&nbsp;&nbsp; <input type="radio"
+												name="questionTypeCode" id="subj_radio" onclick="checkit2()"
+												value="10002"> &nbsp;주관식 &nbsp;&nbsp;&nbsp; <input
+												type="radio" name="questionTypeCode" id="mix_radio"
+												onclick="checkit3()" value="10003"> &nbsp;혼합식
+											&nbsp;&nbsp;&nbsp;
+										</div>
+										<div class="question_content_area" id="question_add">
+											<div class="input-group" id="question_content">
+												<textarea class="form-control" aria-label="문제 입력칸"
+													name="questionContent">${SQD.questionContent}</textarea>
+											</div>
 
 
 
 
-               <!-- 혼합식 -->
-               <div id="mix_box_toggle" style="display: none;">
-                  <div class="col-12">
-                     <div class="Item_box">
-                        <button type="button" onclick="item_mix_copy(this,10003)" style="background:white; border: 1px solid #fff; border-radius: 35em;"><i class="fas fa-plus"></i></button>
-                        <b style="margin-left:160px; ">점수</b>
-                        <form:form modelAttribute="SQD" id="item_mix_form">
-                           <input type="hidden" name="questionTypeCode" value="10003">
-                           <input type="hidden" name="surveySeq" value="${SLD.surveySeq}"
-                              id="surveyseq">
-            
-                           <div id="mix_ItemAfter">
-                           <div id="icon_line">
-                           
-                           </div>
-                           </div>
-                        
-                           <input type="button" class="create_btn"  onclick="update_mix_item_btn()" value="수정">
-                              
-                        </form:form>
-                     </div>
-                  </div>
-               </div>
+											<!-- 문제 추가 버튼  -->
+											<!-- onclick="insertQus()" -->
+											<div class="question_add_btn_div">
 
-               <!-- 주관식은 문제 만들 때 id값 가장 큰 거 부여 -->
-               <div id="subj_box_toggle" style="display: none">
-                  <div class="block_box">
-                     <div class="subj_ItemAfter">
-                        <input type="text" 
-                           placeholder="주관식 문제입니다." readonly>
-                     </div>
-                     <div class="blank_under"></div>
-                  </div>
-               </div>
+												<button type="button" class="create_btn" id="add_qus_btn"
+													onclick="insertQus()">문제 추가</button>
+												<button type="button" class="create_btn" id="update_btn"
+													style="margin-left: 4.48px;"
+													onclick="qusUpdate(${SLD.surveySeq})">문제 수정</button>
 
-            </c:forEach>
-         </span>
+												<input type="hidden" name="surveySeq" id="seq"
+													value="${SLD.surveySeq }"> <input type="hidden"
+													name="questionSeq" value="2">
+												<!-- 비동기로 바꿔 넣어보자 -> 문항도 마찬가지 -->
+											</div>
+
+											<input type="hidden" name="itemScore" value="1"> <input
+												type="hidden" name="itemContent" value=" "> <input
+												type="reset" value="" id="reset_btn" style="display: none">
+										</div>
+									</div>
+								</form:form>
+							</div>
+
+							<div class="question_management">
+								<div class="input_title">문제 목록</div>
+								<div id="scroll_area" style="overflow: auto; height: 450px;">
+
+									<c:if test="${empty SQL}">
+										<br>
+										<b>${NoQuestion}</b>
+									</c:if>
+									<!-- 여기까지 문제 div -->
+
+									<c:forEach items="${SQL}" var="qlist">
+										<div id="queAfter">
+
+											<input type="hidden" value="${qlist.surveySeq }"
+												id="surveySequence">
+											<div class="input_qus" id="checkTouch">
+												<input disabled type="text" id="input_qus"
+													value="${qlist.questionContent }">
+											</div>
+
+											<!-- 조회 버튼 -->
+											<button value="${qlist.questionSeq }"
+												onclick="touchQuestion(this)"
+												style="border: 1px solid #fff; border-radius: 35em; background: white;">
+												<i class="fas fa-search"></i>
+											</button>
+
+											<button class="delete_btn"
+												onclick="deleteQus(this,${qlist.surveySeq})"
+												style="background: white;" value="${qlist.questionSeq }">
+												<i class="fa-regular fa-trash-can"></i>
+											</button>
+											<div class="blank_under"></div>
+										</div>
+									</c:forEach>
+
+								</div>
+							</div>
+						</div>
 
 
-      </div>
- 
-      
-</div>
-      <!--  문제관리 끝 -->
+						<div class="item_management">
+							<div class="input_title">문항 관리</div>
+							<!-- 객관식 -->
+							<span class="icon_div" id="item_div"> <c:forEach
+									items="${SQL}" var="qlist">
+									<div id="obj_box_toggle" style="display: none;">
+										<div class="col-12">
+											<div class="Item_box">
+												<button type="button" onclick="item_obj_copy(this, 10001)"
+													style="background: white; border: 1px solid #fff; border-radius: 35em;">
+													<i class="fas fa-plus"></i>
+												</button>
+												<b style="margin-left: 160px;">점수</b>
 
-      
+												<form:form modelAttribute="SQD" id="item_obj_form">
+													<input type="hidden" name="questionTypeCode" value="10001">
+													<input type="hidden" name="surveySeq"
+														value="${SLD.surveySeq}">
+													<div id="obj_ItemAfter"></div>
 
-   </div>
-</div>
-</div>
+
+
+
+													<input type="button" class="create_btn"
+														onclick="update_obj_item_btn()" style="float: right;"
+														value="수정">
+												</form:form>
+											</div>
+										</div>
+									</div>
+
+
+
+
+									<!-- 혼합식 -->
+									<div id="mix_box_toggle" style="display: none;">
+										<div class="col-12">
+											<div class="Item_box">
+												<button type="button" onclick="item_mix_copy(this,10003)"
+													style="background: white; border: 1px solid #fff; border-radius: 35em;">
+													<i class="fas fa-plus"></i>
+												</button>
+												<b style="margin-left: 160px;">점수</b>
+												<form:form modelAttribute="SQD" id="item_mix_form">
+													<input type="hidden" name="questionTypeCode" value="10003">
+													<input type="hidden" name="surveySeq"
+														value="${SLD.surveySeq}" id="surveyseq">
+
+													<div id="mix_ItemAfter">
+														<div id="icon_line"></div>
+													</div>
+
+													<input type="button" class="create_btn"
+														onclick="update_mix_item_btn()" value="수정">
+
+												</form:form>
+											</div>
+										</div>
+									</div>
+
+									<!-- 주관식은 문제 만들 때 id값 가장 큰 거 부여 -->
+									<div id="subj_box_toggle" style="display: none">
+										<div class="block_box">
+											<div class="subj_ItemAfter">
+												<input type="text" placeholder="주관식 문제입니다." readonly>
+											</div>
+											<div class="blank_under"></div>
+										</div>
+									</div>
+
+								</c:forEach>
+							</span>
+
+
+						</div>
+
+
+					</div>
+					<!--  문제관리 끝 -->
+
+
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <script>
+
+	//surveyinsertcomplete.do/${SLD.surveySeq}
+	function insertComplete(surveySeq){
+		
+		$.ajax({
+			method : "POST",
+	         url : 'surveyinsertcomplete.do/'+surveySeq, // form을 전송할 실제 파일경로
+	         async : false,
+	         dataType: 'html',
+	         processData : false,
+	         contentType : false,
+	         cache : false,
+	         timeout : 600000,
+	         beforeSend : function() {
+	            // 전송 전 실행 코드
+	         },
+	         success : function(data) {
+	        	 console.log(data);
+	            if(data == '0'){
+	            	alert("문항이 최소 1개는 존재해야 합니다.")
+	            }else{
+	            	window.location.replace("/survey/surveysearch");
+	            }
+	            
+	         },
+	         error : function(e) {
+	            // 전송 후 에러 발생 시 실행 코드
+	            console.log("ERROR : ", e);
+	         }
+		})
+	}
+	
 
    // 문제 누르면 touch버튼(돋보기) 활성화
    $(document).ready(function(){

@@ -141,7 +141,8 @@ public class SurveyController {
 
 		return "survey_search";
 	}
-
+	
+	//처음 들어왔을때 용 화면, 아무런 데이터 없이 선택지만 가동 
 	@RequestMapping("/surveyresultteam")
 	public String surveySuccess( Model model) {
 		logger.info("실행");
@@ -158,8 +159,10 @@ public class SurveyController {
 		return "survey_result_team";
 	}
 
+
+	//선택지를 통해 전송받은 파라미터로 데이터를 추출, json화하여 전송
 	@RequestMapping("/surveyresultDetail")
-	public String surveyResultDetail(@RequestParam int surveySeq,
+	public String surveyResultDetail(@RequestParam(defaultValue = "") int surveySeq,
 			                         @RequestParam(defaultValue = "") String departmentId, Model model) {
 		logger.info("실행1");
 
@@ -210,6 +213,7 @@ public class SurveyController {
 	}
 
 
+	//선택한 설문지 토대로 참여한 부서 목록 불러오는 함수
 	@RequestMapping(value = "/select_ajax.do")
 	@ResponseBody
 	public String select_ajax(@RequestBody String filterJSON,
@@ -288,11 +292,15 @@ public class SurveyController {
 				int cntcontent = itemcontents.length() - itemcontents.replace(",", "").length();
 
 				// 다중 값들을 배열로 변환
-				String[] itmencontent = itemcontents.split(",");
+				String[] itemcontent = itemcontents.split(",");
 				String[] itemscore = itemscores.split(",");
 				// 문항 개수만큼 for문 실행하여 문항 등록
 				for (int i = 0; i <= cntcontent; i++) {
-					SQD.setItemContent(itmencontent[i]);
+					if(itemcontent[i].equals("")){
+						System.out.println(i+"번째가 비어있음");
+						continue;
+					}
+					SQD.setItemContent(itemcontent[i]);
 					SQD.setItemScore(itemscore[i]);
 					surveyService.insertItem(SQD);
 				}
@@ -318,6 +326,11 @@ public class SurveyController {
 
 				// 문항 개수만큼 for문 실행하여 문항 등록
 				for (int i = 0; i <= cntcontent; i++) {
+					if(itemcontent[i].equals("")){
+						System.out.println(i+"번째가 비어있음");
+						continue;
+					}
+
 					SQD.setItemContent(itemcontent[i]);
 					SQD.setItemScore(itemscore[i]);
 					surveyService.insertItem(SQD);
@@ -394,11 +407,22 @@ public class SurveyController {
 
 
 	// 등록완료 돌아가기
-	@RequestMapping("/surveyinsertcomplete.do/{surveyseq}")
-	public String SurveyInsertComplete(@PathVariable int surveyseq) {
-		surveyService.surveyInsertComplete(surveyseq);
+	@RequestMapping("/surveyinsertcomplete.do/{surveySeq}")
+	@ResponseBody
+	public String SurveyInsertComplete(@PathVariable int surveySeq) {
+		logger.info(String.valueOf(surveySeq));
+		int cnt = surveyService.getItemCnt(surveySeq);
+		if(cnt == 0 ) {
+			logger.info("0을반환");
+			return "0";
+		}else {
+			logger.info(String.valueOf(cnt)+"을반환");
+			surveyService.surveyInsertComplete(surveySeq);	
+			return "1";
+		}
+		
 
-		return "redirect:/survey/surveysearch";
+		
 	}
 
 	@RequestMapping("/deletesurvey.do/{surveyseq}/{pageno}/{date}/{keyword}/{selection}")
@@ -531,8 +555,11 @@ public class SurveyController {
 			model.addAttribute("surveyResultList",surveyResultList);
 			surveyResultTarget = surveyService.getResultTarget(employeeId);
 			model.addAttribute("surveyResultTarget",surveyResultTarget);
+			List<SurveyResultDTO> personalStats = surveyService.personalStats(surveySeq, employeeId);
+			model.addAttribute("personalStats", personalStats);
 			logger.info("SRT: " + surveyResultTarget.get(0).toString());
 			logger.info("Result Model: " + surveyResultList.get(0).toString());
+
 
 			return "survey_result";
 		}

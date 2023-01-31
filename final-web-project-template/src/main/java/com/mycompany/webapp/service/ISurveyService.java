@@ -71,8 +71,9 @@ public interface ISurveyService {
 
 	//결과 목록
 	List<Map<String, Object>> getResultTarget(int employeeId);
-
-
+	
+	// 개인 결과 요약
+	List<SurveyResultDTO> personalStats(int surveySeq, int employeeId);
 
 	//설문 복사를 위한 문제 및 문항 복사
 	void insertQuestionsAndItems(List<SurveyQuestionDTO> SQD);
@@ -80,6 +81,8 @@ public interface ISurveyService {
 	List<SurveyResultTeamDTO> resultList(int surveySeq);
 	List<SurveyResultTeamDTO> resultDPList(int surveySeq, String departmentId);
 
+	int getItemCnt(int surveySeq);
+	
 }
 
 

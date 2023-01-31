@@ -4,6 +4,19 @@
 	box-sizing: border-box;
 }
 
+.card{
+	position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.25rem;
+    width: 1503px;
+}
+
 .hmenu{
 	display: flex;
 	margin-bottom: 20px;
@@ -146,14 +159,14 @@ select:disabled {
 }
 
 .menu_profile_text {
-	width: 100%;
-	float: left;
-	font-size: 18px;
-	text-align: center;
+/* 	width: 100%; */
+/* 	float: left; */
+/* 	font-size: 18px; */
+/* 	text-align: center; */
 	color: white;
-	margin-left: 0px;
-	font-weight: 450;
-	margin-left: 0px;
+/* 	margin-left: 0px; */
+/* 	font-weight: 450; */
+/* 	margin-left: 0px; */
 }
 
 .seach_float {
@@ -242,8 +255,8 @@ select:disabled {
 /* survey */
 .survey_info {
 	position: fixed;
-	left: 30px;
-	top: 450px;
+	left: 20px;
+	top: 400px;
 	width: 250px;
 	height: 250px;
 	padding: 40px 0;

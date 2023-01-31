@@ -181,7 +181,7 @@ public class MappingController {
 	
 	//리스트 입력 
 	@RequestMapping(value="/popup.do", method=RequestMethod.POST)
-	public void insertAppraise(@RequestBody String filterJSON,
+	public void insertAppraisee(@RequestBody String filterJSON,
 			HttpServletResponse response, ModelMap model) throws Exception {
 		logger.info("실행");
 		JSONObject resMap = new JSONObject();
@@ -229,7 +229,7 @@ public class MappingController {
 	
 	//리스트 삭제	
 	@RequestMapping(value="/deleteMapping.do", method=RequestMethod.POST)
-	public void deleteAppraiseeId(@RequestBody String filterJSON,
+	public void deleteAppraisee(@RequestBody String filterJSON,
 			HttpServletResponse response, ModelMap model) throws Exception {
 		logger.info("실행");
 		JSONObject resMap = new JSONObject();
