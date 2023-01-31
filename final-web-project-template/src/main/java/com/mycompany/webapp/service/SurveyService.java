@@ -204,6 +204,7 @@ public class SurveyService implements ISurveyService{
 	public List<SurveyResultDTO> surveyResult(int employeeId, int surveySeq) {
 			logger.info("개인별 설문 결과 페이지 서비스 진입");
 			logger.info("employeeId: "  + employeeId);
+			logger.info("surveySeq: "  + surveySeq);
 		return surveyDao.surveyResult(employeeId, surveySeq);
 	}
 
@@ -212,7 +213,7 @@ public class SurveyService implements ISurveyService{
 
 		return surveyDao.getResultTarget(employeeId);
 	}
-	
+
 	//개인별 점수 요약
 	@Override
 	public List<SurveyResultDTO> personalStats(int surveySeq, int employeeId) {
@@ -235,12 +236,12 @@ public class SurveyService implements ISurveyService{
 	// 문항 수 체크하여 등록완료 여부 확인
 	@Override
 	public int getItemCnt(int surveySeq) {
-		
+
 		return surveyDao.getItemCnt(surveySeq);
 	}
 
 
-	
+
 
 }
 

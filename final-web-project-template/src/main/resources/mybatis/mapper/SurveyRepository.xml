@@ -125,15 +125,15 @@
    </update>
 
    <update id="updateEmail" parameterType="int">
-   	  UPDATE NOTICE_EMAIL 
+   	  UPDATE NOTICE_EMAIL
    	  	 SET DELIVERY_YN = 'Y',
    	  	 	 UPDATE_DATE = SYSDATE
    	   WHERE SURVEY_SEQ = #{surveySeq}
-             
+
    </update>
 
    <update id="updateSMS" parameterType="int">
-   	  UPDATE NOTICE_SMS 
+   	  UPDATE NOTICE_SMS
    	  	 SET DELIVERY_YN = 'Y',
    	  	 	 UPDATE_DATE = SYSDATE
        WHERE SURVEY_SEQ = #{surveySeq}
@@ -283,38 +283,40 @@
  	<![CDATA[
 		SELECT
 		rnum
-        ,department_name
-        ,grade_name
-        ,employee_name
+        ,DEPARTMENT_NAME
+        ,GRADE_NAME
+        ,EMPLOYEE_NAME
         ,SURVEY_COMPLETE_YN
         ,SURVEY_SEQ
-        ,employee_id
+        ,EMPLOYEE_ID
+        ,SURVEY_COMPLETE_YN
         FROM ( SELECT
                  ROWNUM AS rnum
-                ,survey_seq
-                ,department_name
-                ,grade_name
-                ,employee_name
-                ,survey_complete_yn
-                ,employee_id
+                ,SURVEY_SEQ
+                ,DEPARTMENT_NAME
+                ,GRADE_NAME
+                ,EMPLOYEE_NAME
+                ,SURVEY_COMPLETE_YN
+                ,EMPLOYEE_ID
         FROM ( SELECT
                         distinct
-                        m.survey_seq
-                        ,oc.department_name
-                        ,g.grade_name
-                        ,ui.employee_name
-                        ,ui.employee_id
-                        ,m.survey_complete_yn
-                 FROM grade g ,user_info ui ,mapping m ,ORGANIZATION_CHART oc
+                        m.SURVEY_SEQ
+                        ,oc.DEPARTMENT_NAME
+                        ,g.GRADE_NAME
+                        ,ui.EMPLOYEE_NAME
+                        ,ui.EMPLOYEE_ID
+                        ,m.SURVEY_COMPLETE_YN
+                 FROM GRADE g ,USER_INFO ui ,MAPPING m ,ORGANIZATION_CHART oc
                  WHERE
-                     m.appraisee_id = ui.employee_id
-                    and g.grade_id = ui.grade_id and oc.department_id = ui.department_id and
-                    (m.survey_complete_yn LIKE '%' || #{keyword} || '%'
-                   or
-                   ui.employee_name LIKE '%' || #{keyword} || '%'
-                   or
+                     m.APPRAISEE_ID = ui.EMPLOYEE_ID
+                    and g.grade_id = ui.grade_id and oc.department_id = ui.department_id
+                 AND(
+                    m.SURVEY_COMPLETE_YN LIKE '%' || #{keyword} || '%'
+	               OR
+                   ui.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
+                   OR
                     g.GRADE_NAME LIKE  '%' || #{keyword} || '%'
-                   or
+                   OR
                   oc.DEPARTMENT_NAME LIKE  '%' || #{keyword} || '%')
 
                )
@@ -397,8 +399,8 @@
            AND Q.QUESTION_TYPE_CODE = 10001
       GROUP BY EMPLOYEE_NAME
 	</select>
-	
-	<select id="surveyResult" parameterType="int" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
+
+	<select id="surveyResult" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
 	<![CDATA[
 SELECT ROWNUM AS rnum
         ,a.APPRAISEE_ID
@@ -491,7 +493,7 @@ FROM(
             , (rk + (cnt - 1) / 2) / tot * 100 rat
          FROM (
              SELECT EMPLOYEE_ID
-                  , SCORE 
+                  , SCORE
                   , SURVEY_SEQ
                   , RANK() OVER(PARTITION BY SURVEY_SEQ ORDER BY score DESC) rk
                   , COUNT(*) OVER(PARTITION BY SURVEY_SEQ, score) cnt
@@ -499,19 +501,19 @@ FROM(
                   FROM (
                    SELECT SUM(ITEM_SCORE) AS SCORE,
                            EMPLOYEE_ID,
-                           R.SURVEY_SEQ 
+                           R.SURVEY_SEQ
                       FROM SURVEY_ITEM I,
                            SURVEY_RESULT R,
                            USER_INFO U,
                            SURVEY_QUESTION Q
                      WHERE I.ITEM_SEQ = R.ITEM_SEQ
-                       AND R.APPRAISEE_ID = U.EMPLOYEE_ID 
+                       AND R.APPRAISEE_ID = U.EMPLOYEE_ID
                        AND I.QUESTION_SEQ = Q.QUESTION_SEQ
                        AND Q.QUESTION_TYPE_CODE = 10001
                   GROUP BY EMPLOYEE_ID, R.SURVEY_SEQ) t
                 )
             )
-        ) S 
+        ) S
         ,(SELECT AVG(SCORE) AS AVG,
                  MAX(SCORE) AS MAX,
                  MIN(SCORE) AS MIN,
@@ -525,7 +527,7 @@ FROM(
                         USER_INFO U,
                         SURVEY_QUESTION Q
                   WHERE I.ITEM_SEQ = R.ITEM_SEQ
-                    AND R.APPRAISEE_ID = U.EMPLOYEE_ID 
+                    AND R.APPRAISEE_ID = U.EMPLOYEE_ID
                     AND I.QUESTION_SEQ = Q.QUESTION_SEQ
                     AND Q.QUESTION_TYPE_CODE = 10001
                     AND R.SURVEY_SEQ = #{surveySeq}
@@ -542,11 +544,11 @@ WHERE S.EMPLOYEE_ID = U.EMPLOYEE_ID
 
 
 	<select id ="getItemCnt" parameterType="int" resultType="int">
-	SELECT COUNT(*) 
-	FROM  SURVEY_LIST SL, 
-	      SURVEY_QUESTION SQ, 
-	      SURVEY_ITEM SI 
-    WHERE SQ.QUESTION_SEQ = SI.QUESTION_SEQ AND 
+	SELECT COUNT(*)
+	FROM  SURVEY_LIST SL,
+	      SURVEY_QUESTION SQ,
+	      SURVEY_ITEM SI
+    WHERE SQ.QUESTION_SEQ = SI.QUESTION_SEQ AND
           SQ.SURVEY_SEQ = SL.SURVEY_SEQ AND
           SL.SURVEY_SEQ = #{surveySeq}
 	</select>

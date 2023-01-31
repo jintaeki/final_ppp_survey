@@ -81,8 +81,10 @@ public class SurveyController {
 	}
 
 	
+
 	
-	//처음 들어왔을때 용 화면, 아무런 데이터 없이 선택지만 가동 
+
+	//처음 들어왔을때 용 화면, 아무런 데이터 없이 선택지만 가동
 	@RequestMapping("/surveyresultteam")
 	public String surveySuccess( Model model) {
 		logger.info("실행");
@@ -367,12 +369,12 @@ public class SurveyController {
 			return "0";
 		}else {
 			logger.info(String.valueOf(cnt)+"을반환");
-			surveyService.surveyInsertComplete(surveySeq);	
+			surveyService.surveyInsertComplete(surveySeq);
 			return "1";
 		}
-		
 
-		
+
+
 	}
 
 	
@@ -485,7 +487,7 @@ public class SurveyController {
 			List<Map<String, Object>> evaluateList = null;
 			PagingDTO pagingDto = null;
 			String beforeKeyword = keyword;
-				
+
 			 	model.addAttribute("selecton", selection);
 
 			    logger.info("모델 :" + model);
@@ -497,7 +499,7 @@ public class SurveyController {
 				pagingDto.setSelection(selection);
 				pagingDto.setKeyword(keyword);
 				pagingDto.setSurveySeq(surveySeq);
-				
+
 				logger.info("selection:" + pagingDto.getSelection());
 				logger.info("keyword: "+pagingDto.getKeyword());
 				logger.info("paigingdto:" + pagingDto);
@@ -532,6 +534,7 @@ public class SurveyController {
 			logger.info("surveySeq: " + surveySeq);
 			List<SurveyResultDTO> surveyResultList = surveyService.surveyResult(employeeId, surveySeq);
 			//List<SurveyResultDTO> SRL = SurveyResultList.stream().distinct().collect(Collectors.toList());
+			logger.info("srl" + surveyResultList);
 			model.addAttribute("surveyResultList",surveyResultList);
 			surveyResultTarget = surveyService.getResultTarget(employeeId);
 			model.addAttribute("surveyResultTarget",surveyResultTarget);
@@ -544,17 +547,19 @@ public class SurveyController {
 			return "survey_result";
 		}
 
-		@RequestMapping("/surveyresult1/{surveySeq}/{employeeId}")
-		@ResponseBody
-		public List<SurveyResultDTO> surveyResult2 (
-				@PathVariable int surveySeq,
-				@PathVariable int employeeId,
-				                   HttpSession session, Model model) {
 
-			List<SurveyResultDTO> surveyResultList = surveyService.surveyResult(employeeId, surveySeq);
+		@RequestMapping("/surveyresultcheck/{surveySeq}/{employeeId}")
+	      @ResponseBody
+	      public List<SurveyResultDTO> surveyResult2 (
+	            @PathVariable int surveySeq,
+	            @PathVariable int employeeId,
+	                               HttpSession session, Model model) {
 
-			return surveyResultList ;
-		}
+	         List<SurveyResultDTO> surveyResultList = surveyService.surveyResult(employeeId, surveySeq);
+
+	         return surveyResultList ;
+	      }
+
 		
 		
 }
