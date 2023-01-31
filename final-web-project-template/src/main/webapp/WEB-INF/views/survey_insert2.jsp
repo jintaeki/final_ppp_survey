@@ -241,7 +241,7 @@
 
 													<input type="button" class="create_btn"
 														onclick="update_obj_item_btn()" style="float: right;"
-														value="수정">
+														value="저장">
 												</form:form>
 											</div>
 										</div>
@@ -269,7 +269,7 @@
 													</div>
 
 													<input type="button" class="create_btn"
-														onclick="update_mix_item_btn()" value="수정">
+														onclick="update_mix_item_btn()" value="저장">
 
 												</form:form>
 											</div>
