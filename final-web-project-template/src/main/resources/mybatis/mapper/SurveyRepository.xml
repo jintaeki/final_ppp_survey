@@ -124,19 +124,51 @@
       UPDATE SURVEY_LIST SET    STATE_CODE='30004' WHERE SURVEY_SEQ =#{surveySeq}
    </update>
 
-   <update id="updateEmail" parameterType="int">
-   	  UPDATE NOTICE_EMAIL
+
+   <update id="updateEmail" parameterType="com.mycompany.webapp.dto.NoticeEmailDTO">
+   	  UPDATE NOTICE_EMAIL 
    	  	 SET DELIVERY_YN = 'Y',
+   	  	 	 DELIVERY_CONTENT = #{deliveryContent},
    	  	 	 UPDATE_DATE = SYSDATE
    	   WHERE SURVEY_SEQ = #{surveySeq}
 
    </update>
 
-   <update id="updateSMS" parameterType="int">
-   	  UPDATE NOTICE_SMS
+
+   <update id="updateSMS" parameterType="com.mycompany.webapp.dto.NoticeSmsDTO">
+   	  UPDATE NOTICE_SMS 
    	  	 SET DELIVERY_YN = 'Y',
+   	  	     DELIVERY_CONTENT = #{deliveryContent},
    	  	 	 UPDATE_DATE = SYSDATE
        WHERE SURVEY_SEQ = #{surveySeq}
+   </update>
+   
+   <update id="sendReEmail" parameterType="com.mycompany.webapp.dto.NoticeEmailDTO">
+   	  UPDATE NOTICE_EMAIL 
+         SET UPDATE_DATE = SYSDATE,
+             DELIVERY_CONTENT = #{deliveryContent} 	    
+      WHERE EMAIL_SEQ
+         IN (SELECT EMAIL_SEQ
+               FROM NOTICE_EMAIL N,
+                    MAPPING M
+              WHERE N.SURVEY_SEQ = #{surveySeq}
+                AND N.SURVEY_SEQ = M.SURVEY_SEQ
+                AND M.SURVEY_COMPLETE_YN = 'N'
+                AND N.RATER_ID = M.RATER_ID)
+   </update>
+       
+   <update id="sendReSMS" parameterType="com.mycompany.webapp.dto.NoticeSmsDTO">
+      UPDATE NOTICE_SMS 
+         SET UPDATE_DATE = SYSDATE,
+             DELIVERY_CONTENT = #{deliveryContent} 	    
+      WHERE SMS_SEQ
+         IN (SELECT SMS_SEQ
+               FROM NOTICE_SMS N,
+                    MAPPING M
+              WHERE N.SURVEY_SEQ = #{surveySeq}
+                AND N.SURVEY_SEQ = M.SURVEY_SEQ
+                AND M.SURVEY_COMPLETE_YN = 'N'
+                AND N.RATER_ID = M.RATER_ID)
    </update>
 
 

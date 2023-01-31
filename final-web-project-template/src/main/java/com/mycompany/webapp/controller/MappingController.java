@@ -42,7 +42,8 @@ public class MappingController {
 	
 	// 매핑 출력
 	@RequestMapping(value="/set.do")
-	public String setMapping(int surveySeq, int month, int number, 
+	public String setMapping(int surveySeq, int month, 
+			 				 @RequestParam(defaultValue="0")int number, 
 							 @RequestParam(defaultValue="0")String newCheck,
 							 @RequestParam(defaultValue="") String keyword,
 							 @RequestParam(defaultValue="1") int pageNo,

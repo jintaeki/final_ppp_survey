@@ -77,8 +77,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 					onclick="location.href='<c:url value='/survey/surveysearch'/>'"
 					class="btn btn-primary" value="돌아가기">
 					<button type="button" id="map_insert" class="btn btn-primary" style="margin-left: 1050px;"
-						onclick="mapInsert('${mappingList[0].surveySeq}')">조건관
-						관계없이 추가</button>
+						onclick="mapInsert('${mappingList[0].surveySeq}')">조건과 관계없이 추가</button>
 							
 				
 				</div>
