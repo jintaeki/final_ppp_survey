@@ -7,8 +7,7 @@
 	<div style="border-bottom: 1px solid white; text-align: center; margin-top: 20px;">
 		<img
 			src="${pageContext.request.contextPath}/resources/images/logo_img.png"
-			width="30" height="30" class="d-inline-block align-top">
-		<p class="text-white">ManyFace</p>
+			width="100" height="100" class="d-inline-block align-top">
 	</div>
 	<div style="text-align: center;">
 		<br> <br>

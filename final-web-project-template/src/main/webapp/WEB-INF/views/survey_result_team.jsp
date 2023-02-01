@@ -51,7 +51,7 @@
 
 				<!-- CHART -->
 				<figure class="highcharts-figure"
-					style="overflow: auto; height: 500px; width: 800px; display: flex;">
+					style="overflow: auto; height: 500px; width: 1200px; display: flex;">
 					<div class="scroll_body">
 						<div style="min-width: 800px;">
 							<div id="chart_container"></div>
@@ -199,6 +199,14 @@ Highcharts.chart('chart_container', {
   chart: {
     type: 'column'
   },
+  credits: {
+      enabled: false
+  },
+  navigation: {
+      buttonOptions: {
+          enabled: false
+      }
+  },
   title: {
     align: 'left',
     text: '다면평가 전체 결과 통계'
@@ -255,6 +263,14 @@ Highcharts.chart('chart_container2', {
   chart: {
     type: 'column'
   },
+  credits: {
+      enabled: false
+  },
+  navigation: {
+      buttonOptions: {
+          enabled: false
+      }
+  },
   title: {
     align: 'left',
     text: '다면평가 부서 결과 통계'
@@ -303,6 +319,7 @@ Highcharts.chart('chart_container2', {
      }
   ],
 });
+
 /* CHART 팀별 END */
 
 </script>

@@ -203,8 +203,8 @@
 
 	<select id="selectMappingData" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="com.mycompany.webapp.dto.PopupDTO">
 	<![CDATA[
-		SELECT  PROJECT_ID,
-				GRADE_ID,
+		SELECT 
+                GRADE_ID,
 				DEPARTMENT_ID,
 				SURVEY_SEQ,
 				RATER_ID,
@@ -216,8 +216,7 @@
      		  	GRADE_NAME		
 		FROM (
 			SELECT ROWNUM AS rnum,
-				  PROJECT_ID,
-				   GRADE_ID,
+				  GRADE_ID,
 				   DEPARTMENT_ID,
 			       SURVEY_SEQ,
 				   RATER_ID,
@@ -227,8 +226,8 @@
        		  	   RATER_NAME, 
        		  	   APPRAISEE_NAME, 
      		  	   GRADE_NAME
-			FROM(SELECT P.PROJECT_ID,
-				        UR.GRADE_ID,
+			FROM(SELECT DISTINCT
+                        UR.GRADE_ID,
 				        UR.DEPARTMENT_ID,
 				        M.SURVEY_SEQ,
 				        M.RATER_ID,
@@ -238,16 +237,14 @@
        		  	        UR.EMPLOYEE_NAME AS "RATER_NAME",
        		  	        UA.EMPLOYEE_NAME AS "APPRAISEE_NAME",
      		  	        G.GRADE_NAME
-			       FROM PROJECT P,
-				        PROJECT_HISTORY H,
+			       FROM PROJECT_HISTORY H,
      			        GRADE G,
      			        MAPPING M,
      		            USER_INFO UA,
      			        USER_INFO UR,
      			        SURVEY_LIST S,
                         ORGANIZATION_CHART O
-			      WHERE P.PROJECT_ID = H.PROJECT_ID
-				    AND UR.GRADE_ID = G.GRADE_ID
+			      WHERE UR.GRADE_ID = G.GRADE_ID
 				    AND H.PARTICIPATION_EMPLOYEE_ID = M.APPRAISEE_ID
     			    AND UA.EMPLOYEE_ID = M.APPRAISEE_ID
     			    AND UR.EMPLOYEE_ID = M.RATER_ID
@@ -260,15 +257,12 @@
                         	UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
                         	)
                 		OR (#{selection} = '60002'
-                        	AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
-                    	OR (#{selection} = '60003'
-                    		AND P.PROJECT_NAME LIKE '%' || #{keyword} || '%')    
+                        	AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')    
                     	OR(#{selection} = '60004'
                     	   AND((UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
                         	   OR
                         	   UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
-                            OR O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%'
-                            OR P.PROJECT_NAME LIKE '%' || #{keyword} || '%')
+                            OR O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
                             )
                    		) 
                 	AND UR.GRADE_ID LIKE (
@@ -276,11 +270,13 @@
                          	 THEN '%' || '' || '%' 
                          	 ELSE '%' || #{selectGD} || '%'
                     	END) 
-					ORDER BY G.GRADE_ID DESC, UR.EMPLOYEE_NAME
+                    	ORDER BY GRADE_ID DESC, RATER_NAME
 					)
 				WHERE ROWNUM <= #{endRowNo}		
 			)
 		WHERE rnum  >= #{startRowNo}
+		
+		
 	]]>
 	</select>
 	
@@ -366,15 +362,12 @@
                         	UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
                         	)
                 		OR (#{selection} = '60002'
-                        	AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
-                    	OR (#{selection} = '60003'
-                    		AND P.PROJECT_NAME LIKE '%' || #{keyword} || '%')    
+                        	AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')   
                     	OR(#{selection} = '60004'
                     	   AND((UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
                         	   OR
                         	   UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
-                            OR O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%'
-                            OR P.PROJECT_NAME LIKE '%' || #{keyword} || '%')
+                            OR O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
                             )
                    		) 
                   AND UR.GRADE_ID LIKE (
@@ -460,15 +453,12 @@
                         	UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
                         	)
                 		OR (#{selection} = '60002'
-                        	AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
-                    	OR (#{selection} = '60003'
-                    		AND P.PROJECT_NAME LIKE '%' || #{keyword} || '%')    
+                        	AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')   
                     	OR(#{selection} = '60004'
                     	   AND((UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
                         	   OR
                         	   UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
-                            OR O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%'
-                            OR P.PROJECT_NAME LIKE '%' || #{keyword} || '%')
+                            OR O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
                             )
                    		) 
                   AND UR.GRADE_ID LIKE (

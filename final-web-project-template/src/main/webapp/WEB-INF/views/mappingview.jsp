@@ -25,7 +25,7 @@ function popup(){
 
 function mapInsert(surveySeq){
 	
-	let popUrl ="/mapping/another.do?pageNo=1"+"&surveySeq="+surveySeq
+	let popUrl ="/manyface/mapping/another.do?pageNo=1"+"&surveySeq="+surveySeq
 			   +"&keyword=&selection=60004&selectGD=60004";	
 	let popOption = "width=800, height=820, left=470, top=100";
 	window.open(popUrl, "다면평가 대상 추가", popOption);
@@ -77,7 +77,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 					onclick="location.href='<c:url value='/survey/surveysearch'/>'"
 					class="btn btn-outline-primary" value="돌아가기">
 					<button type="button" id="map_insert" class="btn btn-outline-primary" style="margin-left: 1050px;"
-						onclick="mapInsert('${mappingList[0].surveySeq}')">조건과 관계없이 추가</button>
+						onclick="mapInsert('${surveySeq}')">조건과 관계없이 추가</button>
 							
 				
 				</div>
