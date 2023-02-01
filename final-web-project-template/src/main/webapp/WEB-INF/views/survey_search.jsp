@@ -359,7 +359,7 @@
 											<i class="fas fa-xmark"></i>
 										</button>
 									<td><c:if test="${list.stateCode ne '30004'}">
-											<a href="surveyinsert?surveyseq=${list.surveySeq}"  id="surveyUP">${list.surveyName }</a>
+											<a href="surveyinsert?surveyseq=${list.surveySeq}"  id="surveyUP">${list.surveyName }</a> &nbsp;
 											<a class="menu_profile_text" style="position:fixed;" href='<c:url value='copysurvey.do/${list.surveySeq}'/>'>복사</a>
 
 										</c:if> <c:if test="${list.stateCode eq '30004'}">
