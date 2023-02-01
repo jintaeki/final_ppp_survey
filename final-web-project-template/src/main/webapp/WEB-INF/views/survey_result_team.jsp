@@ -2,7 +2,7 @@
 
 <%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/survey_result_team.css">
-	
+
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/data.js"></script>
 <script src="https://code.highcharts.com/modules/drilldown.js"></script>
@@ -48,7 +48,7 @@
 
 					</div>
 				</div>
-
+				<div class="chartdiv">
 				<!-- CHART -->
 				<figure class="highcharts-figure"
 					style="overflow: auto; height: 500px; width: 800px; display: flex;">
@@ -64,6 +64,7 @@
 						</div>
 					</div>
 				</figure>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -72,62 +73,62 @@
 	/* 선택지 비동기 부분 */
 function typeFn() {
 	$("#departmentId").attr("disabled",true);
-	
+
 	console.log($("#surveySeq").val());
-	 
+
 	if($("select[name=surveySeq] > option:selected").val() != null){
 	$("#select").show();
 	$("#departmentId > option").remove();
 	$("#departmentId").attr("disabled",true);
 	$("#departmentId").append("<option value=\"\">--선택--</option>");
-	 
+
 	var surveySeq = $("#surveySeq").val();
-	 
+
 	var submitObj = new Object();
 	submitObj.surveySeq= surveySeq;
-	 
-	$.ajax({ 
-	      url: "select_ajax.do", 
-	      type: "POST", 
+
+	$.ajax({
+	      url: "select_ajax.do",
+	      type: "POST",
 	      contentType: "application/json;charset=UTF-8",
 	      data:JSON.stringify(submitObj),
 	      dataType : "json",
 	      progress: true
-	     }) 
+	     })
 	     .done(function(data) {
 
 	$('#departmentId').children('option:not(:first)').remove();
-	        
+
 	        var laborOption = "";
 	        for(var k in data.Odt){
 	          var obj = data.Odt[k];
 	          var departmentName = obj.departmentName;
 	          var departmentId = obj.departmentId;
-	          
+
 	          laborOption = "<option value='" + departmentId + "'>" + departmentName + "</option>";
 	          $("#departmentId").append(laborOption);
 	      }
 
 	$("#departmentId").attr("disabled",false);
-       
-	     }) 
-	     .fail(function(e) {  
+
+	     })
+	     .fail(function(e) {
 	         alert("FAIL - "+e);
-	     }) 
-	     .always(function() { 
+	     })
+	     .always(function() {
 	      $("#departmentId").attr("disabled",false);
-	     }); 
+	     });
 		}
 	}
 
-	
+
 	/* CHART 설정부분 */
 
 	var scoreInfo = null;
-	
+
 	function getScoreCnt(type){
 		if(${chartJSONResult} != null) {
-	    	if(scoreInfo==null) scoreInfo=${chartJSONResult};	
+	    	if(scoreInfo==null) scoreInfo=${chartJSONResult};
 	    	var scoreInfoMap = resultProcLineChart(scoreInfo);
 	    	if(scoreInfoMap==null) return null;
 	    	if(type=="data"){
@@ -138,30 +139,30 @@ function typeFn() {
 		}
 	}
 	function resultProcLineChart($obj){
-	    if($obj==null) return null;        
+	    if($obj==null) return null;
 	    var resMap = new Map();
-	    
+
 	    var cateArr = new Array();
 	    var dataArr = new Array();
-	    
+
 	    for(var k in $obj){
-	        var xobj =$obj[k];	
-	        
-	        cateArr.push(xobj.d);    
-	        dataArr.push(xobj.s);             
+	        var xobj =$obj[k];
+
+	        cateArr.push(xobj.d);
+	        dataArr.push(xobj.s);
 	    }
-	    
+
 	    resMap.set("cateArr",cateArr);
 	    resMap.set("data",dataArr);
-	    
+
 	    return resMap;
-	} 
-	
+	}
+
 	var todayInfo = null;
-	
+
 	function getDPScoreCnt(type){
 		if(${chartJSONDp} != null) {
-	    	if(todayInfo==null) todayInfo=${chartJSONDp};	
+	    	if(todayInfo==null) todayInfo=${chartJSONDp};
 	    	var todayInfoMap = resultDPProcLineChart(todayInfo);
 	    	if(todayInfoMap==null) return null;
 	    	if(type=="data"){
@@ -172,25 +173,25 @@ function typeFn() {
 		}
 	}
 	function resultDPProcLineChart($obj){
-	    if($obj==null) return null;        
+	    if($obj==null) return null;
 	    var resMap = new Map();
-	    
+
 	    var cateArr = new Array();
 	    var dataArr = new Array();
-	    
+
 	    for(var k in $obj){
 	        var xobj =$obj[k];
-	        
-	        cateArr.push(xobj.e);      
-	        dataArr.push(xobj.s);             
+
+	        cateArr.push(xobj.e);
+	        dataArr.push(xobj.s);
 	    }
-	    
+
 	    resMap.set("cateArr",cateArr);
 	    resMap.set("data",dataArr);
-	    
+
 	    return resMap;
-	} 
-	
+	}
+
 /* CHART 설정 끝 */
 
 /* CHART 전체 START */

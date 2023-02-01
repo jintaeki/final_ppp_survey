@@ -480,7 +480,7 @@ WHERE sr.QUESTION_SEQ = sq.QUESTION_SEQ
         AND sr.APPRAISEE_ID = ui.employee_id
         AND ui.GRADE_ID = g.GRADE_ID
         AND ui.DEPARTMENT_ID = oc.DEPARTMENT_ID
-        AND sr.APPRAISEE_ID=#{employeeId}AND sr.SURVEY_SEQ = #{surveySeq}
+        AND sr.APPRAISEE_ID=#{employeeId} AND sr.SURVEY_SEQ = #{surveySeq}
 ORDER BY RATER_ID, ANONYMITY_SEQ, QUESTION_SEQ) a
  ]]>
 </select>

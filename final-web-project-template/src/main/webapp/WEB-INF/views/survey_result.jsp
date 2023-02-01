@@ -56,13 +56,18 @@
 							<c:forEach items="${surveyResultList}" var="SRL">
 								<tr>
 									<td>${SRL.rnum}</td>
-
+							  <c:choose>
+								<c:when test = "${SRL.anonymitySeq eq 'null'}">
 									<td>${SRL.raterName}</td>
-
 									<td>${SRL.raterDepartmentName}</td>
-
 									<td>${SRL.raterGrade}</td>
-
+								</c:when>
+								<c:otherwise>
+									<td>#</td>
+									<td>#</td>
+									<td>${SRL.anonymitySeq}</td>
+								</c:otherwise>
+							</c:choose>
 									<td>${SRL.questionContent}</td>
 
 									<td>${SRL.itemContent}</td>
