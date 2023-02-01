@@ -13,10 +13,17 @@
 	<div style="text-align: center;">
 		<br> <br>
 		<div style="background:#1b2435;height: 50px; padding: 10px;">
-			<a class="text-white" href="<c:url value='/survey/surveysearch'/>">설문지
-				목록</a>
+			<a class="text-white" href="<c:url value='/survey/surveysearch'/>">
+				목록 조회</a>
 		</div>
 		<br> <br>
+		
+<!-- 		<div style="background:#1b2435;height: 50px; padding: 10px;"> -->
+<!-- 			<a class="text-white" href="surveysearch?anonyMityCheckCode='30001'&pageno=&keyword=&selection=&surveyStartDate= />">작성 중인 평가지 보기 -->
+<!-- 				</a> -->
+<!-- 		</div> -->
+<!-- 		<br> <br> -->
+		
 		<div style="background:#1b2435;height: 50px; padding: 10px;">
 			<a class="text-white"
 				href="<c:url value='/survey/surveyresultteam'/>">결과 통계</a>

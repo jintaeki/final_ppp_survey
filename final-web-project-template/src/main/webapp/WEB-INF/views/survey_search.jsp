@@ -272,7 +272,7 @@
 				<option value="30004">알림 발송 완료</option>
 				<option value="30003">매핑 완료</option>
 				<option value="30002">등록 완료</option>
-				<option value="30001">등록 중</option>
+				<option value="30001">작성 중</option>
 				
 				
 			</select> <input type="text" class="form-control" id="selectedKeyword"
