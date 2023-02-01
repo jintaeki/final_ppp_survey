@@ -321,9 +321,9 @@
 								<input type="hidden" name="pageNo" value="1">
 								<div class="input-group-append">
 									<input type="submit" class="btn btn-outline-secondary"
-										id="button-addon2" value="검색"> <input type="button"
+										id="button-addon2" value="검색"> <input type="reset"
 										class="btn btn-outline-secondary" id="button-addon2"
-										onclick="resetMenu(this)" value="초기화">
+										value="초기화">
 								</div>
 							</form>
 							<!-- 						<button id="upper_dv_btn" type="button" class="btn btn-primary" -->
