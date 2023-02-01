@@ -89,10 +89,10 @@
                      <td colspan="12" class="text-center">
                         <div>
                            <a class="btn btn-outline-secondary"
-                              href="EvaluateSearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}&surveySeq=${pagingdto.surveySeq}">처음</a>
+                              href="?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}&surveySeq=${pagingdto.surveySeq}">처음</a>
                            <c:if test="${pagingdto.groupNo>1}">
                               <a class="btn btn-outline-secondary"
-                                 href="EvaluateSearch?pageNo=${pagingdto.startPageNo-1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}">이전</a>
+                                 href="?pageNo=${pagingdto.startPageNo-1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}">이전</a>
                            </c:if>
 
                            <c:forEach var="i" begin="${pagingdto.startPageNo}"
@@ -109,10 +109,10 @@
 
                            <c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
                               <a class="btn btn-outline-secondary"
-                                 href="EvaluateSearch?pageNo=${pagingdto.endPageNo+1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}">다음</a>
+                                 href="?pageNo=${pagingdto.endPageNo+1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}">다음</a>
                            </c:if>
                            <a class="btn btn-outline-secondary"
-                              href="EvaluateSearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&surveySeq=${pagingdto.surveySeq}">맨끝</a>
+                              href="?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&surveySeq=${pagingdto.surveySeq}">맨끝</a>
                         </div>
                      </td>
                   </tr>
