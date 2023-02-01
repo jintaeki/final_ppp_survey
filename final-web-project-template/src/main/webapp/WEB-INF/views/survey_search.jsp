@@ -230,7 +230,7 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">설문지 설정</h5>
+					<h5 class="modal-title" id="exampleModalLabel">평가지 설정</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -243,17 +243,17 @@
 					<form:form action="${actionURL}" modelAttribute="SLD">
 
 						<div class="form-group">
-							<label for="recipient-name" class="col-form-label">설문지 이름</label>
+							<label for="recipient-name" class="col-form-label">평가지 이름</label>
 							<input type="text" class="form-control" id="recipient-name"
 								name="surveyName">
 						</div>
 						<div class="form-group">
-							<label for="message-text" class="col-form-label">설문 부가 설명</label>
+							<label for="message-text" class="col-form-label">평가 부가 설명</label>
 							<textarea class="form-control" id="message-text"
 								name="surveyContent"></textarea>
 						</div>
 						<input type="hidden" name="stateCode" value="30001">
-						<input type="hidden" name="surveySeq" value="1"> 설문 진행 기간<br>
+						<input type="hidden" name="surveySeq" value="1"> 평가 진행 기간<br>
 
 						<input type="date" name="surveyStartDate" pattern="yyyy-MM-dd">~<input
 							type="date" name="surveyClosedDate" pattern="yyyy-MM-dd">

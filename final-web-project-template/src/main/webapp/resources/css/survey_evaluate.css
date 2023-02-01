@@ -9,17 +9,17 @@
     justify-content: center;
 }
 
-.forshadowing{
-   background-color: white;
-    box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px, rgb(10 37 64 / 35%) 0px -2px 6px 0px inset;
-    border-radius: 5px;
-    height: 840px;
-    width: 100%;
-    padding: 1em;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
+/* .forshadowing{ */
+/*    background-color: white; */
+/*     box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px, rgb(10 37 64 / 35%) 0px -2px 6px 0px inset; */
+/*     border-radius: 5px; */
+/*     height: 840px; */
+/*     width: 100%; */
+/*     padding: 1em; */
+/*     display: flex; */
+/*     flex-direction: column; */
+/*     justify-content: center; */
+/* } */
 
 .survey_list_form_upper_dv{
 	display:flex;

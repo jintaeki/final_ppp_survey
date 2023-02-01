@@ -219,6 +219,7 @@
 
 						<div class="item_management">
 							<div class="input_title">문항 관리</div>
+							<p class="beforeTouch">문제를 클릭하여 문항을 관리해 보세요.</p>
 							<!-- 객관식 -->
 							<span class="icon_div" id="item_div"> <c:forEach
 									items="${SQL}" var="qlist">
@@ -236,7 +237,7 @@
 													<input type="hidden" name="surveySeq"
 														value="${SLD.surveySeq}">
 													<div id="obj_ItemAfter"></div>
-
+													
 
 
 
@@ -491,7 +492,7 @@
 
     function itemHtml(data){
           //문제 개수 설정
-
+		
 
          let size = data.length;
          var htmlObj = '';
@@ -786,6 +787,7 @@
     }
 
     function touchQuestion(obj){
+    	$(".beforeTouch").empty();
        var sq = $('#surveySequence').val();
       var questionid = $(obj).val();
       $.ajax({
@@ -915,6 +917,7 @@
 
 
    function checkit1() {
+	   $(".beforeTouch").empty();
       if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
           $("#obj_box_toggle").show();
           $("#subj_box_toggle").hide();
@@ -924,6 +927,7 @@
        }
    };
    function checkit3() {
+	   $(".beforeTouch").empty();
       if ($("input[type=radio][id=mix_radio]:checked").is(':checked') == true){
           $("#mix_box_toggle").show();
           $("#obj_box_toggle").hide();
@@ -934,6 +938,7 @@
    };
 
    function checkit2() {
+	   $(".beforeTouch").empty();
     if($("input[type=radio][id=subj_radio]:checked").is(':checked') == true){ // 체크 여부(checked)
         $("#subj_box_toggle").show();
        $("#obj_box_toggle").hide();

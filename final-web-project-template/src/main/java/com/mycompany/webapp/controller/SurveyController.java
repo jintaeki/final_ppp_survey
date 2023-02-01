@@ -445,7 +445,7 @@ public class SurveyController {
 
 			int totalRows = pagingService.getTotalBoardNum(keyword, selection, surveyStartDate, anonyMityCheckCode);
 
-			pagingdto = new PagingDTO(7, 7, totalRows, pageNo);
+			pagingdto = new PagingDTO(7, 10, totalRows, pageNo);
 			pagingdto.setSelection(selection);
 			pagingdto.setKeyword(keyword);
 			pagingdto.setSurveyStartDate(surveyStartDate);
@@ -496,7 +496,7 @@ public class SurveyController {
 				int totalRows = pagingService.getEvaluateSearchBoardNum(keyword, selection, surveySeq);
 
 				System.out.println("totolRows:" + totalRows);
-			    pagingDto = new PagingDTO(7, 7, totalRows, pageNo);
+			    pagingDto = new PagingDTO(7, 10, totalRows, pageNo);
 
 				pagingDto.setSelection(selection);
 				pagingDto.setKeyword(keyword);
