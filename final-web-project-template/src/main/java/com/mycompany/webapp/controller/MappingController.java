@@ -102,6 +102,7 @@ public class MappingController {
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("surveySeq",surveySeq);
 			model.addAttribute("surveyInfo",surveyInfo);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			redirectAttrs.addFlashAttribute("message", e.getMessage());
@@ -143,7 +144,7 @@ public class MappingController {
 			
 			model.addAttribute("pagingdto", pagingdto);
 			model.addAttribute("keyword", keyword);
-		
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -218,7 +219,7 @@ public class MappingController {
 				}
 				
 				//해당 데이터 매핑 테이블에 입력
-				mappingService.insertAppraiseId(surveySeq, raterId, appraiseeId);
+				mappingService.insertAppraisee(surveySeq, raterId, appraiseeId);
 				mappingService.deleteEmail(surveySeq);
 				mappingService.deleteSMS(surveySeq);
 				mappingService.insertEmail(surveySeq);

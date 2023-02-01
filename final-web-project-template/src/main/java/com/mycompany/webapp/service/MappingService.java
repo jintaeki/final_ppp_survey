@@ -83,7 +83,7 @@ public class MappingService implements IMappingService {
 	}
 	
 	@Override // 피평가자 추가
-	public void insertAppraiseId(int surveySeq, String raterId, String appraiseeId) {
+	public void insertAppraisee(int surveySeq, String raterId, String appraiseeId) {
 		mappingrepository.insertAppraisee(surveySeq, raterId, appraiseeId);
 	}
 

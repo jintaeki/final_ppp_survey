@@ -48,7 +48,7 @@ public interface IMappingService {
 	List<MappingDTO> ovrlpCheck(String raterId, String appraiseeId);
 	
 	// 선택한 피평가자 저장
-	void insertAppraiseId(int surveySeq, String raterId, String appraiseeId);
+	void insertAppraisee(int surveySeq, String raterId, String appraiseeId);
 	
 	// 삭제하기 
 	void deleteAppraisee(int surveySeq, String raterId, String appraiseeId);
