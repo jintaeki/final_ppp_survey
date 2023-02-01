@@ -3,6 +3,7 @@ package com.mycompany.webapp.controller;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,7 +21,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -67,7 +70,7 @@ public class SurveyController {
 	ICommonCodeService commonCodeService;
 
 
-
+	 Map<String, String> errors = new HashMap<>();
 
 	@RequestMapping("/sendmessage.do/{surveyseq}/{pageno}")
 	@ResponseBody
@@ -190,13 +193,24 @@ public class SurveyController {
 	// survey_insert jsp
 	// 모달창을 통해 설문지 설정 데이터 입력
 	@RequestMapping(value = "/set.do", method = RequestMethod.POST)
-	public String setSurvey(@ModelAttribute("SLD") @Valid SurveyListDTO SLD, BindingResult result, HttpSession session,
+	@ResponseBody
+	public String setSurvey(@ModelAttribute("SLD") SurveyListDTO SLD, BindingResult bindingresult, HttpSession session,
 			RedirectAttributes redirectAttrs) {
+		logger.info(SLD.toString());
+		if(SLD.getSurveyName()==null || SLD.getSurveyName().isEmpty()) {
+			return "nameEmpty" ;
+		}if(SLD.getSurveyName().getBytes().length>50) {
+			return "nameLarge" ;
+		}if(SLD.getAnonymityCheckCode() == null) {
+			return "noCode";
+		}if(SLD.getSurveyContent().getBytes().length>500) {
+			return "contentLarge";
+		}
 		logger.info("모달창을 통해 설문 등록하는 컨트롤러 진입");
 		surveyService.setSurvey(SLD);
 		session.setAttribute("SLD", SLD);
-
-		return "redirect:/survey/surveyinsert?surveyseq=" + SLD.getSurveySeq();
+		
+		return String.valueOf(SLD.getSurveySeq());
 
 	}
 

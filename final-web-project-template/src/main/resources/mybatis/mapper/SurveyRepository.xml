@@ -211,7 +211,7 @@
 	          	 ,REG_DATE
 	          	 FROM SURVEY_LIST
 	          	 WHERE
-	          	 (SURVEY_START_DATE is null and
+	          	 ((SURVEY_START_DATE is null or SURVEY_CLOSED_DATE is null) and
 	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%' and
 	          	  STATE_CODE LIKE (CASE
       							   WHEN #{selection} = '30005'
@@ -245,7 +245,7 @@
                                                  THEN '%' || '' || '%'
                                                  ELSE '%' || #{anonyMityCheckCode} || '%'
                                                  END)
-				  ORDER BY TO_DATE(REG_DATE, 'YYYY-MM-DD') DESC , ROWNUM DESC
+				  ORDER BY REG_DATE DESC
                 )
          	  WHERE ROWNUM <= #{endRowNo}
                )

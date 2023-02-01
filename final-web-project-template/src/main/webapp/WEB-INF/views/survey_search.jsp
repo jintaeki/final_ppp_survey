@@ -221,6 +221,41 @@
   	  	html +='</div></div></div></div></div>';
   	    $('#beforeModal').after(html);
 	}
+  	
+  	function setdataform(){
+  		
+  		var form = $('#surveyDataForm')[0];
+  		var dataform = new FormData(form);
+  		
+  		
+  		
+  		$.ajax({
+  		url:'/survey/set.do' ,
+  		method:'POST',
+  		data: dataform,
+  		dataType: 'html',
+  		processData : false,
+        contentType : false,
+        cache : false,
+  		success:function(result){
+  			if(result=="nameEmpty"){alert('제목을 입력해 주세요.'); return false;}
+  			if(result=="nameLarge"){alert('제목이 너무 길어요. 15자까지 작성 가능합니다.');  return false;}
+  			if(result=="noCode"){alert('익명 혹은 기명을 선택해 주세요.');  return false;};
+  			if(result=="contentLarge"){alert('부가 설명이 너무 길어요. 150자 내로 입력 가능합니다.');  return false;}
+  			else{location.href="/survey/surveyinsert?surveyseq="+result;
+		};
+  			
+  			
+  		}
+  		
+  		
+  		
+  		
+  		});
+  		
+  	}
+  	
+  	
 </script>
 
 <div class="col-11" style="width: 1800px;">
@@ -240,7 +275,7 @@
 
 				<div class="modal-body">
 					<c:url value="/survey/set.do" var="actionURL" scope="page" />
-					<form:form action="${actionURL}" modelAttribute="SLD">
+					<form:form action="${actionURL}" modelAttribute="SLD" id="surveyDataForm">
 
 						<div class="form-group">
 							<label for="recipient-name" class="col-form-label">평가지 이름</label>
@@ -260,11 +295,10 @@
 						<br>
 						<input type="radio" name="anonymityCheckCode" value="20001">익명 <br>
 						<input type="radio" name="anonymityCheckCode" value="20002">기명
-
 					<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal">취소</button>
-							<input type="submit" class="btn btn-primary" value="등록">
+							<input type="button" onclick="setdataform()" class="btn btn-primary" value="등록">
 						</div>
 					</form:form>
 				</div>

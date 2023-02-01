@@ -24,7 +24,7 @@
 	          	 ,STATE_CODE
 	          	 FROM SURVEY_LIST
 	          	 WHERE
-	          	 (SURVEY_START_DATE is null and
+	          	 ((SURVEY_START_DATE is null or SURVEY_CLOSED_DATE is null) and
 	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%' and
 	          	  STATE_CODE LIKE (CASE
       							   WHEN #{selection} = '30005'
@@ -57,7 +57,7 @@
                                                  THEN '%' || '' || '%'
                                                  ELSE '%' || #{anonyMityCheckCode} || '%'
                                                  END)
-				  ORDER BY ROWNUM DESC
+				  ORDER BY REG_DATE DESC
 			   	)
 
 			   	)
