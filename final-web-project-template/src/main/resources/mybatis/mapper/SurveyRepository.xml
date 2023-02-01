@@ -125,8 +125,8 @@
    </update>
 
 
-   <update id="updateEmail" parameterType="com.mycompany.webapp.dto.NoticeEmailDTO">
-   	  UPDATE NOTICE_EMAIL 
+    <update id="updateEmail" parameterType="com.mycompany.webapp.dto.NoticeEmailDTO">
+   	  UPDATE NOTICE_EMAIL
    	  	 SET DELIVERY_YN = 'Y',
    	  	 	 DELIVERY_CONTENT = #{deliveryContent},
    	  	 	 UPDATE_DATE = SYSDATE
@@ -136,17 +136,17 @@
 
 
    <update id="updateSMS" parameterType="com.mycompany.webapp.dto.NoticeSmsDTO">
-   	  UPDATE NOTICE_SMS 
+   	  UPDATE NOTICE_SMS
    	  	 SET DELIVERY_YN = 'Y',
    	  	     DELIVERY_CONTENT = #{deliveryContent},
    	  	 	 UPDATE_DATE = SYSDATE
        WHERE SURVEY_SEQ = #{surveySeq}
    </update>
-   
+
    <update id="sendReEmail" parameterType="com.mycompany.webapp.dto.NoticeEmailDTO">
-   	  UPDATE NOTICE_EMAIL 
+   	  UPDATE NOTICE_EMAIL
          SET UPDATE_DATE = SYSDATE,
-             DELIVERY_CONTENT = #{deliveryContent} 	    
+             DELIVERY_CONTENT = #{deliveryContent}
       WHERE EMAIL_SEQ
          IN (SELECT EMAIL_SEQ
                FROM NOTICE_EMAIL N,
@@ -156,11 +156,11 @@
                 AND M.SURVEY_COMPLETE_YN = 'N'
                 AND N.RATER_ID = M.RATER_ID)
    </update>
-       
+
    <update id="sendReSMS" parameterType="com.mycompany.webapp.dto.NoticeSmsDTO">
-      UPDATE NOTICE_SMS 
+      UPDATE NOTICE_SMS
          SET UPDATE_DATE = SYSDATE,
-             DELIVERY_CONTENT = #{deliveryContent} 	    
+             DELIVERY_CONTENT = #{deliveryContent}
       WHERE SMS_SEQ
          IN (SELECT SMS_SEQ
                FROM NOTICE_SMS N,
@@ -340,17 +340,17 @@
                  FROM GRADE g ,USER_INFO ui ,MAPPING m ,ORGANIZATION_CHART oc
                  WHERE
                      m.RATER_ID = ui.EMPLOYEE_ID
-                    and g.grade_id = ui.grade_id and oc.department_id = ui.department_id 
-                 
+                    and g.grade_id = ui.grade_id and oc.department_id = ui.department_id
+
                  AND ((#{selection} = 'employeeName'
                     	AND ui.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
                 		OR (#{selection} = 'departmentName'
                         	AND oc.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
                     	OR (#{selection} = 'gradeName'
-                    		AND g.GRADE_NAME LIKE '%' || #{keyword} || '%')    
+                    		AND g.GRADE_NAME LIKE '%' || #{keyword} || '%')
                     	OR(#{selection} = 'surveyCompleteYn'
                     	   AND m.survey_complete_YN LIKE '%' || #{keyword} || '%')
-                       	  
+
                             )
                    		)
                where survey_seq = #{surveySeq}
@@ -361,6 +361,7 @@
  ]]>
 
 </select>
+
 
 	<select id="surveyList" resultType="SLD">
 		SELECT
@@ -479,7 +480,7 @@ WHERE sr.QUESTION_SEQ = sq.QUESTION_SEQ
         AND sr.APPRAISEE_ID = ui.employee_id
         AND ui.GRADE_ID = g.GRADE_ID
         AND ui.DEPARTMENT_ID = oc.DEPARTMENT_ID
-        AND sr.APPRAISEE_ID=#{employeeId}AND sr.SURVEY_SEQ = #{surveySeq}
+        AND sr.APPRAISEE_ID=#{employeeId} AND sr.SURVEY_SEQ = #{surveySeq}
 ORDER BY RATER_ID, ANONYMITY_SEQ, QUESTION_SEQ) a
  ]]>
 </select>
