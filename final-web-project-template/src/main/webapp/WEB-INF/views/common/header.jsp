@@ -52,7 +52,7 @@
            </div>
 		<div class="flex-grow-1 container-fluid">
 			<div class="row h-100">
-				<div class="col-md-2 p-3 bg-dark">
+				<div class="col-md-2 p-3">
 					<div class="h-100 d-flex flex-column">
 						<div class="flex-grow-1">
 							<%@ include file="/WEB-INF/views/common/menu.jsp"%>

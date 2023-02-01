@@ -481,6 +481,9 @@
             <div class="survey_list">
 
                <form:form id="surveyForm" modelAttribute="surveyResult">
+               <div class="noQuestion">
+               <b>설문을 먼저 선택하세요.</b>
+               </div>
                <!-- 문제 들어가는 곳 -->
                </form:form>
             </div>

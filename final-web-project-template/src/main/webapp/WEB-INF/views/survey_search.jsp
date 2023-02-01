@@ -255,6 +255,40 @@
   		
   	}
   	
+  	function reset_btn(){
+  		$('.survey_list_form_upper_dv').empty();
+  		html='';
+  		html +=`<form action="<c:url value='/survey/surveysearch'/>" method="POST" class="survey_list_form" style="display: flex;">`;
+		html +=`<input type="date" name="surveyStartDate" id="selectedDate"
+				value="<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">
+			<select name="anonyMityCheckCode">
+					<option value="30005">전체</option>
+					<option value="30002">기명</option>
+					<option value="300001">익명</option>
+			</select> 
+			<select name="selection">
+				
+				<option value="30005">전체</option>
+				<option value="30004">알림 발송 완료</option>
+				<option value="30003">매핑 완료</option>
+				<option value="30002">등록 완료</option>
+				<option value="30001">등록 중</option>
+				
+				
+			</select> <input type="text" class="form-control" id="selectedKeyword"
+				placeholder="search" name="keyword"
+				value="${pagingdto.keyword}" aria-describedby="button-addon2">
+			<input type="hidden" name="pageNo" value="1">
+			<div class="input-group-append">
+				<input type="submit" class="btn btn-outline-secondary"
+					id="button-addon2" value="검색"> <input type="button" style="margin-left:10px;"
+					class="btn btn-outline-secondary" onclick="reset_btn()" value="초기화">
+			</div>
+		</form>`;
+  		$('.survey_list_form_upper_dv').append(html);
+
+  	}
+  	
   	
 </script>
 
@@ -355,14 +389,11 @@
 								<input type="hidden" name="pageNo" value="1">
 								<div class="input-group-append">
 									<input type="submit" class="btn btn-outline-secondary"
-										id="button-addon2" value="검색"> <input type="reset"
-										class="btn btn-outline-secondary" id="button-addon2"
+										id="button-addon2" value="검색"> <input type="button" style="margin-left:10px;"
+										class="btn btn-outline-secondary" onclick="reset_btn()"
 										value="초기화">
 								</div>
 							</form>
-							<!-- 						<button id="upper_dv_btn" type="button" class="btn btn-primary" -->
-							<!-- 							data-toggle="modal" data-target="#exampleModal" -->
-							<!-- 							data-whatever="@mdo">등록</button> -->
 
 
 						</div>
