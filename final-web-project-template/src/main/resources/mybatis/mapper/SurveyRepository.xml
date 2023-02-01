@@ -308,7 +308,7 @@
                         ,m.SURVEY_COMPLETE_YN
                  FROM GRADE g ,USER_INFO ui ,MAPPING m ,ORGANIZATION_CHART oc
                  WHERE
-                     m.APPRAISEE_ID = ui.EMPLOYEE_ID
+                     m.rater_ID = ui.EMPLOYEE_ID
                     and g.grade_id = ui.grade_id and oc.department_id = ui.department_id
                  AND(
                     m.SURVEY_COMPLETE_YN LIKE '%' || #{keyword} || '%'
