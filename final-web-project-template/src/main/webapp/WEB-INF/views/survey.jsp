@@ -30,6 +30,8 @@
       // radio required 기능을 위한 배열
       var itemSeqArray=[];
       // 주관식 문제 required 기능을 위한 배열
+      // 주관식의 개수만큼 배열의 크기가 정해진다
+      // 0~ n번까지 주관식 문제의 문항번호가 들어가게 된다
       var itemSubjSeq = [];
       var itemSubjSeqIndex=0;
       const size= result.length;
@@ -167,7 +169,13 @@
             		cnt=0;
 
          }else if(result[i].QUESTION_CONTENT == result[i+1].QUESTION_CONTENT){
-            cnt = cnt + 1;
+            // 문제 1개와 문제 n개를 출력할 때 필요한 cnt 수
+        	cnt = cnt + 1;
+            // radio 타입에 name 값을 i+num으로 부여하고 formdata를 받게되면 controller와 mapping이 되지 않는다
+            // 선택한 radio가 어떤 name을 가지고 있는지 알 수 있다면 mapping 가능한 name으로 변경이 가능하다
+            //  itemnum은 i번째 for문을 진행할 때 출력된 문제가 페이지에서 몇 번째 문제인지 보여질 때 사용되는 cnt수
+            // n번까지 존재하는 배열에 출력되는 문항의 name에 붙게될 i를  0번부터 차례대로 넣기 위해도 사용된다
+            // 몇 번쨰 문제를 선택하지 않았는지 체크도 해줄 수 있게 된다
             itemNum= itemNum + 1;
          }
 
@@ -202,7 +210,8 @@
                var anonymitycode = result.anonymityCheckCode;
                var htmlQuestion = '';
                   $('#surveyForm').empty();
-
+			
+               // 전체로 두고 조회했을 때
                if($(obj).val()==0){
                   console.log("surveySeq is 0");
                   var html='';
@@ -216,10 +225,7 @@
 
                 	  showSurveyInfo(surveyName,startDate,closedDate);
 
-                // 설문지 정보 출력
-
-
-
+               // 설문지 정보 출력
                $.ajax({
                      url:'getAppraisee.do/'+raterId+"/"+surveySeq,
                      method: 'GET',
@@ -331,17 +337,20 @@
              }
           }
 
-      var cntCheckedAnswer=1;
-
+      
+          var cntCheckedAnswer=1;
+				//1번부터 진행하는 이유는 itemSeqArray에 i를 대입할 때 index가 1부터시작(i-itemNum+1)했기 때문에 0은 null값이 들어가있다
              for(var i =1; i<itemSeqArray.length; i++){
 
                 if ($('input[name="'+itemSeqArray[i]+'num"]').is(':checked')){
                     cntCheckedAnswer = cntCheckedAnswer + 1;
                  }else if(!$('input[name="'+itemSeqArray[i]+'num"]').is(':checked') ) {
+                	 // 실제 주관식 문제가 비어있는 지 확인하고 alert
                        if($('textarea[name="'+i+'answerContent"]').val()==''){
                           alert(i+"번을 채워주세요.");
                           $('input[name="'+itemSeqArray[i]+'num"]').focus();
                             break;
+                     // 주/객관식 문제에 hidden으로 되어있는 answerContent를 확인하고 alert
                        }else if($('input[name="'+i+'answerContent"]').val()=='선택형 문제입니다.'){
                        alert(i+"번을 선택해주세요.");
                         $('input[name="'+itemSeqArray[i]+'num"]').focus();
@@ -349,11 +358,12 @@
                        }
 
 
-
+					 //radio가 비어있지 않다면 +1
                  }else if ($('textarea[name="'+i+'answerContent"]').val()!=''){
                        cntCheckedAnswer = cntCheckedAnswer + 1;
                  }
              }
+             		//문제 개수만큼 cnt가 쌓였다면 전송 진행
                   if(cntCheckedAnswer == itemSeqArray.length - 1){
 
 

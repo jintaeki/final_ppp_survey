@@ -92,25 +92,30 @@
 	}
 
 
-
-  	function send(obj) {
-
+  	function send() {
+  	
   		var pageno = $('#pageNo').val();
-  		var surveyseq = $(obj).val();
+  		var surveyseq = $('#surveyseq').val();
+  		var deliverycontent = $('#deliverycontent').val();
 
-  		console.log(surveyseq);
+  		console.log(deliverycontent);
 
 		$.ajax({
 			method:'POST', //어떤 방식으로 보낼 지
 			url:'sendmessage.do/'+surveyseq+'/'+pageno, // qdiv를 보낼 경로 설정
+			data:{
+				deliveryContent: deliverycontent
+			},
 		    beforeSend : function() { //보내기 전 실행
 			console.log("요청이 보내지는가?");
 		   },
-		   success:function () {	 //전송 성공시 실행
+		   success:function (data) {	 //전송 성공시 실행
 			console.log("굿");
-			const tag = $(obj);
+			const tag = $('#'+surveyseq+'_send');
 			console.log(tag);
 			console.log(surveyseq);
+			
+			$('#exampleModal1').modal('hide');
 
 			const text = '<button type="button" class="btn btn-link" onclick="location.href='+'\'evaluateSearch/' +surveyseq+ '\'">조회</button>';
  			tag.parent().parent().next().append(text);
@@ -120,7 +125,7 @@
 			console.log(tag.parent().parent().next().next().children('button'));
 			tag.parent().parent().next().next().children().hide();
 			tag.parent().parent().prev().prev().children().click(function(){return false;});
-			tag.parent().parent().prev().prev().children().css('color', '#ccc');
+			tag.parent().parent().prev().prev().children('#surveyUP').css('color', '#ccc');
 
  			const complete = `알림발송완료`;
  			tag.parent().html(complete);
@@ -148,7 +153,6 @@
   	    	console.log($(element).parent().prev().prev().prev().prev().children());
   	    	if(value == 30001){
 	  	    	$(element).next().attr('disabled', 'disabled');
-
   	    	}
   	    });
   	});
@@ -161,6 +165,7 @@
   		  reMapping(surveySeq)
   	    }
   	}
+
 
   	function newMapping(serveySeq){
   		html ="";
@@ -200,7 +205,22 @@
   	    html += '</div></form:form></div></div></div></div>';
   	    $('#beforeModal').after(html);
   	}
-
+  	
+  	function updatemessage(surveyseq){
+		html ="";
+  	  	html +='<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+  	  	html +='<div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">평가 공시 재전송</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+  	  	html +='<span aria-hidden="true">&times;</span></button>';
+  	  	html +='</div>';
+  	  	html +='<div class="modal-body">';
+  	  	html +='<input type="hidden" id="surveyseq" value="'+surveyseq+'">';
+  	  	html +='<div class="form-group"> <label for="exampleFormControlTextarea1">평가를 하지 않은 평가자에게 재전송할 메세지를 입력하시오</label>';
+  	  	html +='<textarea class="form-control" id="deliverycontent" rows="3"></textarea></div>';
+  	  	html +='<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>';
+  	  	html +='<button type="button" class="btn btn-primary" onclick="send()">등록</button>';
+  	  	html +='</div></div></div></div></div>';
+  	    $('#beforeModal').after(html);
+	}
 </script>
 
 <div class="col-11" style="width: 1800px;">
@@ -339,9 +359,8 @@
 											<i class="fas fa-xmark"></i>
 										</button>
 									<td><c:if test="${list.stateCode ne '30004'}">
-											<a href="surveyinsert2?surveyseq=${list.surveySeq}">${list.surveyName }</a>
-											<a class="menu_profile_text" style="position:fixed;"
-												href='<c:url value='copysurvey.do/${list.surveySeq}'/>'>복사</a>
+											<a href="surveyinsert?surveyseq=${list.surveySeq}"  id="surveyUP">${list.surveyName }</a>
+											<a class="menu_profile_text" style="position:fixed;" href='<c:url value='copysurvey.do/${list.surveySeq}'/>'>복사</a>
 
 										</c:if> <c:if test="${list.stateCode eq '30004'}">
 									${list.surveyName }
@@ -353,8 +372,9 @@
 
 									<td><span class="wait" id="stateCode"> <c:if
 												test="${list.stateCode eq '30003'}">
-												<button class="btn btn-primary" onclick="send(this)"
-													value="${list.surveySeq}">발송</button>
+												<button class="btn btn-outline-primary" data-toggle="modal"
+													data-target="#exampleModal1" id="${list.surveySeq}_send"
+													onclick="updatemessage('${list.surveySeq}')">발송</button>
 											</c:if> <c:if test="${list.stateCode ne '30003'}">
 										${list.codeDetailName }
 									</c:if>
@@ -370,12 +390,12 @@
 									<td><c:if test="${list.stateCode ne '30004'}">
 											<input type="hidden" class="stateCode"
 												value="${list.stateCode}">
-											<button type="button" class="btn btn-primary"
+											<button type="button" class="btn btn-outline-primary"
 												id="btn_for_mapping" data-toggle="modal"
 												data-target="#exampleModal1"
 												onclick="btn_for_mapping('${list.surveySeq}', '${list.stateCode}')">매핑</button>
 										</c:if> <c:if test="${list.stateCode eq '30004'}">
-									매핑완료
+									<button type="button" class="btn btn-secondary" disabled>매핑완료</button>
 								</c:if></td>
 								</tr>
 							</c:forEach>
@@ -388,7 +408,7 @@
 								<td></td>
 								<td></td>
 								<td style="float: right;"><button id="upper_dv_btn"
-										type="button" class="btn btn-primary" data-toggle="modal"
+										type="button" class="btn btn-outline-secondary" data-toggle="modal"
 										data-target="#exampleModal" data-whatever="@mdo">등록</button></td>
 							</tr>
 						</tbody>
@@ -397,30 +417,30 @@
 								<td colspan="12" class="text-center" style="border: none;">
 									<div>
 
-										<a class="btn btn-outline-primary btn-sm"
+										<a class="btn btn-outline-secondary"
 											href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a>
 										<c:if test="${pagingdto.groupNo>1}">
-											<a class="btn btn-outline-info btn-sm"
+											<a class="btn btn-outline-secondary"
 												href="surveysearch?pageNo=${pagingdto.startPageNo-1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">이전</a>
 										</c:if>
 
 										<c:forEach var="i" begin="${pagingdto.startPageNo}"
 											end="${pagingdto.endPageNo}">
 											<c:if test="${pagingdto.pageNo != i}">
-												<a class="btn btn-outline-success btn-sm"
+												<a class="btn btn-outline-secondary"
 													href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
 											</c:if>
 											<c:if test="${pagingdto.pageNo == i}">
-												<a class="btn btn-danger btn-sm"
+												<a class="btn btn-secondary"
 													href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
 											</c:if>
 										</c:forEach>
 
 										<c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
-											<a class="btn btn-outline-info btn-sm"
+											<a class="btn btn-outline-secondary"
 												href="surveysearch?pageNo=${pagingdto.endPageNo+1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">다음</a>
 										</c:if>
-										<a class="btn btn-outline-primary btn-sm"
+										<a class="btn btn-outline-secondary"
 											href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">맨끝</a>
 									</div>
 								</td>

@@ -124,19 +124,51 @@
       UPDATE SURVEY_LIST SET    STATE_CODE='30004' WHERE SURVEY_SEQ =#{surveySeq}
    </update>
 
-   <update id="updateEmail" parameterType="int">
+
+    <update id="updateEmail" parameterType="com.mycompany.webapp.dto.NoticeEmailDTO">
    	  UPDATE NOTICE_EMAIL
    	  	 SET DELIVERY_YN = 'Y',
+   	  	 	 DELIVERY_CONTENT = #{deliveryContent},
    	  	 	 UPDATE_DATE = SYSDATE
    	   WHERE SURVEY_SEQ = #{surveySeq}
 
    </update>
 
-   <update id="updateSMS" parameterType="int">
+
+   <update id="updateSMS" parameterType="com.mycompany.webapp.dto.NoticeSmsDTO">
    	  UPDATE NOTICE_SMS
    	  	 SET DELIVERY_YN = 'Y',
+   	  	     DELIVERY_CONTENT = #{deliveryContent},
    	  	 	 UPDATE_DATE = SYSDATE
        WHERE SURVEY_SEQ = #{surveySeq}
+   </update>
+
+   <update id="sendReEmail" parameterType="com.mycompany.webapp.dto.NoticeEmailDTO">
+   	  UPDATE NOTICE_EMAIL
+         SET UPDATE_DATE = SYSDATE,
+             DELIVERY_CONTENT = #{deliveryContent}
+      WHERE EMAIL_SEQ
+         IN (SELECT EMAIL_SEQ
+               FROM NOTICE_EMAIL N,
+                    MAPPING M
+              WHERE N.SURVEY_SEQ = #{surveySeq}
+                AND N.SURVEY_SEQ = M.SURVEY_SEQ
+                AND M.SURVEY_COMPLETE_YN = 'N'
+                AND N.RATER_ID = M.RATER_ID)
+   </update>
+
+   <update id="sendReSMS" parameterType="com.mycompany.webapp.dto.NoticeSmsDTO">
+      UPDATE NOTICE_SMS
+         SET UPDATE_DATE = SYSDATE,
+             DELIVERY_CONTENT = #{deliveryContent}
+      WHERE SMS_SEQ
+         IN (SELECT SMS_SEQ
+               FROM NOTICE_SMS N,
+                    MAPPING M
+              WHERE N.SURVEY_SEQ = #{surveySeq}
+                AND N.SURVEY_SEQ = M.SURVEY_SEQ
+                AND M.SURVEY_COMPLETE_YN = 'N'
+                AND N.RATER_ID = M.RATER_ID)
    </update>
 
 
@@ -289,7 +321,6 @@
         ,SURVEY_COMPLETE_YN
         ,SURVEY_SEQ
         ,EMPLOYEE_ID
-        ,SURVEY_COMPLETE_YN
         FROM ( SELECT
                  ROWNUM AS rnum
                 ,SURVEY_SEQ
@@ -308,18 +339,20 @@
                         ,m.SURVEY_COMPLETE_YN
                  FROM GRADE g ,USER_INFO ui ,MAPPING m ,ORGANIZATION_CHART oc
                  WHERE
-                     m.rater_ID = ui.EMPLOYEE_ID
+                     m.RATER_ID = ui.EMPLOYEE_ID
                     and g.grade_id = ui.grade_id and oc.department_id = ui.department_id
-                 AND(
-                    m.SURVEY_COMPLETE_YN LIKE '%' || #{keyword} || '%'
-	               OR
-                   ui.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
-                   OR
-                    g.GRADE_NAME LIKE  '%' || #{keyword} || '%'
-                   OR
-                  oc.DEPARTMENT_NAME LIKE  '%' || #{keyword} || '%')
 
-               )
+                 AND ((#{selection} = 'employeeName'
+                    	AND ui.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
+                		OR (#{selection} = 'departmentName'
+                        	AND oc.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
+                    	OR (#{selection} = 'gradeName'
+                    		AND g.GRADE_NAME LIKE '%' || #{keyword} || '%')
+                    	OR(#{selection} = 'surveyCompleteYn'
+                    	   AND m.survey_complete_YN LIKE '%' || #{keyword} || '%')
+
+                            )
+                   		)
                where survey_seq = #{surveySeq}
                ORDER BY ROWNUM  ASC
              )
@@ -328,6 +361,7 @@
  ]]>
 
 </select>
+
 
 	<select id="surveyList" resultType="SLD">
 		SELECT

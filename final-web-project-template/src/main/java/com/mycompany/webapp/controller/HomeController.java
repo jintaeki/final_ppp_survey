@@ -188,7 +188,7 @@ public class HomeController {
 	
 	@RequestMapping("/getAppraisee.do/{raterId}/{surveySeq}")
 	@ResponseBody
-	public List<UserCheckDTO> getAppraisee (@PathVariable String raterId,@PathVariable int surveySeq, Model model){
+	public List<UserCheckDTO> getAppraisee (@PathVariable String raterId,@PathVariable int surveySeq){
 		logger.info(raterId);
 		// surveySeq 필요
 		List<UserCheckDTO> UCDList = loginCheckService.getUserInfo(raterId, surveySeq);

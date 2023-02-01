@@ -22,9 +22,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.PopupDTO;
+import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.service.ICommonCodeService;
 import com.mycompany.webapp.service.IMappingService;
 import com.mycompany.webapp.service.IPagingService;
+import com.mycompany.webapp.service.ISurveyService;
 
 @Controller
 @RequestMapping("/mapping")
@@ -40,9 +42,13 @@ public class MappingController {
 	@Autowired
 	IPagingService pagingService;
 	
+	@Autowired
+	ISurveyService surveyService;
+	
 	// 매핑 출력
 	@RequestMapping(value="/set.do")
-	public String setMapping(int surveySeq, int month, int number, 
+	public String setMapping(int surveySeq, int month, 
+			 				 @RequestParam(defaultValue="0")int number, 
 							 @RequestParam(defaultValue="0")String newCheck,
 							 @RequestParam(defaultValue="") String keyword,
 							 @RequestParam(defaultValue="1") int pageNo,
@@ -75,6 +81,7 @@ public class MappingController {
 			}
 			List<PopupDTO> mappingList = null;
 			PagingDTO pagingdto = null;
+			SurveyListDTO surveyInfo = surveyService.selectSurvey(surveySeq);
 				
 			int totalRows = pagingService.getTotalMappingNum(keyword, selection, surveySeq, selectGD);
 			logger.info("줄수"+totalRows);
@@ -93,7 +100,8 @@ public class MappingController {
 			
 			model.addAttribute("pagingdto", pagingdto);
 			model.addAttribute("keyword", keyword);
-		
+			model.addAttribute("surveySeq",surveySeq);
+			model.addAttribute("surveyInfo",surveyInfo);
 		} catch (Exception e) {
 			e.printStackTrace();
 			redirectAttrs.addFlashAttribute("message", e.getMessage());
