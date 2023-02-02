@@ -324,6 +324,13 @@ public class SurveyController {
 
 		return SQD;
 	}
+	
+	@RequestMapping(value="deleteItem.do/{questionSeq}")
+	public void deleteItemByQSeq(@PathVariable int questionSeq) { 
+		System.out.println(questionSeq);
+		surveyService.deleteItemByQSeq(questionSeq);
+
+	}
 
 	// 문제 등록
 	@RequestMapping(value = "/insertquestion.do")
@@ -334,6 +341,7 @@ public class SurveyController {
 		logger.info(SQD.getQuestionTypeCode());
 		surveyService.insertQuestion(SQD);
 		if(SQD.getQuestionTypeCode().equals("10002")) {
+		SQD.setItemScore("0");
 		surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
 		SQD.setItemContent("주관식 문제입니다.");
 		surveyService.insertItem(SQD);
@@ -349,7 +357,9 @@ public class SurveyController {
 		logger.info("업데이트 진입");
 		logger.info("sqd값" + SQD.toString());
 		surveyService.UpdateQuestion(SQD);
-		if(SQD.getQuestionTypeCode().equals("10002")) {
+		System.out.println(SQD.getQuestionSeq());
+		if(SQD.getQuestionTypeCode().equals("10002")) {			
+			SQD.setItemScore("0");
 			SQD.setItemContent("주관식 문제입니다.");
 			surveyService.insertItem(SQD);
 			}

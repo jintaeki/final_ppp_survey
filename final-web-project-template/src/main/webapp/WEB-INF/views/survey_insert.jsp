@@ -154,7 +154,11 @@
 													<input type="radio" id="subj_radio" name="${qlist.questionSeq}" value="10002" onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
 													<input type="radio" id="mix_radio" name="${qlist.questionSeq}" value="10003" onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"checked> 혼합식												
 											</c:if>
-											
+											<c:if test="${qlist.questionTypeCode ne '10001' and qlist.questionTypeCode ne '10002' and qlist.questionTypeCode ne '10003' }">
+												<input type="radio" id="obj_radio" name="${qlist.questionSeq}" value="10001" onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})" checked> 객관식
+													<input type="radio" id="subj_radio" name="${qlist.questionSeq}" value="10002" onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
+													<input type="radio" id="mix_radio" name="${qlist.questionSeq}" value="10003" onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 혼합식												
+											</c:if>
 											
 										
 										
@@ -577,33 +581,33 @@ function manageQus(obj,questionSeq,questionTypeCodes){
          }
    };
 
-    function insertQus(){
-          var qdiv = $('#questioN_insert_form')[0];
-          var data = new FormData(qdiv);
-          $.ajax({
-            method:'POST', //어떤 방식으로 보낼 지
-            url:'insertquestion.do', // qdiv를 보낼 경로 설정
-            data: data,   //
-            processData : false,
-             contentType : false,
-             cache : false,
-            beforeSend : function() { //보내기 전 실행
-            console.log("요청이 보내지는가?");
-            console.log("qdiv:"+qdiv[0]);
-            console.log("data:"+data);
-            },
-            success:function (data) {    //전송 성공시 실행
-               console.log(data);
-               console.log($('#surveyseq').val());
-               var surveyseq = $('#surveyseq').val();
-               location.reload();
+//     function insertQus(){
+//           var qdiv = $('#questioN_insert_form')[0];
+//           var data = new FormData(qdiv);
+//           $.ajax({
+//             method:'POST', //어떤 방식으로 보낼 지
+//             url:'insertquestion.do', // qdiv를 보낼 경로 설정
+//             data: data,   //
+//             processData : false,
+//              contentType : false,
+//              cache : false,
+//             beforeSend : function() { //보내기 전 실행
+//             console.log("요청이 보내지는가?");
+//             console.log("qdiv:"+qdiv[0]);
+//             console.log("data:"+data);
+//             },
+//             success:function (data) {    //전송 성공시 실행
+//                console.log(data);
+//                console.log($('#surveyseq').val());
+//                var surveyseq = $('#surveyseq').val();
+//                location.reload();
 
 
-            }, error:function(e) {   //실패, 에러
-               console.log("Error", e);
-            }
-            });
-         }
+//             }, error:function(e) {   //실패, 에러
+//                console.log("Error", e);
+//             }
+//             });
+//          }
 
         let cntObj=0;
           let cntMix=0;
@@ -921,7 +925,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
          success:function (data) {    //전송 성공시 실행
             cntObj=0;
             cntMix=0;
-                oneQuestion(data);
+//                 oneQuestion(data);
 
                 itemHtml(data);
 
@@ -932,56 +936,54 @@ function manageQus(obj,questionSeq,questionTypeCodes){
       });
    }
    //문제 확인 시 객주흔중에서 문제에 해당하는 유형이 나오게
-   function oneQuestion(data){
-        let html = '';
-        $("#questioN_insert_form").empty();
-         html +=` <div id="insertQform">
-               <div class="select_radio" id="select_radio">`;
-      if(data[0].QUESTION_TYPE_CODE =="10001"){
-         html += '<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" checked value="10001">&nbsp;객관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
-         html += '<input type="radio" name="questionTypeCode" id="subj_radio" onclick="checkit2(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" value="10002"> &nbsp;주관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
-         html += '<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" value="10003"> &nbsp;혼합식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
-      } else if (data[0].QUESTION_TYPE_CODE =="10002"){
-         html += '<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')"  value="10001" >&nbsp;객관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
-         html += '<input type="radio" name="questionTypeCode" id="subj_radio" onclick="checkit2(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" checked value="10002"> &nbsp;주관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
-         html += '<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" value="10003"> &nbsp;혼합식&nbsp;&nbsp;&nbsp&nbsp&nbsp;';
-      } else if (data[0].QUESTION_TYPE_CODE =="10003"){
-         html += '<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')"  value="10001" >&nbsp;객관식&nbsp;&nbsp;&nbsp&nbsp&nbsp;';
-         html += '<input type="radio" name="questionTypeCode" id="subj_radio" onclick="checkit2(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" value="10002"> &nbsp;주관식&nbsp;&nbsp;&nbsp&nbsp&nbsp;';
-         html += '<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" checked value="10003"> &nbsp;혼합식&nbsp;&nbsp;&nbsp&nbsp&nbsp;';
-      }
-      html += `</div>`;
-      html += '<div class="question_content_area" id="question_add"> <div class="input-group" id="question_content">';
+//    function oneQuestion(data){
+//         let html = '';
+//         $("#questioN_insert_form").empty();
+//          html +=` <div id="insertQform">
+//                <div class="select_radio" id="select_radio">`;
+//       if(data[0].QUESTION_TYPE_CODE =="10001"){
+//          html += '<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" checked value="10001">&nbsp;객관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
+//          html += '<input type="radio" name="questionTypeCode" id="subj_radio" onclick="checkit2(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" value="10002"> &nbsp;주관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
+//          html += '<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" value="10003"> &nbsp;혼합식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
+//       } else if (data[0].QUESTION_TYPE_CODE =="10002"){
+//          html += '<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')"  value="10001" >&nbsp;객관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
+//          html += '<input type="radio" name="questionTypeCode" id="subj_radio" onclick="checkit2(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" checked value="10002"> &nbsp;주관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
+//          html += '<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" value="10003"> &nbsp;혼합식&nbsp;&nbsp;&nbsp&nbsp&nbsp;';
+//       } else if (data[0].QUESTION_TYPE_CODE =="10003"){
+//          html += '<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')"  value="10001" >&nbsp;객관식&nbsp;&nbsp;&nbsp&nbsp&nbsp;';
+//          html += '<input type="radio" name="questionTypeCode" id="subj_radio" onclick="checkit2(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" value="10002"> &nbsp;주관식&nbsp;&nbsp;&nbsp&nbsp&nbsp;';
+//          html += '<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" checked value="10003"> &nbsp;혼합식&nbsp;&nbsp;&nbsp&nbsp&nbsp;';
+//       }
+//       html += `</div>`;
+//       html += '<div class="question_content_area" id="question_add"> <div class="input-group" id="question_content">';
 
-      html += '<textarea class="form-control" aria-label="문제 입력칸" id="hi" name="questionContent">'
-      html += data[0].QUESTION_CONTENT;
-      html += '</textarea></div>';
-      html += `<div class="question_add_btn_div">`;
-      html += '<button type="button" class="create_btn" id="add_btn" onclick="insertQus()">문제 추가</button>';
-      html += '&nbsp;&nbsp;<button type="button" class="create_btn"  id="update_btn" onclick="qusUpdate('+data[0].SURVEY_SEQ+','+data[0].QUESTION_TYPE_CODE+')">문제 수정</button>';
-      html += '<input type="hidden" name="surveySeq" id="seq" value="'+data[0].SURVEY_SEQ+'">';
-      html += '<input type="hidden" name="questionSeq" value="'+data[0].QUESTION_SEQ +'">';
-      html += `</div>`;
-      html += `<input type="hidden" name="itemScore" value="0">`;
-      html += `<input type="hidden" name="itemContent" value=" ">`;
-      html += `<input type="reset" value="" id="reset_btn"  style="display:none">
-`
-      html += `</div>`;
-      html += `</div>`;
-      html += `</div>`;
-      $('#questioN_insert_form').append(html);
-   }
+//       html += '<textarea class="form-control" aria-label="문제 입력칸" id="hi" name="questionContent">'
+//       html += data[0].QUESTION_CONTENT;
+//       html += '</textarea></div>';
+//       html += `<div class="question_add_btn_div">`;
+//       html += '<button type="button" class="create_btn" id="add_btn" onclick="insertQus()">문제 추가</button>';
+//       html += '&nbsp;&nbsp;<button type="button" class="create_btn"  id="update_btn" onclick="qusUpdate('+data[0].SURVEY_SEQ+','+data[0].QUESTION_TYPE_CODE+')">문제 수정</button>';
+//       html += '<input type="hidden" name="surveySeq" id="seq" value="'+data[0].SURVEY_SEQ+'">';
+//       html += '<input type="hidden" name="questionSeq" value="'+data[0].QUESTION_SEQ +'">';
+//       html += `</div>`;
+//       html += `<input type="hidden" name="itemScore" value="0">`;
+//       html += `<input type="hidden" name="itemContent" value=" ">`;
+//       html += `<input type="reset" value="" id="reset_btn"  style="display:none">
+// `
+//       html += `</div>`;
+//       html += `</div>`;
+//       html += `</div>`;
+//       $('#questioN_insert_form').append(html);
+//    }
 
 
-      function qusUpdate(surveySeq,typeCode){
-         var qdiv = $('#questioN_insert_form')[0]
+      function changeTypeAndQusUpdate(questionSeq,typeCode){
+        
           console.log("업데이트 시작");
-         var data = new FormData(qdiv);
-
-         if(typeCode !=data.get("questionTypeCode")){
+   
             $.ajax({
                  method: 'POST',
-                 url: 'deleteItem.do/'+data.get("questionSeq"),
+                 url: 'deleteItem.do/'+questionSeq,
                  data: data,
                  processData : false,
                  contentType : false,
@@ -999,8 +1001,10 @@ function manageQus(obj,questionSeq,questionTypeCodes){
                     console.log("Error", e);
                     }
                  });
-         }
-
+         
+          var data = new FormData();
+			data.append("questionTypeCode",typeCode);
+			data.append("questionSeq",questionSeq);
          $.ajax({
             method: 'POST',
             url: 'updatequestion.do/',
@@ -1045,7 +1049,8 @@ function manageQus(obj,questionSeq,questionTypeCodes){
       if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
     	  if(questionType != newValue){
     		  if(confirm("유형이 바뀌면 저장된 데이터가 사라집니다. 계속 진행하시겠습니까?")){
-    			  deleteItemsByQuestionSeq(questionSeq);
+    			  changeTypeAndQusUpdate(questionSeq,newValue);
+    			  location.reload();
     		  }else{
     				$("input[type=radio][name="+name+"][value="+newValue+"]").prop('checked',false);
       				$("input[type=radio][name="+name+"][value="+questionType+"]").prop('checked',true);
@@ -1057,9 +1062,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
     			  return false;
     		  }
     	  }
-//           $("#obj_box_toggle").show();
-//           $("#subj_box_toggle").hide();
-//          $("#mix_box_toggle").hide();
+
 		
          
 			
@@ -1072,7 +1075,8 @@ function manageQus(obj,questionSeq,questionTypeCodes){
       if ($("input[type=radio][id=mix_radio]:checked").is(':checked') == true){
     	  if(questionType != newValue){
     		  if(confirm("유형이 바뀌면 저장된 데이터가 사라집니다. 계속 진행하시겠습니까?")){
-    			  deleteItemsByQuestionSeq(questionSeq);
+    			  changeTypeAndQusUpdate(questionSeq,newValue);
+    			  location.reload();
     		  }else{
     				$("input[type=radio][name="+name+"][value="+newValue+"]").prop('checked',false);
       				$("input[type=radio][name="+name+"][value="+questionType+"]").prop('checked',true);
@@ -1085,9 +1089,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
   			  return false;
   		 	 }
     	  }
-//           $("#mix_box_toggle").show();
-//           $("#obj_box_toggle").hide();
-//           $("#subj_box_toggle").hide();
+
 
 
        }
@@ -1100,7 +1102,8 @@ function manageQus(obj,questionSeq,questionTypeCodes){
     if($("input[type=radio][id=subj_radio]:checked").is(':checked') == true){ // 체크 여부(checked)
     	if(questionType != newValue){
   		  if(confirm("유형이 바뀌면 저장된 데이터가 사라집니다. 계속 진행하시겠습니까?")){
-  			  deleteItemsByQuestionSeq(questionSeq);
+  			changeTypeAndQusUpdate(questionSeq,newValue);
+  			location.reload();
   		  }else{
   				$("input[type=radio][name="+name+"][value="+newValue+"]").prop('checked',false);
   				$("input[type=radio][name="+name+"][value="+questionType+"]").prop('checked',true);
@@ -1109,9 +1112,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 			  return false;
 		  }
   	  }
-//         $("#subj_box_toggle").show();
-//        $("#obj_box_toggle").hide();
-//         $("#mix_box_toggle").hide();
+
 
       }
 

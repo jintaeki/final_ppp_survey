@@ -116,7 +116,7 @@
    </select>
 
    <update id="UpdateQuestion" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
-      UPDATE SURVEY_QUESTION SET QUESTION_CONTENT=#{questionContent}
+      UPDATE SURVEY_QUESTION SET <if test="#{questionContent} != null and #{questionContent} !=''"> QUESTION_CONTENT=#{questionContent}</if>
           ,QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq}
    </update>
 
