@@ -1,11 +1,15 @@
 @charset "UTF-8";
 
+@font-face{
+	font-family: "segoe";
+	
+	src : url('/manyface/src/main/webapp/resources/font/Segoe UI Bold.ttf');
+}
+
 * {
 	box-sizing: border-box;
-	font-family: 'Gothic A1', sans-serif;
-	font-family: 'Nanum Gothic', sans-serif;
-	font-family: 'Nanum Gothic Coding', monospace;
-	font-family: 'Noto Serif KR', serif;
+	
+	
 }
 
 .card {
