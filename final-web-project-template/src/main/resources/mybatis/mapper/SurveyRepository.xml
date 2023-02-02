@@ -506,18 +506,16 @@ SELECT EMPLOYEE_NAME
      , MAX
      , AVG
      , MIN
+     , TOT
+     , RANK
 FROM(
     SELECT EMPLOYEE_ID
          , SCORE
          , SURVEY_SEQ
          , rk
-         , rk2
-         , rat
-         , CASE WHEN              rat <= 10 THEN 1
-                WHEN rat > 10 AND rat <= 50 THEN 2
-                WHEN rat > 50 AND rat <= 90 THEN 3
-                WHEN rat > 90 AND rat <= 100 THEN 4
-            END grd
+         , rk2 AS RANK
+         , ROUND(rat) AS GRD
+         , tot
     FROM (
        SELECT EMPLOYEE_ID
             , SCORE
@@ -525,6 +523,7 @@ FROM(
             , rk
             , (rk + (cnt - 1) / 2) rk2
             , (rk + (cnt - 1) / 2) / tot * 100 rat
+            , tot
          FROM (
              SELECT EMPLOYEE_ID
                   , SCORE

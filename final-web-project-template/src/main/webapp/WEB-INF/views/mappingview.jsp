@@ -1,22 +1,23 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ include file="/WEB-INF/views/common/headerformanager.jsp" %>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/survey_list.css"/>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/survey_list.css" />
 
 <script>
 
 var surveySeq="";
 var raterId="";
 
-$(document).ready(function() {     
-    $('#popup').on('show.bs.modal', function(event) {          
+$(document).ready(function() {
+    $('#popup').on('show.bs.modal', function(event) {
         surveySeq = $(event.relatedTarget).data('survey');
         raterId = $(event.relatedTarget).data('rater');
     });
 });
- 
+
 function popup(){
 	var month = $('#month').val();
-	
+
 	let popUrl ="/mapping/popup.do?pageNo=1"+"&surveySeq="+surveySeq+"&raterId="+raterId
 			   +"&month="+month+"&keyword=&selection=60004&selectGD=60004";
 	let popOption = "width=800, height=820, left=470, top=100";
@@ -24,9 +25,9 @@ function popup(){
 }
 
 function mapInsert(surveySeq){
-	
+
 	let popUrl ="/mapping/another.do?pageNo=1"+"&surveySeq="+surveySeq
-			   +"&keyword=&selection=60004&selectGD=60004";	
+			   +"&keyword=&selection=60004&selectGD=60004";
 	let popOption = "width=800, height=820, left=470, top=100";
 	window.open(popUrl, "다면평가 대상 추가", popOption);
 }
@@ -43,7 +44,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 		    type: "POST",
 		    contentType: "application/json;charset=UTF-8",
 		    data:JSON.stringify(submitObj),
-		    dataType : "json" 
+		    dataType : "json"
 		    })
 		    .done(function(resMap) {
 		    	alert(resMap.msg);
@@ -65,22 +66,10 @@ function map_delete(surveySeq, raterId, appraiseeId){
 
 
 			<div class="forshadowing">
-				<div>				
-					<h3 style="text-align: center;">${surveyInfo.surveyName}
-						매핑 목록</h3>
-				</div>
-
-				
 				<div>
-								
-				<input type="button" style="margin-left: 50px;"
-					onclick="location.href='<c:url value='/survey/surveysearch'/>'"
-					class="btn btn-outline-primary" value="돌아가기">
-					<button type="button" id="map_insert" class="btn btn-outline-primary" style="margin-left: 1050px;"
-						onclick="mapInsert('${surveySeq}')">조건과 관계없이 추가</button>
-							
-				
+					<h3 style="text-align: center;">${surveyInfo.surveyName}매핑 목록</h3>
 				</div>
+				<div></div>
 				<div class="row">
 					<div class="hmenu">
 						<div class="survey_list_form_upper_dv">
@@ -120,6 +109,9 @@ function map_delete(surveySeq, raterId, appraiseeId){
 										value="초기화">
 								</div>
 							</form>
+							<button type="button" id="map_insert"
+								class="btn btn-outline-primary"
+								onclick="mapInsert('${surveySeq}')">조건과 관계없이 추가</button>
 						</div>
 					</div>
 					<table class="table" id="mapTb">
@@ -148,10 +140,10 @@ function map_delete(surveySeq, raterId, appraiseeId){
 													data-rater="${mapping.raterId}">
 													${mapping.raterName}</button></td>
 											<td>${mapping.appraiseeName}</td>
-											<td><input type="button" id="map_delete"
-												class="btn btn-outline-danger"
+											<td><button id="map_delete"
+												style="background: white; border: 1px solid #fff; border-radius: 35em;"
 												onclick="map_delete('${mapping.surveySeq}', '${mapping.raterId}', '${mapping.appraiseeId}');"
-												value="삭제"></td>
+												value="삭제"><i class="fas fa-xmark"></i></button></td>
 										</tr>
 									</c:forEach>
 								</c:otherwise>
@@ -159,72 +151,75 @@ function map_delete(surveySeq, raterId, appraiseeId){
 						</tbody>
 						<tr>
 							<td colspan="4" class="text-center">
-<!-- 								<div class="page_wrap"> -->
-<!-- 									<div class="page_nation"> -->
-										<div>
-										<%-- 맨처음 페이지 이동    
+								<!-- 								<div class="page_wrap"> --> <!-- 									<div class="page_nation"> -->
+								<div>
+									<%-- 맨처음 페이지 이동
       									<a class="arrow prev" href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a> --%>
-										<c:if test="${pagingdto.groupNo>1}">
+									<c:if test="${pagingdto.groupNo>1}">
+										<a class="btn btn-outline-secondary"
+											href="set.do?pageNo=${pagingdto.startPageNo-1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">이전</a>
+									</c:if>
+									<c:forEach var="i" begin="${pagingdto.startPageNo}"
+										end="${pagingdto.endPageNo}">
+										<c:if test="${pagingdto.pageNo != i}">
 											<a class="btn btn-outline-secondary"
-												href="set.do?pageNo=${pagingdto.startPageNo-1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">이전</a>
+												href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
 										</c:if>
-										<c:forEach var="i" begin="${pagingdto.startPageNo}"
-											end="${pagingdto.endPageNo}">
-											<c:if test="${pagingdto.pageNo != i}">
-												<a class="btn btn-outline-secondary"
-													href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
-											</c:if>
-											<c:if test="${pagingdto.pageNo == i}">
-												<a class="btn btn-secondary"
-													href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
-											</c:if>
-										</c:forEach>
-										<c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
-											<a class="btn btn-outline-secondary"
-												href="set.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">다음</a>
+										<c:if test="${pagingdto.pageNo == i}">
+											<a class="btn btn-secondary"
+												href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
 										</c:if>
-										<%-- 맨마지막 페이지 이동 
+									</c:forEach>
+									<c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
+										<a class="btn btn-outline-secondary"
+											href="set.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">다음</a>
+									</c:if>
+									<%-- 맨마지막 페이지 이동
        						  			<a class="arrow next" href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">맨끝</a> --%>
-</div>
-<!-- 									</div> -->
-<!-- 								</div> -->
+								</div> <!-- 									</div> --> <!-- 								</div> -->
+
 							</td>
 						</tr>
 					</table>
-					
+
 				</div>
-			
-					
+
+
 			</div>
 		</div>
 	</div>
 </div>
-<%@ include file="/WEB-INF/views/common/footerformanager.jsp" %>
+<%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
 
 <!-- Modal -->
-<div class="modal fade" id="popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">추가할 조합의 프로젝트 범위를 정하시오</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-		<br><h5> 다면평가에 포함될 프로젝트의 범위 정하기 </h5> 
-		<select class="form-control" id="month"> 
-			<option value="3">최근 3개월 동안에 끝난 프로젝트</option> 
-			<option value="6">최근 6개월 동안에 끝난 프로젝트</option> 
-			<option value="12">최근 1년 동안에 끝난 프로젝트</option>
-  			<option value="24">최근 2년 동안에 끝난 프로젝트</option> 
-  			<option value="36">최근 3년 동안에 끝난 프로젝트</option> 
-  		</select>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-        <button type="button" class="btn btn-primary" onclick="popup()">추가할사람 보기</button>
-      </div>
-    </div>
-  </div>
+<div class="modal fade" id="popup" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">추가할 조합의 프로젝트 범위를
+					정하시오</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<br>
+				<h5>다면평가에 포함될 프로젝트의 범위 정하기</h5>
+				<select class="form-control" id="month">
+					<option value="3">최근 3개월 동안에 끝난 프로젝트</option>
+					<option value="6">최근 6개월 동안에 끝난 프로젝트</option>
+					<option value="12">최근 1년 동안에 끝난 프로젝트</option>
+					<option value="24">최근 2년 동안에 끝난 프로젝트</option>
+					<option value="36">최근 3년 동안에 끝난 프로젝트</option>
+				</select>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+				<button type="button" class="btn btn-primary" onclick="popup()">추가할사람
+					보기</button>
+			</div>
+		</div>
+	</div>
 </div>

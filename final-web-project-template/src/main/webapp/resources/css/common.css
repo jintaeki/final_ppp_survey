@@ -301,3 +301,9 @@ select:disabled {
 .item_form {
 	margin-left: 10px;
 }
+
+thead{
+	border-radius: 10px;
+	color: white;
+	background-color: #8258FA;
+}

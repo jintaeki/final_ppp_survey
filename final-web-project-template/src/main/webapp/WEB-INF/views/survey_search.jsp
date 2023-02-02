@@ -6,6 +6,14 @@
 
 <script>
 
+function delete_mapping_btn(){
+	  if (confirm("정말 삭제하시겠습니까??") == true){    //확인
+	      document.form.submit();
+	  }else{   //취소
+	      return;
+	  }
+	}
+
 
 	function delete_survey_btn(obj,surveyseq,selection,pageno){
 		if(confirm("삭제하시겠습니까?")){
@@ -93,7 +101,7 @@
 
 
   	function send() {
-  	
+
   		var pageno = $('#pageNo').val();
   		var surveyseq = $('#surveyseq').val();
   		var deliverycontent = $('#deliverycontent').val();
@@ -114,7 +122,7 @@
 			const tag = $('#'+surveyseq+'_send');
 			console.log(tag);
 			console.log(surveyseq);
-			
+
 			$('#exampleModal1').modal('hide');
 
 			const text = '<button type="button" class="btn btn-link" onclick="location.href='+'\'evaluateSearch/' +surveyseq+ '\'">조회</button>';
@@ -180,7 +188,7 @@
   	   	html += '<input type="hidden" id="newCheck" name="newCheck" value="0">';
   	   	html += '<br> <h5> 다면평가에 포함될 프로젝트의 범위 정하기 </h5> <select class="form-control" name="month"> <option value="3">최근 3개월 동안에 끝난 프로젝트</option> <option value="6">최근 6개월 동안에 끝난 프로젝트</option> <option value="12">최근 1년 동안에 끝난 프로젝트</option>';
   		html +=	'<option value="24">최근 2년 동안에 끝난 프로젝트</option> <option value="36">최근 3년 동안에 끝난 프로젝트</option> </select>';
-  		html += '<br> <h5>평가 최대 인원</h5> <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;">';
+  		html += '<br> <h5>피평가자 최대 인원</h5> <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;">';
   	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> <input type="submit" class="btn btn-primary" value="매핑">';
   	    html += '</div></form:form></div></div></div></div>';
   	    $('#beforeModal').after(html);
@@ -199,13 +207,13 @@
   	   	html += '<input type="hidden" id="month" name="month" value="3">';
   	   	html += '<input type="hidden" id="number" name="number" value="3">';
   	   	html += '<br> <h5> 해당 다면평가의 매핑을 새로 하시겠습니까? </h5>';
-  	   	html += '<br><button type="submit" class="btn btn-outline-danger" id="newCheck" name="newCheck" value="1">삭제하고 새로 시작하기</button>';
-  	   	html += '<br><button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 매핑 데이터로 넘어가기</button>';
-  	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>';
+  	   	html += '<br><button type="submit" class="btn btn-outline-danger" id="newCheck" name="newCheck" value="1" onclick="delete_mapping_btn();">삭제하고 새로 시작하기</button>';
+  	   	html += '<button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 매핑 데이터로 넘어가기</button>';
+  	    html += '<div class="modal-footer"><br><button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>';
   	    html += '</div></form:form></div></div></div></div>';
   	    $('#beforeModal').after(html);
   	}
-  	
+
   	function updatemessage(surveyseq){
 		html ="";
   	  	html +='<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
@@ -221,14 +229,14 @@
   	  	html +='</div></div></div></div></div>';
   	    $('#beforeModal').after(html);
 	}
-  	
+
   	function setdataform(){
-  		
+
   		var form = $('#surveyDataForm')[0];
   		var dataform = new FormData(form);
-  		
-  		
-  		
+
+
+
   		$.ajax({
   		url:'/survey/set.do' ,
   		method:'POST',
@@ -244,17 +252,17 @@
   			if(result=="contentLarge"){alert('부가 설명이 너무 길어요. 150자 내로 입력 가능합니다.');  return false;}
   			else{location.href="/survey/surveyinsert?surveyseq="+result;
 		};
-  			
-  			
+
+
   		}
-  		
-  		
-  		
-  		
+
+
+
+
   		});
-  		
+
   	}
-  	
+
   	function reset_btn(){
   		$('.survey_list_form_upper_dv').empty();
   		html='';
@@ -265,16 +273,16 @@
 					<option value="30005">전체</option>
 					<option value="30002">기명</option>
 					<option value="300001">익명</option>
-			</select> 
+			</select>
 			<select name="selection">
-				
+
 				<option value="30005">전체</option>
 				<option value="30004">알림 발송 완료</option>
 				<option value="30003">매핑 완료</option>
 				<option value="30002">등록 완료</option>
 				<option value="30001">작성 중</option>
-				
-				
+
+
 			</select> <input type="text" class="form-control" id="selectedKeyword"
 				placeholder="search" name="keyword"
 				value="${pagingdto.keyword}" aria-describedby="button-addon2">
@@ -288,8 +296,8 @@
   		$('.survey_list_form_upper_dv').append(html);
 
   	}
-  	
-  	
+
+
 </script>
 
 <div class="col-11" style="width: 1800px;">

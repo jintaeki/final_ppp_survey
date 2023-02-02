@@ -237,7 +237,7 @@
 													<input type="hidden" name="surveySeq"
 														value="${SLD.surveySeq}">
 													<div id="obj_ItemAfter"></div>
-													
+
 
 
 
@@ -492,7 +492,7 @@
 
     function itemHtml(data){
           //문제 개수 설정
-		
+
 
          let size = data.length;
          var htmlObj = '';
