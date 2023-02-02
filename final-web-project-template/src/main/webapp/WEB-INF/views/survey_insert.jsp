@@ -26,8 +26,7 @@
 	<div class="card" >
 		<div class="card-body" style="height:890px;">
 			<div class="forshadowing" style="height:860px;">
-				<button style="float: left;" class="btn btn-link"
-					onclick="history.go(-1)">뒤로가기</button>
+
 				<button style="float: right;" class="btn btn-link"
 					onclick="insertComplete(${SLD.surveySeq})">등록완료</button>
 				<!-- 설문지 설정 진택 -->
@@ -35,149 +34,87 @@
 				<div class="container_survey">
 					<div class="row" style="margin-top: 45px;"></div>
 
-					<div class="inner_container">
-						<div class="container_flex"
-							style="border-radius: 20px; box-shadow: 1px 1px 10px 0px; padding: 20px; width: 450px;">
-							<div class="input_title">기본 설정</div>
-							<form:form modelAttribute="SLD" id="survey_setting_form">
-								<table style="border-collapse: collapse;">
-									<tr>
-										<th><div style="margin-top: 8px;"></div></th>
-									</tr>
+<!-- 					<div class="inner_container"> -->
+					<div class="container_flex"
+						style="border-radius: 20px; box-shadow: 1px 1px 10px 0px;">
+						<div class="input_title" style="margin-right:0px; text-align:center;">기본 설정</div>
+						<form:form modelAttribute="SLD" id="survey_setting_form">
+							<table style="text-align:center;">
+								<!-- 									<tr> -->
+								<!-- 										<th><div style="margin-top: 8px;"></div></th> -->
+								<!-- 									</tr> -->
 
-									<tr>
+								<tr class="col-12">
 
-										<td><span class="insert_category"><b>설문지 제목</b><label
-												for="survey_name"></label></span></td>
-										<td><input type="text" id="survey_name" name="surveyName"
-											style="width: 200px;" value="${SLD.surveyName}"></td>
+									<th class="col-2"><span class="insert_category"><b>설문지 제목</b><label
+											for="survey_name"></label></span></th>
+									<th class="col-3"><span class="insert_category"> <b>평가 기간</b>
+									</span></th>
+									<th class="col-2"><span class="insert_category"> <b>익명/기명</b></span></th>
+									<th class="col-4"><span class="insert_category"><b>상세 설명</b></span></th>
+									<th class="col-1"></th>
+								</tr>
 
-									</tr>
+								<tr>
+									<td class="col-2"><input type="text" id="survey_name" name="surveyName"
+										style="width: 200px;" value="${SLD.surveyName}"></td>
 
-									<tr style="border-bottom: 3px solid gainsboro;">
-										<th><div style="margin-top: 8px;"></div></th>
-									</tr>
-									<tr>
-										<th><div style="margin-top: 8px;"></div></th>
-									</tr>
-									<tr>
-										<td><span class="insert_category"> <b>평가 기간</b>
-										</span></td>
-										<td><input type="date" name="surveyStartDate"
-											class="survey_date"
-											value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">-
-											<input type="date" name="surveyClosedDate"
-											class="survey_date"
-											value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />"></td>
-									</tr>
+									<td class="col-3"><input type="date" name="surveyStartDate"
+										class="survey_date"
+										value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">-
+										<input type="date" name="surveyClosedDate" class="survey_date"
+										value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />"></td>
 
-									<tr style="border-bottom: 3px solid gainsboro;">
-										<th><div style="margin-top: 8px;"></div></th>
-									</tr>
-									<tr>
-										<th><div style="margin-top: 8px;"></div></th>
-									</tr>
+									<td class="col-2"><c:if test="${SLD.anonymityCheckCode eq '20001'}">
+											<input type="radio" name="anonymityCheckCode"
+												id="survey_type_check" value="20001" checked>
+											<label style="margin-bottom: 0px;" for="survey_type_check"><b>익명</b></label>
+											<input type="radio" name="anonymityCheckCode"
+												id="survey_type_check" value="20002">
+											<label style="margin-bottom: 0px;" for="survey_type_check"><b>기명</b></label>
+										</c:if> <c:if test="${SLD.anonymityCheckCode eq '20002'}">
+											<input type="radio" name="anonymityCheckCode"
+												id="survey_type_check" value="20001">
+											<label style="margin-bottom: 0px;" for="survey_type_check"><b>익명</b></label>
 
-									<tr>
-										<td><span class="insert_category"> <b>익명/기명</b></span></td>
-										<td><c:if test="${SLD.anonymityCheckCode eq '20001'}">
-												<input type="radio" name="anonymityCheckCode"
-													id="survey_type_check" value="20001" checked>
-												<label style="margin-bottom: 0px;" for="survey_type_check"><b>익명</b></label>
-												<input type="radio" name="anonymityCheckCode"
-													id="survey_type_check" value="20002">
-												<label style="margin-bottom: 0px;" for="survey_type_check"><b>기명</b></label>
-											</c:if> <c:if test="${SLD.anonymityCheckCode eq '20002'}">
-												<input type="radio" name="anonymityCheckCode"
-													id="survey_type_check" value="20001">
-												<label style="margin-bottom: 0px;" for="survey_type_check"><b>익명</b></label>
+											<input type="radio" name="anonymityCheckCode"
+												id="survey_type_check" value="20002" checked>
+											<label style="margin-bottom: 0px;" for="survey_type_check"><b>기명</b></label>
+										</c:if></td>
+										
+										
+											<td class="col-4"><textarea class="visually-hidden" id="message-text"
+								name="surveyContent"
+								style="width: 400px; height: 100px; max-width: 350px;">${SLD.surveyContent }</textarea></td>
+										
+										
+										<td class="col-1"><input type="button" class="update_btn" style="padding:5px 26px 26px 26px;" onclick="register()" value="적용">
+										</td>
+								</tr>
 
-												<input type="radio" name="anonymityCheckCode"
-													id="survey_type_check" value="20002" checked>
-												<label style="margin-bottom: 0px;" for="survey_type_check"><b>기명</b></label>
-											</c:if></td>
-									</tr>
-									<tr style="border-bottom: 3px solid gainsboro;">
-										<th><div style="margin-top: 8px;"></div></th>
-									</tr>
-									<tr>
-										<th><div style="margin-top: 8px;"></div></th>
-									</tr>
+							</table>
 
-								</table>
-
-								<span class="insert_category"><b>상세 설명</b></span>
-								<br>
-								<div style="margin-top: 8px;"></div>
-								<textarea class="visually-hidden" id="message-text"
-									name="surveyContent"
-									style="width: 350px; height: 100px; max-width: 350px;">${SLD.surveyContent }</textarea>
-
-								<input type="hidden" name="stateCode" value="30001">
-								<input type="hidden" name="surveySeq" id="surveyseq"
-									value="${SLD.surveySeq}">
-
-							</form:form>
-							<input type="button" class="update_btn"
-								style="margin-bottom: 10px; float: right;" onclick="register()"
-								value="적용">
-
-						</div>
-
-
-						<div>
-<!-- 							<div class="question_inputdv" id="input_question"> -->
-<!-- 								<div class="input_title">문제 관리</div> -->
-
-<%-- 								<form:form modelAttribute="SQD" id="questioN_insert_form"> --%>
-<!-- 									aa -->
-<!-- 									<div id="insertQform"> -->
-
-<!-- 										<div class="select_radio" id="select_radio"> -->
-<!-- 											<input type="radio" name="questionTypeCode" id="obj_radio" -->
-<!-- 												onclick="checkit1()" value="10001" checked>&nbsp;객관식 -->
-<!-- 											&nbsp;&nbsp;&nbsp; <input type="radio" -->
-<!-- 												name="questionTypeCode" id="subj_radio" onclick="checkit2()" -->
-<!-- 												value="10002"> &nbsp;주관식 &nbsp;&nbsp;&nbsp; <input -->
-<!-- 												type="radio" name="questionTypeCode" id="mix_radio" -->
-<!-- 												onclick="checkit3()" value="10003"> &nbsp;혼합식 -->
-<!-- 											&nbsp;&nbsp;&nbsp; -->
-<!-- 										</div> -->
-<!-- 										<div class="question_content_area" id="question_add"> -->
-<!-- 											<div class="input-group" id="question_content"> -->
-<!-- 												<textarea class="form-control" aria-label="문제 입력칸" -->
-<%-- 													name="questionContent">${SQD.questionContent}</textarea> --%>
-<!-- 											</div> -->
+		
+							<input type="hidden" name="stateCode" value="30001">
+							<input type="hidden" name="surveySeq" id="surveyseq"
+								value="${SLD.surveySeq}">
+							
+						</form:form>
+						
+					</div>
 
 
 
 
-<!-- 											문제 추가 버튼  -->
-<!-- 											onclick="insertQus()" -->
-<!-- 											<div class="question_add_btn_div"> -->
-
-<!-- 												<button type="button" class="create_btn" id="add_qus_btn" -->
-<!-- 													onclick="insertQus()">문제 추가</button> -->
-<!-- 												<button type="button" class="create_btn" id="update_btn" -->
-<!-- 													style="margin-left: 4.48px;" -->
-<%-- 													onclick="qusUpdate(${SLD.surveySeq})">문제 수정</button> --%>
-
-<!-- 												<input type="hidden" name="surveySeq" id="seq" -->
-<%-- 													value="${SLD.surveySeq }"> <input type="hidden" --%>
-<!-- 													name="questionSeq" value="0"> -->
-<!-- 												비동기로 바꿔 넣어보자 -> 문항도 마찬가지 -->
-<!-- 											</div> -->
-
-<!-- 											<input type="hidden" name="itemScore" value="0"> <input -->
-<!-- 												type="hidden" name="itemContent" value=" "> <input -->
-<!-- 												type="reset" value="" id="reset_btn" style="display: none"> -->
-<!-- 										</div> -->
-<!-- 									</div> -->
-<%-- 								</form:form> --%>
-<!-- 							</div> -->
-
-							<div class="question_management">
-								<div class="input_title">문제 목록</div>
+				<div class="questionAndItem" style="display: flex; justify-content: space-between;">
+					<div class="question_management">
+								<div class="input_title" style="display:contents">문제 목록 
+								<button type="button" onclick="question_copy(this,${SLD.surveySeq} )"
+													style="background: white; border: 1px solid #fff; border-radius: 35em;">
+													<i class="fas fa-plus"></i>
+												</button>
+								</div> 
+								
 								<div id="scroll_area" style="overflow: auto; height: 450px;">
 
 									<c:if test="${empty SQL}">
@@ -185,39 +122,44 @@
 										<b>${NoQuestion}</b>
 									</c:if>
 									<!-- 여기까지 문제 div -->
-									<c:forEach items="${SQL}" var="qlist">
-																	<form id="${qlist.questionSeq }">
+									<div id="queAfter">
 									
-										<div id="queAfter">
-
-											
-											
-											
+									<c:forEach items="${SQL}" var="qlist">
+									<div class="deleteThis" style="display:flex;">
+									<button class="delete_btn"
+												onclick="deleteQus(this,${qlist.surveySeq})"
+												style="background: white;" value="${qlist.questionSeq }">
+												<i class="fa-regular fa-trash-can"></i>
+											</button>
+										<form id="${qlist.questionSeq }" onsubmit="return false;">
+									
 											<div class="input_qus" id="checkTouch">
 												<input type="hidden" name= "surveySeq" value="${qlist.surveySeq }" id="surveySequence">
 												<input type="hidden" name= "questionSeq" value="${qlist.questionSeq }">
 												<input  name="questionContent" type="text" id="input_qus" onclick="manageQus(this,${qlist.questionSeq},${qlist.questionTypeCode })" value="${qlist.questionContent }">
-												<c:if test="${qlist.questionTypeCode eq '10001' }">
-													<input type="radio" name="${qlist.questionSeq}radio" value="10001" onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq})" checked> 객관식
-													<input type="radio" name="${qlist.questionSeq}radio" value="10002" onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq})"> 주관식
-													<input type="radio" name="${qlist.questionSeq}radio" value="10003" onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq})"> 혼합식												
+												
+											</div>
+											<c:if test="${qlist.questionTypeCode eq '10001' }">
+													<input type="radio" id="obj_radio" name="${qlist.questionSeq}" value="10001" onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})" checked> 객관식
+													<input type="radio" id="subj_radio" name="${qlist.questionSeq}" value="10002" onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
+													<input type="radio" id="mix_radio" name="${qlist.questionSeq}" value="10003" onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 혼합식												
 												</c:if>
 												<c:if test="${qlist.questionTypeCode eq '10002' }">
-													<input type="radio" name="${qlist.questionSeq}radio" value="10001" onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq})"> 객관식
-													<input type="radio" name="${qlist.questionSeq}radio" value="10002" onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq})"checked> 주관식
-													<input type="radio" name="${qlist.questionSeq}radio" value="10003" onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq})"> 혼합식												
+													<input type="radio" id="obj_radio" name="${qlist.questionSeq}" value="10001" onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 객관식
+													<input type="radio" id="subj_radio" name="${qlist.questionSeq}" value="10002" onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"checked> 주관식
+													<input type="radio" id="mix_radio" name="${qlist.questionSeq}" value="10003" onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 혼합식												
 												</c:if>
 												<c:if test="${qlist.questionTypeCode eq '10003' }">
-													<input type="radio" name="${qlist.questionSeq}radio" value="10001" onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq})"> 객관식
-													<input type="radio" name="${qlist.questionSeq}radio" value="10002" onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq})"> 주관식
-													<input type="radio" name="${qlist.questionSeq}radio" value="10003" onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq})"checked> 혼합식												
-												</c:if>
-																							</div>
+													<input type="radio" id="obj_radio" name="${qlist.questionSeq}" value="10001" onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 객관식
+													<input type="radio" id="subj_radio" name="${qlist.questionSeq}" value="10002" onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
+													<input type="radio" id="mix_radio" name="${qlist.questionSeq}" value="10003" onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"checked> 혼합식												
+											</c:if>
 											
 											
 										
-										</div>
+										
 										</form>
+									
 											<!-- 조회 버튼 -->
 											<button value="${qlist.questionSeq }"
 												onclick="touchQuestion(this)"
@@ -225,17 +167,14 @@
 												<i class="fas fa-search"></i>
 											</button>
 											
-											<button class="delete_btn"
-												onclick="deleteQus(this,${qlist.surveySeq})"
-												style="background: white;" value="${qlist.questionSeq }">
-												<i class="fa-regular fa-trash-can"></i>
-											</button>
+											
 											<div class="blank_under"></div>
+									</div>
 									</c:forEach>
-								
+								</div>
 								</div>
 							</div>
-						</div>
+						
 
 
 						<div class="item_management">
@@ -311,8 +250,8 @@
 							</span>
 						</div>
 
-
 					</div>
+<!-- 					</div> -->
 					<!--  문제관리 끝 -->
 
 
@@ -325,64 +264,113 @@
 
 
 // 문제 버튼없이 저장 및 수정
+// var cnt = 0;
 function manageQus(obj,questionSeq,questionTypeCodes){
 	const tag = $(obj);
-	var form = $('#'+questionSeq)[0];
-	var dataform = new FormData(form);
+
+	keyArray = [];
+	valueArray = [];
+	var cnt = 0;
+		$(tag).blur(function(e){
+			
+			
+			
+			if(questionSeq ==0){
+				var form = $('#0')[0];
+				var formdata = new FormData(form);
+				for(const pairkeys of formdata.keys()){
+		             keyArray.push(pairkeys);
+		             console.log(pairkeys);	
+		             cnt = cnt +1;
+		          }
+				
+		          for(const pairvalues of formdata.values()){
+		        	  console.log(pairvalues);
+		             valueArray.push(pairvalues);
+		          }
+		          
+		          
+		          for(var i = 0 ; i<cnt ; i++){
+		        	  
+		        	  if(keyArray[i].substr(0,1)=='0'){
+		        		  formdata.append('questionTypeCode',valueArray[i]);
+		        	  }
+		        	  
+		          }
+		          
+		          $.ajax({
+						method : "POST",
+				         url : 'insertquestion.do/', // form을 전송할 실제 파일경로
+				         data: formdata,
+				         processData : false,
+				         contentType : false,
+				         cache : false,
+				         timeout : 600000,
+				         beforeSend : function() {
+				            // 전송 전 실행 코드
+				         },
+				         success : function(data) {
+
+							location.reload();
+				         },
+				         error : function(e) {
+				            // 전송 후 에러 발생 시 실행 코드
+				            console.log("ERROR : ", e);
+				         }
+					})
+					
+			}else{
+				var form = $('#'+questionSeq)[0];
+				var formdata = new FormData(form);
+				for(const pairkeys of formdata.keys()){
+		             keyArray.push(pairkeys);
+						cnt = cnt +1;
+		          }
+		          for(const pairvalues of formdata.values()){
+		             valueArray.push(pairvalues);
+		          }
+		          
+		          for(var i = 0 ; i < cnt ; i++){
+		        	  if(keyArray[i]==questionSeq){
+		        		  formdata.append('questionTypeCode',valueArray[i]);
+		        	  }
+		          }
+		          
+		          $.ajax({
+						method : "POST",
+				         url : 'updatequestion.do/', // form을 전송할 실제 파일경로
+				         data: formdata,
+				         processData : false,
+				         contentType : false,
+				         cache : false,
+				         timeout : 600000,
+				         beforeSend : function() {
+				            // 전송 전 실행 코드
+				         },
+				         success : function(data) {
+
+
+				         },
+				         error : function(e) {
+				            // 전송 후 에러 발생 시 실행 코드
+				            console.log("ERROR : ", e);
+				         }
+					})
+			}
+			 
+			 
+			
+	});
 	
-	
-	if(questionTypeCodes != tag.val() && tag.val() =='10001' ){
-		//객관식 빈 문제 출력
-	}else if(questionTypeCodes != tag.val() && tag.val() =='10002' ){		
-		//주관식 빈 문제 출력
-	}else if(questionTypeCodes != tag.val() && tag.val() =='10003' ){
-		//혼관식 빈 문제 출력
-	}else if (questionTypeCodes == tag.val()){
-		//아무 반응 없음
-	}
-	
-	$(tag).blur(function(e){
+
 		
-		 for(const pairkeys of dataform.keys()){
-            console.log(pairkeys);
-
-          }
-		 
-		 for(const pairvalues of dataform.values()){
-			 console.log(pairvalues);
-		 }
 	
-// 		$.ajax({
-// 			method : "POST",
-// 	         url : 'insertquestion.do/', // form을 전송할 실제 파일경로
-// 	         data: dataform,
-// 	         processData : false,
-// 	         contentType : false,
-// 	         cache : false,
-// 	         timeout : 600000,
-// 	         beforeSend : function() {
-// 	            // 전송 전 실행 코드
-// 	         },
-// 	         success : function(data) {
-// 	        	 console.log(data);
-// 	            if(data == '0'){
-// 	            	alert("문항이 최소 1개는 존재해야 합니다.")
-// 	            }else{
-// 	            	window.location.replace("/survey/surveysearch");
-// 	            }
+	
+	
 
-// 	         },
-// 	         error : function(e) {
-// 	            // 전송 후 에러 발생 시 실행 코드
-// 	            console.log("ERROR : ", e);
-// 	         }
-// 		})
-		});
 }
 
-$('#hi').focus(function(e){
-	console.log('문제 input 눌렀음');
-	});
+
 
 
 	//surveyinsertcomplete.do/${SLD.surveySeq}
@@ -420,16 +408,12 @@ $('#hi').focus(function(e){
    // 문제 누르면 touch버튼(돋보기) 활성화
    $(document).ready(function(){
         $('div#checkTouch').click(function(){
-           $(this).parent().parent().next('button').click();
+           $(this).parent().next('button').click();
 
         });
       });
 	
-//    $(document).ready(function(){
-// 	   $('div.input_qus').click(function(){
-// 		   $(this).parent().parent().next('button').click();
-// 	   });
-//    });
+
 
    //진택
    var cnt = 0;
@@ -459,7 +443,11 @@ $('#hi').focus(function(e){
          }
       });
    }
-
+	
+   
+   
+   
+   
    //문항 비동기 등록(수정)
    function update_obj_item_btn() {
       var form = $('#item_obj_form')[0];
@@ -509,9 +497,51 @@ $('#hi').focus(function(e){
          }
       });
    }
+	
+   
+   
+	// 문제 추가
+	var newQuestionCnt = 0;
+   function question_copy(obj,surveySeq){
+		
+	   var testDiv ='';
+	   	testDiv +='<div class="deleteThis">';
+	 	testDiv +='<form id="0" name="0" onsubmit="return false;">';
+	   	testDiv +='<div class="input_qus" id="checkTouch">';
+	   	testDiv +='<input type="hidden" name= "surveySeq" value="'+surveySeq+'" id="surveySequence">';
+		testDiv +='<input type="hidden" name= "questionSeq" value="0">';
+		testDiv +='<input type="text" name="questionContent"  id="input_qus"  onclick="manageQus(this,0,10001)" value="hi">';	
+		testDiv +='</div>';
+		testDiv +='<input type="radio" id="obj_radio" name="0'+newQuestionCnt+'" value="10001" onclick="checkit1(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+'" checked> 객관식';
+		testDiv +='<input type="radio" id="subj_radio" name="0'+newQuestionCnt+'" value="10002" onclick="checkit2(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+')"> 주관식';
+		testDiv +='<input type="radio" id="mix_radio" name="0'+newQuestionCnt+'" value="10003" onclick="checkit3(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+')"> 혼합식';									
+      	testDiv +='</form>';
+      	testDiv +='<button value="'+0+'" onclick="touchQuestion(this)"style="display:none;">';
+      	testDiv +='	<i class="fas fa-search"></i>';
+      	testDiv +='</button>';
+		
+      	testDiv +='<button class="delete_btn" onclick="deleteQus(this,'+surveySeq+')" style="background: white;" value="'+0+'"><i class="fa-regular fa-trash-can"></i></button>';
+      	testDiv +='<div class="blank_under"></div>';
+      	testDiv +='</div>'
+      	
+        $('#queAfter').prepend(testDiv);
+			console.log( $('#queAfter').children().first().before());
+        
+        console.log($('#queAfter').children().children().first());
+        console.log(  $('#queAfter').children().children().children().first(":input[type=text]"));
+        console.log( $('#queAfter').children().children().first());
+//         $('#queAfter').children().children().first().children(['name=questionContent']).on('focus');
+        
 
+        $('#queAfter').children().children().children().first().children(['name=questionContent']).focus();
 
-   //문제 추가 후 문항 추가
+        $('#0').children().children().next().next().click();
+        newQuestionCnt = newQuestionCnt + 1;
+	}
+   
+
+   
+   //문항 추가
   function item_obj_copy(obj,type){
        if(cntObj ==5){
           alert("객관식 문항은 최대 5개까지 생성 가능합니다.")
@@ -787,7 +817,9 @@ $('#hi').focus(function(e){
     function deleteQus(obj,surveySeq) {
    if(confirm("삭제하시겠습니까?")){
       var questionSeq = $(obj).val();
-
+	if(questionSeq==0){
+		$(obj).parent().remove();
+	}else{ 
       $.ajax({
          method:'POST', //어떤 방식으로 보낼 지
             url:'deletequestion.do/'+ questionSeq , // qdiv를 보낼 경로 설정
@@ -803,6 +835,7 @@ $('#hi').focus(function(e){
 
             }
        });
+	}
    }
    }
     let deleteItemZeroConfirm = 0;
@@ -905,17 +938,17 @@ $('#hi').focus(function(e){
          html +=` <div id="insertQform">
                <div class="select_radio" id="select_radio">`;
       if(data[0].QUESTION_TYPE_CODE =="10001"){
-         html += '<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1()" checked value="10001">&nbsp;객관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
-         html += '<input type="radio" name="questionTypeCode" id="subj_radio" onclick="checkit2()" value="10002"> &nbsp;주관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
-         html += '<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3()" value="10003"> &nbsp;혼합식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
+         html += '<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" checked value="10001">&nbsp;객관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
+         html += '<input type="radio" name="questionTypeCode" id="subj_radio" onclick="checkit2(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" value="10002"> &nbsp;주관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
+         html += '<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" value="10003"> &nbsp;혼합식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
       } else if (data[0].QUESTION_TYPE_CODE =="10002"){
-         html += '<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1()"  value="10001" >&nbsp;객관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
-         html += '<input type="radio" name="questionTypeCode" id="subj_radio" onclick="checkit2()" checked value="10002"> &nbsp;주관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
-         html += '<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3()" value="10003"> &nbsp;혼합식&nbsp;&nbsp;&nbsp&nbsp&nbsp;';
+         html += '<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')"  value="10001" >&nbsp;객관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
+         html += '<input type="radio" name="questionTypeCode" id="subj_radio" onclick="checkit2(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" checked value="10002"> &nbsp;주관식&nbsp;&nbsp;&nbsp&nbsp;&nbsp;';
+         html += '<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" value="10003"> &nbsp;혼합식&nbsp;&nbsp;&nbsp&nbsp&nbsp;';
       } else if (data[0].QUESTION_TYPE_CODE =="10003"){
-         html += '<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1()"  value="10001" >&nbsp;객관식&nbsp;&nbsp;&nbsp&nbsp&nbsp;';
-         html += '<input type="radio" name="questionTypeCode" id="subj_radio" onclick="checkit2()" value="10002"> &nbsp;주관식&nbsp;&nbsp;&nbsp&nbsp&nbsp;';
-         html += '<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3()" checked value="10003"> &nbsp;혼합식&nbsp;&nbsp;&nbsp&nbsp&nbsp;';
+         html += '<input type="radio" name="questionTypeCode" id="obj_radio" onclick="checkit1(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')"  value="10001" >&nbsp;객관식&nbsp;&nbsp;&nbsp&nbsp&nbsp;';
+         html += '<input type="radio" name="questionTypeCode" id="subj_radio" onclick="checkit2(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" value="10002"> &nbsp;주관식&nbsp;&nbsp;&nbsp&nbsp&nbsp;';
+         html += '<input type="radio" name="questionTypeCode" id="mix_radio" onclick="checkit3(this,'+data[0].QUESTION_TYPE_CODE+','+data[0].QUESTION_SEQ+')" checked value="10003"> &nbsp;혼합식&nbsp;&nbsp;&nbsp&nbsp&nbsp;';
       }
       html += `</div>`;
       html += '<div class="question_content_area" id="question_add"> <div class="input-group" id="question_content">';
@@ -1004,39 +1037,81 @@ $('#hi').focus(function(e){
    };
 
 
-   function checkit1(obj,questionType,questionSeq) {
+   function checkit1(obj,questionType,questionSeq,name) {
 	   $(".beforeTouch").empty();
+	   
+	   newValue=$(obj).val();
+	   
       if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
-    	  if(questionType != $(obj).val()){
-    		  if(comfirm("유형이 바뀌면 저장된 데이터가 사라집니다. 계속 진행하시겠습니까?")){
+    	  if(questionType != newValue){
+    		  if(confirm("유형이 바뀌면 저장된 데이터가 사라집니다. 계속 진행하시겠습니까?")){
     			  deleteItemsByQuestionSeq(questionSeq);
+    		  }else{
+    				$("input[type=radio][name="+name+"][value="+newValue+"]").prop('checked',false);
+      				$("input[type=radio][name="+name+"][value="+questionType+"]").prop('checked',true);
+
+  		
+    					
+    			        
+    			
+    			  return false;
     		  }
     	  }
-          $("#obj_box_toggle").show();
-          $("#subj_box_toggle").hide();
-         $("#mix_box_toggle").hide();
+//           $("#obj_box_toggle").show();
+//           $("#subj_box_toggle").hide();
+//          $("#mix_box_toggle").hide();
 		
          
 			
        }
    };
-   function checkit3() {
+   function checkit3(obj,questionType,questionSeq,name) {
 	   $(".beforeTouch").empty();
+	   newValue=$(obj).val();
+
       if ($("input[type=radio][id=mix_radio]:checked").is(':checked') == true){
-          $("#mix_box_toggle").show();
-          $("#obj_box_toggle").hide();
-          $("#subj_box_toggle").hide();
+    	  if(questionType != newValue){
+    		  if(confirm("유형이 바뀌면 저장된 데이터가 사라집니다. 계속 진행하시겠습니까?")){
+    			  deleteItemsByQuestionSeq(questionSeq);
+    		  }else{
+    				$("input[type=radio][name="+name+"][value="+newValue+"]").prop('checked',false);
+      				$("input[type=radio][name="+name+"][value="+questionType+"]").prop('checked',true);
+
+
+  		
+  					
+  			        
+  			
+  			  return false;
+  		 	 }
+    	  }
+//           $("#mix_box_toggle").show();
+//           $("#obj_box_toggle").hide();
+//           $("#subj_box_toggle").hide();
 
 
        }
    };
 
-   function checkit2() {
+   function checkit2(obj,questionType,questionSeq,name) {
 	   $(".beforeTouch").empty();
+	   newValue=$(obj).val();
+
     if($("input[type=radio][id=subj_radio]:checked").is(':checked') == true){ // 체크 여부(checked)
-        $("#subj_box_toggle").show();
-       $("#obj_box_toggle").hide();
-        $("#mix_box_toggle").hide();
+    	if(questionType != newValue){
+  		  if(confirm("유형이 바뀌면 저장된 데이터가 사라집니다. 계속 진행하시겠습니까?")){
+  			  deleteItemsByQuestionSeq(questionSeq);
+  		  }else{
+  				$("input[type=radio][name="+name+"][value="+newValue+"]").prop('checked',false);
+  				$("input[type=radio][name="+name+"][value="+questionType+"]").prop('checked',true);
+
+			    	
+			  return false;
+		  }
+  	  }
+//         $("#subj_box_toggle").show();
+//        $("#obj_box_toggle").hide();
+//         $("#mix_box_toggle").hide();
 
       }
 

@@ -331,6 +331,7 @@ public class SurveyController {
 	public SurveyQuestionDTO insertQuestion(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model) {
 		logger.info("문제 생성 진입했나?");
 		model.addAttribute("SQD", SQD);
+		logger.info(SQD.getQuestionTypeCode());
 		surveyService.insertQuestion(SQD);
 		if(SQD.getQuestionTypeCode().equals("10002")) {
 		surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
