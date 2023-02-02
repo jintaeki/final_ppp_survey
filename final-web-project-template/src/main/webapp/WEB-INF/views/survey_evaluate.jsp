@@ -62,11 +62,11 @@
                               value="조회"></td>
                            </c:if>
                            <c:if test="${EL.GRADE_NAME ne '부장'}">
-                           <td><input type="button" class="btn btn-link"                             
+                           <td><input type="button" class="btn btn-link"
                               value="조회" disabled></td>
                            </c:if>
-                           
-                           
+                          1
+
                         </tr>
                      </c:forEach>
 
@@ -84,8 +84,8 @@
 							</tr>
 						</tbody>
                   <tr>
-						
-							
+
+
                      <td colspan="12" class="text-center">
                         <div>
                            <a class="btn btn-outline-secondary"
@@ -158,8 +158,8 @@ function result_search_btn(surveySeq, employeeId) {
    }
 </script>
    <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
-	
-	
+
+
 
 	<!-- modal(이메일 보낼시) -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
