@@ -4,18 +4,7 @@
 <%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
 
 <style>
-.insert2_table  tr{
-/* border: 1px solid black;  */
-}
-.insert2_table  td{
- border: 1px solid black;
-}
-.insert2_table  th{
- border: 1px solid black;
-}
-
-.insert2_table  input{
- border: none;
+#input_qus:focus { font-size:20px; } 
 
 }
 
@@ -46,26 +35,26 @@
 
 								<tr class="col-12">
 
-									<th class="col-2"><span class="insert_category"><b>설문지 제목</b><label
+									<th class="col-1"><span class="insert_category"><b>설문지 제목</b><label
 											for="survey_name"></label></span></th>
-									<th class="col-3"><span class="insert_category"> <b>평가 기간</b>
+									<th class="col-2"><span class="insert_category"> <b>평가 기간</b>
 									</span></th>
-									<th class="col-2"><span class="insert_category"> <b>익명/기명</b></span></th>
-									<th class="col-4"><span class="insert_category"><b>상세 설명</b></span></th>
+									<th class="col-1"><span class="insert_category"> <b>익명/기명</b></span></th>
+									<th class="col-3"><span class="insert_category"><b>상세 설명</b></span></th>
 									<th class="col-1"></th>
 								</tr>
 
 								<tr>
-									<td class="col-2"><input type="text" id="survey_name" name="surveyName"
+									<td class="col-1"><input type="text" id="survey_name" name="surveyName"
 										style="width: 200px;" value="${SLD.surveyName}"></td>
 
-									<td class="col-3"><input type="date" name="surveyStartDate"
+									<td class="col-2"><input type="date" name="surveyStartDate"
 										class="survey_date"
 										value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">-
 										<input type="date" name="surveyClosedDate" class="survey_date"
 										value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />"></td>
 
-									<td class="col-2"><c:if test="${SLD.anonymityCheckCode eq '20001'}">
+									<td class="col-1"><c:if test="${SLD.anonymityCheckCode eq '20001'}">
 											<input type="radio" name="anonymityCheckCode"
 												id="survey_type_check" value="20001" checked>
 											<label style="margin-bottom: 0px;" for="survey_type_check"><b>익명</b></label>
@@ -83,7 +72,7 @@
 										</c:if></td>
 										
 										
-											<td class="col-4"><textarea class="visually-hidden" id="message-text"
+											<td class="col-3"><textarea class="visually-hidden" id="message-text"
 								name="surveyContent"
 								style="width: 400px; height: 100px; max-width: 350px;">${SLD.surveyContent }</textarea></td>
 										
@@ -107,7 +96,7 @@
 
 
 					<div class="questionAndItem"
-						style="display: flex; justify-content: space-between;">
+						style="display: flex; justify-content: space-around;">
 						<div class="question_management">
 							<div class="input_title" style="display: contents">
 								문제 목록
@@ -118,7 +107,7 @@
 								</button>
 							</div>
 
-							<div id="scroll_area" style="overflow: auto; height: 450px;">
+							<div id="scroll_area" style="overflow: auto; height: 500px;">
 
 								<c:if test="${empty SQL}">
 									<br>
@@ -132,7 +121,7 @@
 											<button class="delete_btn"
 												onclick="deleteQus(this,${qlist.surveySeq})"
 												style="background: white;" value="${qlist.questionSeq }">
-												<i class="fa-x"></i>
+												<i class="fas fa-xmark"></i>
 											</button>
 											<form id="${qlist.questionSeq }" onsubmit="return false;">
 
@@ -141,7 +130,7 @@
 														value="${qlist.surveySeq }" id="surveySequence"> <input
 														type="hidden" name="questionSeq"
 														value="${qlist.questionSeq }"> <input
-														name="questionContent" type="text" id="input_qus"
+														name="questionContent" type="text" id="input_qus" 
 														onclick="manageQus(this,${qlist.questionSeq},${qlist.questionTypeCode }); this.onclick=null;"
 														value="${qlist.questionContent }">
 
@@ -221,14 +210,11 @@
 							<div class="input_title">문항 관리</div>
 							
 							<p class="beforeTouch">문제를 클릭하여 문항을 관리해 보세요.</p>
-
 							
 							<div class="itemAfter">
 							
 								<!-- 객관식 -->
 								<c:forEach items="${SQL}" var="qlist">
-
-
 
 								</c:forEach>
 							</div>
@@ -500,7 +486,6 @@ function manageQus(obj,questionSeq,questionTypeCodes){
          }
       });
    }
-<<<<<<< HEAD
 	
    
    
@@ -533,130 +518,6 @@ function manageQus(obj,questionSeq,questionTypeCodes){
       	testDiv +='</div>'
       	
         $('#queAfter').prepend(testDiv);
-=======
-
-   //문항 비동기 등록(수정)
-   function update_obj_item_btn() {
-      var form = $('#item_obj_form')[0];
-      var data = new FormData(form);
-      $.ajax({
-         method : "POST",
-         url : 'insertItem.do', // form을 전송할 실제 파일경로
-         data : data,
-         processData : false,
-         contentType : false,
-         cache : false,
-         timeout : 600000,
-         beforeSend : function() {
-            // 전송 전 실행 코드
-         },
-         success : function(data) {
-            // 전송 후 성공 시 실행 코드
-            console.log(data);
-         },
-         error : function(e) {
-            // 전송 후 에러 발생 시 실행 코드
-            console.log("ERROR : ", e);
-         }
-      });
-   }
-   function update_mix_item_btn() {
-      var form = $('#item_mix_form')[0];
-      var data = new FormData(form);
-      $.ajax({
-         method : "POST",
-         url : 'insertItem.do', // form을 전송할 실제 파일경로
-         data : data,
-         processData : false,
-         contentType : false,
-         cache : false,
-         timeout : 600000,
-         beforeSend : function() {
-            // 전송 전 실행 코드
-         },
-         success : function(data) {
-            // 전송 후 성공 시 실행 코드
-            console.log(data);
-         },
-         error : function(e) {
-            // 전송 후 에러 발생 시 실행 코드
-            console.log("ERROR : ", e);
-         }
-      });
-   }
-
-
-   //문제 추가 후 문항 추가
-  function item_obj_copy(obj,type){
-       if(cntObj ==5){
-          alert("객관식 문항은 최대 5개까지 생성 가능합니다.")
-       }else{
-          var testDiv ='';
-           testDiv +='<div class="icon_line">';
-           testDiv += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-            testDiv +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
-            testDiv +='<button type="button" style="background:white;" class="delete_btn" onclick="deleteItem_zero(this,'+type+')" value="0">'
-            testDiv += '<i class="fas fa-xmark"></i>'
-            testDiv += '</button>'
-            testDiv += '</div>';
-            $('#obj_ItemAfter').append(testDiv);
-           cntObj = cntObj + 1;
-       }
-   };
-   function item_mix_copy(obj,type) {
-         if(cntMix ==5){
-            alert("혼합식 문항은 최대 5개까지 생성 가능합니다.")
-         }else{
-
-          var testDiv ='';
-          testDiv +='<div class="icon_line">';
-         testDiv += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
-           testDiv +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
-           testDiv +='<button type="button" style="background:white;" class="delete_btn" onclick="deleteItem_zero(this,'+type+')" value="0">'
-         testDiv += '<i class="fas fa-xmark"></i>'
-         testDiv += '</button>'
-         testDiv += '</div>';
-
-           $('#guitar').before(testDiv);
-           cntMix = cntMix + 1;
-         }
-   };
-
-    function insertQus(){
-          var qdiv = $('#questioN_insert_form')[0];
-          var data = new FormData(qdiv);
-          $.ajax({
-            method:'POST', //어떤 방식으로 보낼 지
-            url:'insertquestion.do', // qdiv를 보낼 경로 설정
-            data: data,   //
-            processData : false,
-             contentType : false,
-             cache : false,
-            beforeSend : function() { //보내기 전 실행
-            console.log("요청이 보내지는가?");
-            console.log("qdiv:"+qdiv[0]);
-            console.log("data:"+data);
-            },
-            success:function (data) {    //전송 성공시 실행
-               console.log(data);
-               console.log($('#surveyseq').val());
-               var surveyseq = $('#surveyseq').val();
-               location.reload();
-
-
-            }, error:function(e) {   //실패, 에러
-               console.log("Error", e);
-            }
-            });
-         }
-
-        let cntObj=0;
-          let cntMix=0;
-
-    function itemHtml(data){
-          //문제 개수 설정
-
->>>>>>> refs/remotes/origin/chansoo_2
 
         
 
@@ -681,11 +542,11 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 			   html  +='<div class="icon_line">';
 			   html +='<div id="TouchItem">';
 			   html  +='<input type="hidden" name="questionSeq" value="' + questionSeq +'">';
-			   html  += '<input type="text" name="itemContent" placeholder="문항 입력..." id="input_item" onclick="manageItem(this,'+questionSeq+');this.onclick=null;">';
-			   html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
 			   html  +='<button type="button" style="background:white;" class="delete_btn" onclick="deleteItem(this,0)" >';
 			   html  += '<i class="fas fa-xmark"></i>';
 			   html  +=   '</button>';
+			   html  += '<input type="text" name="itemContent" placeholder="문항 입력..." id="input_item" onclick="manageItem(this,'+questionSeq+');this.onclick=null;">';
+			   html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
 			   html  +='<input type="hidden" name="itemSeq" value="0">';
 			   html +='</div>';
 			   html  += '</div>';
@@ -700,11 +561,11 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 			   html  +='<div class="icon_line">';
 			   html +='<div id="TouchItem">';
 		 	   html  +='<input type="hidden" name="questionSeq" value="' + questionSeq +'">';
-		 	   html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+questionSeq+');this.onclick=null;" >';
-		 	   html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" >';
 		       html  +='<button type="button" style="background:white;" class="delete_btn" onclick="deleteItem(this,0)" >';
 		       html  += '<i class="fas fa-xmark"></i>';
 			   html  += '</button>';
+		       html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+questionSeq+');this.onclick=null;" >';
+		 	   html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" >';
 			   html  +='<input type="hidden" name="itemSeq" value="0">';
 			   html +='</div>';
 		   	   html  += '</div>';
@@ -764,22 +625,22 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 					html  +='<div class="icon_line">';
 					html +='<div id="TouchItem">';
 					html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
-					html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
-					html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
 					html  +='<button type="button" style="background:white;" class="delete_btn" onclick="deleteItem(this,0)" value="'+data[i].QUESTION_SEQ+'">';
 					html  += '<i class="fas fa-xmark"></i>';
 					html  +=   '</button>';
+					html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
+					html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
 					html  +='<input type="hidden" name="itemSeq" value="0">';
 					html  +='</div>'
 				    html  += '</div>';
 				    html  +='<div class="icon_line">';
 					html +='<div id="TouchItem">';
 					html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
-				    html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
-				    html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
 				    html  +='<button type="button" style="background:white;" class="delete_btn" onclick="deleteItem(this,0)" value="'+data[i].QUESTION_SEQ+'">';
 				    html  += '<i class="fas fa-xmark"></i>';
 				    html  +=   '</button>';
+				    html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
+				    html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
 				    html  +='<input type="hidden" name="itemSeq" value="0">';
 				    html  +='</div>';
 				    html  += '</div>';
@@ -790,11 +651,11 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 					 html  +='<div class="icon_line">';
 					 html +='<div id="TouchItem">';
 					 html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
-					 html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;" value="'+data[i].ITEM_CONTENT+'">';
-			         html  +='<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
 			         html  +='<button type="button" style="background:white;" class="delete_btn" onclick="deleteItem(this,'+data[i].ITEM_SEQ+')" value="'+data[i].QUESTION_SEQ+'">';
 				     html  += '<i class="fas fa-xmark"></i>';
 				     html  +=   '</button>';
+			         html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;" value="'+data[i].ITEM_CONTENT+'">';
+			         html  +='<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
 				     html  +='<input type="hidden" name="itemSeq" value="'+data[i].ITEM_SEQ+'">';
 				     html  +='</div>';
 				     html  += '</div>';
@@ -819,11 +680,11 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 					html  +='<div class="icon_line">';
 					html +='<div id="TouchItem">';
 			        html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
-			        html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
-			        html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
 			        html +='<button type="button" style="background:white;" class="delete_btn" onclick="deleteItem(this,0)" value="'+data[i].QUESTION_SEQ+'">';
 			        html += '<i class="fas fa-xmark"></i>';
-			        html +=   '</button>';
+			        html +=   '</button>'
+			        html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
+			        html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
 			        html  +='<input type="hidden" name="itemSeq" value="0">';
 			        html  +='</div>';
 			        html  += '</div>';
@@ -854,11 +715,11 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 				 		html  +='<div class="icon_line">';
 						html +='<div id="TouchItem">';
 				 		html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
-				 		html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;" value="'+data[i].ITEM_CONTENT+'">';
-				 		html  +='<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
 				        html  +='<button type="button" style="background:white;" class="delete_btn" onclick="deleteItem(this,'+data[i].ITEM_SEQ+')" value="'+data[i].QUESTION_SEQ+'">';
 				        html  += '<i class="fas fa-xmark"></i>';
 					    html  +=   '</button>';
+				 		html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;" value="'+data[i].ITEM_CONTENT+'">';
+				 		html  +='<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
 					    html  +='<input type="hidden" name="itemSeq" value="'+data[i].ITEM_SEQ+'">';
 					    html  += '</div>';
 					    html +='</div>';
@@ -1026,11 +887,17 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 
     //문제 유형 선택 시  해당하는 유형의 문항form이 나오도록 하는 비동기
    window.onloade=function(){
+	   
      if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
                $("#obj_box_toggle").show();
       }
    };
 
+   $(document).ready(function(){
+	   $('#queAfter div form div input[name=questionContent]').first().focus();
+	   $('#queAfter div form div input[name=questionContent]').first().click();
+
+   });
 
    function checkit1(obj,questionType,questionSeq,name) {
 	   $(".beforeTouch").empty();
@@ -1105,6 +972,8 @@ function manageQus(obj,questionSeq,questionTypeCodes){
       }
 
    };
+   
+   
 </script>
 
 <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>

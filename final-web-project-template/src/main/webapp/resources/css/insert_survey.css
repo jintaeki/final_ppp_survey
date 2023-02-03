@@ -39,7 +39,7 @@ input {
 }
 .question_management{
 	margin-top: 30px;
-	width: 850px;
+	width: 880px;
 	box-shadow: 1px 1px 10px 0px;
 	border-radius: 20px;
 	padding: 20px;
@@ -98,7 +98,9 @@ input#input_qus{
 	border: 2px solid #e8e8e8;
 	background-color: #ffffff;
 }
-
+input#is{
+	margin-left:20px;
+}
 .input_qus {
 	display: inline-flex;
 	height: 50px;
