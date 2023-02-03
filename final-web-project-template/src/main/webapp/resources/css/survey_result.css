@@ -42,13 +42,19 @@
 .table_container_flex{
    display:flex;
    justify-content: center;
+   vertical-align: middle;
    border-radius: 20px;
    box-shadow: 1px 1px 10px 0px;
    padding: 20px;
    margin:20px;
    margin-top: 0px;
    overflow:scroll;
+   height: 540px;
 }
+
+
+
+
 .infodiv{
 	margin:auto;
 }

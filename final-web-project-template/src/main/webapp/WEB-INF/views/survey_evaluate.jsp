@@ -12,6 +12,7 @@
                      <form
                         action="<c:url value='/survey/evaluatesearch/${surveySeq}'/>"
                         method="GET" class="survey_list_form" id="survey_list_form_id">
+
                         <select name="selection">
                            <option value="employeeName"
                               <c:if test="${pagingDto.selection eq 'employeeName'}">selected</c:if>>이름</option>
@@ -19,7 +20,7 @@
                               <c:if test="${pagingDto.selection eq 'departmentName'}">selected</c:if>>부서명</option>
                            <option value="gradeName"
                               <c:if test="${pagingDto.selection eq 'gradeName'}">selected</c:if>>직급</option>
-                           <option value="gradeName"
+                           <option value="surveyCompleteYn"
                               <c:if test="${pagingDto.selection eq 'surveyCompleteYn'}">selected</c:if>>참여여부</option>
 
                         </select> <input type="text" class="form-control" id="selectedKeyword"
@@ -37,7 +38,7 @@
                   </div>
                </div>
 
-               <table class="table">
+               <table class="table table-striped">
                   <thead>
                      <tr>
                         <th scope="col"></th>
@@ -65,27 +66,11 @@
                            <td><input type="button" class="btn btn-link"
                               value="조회" disabled></td>
                            </c:if>
-                          1
-
                         </tr>
                      </c:forEach>
 
                   </tbody>
-                  <tbody>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td style="float: right;"><button id="upper_dv_btn"
-										type="button" class="btn btn-outline-primary" data-toggle="modal"
-										data-target="#exampleModal" >재전송</button></td>
-							</tr>
-						</tbody>
-                  <tr>
-
-
+                  <tr class="table-light">
                      <td colspan="12" class="text-center">
                         <div>
                            <a class="btn btn-outline-secondary"

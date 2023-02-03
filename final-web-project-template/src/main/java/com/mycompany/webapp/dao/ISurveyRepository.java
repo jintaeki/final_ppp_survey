@@ -43,7 +43,7 @@ public interface ISurveyRepository {
 	// 메일 발송시 상태 업데이트
 	void updateEmail(@Param("surveySeq") int surveySeq, @Param("deliveryContent") String deliveryContent);
 	void updateSMS(@Param("surveySeq") int surveySeq, @Param("deliveryContent") String deliveryContent);
-	// 메일 재 발송 
+	// 메일 재 발송
 	void sendReEmail(@Param("surveySeq") int surveySeq, @Param("deliveryContent") String deliveryContent);
 	void sendReSMS(@Param("surveySeq") int surveySeq, @Param("deliveryContent") String deliveryContent);
 
@@ -75,10 +75,14 @@ public interface ISurveyRepository {
 	List<SurveyResultTeamDTO> resultList(int surveySeq);
 	List<SurveyResultTeamDTO> resultDPList(@Param("surveySeq") int surveySeq, @Param("departmentId") String departmentId);
 
-	List<SurveyResultDTO> surveyResult(@Param("employeeId") int employeeId, @Param("surveySeq") int surveySeq);
+	List<SurveyResultDTO> objectiveResult(@Param("employeeId") int employeeId, @Param("surveySeq") int surveySeq);
+
+	List<SurveyResultDTO> subjectiveResult(@Param("employeeId") int employeeId, @Param("surveySeq") int surveySeq);
+
+	List<SurveyResultDTO> mixResult(@Param("employeeId") int employeeId, @Param("surveySeq") int surveySeq);
 
 	List<Map<String, Object>> getResultTarget(int employeeId);
-	
+
 	// 개인 점수 요악본
 	List<SurveyResultDTO> personalStats(@Param("surveySeq") int surveySeq, @Param("employeeId") int employeeId);
 

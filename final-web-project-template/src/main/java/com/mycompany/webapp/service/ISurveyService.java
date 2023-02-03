@@ -44,8 +44,8 @@ public interface ISurveyService {
 	// 메일 발송시 상태 업데이트
 	void updateEmail(int surveyseq, String deliveryContent);
 	void updateSMS(int surveyseq, String deliveryContent);
-	
-	// 메일 재 발송 
+
+	// 메일 재 발송
 	void sendReEmail(int surveySeq, String deliveryContent);
 	void sendReSMS(int surveySeq, String deliveryContent);
 
@@ -65,9 +65,11 @@ public interface ISurveyService {
 
 	List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
 
-	List<SurveyResultDTO> surveyResult(int employeeId, int surveyId);
+	List<SurveyResultDTO> objectiveResult(int employeeId, int surveyId);
 
+	List<SurveyResultDTO> subjectiveResult(int employeeId, int surveyId);
 
+	List<SurveyResultDTO> mixResult(int employeeId, int surveyId);
 
 	// 결과 통계 페이지
 	List<SurveyListDTO> surveyList();
@@ -75,7 +77,7 @@ public interface ISurveyService {
 
 	//결과 목록
 	List<Map<String, Object>> getResultTarget(int employeeId);
-	
+
 	// 개인 결과 요약
 	List<SurveyResultDTO> personalStats(int surveySeq, int employeeId);
 
@@ -86,7 +88,7 @@ public interface ISurveyService {
 	List<SurveyResultTeamDTO> resultDPList(int surveySeq, String departmentId);
 
 	int getItemCnt(int surveySeq);
-	
+
 }
 
 

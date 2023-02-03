@@ -2,6 +2,7 @@ package com.mycompany.webapp.controller;
 
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -85,9 +86,9 @@ public class SurveyController {
 		return "성공";
 	}
 
-	
 
-	
+
+
 
 	//처음 들어왔을때 용 화면, 아무런 데이터 없이 선택지만 가동
 	@RequestMapping("/surveyresultteam")
@@ -209,7 +210,7 @@ public class SurveyController {
 		logger.info("모달창을 통해 설문 등록하는 컨트롤러 진입");
 		surveyService.setSurvey(SLD);
 		session.setAttribute("SLD", SLD);
-		
+
 		return String.valueOf(SLD.getSurveySeq());
 
 	}
@@ -243,7 +244,7 @@ public class SurveyController {
 
 		return "survey_insert";
 	}
-	
+
 	// 문항 등록
 	@RequestMapping("/insertItem.do")
 	@ResponseBody
@@ -268,7 +269,7 @@ public class SurveyController {
 				// 다중 값들을 배열로 변환
 				String[] itemcontent = itemcontents.split(",");
 				String[] itemscore = itemscores.split(",");
-				
+
 				// 기존 문항 삭제
 				surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
 
@@ -304,7 +305,7 @@ public class SurveyController {
 
 				// 기존 문항 삭제
 				surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
-				
+
 				// 문항 개수만큼 for문 실행하여 문항 등록
 				for (int i = 0; i <= cntcontent; i++) {
 					if(itemcontent[i].equals("")){
@@ -393,7 +394,7 @@ public class SurveyController {
 
 	}
 
-	
+
 	//survey_list.jsp
 	//문제 복사를 위한 메소드
 	@RequestMapping("/copysurvey.do/{surveySeq}")
@@ -439,7 +440,7 @@ public class SurveyController {
 				+ "&surveyStartDate=" + strDate;
 
 	}
-	
+
 	@RequestMapping("/surveysearch")
 	public String search(@RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "1") int pageNo,
 			@RequestParam(defaultValue = "30005") String selection,
@@ -479,7 +480,7 @@ public class SurveyController {
 
 		return "survey_search";
 	}
-	
+
 	// survey evaluate.sjp
 	@RequestMapping("/evaluatesearch/{surveySeq}")
 	public String searchByEvaluate(
@@ -487,6 +488,7 @@ public class SurveyController {
 			             @RequestParam(defaultValue="") String keyword,
 						 @RequestParam(defaultValue="1") int pageNo,
 						 @RequestParam(defaultValue="employeeName") String selection,
+						 @RequestParam(defaultValue= "" ) String subSelection,
 						 @RequestParam(value = "searchType", required = false, defaultValue = "employeeName") String searchType,
 						 @RequestParam(value="employeeName", required=false) String employeeName,
 						 @RequestParam(value="departmentName", required=false) String departmentName,
@@ -494,8 +496,9 @@ public class SurveyController {
 						 @RequestParam(value="gradeName", required=false) String gradeName,
 						  Model model) {
 		logger.info("지금 가져온 선택지:"+selection);
+		logger.info("부 선택지:" + subSelection);
 		logger.info("페이지 수"+pageNo);
-		logger.info("키워드"+keyword);
+		logger.info("키워드:" + keyword);
 		logger.info("설문지 번호" + surveySeq);
 
 		try {
@@ -510,7 +513,7 @@ public class SurveyController {
 				int totalRows = pagingService.getEvaluateSearchBoardNum(keyword, selection, surveySeq);
 
 				System.out.println("totolRows:" + totalRows);
-			    pagingDto = new PagingDTO(7, 10, totalRows, pageNo);
+			    pagingDto = new PagingDTO(100, 100, totalRows, pageNo);
 
 				pagingDto.setSelection(selection);
 				pagingDto.setKeyword(keyword);
@@ -540,8 +543,8 @@ public class SurveyController {
 		logger.info("검색 테스트");
 		return "survey_evaluate";
 	}
-		
-		
+
+
 	@RequestMapping("/remessage.do")
 	public String remessage(@RequestParam int surveySeq, @RequestParam String deliveryContent) {
 		surveyService.sendReEmail(surveySeq, deliveryContent);
@@ -549,7 +552,7 @@ public class SurveyController {
 
 		return "redirect:/survey/evaluatesearch/"+surveySeq;
 	}
-		
+
 
 		@RequestMapping("/surveyresult/{surveySeq}/{employeeId}")
 		public String surveyResult (
@@ -559,20 +562,28 @@ public class SurveyController {
 			List<Map<String, Object>> surveyResultTarget = null;
 			logger.info("employeeId:" + employeeId);
 			logger.info("surveySeq: " + surveySeq);
-			List<SurveyResultDTO> surveyResultList = surveyService.surveyResult(employeeId, surveySeq);
+			List<SurveyResultDTO> objectiveResultList = surveyService.objectiveResult(employeeId, surveySeq);
+			List<SurveyResultDTO> subjectiveResultList = surveyService.subjectiveResult(employeeId, surveySeq);
+			List<SurveyResultDTO> mixResultList = surveyService.mixResult(employeeId, surveySeq);
 			//List<SurveyResultDTO> SRL = SurveyResultList.stream().distinct().collect(Collectors.toList());
-			logger.info("srl" + surveyResultList);
-			model.addAttribute("surveyResultList",surveyResultList);
+			model.addAttribute("objectiveResultList",objectiveResultList);
+			model.addAttribute("subjectiveResultList",subjectiveResultList);
+			model.addAttribute("mixResultList",mixResultList);
+			logger.info("SRT 진입");
+			System.out.println("SRT 진입");
 			surveyResultTarget = surveyService.getResultTarget(employeeId);
 			model.addAttribute("surveyResultTarget",surveyResultTarget);
+			logger.info("employeeId:" + employeeId);
+			logger.info("surveySeq: " + surveySeq);
 			List<SurveyResultDTO> personalStats = surveyService.personalStats(surveySeq, employeeId);
-			model.addAttribute("personalStats", personalStats);
-//			logger.info("SRT: " + surveyResultTarget.get(0).toString());
+		model.addAttribute("personalStats", personalStats);
+			logger.info("SRT: " + surveyResultTarget.get(0).toString());
 //			logger.info("Result Model: " + surveyResultList.get(0).toString());
-
+		logger.info("subjectiveResultList: " + subjectiveResultList);
 
 			return "survey_result";
 		}
+
 
 
 		@RequestMapping("/surveyresultcheck/{surveySeq}/{employeeId}")
@@ -581,12 +592,16 @@ public class SurveyController {
 	            @PathVariable int surveySeq,
 	            @PathVariable int employeeId,
 	                               HttpSession session, Model model) {
-
-	         List<SurveyResultDTO> surveyResultList = surveyService.surveyResult(employeeId, surveySeq);
+			List<SurveyResultDTO> objectiveResultList = surveyService.objectiveResult(employeeId, surveySeq);
+			List<SurveyResultDTO> subjectiveResult = surveyService.objectiveResult(employeeId, surveySeq);
+			List<SurveyResultDTO> mixResult = surveyService.objectiveResult(employeeId, surveySeq);
+	        List<SurveyResultDTO> surveyResultList =  new ArrayList<SurveyResultDTO>();
+	        surveyResultList.addAll(objectiveResultList);
+	        surveyResultList.addAll(subjectiveResult);
+	        surveyResultList.addAll(mixResult);
+	        logger.info("surveyResultList" + surveyResultList);
 
 	         return surveyResultList ;
 	      }
 
-		
-		
 }

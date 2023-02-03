@@ -32,6 +32,7 @@
 								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">설문 내<br>최고점</div></div>
 								<div class="col-2"><div class="infodiv">${PS.max}</div></div>
 							</c:forEach>
+
 						</div>
 						<div class="col-12">&nbsp;</div>
 						<div class="col-12">&nbsp;</div>
@@ -40,42 +41,57 @@
 			 </div>
 
 				<div class="table_container_flex">
-					<table class="table  table-bordered" style="word-break: break-all">
+					<table class="table table-bordered table-striped text-center">
 						<thead>
 							<tr>
-								<th scope="col">#</th>
-								<th scope="col">평가자</th>
-								<th scope="col">부서</th>
-								<th scope="col">직책</th>
-								<th scope="col">문제</th>
-								<th scope="col">문항</th>
-								<th scope="col">점수</th>
+								<th class="col-xs">#</th>
+								<th class="col-xs">평가자</th>
+								<th class="col-1.5">부서</th>
+								<th class="col-xs">직책</th>
+								<th class="col-xs">문제 유형</th>
+								<th class="col-6">문제</th>
+								<th class="col-xs">문항</th>
+								<th class="col-xs">점수</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${surveyResultList}" var="SRL">
+
+							<tr>
+								<td colspan="8">객관식 목록</td>
+							</tr>
+
+							<c:forEach items="${objectiveResultList}" var="ORL">
+								<tr>
+									<td>${ORL.rnum}</td>
+									<td>${ORL.raterName}</td>
+									<td>${ORL.raterDepartmentName}</td>
+									<td>${ORL.raterGrade}</td>
+									<td>${ORL.questionType}</td>
+									<td>${ORL.questionContent}</td>
+									<td>${ORL.itemContent}</td>
+									<td>${ORL.itemScore}</td>
+								</tr>
+							</c:forEach>
+
+								<tr>
+								<td colspan="8">주관식 목록</td>
+							    </tr>
+
+							   <c:forEach items="${subjectiveResultList}" var="SRL">
 								<tr>
 									<td>${SRL.rnum}</td>
-							  <c:choose>
-								<c:when test = "${SRL.anonymitySeq eq 'null'}">
 									<td>${SRL.raterName}</td>
 									<td>${SRL.raterDepartmentName}</td>
 									<td>${SRL.raterGrade}</td>
-								</c:when>
-								<c:otherwise>
-									<td>#</td>
-									<td>${SRL.anonymitySeq}</td>
-									<td>#</td>
-									<td>#</td>
-								</c:otherwise>
-							</c:choose>
+									<td>${SRL.questionType}</td>
 									<td>${SRL.questionContent}</td>
-
 									<td>${SRL.itemContent}</td>
-
 									<td>${SRL.itemScore}</td>
 								</tr>
 							</c:forEach>
+
+
+
 						<tbody>
 					</table>
 					<!-- table_container_flex 종료 -->

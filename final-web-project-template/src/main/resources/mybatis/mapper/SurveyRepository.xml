@@ -339,7 +339,7 @@
                         ,m.SURVEY_COMPLETE_YN
                  FROM GRADE g ,USER_INFO ui ,MAPPING m ,ORGANIZATION_CHART oc
                  WHERE
-                     m.RATER_ID = ui.EMPLOYEE_ID
+                     m.APPRAISEE_ID = ui.EMPLOYEE_ID
                     and g.grade_id = ui.grade_id and oc.department_id = ui.department_id
 
                  AND ((#{selection} = 'employeeName'
@@ -358,10 +358,10 @@
              )
 
 				WHERE rnum >= #{startRowNo} and rnum <= #{endRowNo}
+
  ]]>
 
 </select>
-
 
 	<select id="surveyList" resultType="SLD">
 		SELECT
@@ -434,8 +434,8 @@
       GROUP BY EMPLOYEE_NAME
 	</select>
 
-	<select id="surveyResult" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
-	<![CDATA[
+
+<select id="objectiveResult" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
 SELECT ROWNUM AS rnum
         ,a.APPRAISEE_ID
        ,a.RATER_ID
@@ -453,6 +453,7 @@ SELECT ROWNUM AS rnum
          WHERE ui.EMPLOYEE_ID = RATER_ID
          AND ui.GRADE_ID = g.GRADE_ID) RATER_GRADE
        ,a.QUESTION_TYPE_CODE
+       ,DECODE(a.QUESTION_TYPE_CODE, '10001', '객관식', '10002', '주관식', '혼합식') question_type
        ,a.QUESTION_SEQ
        ,a.ITEM_SEQ
        ,a.ANSWER_CONTENT
@@ -480,10 +481,112 @@ WHERE sr.QUESTION_SEQ = sq.QUESTION_SEQ
         AND sr.APPRAISEE_ID = ui.employee_id
         AND ui.GRADE_ID = g.GRADE_ID
         AND ui.DEPARTMENT_ID = oc.DEPARTMENT_ID
-        AND sr.APPRAISEE_ID=#{employeeId} AND sr.SURVEY_SEQ = #{surveySeq}
+        AND sr.APPRAISEE_ID=#{employeeId} AND sr.SURVEY_SEQ = #{surveySeq} AND sq.QUESTION_TYPE_CODE = '10001'
 ORDER BY RATER_ID, ANONYMITY_SEQ, QUESTION_SEQ) a
- ]]>
 </select>
+
+
+<select id="subjectiveResult" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
+SELECT ROWNUM AS rnum
+        ,a.APPRAISEE_ID
+       ,a.RATER_ID
+       ,a.ANONYMITY_SEQ
+       ,(SELECT DEPARTMENT_NAME
+         FROM ORGANIZATION_CHART oc
+             ,USER_INFO ui
+         WHERE ui.EMPLOYEE_ID = RATER_ID
+         AND ui.DEPARTMENT_ID = oc.DEPARTMENT_ID) RATER_DEPARTMENT_NAME
+       ,(SELECT EMPLOYEE_NAME
+         FROM USER_INFO
+         WHERE EMPLOYEE_ID = RATER_ID) RATER_NAME
+       ,(SELECT GRADE_NAME
+         FROM GRADE g ,USER_INFO ui
+         WHERE ui.EMPLOYEE_ID = RATER_ID
+         AND ui.GRADE_ID = g.GRADE_ID) RATER_GRADE
+       ,a.QUESTION_TYPE_CODE
+       ,DECODE(a.QUESTION_TYPE_CODE, '10001', '객관식', '10002', '주관식', '혼합식') question_type
+       ,a.QUESTION_SEQ
+       ,a.ITEM_SEQ
+       ,a.ANSWER_CONTENT
+       ,a.QUESTION_CONTENT
+       ,a.ITEM_CONTENT
+       ,a.ITEM_SCORE
+FROM (SELECT sr.APPRAISEE_ID
+            ,sr.RATER_ID
+            ,sr.ANONYMITY_SEQ
+            ,sq.QUESTION_TYPE_CODE
+            ,sr.QUESTION_SEQ
+            ,sr.ITEM_SEQ
+            ,sr.ANSWER_CONTENT
+            ,sq.QUESTION_CONTENT
+            ,si.ITEM_CONTENT
+            ,si.ITEM_SCORE
+        FROM SURVEY_RESULT sr
+       ,SURVEY_QUESTION sq
+       ,SURVEY_ITEM si
+       ,USER_INFO ui
+       ,GRADE g
+       ,ORGANIZATION_CHART oc
+WHERE sr.QUESTION_SEQ = sq.QUESTION_SEQ
+        AND sr.ITEM_SEQ = si.ITEM_SEQ
+        AND sr.APPRAISEE_ID = ui.employee_id
+        AND ui.GRADE_ID = g.GRADE_ID
+        AND ui.DEPARTMENT_ID = oc.DEPARTMENT_ID
+        AND sr.APPRAISEE_ID=#{employeeId} AND sr.SURVEY_SEQ = #{surveySeq} AND sq.QUESTION_TYPE_CODE = '10002'
+ORDER BY RATER_ID, ANONYMITY_SEQ, QUESTION_SEQ) a
+</select>
+
+
+<select id="mixResult" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
+SELECT ROWNUM AS rnum
+        ,a.APPRAISEE_ID
+       ,a.RATER_ID
+       ,a.ANONYMITY_SEQ
+       ,(SELECT DEPARTMENT_NAME
+         FROM ORGANIZATION_CHART oc
+             ,USER_INFO ui
+         WHERE ui.EMPLOYEE_ID = RATER_ID
+         AND ui.DEPARTMENT_ID = oc.DEPARTMENT_ID) RATER_DEPARTMENT_NAME
+       ,(SELECT EMPLOYEE_NAME
+         FROM USER_INFO
+         WHERE EMPLOYEE_ID = RATER_ID) RATER_NAME
+       ,(SELECT GRADE_NAME
+         FROM GRADE g ,USER_INFO ui
+         WHERE ui.EMPLOYEE_ID = RATER_ID
+         AND ui.GRADE_ID = g.GRADE_ID) RATER_GRADE
+       ,a.QUESTION_TYPE_CODE
+       ,DECODE(a.QUESTION_TYPE_CODE, '10001', '객관식', '10002', '주관식', '혼합식') question_type
+       ,a.QUESTION_SEQ
+       ,a.ITEM_SEQ
+       ,a.ANSWER_CONTENT
+       ,a.QUESTION_CONTENT
+       ,a.ITEM_CONTENT
+       ,a.ITEM_SCORE
+FROM (SELECT sr.APPRAISEE_ID
+            ,sr.RATER_ID
+            ,sr.ANONYMITY_SEQ
+            ,sq.QUESTION_TYPE_CODE
+            ,sr.QUESTION_SEQ
+            ,sr.ITEM_SEQ
+            ,sr.ANSWER_CONTENT
+            ,sq.QUESTION_CONTENT
+            ,si.ITEM_CONTENT
+            ,si.ITEM_SCORE
+        FROM SURVEY_RESULT sr
+       ,SURVEY_QUESTION sq
+       ,SURVEY_ITEM si
+       ,USER_INFO ui
+       ,GRADE g
+       ,ORGANIZATION_CHART oc
+WHERE sr.QUESTION_SEQ = sq.QUESTION_SEQ
+        AND sr.ITEM_SEQ = si.ITEM_SEQ
+        AND sr.APPRAISEE_ID = ui.employee_id
+        AND ui.GRADE_ID = g.GRADE_ID
+        AND ui.DEPARTMENT_ID = oc.DEPARTMENT_ID
+        AND sr.APPRAISEE_ID=#{employeeId} AND sr.SURVEY_SEQ = #{surveySeq} AND sq.QUESTION_TYPE_CODE = '10003'
+ORDER BY RATER_ID, ANONYMITY_SEQ, QUESTION_SEQ) a
+</select>
+
 
 
 <select id="getResultTarget" parameterType="int" resultType="hashmap">
@@ -543,7 +646,7 @@ FROM(
                      WHERE I.ITEM_SEQ = R.ITEM_SEQ
                        AND R.APPRAISEE_ID = U.EMPLOYEE_ID
                        AND I.QUESTION_SEQ = Q.QUESTION_SEQ
-                       AND Q.QUESTION_TYPE_CODE = 10001
+                       AND Q.QUESTION_TYPE_CODE = '10001'
                   GROUP BY EMPLOYEE_ID, R.SURVEY_SEQ) t
                 )
             )
@@ -563,7 +666,7 @@ FROM(
                   WHERE I.ITEM_SEQ = R.ITEM_SEQ
                     AND R.APPRAISEE_ID = U.EMPLOYEE_ID
                     AND I.QUESTION_SEQ = Q.QUESTION_SEQ
-                    AND Q.QUESTION_TYPE_CODE = 10001
+                    AND Q.QUESTION_TYPE_CODE = '10001'
                     AND R.SURVEY_SEQ = #{surveySeq}
                   GROUP BY EMPLOYEE_NAME, R.SURVEY_SEQ
                   )
