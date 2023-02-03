@@ -331,41 +331,63 @@ public class SurveyController {
 		surveyService.deleteItemByQSeq(questionSeq);
 
 	}
+	
+	@RequestMapping(value="deleteItem.do/{questionSeq}/{itemSeq}")
+	@ResponseBody
+	public void deleteItem(@PathVariable int questionSeq, @PathVariable int itemSeq) { 
+		System.out.println(questionSeq);
+		surveyService.deleteItem(questionSeq, itemSeq);
 
+	}
+	
 	// 문제 등록
 	@RequestMapping(value = "/insertquestion.do")
 	@ResponseBody
-	public SurveyQuestionDTO insertQuestion(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model) {
+	public String insertQuestion(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model) {
 		logger.info("문제 생성 진입했나?");
 		model.addAttribute("SQD", SQD);
 		logger.info(SQD.getQuestionTypeCode());
+		if(SQD.getQuestionContent()==null || SQD.getQuestionContent().equals("")) {
+			return "0";
+		}
 		surveyService.insertQuestion(SQD);
+		
 		if(SQD.getQuestionTypeCode().equals("10002")) {
+			
 		SQD.setItemScore("0");
 		surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
 		SQD.setItemContent("주관식 문제입니다.");
 		surveyService.insertItem(SQD);
 		}
-		return SQD;
+		return "1";
 	}
 
 	// 문제 업데이트
 	@RequestMapping("/updatequestion.do")
 	@ResponseBody
-	public SurveyQuestionDTO updatequestion(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,
+	public String updatequestion(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result,
 			Model model) {
-		logger.info("업데이트 진입");
+		logger.info("문제 업데이트 진입");
 		logger.info("sqd값" + SQD.toString());
-		surveyService.UpdateQuestion(SQD);
+		String questionContent = SQD.getQuestionContent();
+		int questionSeq = SQD.getQuestionSeq();
+		String questionTypeCode = SQD.getQuestionTypeCode();
+		if(questionContent==null || questionContent.equals("")) {
+			return "0";
+		}else if (questionContent.equals("!@#")) {
+			questionContent = null;
+		}
+		surveyService.UpdateQuestion(questionContent,questionSeq,questionTypeCode);
 		System.out.println(SQD.getQuestionSeq());
-		if(SQD.getQuestionTypeCode().equals("10002")) {			
+		if(SQD.getQuestionTypeCode().equals("10002")) {
+			surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
 			SQD.setItemScore("0");
 			SQD.setItemContent("주관식 문제입니다.");
 			surveyService.insertItem(SQD);
 			}
 		logger.info(SQD.toString());
 		logger.info("업데이트 성공");
-		return SQD;
+		return "1";
 	}
 
 	@RequestMapping(value = "/deletequestion.do/{questionSeq}")

@@ -28,7 +28,7 @@ public interface ISurveyService {
 
 	void insertItem(SurveyQuestionDTO sqd);
 
-	void UpdateQuestion(SurveyQuestionDTO sqd);
+	void UpdateQuestion(String questionContent, int questionSeq, String questionTypeCode);
 
 	List<Map<String, String>> selectSurveyEvaluate(int surveySeq);
 
@@ -52,6 +52,8 @@ public interface ISurveyService {
 	void deleteQuestion(int questionSeq);
 
 	void deleteItemByQSeq(int questionSeq);
+	
+	void deleteItem (int questionSeq, int itemSeq);
 
 	List<SurveyListDTO> searchListByKeyword(PagingDTO pagingdto);
 

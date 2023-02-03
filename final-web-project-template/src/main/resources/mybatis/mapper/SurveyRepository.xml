@@ -115,9 +115,17 @@
       FROM SURVEY_QUESTION WHERE SURVEY_SEQ = #{surveySeq} order by question_seq asc
    </select>
 
-   <update id="UpdateQuestion" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
-      UPDATE SURVEY_QUESTION SET <if test="#{questionContent} != null and #{questionContent} !=''"> QUESTION_CONTENT=#{questionContent}</if>
-          ,QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq}
+   <update id="UpdateQuestion">
+      UPDATE SURVEY_QUESTION SET 
+      <choose >
+      	<when test= "questionContent != null">
+      		 QUESTION_CONTENT=#{questionContent},QUESTION_TYPE_CODE=#{questionTypeCode}
+      	</when>
+      	<when test="questionContent == null">
+      		QUESTION_TYPE_CODE=#{questionTypeCode}
+      	</when>
+      </choose>
+       WHERE QUESTION_SEQ=#{questionSeq}
    </update>
 
    <update id="sendMessage" parameterType="int">
@@ -264,7 +272,9 @@
                 ,SURVEY_ITEM.ITEM_SCORE
           FROM  SURVEY_ITEM  right join SURVEY_QUESTION
           on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ
-          WHERE SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} and SURVEY_QUESTION.QUESTION_SEQ = #{questionSeq} ORDER BY SURVEY_QUESTION.QUESTION_SEQ DESC
+          WHERE SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} 
+          and SURVEY_QUESTION.QUESTION_SEQ = #{questionSeq} 
+          ORDER BY SURVEY_ITEM.ITEM_SCORE  ,SURVEY_ITEM.ITEM_SEQ
 
    </select>
 
@@ -273,6 +283,11 @@
 		WHERE QUESTION_SEQ = #{questionSeq}
 	</delete>
 
+	<delete id="deleteItem">
+		DELETE FROM SURVEY_ITEM
+		WHERE QUESTION_SEQ = #{questionSeq} and ITEM_SEQ = #{itemSeq}
+	</delete>
+	
 
    <select id="selectItems" parameterType="int" resultType="hashmap">
 
