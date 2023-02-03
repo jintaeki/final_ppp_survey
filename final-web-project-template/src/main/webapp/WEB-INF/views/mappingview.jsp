@@ -19,15 +19,15 @@ function popup(){
 	var month = $('#month').val();
 
 	let popUrl ="/mapping/popup.do?pageNo=1"+"&surveySeq="+surveySeq+"&raterId="+raterId
-			   +"&month="+month+"&keyword=&selection=60004&selectGD=60004";
+			   +"&month="+month+"&keyword=&keyword2=&selection=60004&selectGD=60004";
 	let popOption = "width=800, height=820, left=470, top=100";
 	window.open(popUrl, "다면평가 대상 추가", popOption);
 }
 
 function mapInsert(surveySeq){
 
-	let popUrl ="/mapping/another.do?pageNo=1"+"&surveySeq="+surveySeq
-			   +"&keyword=&selection=60004&selectGD=60004";
+	let popUrl ="/mapping/another.do?surveySeq="+surveySeq
+			   +"&keyword=&selection=60004&selection2=60004&selectGD=60004";
 	let popOption = "width=800, height=820, left=470, top=100";
 	window.open(popUrl, "다면평가 대상 추가", popOption);
 }
@@ -208,11 +208,9 @@ function map_delete(surveySeq, raterId, appraiseeId){
 				<br>
 				<h5>다면평가에 포함될 프로젝트의 범위 정하기</h5>
 				<select class="form-control" id="month">
-					<option value="3">최근 3개월 동안에 끝난 프로젝트</option>
-					<option value="6">최근 6개월 동안에 끝난 프로젝트</option>
-					<option value="12">최근 1년 동안에 끝난 프로젝트</option>
-					<option value="24">최근 2년 동안에 끝난 프로젝트</option>
-					<option value="36">최근 3년 동안에 끝난 프로젝트</option>
+				<c:forEach items="${commonDateList}" var="month">
+					<option value="${month.codeDetailName}">최근 ${month.codeDetailName}개월 동안에 끝난 프로젝트</option>
+				</c:forEach>
 				</select>
 			</div>
 			<div class="modal-footer">

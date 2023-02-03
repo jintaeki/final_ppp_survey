@@ -521,8 +521,8 @@ FROM(
             , SCORE
             , SURVEY_SEQ
             , rk
-            , (rk + (cnt - 1) / 2) rk2
-            , (rk + (cnt - 1) / 2) / tot * 100 rat
+            , (rk + (cnt - 1) / 2) AS rk2
+            , (rk + (cnt - 1) / 2) / tot * 100 AS rat
             , tot
          FROM (
              SELECT EMPLOYEE_ID
@@ -542,7 +542,7 @@ FROM(
                      WHERE I.ITEM_SEQ = R.ITEM_SEQ
                        AND R.APPRAISEE_ID = U.EMPLOYEE_ID
                        AND I.QUESTION_SEQ = Q.QUESTION_SEQ
-                       AND Q.QUESTION_TYPE_CODE = 10001
+                       AND Q.QUESTION_TYPE_CODE = '10001'
                   GROUP BY EMPLOYEE_ID, R.SURVEY_SEQ) t
                 )
             )
@@ -562,7 +562,7 @@ FROM(
                   WHERE I.ITEM_SEQ = R.ITEM_SEQ
                     AND R.APPRAISEE_ID = U.EMPLOYEE_ID
                     AND I.QUESTION_SEQ = Q.QUESTION_SEQ
-                    AND Q.QUESTION_TYPE_CODE = 10001
+                    AND Q.QUESTION_TYPE_CODE = '10001'
                     AND R.SURVEY_SEQ = #{surveySeq}
                   GROUP BY EMPLOYEE_NAME, R.SURVEY_SEQ
                   )

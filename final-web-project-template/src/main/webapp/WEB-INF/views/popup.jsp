@@ -85,7 +85,7 @@
 </script>
 <div class="entire_popup">
 <div class="popup-title">다면평가 대상 추가</div>
-	<div class="hmenu">
+	<div class="hmenu_popup">
 		<div class="survey_list_form_upper_dv">
 			<form action="<c:url value='/mapping/popup.do'/>" method="get" class="survey_list_form">
 				<select name="selectGD">
@@ -124,8 +124,8 @@
 			</form>
 		</div>
 	</div>
-   <div class="table table-hover">
-         <table id="resTb" class="table">
+   <div class="table-table-hover">
+         <table id="resTb" class="tablePop">
             <thead>
                <tr>
                   <th class="check"><input type="checkbox" id="check_all" /></th>
