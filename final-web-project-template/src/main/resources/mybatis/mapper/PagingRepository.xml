@@ -180,19 +180,15 @@
 	SELECT count(ROWNUM)
 	    FROM (
 			SELECT ROWNUM AS rnum
-		      	  ,PROJECT_NAME
+		      	  ,EMPLOYEE_ID
 	    	FROM (SELECT
-                  P.PROJECT_NAME
-                FROM PROJECT P,
-                     PROJECT_HISTORY H,
-                     GRADE G,
+                 	UR.EMPLOYEE_ID
+                FROM GRADE G,
                      USER_INFO UA,
                      USER_INFO UR,
                      SURVEY_LIST S,
                      ORGANIZATION_CHART O
-               WHERE P.PROJECT_ID = H.PROJECT_ID
-                 AND UR.EMPLOYEE_ID = H.participation_employee_id
-                 AND UR.GRADE_ID = G.GRADE_ID
+               WHERE UR.GRADE_ID = G.GRADE_ID
                  AND UA.DEPARTMENT_ID = O.DEPARTMENT_ID
                  AND S.SURVEY_SEQ = #{surveySeq}
                  AND UA.GRADE_ID = 2
@@ -267,7 +263,7 @@
                     		AND g.GRADE_NAME LIKE '%' || #{keyword} || '%')    
                     	OR(#{selection} = 'surveyCompleteYn'
                     	   AND m.survey_complete_YN LIKE '%' || #{keyword} || '%')
-                        
+                      
                             )
 
                )

@@ -221,11 +221,14 @@
 							<div class="input_title">문항 관리</div>
 							
 							<p class="beforeTouch">문제를 클릭하여 문항을 관리해 보세요.</p>
+
 							
 							<div class="itemAfter">
 							
 								<!-- 객관식 -->
 								<c:forEach items="${SQL}" var="qlist">
+
+
 
 								</c:forEach>
 							</div>
@@ -497,6 +500,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
          }
       });
    }
+<<<<<<< HEAD
 	
    
    
@@ -529,6 +533,130 @@ function manageQus(obj,questionSeq,questionTypeCodes){
       	testDiv +='</div>'
       	
         $('#queAfter').prepend(testDiv);
+=======
+
+   //문항 비동기 등록(수정)
+   function update_obj_item_btn() {
+      var form = $('#item_obj_form')[0];
+      var data = new FormData(form);
+      $.ajax({
+         method : "POST",
+         url : 'insertItem.do', // form을 전송할 실제 파일경로
+         data : data,
+         processData : false,
+         contentType : false,
+         cache : false,
+         timeout : 600000,
+         beforeSend : function() {
+            // 전송 전 실행 코드
+         },
+         success : function(data) {
+            // 전송 후 성공 시 실행 코드
+            console.log(data);
+         },
+         error : function(e) {
+            // 전송 후 에러 발생 시 실행 코드
+            console.log("ERROR : ", e);
+         }
+      });
+   }
+   function update_mix_item_btn() {
+      var form = $('#item_mix_form')[0];
+      var data = new FormData(form);
+      $.ajax({
+         method : "POST",
+         url : 'insertItem.do', // form을 전송할 실제 파일경로
+         data : data,
+         processData : false,
+         contentType : false,
+         cache : false,
+         timeout : 600000,
+         beforeSend : function() {
+            // 전송 전 실행 코드
+         },
+         success : function(data) {
+            // 전송 후 성공 시 실행 코드
+            console.log(data);
+         },
+         error : function(e) {
+            // 전송 후 에러 발생 시 실행 코드
+            console.log("ERROR : ", e);
+         }
+      });
+   }
+
+
+   //문제 추가 후 문항 추가
+  function item_obj_copy(obj,type){
+       if(cntObj ==5){
+          alert("객관식 문항은 최대 5개까지 생성 가능합니다.")
+       }else{
+          var testDiv ='';
+           testDiv +='<div class="icon_line">';
+           testDiv += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
+            testDiv +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+            testDiv +='<button type="button" style="background:white;" class="delete_btn" onclick="deleteItem_zero(this,'+type+')" value="0">'
+            testDiv += '<i class="fas fa-xmark"></i>'
+            testDiv += '</button>'
+            testDiv += '</div>';
+            $('#obj_ItemAfter').append(testDiv);
+           cntObj = cntObj + 1;
+       }
+   };
+   function item_mix_copy(obj,type) {
+         if(cntMix ==5){
+            alert("혼합식 문항은 최대 5개까지 생성 가능합니다.")
+         }else{
+
+          var testDiv ='';
+          testDiv +='<div class="icon_line">';
+         testDiv += '<input type="text" name="itemContent" placeholder="문항 입력..." id="ic">';
+           testDiv +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+           testDiv +='<button type="button" style="background:white;" class="delete_btn" onclick="deleteItem_zero(this,'+type+')" value="0">'
+         testDiv += '<i class="fas fa-xmark"></i>'
+         testDiv += '</button>'
+         testDiv += '</div>';
+
+           $('#guitar').before(testDiv);
+           cntMix = cntMix + 1;
+         }
+   };
+
+    function insertQus(){
+          var qdiv = $('#questioN_insert_form')[0];
+          var data = new FormData(qdiv);
+          $.ajax({
+            method:'POST', //어떤 방식으로 보낼 지
+            url:'insertquestion.do', // qdiv를 보낼 경로 설정
+            data: data,   //
+            processData : false,
+             contentType : false,
+             cache : false,
+            beforeSend : function() { //보내기 전 실행
+            console.log("요청이 보내지는가?");
+            console.log("qdiv:"+qdiv[0]);
+            console.log("data:"+data);
+            },
+            success:function (data) {    //전송 성공시 실행
+               console.log(data);
+               console.log($('#surveyseq').val());
+               var surveyseq = $('#surveyseq').val();
+               location.reload();
+
+
+            }, error:function(e) {   //실패, 에러
+               console.log("Error", e);
+            }
+            });
+         }
+
+        let cntObj=0;
+          let cntMix=0;
+
+    function itemHtml(data){
+          //문제 개수 설정
+
+>>>>>>> refs/remotes/origin/chansoo_2
 
         
 

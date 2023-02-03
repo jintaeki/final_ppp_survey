@@ -85,11 +85,11 @@
 </script>
 <div class="entire_popup">
 <div class="popup-title">다면평가 대상 추가</div>
-	<div class="hmenu">
-		<div class="survey_list_form_upper_dv">
-			<form action="<c:url value='/mapping/another.do'/>" method="get" class="survey_list_form">
+	<div class="hmenu_popup_An">
+		<div class="survey_list_form_upper_dv_An">
+			<form action="<c:url value='/mapping/another.do'/>" method="get" class="survey_list_form_An">
 				<select name="selectGD">
-					<option value="60004">전체</option>
+					<option value="60004">평가자 직급</option>
 					<c:forEach items="${gradeList}" var="grade">
 						<c:if test="${pagingdto.selectGD eq grade.gradeId}">
 							<option selected value="${pagingdto.selectGD}">${grade.gradeName}</option>
@@ -102,15 +102,27 @@
 				<select name="selection">
 					<c:forEach items="${commonMapList}" var="commonMap">
 						<c:if test="${pagingdto.selection eq commonMap.codeDetailId }">
-							<option selected value="${pagingdto.selection}">${commonMap.codeDetailName }</option>
+							<option selected value="${pagingdto.selection}">${commonMap.codeDetailName}</option>
 						</c:if>
 						<c:if test="${pagingdto.selection ne commonMap.codeDetailId }">
 							<option value="${commonMap.codeDetailId}">${commonMap.codeDetailName }</option>
 						</c:if>
 					</c:forEach>
 				</select> 
-				<input type="text" class="form-control" id="selectedKeyword" placeholder="search"
+				<input type="text" class="form-control" id="selectedKeyword" placeholder="평가자  검색창"
 					   name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2"> 
+				<select name="selection2" style="margin-left:100px">
+					<c:forEach items="${commonMapList}" var="commonMap">
+						<c:if test="${pagingdto.selection2 eq commonMap.codeDetailId }">
+							<option selected value="${pagingdto.selection2}">${commonMap.codeDetailName}</option>
+						</c:if>
+						<c:if test="${pagingdto.selection2 ne commonMap.codeDetailId }">
+							<option value="${commonMap.codeDetailId}">${commonMap.codeDetailName }</option>
+						</c:if>
+					</c:forEach>
+				</select> 
+				<input type="text" class="form-control" id="selectedKeyword" placeholder="피평가자 검색창"
+					   name="keyword2" value="${pagingdto.keyword2}" aria-describedby="button-addon2"> 
 				<input type="hidden" name="pageNo" value="1">
 				<input type="hidden" name="surveySeq" value="${pagingdto.surveySeq}">
 				<div class="input-group-append">
@@ -122,12 +134,11 @@
 			</form>
 		</div>
 	</div>
-   <div class="table table-hover">
-         <table id="resTb" class="table">
+   <div class="table-table-hover">
+         <table id="resTb" class="tableAnother">
             <thead>
                <tr>
                   <th class="check"><input type="checkbox" id="check_all" /></th>
-                  <th>프로젝트</th>
                   <th>평가자</th>
                   <th>부서</th>
                   <th>피평가자</th>
@@ -157,7 +168,6 @@
 								<input type="hidden" name="gradeName" value="${result.gradeName}" />
 								
 								<td><input type="checkbox" name="chk_res" value="${result.raterId}${result.appraiseeId}"/></td>
-								<td class="projectName"><c:out value="${result.projectName}" /></td>
 								<td class="raterName"><c:out value="${result.raterName}" /></td>
 								<td class=departmentName><c:out value="${result.departmentName}" /></td>
 								<td class="appraiseeName"><c:out value="${result.appraiseeName}" /></td>
@@ -165,50 +175,17 @@
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
-				<c:if test="${fn:length(popupList) == 0}">
-                  <tr class="center">
-                     <td colspan="5">
-                     <spring:message code="list.noResult" text="추가할 인원을 선택해주세요" />
-                     </td>
-                  </tr>
-               </c:if>
             </tbody>
          </table>
 
 
       <div class="d-flex justify-content-between"></div>
-
       <!-- selectItem : 체크값이 없을 경우 체크하라는 유효성 검사 -->
-      <div class="button">
+   </div>
+    <div class="button">
+      <spring:message code="list.noResult" text="추가할 인원을 선택해주세요" /><br><br>
       <button type="button" class="btn btn-primary" onclick="selectItem();">추가</button>
       </div>
-      <div class="page_wrap">
-			<div class="page_nation">
-				<%-- 맨처음 페이지 이동    
-      				<a class="arrow prev" href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a> --%>
-				<c:if test="${pagingdto.groupNo>1}">
-					<a class="arrow prev"
-					   href="another.do?pageNo=${pagingdto.startPageNo-1}&surveySeq=${pagingdto.surveySeq}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">이전</a>
-				</c:if>
-				<c:forEach var="i" begin="${pagingdto.startPageNo}" end="${pagingdto.endPageNo}">
-					<c:if test="${pagingdto.pageNo != i}">
-						<a class="active" 
-						   href="another.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
-					</c:if>
-					<c:if test="${pagingdto.pageNo == i}">
-					<a class="page_nation"
-						   href="another.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
-					</c:if>
-				</c:forEach>
-				<c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
-					<a class="arrow next"
-					   href="another.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">다음</a>
-				</c:if>
-				<%-- 맨마지막 페이지 이동 
-       			<a class="arrow next" href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">맨끝</a> --%>
-			</div>
-		</div>
-   </div>
 </div>
 <!--
 <input type="button" type="submit" value="저장" />

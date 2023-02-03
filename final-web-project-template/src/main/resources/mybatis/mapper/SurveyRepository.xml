@@ -521,25 +521,24 @@ SELECT EMPLOYEE_NAME
      , MAX
      , AVG
      , MIN
+     , TOT
+     , RANK
 FROM(
     SELECT EMPLOYEE_ID
          , SCORE
          , SURVEY_SEQ
          , rk
-         , rk2
-         , rat
-         , CASE WHEN              rat <= 10 THEN 1
-                WHEN rat > 10 AND rat <= 50 THEN 2
-                WHEN rat > 50 AND rat <= 90 THEN 3
-                WHEN rat > 90 AND rat <= 100 THEN 4
-            END grd
+         , rk2 AS RANK
+         , ROUND(rat) AS GRD
+         , tot
     FROM (
        SELECT EMPLOYEE_ID
             , SCORE
             , SURVEY_SEQ
             , rk
-            , (rk + (cnt - 1) / 2) rk2
-            , (rk + (cnt - 1) / 2) / tot * 100 rat
+            , (rk + (cnt - 1) / 2) AS rk2
+            , (rk + (cnt - 1) / 2) / tot * 100 AS rat
+            , tot
          FROM (
              SELECT EMPLOYEE_ID
                   , SCORE
@@ -558,7 +557,7 @@ FROM(
                      WHERE I.ITEM_SEQ = R.ITEM_SEQ
                        AND R.APPRAISEE_ID = U.EMPLOYEE_ID
                        AND I.QUESTION_SEQ = Q.QUESTION_SEQ
-                       AND Q.QUESTION_TYPE_CODE = 10001
+                       AND Q.QUESTION_TYPE_CODE = '10001'
                   GROUP BY EMPLOYEE_ID, R.SURVEY_SEQ) t
                 )
             )
@@ -578,7 +577,7 @@ FROM(
                   WHERE I.ITEM_SEQ = R.ITEM_SEQ
                     AND R.APPRAISEE_ID = U.EMPLOYEE_ID
                     AND I.QUESTION_SEQ = Q.QUESTION_SEQ
-                    AND Q.QUESTION_TYPE_CODE = 10001
+                    AND Q.QUESTION_TYPE_CODE = '10001'
                     AND R.SURVEY_SEQ = #{surveySeq}
                   GROUP BY EMPLOYEE_NAME, R.SURVEY_SEQ
                   )

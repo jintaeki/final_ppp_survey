@@ -17,7 +17,7 @@
 				<div class="result_container">
 					<div class="hmenu">
 						<table class="table table-bordered">
-							<thead>
+							<thead class="chartselect">
 								<tr>
 									<th scope="col">
 										<form action="<c:url value='/survey/surveyresultDetail'/>"
@@ -53,14 +53,29 @@
 				<figure class="highcharts-figure"
 					style="overflow: auto; height: 500px; width: 1200px; display: flex;">
 					<div class="scroll_body">
-						<div style="min-width: 800px;">
-							<div id="chart_container"></div>
-							<p class="highcharts-description">다면평가에 대한 팀별 결과를 조회합니다.</p>
+						<div class="chartGP">
+
+						<div class="container_flex">
+							<c:if test="${chartJSONResult[0].s eq null}">
+								설문지를 선택하면 그래프가 나올 것 입니다.
+							</c:if>
+							<c:if test="${chartJSONResult[0].s ne null}">
+								<div id="chart_container"></div>
+								<p class="highcharts-description">다면평가에 대한 팀별 결과를 조회합니다.</p>
+							</c:if>
+							</div>
 						</div>
-						<div style="min-width: 800px;">
-							<div id="chart_container2"></div>
-							<p class="highcharts-description">부서별 소속 팀원들의 결과를 조회할 수 있습니다.
-							</p>
+						<br>
+						<div class="chartGP">
+						<div class="container_flex">
+							<c:if test="${chartJSONDp[0].s eq null}">
+								설문지를 선택하면 그래프가 나올 것 입니다.
+							</c:if>
+							<c:if test="${chartJSONDp[0].s ne null}">
+								<div id="chart_container2"></div>
+								<p class="highcharts-description">부서별 소속 팀원들의 결과를 조회할 수 있습니다.</p>
+							</c:if>
+							</div>
 						</div>
 					</div>
 				</figure>
@@ -212,10 +227,6 @@ Highcharts.chart('chart_container', {
     align: 'left',
     text: '다면평가 전체 결과 통계'
   },
-  subtitle: {
-    align: 'left',
-    text: '평가 결과는 소중한 직원을 나타내는 수치가 아니므로, <br>체계적인 코칭과 피드백 수립을 위한 목적으로만 참고하시길 바랍니다.'
-  },
   accessibility: {
     announceNewData: {
       enabled: true
@@ -275,10 +286,6 @@ Highcharts.chart('chart_container2', {
   title: {
     align: 'left',
     text: '다면평가 부서 결과 통계'
-  },
-  subtitle: {
-    align: 'left',
-    text: '평가 결과는 소중한 직원을 나타내는 수치가 아니므로, <br>체계적인 코칭과 피드백 수립을 위한 목적으로만 참고하시길 바랍니다.'
   },
   accessibility: {
     announceNewData: {

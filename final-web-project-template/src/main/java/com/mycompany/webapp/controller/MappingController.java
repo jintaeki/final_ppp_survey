@@ -155,24 +155,24 @@ public class MappingController {
 	@RequestMapping(value="/another.do", method=RequestMethod.GET)
 	public String anotherMapping(int surveySeq, 
 								@RequestParam(defaultValue="") String keyword,
-								@RequestParam(defaultValue="1") int pageNo,
+								@RequestParam(defaultValue="") String keyword2,
 								@RequestParam(defaultValue="60004") String selection,
+								@RequestParam(defaultValue="60004") String selection2,
 								@RequestParam(defaultValue="60004") String selectGD,Model model) {
 		model.addAttribute("commonMapList", commonService.selectMappingCode());
 		model.addAttribute("commonDateList", commonService.selectDateCode());
 		model.addAttribute("gradeList", mappingService.selectGradeList());
 		logger.info("지금 가져온 선택지:"+selection);
-		logger.info("페이지 수"+pageNo);
 		logger.info("키워드"+keyword+"1");
 		try {
 			List<PopupDTO> getPopup = null;
 			PagingDTO pagingdto = null;
 
-			int totalRows = pagingService.getTotalNonMappingNum(keyword, selection, surveySeq, selectGD);
-			logger.info("줄수"+totalRows);
-			pagingdto = new PagingDTO(7, 10, totalRows, pageNo);
+			pagingdto = new PagingDTO(1, 1, 1, 1);
 			pagingdto.setKeyword(keyword);
+			pagingdto.setKeyword2(keyword2);
 			pagingdto.setSelection(selection);
+			pagingdto.setSelection2(selection2);
 			pagingdto.setSurveySeq(surveySeq);
 			pagingdto.setSelectGD(selectGD);
 			

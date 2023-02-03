@@ -21,8 +21,10 @@ public class PagingDTO {
 		private int endRowNo;		//페이지의 마지막 행 번호
 		private int endRowIndex;	//페이지의 마지막 행 인덱스
 		private String keyword; 	//검색을 위한 변수
+		private String keyword2; 	//검색을 위한 변수
 		private String anonyMityCheckCode;
 		private String selection;	// 검색 선택지 변수
+		private String selection2;	// 추가 선택지 변수
 		private String selectGD;	// 직급 검색 변수
 		private String raterId;		// 매핑 추가를 위한 평가자 id
 		private int month;			// 매핑 추가를 위한 날짜 변수
@@ -208,6 +210,16 @@ public class PagingDTO {
 		}
 
 
+		public String getKeyword2() {
+			return keyword2;
+		}
+
+
+		public void setKeyword2(String keyword2) {
+			this.keyword2 = keyword2;
+		}
+
+
 		public String getAnonyMityCheckCode() {
 			return anonyMityCheckCode;
 		}
@@ -225,6 +237,16 @@ public class PagingDTO {
 
 		public void setSelection(String selection) {
 			this.selection = selection;
+		}
+
+
+		public String getSelection2() {
+			return selection2;
+		}
+
+
+		public void setSelection2(String selection2) {
+			this.selection2 = selection2;
 		}
 
 
@@ -284,13 +306,11 @@ public class PagingDTO {
 					+ ", totalGroupNo=" + totalGroupNo + ", startPageNo=" + startPageNo + ", endPageNo=" + endPageNo
 					+ ", pageNo=" + pageNo + ", pagesPerGroup=" + pagesPerGroup + ", groupNo=" + groupNo
 					+ ", rowsPerPage=" + rowsPerPage + ", startRowNo=" + startRowNo + ", startRowIndex=" + startRowIndex
-					+ ", endRowNo=" + endRowNo + ", endRowIndex=" + endRowIndex + ", keyword=" + keyword
-					+ ", anonyMityCheckCode=" + anonyMityCheckCode + ", selection=" + selection + ", selectGD="
-					+ selectGD + ", raterId=" + raterId + ", month=" + month + ", rnum=" + rnum + ", surveyStartDate="
-					+ surveyStartDate + "]";
+					+ ", endRowNo=" + endRowNo + ", endRowIndex=" + endRowIndex + ", keyword=" + keyword + ", keyword2="
+					+ keyword2 + ", anonyMityCheckCode=" + anonyMityCheckCode + ", selection=" + selection
+					+ ", selection2=" + selection2 + ", selectGD=" + selectGD + ", raterId=" + raterId + ", month="
+					+ month + ", rnum=" + rnum + ", surveyStartDate=" + surveyStartDate + "]";
 		}
-
-
 
 }
 

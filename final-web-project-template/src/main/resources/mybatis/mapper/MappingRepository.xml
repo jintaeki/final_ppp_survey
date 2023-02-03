@@ -385,92 +385,74 @@
    	
    	<select id="getAnother" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="com.mycompany.webapp.dto.PopupDTO">
 	<![CDATA[
-	   	SELECT
-	   		PROJECT_ID,
+		SELECT 
      		GRADE_ID,
      		DEPARTMENT_ID,
      		SURVEY_SEQ,
      		RATER_ID,
      		APPRAISEE_ID,
-     		PROJECT_NAME,
      		SURVEY_NAME,
      		DEPARTMENT_NAME,
      		RATER_NAME,
      		APPRAISEE_NAME,
      		GRADE_NAME
-	   	FROM (
-			SELECT 
-				ROWNUM AS rnum,
-				PROJECT_ID,
-     			GRADE_ID,
-     			DEPARTMENT_ID,
-     			SURVEY_SEQ,
-     			RATER_ID,
-     			APPRAISEE_ID,
-     			PROJECT_NAME,
-     			SURVEY_NAME,
-     			DEPARTMENT_NAME,
-     			RATER_NAME,
-     			APPRAISEE_NAME,
-     			GRADE_NAME
-	   		FROM(
-	   			SELECT
-					P.PROJECT_ID,
-					UR.GRADE_ID,
-					UR.DEPARTMENT_ID,
-					S.SURVEY_SEQ,
-					UR.EMPLOYEE_ID   AS "RATER_ID", 
-					UA.EMPLOYEE_ID   AS "APPRAISEE_ID",
-					P.PROJECT_NAME,
-					S.SURVEY_NAME,
-					O.DEPARTMENT_NAME,
-	       			UR.EMPLOYEE_NAME AS "RATER_NAME",
-	       			UA.EMPLOYEE_NAME AS "APPRAISEE_NAME",
-	     			G.GRADE_NAME
-				FROM PROJECT P,
-					PROJECT_HISTORY H,
-	     			GRADE G,
-	     	    	USER_INFO UA,
-	     	   		USER_INFO UR,
-	     	    	SURVEY_LIST S,
-	            	ORGANIZATION_CHART O
-				WHERE P.PROJECT_ID = H.PROJECT_ID
-	          	  AND UR.EMPLOYEE_ID = H.participation_employee_id
-	          	  AND UR.GRADE_ID = G.GRADE_ID
-	          	  AND UR.DEPARTMENT_ID = O.DEPARTMENT_ID
-	          	  AND UA.GRADE_ID = 2
-	          	  AND UA.EMPLOYEE_ID != UR.EMPLOYEE_ID
-	          	  AND S.SURVEY_SEQ = #{surveySeq}
-	          	  AND NOT EXISTS
-	          			(SELECT 'X'
-	                 	 FROM MAPPING M
-	                 	WHERE M.APPRAISEE_ID = UA.EMPLOYEE_ID
-	                      AND M.RATER_ID = UR.EMPLOYEE_ID
-	                      AND M.SURVEY_SEQ = #{surveySeq})
-	           	  AND ((#{selection} = '60001'
-                    	AND(UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
-                        	OR
-                        	UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
-                        	)
-                		OR (#{selection} = '60002'
-                        	AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')   
-                    	OR(#{selection} = '60004'
-                    	   AND((UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
-                        	   OR
-                        	   UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
-                            OR O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
-                            )
-                   		) 
-                  AND UR.GRADE_ID LIKE (
-                    	CASE WHEN #{selectGD} = '60004' 
-                         	 THEN '%' || '' || '%' 
-                         	 ELSE '%' || #{selectGD} || '%'
-                    	END)
-				  ORDER BY G.GRADE_ID DESC, UR.EMPLOYEE_NAME
-				   )
-			WHERE ROWNUM <= #{endRowNo}		
+	   	FROM(
+	   		SELECT
+			UR.GRADE_ID,
+				UR.DEPARTMENT_ID,
+				S.SURVEY_SEQ,
+				UR.EMPLOYEE_ID   AS "RATER_ID", 
+				UA.EMPLOYEE_ID   AS "APPRAISEE_ID",
+				S.SURVEY_NAME,
+				O.DEPARTMENT_NAME,
+	     		UR.EMPLOYEE_NAME AS "RATER_NAME",
+	      		UA.EMPLOYEE_NAME AS "APPRAISEE_NAME",
+	     		G.GRADE_NAME
+			FROM
+	    		GRADE G,
+	     	    USER_INFO UA,
+	     	   	USER_INFO UR,
+	     	    SURVEY_LIST S,
+	            ORGANIZATION_CHART O,
+	            ORGANIZATION_CHART OA
+			WHERE UR.GRADE_ID = G.GRADE_ID
+	          AND UR.DEPARTMENT_ID = O.DEPARTMENT_ID
+	          AND UA.DEPARTMENT_ID = OA.DEPARTMENT_ID
+         	  AND UA.GRADE_ID = 2
+          	  AND UA.EMPLOYEE_ID != UR.EMPLOYEE_ID
+          	  AND UR.MANAGER_YN = 'N'
+          	  AND S.SURVEY_SEQ = #{surveySeq}
+          	  AND NOT EXISTS
+          			(SELECT 'X'
+                 	 FROM MAPPING M
+                	WHERE M.APPRAISEE_ID = UA.EMPLOYEE_ID
+                      AND M.RATER_ID = UR.EMPLOYEE_ID
+                      AND M.SURVEY_SEQ = #{surveySeq})
+           	  AND ((#{selection} = '60001'
+                   	AND UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
+               		OR (#{selection} = '60002'
+                       	AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')   
+                   	OR (#{selection} = '60004'
+                   	    AND(UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
+                           OR O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
+                        )
+                    ) 
+               AND UR.GRADE_ID LIKE (
+                   	CASE WHEN #{selectGD} = '60004' 
+                       	 THEN '%' || '' || '%' 
+                         ELSE '%' || #{selectGD} || '%'
+                    END)
+               AND ((#{selection2} = '60001'
+                   	AND UA.EMPLOYEE_NAME LIKE '%' || #{keyword2} || '%')
+               		OR (#{selection2} = '60002'
+                       	AND OA.DEPARTMENT_NAME LIKE '%' || #{keyword2} || '%')   
+                   	OR(#{selection2} = '60004'
+                   	   AND(UA.EMPLOYEE_NAME LIKE '%' || #{keyword2} || '%'
+                           OR OA.DEPARTMENT_NAME LIKE '%' || #{keyword2} || '%')
+                       )
+                 )
+			ORDER BY G.GRADE_ID DESC, UR.EMPLOYEE_NAME
 			)
-		WHERE rnum  >= #{startRowNo}	
    	]]>
    	</select>
    	
