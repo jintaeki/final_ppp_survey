@@ -279,16 +279,17 @@
 			   html +='<div class="input_title">피평가자 목록('+data[0].surveyName+')</div>';
 			   html +='<div id="scroll_area">';
 			   html +=`<div class="row">
+				   	<div class="col-3">피평가자</div>
 					  <div class="col-4">부서</div>
-					  <div class="col-2">직급</div>
-					  <div class="col-3">피평가자</div>
+					  <div class="col-2">직급</div>					  
 					  <div class="col-3"></div>
 					  </div>
 			          <div id="appendArea" class="row">`;
             for(var i=0; i<size; i++){
-               html +='<div class="col-4">'+data[i].appraiseeDepartmentName+'</div>';
-               html +='<div class="col-2">'+data[i].appraiseeGradeName+'</div>';
-               html +='<div class="col-3">'+data[i].appraiseeName+'</div>';
+                html +='<div class="col-3">'+data[i].appraiseeName+'</div>';
+                html +='<div class="col-4">'+data[i].appraiseeDepartmentName+'</div>';
+                html +='<div class="col-2">'+data[i].appraiseeGradeName+'</div>';
+
                if(data[i].surveyCompleteYN=='N'){
                html +='<div class="col-3"><button style="color:green;" class="create_btn" id="'+data[i].appraiseeId+'" onclick="surveyStart(this,'+data[i].appraiseeId+','+data[i].raterId+','+anonymitycode+','+theSeq+','+data[i].surveySeq+')" value="'+data[i].appraiseeName+'">평가하기</button></div>';
                }else{
@@ -494,9 +495,9 @@
 
 
 							<div class="row">
+								<div class="col-3">피평가자</div>
 								<div class="col-4">부서</div>
 								<div class="col-2">직급</div>
-								<div class="col-3">피평가자</div>
 								<div class="col-3"></div>
 
 							</div>
@@ -510,10 +511,9 @@
 								</c:if>
 								<c:if test="${surveySeqAndName.SURVEY_SEQ eq allAppraisee.surveySeq }">
 									<div id="appendArea" class="row">
-
-										<div class="col-4">${allAppraisee.appraiseeDepartmentName}</div>
-										<div class="col-2">${allAppraisee.appraiseeGradeName}</div>
 										<div class="col-3">${allAppraisee.appraiseeName}</div>
+										<div class="col-4">${allAppraisee.appraiseeDepartmentName}</div>
+										<div class="col-2">${allAppraisee.appraiseeGradeName}</div>										
 										<c:if test="${allAppraisee.surveyCompleteYN eq 'N'}">
 											<div class="col-3">
 
