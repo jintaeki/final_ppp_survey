@@ -62,7 +62,7 @@
              console.log(cnt);
              if(result[i].QUESTION_TYPE_CODE =="10002"){
                 surveyQandA += '<div class="item_form" style=" display: flex; align-items: flex-end;">';
-                surveyQandA += '<input type="hidden" name="'+(i+'num')+'" value="'+result[i].ITEM_SEQ+'">';
+                surveyQandA += '<input type="radio" style="display:none;" name="'+(i+'num')+'" value="'+result[i].ITEM_SEQ+'"checked>';
                 surveyQandA += '<textarea name="'+(i-itemNum +1)+'answerContent" ></textarea>';
                 surveyQandA += '</div>';
                 itemSeqArray[i-itemNum +1]=i;
@@ -120,7 +120,7 @@
           surveyQandA +='<input type="hidden" name="surveySeq" value="'+result[i].SURVEY_SEQ+'">';
           		if(result[i].QUESTION_TYPE_CODE =="10002"){
              		surveyQandA += '<div class="item_form" style=" display: flex; align-items: flex-end;">';
-             		surveyQandA+= '<input type="hidden" name="'+(i+'num')+'" value="'+result[i].ITEM_SEQ+'">';
+             		surveyQandA+= '<input type="radio" style="display:none;" name="'+(i+'num')+'" value="'+result[i].ITEM_SEQ+'"checked>';
 
             		surveyQandA += '<textarea name="'+(i-itemNum +1)+'answerContent"></textarea>';
 
@@ -357,12 +357,22 @@
           }
 
       
-          var cntCheckedAnswer=1;
+          var cntCheckedAnswer=0;
 				//1번부터 진행하는 이유는 itemSeqArray에 i를 대입할 때 index가 1부터시작(i-itemNum+1)했기 때문에 0은 null값이 들어가있다
              for(var i =1; i<itemSeqArray.length; i++){
 
                 if ($('input[name="'+itemSeqArray[i]+'num"]').is(':checked')){
-                    cntCheckedAnswer = cntCheckedAnswer + 1;
+                	if($('textarea[name="'+i+'answerContent"]').val()==''){
+                		 alert(i+"번을 채워주세요.");
+                		 $('input[name="'+itemSeqArray[i]+'num"]').focus();
+                         break
+                	}else if($('textarea[name="'+i+'answerContent"]').val()!=''){
+                		cntCheckedAnswer = cntCheckedAnswer + 1;
+                	}else{
+                		
+                		cntCheckedAnswer = cntCheckedAnswer + 1;
+                	}
+                    
                  }else if(!$('input[name="'+itemSeqArray[i]+'num"]').is(':checked') ) {
                 	 // 실제 주관식 문제가 비어있는 지 확인하고 alert
                        if($('textarea[name="'+i+'answerContent"]').val()==''){
@@ -384,8 +394,8 @@
              }
              		//문제 개수만큼 cnt가 쌓였다면 전송 진행
              		console.log(cntCheckedAnswer);
-             		console.log(itemSeqArray.length);
-                  if(cntCheckedAnswer == itemSeqArray.length){
+             		console.log(itemSeqArray.length-1);
+                  if(cntCheckedAnswer == itemSeqArray.length-1){
 
 
                     //formData에 담은 데이터를 object map에 담는다
