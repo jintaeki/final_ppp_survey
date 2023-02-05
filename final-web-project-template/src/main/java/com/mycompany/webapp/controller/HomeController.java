@@ -163,6 +163,11 @@ public class HomeController {
 				model.addAttribute("surveySeqAndName",surveySeqAndName);
 				model.addAttribute("surveyResult", new SurveyResultDTO());
 				session.setAttribute("checked", check);
+				int nosurveySeqForGetAllUser = 0;
+
+				List<UserCheckDTO> allUser = loginCheckService.getUserInfo(UCD.getRaterId(), nosurveySeqForGetAllUser);
+				
+				model.addAttribute("allUser",allUser);
 
 				return "survey";
 			}else {
