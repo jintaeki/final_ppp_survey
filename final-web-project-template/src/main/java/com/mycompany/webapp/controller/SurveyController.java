@@ -205,11 +205,23 @@ public class SurveyController {
 			return "noCode";
 		}if(SLD.getSurveyContent().getBytes().length>500) {
 			return "contentLarge";
+		}if(SLD.getSurveyStartDate() ==null || SLD.getStateCode()==null) {
+			return "dateEmpty";
+		}if(SLD.getSurveySeq() != 0) {
+			List<SurveyQuestionDTO> SQD = surveyService.getQuestionListOrderByAsc(SLD.getSurveySeq());
+			surveyService.setSurvey(SLD);
+			for(int i = 0 ; i< SQD.size();i++) {
+				SQD.get(i).setSurveySeq(SLD.getSurveySeq());
+			}
+
+			surveyService.insertQuestionsAndItems(SQD);
+			session.setAttribute("SLD", SLD);
+		}else {
+			surveyService.setSurvey(SLD);
+			session.setAttribute("SLD", SLD);
 		}
-		logger.info("모달창을 통해 설문 등록하는 컨트롤러 진입");
-		surveyService.setSurvey(SLD);
-		session.setAttribute("SLD", SLD);
 		
+	
 		return String.valueOf(SLD.getSurveySeq());
 
 	}
@@ -230,10 +242,12 @@ public class SurveyController {
 	// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
 	@RequestMapping("/surveyinsert")
 	public String survey_insert(@RequestParam("surveyseq") int surveySeq, Model model, HttpSession session) {
+		System.out.println("gkgk:"+session.getAttribute("SLD"));
 		if (!String.valueOf(session.getAttribute("SLD")).equals("null")) {
 			SurveyListDTO SLD = (SurveyListDTO) session.getAttribute("SLD");
-			session.removeAttribute("SLD");
 			model.addAttribute("SLD", SLD);
+			session.removeAttribute("SLD");
+			model.addAttribute("SQL", surveyService.getQuestionListOrderByDesc(SLD.getSurveySeq()));
 			model.addAttribute("NoQuestion","저장된 문제가 없습니다.");
 		} else {
 			model.addAttribute("SLD", surveyService.selectSurvey(surveySeq));
@@ -427,38 +441,43 @@ public class SurveyController {
 	}
 
 	
-	//survey_list.jsp
-	//문제 복사를 위한 메소드
-	@RequestMapping("/copysurvey.do/{surveySeq}")
-	public String copySurvey(@PathVariable int surveySeq) {
+//	//survey_list.jsp
+//	//문제 복사를 위한 메소드
+//	@RequestMapping("/copysurvey.do/{surveySeq}")
+//	public String copySurvey(@PathVariable int surveySeq) {
+//
+//		// seq로 설문 내용 불러오기
+//		SurveyListDTO SLD = surveyService.selectSurvey(surveySeq);
+//		logger.info("복사할 설문 내용: "+SLD.toString());
+//		// 설문 저장
+//		SLD.setStateCode("30001");
+//		surveyService.setSurvey(SLD);
+//		System.out.println(SLD.getSurveySeq());
+//
+//		//설문지의 문제 조회
+//		List<SurveyQuestionDTO> SQD = surveyService.getQuestionListOrderByAsc(surveySeq);
+//		for(int i = 0 ; i< SQD.size();i++) {
+//			SQD.get(i).setSurveySeq(SLD.getSurveySeq());
+//		}
+//
+//		surveyService.insertQuestionsAndItems(SQD);
+//		return "redirect:/survey/surveysearch";
+//	}
 
-		// seq로 설문 내용 불러오기
-		SurveyListDTO SLD = surveyService.selectSurvey(surveySeq);
-		logger.info("복사할 설문 내용: "+SLD.toString());
-		// 설문 저장
-		SLD.setStateCode("30001");
-		surveyService.setSurvey(SLD);
-		System.out.println(SLD.getSurveySeq());
-
-		//설문지의 문제 조회
-		List<SurveyQuestionDTO> SQD = surveyService.getQuestionListOrderByAsc(surveySeq);
-		for(int i = 0 ; i< SQD.size();i++) {
-			SQD.get(i).setSurveySeq(SLD.getSurveySeq());
-		}
-
-		surveyService.insertQuestionsAndItems(SQD);
-		return "redirect:/survey/surveysearch";
-	}
-
-	@RequestMapping("/deletesurvey.do/{surveyseq}/{pageno}/{date}/{keyword}/{selection}")
+	@RequestMapping("/deletesurvey.do/{surveyseq}/{pageno}/{keyword}/{selection}/{anonyMityCheckCode}/{surveyStartDateLeft}/{surveyStartDateRight}")
 	public String DeleteSurvey(@PathVariable int surveyseq, @PathVariable int pageno,
-			@PathVariable(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
-			@PathVariable String selection, @PathVariable String keyword) {
+			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDateLeft, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDateRight,
+			@PathVariable String selection, @PathVariable String keyword, @PathVariable String anonyMityCheckCode) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String strDate = (String) sdf.format(date);
-		if (sdf.format(date).equals("1111-11-11")) {
-			strDate = "";
+		String strDateLeft = (String) sdf.format(surveyStartDateLeft);
+		String strDateRight = (String) sdf.format(surveyStartDateRight);
+
+		if (sdf.format(surveyStartDateLeft).equals("1111-11-11")) {
+			strDateLeft = "";
+		}
+		if (sdf.format(surveyStartDateRight).equals("1111-11-11")) {
+			strDateRight ="";
 		}
 		if (keyword.equals("empty")) {
 			keyword = "";
@@ -468,34 +487,35 @@ public class SurveyController {
 			  surveyService.deleteSurvey(surveyseq);
 		      mappingService.deleteEmail(surveyseq);
 		      mappingService.deleteSMS(surveyseq);
-		return "redirect:/survey/surveysearch?pageNo=" + pageno + "&keyword=" + keyword + "&selection=" + selection
-				+ "&surveyStartDate=" + strDate;
+		return "redirect:/survey/surveysearch?pageNo=" + pageno + "&keyword=" + keyword + "&selection=" + selection +"anonyMityCheckCode" + anonyMityCheckCode
+				+ "&surveyStartDateLeft=" + strDateLeft+"&surveyStartDateRight=" + strDateRight;
 
 	}
 	
 	@RequestMapping("/surveysearch")
 	public String search(@RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "1") int pageNo,
-			@RequestParam(defaultValue = "30005") String selection,
-			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDate,
-			@RequestParam(defaultValue = "") String anonyMityCheckCode, HttpSession session, Model model) {
+			@RequestParam(defaultValue = "30005") String selection, @RequestParam(defaultValue="30005") String anonyMityCheckCode,
+			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDateLeft, @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDateRight,
+			 HttpSession session, Model model) {
 
 		model.addAttribute("commonCodeList", commonCodeService.selectStateCode());
-		logger.info("지금 가져온 선택지:" + selection);
-		logger.info("페이지 수" + pageNo);
-		logger.info("키워드" + keyword);
-		logger.info("날짜" + surveyStartDate);
-		logger.info("anonyMityCheckCode" + anonyMityCheckCode);
+//		logger.info("지금 가져온 선택지:" + selection);
+//		logger.info("페이지 수" + pageNo);
+//		logger.info("키워드" + keyword);
+//		logger.info("날짜" + surveyStartDateLeft);
+//		logger.info("anonyMityCheckCode" + anonyMityCheckCode);
 		try {
 
 			List<SurveyListDTO> surveylist = null;
 			PagingDTO pagingdto = null;
 
-			int totalRows = pagingService.getTotalBoardNum(keyword, selection, surveyStartDate, anonyMityCheckCode);
-
+			int totalRows = pagingService.getTotalBoardNum(keyword, selection, surveyStartDateLeft,surveyStartDateRight, anonyMityCheckCode);
+			logger.info(String.valueOf(totalRows));
 			pagingdto = new PagingDTO(7, 10, totalRows, pageNo);
 			pagingdto.setSelection(selection);
 			pagingdto.setKeyword(keyword);
-			pagingdto.setSurveyStartDate(surveyStartDate);
+			pagingdto.setSurveyStartDateLeft(surveyStartDateLeft);
+			pagingdto.setSurveyStartDateRight(surveyStartDateRight);
 			pagingdto.setAnonyMityCheckCode(anonyMityCheckCode);
 
 			surveylist = surveyService.searchListByKeyword(pagingdto);

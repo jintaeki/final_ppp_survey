@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 public interface IPagingRepository {
 
 
-	int getTotalBoardNum(@Param("keyword")String keyword,@Param("selection") String selection, @Param("surveyStartDate") Date surveyStartDate, @Param("anonyMityCheckCode") String anonyMityCheckCode);
+	int getTotalBoardNum(@Param("keyword")String keyword,@Param("selection") String selection, @Param("surveyStartDateLeft") Date surveyStartDateLeft,@Param("surveyStartDateRight") Date surveyStartDateRight, @Param("anonyMityCheckCode") String anonyMityCheckCode);
 
 	int getTotalMappingNum(@Param("keyword")String keyword, @Param("selection") String selection, 
 			@Param("surveySeq") int surveySeq, @Param("selectGD") String selectGD);

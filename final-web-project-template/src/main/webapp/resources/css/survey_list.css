@@ -11,10 +11,7 @@ color:green;
     display: block;
 }
 
-.survey_list_form_upper_dv{
-	display:flex;
-	margin-left: 130px;
-}
+
 
 #selectedDate{
 	margin-right:10px;

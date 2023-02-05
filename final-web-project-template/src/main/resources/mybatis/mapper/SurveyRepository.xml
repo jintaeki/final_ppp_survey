@@ -117,7 +117,7 @@
 
    <update id="UpdateQuestion">
       UPDATE SURVEY_QUESTION SET 
-      <choose >
+      <choose>
       	<when test= "questionContent != null">
       		 QUESTION_CONTENT=#{questionContent},QUESTION_TYPE_CODE=#{questionTypeCode}
       	</when>
@@ -125,6 +125,7 @@
       		QUESTION_TYPE_CODE=#{questionTypeCode}
       	</when>
       </choose>
+      
        WHERE QUESTION_SEQ=#{questionSeq}
    </update>
 
@@ -181,7 +182,6 @@
 
 
 <select id="searchListByKeyword" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="SLD">
-   <![CDATA[
        SELECT
        		 rnum
        		,SURVEY_SEQ
@@ -218,48 +218,57 @@
 	          	 ,STATE_CODE
 	          	 ,REG_DATE
 	          	 FROM SURVEY_LIST
-	          	 WHERE
-	          	 ((SURVEY_START_DATE is null or SURVEY_CLOSED_DATE is null) and
-	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%' and
-	          	  STATE_CODE LIKE (CASE
-      							   WHEN #{selection} = '30005'
-      							   THEN '%' || '' || '%'
-                                   ELSE '%' || #{selection} || '%'
-                                   END) AND
-                  ANONYMITY_CHECK_CODE LIKE (CASE
-                                                 WHEN #{anonyMityCheckCode} = '30005'
-                                                 THEN '%' || '' || '%'
-                                                 ELSE '%' || #{anonyMityCheckCode} || '%'
-                                                 END)
-	          	 )
-	          	   or
-	          	 SURVEY_START_DATE >= (CASE
-	          	 						 WHEN #{surveyStartDate} is null
-	          	 						 THEN sysdate-99999
-	          	 						 WHEN #{surveyStartDate} is not null
-	          	 						 THEN to_date(to_char(#{surveyStartDate},'yyyy-MM-dd'),'yyyy-MM-dd')
-	          	 						 END) and
-
-	          	  STATE_CODE LIKE (CASE
-      							   WHEN #{selection} = '30005'
-      							   THEN '%' || '' || '%'
-                                   ELSE '%' || #{selection} || '%'
-                                   END) and
-
-	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%'AND
-
-	          	  ANONYMITY_CHECK_CODE LIKE (CASE
-                                                 WHEN #{anonyMityCheckCode} = '30005'
-                                                 THEN '%' || '' || '%'
-                                                 ELSE '%' || #{anonyMityCheckCode} || '%'
-                                                 END)
-				  ORDER BY REG_DATE DESC
-                )
-         	  WHERE ROWNUM <= #{endRowNo}
+	   
+	          	           	   
+	          	  <choose>
+	          	  	<when test ="keyword ==''">
+	          	  		 WHERE survey_name like  '%' || '' || '%' 
+	          	  	</when>
+	          	  	<otherwise>
+	          	  	     WHERE survey_name like '%' || #{keyword} || '%'	
+	          	  	</otherwise>
+	          	  </choose>
+	          	  <choose>
+      				<when test= "selection == '30005'">
+      			    </when>
+      				<otherwise>
+      					AND STATE_CODE = #{selection}
+     			 	</otherwise>
+				  </choose>
+				  <choose>
+      				<when test= "anonyMityCheckCode == '30005'">
+      			    </when>
+      				<otherwise>
+      					AND ANONYMITY_CHECK_CODE= #{anonyMityCheckCode}
+     			 	</otherwise>
+				  </choose>
+				  <choose>
+				  	<when test="surveyStartDateLeft == null">
+				  	</when>
+				 	<otherwise>
+						AND survey_start_date >= to_date(to_char(#{surveyStartDateLeft},'yyyy-MM-dd'),'yyyy-MM-dd')         	  	
+	          	  	</otherwise> 
+				  </choose>
+	  			 <choose>
+				  	<when test="surveyStartDateRight == null">
+				  	</when>
+				 	<otherwise>
+				 	<![CDATA[
+						AND survey_start_date <= to_date(to_char(#{surveyStartDateRight},'yyyy-MM-dd'),'yyyy-MM-dd')   
+					]]>      	  	
+	          	  	</otherwise> 
+				  </choose>
+                
+                ORDER BY REG_DATE DESC
                )
-            WHERE rnum  >= #{startRowNo}
-           ) WHERE cd.code_detail_id = state_code
-      ]]>
+          	  <![CDATA[              
+         	  WHERE ROWNUM <= #{endRowNo}
+         	  ]]>
+         	  
+           ) 
+          WHERE rnum  >= #{startRowNo}
+       ) 
+       WHERE cd.code_detail_id = state_code
    </select>
 
    <select id="selectQuestionBySeq"  resultType="hashmap">

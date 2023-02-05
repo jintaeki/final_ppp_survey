@@ -14,8 +14,12 @@ public class PagingService implements IPagingService{
 	IPagingRepository pagingRepo;
 
 	@Override
-	public int getTotalBoardNum(String keyword, String selection, Date surveyStartDate, String anonyMityCheckCode) {
-		return pagingRepo.getTotalBoardNum(keyword, selection, surveyStartDate, anonyMityCheckCode);
+	public int getTotalBoardNum(String keyword, String selection,  Date surveyStartDateLeft,Date surveyStartDateRight, String anonyMityCheckCode) {
+		System.out.println(surveyStartDateLeft);
+		System.out.println(keyword);
+		System.out.println(selection);
+		System.out.println(anonyMityCheckCode);
+		return pagingRepo.getTotalBoardNum(keyword, selection, surveyStartDateLeft, surveyStartDateRight, anonyMityCheckCode);
 	}
 
 	@Override

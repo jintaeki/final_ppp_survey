@@ -27,9 +27,8 @@
 }
 
 .hmenu {
-	display: flex;
-	margin-bottom: 20px;
-	margin-left: 530px;
+	margin: auto;
+	margin-bottom: 30px;
 	margin-top: 50px;
 }
 
@@ -38,6 +37,20 @@
 	width: 1500px;
 	/* 	margin-left:50px; */
 	background: darkgray;
+}
+
+.survey_list_form_upper_dv{
+	width:1500px;
+	margin-left:100px;
+}
+
+.searchRangeAll{
+	display:flex;
+
+}
+
+.searchRange{
+	margin-right:290px;
 }
 
 .forshadowing {
