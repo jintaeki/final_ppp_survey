@@ -26,7 +26,7 @@
 
 </head>
 <body>
-		
+
 			<div class="container_login">
 					<img src="${pageContext.request.contextPath}/resources/images/logo_img.png" class="login_img">
 				<div class="login_text">다 함께 성장하는, 다면평가 시스템</div>
@@ -38,8 +38,8 @@
 								class="login_form-placeholder" for="email">Email</label>
 						</div>
 						<div class="login_form">
-							<input type="text" class="form-control" name="raterId"
-								value="118879" id="id" required> <label
+							<input type="text" class="form-control" name="password"
+								value="20220720" id="id" required> <label
 								class="login_form-placeholder" for="id">ID</label>
 						</div>
 						<div class="login_btn">
@@ -47,7 +47,7 @@
 							<!-- 							<button type="button" class="btn btn-primary" -->
 							<!-- 								onclick="location.href='survey/surveylist'">관리자 로그인</button> -->
 						</div>
-					
+
 					</form:form>
 			</div>
 </body>
