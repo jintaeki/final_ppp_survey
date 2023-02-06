@@ -296,7 +296,6 @@ public class HomeController {
 	// 일련번호 발급 및 중복 확인 메소드, 재귀함수
 	public String checknansu() {
 		nansu = loginCheckService.getNansu();
-		System.out.println(loginCheckService.checkNansu(nansu));
 		if(loginCheckService.checkNansu(nansu)==0) {
 			
 		}else {
