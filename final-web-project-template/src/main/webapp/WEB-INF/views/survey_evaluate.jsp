@@ -14,15 +14,22 @@
                         action="<c:url value='/survey/evaluatesearch/${surveySeq}'/>"
                         method="GET" class="survey_list_form" id="survey_list_form_id">
 
+
+						   <select class="subSelection" name="selection2">
+						   		<option value="참여">참여여부</option>
+                           		<option value="사원">사원</option>
+                           		<option value="대리">대리</option>
+                           		<option value="과장">부장</option>
+                           		<option value="차장">부장</option>
+                                <option value="부장">부장</option>
+                        	</select>
+
                         <select class="selection" name="selection">
+                      	  <option value="departmentName"
+                              <c:if test="${pagingDto.selection2 eq 'departmentName'}">selected</c:if>>부서명</option>
+
                            <option value="employeeName"
                               <c:if test="${pagingDto.selection eq 'employeeName'}">selected</c:if>>이름</option>
-                           <option value="departmentName"
-                              <c:if test="${pagingDto.selection eq 'departmentName'}">selected</c:if>>부서명</option>
-                           <option value="gradeName"
-                              <c:if test="${pagingDto.selection eq 'gradeName'}">selected</c:if>>직급</option>
-                           <option value="surveyCompleteYn"
-                              <c:if test="${pagingDto.selection eq 'surveyCompleteYn'}">selected</c:if>>참여여부</option>
 
                         </select> <input type="text" class="form-control" id="selectedKeyword"
                            placeholder="search" name="keyword"
@@ -56,7 +63,12 @@
                            <td class="sv_name">${EL.DEPARTMENT_NAME}</td>
                            <td>${EL.GRADE_NAME}</td>
                            <td>${EL.EMPLOYEE_NAME}</td>
-                           <td>${EL.SURVEY_COMPLETE_YN}</td>
+                           <c:if test="${EL.SURVEY_COMPLETE_YN eq 'Y'}">
+                           <td>설문 참여</td>
+                           </c:if>
+                            <c:if test="${EL.SURVEY_COMPLETE_YN eq 'N'}">
+                           <td>설문 비참여</td>
+                           </c:if>
                            <c:if test="${EL.GRADE_NAME eq '부장'}">
                            <td><input type="button" class="btn btn-link"
                               onclick="result_search_btn(${surveySeq},${EL.EMPLOYEE_ID})"

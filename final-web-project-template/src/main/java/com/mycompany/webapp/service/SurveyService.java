@@ -164,6 +164,7 @@ public class SurveyService implements ISurveyService{
 	@Override
 	public List<Map<String, Object>> searchByEvaluate(PagingDTO pagingDto) {
 		logger.info("검색:" + surveyDao.searchByEvaluate(pagingDto).toString());
+		logger.info("검색 전 dto: " + pagingDto.toString());
 		return surveyDao.searchByEvaluate(pagingDto);
 	}
 

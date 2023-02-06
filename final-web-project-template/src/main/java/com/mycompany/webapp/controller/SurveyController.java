@@ -532,15 +532,14 @@ public class SurveyController {
 			             @RequestParam(defaultValue="") String keyword,
 						 @RequestParam(defaultValue="1") int pageNo,
 						 @RequestParam(defaultValue="employeeName") String selection,
-						 @RequestParam(defaultValue= "" ) String subSelection,
-						 @RequestParam(value = "searchType", required = false, defaultValue = "employeeName") String searchType,
+						 @RequestParam(defaultValue= "" ) String selection2,
 						 @RequestParam(value="employeeName", required=false) String employeeName,
 						 @RequestParam(value="departmentName", required=false) String departmentName,
 						 @RequestParam(value="CompleteYn", required=false) String surveyCompleteYn,
 						 @RequestParam(value="gradeName", required=false) String gradeName,
 						  Model model) {
 		logger.info("지금 가져온 선택지:"+selection);
-		logger.info("부 선택지:" + subSelection);
+		logger.info("부 선택지:" + selection2);
 		logger.info("페이지 수"+pageNo);
 		logger.info("키워드:" + keyword);
 		logger.info("설문지 번호" + surveySeq);
@@ -551,19 +550,21 @@ public class SurveyController {
 			PagingDTO pagingDto = null;
 			String beforeKeyword = keyword;
 
-			 	model.addAttribute("selecton", selection);
+			 	model.addAttribute("selection", selection);
 
 			    logger.info("모델 :" + model);
-				int totalRows = pagingService.getEvaluateSearchBoardNum(keyword, selection, surveySeq);
+				int totalRows = pagingService.getEvaluateSearchBoardNum(keyword, selection, selection2,  surveySeq);
 
 				System.out.println("totolRows:" + totalRows);
 			    pagingDto = new PagingDTO(100, 100, totalRows, pageNo);
 
 				pagingDto.setSelection(selection);
+				pagingDto.setSelection2(selection2);
 				pagingDto.setKeyword(keyword);
 				pagingDto.setSurveySeq(surveySeq);
 
 				logger.info("selection:" + pagingDto.getSelection());
+				logger.info("selection2: " + pagingDto.getSelection2());
 				logger.info("keyword: "+pagingDto.getKeyword());
 				logger.info("paigingdto:" + pagingDto);
 				evaluateList = surveyService.searchByEvaluate(pagingDto);
@@ -572,7 +573,7 @@ public class SurveyController {
 				pagingDto.setKeyword(beforeKeyword);
 				logger.info(pagingDto.toString());
 				logger.info("evaluateList: " + evaluateList);
-
+				//logger.info("evaluateList: " + evaluateList.get(0).toString());
 			model.addAttribute("evaluateList", evaluateList);
 
 			logger.info(keyword);

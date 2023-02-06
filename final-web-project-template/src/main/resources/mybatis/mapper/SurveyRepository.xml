@@ -116,7 +116,7 @@
    </select>
 
    <update id="UpdateQuestion">
-      UPDATE SURVEY_QUESTION SET 
+      UPDATE SURVEY_QUESTION SET
       <choose>
       	<when test= "questionContent != null">
       		 QUESTION_CONTENT=#{questionContent},QUESTION_TYPE_CODE=#{questionTypeCode}
@@ -125,7 +125,7 @@
       		QUESTION_TYPE_CODE=#{questionTypeCode}
       	</when>
       </choose>
-      
+
        WHERE QUESTION_SEQ=#{questionSeq}
    </update>
 
@@ -218,14 +218,14 @@
 	          	 ,STATE_CODE
 	          	 ,REG_DATE
 	          	 FROM SURVEY_LIST
-	   
-	          	           	   
+
+
 	          	  <choose>
 	          	  	<when test ="keyword ==''">
-	          	  		 WHERE survey_name like  '%' || '' || '%' 
+	          	  		 WHERE survey_name like  '%' || '' || '%'
 	          	  	</when>
 	          	  	<otherwise>
-	          	  	     WHERE survey_name like '%' || #{keyword} || '%'	
+	          	  	     WHERE survey_name like '%' || #{keyword} || '%'
 	          	  	</otherwise>
 	          	  </choose>
 	          	  <choose>
@@ -246,28 +246,28 @@
 				  	<when test="surveyStartDateLeft == null">
 				  	</when>
 				 	<otherwise>
-						AND survey_start_date >= to_date(to_char(#{surveyStartDateLeft},'yyyy-MM-dd'),'yyyy-MM-dd')         	  	
-	          	  	</otherwise> 
+						AND survey_start_date >= to_date(to_char(#{surveyStartDateLeft},'yyyy-MM-dd'),'yyyy-MM-dd')
+	          	  	</otherwise>
 				  </choose>
 	  			 <choose>
 				  	<when test="surveyStartDateRight == null">
 				  	</when>
 				 	<otherwise>
 				 	<![CDATA[
-						AND survey_start_date <= to_date(to_char(#{surveyStartDateRight},'yyyy-MM-dd'),'yyyy-MM-dd')   
-					]]>      	  	
-	          	  	</otherwise> 
+						AND survey_start_date <= to_date(to_char(#{surveyStartDateRight},'yyyy-MM-dd'),'yyyy-MM-dd')
+					]]>
+	          	  	</otherwise>
 				  </choose>
-                
+
                 ORDER BY REG_DATE DESC
                )
-          	  <![CDATA[              
+          	  <![CDATA[
          	  WHERE ROWNUM <= #{endRowNo}
          	  ]]>
-         	  
-           ) 
+
+           )
           WHERE rnum  >= #{startRowNo}
-       ) 
+       )
        WHERE cd.code_detail_id = state_code
    </select>
 
@@ -281,8 +281,8 @@
                 ,SURVEY_ITEM.ITEM_SCORE
           FROM  SURVEY_ITEM  right join SURVEY_QUESTION
           on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ
-          WHERE SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} 
-          and SURVEY_QUESTION.QUESTION_SEQ = #{questionSeq} 
+          WHERE SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq}
+          and SURVEY_QUESTION.QUESTION_SEQ = #{questionSeq}
           ORDER BY SURVEY_ITEM.ITEM_SCORE  ,SURVEY_ITEM.ITEM_SEQ
 
    </select>
@@ -296,7 +296,7 @@
 		DELETE FROM SURVEY_ITEM
 		WHERE QUESTION_SEQ = #{questionSeq} and ITEM_SEQ = #{itemSeq}
 	</delete>
-	
+
 
    <select id="selectItems" parameterType="int" resultType="hashmap">
 
@@ -336,8 +336,8 @@
   </select>
 
 	<select id="searchByEvaluate" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="hashmap">
- 	<![CDATA[
-		SELECT
+
+ 	SELECT
 		rnum
         ,DEPARTMENT_NAME
         ,GRADE_NAME
@@ -345,7 +345,7 @@
         ,SURVEY_COMPLETE_YN
         ,SURVEY_SEQ
         ,EMPLOYEE_ID
-        FROM ( SELECT
+        FROM ( SELECT distinct
                  ROWNUM AS rnum
                 ,SURVEY_SEQ
                 ,DEPARTMENT_NAME
@@ -365,26 +365,62 @@
                  WHERE
                      m.APPRAISEE_ID = ui.EMPLOYEE_ID
                     and g.grade_id = ui.grade_id and oc.department_id = ui.department_id
-
-                 AND ((#{selection} = 'employeeName'
-                    	AND ui.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
-                		OR (#{selection} = 'departmentName'
-                        	AND oc.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
-                    	OR (#{selection} = 'gradeName'
-                    		AND g.GRADE_NAME LIKE '%' || #{keyword} || '%')
-                    	OR(#{selection} = 'surveyCompleteYn'
-                    	   AND m.survey_complete_YN LIKE '%' || #{keyword} || '%')
+						<choose>
+							<when test = "keyword == ''">
+								and employee_name like '%' || '' || '%'
+							</when>
+							<otherwise>
+							 	and employee_name like '%' || #{keyword} || '%'
+							</otherwise>
+						</choose>
+                        <choose>
+                         <when test = "selection == 'employeeName'">
+							and ui.employee_name like  '%' || #{keyword} || '%'
+                    	</when>
+						</choose>
+						<choose>
+						<when test= "selection2 == '사원'">
+							and g.grade_name = #{selection2}
+                        </when>
+						</choose>
+							<choose>
+						<when test= "selection2 == '부장'">
+							and g.grade_name = #{selection2}
+                        </when>
+						</choose>
+							<choose>
+						<when test= "selection2 == '차장'">
+							and g.grade_name = #{selection2}
+                        </when>
+						</choose>
+							<choose>
+						<when test= "selection2 == '과장'">
+							and g.grade_name = #{selection2}
+                        </when>
+						</choose>
+							<choose>
+						<when test= "selection2 == '대리'">
+							and g.grade_name = #{selection2}
+                        </when>
+						</choose>
+					<choose>
+                        <when test= "selection2 == 'completeYN'">
+							and m.SURVEY_COMPLETE_YN like '%' || #{keyword} || '%'
+                        </when>
+					</choose>
+					<choose>
+                        <when test= "selection == 'departmentName'">
+							and oc.department_name like '%' || #{departmentName} || '%'
+                        </when>
+						</choose>
 
                             )
-                   		)
                where survey_seq = #{surveySeq}
-               ORDER BY ROWNUM  ASC
+               ORDER BY ROWNUM ASC
              )
-
-				WHERE rnum >= #{startRowNo} and rnum <= #{endRowNo}
-
- ]]>
-
+             <![CDATA[
+		WHERE rnum >= #{startRowNo} and rnum <= #{endRowNo}
+				]]>
 </select>
 
 	<select id="surveyList" resultType="SLD">
