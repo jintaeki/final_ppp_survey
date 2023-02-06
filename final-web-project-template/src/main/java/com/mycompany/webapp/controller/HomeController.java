@@ -172,7 +172,7 @@ public class HomeController {
 				return "survey";
 			}else {
 				logger.info("관리자 진입");
-				session.setAttribute("checked", UCD.getRaterId());
+				session.setAttribute("checked", check);
 				return "redirect:/survey/surveysearch";
 			}
 			

@@ -41,8 +41,8 @@
 			</tr>
 
 		</table>
-		<div >
-			<a style="margin-left: 50px;" href="/logout">로그아웃</a>
+		<div style="margin-top:10px;">
+			<a style="margin-left: 100px;" href="/logout">로그아웃</a>
 		</div>
 	</div>
 </div>

@@ -26,6 +26,8 @@
    	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
    	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
    	<script src="https://code.highcharts.com/highcharts.js"></script>
+   	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+   	
 
 </head>
 <body>

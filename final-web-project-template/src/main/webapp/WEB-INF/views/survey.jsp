@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 
-<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
 <!-- <link rel="stylesheet" type="text/css" href="/survey.css"> -->
    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/survey.css" />
 
@@ -51,7 +51,7 @@
           if(i==size-1){
              surveyQandA += '<div class="question-form">';
              surveyQandA+= '<input type="hidden" name="questionSeq" value="'+result[i].QUESTION_SEQ+'">';
-             surveyQandA += '<p style="margin-bottom: 0px; color:dimgray;">'+(i-itemNum +1)+'.'+ result[i].QUESTION_CONTENT+'</p>';
+             surveyQandA += '<p style="margin-bottom: 0px; color:dimgray; text-align: initial;">'+(i-itemNum +1)+'.'+ result[i].QUESTION_CONTENT+'</p>';
              surveyQandA +='</div>';
              surveyQandA +='<input type="hidden" name="raterId" value="'+raterId+'">';
              surveyQandA +='<input type="hidden" name="appraiseeId" value="'+appraiseeId+'">';
@@ -113,7 +113,7 @@
 
           surveyQandA += '<div class="question-form">';
           surveyQandA+= '<input type="hidden" name="questionSeq" value="'+result[i].QUESTION_SEQ+'">';
-          surveyQandA += '<p style="margin-bottom: 0px; color:dimgray;">'+(i-itemNum +1)+'.'+ result[i].QUESTION_CONTENT+'</p>';
+          surveyQandA += '<p style="margin-bottom: 0px; color:dimgray; text-align: initial;">'+(i-itemNum +1)+'.'+ result[i].QUESTION_CONTENT+'</p>';
           surveyQandA +='</div>';
           surveyQandA +='<input type="hidden" name="raterId" value="'+raterId+'">';
           surveyQandA +='<input type="hidden" name="appraiseeId" value="'+appraiseeId+'">';
@@ -460,7 +460,7 @@
       <b>참여 가능 설문</b>
        <br>
             <c:forEach items="${surveySeqAndName}" var="surveySeqAndName">
-       			<button id="menu_btn" onclick="selectSurvey(this,${raterId})" value="${surveySeqAndName.SURVEY_SEQ}" style="border:none;">${surveySeqAndName.SURVEY_NAME}</button>
+       			<button id="menu_btn" onclick="selectSurvey(this,${raterId})" value="${surveySeqAndName.SURVEY_SEQ}" style="border:none;"><b>${surveySeqAndName.SURVEY_NAME}</b></button>
        		<br>
        		</c:forEach>
          
@@ -470,8 +470,10 @@
 
 
 <!-- 문항 시작 -->
-<div class="container" style="padding: 20px 20px 20px 20px; margin:0; height: 900px;">
-	<div style="display: flex; margin-left: 20px; margin-bottom: 20px;">
+<div class="card" style=" margin-left:0px;">
+<div class="card-body" style="	width:1400px;background: #031436; margin-left:0px; border-radius: 0.25rem;">
+<div class="forshadowing" style="margin:auto; ">
+	<div  style="display: flex; margin-left: 20px; margin-bottom: 20px;">
 		<select name="surveySeq" onclick="selectSurvey(this,${raterId})">
 			<option value="0">평가지 선택</option>
 			<option value="1">전체 평가지</option>
@@ -547,7 +549,7 @@
 			<div class="surveyName"></div>
 		
     
-         <div id="scroll_area" style="max-height: 670px; margin-left:10px; ">
+         <div id="scroll_area" style="max-height: 630px; margin-left:10px; ">
             <div class="survey_list">
 
                <form:form id="surveyForm" modelAttribute="surveyResult">
@@ -563,6 +565,8 @@
 <%--       <img src="${pageContext.request.contextPath}/resources/images/evaluate.png"  --%>
 <!--       style="width: 600px; margin-top: 300px; margin-left: -28px; position: fixed; opacity: 0.1;"> -->
    </div>
+   </div>
+   </div>
 </div>
 
-<%@ include file="/WEB-INF/views/common/footer.jsp"%>
+<%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
