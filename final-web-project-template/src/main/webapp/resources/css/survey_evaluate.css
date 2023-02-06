@@ -21,6 +21,11 @@
 /*     justify-content: center; */
 /* } */
 
+.title{
+	font-size: 24px;
+    text-align: center;
+}
+
 .survey_list_form_upper_dv{
 	display:flex;
 /* 	margin-left:200px; */
@@ -31,10 +36,15 @@
     margin-left: 360px;
 }
 
+.selection {
+	position: relative;
+    right: 800px;
+}
+
 
 .table{
 	max-width: 1300px;
-	height: 740px;
+	height: 700px;
 	margin:auto;
 }
 .sv_name{

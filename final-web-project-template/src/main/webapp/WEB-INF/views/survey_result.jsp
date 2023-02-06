@@ -8,6 +8,7 @@
 		<div class="card-body">
 			<div class="forshadowing">
 			  <div class="container_flex">
+			  <div class="title" style="font-size: 24px;">설문 결과</div>
 				<div class="individual">
 					<div class="row" style="text-align: center">
 						<div class="info" style="display: contents;">

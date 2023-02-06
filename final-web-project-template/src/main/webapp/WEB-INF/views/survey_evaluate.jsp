@@ -6,6 +6,7 @@
    <div class="card">
       <div class="card-body">
          <div class="forshadowing">
+           <div class="title">평가 대상자 목록</div>
             <div class="row">
                <div class="hmenu">
                   <div class="survey_list_form_upper_dv">
@@ -13,7 +14,7 @@
                         action="<c:url value='/survey/evaluatesearch/${surveySeq}'/>"
                         method="GET" class="survey_list_form" id="survey_list_form_id">
 
-                        <select name="selection">
+                        <select class="selection" name="selection">
                            <option value="employeeName"
                               <c:if test="${pagingDto.selection eq 'employeeName'}">selected</c:if>>이름</option>
                            <option value="departmentName"
@@ -37,7 +38,6 @@
                      </form>
                   </div>
                </div>
-
                <table class="table table-striped">
                   <thead>
                      <tr>
