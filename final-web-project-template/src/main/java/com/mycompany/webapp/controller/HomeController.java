@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -152,7 +153,9 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/survey/fileUploadProjectHistory.do")
-	public void jsonFileUploadProjectHistory (@RequestBody List<Map<String,Object>> historyJson ) {
+	
+	public void jsonFileUploadProjectHistory (MultipartHttpServletRequest historyJson ) {
+		System.out.println(historyJson.getFile("projectHistory"));
 			System.out.println("haha:"+historyJson.toString());
 
 	}
