@@ -25,7 +25,7 @@
 
    }
 
-   function questionHTML(result,raterId,appraiseeId,anonymitycode,theSeq){
+   function questionHTML(result,raterId,appraiseeId,anonymitycode,theSeq,appraiseeName){
       var itemNum = 0;
       // radio required 기능을 위한 배열
       var itemSeqArray=[];
@@ -62,7 +62,7 @@
              console.log(cnt);
              if(result[i].QUESTION_TYPE_CODE =="10002"){
                 surveyQandA += '<div class="item_form" style=" display: flex; align-items: flex-end;">';
-                surveyQandA += '<input type="hidden" name="'+(i+'num')+'" value="'+result[i].ITEM_SEQ+'">';
+                surveyQandA += '<input type="radio" style="display:none;" name="'+(i+'num')+'" value="'+result[i].ITEM_SEQ+'"checked>';
                 surveyQandA += '<textarea name="'+(i-itemNum +1)+'answerContent" ></textarea>';
                 surveyQandA += '</div>';
                 itemSeqArray[i-itemNum +1]=i;
@@ -120,7 +120,7 @@
           surveyQandA +='<input type="hidden" name="surveySeq" value="'+result[i].SURVEY_SEQ+'">';
           		if(result[i].QUESTION_TYPE_CODE =="10002"){
              		surveyQandA += '<div class="item_form" style=" display: flex; align-items: flex-end;">';
-             		surveyQandA+= '<input type="hidden" name="'+(i+'num')+'" value="'+result[i].ITEM_SEQ+'">';
+             		surveyQandA+= '<input type="radio" style="display:none;" name="'+(i+'num')+'" value="'+result[i].ITEM_SEQ+'"checked>';
 
             		surveyQandA += '<textarea name="'+(i-itemNum +1)+'answerContent"></textarea>';
 
@@ -180,21 +180,26 @@
          }
 
 
-
+          
       }
       itemSeqArray[0] = itemSeqArray.length;
       console.log(itemSeqArray);
       submitBtn = '';
       submitBtn='<button type="button" class="create_btn" onclick="submit('+JSON.stringify(itemSeqArray)+','+JSON.stringify(itemSubjSeq)+')">제출</button>';
 
+
       //문제 전송버튼 삭제 및 생성
       $('.submit_btn').empty();
       $('.submit_btn').append(submitBtn);
+	  $('.surveyName').empty();
+	  $('.surveyName').append('<div class="input_title">피평가자 : '+appraiseeName+'</div>');
       $('#surveyForm').append(surveyQandA);
+      
    }
 
    function selectSurvey(obj,raterId){
       $('.submit_btn').empty();
+      $('.surveyName').empty();
       console.log(raterId);
       console.log($(obj).val());
       var surveySeq = $(obj).val();
@@ -212,19 +217,13 @@
                   $('#surveyForm').empty();
 			
                // 전체로 두고 조회했을 때
-               if($(obj).val()==0){
-                  console.log("surveySeq is 0");
-                  var html='';
-                html += '<div class="noAppraisee"><b>평가 대상이 없습니다.</b></div>'
-                  $('#appendArea').empty();
-                  $('#appendArea').append(html);
-                  var htmlQuestion='<div class="noQuestion"><b>설문을 먼저 선택하세요.</b></div>';
-                  $('#surveyForm').append(htmlQuestion);
-                  showSurveyInfo("","","");
+               if($(obj).val()==1){
+            	   surveySeq = 1;
+            	   showSurveyInfo(surveyName,startDate,closedDate,surveySeq);
                  }else{
 
-                	  showSurveyInfo(surveyName,startDate,closedDate);
-
+                	  showSurveyInfo(surveyName,startDate,closedDate,surveySeq);
+                 }
                // 설문지 정보 출력
                $.ajax({
                      url:'getAppraisee.do/'+raterId+"/"+surveySeq,
@@ -242,7 +241,7 @@
                            success: function(theSeq){
                               console.log('result '+result);
 
-                              appraisee(appraisees,anonymitycode,theSeq);
+                              appraisee(appraisees,anonymitycode,theSeq,surveySeq);
                              var htmlQuestion='<div class="noQuestion"><b>평가 버튼을 눌러 평가를 진행해주세요.</b></div>';
                               $('#surveyForm').append(htmlQuestion);
 
@@ -255,7 +254,7 @@
                   });
 
 
-            }
+          
             }
          });
 
@@ -263,28 +262,49 @@
       }
 
 
-   function appraisee(data,anonymitycode,theSeq){
+   function appraisee(data,anonymitycode,theSeq,surveySeq){
       var size = data.length;
       var html = '';
-      $('#appendArea').empty();
-
+    
+		if (surveySeq ==1){
+			
+			location.reload();
+			return false();
+		}else if (surveySeq==0){
+			
+		}
+		else{
+			  $('.appraiseeList_list').empty();
+			   html +='<div class="appraiseeList">';
+			   html +='<div class="input_title">피평가자 목록('+data[0].surveyName+')</div>';
+			   html +='<div id="scroll_area">';
+			   html +=`<div class="row">
+				   	<div class="col-3">피평가자</div>
+					  <div class="col-4">부서</div>
+					  <div class="col-2">직급</div>					  
+					  <div class="col-3"></div>
+					  </div>
+			          <div id="appendArea" class="row">`;
             for(var i=0; i<size; i++){
+                html +='<div class="col-3">'+data[i].appraiseeName+'</div>';
+                html +='<div class="col-4">'+data[i].appraiseeDepartmentName+'</div>';
+                html +='<div class="col-2">'+data[i].appraiseeGradeName+'</div>';
 
-               html +='<div class="col-4">'+data[i].appraiseeDepartmentName+'</div>';
-               html +='<div class="col-2">'+data[i].appraiseeGradeName+'</div>';
-               html +='<div class="col-3">'+data[i].appraiseeName+'</div>';
                if(data[i].surveyCompleteYN=='N'){
-               html +='<div class="col-3"><button  class="create_btn" id="'+data[i].appraiseeId+'" onclick="surveyStart(this,'+data[i].appraiseeId+','+data[i].raterId+','+anonymitycode+','+theSeq+')" value="'+data[i].surveySeq+'">평가</button></div>';
+               html +='<div class="col-3"><button style="color:green;" class="create_btn" id="'+data[i].appraiseeId+'" onclick="surveyStart(this,'+data[i].appraiseeId+','+data[i].raterId+','+anonymitycode+','+theSeq+','+data[i].surveySeq+')" value="'+data[i].appraiseeName+'">평가하기</button></div>';
                }else{
-               html +='<div class="col-3"><button style="padding: 10px 13px; color:green;" class="create_btn" disabled>평가완료</button></div>';
+               html +='<div class="col-3"><button style="padding: 10px 13px; " class="create_btn" disabled>평가완료</button></div>';
                }
            }
-
-      $('#appendArea').append(html);
+            html +=`</div>
+					</div>`;
+            $('.appraiseeList_list').append(html);
+		}
+     
    }
 
-   function surveyStart(obj,appraiseeId,raterId,anonymitycode,theSeq){
-      var surveySeq = $(obj).val();
+   function surveyStart(obj,appraiseeId,raterId,anonymitycode,theSeq,surveySeq){
+      var appraiseeName = $(obj).val();
 
 
       $.ajax({
@@ -294,7 +314,7 @@
             success: function(result){
 
                alert("문제요청성공");
-               questionHTML(result,raterId,appraiseeId,anonymitycode,theSeq);
+               questionHTML(result,raterId,appraiseeId,anonymitycode,theSeq,appraiseeName);
 
             }
          });
@@ -338,12 +358,22 @@
           }
 
       
-          var cntCheckedAnswer=1;
+          var cntCheckedAnswer=0;
 				//1번부터 진행하는 이유는 itemSeqArray에 i를 대입할 때 index가 1부터시작(i-itemNum+1)했기 때문에 0은 null값이 들어가있다
              for(var i =1; i<itemSeqArray.length; i++){
 
                 if ($('input[name="'+itemSeqArray[i]+'num"]').is(':checked')){
-                    cntCheckedAnswer = cntCheckedAnswer + 1;
+                	if($('textarea[name="'+i+'answerContent"]').val()==''){
+                		 alert(i+"번을 채워주세요.");
+                		 $('input[name="'+itemSeqArray[i]+'num"]').focus();
+                         break
+                	}else if($('textarea[name="'+i+'answerContent"]').val()!=''){
+                		cntCheckedAnswer = cntCheckedAnswer + 1;
+                	}else{
+                		
+                		cntCheckedAnswer = cntCheckedAnswer + 1;
+                	}
+                    
                  }else if(!$('input[name="'+itemSeqArray[i]+'num"]').is(':checked') ) {
                 	 // 실제 주관식 문제가 비어있는 지 확인하고 alert
                        if($('textarea[name="'+i+'answerContent"]').val()==''){
@@ -364,7 +394,9 @@
                  }
              }
              		//문제 개수만큼 cnt가 쌓였다면 전송 진행
-                  if(cntCheckedAnswer == itemSeqArray.length - 1){
+             		console.log(cntCheckedAnswer);
+             		console.log(itemSeqArray.length-1);
+                  if(cntCheckedAnswer == itemSeqArray.length-1){
 
 
                     //formData에 담은 데이터를 object map에 담는다
@@ -386,7 +418,7 @@
                  		$('#surveyForm').append(htmlQuestion);
                  		$('.submit_btn').empty();
                  		var tag = $('#'+object['appraiseeId']);
-                		tag.parent().html('<button type="button" class="create_btn" style="padding: 10px 13px; color:green;" disabled>평가완료</button>');
+                		tag.parent().html('<button type="button" class="create_btn" style="padding: 10px 13px;" disabled>평가완료</button>');
                      }
                   });
                  }
@@ -399,11 +431,19 @@
       }
    }
 
-   function showSurveyInfo(surveyName,startDate,closedDate){
+   function showSurveyInfo(surveyName,startDate,closedDate,surveySeq){
 	   let html ='';
-	   html +='<br><b>설문 참여가능 기간</b><br>';
-	   html +='<p>'+startDate+' ~ '+ closedDate+'</p>';
-	   html +='<p><b>참여 중인 설문</b><br> '+surveyName +'<br></p>';
+	   if(surveySeq ==0){
+		   html +='<br><br><b>평가지를 선택해 주세요.</b>';
+	   }else if (surveySeq == 1){
+		   
+	   }else{
+		   html +='<br><b>설문 참여가능 기간</b><br>';
+		   html +='<p>'+startDate+' ~ '+ closedDate+'</p>';
+		   html +='<p><b>참여 중인 설문</b><br> '+surveyName +'<br></p>';
+	   }
+	   
+
 
 	$('.survey_info').empty();
 	$('.survey_info').append(html);
@@ -417,67 +457,97 @@
 <div class="container_flex">
    <div class="survey_info">
    <br>
-      <b>설문 참여가능 기간</b><br>
-      <p>~</p>
-      <b>참여 중인 설문</b> <br>  <br>
+      <b>참여 가능 설문</b>
+       <br>
+            <c:forEach items="${surveySeqAndName}" var="surveySeqAndName">
+       			<button id="menu_btn" onclick="selectSurvey(this,${raterId})" value="${surveySeqAndName.SURVEY_SEQ}" style="border:none;">${surveySeqAndName.SURVEY_NAME}</button>
+       		<br>
+       		</c:forEach>
+         
    </div>
 </div>
 
 
 
 <!-- 문항 시작 -->
-<div class="container" style="padding: 40px 40px 40px 40px; margin:0;">
-	<div style="display:flex;">
-   <select name="surveySeq" onclick="selectSurvey(this,${raterId})">
-      <option value="0">설문 선택</option>
-      <c:forEach items="${surveySeqAndName}" var="surveySeqAndName">
-         <option  value="${surveySeqAndName.SURVEY_SEQ}" >${surveySeqAndName.SURVEY_NAME}</option>
-      </c:forEach>
-   </select>
-				<div style="margin-left: 1090px;">
-					<a href="/logout">로그아웃</a>
-				</div>
+<div class="container" style="padding: 20px 20px 20px 20px; margin:0; height: 900px;">
+	<div style="display: flex; margin-left: 20px; margin-bottom: 20px;">
+		<select name="surveySeq" onclick="selectSurvey(this,${raterId})">
+			<option value="0">평가지 선택</option>
+			<option value="1">전체 평가지</option>
+			<c:forEach items="${surveySeqAndName}" var="surveySeqAndName">
+				<option value="${surveySeqAndName.SURVEY_SEQ}">${surveySeqAndName.SURVEY_NAME}</option>
+			</c:forEach>
+		</select>
+	</div>
+
+	<div class="row" style="width: 1360px;">
+
+
+		<div class="col-5">
+			<div class="appraiseeList_list">
+
+				<c:forEach items="${surveySeqAndName}" var="surveySeqAndName">
+					<div class="appraiseeList">
+						<div class="input_title">피평가자 목록 (${surveySeqAndName.SURVEY_NAME})</div>
+
+						<div id="scroll_area">
+
+
+							<div class="row">
+								<div class="col-3">피평가자</div>
+								<div class="col-4">부서</div>
+								<div class="col-2">직급</div>
+								<div class="col-3"></div>
+
+							</div>
+
+							<c:forEach items="${allUser}" var="allAppraisee">
+
+								<c:if test="${allUser} eq null }">
+									<div class="noAppraisee">
+										<b>평가 대상이 없습니다.</b>
+									</div>
+								</c:if>
+								<c:if test="${surveySeqAndName.SURVEY_SEQ eq allAppraisee.surveySeq }">
+									<div id="appendArea" class="row">
+										<div class="col-3">${allAppraisee.appraiseeName}</div>
+										<div class="col-4">${allAppraisee.appraiseeDepartmentName}</div>
+										<div class="col-2">${allAppraisee.appraiseeGradeName}</div>										
+										<c:if test="${allAppraisee.surveyCompleteYN eq 'N'}">
+											<div class="col-3">
+
+												<button class="create_btn" style="color:blue;"onclick="selectSurvey(this,${raterId})" value="${allAppraisee.surveySeq }">평가지
+													선택</button>
+											</div>
+										</c:if>
+										<c:if test="${allAppraisee.surveyCompleteYN eq 'Y'}">
+											<div class="col-3">
+												<button style="padding: 10px 13px; "
+													class="create_btn" disabled>평가완료</button>
+											</div>
+										</c:if>
+
+									</div>
+								</c:if>
+							</c:forEach>
+
+
+
+						</div>
+					</div>
+				</c:forEach>
 			</div>
-   <div class="row" style="width: 1360px;">
 
-      <div class="appraiseeList col-4">
-         <div class="input_title">피평가자 목록</div>
-
-         <div id="scroll_area">
-
-
-            <div class="row">
-               <div class="col-4">부서</div>
-               <div class="col-2">직급</div>
-               <div class="col-3">피평가자</div>
-               <div class="col-3"></div>
-            </div>
-            <div id="appendArea" class="row">
-
-               <div class="noAppraisee"><b>평가 대상이 없습니다.</b></div>
-            </div>
+		</div>
 
 
 
-         </div>
-      </div>
-
-
-
-
-
-<!--    <div class="col-1">하이</div> -->
-
-
-
-
-
-         
-
-      <div class="question-box col-7">
-
-      <div class="submit_btn"></div>
-         <div id="scroll_area" style="max-height: 670px; ">
+		<div class="question-box col-6">
+			<div class="surveyName"></div>
+		
+    
+         <div id="scroll_area" style="max-height: 670px; margin-left:10px; ">
             <div class="survey_list">
 
                <form:form id="surveyForm" modelAttribute="surveyResult">
@@ -488,9 +558,10 @@
                </form:form>
             </div>
          </div>
+           <div class="submit_btn"></div>
       </div>
-      <img src="${pageContext.request.contextPath}/resources/images/evaluate.png" 
-      style="width: 600px; margin-top: 300px; margin-left: -28px; position: fixed; opacity: 0.1;">
+<%--       <img src="${pageContext.request.contextPath}/resources/images/evaluate.png"  --%>
+<!--       style="width: 600px; margin-top: 300px; margin-left: -28px; position: fixed; opacity: 0.1;"> -->
    </div>
 </div>
 

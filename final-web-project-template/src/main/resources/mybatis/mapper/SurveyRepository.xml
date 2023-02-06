@@ -115,9 +115,18 @@
       FROM SURVEY_QUESTION WHERE SURVEY_SEQ = #{surveySeq} order by question_seq asc
    </select>
 
-   <update id="UpdateQuestion" parameterType="com.mycompany.webapp.dto.SurveyQuestionDTO">
-      UPDATE SURVEY_QUESTION SET QUESTION_CONTENT=#{questionContent}
-          ,QUESTION_TYPE_CODE=#{questionTypeCode} WHERE QUESTION_SEQ=#{questionSeq}
+   <update id="UpdateQuestion">
+      UPDATE SURVEY_QUESTION SET 
+      <choose>
+      	<when test= "questionContent != null">
+      		 QUESTION_CONTENT=#{questionContent},QUESTION_TYPE_CODE=#{questionTypeCode}
+      	</when>
+      	<when test="questionContent == null">
+      		QUESTION_TYPE_CODE=#{questionTypeCode}
+      	</when>
+      </choose>
+      
+       WHERE QUESTION_SEQ=#{questionSeq}
    </update>
 
    <update id="sendMessage" parameterType="int">
@@ -173,7 +182,6 @@
 
 
 <select id="searchListByKeyword" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="SLD">
-   <![CDATA[
        SELECT
        		 rnum
        		,SURVEY_SEQ
@@ -210,48 +218,57 @@
 	          	 ,STATE_CODE
 	          	 ,REG_DATE
 	          	 FROM SURVEY_LIST
-	          	 WHERE
-	          	 ((SURVEY_START_DATE is null or SURVEY_CLOSED_DATE is null) and
-	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%' and
-	          	  STATE_CODE LIKE (CASE
-      							   WHEN #{selection} = '30005'
-      							   THEN '%' || '' || '%'
-                                   ELSE '%' || #{selection} || '%'
-                                   END) AND
-                  ANONYMITY_CHECK_CODE LIKE (CASE
-                                                 WHEN #{anonyMityCheckCode} = '30005'
-                                                 THEN '%' || '' || '%'
-                                                 ELSE '%' || #{anonyMityCheckCode} || '%'
-                                                 END)
-	          	 )
-	          	   or
-	          	 SURVEY_START_DATE >= (CASE
-	          	 						 WHEN #{surveyStartDate} is null
-	          	 						 THEN sysdate-99999
-	          	 						 WHEN #{surveyStartDate} is not null
-	          	 						 THEN to_date(to_char(#{surveyStartDate},'yyyy-MM-dd'),'yyyy-MM-dd')
-	          	 						 END) and
-
-	          	  STATE_CODE LIKE (CASE
-      							   WHEN #{selection} = '30005'
-      							   THEN '%' || '' || '%'
-                                   ELSE '%' || #{selection} || '%'
-                                   END) and
-
-	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%'AND
-
-	          	  ANONYMITY_CHECK_CODE LIKE (CASE
-                                                 WHEN #{anonyMityCheckCode} = '30005'
-                                                 THEN '%' || '' || '%'
-                                                 ELSE '%' || #{anonyMityCheckCode} || '%'
-                                                 END)
-				  ORDER BY REG_DATE DESC
-                )
-         	  WHERE ROWNUM <= #{endRowNo}
+	   
+	          	           	   
+	          	  <choose>
+	          	  	<when test ="keyword ==''">
+	          	  		 WHERE survey_name like  '%' || '' || '%' 
+	          	  	</when>
+	          	  	<otherwise>
+	          	  	     WHERE survey_name like '%' || #{keyword} || '%'	
+	          	  	</otherwise>
+	          	  </choose>
+	          	  <choose>
+      				<when test= "selection == '30005'">
+      			    </when>
+      				<otherwise>
+      					AND STATE_CODE = #{selection}
+     			 	</otherwise>
+				  </choose>
+				  <choose>
+      				<when test= "anonyMityCheckCode == '30005'">
+      			    </when>
+      				<otherwise>
+      					AND ANONYMITY_CHECK_CODE= #{anonyMityCheckCode}
+     			 	</otherwise>
+				  </choose>
+				  <choose>
+				  	<when test="surveyStartDateLeft == null">
+				  	</when>
+				 	<otherwise>
+						AND survey_start_date >= to_date(to_char(#{surveyStartDateLeft},'yyyy-MM-dd'),'yyyy-MM-dd')         	  	
+	          	  	</otherwise> 
+				  </choose>
+	  			 <choose>
+				  	<when test="surveyStartDateRight == null">
+				  	</when>
+				 	<otherwise>
+				 	<![CDATA[
+						AND survey_start_date <= to_date(to_char(#{surveyStartDateRight},'yyyy-MM-dd'),'yyyy-MM-dd')   
+					]]>      	  	
+	          	  	</otherwise> 
+				  </choose>
+                
+                ORDER BY REG_DATE DESC
                )
-            WHERE rnum  >= #{startRowNo}
-           ) WHERE cd.code_detail_id = state_code
-      ]]>
+          	  <![CDATA[              
+         	  WHERE ROWNUM <= #{endRowNo}
+         	  ]]>
+         	  
+           ) 
+          WHERE rnum  >= #{startRowNo}
+       ) 
+       WHERE cd.code_detail_id = state_code
    </select>
 
    <select id="selectQuestionBySeq"  resultType="hashmap">
@@ -264,7 +281,9 @@
                 ,SURVEY_ITEM.ITEM_SCORE
           FROM  SURVEY_ITEM  right join SURVEY_QUESTION
           on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ
-          WHERE SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} and SURVEY_QUESTION.QUESTION_SEQ = #{questionSeq} ORDER BY SURVEY_QUESTION.QUESTION_SEQ DESC
+          WHERE SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} 
+          and SURVEY_QUESTION.QUESTION_SEQ = #{questionSeq} 
+          ORDER BY SURVEY_ITEM.ITEM_SCORE  ,SURVEY_ITEM.ITEM_SEQ
 
    </select>
 
@@ -273,6 +292,11 @@
 		WHERE QUESTION_SEQ = #{questionSeq}
 	</delete>
 
+	<delete id="deleteItem">
+		DELETE FROM SURVEY_ITEM
+		WHERE QUESTION_SEQ = #{questionSeq} and ITEM_SEQ = #{itemSeq}
+	</delete>
+	
 
    <select id="selectItems" parameterType="int" resultType="hashmap">
 
@@ -609,25 +633,24 @@ SELECT EMPLOYEE_NAME
      , MAX
      , AVG
      , MIN
+     , TOT
+     , RANK
 FROM(
     SELECT EMPLOYEE_ID
          , SCORE
          , SURVEY_SEQ
          , rk
-         , rk2
-         , rat
-         , CASE WHEN              rat <= 10 THEN 1
-                WHEN rat > 10 AND rat <= 50 THEN 2
-                WHEN rat > 50 AND rat <= 90 THEN 3
-                WHEN rat > 90 AND rat <= 100 THEN 4
-            END grd
+         , rk2 AS RANK
+         , ROUND(rat) AS GRD
+         , tot
     FROM (
        SELECT EMPLOYEE_ID
             , SCORE
             , SURVEY_SEQ
             , rk
-            , (rk + (cnt - 1) / 2) rk2
-            , (rk + (cnt - 1) / 2) / tot * 100 rat
+            , (rk + (cnt - 1) / 2) AS rk2
+            , (rk + (cnt - 1) / 2) / tot * 100 AS rat
+            , tot
          FROM (
              SELECT EMPLOYEE_ID
                   , SCORE

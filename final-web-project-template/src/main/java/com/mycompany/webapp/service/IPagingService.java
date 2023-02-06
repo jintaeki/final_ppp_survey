@@ -5,7 +5,7 @@ import java.util.Date;
 public interface IPagingService {
 
 
-	int getTotalBoardNum(String keyword, String selection, Date surveyStartDate, String anonyMityCheckCode);
+	int getTotalBoardNum(String keyword, String selection, Date surveyStartDateLeft,Date surveyStartDateRight, String anonyMityCheckCode);
 
 	int getTotalMappingNum(String keyword, String selection, int surveySeq, String selectGD);
 	

@@ -63,7 +63,9 @@ public class SurveyService implements ISurveyService{
 		surveyDao.deleteItemByQSeq(questionSeq);
 	}
 
-
+	public void deleteItem (int questionSeq, int itemSeq) {
+		surveyDao.deleteItem(questionSeq, itemSeq);
+	}
 
 	@Override
 	public void insertQuestion(SurveyQuestionDTO sqd) {
@@ -82,9 +84,8 @@ public class SurveyService implements ISurveyService{
 	}
 
 	@Override
-	public void UpdateQuestion(SurveyQuestionDTO SQD) {
-		logger.info("문제 업데이트 서비스 진입: " + SQD);
-		 surveyDao.UpdateQuestion(SQD);
+	public void UpdateQuestion(String questionContent, int questionSeq, String questionTypeCode) {
+		 surveyDao.UpdateQuestion(questionContent, questionSeq,  questionTypeCode);
 
 	}
 
@@ -275,6 +276,8 @@ public class SurveyService implements ISurveyService{
 
 		return surveyDao.getItemCnt(surveySeq);
 	}
+
+
 
 
 

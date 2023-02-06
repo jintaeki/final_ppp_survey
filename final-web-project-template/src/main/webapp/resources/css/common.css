@@ -1,11 +1,14 @@
 @charset "UTF-8";
 
+@font-face{
+	font-family: "segoe";
+
+	src : url('/manyface/src/main/webapp/resources/font/Segoe UI Bold.ttf');
+}
 * {
 	box-sizing: border-box;
-	font-family: 'Gothic A1', sans-serif;
-	font-family: 'Nanum Gothic', sans-serif;
-	font-family: 'Nanum Gothic Coding', monospace;
-	font-family: 'Noto Serif KR', serif;
+
+
 }
 
 .card {
@@ -23,16 +26,31 @@
 }
 
 .hmenu {
-	display: flex;
-	margin-bottom: 20px;
-	margin-left: 530px;
+
+	margin: auto;
+	margin-bottom: 30px;
+	margin-top: 50px;
 }
 
 .card-body {
-	height: 865px;
+	height: 900px;
 	width: 1500px;
 	/* 	margin-left:50px; */
-	background: darkgray;
+	background: #031436;
+}
+
+.survey_list_form_upper_dv{
+	width:1500px;
+	margin-left:100px;
+}
+
+.searchRangeAll{
+	display:flex;
+
+}
+
+.searchRange{
+	margin-right:290px;
 }
 
 .forshadowing {
@@ -40,7 +58,7 @@
 	box-shadow: rgb(50 50 93/ 25%) 0px 50px 100px -20px, rgb(0 0 0/ 30%) 0px
 		30px 60px -30px, rgb(10 37 64/ 35%) 0px -2px 6px 0px inset;
 	border-radius: 5px;
-	height: 820px;
+	height: 860px;
 	padding: 1em;
 }
 
@@ -55,9 +73,6 @@ table {
 	vertical-align: middle;
 }
 
-::-webkit-scrollbar { /* 스크롤바 제거 */
-	display: none;
-}
 
 input {
 	border-radius: 10px;
@@ -299,4 +314,10 @@ select:disabled {
 
 .item_form {
 	margin-left: 10px;
+}
+
+thead{
+	border-radius: 10px;
+	color: white;
+	background-color: #8258FA;
 }

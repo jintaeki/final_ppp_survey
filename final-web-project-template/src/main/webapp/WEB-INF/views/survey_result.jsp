@@ -104,5 +104,4 @@
 	</div>
 	<!-- col-11 종료 -->
 </div>
-
 <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>

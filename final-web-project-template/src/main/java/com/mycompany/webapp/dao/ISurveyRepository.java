@@ -31,7 +31,7 @@ public interface ISurveyRepository {
 
 	SurveyListDTO selectSurvey(int surveyid);
 
-	void UpdateQuestion(SurveyQuestionDTO SQD);
+	void UpdateQuestion(@Param("questionContent") String questionContent, @Param("questionSeq")  int questionSeq, @Param("questionTypeCode")  String questionTypeCode);
 
 	List<SurveyQuestionDTO> getQuestionListOrderByDesc(int surveySeq);
 
@@ -61,7 +61,7 @@ public interface ISurveyRepository {
 
 	void deleteSurvey(int surveySeq);
 
-	void deleteItem (int itemSeq);
+	void deleteItem (@Param("questionSeq") int questionSeq, @Param("itemSeq") int itemSeq);
 
 	List<Map<String, String>> selectSurveyEvaluate(int surveySeq);
 

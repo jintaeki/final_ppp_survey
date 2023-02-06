@@ -4,7 +4,7 @@
 <mapper namespace="com.mycompany.webapp.dao.IPagingRepository">
 
 	<select id="getTotalBoardNum" resultType="int">
-	<![CDATA[
+
 		SELECT count(ROWNUM)
 	    FROM (
 			SELECT ROWNUM AS rnum
@@ -23,47 +23,56 @@
 		      	 ,SURVEY_CLOSED_DATE
 	          	 ,STATE_CODE
 	          	 FROM SURVEY_LIST
-	          	 WHERE
-	          	 ((SURVEY_START_DATE is null or SURVEY_CLOSED_DATE is null) and
-	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%' and
-	          	  STATE_CODE LIKE (CASE
-      							   WHEN #{selection} = '30005'
-      							   THEN '%' || '' || '%'
-                                   ELSE '%' || #{selection} || '%'
-                                   END) AND
-                 ANONYMITY_CHECK_CODE LIKE (CASE
-                                                 WHEN #{anonyMityCheckCode} = '30005'
-                                                 THEN '%' || '' || '%'
-                                                 ELSE '%' || #{anonyMityCheckCode} || '%'
-                                                 END)
-	          	 )
-	          	   or
-	          	 SURVEY_START_DATE >= (CASE
-	          	 						 WHEN #{surveyStartDate} is null
-	          	 						 THEN sysdate-99999
-	          	 						 WHEN #{surveyStartDate} is not null
-	          	 						 THEN to_date(to_char(#{surveyStartDate},'yyyy-MM-dd'),'yyyy-MM-dd')
-	          	 						 END) and
-
-	          	  STATE_CODE LIKE (CASE
-      							   WHEN #{selection} = '30005'
-      							   THEN '%' || '' || '%'
-                                   ELSE '%' || #{selection} || '%'
-                                   END) and
-
-	          	  SURVEY_NAME LIKE '%' || #{keyword} || '%'and
-	          	  ANONYMITY_CHECK_CODE LIKE (CASE
-                                                 WHEN #{anonyMityCheckCode} = '30005'
-                                                 THEN '%' || '' || '%'
-                                                 ELSE '%' || #{anonyMityCheckCode} || '%'
-                                                 END)
-				  ORDER BY REG_DATE DESC
-			   	)
-
-			   	)
 
 
-			   ]]>
+
+	          	  <choose>
+	          	  	<when test ="keyword ==''">
+	          	  		 WHERE survey_name like  '%' || '' || '%'
+	          	  	</when>
+	          	  	<otherwise>
+	          	  	     WHERE survey_name like '%' || #{keyword} || '%'
+	          	  	</otherwise>
+	          	  </choose>
+	          	  <choose>
+      				<when test= "selection == '30005'">
+      			    </when>
+      				<otherwise>
+      					AND STATE_CODE = #{selection}
+     			 	</otherwise>
+				  </choose>
+				  <choose>
+      				<when test= "anonyMityCheckCode == '30005'">
+      			    </when>
+      				<otherwise>
+      					AND ANONYMITY_CHECK_CODE= #{anonyMityCheckCode}
+     			 	</otherwise>
+				  </choose>
+				  <choose>
+				  	<when test="surveyStartDateLeft == null">
+				  	</when>
+				 	<otherwise>
+						AND survey_start_date >= to_date(to_char(#{surveyStartDateLeft},'yyyy-MM-dd'),'yyyy-MM-dd')
+	          	  	</otherwise>
+				  </choose>
+	  			 <choose>
+				  	<when test="surveyStartDateRight == null">
+				  	</when>
+				 	<otherwise>
+				 	<![CDATA[
+						AND survey_start_date <= to_date(to_char(#{surveyStartDateRight},'yyyy-MM-dd'),'yyyy-MM-dd')
+					]]>
+	          	  	</otherwise>
+				  </choose>
+
+
+
+
+				ORDER BY REG_DATE DESC
+			)
+		)
+
+
 	</select>
 
 	<select id="getTotalMappingNum" resultType="int">
@@ -180,19 +189,15 @@
 	SELECT count(ROWNUM)
 	    FROM (
 			SELECT ROWNUM AS rnum
-		      	  ,PROJECT_NAME
+		      	  ,EMPLOYEE_ID
 	    	FROM (SELECT
-                  P.PROJECT_NAME
-                FROM PROJECT P,
-                     PROJECT_HISTORY H,
-                     GRADE G,
+                 	UR.EMPLOYEE_ID
+                FROM GRADE G,
                      USER_INFO UA,
                      USER_INFO UR,
                      SURVEY_LIST S,
                      ORGANIZATION_CHART O
-               WHERE P.PROJECT_ID = H.PROJECT_ID
-                 AND UR.EMPLOYEE_ID = H.participation_employee_id
-                 AND UR.GRADE_ID = G.GRADE_ID
+               WHERE UR.GRADE_ID = G.GRADE_ID
                  AND UA.DEPARTMENT_ID = O.DEPARTMENT_ID
                  AND S.SURVEY_SEQ = #{surveySeq}
                  AND UA.GRADE_ID = 2
@@ -230,6 +235,7 @@
 
 	<select id="getEvaluateSearchBoardNum"  resultType="int">
 
+
 	      select count(ROWNUM)
 	      from (
 	             SELECT
@@ -257,8 +263,7 @@
 	                 FROM grade g ,user_info ui ,mapping m ,ORGANIZATION_CHART oc
 	                 WHERE
 	                     m.APPRAISEE_ID = ui.employee_id
-	                     and g.grade_id = ui.grade_id and oc.department_id = ui.department_id
-
+	                     AND g.grade_id = ui.grade_id and oc.department_id = ui.department_id
 	                     AND ((#{selection} = 'employeeName'
 	                    	AND ui.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
 	                		OR (#{selection} = 'departmentName'

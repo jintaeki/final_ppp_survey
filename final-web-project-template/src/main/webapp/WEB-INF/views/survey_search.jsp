@@ -6,37 +6,53 @@
 
 <script>
 
+function delete_mapping_btn(){
+	  if (confirm("정말 삭제하시겠습니까??") == true){    //확인
+	      document.form.submit();
+	  }else{   //취소
+	      return;
+	  }
+	}
 
-	function delete_survey_btn(obj,surveyseq,selection,pageno){
+
+	function delete_survey_btn(obj,surveyseq,selection,pageno,anonyMityCheckCode,surveyStartDateLeft, surveyStartDateRight){
 		if(confirm("삭제하시겠습니까?")){
 		let bselection = selection;
 		let bpageno = pageno;
-		let bdate = $('#selectedDate').val();
+		let banonyMityCheckCode = anonyMityCheckCode;
 		let bkeyword = $('#selectedKeyword').val();
-	  	var date = $('#selectedDate').val();
+		let bsurveyStartDateLeft = surveyStartDateLeft;
+		let bsurveyStartDateRight = surveyStartDateRight;
 	  	var keyword = $('#selectedKeyword').val();
-		if(date==''){
-			date = new Date('1111-11-11');
-			const year = date.getFullYear();
-			const month = date.getMonth();
-			const day = date.getDate();
+// 		if(date==''){
+// 			date = new Date('1111-11-11');
+// 			const year = date.getFullYear();
+// 			const month = date.getMonth();
+// 			const day = date.getDate();
 
-			currentDay = new Date(year, month, day).toLocaleDateString();
-			currentDay = currentDay.replaceAll('.','-');
-			currentDay = currentDay.replaceAll(' ', '');
-			currentDay = currentDay.slice(0,-1);
+// 			currentDay = new Date(year, month, day).toLocaleDateString();
+// 			currentDay = currentDay.replaceAll('.','-');
+// 			currentDay = currentDay.replaceAll(' ', '');
+// 			currentDay = currentDay.slice(0,-1);
 
-			let firstTemp = currentDay.split('-')[0];
-			let middleTemp = currentDay.split('-')[1];
-			let lastTemp = currentDay.split('-')[2];
-			if(Number(firstTemp<10)) firstTemp = '0' +firstTemp;
-			if(Number(middleTemp<10)) middleTemp = '0' + middleTemp;
-			if(Number(lastTemp<10)) lastTemp = '0'+lastTemp;
+// 			let firstTemp = currentDay.split('-')[0];
+// 			let middleTemp = currentDay.split('-')[1];
+// 			let lastTemp = currentDay.split('-')[2];
+// 			if(Number(firstTemp<10)) firstTemp = '0' +firstTemp;
+// 			if(Number(middleTemp<10)) middleTemp = '0' + middleTemp;
+// 			if(Number(lastTemp<10)) lastTemp = '0'+lastTemp;
 
-			currentDay = firstTemp+'-'+middleTemp+'-'+lastTemp;
-			date = currentDay;
+// 			currentDay = firstTemp+'-'+middleTemp+'-'+lastTemp;
+// 			date = currentDay;
 
-		}if(keyword==''){
+// 		}
+	  	if(surveyStartDateLeft ==''){
+			surveyStartDateLeft == 'emptyLeftDate';
+		}
+		if(surveyStartDateRight ==''){
+			surveyStartDateRight == 'emptyRightDate';
+		}
+		if(keyword==''){
 			keyword= 'empty';
 
 		}
@@ -45,7 +61,7 @@
 
 		$.ajax({
 	         method:'POST', //어떤 방식으로 보낼 지
-	            url:'deletesurvey.do/'+ surveyseq+'/'+pageno+'/'+date +'/'+keyword+'/'+selection, // qdiv를 보낼 경로 설정
+	            url:'deletesurvey.do/'+ surveyseq+'/'+pageno +'/'+keyword+'/'+selection+'/'+anonyMityCheckCode+'/'+surveyStartDateLeft+'/'+surveyStartDateRight, // qdiv를 보낼 경로 설정
 	            processData : false,
 	            async: false,
 	            contentType : false,
@@ -57,7 +73,7 @@
 
 	    		const tag= $('#'+surveyseq);
 	        	tag.remove();
-	            location.href='/survey/surveysearch?pageNo='+bpageno+'&keyword='+bkeyword+'&selection='+bselection+'&surveyStartDate='+bdate;
+	            location.href='/survey/surveysearch?pageNo='+bpageno+'&keyword='+bkeyword+'&selection='+bselection+'&anonyMityCheckCode='+banonyMityCheckCode+'&surveyStartDateLeft='+surveyStartDateLeft+'&surveyStartDateRight='+surveyStartDateRight;
 	            }
 	       });
 
@@ -93,7 +109,7 @@
 
 
   	function send() {
-  	
+
   		var pageno = $('#pageNo').val();
   		var surveyseq = $('#surveyseq').val();
   		var deliverycontent = $('#deliverycontent').val();
@@ -114,7 +130,7 @@
 			const tag = $('#'+surveyseq+'_send');
 			console.log(tag);
 			console.log(surveyseq);
-			
+
 			$('#exampleModal1').modal('hide');
 
 			const text = '<button type="button" class="btn btn-link" onclick="location.href='+'\'evaluateSearch/' +surveyseq+ '\'">조회</button>';
@@ -180,7 +196,7 @@
   	   	html += '<input type="hidden" id="newCheck" name="newCheck" value="0">';
   	   	html += '<br> <h5> 다면평가에 포함될 프로젝트의 범위 정하기 </h5> <select class="form-control" name="month"> <option value="3">최근 3개월 동안에 끝난 프로젝트</option> <option value="6">최근 6개월 동안에 끝난 프로젝트</option> <option value="12">최근 1년 동안에 끝난 프로젝트</option>';
   		html +=	'<option value="24">최근 2년 동안에 끝난 프로젝트</option> <option value="36">최근 3년 동안에 끝난 프로젝트</option> </select>';
-  		html += '<br> <h5>평가 최대 인원</h5> <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;">';
+  		html += '<br> <h5>피평가자 최대 인원</h5> <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;">';
   	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> <input type="submit" class="btn btn-primary" value="매핑">';
   	    html += '</div></form:form></div></div></div></div>';
   	    $('#beforeModal').after(html);
@@ -199,13 +215,13 @@
   	   	html += '<input type="hidden" id="month" name="month" value="3">';
   	   	html += '<input type="hidden" id="number" name="number" value="3">';
   	   	html += '<br> <h5> 해당 다면평가의 매핑을 새로 하시겠습니까? </h5>';
-  	   	html += '<br><button type="submit" class="btn btn-outline-danger" id="newCheck" name="newCheck" value="1">삭제하고 새로 시작하기</button>';
-  	   	html += '<br><button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 매핑 데이터로 넘어가기</button>';
-  	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>';
+  	   	html += '<br><button type="submit" class="btn btn-outline-danger" id="newCheck" name="newCheck" value="1" onclick="delete_mapping_btn();">삭제하고 새로 시작하기</button>';
+  	   	html += '<button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 매핑 데이터로 넘어가기</button>';
+  	    html += '<div class="modal-footer"><br><button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>';
   	    html += '</div></form:form></div></div></div></div>';
   	    $('#beforeModal').after(html);
   	}
-  	
+
   	function updatemessage(surveyseq){
 		html ="";
   	  	html +='<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
@@ -221,14 +237,14 @@
   	  	html +='</div></div></div></div></div>';
   	    $('#beforeModal').after(html);
 	}
-  	
+
   	function setdataform(){
-  		
+
   		var form = $('#surveyDataForm')[0];
   		var dataform = new FormData(form);
-  		
-  		
-  		
+
+
+
   		$.ajax({
   		url:'/survey/set.do' ,
   		method:'POST',
@@ -242,57 +258,57 @@
   			if(result=="nameLarge"){alert('제목이 너무 길어요. 15자까지 작성 가능합니다.');  return false;}
   			if(result=="noCode"){alert('익명 혹은 기명을 선택해 주세요.');  return false;};
   			if(result=="contentLarge"){alert('부가 설명이 너무 길어요. 150자 내로 입력 가능합니다.');  return false;}
-  			else{location.href="/survey/surveyinsert?surveyseq="+result;
+  			if(result=="dateEmpty"){alert('날짜를 선택해 주세요.'); return false;}
+  			else{alert("등록 성공. 관리 페이지로 이동합니다.");location.href="/survey/surveyinsert?surveyseq="+result;
 		};
-  			
-  			
+
+
   		}
-  		
-  		
-  		
-  		
+
+
+
+
   		});
-  		
+
   	}
-  	
+
   	function reset_btn(){
-  		$('.survey_list_form_upper_dv').empty();
+  		$('.searchRangeAll').empty();
   		html='';
-  		html +=`<form action="<c:url value='/survey/surveysearch'/>" method="POST" class="survey_list_form" style="display: flex;">`;
-		html +=`<input type="date" name="surveyStartDate" id="selectedDate"
-				value="<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">
-			<select name="anonyMityCheckCode">
+  		html +=`<div class="searchRange"><b>평가 시작 시간:</b>`;
+		html +=`<input type="date" name="surveyStartDateLeft" id="selectedDate">
+				<input type="date" name="surveyStartDateRight" id="selectedDate">`;
+					
+		html +=`	<select name="anonyMityCheckCode">
 					<option value="30005">전체</option>
 					<option value="30002">기명</option>
 					<option value="300001">익명</option>
-			</select> 
-			<select name="selection">
-				
+					</select>
+				<select name="selection">
+
 				<option value="30005">전체</option>
 				<option value="30004">알림 발송 완료</option>
 				<option value="30003">매핑 완료</option>
-				<option value="30002">등록 완료</option>
+				<option value="30002">평가지 등록 완료</option>
 				<option value="30001">작성 중</option>
+				</select> </div>`;
 				
-				
-			</select> <input type="text" class="form-control" id="selectedKeyword"
-				placeholder="search" name="keyword"
-				value="${pagingdto.keyword}" aria-describedby="button-addon2">
-			<input type="hidden" name="pageNo" value="1">
-			<div class="input-group-append">
+		html +=`<div class="input-group-append">	
+				<input type="text" class="form-control" id="selectedKeyword" placeholder="search" name="keyword" aria-describedby="button-addon2">
+				<input type="hidden" name="pageNo" value="1">
 				<input type="submit" class="btn btn-outline-secondary"
 					id="button-addon2" value="검색"> <input type="button" style="margin-left:10px;"
 					class="btn btn-outline-secondary" onclick="reset_btn()" value="초기화">
-			</div>
-		</form>`;
-  		$('.survey_list_form_upper_dv').append(html);
+				</div>
+				</div>`;
+  		$('.searchRangeAll').append(html);
 
   	}
-  	
-  	
+
+
 </script>
 
-<div class="col-11" style="width: 1800px;">
+<div class="col-11" style="width: 1800px; height:900px;">
 	<!-- modal(설문 등록 시 뜨는 팝업창) -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -322,13 +338,26 @@
 								name="surveyContent"></textarea>
 						</div>
 						<input type="hidden" name="stateCode" value="30001">
-						<input type="hidden" name="surveySeq" value="1"> 평가 진행 기간<br>
+						<input type="hidden"> 평가 진행 기간<br>
 
 						<input type="date" name="surveyStartDate" pattern="yyyy-MM-dd">~<input
 							type="date" name="surveyClosedDate" pattern="yyyy-MM-dd">
 						<br>
-						<input type="radio" name="anonymityCheckCode" value="20001">익명 <br>
+						<br>
+						<div style="display: flex;align-items: center;">
+						<input type="radio" name="anonymityCheckCode" value="20001">익명 &nbsp;
 						<input type="radio" name="anonymityCheckCode" value="20002">기명
+						</div>
+						<br>
+						<input type="hidden"> 평가지 복사<br>
+						<select name="surveySeq">
+							<option value="0">평가지 선택</option>
+							<c:forEach var="list" items="${surveylist}">
+								<option value="${list.surveySeq} ">${list.surveyName }</option>
+							</c:forEach>					
+						</select>
+						<br>
+						<br>
 					<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal">취소</button>
@@ -351,8 +380,13 @@
 						<div class="survey_list_form_upper_dv">
 							<form action="<c:url value='/survey/surveysearch'/>"
 								method="POST" class="survey_list_form" style="display: flex;">
-								<input type="date" name="surveyStartDate" id="selectedDate"
-									value="<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">
+								<div class="searchRangeAll">
+								<div class="searchRange">
+								<b>평가 시작 시간:</b>
+								<input type="date" name="surveyStartDateLeft" id="selectedDate"
+									value="<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />">
+								<input type="date" name="surveyStartDateRight" id="selectedDate"
+									value="<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">
 								<select name="anonyMityCheckCode">
 									<c:forEach items="${commonCodeList}" var="commonCode">
 										<c:if
@@ -383,21 +417,27 @@
 											</c:if>
 										</c:if>
 									</c:forEach>
-								</select> <input type="text" class="form-control" id="selectedKeyword"
+								</select> 
+								</div>
+								
+								<div class="input-group-append">
+								<input type="text" class="form-control" id="selectedKeyword"
 									placeholder="search" name="keyword"
 									value="${pagingdto.keyword}" aria-describedby="button-addon2">
 								<input type="hidden" name="pageNo" value="1">
-								<div class="input-group-append">
+								
 									<input type="submit" class="btn btn-outline-secondary"
 										id="button-addon2" value="검색"> <input type="button" style="margin-left:10px;"
 										class="btn btn-outline-secondary" onclick="reset_btn()"
-										value="초기화">
+										value="초기화">						
+								</div>
 								</div>
 							</form>
 
 
 						</div>
 					</div>
+					<div class="col-12" style="margin-bottom:30px;"> <h4 style="text-align:center;"><b>평가지 목록</b></h4></div>
 					<table class="table">
 						<thead>
 							<tr>
@@ -419,13 +459,12 @@
 									<th scope="row">
 										<button class="delete_survey_btn"
 											style="background: white; border: 1px solid #fff; border-radius: 35em;"
-											onclick="delete_survey_btn(this,${list.surveySeq}, ${pagingdto.selection},  ${pagingdto.pageNo})">
+											onclick="delete_survey_btn(this,${list.surveySeq}, ${pagingdto.selection},  ${pagingdto.pageNo}, ${paging.anonyMityCheckCode},${paging.surveyStartDateLeft},${paging.surveyStartDateRight} )">
 
 											<i class="fas fa-xmark"></i>
 										</button>
 									<td><c:if test="${list.stateCode ne '30004'}">
 											<a href="surveyinsert?surveyseq=${list.surveySeq}"  id="surveyUP">${list.surveyName }</a> &nbsp;
-											<a class="menu_profile_text" style="position:fixed;" href='<c:url value='copysurvey.do/${list.surveySeq}'/>'>복사</a>
 
 										</c:if> <c:if test="${list.stateCode eq '30004'}">
 									${list.surveyName }
@@ -483,30 +522,30 @@
 									<div>
 
 										<a class="btn btn-outline-secondary"
-											href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a>
+											href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">처음</a>
 										<c:if test="${pagingdto.groupNo>1}">
 											<a class="btn btn-outline-secondary"
-												href="surveysearch?pageNo=${pagingdto.startPageNo-1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">이전</a>
+												href="surveysearch?pageNo=${pagingdto.startPageNo-1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">이전</a>
 										</c:if>
 
 										<c:forEach var="i" begin="${pagingdto.startPageNo}"
 											end="${pagingdto.endPageNo}">
 											<c:if test="${pagingdto.pageNo != i}">
 												<a class="btn btn-outline-secondary"
-													href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
+													href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">${i}</a>
 											</c:if>
 											<c:if test="${pagingdto.pageNo == i}">
 												<a class="btn btn-secondary"
-													href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">${i}</a>
+													href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">${i}</a>
 											</c:if>
 										</c:forEach>
 
 										<c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
 											<a class="btn btn-outline-secondary"
-												href="surveysearch?pageNo=${pagingdto.endPageNo+1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">다음</a>
+												href="surveysearch?pageNo=${pagingdto.endPageNo+1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">다음</a>
 										</c:if>
 										<a class="btn btn-outline-secondary"
-											href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">맨끝</a>
+											href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">맨끝</a>
 									</div>
 								</td>
 							</tr>
