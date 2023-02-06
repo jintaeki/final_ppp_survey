@@ -100,9 +100,7 @@ public class SurveyController {
 
 		model.addAttribute("chartJSONDp", cJsonArrDP);
 		model.addAttribute("chartJSONResult", cJsonArrResult);
-
 		model.addAttribute("Sdt", Sdt);
-
 		return "survey_result_team";
 	}
 
