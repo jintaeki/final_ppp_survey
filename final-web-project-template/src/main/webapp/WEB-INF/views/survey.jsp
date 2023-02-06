@@ -197,7 +197,26 @@
       
    }
 
+   var cntForGO = 0;
+   function go(content){
+
+		if(cntForGO==0){
+			Swal.fire({
+				text: '<b>'+content+'/<b>',
+				 confirmButtonText: '확인',
+					 preConfirm:()=>{
+						 if(confirm('평가지 내용을 그만 보시겠습니까?')){
+								cntForGO = cntForGO + 1;
+							}
+					 }
+			});		
+		}
+		
+	
+	}
+   
    function selectSurvey(obj,raterId){
+	   cntForGO = 0;
       $('.submit_btn').empty();
       $('.surveyName').empty();
       console.log(raterId);
@@ -231,7 +250,7 @@
                      dataType: 'json',
                      success: function(result){
                         console.log('result '+result);
-
+                       
                         var appraisees = result;
 
                        $.ajax({
@@ -239,8 +258,7 @@
                            method: 'GET',
                            dataType: 'html',
                            success: function(theSeq){
-                              console.log('result '+result);
-
+                              
                               appraisee(appraisees,anonymitycode,theSeq,surveySeq);
                              var htmlQuestion='<div class="noQuestion"><b>평가 버튼을 눌러 평가를 진행해주세요.</b></div>';
                               $('#surveyForm').append(htmlQuestion);
@@ -291,7 +309,7 @@
                 html +='<div class="col-2">'+data[i].appraiseeGradeName+'</div>';
 
                if(data[i].surveyCompleteYN=='N'){
-               html +='<div class="col-3"><button style="color:green;" class="create_btn" id="'+data[i].appraiseeId+'" onclick="surveyStart(this,'+data[i].appraiseeId+','+data[i].raterId+','+anonymitycode+','+theSeq+','+data[i].surveySeq+')" value="'+data[i].appraiseeName+'">평가하기</button></div>';
+               html +='<div class="col-3"><button style="color:green;" class="create_btn" id="'+data[i].appraiseeId+'" onclick="surveyStart(this,'+data[i].appraiseeId+','+data[i].raterId+','+anonymitycode+','+theSeq+','+data[i].surveySeq+','+data[i].surveyContent+')" value="'+data[i].appraiseeName+'">평가하기</button></div>';
                }else{
                html +='<div class="col-3"><button style="padding: 10px 13px; " class="create_btn" disabled>평가완료</button></div>';
                }
@@ -299,21 +317,21 @@
             html +=`</div>
 					</div>`;
             $('.appraiseeList_list').append(html);
+          
+            
 		}
-     
+		 
    }
 
-   function surveyStart(obj,appraiseeId,raterId,anonymitycode,theSeq,surveySeq){
+   function surveyStart(obj,appraiseeId,raterId,anonymitycode,theSeq,surveySeq,content){
       var appraiseeName = $(obj).val();
-
-
+      go(content);      
       $.ajax({
             url: 'getquestionforsurvey.do/'+surveySeq,
             method: 'GET',
             dataType: 'json',
             success: function(result){
 
-               alert("문제요청성공");
                questionHTML(result,raterId,appraiseeId,anonymitycode,theSeq,appraiseeName);
 
             }
