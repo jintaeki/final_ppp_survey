@@ -120,7 +120,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 								<th scope="col">직급</th>
 								<th scope="col">평가자</th>
 								<th scope="col">피평가자</th>
-								<th scope="col">삭제여부</th>
+								<th scope="col">삭제</th>
 							</tr>
 						</thead>
 						<tbody id="mapTr">

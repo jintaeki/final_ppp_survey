@@ -32,10 +32,9 @@
 <body>
    <div class="d-flex flex-column">
 
-            <div class="col-12">
+            <div style="height:20px;">
 				&nbsp;
-				<br>
-				<br>
+				
            </div>
 		<div class="flex-grow-1 container-fluid">
 			<div class="row h-100">

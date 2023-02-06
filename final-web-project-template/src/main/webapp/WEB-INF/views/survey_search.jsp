@@ -308,7 +308,7 @@ function delete_mapping_btn(){
 
 </script>
 
-<div class="col-11" style="width: 1800px;">
+<div class="col-11" style="width: 1800px; height:900px;">
 	<!-- modal(설문 등록 시 뜨는 팝업창) -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
