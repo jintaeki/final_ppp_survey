@@ -7,6 +7,10 @@
     max-width: 1600px;
 }
 
+#scroll_area div{
+	max-width: 480px;
+}
+
 .survey_info b{
 	color: white;
 }
