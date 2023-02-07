@@ -1,10 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
+<script src="resources/js/survey.js"></script>
+<script src="resources/js/surveycountdown.js"></script>
+
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/survey_list.css" />
 
 
+
 <script>
+
+
 
 function delete_mapping_btn(){
 	  if (confirm("정말 삭제하시겠습니까??") == true){    //확인
@@ -308,7 +314,7 @@ function delete_mapping_btn(){
 
 </script>
 
-<div class="col-11" style="width: 1800px;">
+<div class="col-11" >
 	<!-- modal(설문 등록 시 뜨는 팝업창) -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -437,7 +443,7 @@ function delete_mapping_btn(){
 
 						</div>
 					</div>
-					<div class="col-12" style="margin-bottom:30px;"> <h4 style="text-align:center;"><b>평가지 목록</b></h4></div>
+					<div class="col-12" style="margin-bottom:30px;"><h3 style="text-align:center;"><b>평가지 목록</b></h3></div>
 					<table class="table">
 						<thead>
 							<tr>
@@ -555,6 +561,7 @@ function delete_mapping_btn(){
 
 				</div>
 			</div>
+			<!--  평가지  -->
 		</div>
 	</div>
 </div>

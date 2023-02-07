@@ -100,9 +100,7 @@ public class SurveyController {
 
 		model.addAttribute("chartJSONDp", cJsonArrDP);
 		model.addAttribute("chartJSONResult", cJsonArrResult);
-
 		model.addAttribute("Sdt", Sdt);
-
 		return "survey_result_team";
 	}
 
@@ -242,7 +240,6 @@ public class SurveyController {
 	// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
 	@RequestMapping("/surveyinsert")
 	public String survey_insert(@RequestParam("surveyseq") int surveySeq, Model model, HttpSession session) {
-		System.out.println("gkgk:"+session.getAttribute("SLD"));
 		if (!String.valueOf(session.getAttribute("SLD")).equals("null")) {
 			SurveyListDTO SLD = (SurveyListDTO) session.getAttribute("SLD");
 			model.addAttribute("SLD", SLD);
@@ -289,7 +286,6 @@ public class SurveyController {
 				// 문항 개수만큼 for문 실행하여 문항 등록
 				for (int i = 0; i <= cntcontent; i++) {
 					if(itemcontent[i].equals("")){
-						System.out.println(i+"번째가 비어있음");
 						continue;
 					}
 					SQD.setItemContent(itemcontent[i]);
@@ -322,7 +318,6 @@ public class SurveyController {
 				// 문항 개수만큼 for문 실행하여 문항 등록
 				for (int i = 0; i <= cntcontent; i++) {
 					if(itemcontent[i].equals("")){
-						System.out.println(i+"번째가 비어있음");
 						continue;
 					}
 
@@ -341,7 +336,6 @@ public class SurveyController {
 	
 	@RequestMapping(value="deleteItem.do/{questionSeq}")
 	public void deleteItemByQSeq(@PathVariable int questionSeq) { 
-		System.out.println(questionSeq);
 		surveyService.deleteItemByQSeq(questionSeq);
 
 	}
@@ -349,7 +343,6 @@ public class SurveyController {
 	@RequestMapping(value="deleteItem.do/{questionSeq}/{itemSeq}")
 	@ResponseBody
 	public void deleteItem(@PathVariable int questionSeq, @PathVariable int itemSeq) { 
-		System.out.println(questionSeq);
 		surveyService.deleteItem(questionSeq, itemSeq);
 
 	}
@@ -392,7 +385,6 @@ public class SurveyController {
 			questionContent = null;
 		}
 		surveyService.UpdateQuestion(questionContent,questionSeq,questionTypeCode);
-		System.out.println(SQD.getQuestionSeq());
 		if(SQD.getQuestionTypeCode().equals("10002")) {
 			surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
 			SQD.setItemScore("0");
@@ -562,7 +554,6 @@ public class SurveyController {
 			    logger.info("모델 :" + model);
 				int totalRows = pagingService.getEvaluateSearchBoardNum(keyword, selection, surveySeq);
 
-				System.out.println("totolRows:" + totalRows);
 			    pagingDto = new PagingDTO(7, 10, totalRows, pageNo);
 
 				pagingDto.setSelection(selection);
@@ -582,7 +573,6 @@ public class SurveyController {
 			model.addAttribute("evaluateList", evaluateList);
 
 			logger.info(keyword);
-			System.out.println(pageNo);
 			model.addAttribute("pagingdto", pagingDto);
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("surveySeq", surveySeq);

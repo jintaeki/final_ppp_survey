@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/survey_list.css" />
+	href="${pageContext.request.contextPath}/resources/css/mapping_view.css" />
 
 <script>
 
@@ -66,15 +66,15 @@ function map_delete(surveySeq, raterId, appraiseeId){
 
 
 			<div class="forshadowing">
-				<div>
-					<h3 style="text-align: center;">${surveyInfo.surveyName}매핑 목록</h3>
-				</div>
+				
 				<div></div>
 				<div class="row">
 					<div class="hmenu">
 						<div class="survey_list_form_upper_dv">
 							<form action="<c:url value='/mapping/set.do'/>" method="POST"
-								class="survey_list_form">
+								class="survey_list_form" style="display:flex;">
+								<div class="searchRangeAll">
+								<div class="searchRange">
 								<select name="selectGD">
 									<option value="60004">전체</option>
 									<c:forEach items="${gradeList}" var="grade">
@@ -94,7 +94,10 @@ function map_delete(surveySeq, raterId, appraiseeId){
 											<option value="${commonMap.codeDetailId}">${commonMap.codeDetailName }</option>
 										</c:if>
 									</c:forEach>
-								</select> <input type="text" class="form-control" id="selectedKeyword"
+								</select> 
+								</div>
+								<div class="input-group-append" style="margin-left:460px;">
+								<input type="text" class="form-control" id="selectedKeyword"
 									placeholder="search" name="keyword"
 									value="${pagingdto.keyword}" aria-describedby="button-addon2">
 								<input type="hidden" name="pageNo" value="1"> <input
@@ -102,16 +105,29 @@ function map_delete(surveySeq, raterId, appraiseeId){
 								<input type="hidden" name="month" value="${pagingdto.month}">
 								<input type="hidden" name="number" value="${number}"> <input
 									type="hidden" name="newCheck" value="0">
-								<div class="input-group-append">
+								
 									<input type="submit" class="btn btn-outline-secondary"
 										id="button-addon2" value="검색"> <input type="reset"
 										class="btn btn-outline-secondary" id="button-addon2"
 										value="초기화">
 								</div>
+								</div>
 							</form>
+							
+						</div>
+					</div>
+					<div>
+						<div class="mappingsearchMenu" style="">
+						 <div style="margin-right:200px;">
+							<h3 style="width:500px;">
+								<b>${surveyInfo.surveyName}매핑 목록</b>
+							</h3>
+						</div>
+						<div style="margin-right:100px;">
 							<button type="button" id="map_insert"
 								class="btn btn-outline-primary"
 								onclick="mapInsert('${surveySeq}')">조건과 관계없이 추가</button>
+						</div>	
 						</div>
 					</div>
 					<table class="table" id="mapTb">
@@ -120,7 +136,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 								<th scope="col">직급</th>
 								<th scope="col">평가자</th>
 								<th scope="col">피평가자</th>
-								<th scope="col">삭제여부</th>
+								<th scope="col">삭제</th>
 							</tr>
 						</thead>
 						<tbody id="mapTr">

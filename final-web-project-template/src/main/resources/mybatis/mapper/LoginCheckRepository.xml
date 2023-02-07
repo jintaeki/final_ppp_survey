@@ -21,10 +21,12 @@
 
 	<select id="getUserInfo" resultType="com.mycompany.webapp.dto.UserCheckDTO">
 		<![CDATA[
-		SELECT S.SURVEY_SEQ,
+		SELECT 
+			   S.SURVEY_SEQ, 
                S.SURVEY_NAME,
-               M.RATER_ID,
-               UR.EMPLOYEE_NAME AS RATER_NAME,
+               S.SURVEY_CONTENT, 
+               M.RATER_ID, 
+               UR.EMPLOYEE_NAME AS RATER_NAME, 
                GR.GRADE_NAME AS RATER_GRADE_NAME,
                OCR.DEPARTMENT_NAME AS RATER_DEPARTMENT_NAME,
                M.APPRAISEE_ID,
@@ -45,23 +47,26 @@
               UA.GRADE_ID = GA.GRADE_ID AND
               UA.DEPARTMENT_ID = OCA.DEPARTMENT_ID AND
               S.SURVEY_SEQ = M.SURVEY_SEQ AND
+              <if test="surveySeq !=0">
               S.SURVEY_SEQ = #{surveySeq} AND
+              </if>
               UR.EMPLOYEE_ID = #{raterId}
-		]]>
+              ORDER BY S.SURVEY_SEQ
 	</select>
 
 	<select id="getQuestion" parameterType="int" resultType="hashmap">
-      SELECT SURVEY_QUESTION.SURVEY_SEQ
+      SELECT SURVEY_LIST.SURVEY_NAME 
+      		,SURVEY_QUESTION.SURVEY_SEQ
        		,SURVEY_QUESTION.QUESTION_SEQ
             ,SURVEY_QUESTION.QUESTION_CONTENT
             ,SURVEY_QUESTION.QUESTION_TYPE_CODE
             ,SURVEY_ITEM.ITEM_SEQ
             ,SURVEY_ITEM.ITEM_CONTENT
             ,SURVEY_ITEM.ITEM_SCORE
-      FROM  SURVEY_ITEM  right join SURVEY_QUESTION
-      on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ
-      where SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} ORDER BY SURVEY_QUESTION.QUESTION_SEQ ASC,SURVEY_ITEM.ITEM_SCORE ASC,
-      SURVEY_ITEM.ITEM_SEQ
+      FROM  SURVEY_LIST,(SURVEY_ITEM  right join SURVEY_QUESTION
+      on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ)
+      where SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} and SURVEY_LIST.SURVEY_SEQ = ${surveySeq} ORDER BY SURVEY_QUESTION.QUESTION_SEQ ASC,SURVEY_ITEM.ITEM_SCORE ASC,
+      SURVEY_ITEM.ITEM_SEQ 
    </select>
 
 	<select id="getSurveySeqAndName" parameterType="string" resultType="hashmap">
@@ -70,12 +75,12 @@
 	                ,SL.SURVEY_NAME
 	                ,SL.ANONYMITY_CHECK_CODE
 	 FROM SURVEY_LIST SL
-	     ,MAPPING M
-	 WHERE SL.SURVEY_SEQ = M.SURVEY_SEQ  AND
-	      SL.SURVEY_START_DATE <= SYSDATE AND
-	      SL.SURVEY_CLOSED_DATE >= SYSDATE AND
-	      SL.STATE_CODE = '30004' AND
-	      M.RATER_ID = #{raterId}
+	     ,MAPPING M 
+	 WHERE SL.SURVEY_SEQ = M.SURVEY_SEQ  AND 
+	      SL.SURVEY_START_DATE <= SYSDATE AND 
+	      SL.SURVEY_CLOSED_DATE >= SYSDATE AND 
+	      SL.STATE_CODE = '30004' AND 
+	      M.RATER_ID = #{raterId} order by M.SURVEY_SEQ
 
 	]]>
 	</select>

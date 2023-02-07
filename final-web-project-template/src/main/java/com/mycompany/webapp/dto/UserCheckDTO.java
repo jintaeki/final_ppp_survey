@@ -4,6 +4,7 @@ public class UserCheckDTO {
 
 	private int surveySeq;
 	private String surveyName;
+	private String surveyContent;
 	private String raterId;
 	private String raterName;
 	private String raterDepartmentName;
@@ -17,12 +18,15 @@ public class UserCheckDTO {
 	private String managerYN;
 	private String anonymitySeq;
 	private String password;
-
+	
 	public int getSurveySeq() {
 		return surveySeq;
 	}
 	public String getSurveyName() {
 		return surveyName;
+	}
+	public String getSurveyContent() {
+		return surveyContent;
 	}
 	public String getRaterId() {
 		return raterId;
@@ -69,6 +73,9 @@ public class UserCheckDTO {
 	public void setSurveyName(String surveyName) {
 		this.surveyName = surveyName;
 	}
+	public void setSurveyContent(String surveyContent) {
+		this.surveyContent = surveyContent;
+	}
 	public void setRaterId(String raterId) {
 		this.raterId = raterId;
 	}
@@ -108,21 +115,14 @@ public class UserCheckDTO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 	@Override
 	public String toString() {
-		return "UserCheckDTO [surveySeq=" + surveySeq + ", surveyName=" + surveyName + ", raterId=" + raterId
-				+ ", raterName=" + raterName + ", raterDepartmentName=" + raterDepartmentName + ", raterGradeName="
-				+ raterGradeName + ", appraiseeId=" + appraiseeId + ", appraiseeName=" + appraiseeName
-				+ ", appraiseeDepartmentName=" + appraiseeDepartmentName + ", appraiseeGradeName=" + appraiseeGradeName
-				+ ", surveyCompleteYN=" + surveyCompleteYN + ", email=" + email + ", managerYN=" + managerYN
-				+ ", anonymitySeq=" + anonymitySeq + "]";
+		return "UserCheckDTO [surveySeq=" + surveySeq + ", surveyName=" + surveyName + ", surveyContent="
+				+ surveyContent + ", raterId=" + raterId + ", raterName=" + raterName + ", raterDepartmentName="
+				+ raterDepartmentName + ", raterGradeName=" + raterGradeName + ", appraiseeId=" + appraiseeId
+				+ ", appraiseeName=" + appraiseeName + ", appraiseeDepartmentName=" + appraiseeDepartmentName
+				+ ", appraiseeGradeName=" + appraiseeGradeName + ", surveyCompleteYN=" + surveyCompleteYN + ", email="
+				+ email + ", managerYN=" + managerYN + ", anonymitySeq=" + anonymitySeq + "]";
 	}
-
-
-
-
-
-
-
 }
+

@@ -33,10 +33,10 @@
 }
 
 .card-body {
-	height: 865px;
+	height: 900px;
 	width: 1500px;
 	/* 	margin-left:50px; */
-	background: darkgray;
+	background: #031436;
 }
 
 .survey_list_form_upper_dv{
@@ -58,7 +58,7 @@
 	box-shadow: rgb(50 50 93/ 25%) 0px 50px 100px -20px, rgb(0 0 0/ 30%) 0px
 		30px 60px -30px, rgb(10 37 64/ 35%) 0px -2px 6px 0px inset;
 	border-radius: 5px;
-	height: 820px;
+	height: 860px;
 	padding: 1em;
 }
 
