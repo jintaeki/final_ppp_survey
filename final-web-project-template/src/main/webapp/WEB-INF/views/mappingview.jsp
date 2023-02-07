@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/survey_list.css" />
+	href="${pageContext.request.contextPath}/resources/css/mapping_view.css" />
 
 <script>
 
@@ -66,15 +66,15 @@ function map_delete(surveySeq, raterId, appraiseeId){
 
 
 			<div class="forshadowing">
-				<div>
-					<h3 style="text-align: center;">${surveyInfo.surveyName}매핑 목록</h3>
-				</div>
+
 				<div></div>
 				<div class="row">
 					<div class="hmenu">
 						<div class="survey_list_form_upper_dv">
 							<form action="<c:url value='/mapping/set.do'/>" method="POST"
-								class="survey_list_form">
+								class="survey_list_form" style="display:flex;">
+								<div class="searchRangeAll">
+								<div class="searchRange">
 								<select name="selectGD">
 									<option value="60004">전체</option>
 									<c:forEach items="${gradeList}" var="grade">
@@ -94,7 +94,10 @@ function map_delete(surveySeq, raterId, appraiseeId){
 											<option value="${commonMap.codeDetailId}">${commonMap.codeDetailName }</option>
 										</c:if>
 									</c:forEach>
-								</select> <input type="text" class="form-control" id="selectedKeyword"
+								</select>
+								</div>
+								<div class="input-group-append" style="margin-left:460px;">
+								<input type="text" class="form-control" id="selectedKeyword"
 									placeholder="search" name="keyword"
 									value="${pagingdto.keyword}" aria-describedby="button-addon2">
 								<input type="hidden" name="pageNo" value="1"> <input
@@ -102,14 +105,29 @@ function map_delete(surveySeq, raterId, appraiseeId){
 								<input type="hidden" name="month" value="${pagingdto.month}">
 								<input type="hidden" name="number" value="${number}"> <input
 									type="hidden" name="newCheck" value="0">
-								<div class="input-group-append">
+
 									<input type="submit" class="btn btn-outline-secondary"
 										id="button-addon2" value="검색"> <input type="reset"
 										class="btn btn-outline-secondary" id="button-addon2"
 										value="초기화">
 								</div>
+								</div>
 							</form>
 
+						</div>
+					</div>
+					<div>
+						<div class="mappingsearchMenu" style="">
+						 <div style="margin-right:200px;">
+							<h3 style="width:500px;">
+								<b>${surveyInfo.surveyName}매핑 목록</b>
+							</h3>
+						</div>
+						<div style="margin-right:100px;">
+							<button type="button" id="map_insert"
+								class="btn btn-outline-primary"
+								onclick="mapInsert('${surveySeq}')">조건과 관계없이 추가</button>
+						</div>
 						</div>
 					</div>
 					<table class="table" id="mapTb">
@@ -151,11 +169,8 @@ function map_delete(surveySeq, raterId, appraiseeId){
 							<td colspan="4" class="text-center">
 								<!-- 								<div class="page_wrap"> --> <!-- 									<div class="page_nation"> -->
 								<div>
-										<button type="button" id="map_insert"
-								class="btn btn-outline-primary"
-								onclick="mapInsert('${surveySeq}')">조건과 관계없이 추가</button>
 									<%-- 맨처음 페이지 이동
-      									<a class="arrow prev" href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a>--%>
+      									<a class="arrow prev" href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a> --%>
 									<c:if test="${pagingdto.groupNo>1}">
 										<a class="btn btn-outline-secondary"
 											href="set.do?pageNo=${pagingdto.startPageNo-1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">이전</a>
@@ -171,23 +186,19 @@ function map_delete(surveySeq, raterId, appraiseeId){
 												href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
 										</c:if>
 									</c:forEach>
-									<%--
 									<c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
 										<a class="btn btn-outline-secondary"
 											href="set.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">다음</a>
 									</c:if>
-									 --%>
 									<%-- 맨마지막 페이지 이동
        						  			<a class="arrow next" href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">맨끝</a> --%>
-								</div>
+								</div> <!-- 									</div> --> <!-- 								</div> -->
 
 							</td>
 						</tr>
 					</table>
 
-					</div>
-
-			</div>
+				</div>
 
 
 			</div>

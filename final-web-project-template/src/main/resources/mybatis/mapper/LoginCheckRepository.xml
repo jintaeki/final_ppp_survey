@@ -22,7 +22,8 @@
 	<select id="getUserInfo" resultType="com.mycompany.webapp.dto.UserCheckDTO">
 		SELECT 
 				S.SURVEY_SEQ, 
-               S.SURVEY_NAME, 
+               S.SURVEY_NAME,
+               S.SURVEY_CONTENT, 
                M.RATER_ID, 
                UR.EMPLOYEE_NAME AS RATER_NAME, 
                GR.GRADE_NAME AS RATER_GRADE_NAME,

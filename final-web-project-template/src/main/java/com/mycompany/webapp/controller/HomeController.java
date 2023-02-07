@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -40,7 +41,9 @@ import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyResultDTO;
 import com.mycompany.webapp.dto.UserCheckDTO;
 import com.mycompany.webapp.service.ISurveyService;
-
+import com.mycompany.webapp.dao.IJsonRepository;
+import com.mycompany.webapp.dto.DTO_for_json;
+import com.mycompany.webapp.dto.DTO_for_json2;
 import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.PopupDTO;
 import com.mycompany.webapp.service.ILoginCheckService;
@@ -58,11 +61,20 @@ public class HomeController {
 	@Autowired
 	ILoginCheckService loginCheckService;
 	
+	@Autowired
+	IJsonRepository ijr;
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
 
-		
-		
+ 
+		UserCheckDTO UCD = new UserCheckDTO();
+		model.addAttribute("UCD",UCD);
+		return "login";
+	}
+	
+	@RequestMapping("/survey/fileUploadOrganization.do")
+	public void jsonFileUploadOrganization () {
 //		String filePathGroupinfo = "C:\\Users\\KOSA\\Desktop\\JSON 조직도.json";
 //		String filePathPjhistorys = "C:\\Users\\KOSA\\Desktop\\JSON 프로젝트 투입 인원.json";
 //
@@ -93,7 +105,7 @@ public class HomeController {
 //				for(int i=0; i<jsonArr2.size(); i++) {
 //					
 //					jsonObj2 = (JSONObject)jsonArr2.get(i);
-//					System.out.println(jsonObj.get("projectid")); // for문 안에 VO 객체 set 메소드로 값을 설정하고 mapper에 insert하는 방식
+//					System.out.println(jsonObj2.get("projectid")); // for문 안에 VO 객체 set 메소드로 값을 설정하고 mapper에 insert하는 방식
 //					
 //					if(i<9) {
 //						JSONObject jsonObj = (JSONObject)jsonArr.get(i);
@@ -138,10 +150,14 @@ public class HomeController {
 //			// TODO Auto-generated catch block
 //			d.printStackTrace();
 //		}
-        
-		UserCheckDTO UCD = new UserCheckDTO();
-		model.addAttribute("UCD",UCD);
-		return "login";
+	}
+	
+	@RequestMapping("/survey/fileUploadProjectHistory.do")
+	
+	public void jsonFileUploadProjectHistory (MultipartHttpServletRequest historyJson ) {
+		System.out.println(historyJson.getFile("projectHistory"));
+			System.out.println("haha:"+historyJson.toString());
+
 	}
 	
 	@RequestMapping("/logincheck")
@@ -172,7 +188,7 @@ public class HomeController {
 				return "survey";
 			}else {
 				logger.info("관리자 진입");
-				session.setAttribute("checked", UCD.getRaterId());
+				session.setAttribute("checked", check);
 				return "redirect:/survey/surveysearch";
 			}
 			
