@@ -109,9 +109,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 										value="초기화">
 								</div>
 							</form>
-							<button type="button" id="map_insert"
-								class="btn btn-outline-primary"
-								onclick="mapInsert('${surveySeq}')">조건과 관계없이 추가</button>
+
 						</div>
 					</div>
 					<table class="table" id="mapTb">
@@ -153,8 +151,11 @@ function map_delete(surveySeq, raterId, appraiseeId){
 							<td colspan="4" class="text-center">
 								<!-- 								<div class="page_wrap"> --> <!-- 									<div class="page_nation"> -->
 								<div>
+										<button type="button" id="map_insert"
+								class="btn btn-outline-primary"
+								onclick="mapInsert('${surveySeq}')">조건과 관계없이 추가</button>
 									<%-- 맨처음 페이지 이동
-      									<a class="arrow prev" href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a> --%>
+      									<a class="arrow prev" href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a>--%>
 									<c:if test="${pagingdto.groupNo>1}">
 										<a class="btn btn-outline-secondary"
 											href="set.do?pageNo=${pagingdto.startPageNo-1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">이전</a>
@@ -170,19 +171,23 @@ function map_delete(surveySeq, raterId, appraiseeId){
 												href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
 										</c:if>
 									</c:forEach>
+									<%--
 									<c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
 										<a class="btn btn-outline-secondary"
 											href="set.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">다음</a>
 									</c:if>
+									 --%>
 									<%-- 맨마지막 페이지 이동
        						  			<a class="arrow next" href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">맨끝</a> --%>
-								</div> <!-- 									</div> --> <!-- 								</div> -->
+								</div>
 
 							</td>
 						</tr>
 					</table>
 
-				</div>
+					</div>
+
+			</div>
 
 
 			</div>

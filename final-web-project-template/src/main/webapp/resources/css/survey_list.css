@@ -75,3 +75,7 @@ color:green;
 #grey{
 	color: #ccc;
 }
+
+#map_insert {
+    float: right;
+}
