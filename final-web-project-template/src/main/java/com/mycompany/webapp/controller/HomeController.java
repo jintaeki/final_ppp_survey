@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -66,100 +67,107 @@ public class HomeController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
-
  
 		UserCheckDTO UCD = new UserCheckDTO();
 		model.addAttribute("UCD",UCD);
 		return "login";
 	}
 	
-	@RequestMapping("/survey/fileUploadOrganization.do")
-	public void jsonFileUploadOrganization () {
-//		String filePathGroupinfo = "C:\\Users\\KOSA\\Desktop\\JSON 조직도.json";
-//		String filePathPjhistorys = "C:\\Users\\KOSA\\Desktop\\JSON 프로젝트 투입 인원.json";
-//
-//		JSONObject jsonObj2 = null;
-//
-//		//JSON 읽어와서 쿼리에 담기위한 사전작업
-//
-//	    FileInputStream fis;
-//	    FileInputStream fis2;
-//		try {
-//			DTO_for_json dfj = new DTO_for_json();
-//			DTO_for_json2 dfj2 = new DTO_for_json2();
-//			
-//			fis = new FileInputStream(filePathGroupinfo);
-//			InputStreamReader isr= new InputStreamReader(fis,"UTF-8");
-//			BufferedReader br=new BufferedReader(isr);
-//			fis2 = new FileInputStream(filePathPjhistorys);
-//			InputStreamReader isr2= new InputStreamReader(fis2,"UTF-8");
-//			BufferedReader br2 =new BufferedReader(isr2);
-//			 
-//			JSONParser parser = new JSONParser();
-//			Object obj = parser.parse(br);
-//			Object obj2 = parser.parse(br2);
-//			JSONArray jsonArr = (JSONArray) obj;
-//			JSONArray jsonArr2 = (JSONArray) obj2;
-//			System.out.println("아"+jsonArr2.size());
-//			if(jsonArr.size()>0) {
-//				for(int i=0; i<jsonArr2.size(); i++) {
-//					
-//					jsonObj2 = (JSONObject)jsonArr2.get(i);
-//					System.out.println(jsonObj2.get("projectid")); // for문 안에 VO 객체 set 메소드로 값을 설정하고 mapper에 insert하는 방식
-//					
-//					if(i<9) {
-//						JSONObject jsonObj = (JSONObject)jsonArr.get(i);
-//					dfj.setHighDepartmentId((long) jsonObj.get("HIGH_DEPARTMENT_ID"));
-//					dfj.setDepartmentId( (long) jsonObj.get("DEPARTMENT_ID"));
-//					dfj.setDepartmentName((String) jsonObj.get("DEPARTMENT_NAME"));
-//					System.out.println(dfj);
-//					ijr.insert_into_groupinfo(dfj);
-//					}
-//					
-//					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d", Locale.KOREA);
-//					
-//					
-//					dfj2.setParticipationEmployeeId((long) jsonObj2.get("PARTICIPATION_EMPLOYEE_ID"));
-//					dfj2.setProjectId((long) jsonObj2.get("PROJECT_ID"));
-//				
-//					
-//					LocalDate Ldate = LocalDate.parse((CharSequence) jsonObj2.get("PROJECT_START_DATE"), formatter);
-//					Date date = Date.valueOf(Ldate);
-//					dfj2.setProjectStartDate(date);
-//					LocalDate Ldate2 = LocalDate.parse((CharSequence) jsonObj2.get("PROJECT_CLOSED_DATE"), formatter);
-//					Date date2 = Date.valueOf(Ldate2);
-//					dfj2.setProjectClosedDate(date2);
-//					System.out.println(dfj2);
-//
-//					ijr.insert_into_pjhistorys(dfj2);
-//					
-//
-//					logger.info("입력 성공");
-//				}
-//		 }	
-//			
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch(UnsupportedEncodingException c) {
-//			c.printStackTrace();
-//		}catch (IOException b) {
-//			// TODO Auto-generated catch block
-//			b.printStackTrace();
-//		} catch (ParseException d) {
-//			// TODO Auto-generated catch block
-//			d.printStackTrace();
-//		}
-	}
 	
-	@RequestMapping("/survey/fileUploadProjectHistory.do")
+	@RequestMapping("/survey/fileuploadprojecthistory.do")	
+	@ResponseBody
+	public String jsonFileUploadProjectHistory (@RequestParam(value="projecthistoryjson") MultipartFile jsonFile ) {
+		JSONObject jsonObj = null;
+		byte[] jsonData= null ;
+		DTO_for_json2 dfj = new DTO_for_json2();
+		JSONParser parser = new JSONParser();
+		Object obj  ;
+		JSONArray jsonArr = new JSONArray();
+		String jsonstr;
+		
+		
+		if(jsonFile.getContentType().equals("application/json")) {
+		
+			try {
+				jsonData = jsonFile.getBytes();
+				jsonstr = new String(jsonData);
+				obj = parser.parse(jsonstr);
+				jsonArr = (JSONArray) obj;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+			
+		
+			//JSON 읽어와서 쿼리에 담기위한 사전작업
+			
+			JSONObject checkKey=(JSONObject)jsonArr.get(0);
+			if(checkKey.containsKey("PROJECT_ID")&&checkKey.containsKey("PARTICIPATION_EMPLOYEE_ID")){
+				if(jsonArr.size()>0) {
+					for(int i=0; i<jsonArr.size(); i++) {
+						jsonObj = (JSONObject)jsonArr.get(i);
+						//jsonObj.get("projectid") for문 안에 VO 객체 set 메소드로 값을 설정하고 mapper에 insert하는 방식				
+						dfj.setParticipationEmployeeId((long) jsonObj.get("PARTICIPATION_EMPLOYEE_ID"));
+						dfj.setProjectId((long) jsonObj.get("PROJECT_ID"));
+						//ijr.insert_into_pjhistorys(dfj);
+					logger.info("입력 성공");
+					}
+				}
+			
+				return "2";
+			}else {
+				return "1";
+			}
 	
-	public void jsonFileUploadProjectHistory (MultipartHttpServletRequest historyJson ) {
-		System.out.println(historyJson.getFile("projectHistory"));
-			System.out.println("haha:"+historyJson.toString());
+		}
+		else {
+			return "0";
+		}
 
 	}
 	
+	@RequestMapping("/survey/fileUploadOrganization.do")
+	@ResponseBody
+	public String jsonFileUploadOrganization (@RequestParam(value="organizationjson") MultipartFile jsonFile ) {
+		if(jsonFile.getContentType().equals("application/json")) {
+			JSONObject jsonObj = null;
+			byte[] jsonData= null ;
+			DTO_for_json dfj = new DTO_for_json();
+			JSONParser parser = new JSONParser();
+			Object obj  ;
+			JSONArray jsonArr = new JSONArray();
+			String jsonstr;
+			try {
+				jsonData = jsonFile.getBytes();
+				jsonstr = new String(jsonData);
+				obj = parser.parse(jsonstr);
+				jsonArr = (JSONArray) obj;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+				
+			//JSON 읽어와서 쿼리에 담기위한 사전작업
+			JSONObject checkKey=(JSONObject)jsonArr.get(0);
+			if(checkKey.containsKey("HIGH_DEPARTMENT_ID")&&checkKey.containsKey("DEPARTMENT_ID")&&checkKey.containsKey("DEPARTMENT_NAME")){
+				if(jsonArr.size()>0) {
+					for(int i=0; i<jsonArr.size(); i++) {				
+						jsonObj = (JSONObject)jsonArr.get(i);		
+						dfj.setHighDepartmentId((long) jsonObj.get("HIGH_DEPARTMENT_ID"));
+						dfj.setDepartmentId((long) jsonObj.get("DEPARTMENT_ID"));
+						dfj.setDepartmentName((String) jsonObj.get("DEPARTMENT_NAME"));
+						ijr.insert_into_groupinfo(dfj);
+					}
+				}
+				return "2";
+			}else {
+				return "1";
+
+			}
+		}else {
+			return "0";
+			
+		}
+	}
 	@RequestMapping("/logincheck")
 	public String loginAfter(@ModelAttribute("UCD")  @Valid UserCheckDTO UCD, 
 							  BindingResult result,

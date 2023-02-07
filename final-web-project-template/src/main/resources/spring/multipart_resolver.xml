@@ -4,7 +4,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<!-- 모든 서블릿 버전에서 사용 가능한 방법: commons-fileupload 라이브러리 의존 설정 필요 -->
-	<bean id="multipartResolver" 
-	      class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/> 
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <property name="maxUploadSize" value="10485760"/>
+    <property name="maxUploadSizePerFile" value="10485760"/>
+    <property name="maxInMemorySize" value="0"/>
+	</bean>
 
 </beans>

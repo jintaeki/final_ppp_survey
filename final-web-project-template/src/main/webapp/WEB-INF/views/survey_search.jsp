@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
-<script src="resources/js/survey.js"></script>
-<script src="resources/js/surveycountdown.js"></script>
+
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/survey_list.css" />

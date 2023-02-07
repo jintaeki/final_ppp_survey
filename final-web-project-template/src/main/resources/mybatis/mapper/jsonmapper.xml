@@ -5,28 +5,41 @@
 
 <insert id="insert_into_groupinfo"
 		parameterType="com.mycompany.webapp.dto.DTO_for_json">
-	<![CDATA[
-		INSERT INTO 
-		ORGANIZATION_CHART 
+
+			INSERT INTO 
+		ORGANIZATION_CHART_COPY 
 			(HIGH_DEPARTMENT_ID, DEPARTMENT_ID,
-			DEPARTMENT_NAME)  
-		VALUES 
-			(#{highDepartmentId},
-			#{departmentId}, #{departmentName})
-	]]>
+			DEPARTMENT_NAME,REG_DATE,UPDATE_DATE)  
+		   select #{highDepartmentId},
+				  #{departmentId}, 
+				  #{departmentName},
+				  trunc(sysdate),
+				  trunc(sysdate) from dual 
+		WHERE NOT EXISTS (
+                SELECT 1
+                FROM ORGANIZATION_CHART_COPY
+                WHERE HIGH_DEPARTMENT_ID = #{highDepartmentId} 
+                  and DEPARTMENT_ID = #{departmentId}
+                  and DEPARTMENT_NAME = #{departmentName})
+	
 	</insert>
 
 <insert id="insert_into_pjhistorys"
 		parameterType="com.mycompany.webapp.dto.DTO_for_json2">
-	<![CDATA[
+	
 		INSERT INTO 
-		PROJECT_HISTORY 
+		PROJECT_HISTORY_COPY 
 			(PARTICIPATION_EMPLOYEE_ID
-		   , PROJECT_ID)  
-		VALUES 
-			(#{participationEmployeeId},
-			 #{projectId})
-	]]>
+		   , PROJECT_ID,REG_DATE,UPDATE_DATE)  
+		   select #{participationEmployeeId},#{projectId},trunc(sysdate),trunc(sysdate) from dual 
+		WHERE NOT EXISTS (
+                SELECT 1
+                FROM PROJECT_HISTORY_COPY
+                WHERE PROJECT_ID = #{projectId} and PARTICIPATION_EMPLOYEE_ID = #{participationEmployeeId})
+		   
+
+			 
+	
 	</insert>
 
 
