@@ -116,7 +116,7 @@
    </select>
 
    <update id="UpdateQuestion">
-      UPDATE SURVEY_QUESTION SET 
+      UPDATE SURVEY_QUESTION SET
       <choose>
       	<when test= "questionContent != null">
       		 QUESTION_CONTENT=#{questionContent},QUESTION_TYPE_CODE=#{questionTypeCode}
@@ -125,7 +125,7 @@
       		QUESTION_TYPE_CODE=#{questionTypeCode}
       	</when>
       </choose>
-      
+
        WHERE QUESTION_SEQ=#{questionSeq}
    </update>
 
@@ -218,14 +218,14 @@
 	          	 ,STATE_CODE
 	          	 ,REG_DATE
 	          	 FROM SURVEY_LIST
-	   
-	          	           	   
+
+
 	          	  <choose>
 	          	  	<when test ="keyword ==''">
-	          	  		 WHERE survey_name like  '%' || '' || '%' 
+	          	  		 WHERE survey_name like  '%' || '' || '%'
 	          	  	</when>
 	          	  	<otherwise>
-	          	  	     WHERE survey_name like '%' || #{keyword} || '%'	
+	          	  	     WHERE survey_name like '%' || #{keyword} || '%'
 	          	  	</otherwise>
 	          	  </choose>
 	          	  <choose>
@@ -246,28 +246,28 @@
 				  	<when test="surveyStartDateLeft == null">
 				  	</when>
 				 	<otherwise>
-						AND survey_start_date >= to_date(to_char(#{surveyStartDateLeft},'yyyy-MM-dd'),'yyyy-MM-dd')         	  	
-	          	  	</otherwise> 
+						AND survey_start_date >= to_date(to_char(#{surveyStartDateLeft},'yyyy-MM-dd'),'yyyy-MM-dd')
+	          	  	</otherwise>
 				  </choose>
 	  			 <choose>
 				  	<when test="surveyStartDateRight == null">
 				  	</when>
 				 	<otherwise>
 				 	<![CDATA[
-						AND survey_start_date <= to_date(to_char(#{surveyStartDateRight},'yyyy-MM-dd'),'yyyy-MM-dd')   
-					]]>      	  	
-	          	  	</otherwise> 
+						AND survey_start_date <= to_date(to_char(#{surveyStartDateRight},'yyyy-MM-dd'),'yyyy-MM-dd')
+					]]>
+	          	  	</otherwise>
 				  </choose>
-                
+
                 ORDER BY REG_DATE DESC
                )
-          	  <![CDATA[              
+          	  <![CDATA[
          	  WHERE ROWNUM <= #{endRowNo}
          	  ]]>
-         	  
-           ) 
+
+           )
           WHERE rnum  >= #{startRowNo}
-       ) 
+       )
        WHERE cd.code_detail_id = state_code
    </select>
 
@@ -281,8 +281,8 @@
                 ,SURVEY_ITEM.ITEM_SCORE
           FROM  SURVEY_ITEM  right join SURVEY_QUESTION
           on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ
-          WHERE SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} 
-          and SURVEY_QUESTION.QUESTION_SEQ = #{questionSeq} 
+          WHERE SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq}
+          and SURVEY_QUESTION.QUESTION_SEQ = #{questionSeq}
           ORDER BY SURVEY_ITEM.ITEM_SCORE  ,SURVEY_ITEM.ITEM_SEQ
 
    </select>
@@ -296,7 +296,7 @@
 		DELETE FROM SURVEY_ITEM
 		WHERE QUESTION_SEQ = #{questionSeq} and ITEM_SEQ = #{itemSeq}
 	</delete>
-	
+
 
    <select id="selectItems" parameterType="int" resultType="hashmap">
 
@@ -335,22 +335,22 @@
   </select>
 
 	<select id="searchByEvaluate" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="hashmap">
- 	<![CDATA[
-		SELECT
-		rnum
+
+    SELECT
+      rnum
         ,DEPARTMENT_NAME
         ,GRADE_NAME
         ,EMPLOYEE_NAME
-        ,SURVEY_COMPLETE_YN
+
         ,SURVEY_SEQ
         ,EMPLOYEE_ID
-        FROM ( SELECT
+        FROM ( SELECT distinct
                  ROWNUM AS rnum
                 ,SURVEY_SEQ
                 ,DEPARTMENT_NAME
                 ,GRADE_NAME
                 ,EMPLOYEE_NAME
-                ,SURVEY_COMPLETE_YN
+
                 ,EMPLOYEE_ID
         FROM ( SELECT
                         distinct
@@ -359,35 +359,63 @@
                         ,g.GRADE_NAME
                         ,ui.EMPLOYEE_NAME
                         ,ui.EMPLOYEE_ID
-                        ,m.SURVEY_COMPLETE_YN
+
                  FROM GRADE g ,USER_INFO ui ,MAPPING m ,ORGANIZATION_CHART oc
                  WHERE
-                     m.appraisee_id = ui.EMPLOYEE_ID
+                     m.APPRAISEE_ID = ui.EMPLOYEE_ID
                     and g.grade_id = ui.grade_id and oc.department_id = ui.department_id
+                  <choose>
+                     <when test = "keyword == ''">
+                        and ui.employee_name like '%' || '' || '%'
+                     </when>
+                     <otherwise>
+                         and ui.employee_name like '%' || #{keyword} || '%'
+                     </otherwise>
+                  </choose>
+                        <choose>
+                         <when test = "selection == 'employeeName'">
+                     and ui.employee_name like  '%' || #{keyword} || '%'
+                       </when>
+                  </choose>
+                  <choose>
+                        <when test= "selection == 'departmentName'">
+                     and oc.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%'
+                        </when>
+                  </choose>
+                  <choose>
+                  <when test= "selection2 == '사원'">
+                     and g.grade_name = #{selection2}
+                        </when>
+                  </choose>
+                     <choose>
+                  <when test= "selection2 == '부장'">
+                     and g.grade_name = #{selection2}
+                        </when>
+                  </choose>
+                     <choose>
+                  <when test= "selection2 == '차장'">
+                     and g.grade_name = #{selection2}
+                        </when>
+                  </choose>
+                     <choose>
+                  <when test= "selection2 == '과장'">
+                     and g.grade_name = #{selection2}
+                        </when>
+                  </choose>
+                     <choose>
+                  <when test= "selection2 == '대리'">
+                     and g.grade_name = #{selection2}
+                        </when>
+                  </choose>
 
-                 AND ((#{selection} = '50003'
-                    	AND ui.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
-                		OR (#{selection} = '50001'
-                        	AND oc.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
-                    	OR (#{selection} = '50002'
-                    		AND g.GRADE_NAME LIKE '%' || #{keyword} || '%')
-                    	OR(#{selection} = '50004'
-                    	   AND m.survey_complete_YN LIKE '%' || #{keyword} || '%')
-                    	OR(#{selection} = '50005'
-                    	   AND(ui.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
-                               OR oc.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%'
-                               OR g.GRADE_NAME LIKE '%' || #{keyword} || '%'
-                               OR m.survey_complete_YN LIKE '%' || #{keyword} || '%')
                             )
-                        )
-                    )
                where survey_seq = #{surveySeq}
-               ORDER BY ROWNUM  ASC
+               ORDER BY ROWNUM ASC
              )
-		WHERE rnum >= #{startRowNo} and rnum <= #{endRowNo}
- 	]]>
+             <![CDATA[
+      WHERE rnum >= #{startRowNo} and rnum <= #{endRowNo}
+            ]]>
 </select>
-
 
 
  <select id="selectSurveyMessage" parameterType="int" resultType="hashmap">
@@ -458,11 +486,6 @@
 		WHERE rnum >= #{startRowNo} and rnum <= #{endRowNo}
  	]]>
 </select>
-
-
-
-
-
 
 	<select id="surveyList" resultType="SLD">
 		SELECT
@@ -535,8 +558,8 @@
       GROUP BY EMPLOYEE_NAME
 	</select>
 
-	<select id="surveyResult" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
-	<![CDATA[
+
+<select id="objectiveResult" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
 SELECT ROWNUM AS rnum
         ,a.APPRAISEE_ID
        ,a.RATER_ID
@@ -554,6 +577,7 @@ SELECT ROWNUM AS rnum
          WHERE ui.EMPLOYEE_ID = RATER_ID
          AND ui.GRADE_ID = g.GRADE_ID) RATER_GRADE
        ,a.QUESTION_TYPE_CODE
+       ,DECODE(a.QUESTION_TYPE_CODE, '10001', '객관식', '10002', '주관식', '혼합식') question_type
        ,a.QUESTION_SEQ
        ,a.ITEM_SEQ
        ,a.ANSWER_CONTENT
@@ -581,10 +605,112 @@ WHERE sr.QUESTION_SEQ = sq.QUESTION_SEQ
         AND sr.APPRAISEE_ID = ui.employee_id
         AND ui.GRADE_ID = g.GRADE_ID
         AND ui.DEPARTMENT_ID = oc.DEPARTMENT_ID
-        AND sr.APPRAISEE_ID=#{employeeId} AND sr.SURVEY_SEQ = #{surveySeq}
+        AND sr.APPRAISEE_ID=#{employeeId} AND sr.SURVEY_SEQ = #{surveySeq} AND sq.QUESTION_TYPE_CODE = '10001'
 ORDER BY RATER_ID, ANONYMITY_SEQ, QUESTION_SEQ) a
- ]]>
 </select>
+
+
+<select id="subjectiveResult" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
+SELECT ROWNUM AS rnum
+        ,a.APPRAISEE_ID
+       ,a.RATER_ID
+       ,a.ANONYMITY_SEQ
+       ,(SELECT DEPARTMENT_NAME
+         FROM ORGANIZATION_CHART oc
+             ,USER_INFO ui
+         WHERE ui.EMPLOYEE_ID = RATER_ID
+         AND ui.DEPARTMENT_ID = oc.DEPARTMENT_ID) RATER_DEPARTMENT_NAME
+       ,(SELECT EMPLOYEE_NAME
+         FROM USER_INFO
+         WHERE EMPLOYEE_ID = RATER_ID) RATER_NAME
+       ,(SELECT GRADE_NAME
+         FROM GRADE g ,USER_INFO ui
+         WHERE ui.EMPLOYEE_ID = RATER_ID
+         AND ui.GRADE_ID = g.GRADE_ID) RATER_GRADE
+       ,a.QUESTION_TYPE_CODE
+       ,DECODE(a.QUESTION_TYPE_CODE, '10001', '객관식', '10002', '주관식', '혼합식') question_type
+       ,a.QUESTION_SEQ
+       ,a.ITEM_SEQ
+       ,a.ANSWER_CONTENT
+       ,a.QUESTION_CONTENT
+       ,a.ITEM_CONTENT
+       ,a.ITEM_SCORE
+FROM (SELECT sr.APPRAISEE_ID
+            ,sr.RATER_ID
+            ,sr.ANONYMITY_SEQ
+            ,sq.QUESTION_TYPE_CODE
+            ,sr.QUESTION_SEQ
+            ,sr.ITEM_SEQ
+            ,sr.ANSWER_CONTENT
+            ,sq.QUESTION_CONTENT
+            ,si.ITEM_CONTENT
+            ,si.ITEM_SCORE
+        FROM SURVEY_RESULT sr
+       ,SURVEY_QUESTION sq
+       ,SURVEY_ITEM si
+       ,USER_INFO ui
+       ,GRADE g
+       ,ORGANIZATION_CHART oc
+WHERE sr.QUESTION_SEQ = sq.QUESTION_SEQ
+        AND sr.ITEM_SEQ = si.ITEM_SEQ
+        AND sr.APPRAISEE_ID = ui.employee_id
+        AND ui.GRADE_ID = g.GRADE_ID
+        AND ui.DEPARTMENT_ID = oc.DEPARTMENT_ID
+        AND sr.APPRAISEE_ID=#{employeeId} AND sr.SURVEY_SEQ = #{surveySeq} AND sq.QUESTION_TYPE_CODE = '10002'
+ORDER BY RATER_ID, ANONYMITY_SEQ, QUESTION_SEQ) a
+</select>
+
+
+<select id="mixResult" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
+SELECT ROWNUM AS rnum
+        ,a.APPRAISEE_ID
+       ,a.RATER_ID
+       ,a.ANONYMITY_SEQ
+       ,(SELECT DEPARTMENT_NAME
+         FROM ORGANIZATION_CHART oc
+             ,USER_INFO ui
+         WHERE ui.EMPLOYEE_ID = RATER_ID
+         AND ui.DEPARTMENT_ID = oc.DEPARTMENT_ID) RATER_DEPARTMENT_NAME
+       ,(SELECT EMPLOYEE_NAME
+         FROM USER_INFO
+         WHERE EMPLOYEE_ID = RATER_ID) RATER_NAME
+       ,(SELECT GRADE_NAME
+         FROM GRADE g ,USER_INFO ui
+         WHERE ui.EMPLOYEE_ID = RATER_ID
+         AND ui.GRADE_ID = g.GRADE_ID) RATER_GRADE
+       ,a.QUESTION_TYPE_CODE
+       ,DECODE(a.QUESTION_TYPE_CODE, '10001', '객관식', '10002', '주관식', '혼합식') question_type
+       ,a.QUESTION_SEQ
+       ,a.ITEM_SEQ
+       ,a.ANSWER_CONTENT
+       ,a.QUESTION_CONTENT
+       ,a.ITEM_CONTENT
+       ,a.ITEM_SCORE
+FROM (SELECT sr.APPRAISEE_ID
+            ,sr.RATER_ID
+            ,sr.ANONYMITY_SEQ
+            ,sq.QUESTION_TYPE_CODE
+            ,sr.QUESTION_SEQ
+            ,sr.ITEM_SEQ
+            ,sr.ANSWER_CONTENT
+            ,sq.QUESTION_CONTENT
+            ,si.ITEM_CONTENT
+            ,si.ITEM_SCORE
+        FROM SURVEY_RESULT sr
+       ,SURVEY_QUESTION sq
+       ,SURVEY_ITEM si
+       ,USER_INFO ui
+       ,GRADE g
+       ,ORGANIZATION_CHART oc
+WHERE sr.QUESTION_SEQ = sq.QUESTION_SEQ
+        AND sr.ITEM_SEQ = si.ITEM_SEQ
+        AND sr.APPRAISEE_ID = ui.employee_id
+        AND ui.GRADE_ID = g.GRADE_ID
+        AND ui.DEPARTMENT_ID = oc.DEPARTMENT_ID
+        AND sr.APPRAISEE_ID=#{employeeId} AND sr.SURVEY_SEQ = #{surveySeq} AND sq.QUESTION_TYPE_CODE = '10003'
+ORDER BY RATER_ID, ANONYMITY_SEQ, QUESTION_SEQ) a
+</select>
+
 
 
 <select id="getResultTarget" parameterType="int" resultType="hashmap">

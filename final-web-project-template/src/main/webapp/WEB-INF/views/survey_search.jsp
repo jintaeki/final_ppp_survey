@@ -469,7 +469,7 @@ function delete_mapping_btn(){
 											<i class="fas fa-xmark"></i>
 										</button>
 									<td><c:if test="${list.stateCode ne '30004'}">
-											<a href="surveyinsert?surveyseq=${list.surveySeq}"  id="surveyUP">${list.surveyName }</a> &nbsp;
+											<a href="surveyinsert.do?surveyseq=${list.surveySeq}"  id="surveyUP">${list.surveyName }</a> &nbsp;
 
 										</c:if> <c:if test="${list.stateCode eq '30004'}">
 									${list.surveyName }

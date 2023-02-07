@@ -103,12 +103,12 @@ public class SurveyService implements ISurveyService{
 	public void updateSMS(int surveyseq, String deliveryContent) {
 		surveyDao.updateSMS(surveyseq, deliveryContent);
 	}
-	
+
 	@Override
 	public void sendReEmail(int surveySeq, String deliveryContent) {
 		surveyDao.sendReEmail(surveySeq, deliveryContent);
 	}
-	
+
 	@Override
 	public void sendReSMS(int surveySeq, String deliveryContent) {
 		surveyDao.sendReSMS(surveySeq, deliveryContent);
@@ -171,7 +171,8 @@ public class SurveyService implements ISurveyService{
 
 	@Override
 	public List<Map<String, Object>> searchByEvaluate(PagingDTO pagingDto) {
-		logger.info("검색:" + surveyDao.searchByEvaluate(pagingDto).toString());
+		logger.info("검색:" + surveyDao.searchByEvaluate(pagingDto));
+		logger.info("검색 전 dto: " + pagingDto.toString());
 		return surveyDao.searchByEvaluate(pagingDto);
 	}
 	
@@ -226,22 +227,48 @@ public class SurveyService implements ISurveyService{
 
 
 	@Override
-	public List<SurveyResultDTO> surveyResult(int employeeId, int surveySeq) {
+	public List<SurveyResultDTO> objectiveResult(int employeeId, int surveySeq) {
 			logger.info("개인별 설문 결과 페이지 서비스 진입");
 			logger.info("employeeId: "  + employeeId);
 			logger.info("surveySeq: "  + surveySeq);
-		return surveyDao.surveyResult(employeeId, surveySeq);
+		return surveyDao.objectiveResult(employeeId, surveySeq);
 	}
 
 	@Override
-	public List<Map<String, Object>> getResultTarget(int employeeId) {
+	public List<SurveyResultDTO> subjectiveResult(int employeeId, int surveySeq) {
+			logger.info("개인별 설문 결과 페이지 서비스 진입");
+			logger.info("employeeId: "  + employeeId);
+			logger.info("surveySeq: "  + surveySeq);
+		return surveyDao.subjectiveResult(employeeId, surveySeq);
+	}
 
+	@Override
+	public List<SurveyResultDTO> mixResult(int employeeId, int surveySeq) {
+			logger.info("개인별 설문 결과 페이지 서비스 진입");
+			logger.info("employeeId: "  + employeeId);
+			logger.info("surveySeq: "  + surveySeq);
+		return surveyDao.mixResult(employeeId, surveySeq);
+	}
+
+
+
+
+
+	@Override
+	public List<Map<String, Object>> getResultTarget(int employeeId) {
+		logger.info("SRT 진입");
+		logger.info("SRT 대상 ID: " + employeeId);
 		return surveyDao.getResultTarget(employeeId);
 	}
 
 	//개인별 점수 요약
 	@Override
 	public List<SurveyResultDTO> personalStats(int surveySeq, int employeeId) {
+		System.out.println("진입");
+		logger.info("personalStats 진입");
+		logger.info("surveySeq: " + surveySeq);
+		logger.info("employeeId: " + surveySeq);
+
 		return surveyDao.personalStats(surveySeq, employeeId);
 	}
 

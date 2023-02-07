@@ -65,7 +65,11 @@ function map_delete(surveySeq, raterId, appraiseeId){
 <div class="col-11">
 	<div class="card">
 		<div class="card-body">
-			<div class="forshadowing">		
+
+			<div class="forshadowing">
+
+				<div></div>
+
 				<div class="row">
 					<div class="hmenu">
 						<div class="survey_list_form_upper_dv">
@@ -92,7 +96,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 											<option value="${commonMap.codeDetailId}">${commonMap.codeDetailName }</option>
 										</c:if>
 									</c:forEach>
-								</select> 
+								</select>
 								</div>
 								<div class="input-group-append">
 								<input type="text" class="form-control" id="selectedKeyword"
@@ -103,7 +107,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 								<input type="hidden" name="month" value="${pagingdto.month}">
 								<input type="hidden" name="number" value="${number}"> <input
 									type="hidden" name="newCheck" value="0">
-								
+
 									<input type="submit" class="btn btn-outline-secondary"
 										id="button-addon2" value="검색"> <input type="reset"
 										class="btn btn-outline-secondary" id="button-addon2"
@@ -111,21 +115,17 @@ function map_delete(surveySeq, raterId, appraiseeId){
 								</div>
 								</div>
 							</form>
-							
+
 						</div>
 					</div>
 					<div>
-						<div class="mappingsearchMenu" style="">
-						 <div style="margin-right:200px;">
+						<div class="mappingsearchMenu">
+						 <div>
 							<h3 style="width:500px;">
 								<b>${surveyInfo.surveyName}매핑 목록</b>
 							</h3>
 						</div>
-						<div style="margin-right:100px;">
-							<button type="button" id="map_insert"
-								class="btn btn-outline-primary"
-								onclick="mapInsert('${surveySeq}')">조건과 관계없이 추가</button>
-						</div>	
+
 						</div>
 					</div>
 					<table class="table" id="mapTb">
@@ -167,6 +167,11 @@ function map_delete(surveySeq, raterId, appraiseeId){
 							<td colspan="4" class="text-center">
 								<!-- 								<div class="page_wrap"> --> <!-- 									<div class="page_nation"> -->
 								<div>
+
+							<button type="button" id="map_insert"
+								class="btn btn-outline-primary"
+								onclick="mapInsert('${surveySeq}')">조건과 관계없이 추가</button>
+
 									<%-- 맨처음 페이지 이동
       									<a class="arrow prev" href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a> --%>
 									<c:if test="${pagingdto.groupNo>1}">
@@ -190,6 +195,8 @@ function map_delete(surveySeq, raterId, appraiseeId){
 									</c:if>
 									<%-- 맨마지막 페이지 이동
        						  			<a class="arrow next" href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">맨끝</a> --%>
+
+
 								</div> <!-- 									</div> --> <!-- 								</div> -->
 
 							</td>
