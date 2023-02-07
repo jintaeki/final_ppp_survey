@@ -111,68 +111,6 @@ public class MappingController {
 	}
 
 
-	// sms, emai 보내지 않고 매핑
-		@RequestMapping(value="/forcemappingset.do")
-		public String setForceMapping(int surveySeq, int month,
-				 				 @RequestParam(defaultValue="0")int number,
-								 @RequestParam(defaultValue="0")String newCheck,
-								 @RequestParam(defaultValue="") String keyword,
-								 @RequestParam(defaultValue="1") int pageNo,
-								 @RequestParam(defaultValue="60004") String selection,
-								 @RequestParam(defaultValue="60004") String selectGD,
-								 Model model, RedirectAttributes redirectAttrs) {
-			model.addAttribute("commonMapList", commonService.selectMappingCode());
-			model.addAttribute("commonDateList", commonService.selectDateCode());
-			model.addAttribute("gradeList", mappingService.selectGradeList());
-			model.addAttribute("number", number);
-			model.addAttribute("newCheck", newCheck);
-			logger.info("지금 가져온 선택지:"+selection);
-			logger.info("페이지 수"+pageNo);
-			logger.info("키워드"+keyword);
-			logger.info("직급"+selectGD);
-			try {
-				if(Integer.parseInt(mappingService.stateCheck(surveySeq)) == 30002) {
-					mappingService.setMapping(surveySeq, month, number);
-					mappingService.updateState(surveySeq, "30003");
-				}else if(Integer.parseInt(mappingService.stateCheck(surveySeq)) == 30003) {
-					if(Integer.parseInt(newCheck) == 1) {
-						mappingService.deleteMapping(surveySeq);
-						mappingService.updateState(surveySeq, "30002");
-						return "redirect:/survey/surveysearch";
-					}
-				}
-				List<PopupDTO> mappingList = null;
-				PagingDTO pagingdto = null;
-				SurveyListDTO surveyInfo = surveyService.selectSurvey(surveySeq);
-
-				int totalRows = pagingService.getTotalMappingNum(keyword, selection, surveySeq, selectGD);
-				logger.info("줄수"+totalRows);
-				pagingdto = new PagingDTO(7, 10, totalRows, pageNo);
-				pagingdto.setKeyword(keyword);
-				pagingdto.setSelection(selection);
-				pagingdto.setSurveySeq(surveySeq);
-				pagingdto.setSelectGD(selectGD);
-				pagingdto.setMonth(month);
-
-				logger.info("페이징:" +pagingdto.toString());
-
-				mappingList = mappingService.selectMappingData(pagingdto);
-				logger.info("리스트:" +mappingList.toString());
-				model.addAttribute("mappingList", mappingList);
-
-				model.addAttribute("pagingdto", pagingdto);
-				model.addAttribute("keyword", keyword);
-				model.addAttribute("surveySeq",surveySeq);
-				model.addAttribute("surveyInfo",surveyInfo);
-
-			} catch (Exception e) {
-				e.printStackTrace();
-				redirectAttrs.addFlashAttribute("message", e.getMessage());
-			}
-			return "/mappingview";
-		}
-
-
 
 
 

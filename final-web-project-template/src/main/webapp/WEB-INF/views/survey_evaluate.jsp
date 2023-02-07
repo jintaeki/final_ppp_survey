@@ -60,7 +60,6 @@
                         <th scope="col">부서</th>
                         <th scope="col">직급</th>
                         <th scope="col">이름</th>
-
                         <th scope="col">결과</th>
                      </tr>
                   </thead>
