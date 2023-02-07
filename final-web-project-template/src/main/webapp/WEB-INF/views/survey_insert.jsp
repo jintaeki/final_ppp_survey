@@ -109,13 +109,15 @@
 
 							<div id="scroll_area" style="overflow: auto; height: 500px;">
 
-								<c:if test="${empty SQL}">
-									<br>
-									<b>${NoQuestion}</b>
-								</c:if>
+								
 								<!-- 여기까지 문제 div -->
 								<div id="queAfter">
-
+								<c:if test="${empty SQL}">
+								<div class="noquestion">
+									<br>
+									<b>${NoQuestion}</b>
+								</div>
+								</c:if>
 									<c:forEach items="${SQL}" var="qlist">
 										<div class="deleteThis" style="display: flex;">
 											<button class="delete_btn"
@@ -496,7 +498,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 	// 문제 추가
 	var newQuestionCnt = 0;
    function question_copy(obj,surveySeq){
-		
+		$('.noquestion').empty();
 	   var testDiv ='';
 	   	testDiv +='<div class="deleteThis" style="display:flex;">';
       	testDiv +='<button class="delete_btn" onclick="deleteQus(this,'+surveySeq+')" style="background: white;" value="'+0+'"><i class="fas fa-xmark"></i></button>';
