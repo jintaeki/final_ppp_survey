@@ -43,6 +43,7 @@ function delete_mapping_btn(){
 
 // 			let firstTemp = currentDay.split('-')[0];
 // 			let middleTemp = currentDay.split('-')[1];
+
 // 			let lastTemp = currentDay.split('-')[2];
 // 			if(Number(firstTemp<10)) firstTemp = '0' +firstTemp;
 // 			if(Number(middleTemp<10)) middleTemp = '0' + middleTemp;
@@ -266,6 +267,34 @@ function delete_mapping_btn(){
   			if(result=="contentLarge"){alert('부가 설명이 너무 길어요. 150자 내로 입력 가능합니다.');  return false;}
   			if(result=="dateEmpty"){alert('날짜를 선택해 주세요.'); return false;}
   			else{alert("등록 성공. 관리 페이지로 이동합니다.");location.href="/survey/surveyinsert?surveyseq="+result;
+			};
+
+
+  		}
+	});
+
+  }
+
+
+  	function setforcedataform() {
+  		var form = $('#surveyDataForm')[0];
+  		var dataform = new FormData(form);
+
+  		$.ajax({
+  		url:'/survey/forcemappingset.do',
+  		method:'POST',
+  		data: dataform,
+  		dataType: 'html',
+  		processData : false,
+        contentType : false,
+        cache : false,
+  		success:function(result){
+  			if(result=="nameEmpty"){alert('제목을 입력해 주세요.'); return false;}
+  			if(result=="nameLarge"){alert('제목이 너무 길어요. 15자까지 작성 가능합니다.');  return false;}
+  			if(result=="noCode"){alert('익명 혹은 기명을 선택해 주세요.');  return false;};
+  			if(result=="contentLarge"){alert('부가 설명이 너무 길어요. 150자 내로 입력 가능합니다.');  return false;}
+  			if(result=="dateEmpty"){alert('날짜를 선택해 주세요.'); return false;}
+  			else{alert("등록 성공. 관리 페이지로 이동합니다.");location.href="/survey/surveyinsert?surveyseq="+result;
 		};
 
 
@@ -275,8 +304,11 @@ function delete_mapping_btn(){
 
 
   		});
-
   	}
+
+
+
+
 
   	function reset_btn(){
   		$('.searchRangeAll').empty();
@@ -284,7 +316,7 @@ function delete_mapping_btn(){
   		html +=`<div class="searchRange"><b>평가 시작 시간:</b>`;
 		html +=`<input type="date" name="surveyStartDateLeft" id="selectedDate">
 				<input type="date" name="surveyStartDateRight" id="selectedDate">`;
-					
+
 		html +=`	<select name="anonyMityCheckCode">
 					<option value="30005">전체</option>
 					<option value="30002">기명</option>
@@ -298,8 +330,8 @@ function delete_mapping_btn(){
 				<option value="30002">평가지 등록 완료</option>
 				<option value="30001">작성 중</option>
 				</select> </div>`;
-				
-		html +=`<div class="input-group-append">	
+
+		html +=`<div class="input-group-append">
 				<input type="text" class="form-control" id="selectedKeyword" placeholder="search" name="keyword" aria-describedby="button-addon2">
 				<input type="hidden" name="pageNo" value="1">
 				<input type="submit" class="btn btn-outline-secondary"
@@ -360,7 +392,7 @@ function delete_mapping_btn(){
 							<option value="0">평가지 선택</option>
 							<c:forEach var="list" items="${surveylist}">
 								<option value="${list.surveySeq} ">${list.surveyName }</option>
-							</c:forEach>					
+							</c:forEach>
 						</select>
 						<br>
 						<br>
@@ -368,6 +400,7 @@ function delete_mapping_btn(){
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal">취소</button>
 							<input type="button" onclick="setdataform()" class="btn btn-primary" value="등록">
+
 						</div>
 					</form:form>
 				</div>
@@ -423,19 +456,19 @@ function delete_mapping_btn(){
 											</c:if>
 										</c:if>
 									</c:forEach>
-								</select> 
+								</select>
 								</div>
-								
+
 								<div class="input-group-append">
 								<input type="text" class="form-control" id="selectedKeyword"
 									placeholder="search" name="keyword"
 									value="${pagingdto.keyword}" aria-describedby="button-addon2">
 								<input type="hidden" name="pageNo" value="1">
-								
+
 									<input type="submit" class="btn btn-outline-secondary"
 										id="button-addon2" value="검색"> <input type="button" style="margin-left:10px;"
 										class="btn btn-outline-secondary" onclick="reset_btn()"
-										value="초기화">						
+										value="초기화">
 								</div>
 								</div>
 							</form>
@@ -485,6 +518,7 @@ function delete_mapping_btn(){
 												<button class="btn btn-outline-primary" data-toggle="modal"
 													data-target="#exampleModal1" id="${list.surveySeq}_send"
 													onclick="updatemessage('${list.surveySeq}')">발송</button>
+														<input type="button" onclick="setforcedataform()" class="btn btn-primary" value="강제 진행">
 											</c:if> <c:if test="${list.stateCode ne '30003'}">
 										${list.codeDetailName }
 									</c:if>
