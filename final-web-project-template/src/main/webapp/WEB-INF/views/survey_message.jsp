@@ -6,6 +6,7 @@
    <div class="card">
       <div class="card-body">
          <div class="forshadowing">
+          <div class="title">설문지 평가 완료여부 목록</div>
             <div class="row">
                <div class="hmenu">
                   <div class="survey_list_form_upper_dv">
