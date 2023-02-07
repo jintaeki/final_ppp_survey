@@ -66,6 +66,10 @@ public interface ISurveyRepository {
 	List<Map<String, String>> selectSurveyEvaluate(int surveySeq);
 
 	List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
+	
+	List<Map<String, String>> selectSurveyMessage(int surveySeq);
+
+	List<Map<String, Object>> searchByMessage(PagingDTO pagingdto);
 
 	// 결과 통계 페이지
 	List<SurveyListDTO> surveyList();

@@ -74,7 +74,7 @@ body {
 	<div style="text-align: center;">
 		<br> <br>
 		<div style="background:#1b2435;height: 50px; padding: 10px;">
-			<a class="text-white" href="<c:url value='/survey/surveysearch'/>">
+			<a class="text-white" href="<c:url value='/survey/surveysearch.do'/>">
 				목록 조회</a>
 		</div>
 		<br> <br>
@@ -87,17 +87,17 @@ body {
 		
 		<div style="background:#1b2435;height: 50px; padding: 10px;">
 			<a class="text-white"
-				href="<c:url value='/survey/surveyresultteam'/>">결과 통계</a>
+				href="<c:url value='/survey/surveyresultteam.do'/>">결과 통계</a>
 		</div>
 		<br> <br>
 		<c:if test="${checked ne '' }">		
 		<div style="background:#1b2435;height: 50px; padding: 10px;">
-			<a class="text-white" href="<c:url value='/logout'/>">로그아웃</a>
+			<a class="text-white" href="<c:url value='/logout.do'/>">로그아웃</a>
 		</div>
 		</c:if>
 		<c:if test="${checked eq '' }">
 		<div style="background:#1b2435;height: 50px; padding: 10px;">
-			<a class="text-white" href="<c:url value='/login'/>">로그인</a>
+			<a class="text-white" href="<c:url value='/login.do'/>">로그인</a>
 		</div>
 		</c:if>
 		<br> <br>

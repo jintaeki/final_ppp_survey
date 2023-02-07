@@ -20,7 +20,6 @@
 	</select>
 
 	<select id="getUserInfo" resultType="com.mycompany.webapp.dto.UserCheckDTO">
-		<![CDATA[
 		SELECT 
 			   S.SURVEY_SEQ, 
                S.SURVEY_NAME,
@@ -81,7 +80,6 @@
 	      SL.SURVEY_CLOSED_DATE >= SYSDATE AND 
 	      SL.STATE_CODE = '30004' AND 
 	      M.RATER_ID = #{raterId} order by M.SURVEY_SEQ
-
 	]]>
 	</select>
 

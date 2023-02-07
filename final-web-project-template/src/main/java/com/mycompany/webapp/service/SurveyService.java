@@ -160,11 +160,25 @@ public class SurveyService implements ISurveyService{
 
 		return surveyDao.selectSurveyEvaluate(surveySeq);
 	}
+	
+	@Override
+	public List<Map<String, String>> selectSurveyMessage(int surveySeq) {
+		logger.info("selectSurveyEvaluate 서비스 진입");
+		logger.info("서비스: " +surveySeq);
+
+		return surveyDao.selectSurveyMessage(surveySeq);
+	}
 
 	@Override
 	public List<Map<String, Object>> searchByEvaluate(PagingDTO pagingDto) {
 		logger.info("검색:" + surveyDao.searchByEvaluate(pagingDto).toString());
 		return surveyDao.searchByEvaluate(pagingDto);
+	}
+	
+	@Override
+	public List<Map<String, Object>> searchByMessage(PagingDTO pagingdto) {
+		logger.info("검색:" + surveyDao.searchByMessage(pagingdto).toString());
+		return surveyDao.searchByMessage(pagingdto);
 	}
 
 	@Override

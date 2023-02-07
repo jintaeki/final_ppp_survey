@@ -164,7 +164,7 @@ public class HomeController {
 
 	}
 
-	@RequestMapping("/logincheck")
+	@RequestMapping("/logincheck.do")
 	public String loginAfter(@ModelAttribute("UCD")  @Valid UserCheckDTO UCD,
 							  BindingResult result,
 							  HttpSession session, Model model) {
@@ -193,7 +193,7 @@ public class HomeController {
 			}else {
 				logger.info("관리자 진입");
 				session.setAttribute("checked", check);
-				return "redirect:/survey/surveysearch";
+				return "redirect:/survey/surveysearch.do";
 			}
 
 		}else {
@@ -205,7 +205,7 @@ public class HomeController {
 
 	}
 
-	@RequestMapping("/logout")
+	@RequestMapping("/logout.do")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "login";

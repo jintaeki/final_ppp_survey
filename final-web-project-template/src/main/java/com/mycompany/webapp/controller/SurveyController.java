@@ -36,13 +36,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.mycompany.webapp.dto.CommonDTO;
 import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.PagingDTO;
+import com.mycompany.webapp.dto.PopupDTO;
 import com.mycompany.webapp.dto.ProjectDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 import com.mycompany.webapp.dto.SurveyResultDTO;
 
 import com.mycompany.webapp.dto.SurveyResultTeamDTO;
-
+import com.mycompany.webapp.service.CommonCodeService;
 import com.mycompany.webapp.service.ICommonCodeService;
 import com.mycompany.webapp.service.IMappingService;
 import com.mycompany.webapp.service.IPagingService;
@@ -90,7 +91,7 @@ public class SurveyController {
 	
 
 	//처음 들어왔을때 용 화면, 아무런 데이터 없이 선택지만 가동
-	@RequestMapping("/surveyresultteam")
+	@RequestMapping("/surveyresultteam.do")
 	public String surveySuccess( Model model) {
 		logger.info("실행");
 
@@ -106,7 +107,7 @@ public class SurveyController {
 
 
 	//선택지를 통해 전송받은 파라미터로 데이터를 추출, json화하여 전송
-	@RequestMapping("/surveyresultDetail")
+	@RequestMapping("/surveyresultDetail.do")
 	public String surveyResultDetail(@RequestParam(defaultValue = "") int surveySeq,
 			                         @RequestParam(defaultValue = "") String departmentId, Model model) {
 		logger.info("실행1");
@@ -238,7 +239,7 @@ public class SurveyController {
 	}
 
 	// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
-	@RequestMapping("/surveyinsert")
+	@RequestMapping("/surveyinsert.do")
 	public String survey_insert(@RequestParam("surveyseq") int surveySeq, Model model, HttpSession session) {
 		if (!String.valueOf(session.getAttribute("SLD")).equals("null")) {
 			SurveyListDTO SLD = (SurveyListDTO) session.getAttribute("SLD");
@@ -484,7 +485,7 @@ public class SurveyController {
 
 	}
 	
-	@RequestMapping("/surveysearch")
+	@RequestMapping("/surveysearch.do")
 	public String search(@RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "1") int pageNo,
 			@RequestParam(defaultValue = "30005") String selection, @RequestParam(defaultValue="30005") String anonyMityCheckCode,
 			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDateLeft, @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDateRight,
@@ -526,17 +527,12 @@ public class SurveyController {
 	}
 	
 	// survey evaluate.sjp
-	@RequestMapping("/evaluatesearch/{surveySeq}")
+	@RequestMapping("/evaluatesearch.do/{surveySeq}")
 	public String searchByEvaluate(
 						 @PathVariable("surveySeq") int surveySeq,
 			             @RequestParam(defaultValue="") String keyword,
 						 @RequestParam(defaultValue="1") int pageNo,
-						 @RequestParam(defaultValue="employeeName") String selection,
-						 @RequestParam(value = "searchType", required = false, defaultValue = "employeeName") String searchType,
-						 @RequestParam(value="employeeName", required=false) String employeeName,
-						 @RequestParam(value="departmentName", required=false) String departmentName,
-						 @RequestParam(value="CompleteYn", required=false) String surveyCompleteYn,
-						 @RequestParam(value="gradeName", required=false) String gradeName,
+						 @RequestParam(defaultValue="50005") String selection,
 						  Model model) {
 		logger.info("지금 가져온 선택지:"+selection);
 		logger.info("페이지 수"+pageNo);
@@ -544,7 +540,7 @@ public class SurveyController {
 		logger.info("설문지 번호" + surveySeq);
 
 		try {
-
+			model.addAttribute("CommonEvaluteList", commonCodeService.selectEvaluateCode());
 			List<Map<String, Object>> evaluateList = null;
 			PagingDTO pagingDto = null;
 			String beforeKeyword = keyword;
@@ -583,6 +579,60 @@ public class SurveyController {
 		logger.info("검색 테스트");
 		return "survey_evaluate";
 	}
+	
+	
+	@RequestMapping("/evaluateMessage.do/{surveySeq}")
+	public String searchByMessage(
+						 @PathVariable("surveySeq") int surveySeq,
+			             @RequestParam(defaultValue="") String keyword,
+						 @RequestParam(defaultValue="1") int pageNo,
+						 @RequestParam(defaultValue="50005") String selection,
+						  Model model) {
+		logger.info("지금 가져온 선택지:"+selection);
+		logger.info("페이지 수"+pageNo);
+		logger.info("키워드"+keyword);
+		logger.info("설문지 번호" + surveySeq);
+
+		try {
+			model.addAttribute("CommonEvaluteList", commonCodeService.selectEvaluateCode());
+			List<Map<String, Object>> evaluateList = null;
+			PagingDTO pagingDto = null;
+			String beforeKeyword = keyword;
+
+			 	model.addAttribute("selecton", selection);
+
+			    logger.info("모델 :" + model);
+				int totalRows = pagingService.getEvaluateMessageBoardNum(beforeKeyword, selection, surveySeq);
+
+			    pagingDto = new PagingDTO(7, 10, totalRows, pageNo);
+
+				pagingDto.setSelection(selection);
+				pagingDto.setKeyword(keyword);
+				pagingDto.setSurveySeq(surveySeq);
+
+				logger.info("selection:" + pagingDto.getSelection());
+				logger.info("keyword: "+pagingDto.getKeyword());
+				logger.info("paigingdto:" + pagingDto);
+				evaluateList = surveyService.searchByMessage(pagingDto);
+				logger.info("스타트, 엔드로우 체크: " + pagingDto);
+				logger.info("리스트:" +evaluateList.toString());
+				pagingDto.setKeyword(beforeKeyword);
+				logger.info(pagingDto.toString());
+				logger.info("evaluateList: " + evaluateList);
+
+			model.addAttribute("evaluateList", evaluateList);
+
+			logger.info(keyword);
+			model.addAttribute("pagingdto", pagingDto);
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("surveySeq", surveySeq);
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("검색 테스트");
+		return "survey_message";
+	}
 		
 		
 	@RequestMapping("/remessage.do")
@@ -618,7 +668,7 @@ public class SurveyController {
 		}
 
 
-		@RequestMapping("/surveyresultcheck/{surveySeq}/{employeeId}")
+		@RequestMapping("/surveyresultcheck.do/{surveySeq}/{employeeId}")
 	      @ResponseBody
 	      public List<SurveyResultDTO> surveyResult2 (
 	            @PathVariable int surveySeq,

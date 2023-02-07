@@ -265,7 +265,7 @@ function delete_mapping_btn(){
   			if(result=="noCode"){alert('익명 혹은 기명을 선택해 주세요.');  return false;};
   			if(result=="contentLarge"){alert('부가 설명이 너무 길어요. 150자 내로 입력 가능합니다.');  return false;}
   			if(result=="dateEmpty"){alert('날짜를 선택해 주세요.'); return false;}
-  			else{alert("등록 성공. 관리 페이지로 이동합니다.");location.href="/survey/surveyinsert?surveyseq="+result;
+  			else{alert("등록 성공. 관리 페이지로 이동합니다.");location.href="/survey/surveyinsert.do?surveyseq="+result;
 		};
 
 
@@ -493,7 +493,7 @@ function delete_mapping_btn(){
 
 									<td><c:if test="${list.stateCode eq '30004'}">
 											<button type="button" class="btn btn-link"
-												onclick="location.href='<c:url value='evaluatesearch/${list.surveySeq}'/>'">조회</button>
+												onclick="location.href='<c:url value='evaluatesearch.do/${list.surveySeq}'/>'">조회</button>
 										</c:if> <input type="hidden" id="pageNo" name=pageNo
 										value="${pagingdto.startPageNo}"></td>
 
@@ -528,30 +528,30 @@ function delete_mapping_btn(){
 									<div>
 
 										<a class="btn btn-outline-secondary"
-											href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">처음</a>
+											href="surveysearch.do?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">처음</a>
 										<c:if test="${pagingdto.groupNo>1}">
 											<a class="btn btn-outline-secondary"
-												href="surveysearch?pageNo=${pagingdto.startPageNo-1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">이전</a>
+												href="surveysearch.do?pageNo=${pagingdto.startPageNo-1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">이전</a>
 										</c:if>
 
 										<c:forEach var="i" begin="${pagingdto.startPageNo}"
 											end="${pagingdto.endPageNo}">
 											<c:if test="${pagingdto.pageNo != i}">
 												<a class="btn btn-outline-secondary"
-													href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">${i}</a>
+													href="surveysearch.do?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">${i}</a>
 											</c:if>
 											<c:if test="${pagingdto.pageNo == i}">
 												<a class="btn btn-secondary"
-													href="surveysearch?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">${i}</a>
+													href="surveysearch.do?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">${i}</a>
 											</c:if>
 										</c:forEach>
 
 										<c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
 											<a class="btn btn-outline-secondary"
-												href="surveysearch?pageNo=${pagingdto.endPageNo+1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">다음</a>
+												href="surveysearch.do?pageNo=${pagingdto.endPageNo+1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">다음</a>
 										</c:if>
 										<a class="btn btn-outline-secondary"
-											href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">맨끝</a>
+											href="surveysearch.do?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">맨끝</a>
 									</div>
 								</td>
 							</tr>

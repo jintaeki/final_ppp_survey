@@ -20,4 +20,6 @@ public interface IPagingRepository {
 	
 
 	int getEvaluateSearchBoardNum(@Param("keyword")String keyword, @Param("selection") String selection, @Param("surveySeq") int surveySeq);
+	
+	int getEvaluateMessageBoardNum(@Param("keyword")String keyword, @Param("selection") String selection, @Param("surveySeq") int surveySeq);
 }

@@ -5,8 +5,7 @@
 	text-align: center;
 	margin-bottom: 30px;
 	display: flex; 
-	justify-content: flex-end;
-						
+	justify-content: flex-end;		
 }
 
 .survey_list_form{
@@ -17,8 +16,11 @@
 }
 
 #button-addon2{
-		margin-left: 6px;
+	margin-left: 6px;
+}
 
+.input-group-append{
+	margin-left:460px;
 }
 
 #upper_dv_btn{
