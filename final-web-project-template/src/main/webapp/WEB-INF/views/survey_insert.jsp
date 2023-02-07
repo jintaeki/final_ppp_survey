@@ -499,7 +499,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 		
 	   var testDiv ='';
 	   	testDiv +='<div class="deleteThis" style="display:flex;">';
-      	testDiv +='<button class="delete_btn" onclick="deleteQus(this,'+surveySeq+')" style="background: white;" value="'+0+'"><i class="fa-regular fa-trash-can"></i></button>';
+      	testDiv +='<button class="delete_btn" onclick="deleteQus(this,'+surveySeq+')" style="background: white;" value="'+0+'"><i class="fas fa-xmark"></i></button>';
 	 	testDiv +='<form id="0" name="0" onsubmit="return false;">';
 	   	testDiv +='<div class="input_qus" id="checkTouch">';
 	   	testDiv +='<input type="hidden" name= "surveySeq" value="'+surveySeq+'" id="surveySequence">';
@@ -691,7 +691,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 			        html  +='<div class="icon_line" id="guitar">';
 					html +='<div id="TouchItem">';
 			        html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
-			        html  += '<input type="text" name="itemContent" placeholder="기타" value="기타" id="guitar" readonly>';
+			        html  += '<i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><input type="text" name="itemContent" placeholder="기타" value="기타" id="guitar" readonly>';
 			        html  +='<input type="hidden" name="itemScore"  value="0">';
 			        html  +='<input type="hidden" name="itemSeq" value="0">';
 					html  +='</div>';
@@ -704,7 +704,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 		                html  +='<div class="icon_line" id="guitar">';
 		 			    html +='<div id="TouchItem">';
 		                html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
-		                html  += '<input type="text" name="itemContent" id="guitar" value="'+data[i].ITEM_CONTENT+'" readonly>';
+		                html  += '<i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><input type="text" name="itemContent" id="guitar" value="'+data[i].ITEM_CONTENT+'" readonly>';
 		                html  +='<input type="hidden" name="itemScore"  value="0">';
 		                html  +='<input type="hidden" name="itemSeq" value="'+data[i].ITEM_SEQ+'">';
 		                html  += '</div>';
