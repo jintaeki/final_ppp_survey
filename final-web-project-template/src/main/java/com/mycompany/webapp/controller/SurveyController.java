@@ -535,7 +535,6 @@ public class SurveyController {
 						 @RequestParam(defaultValue= "" ) String selection2,
 						 @RequestParam(value="employeeName", required=false) String employeeName,
 						 @RequestParam(value="departmentName", required=false) String departmentName,
-						 @RequestParam(value="CompleteYn", required=false) String surveyCompleteYn,
 						 @RequestParam(value="gradeName", required=false) String gradeName,
 						  Model model) {
 		logger.info("지금 가져온 선택지:"+selection);
@@ -585,6 +584,7 @@ public class SurveyController {
 			e.printStackTrace();
 		}
 		logger.info("검색 테스트");
+		logger.info("selection2: " + selection2);
 		return "survey_evaluate";
 	}
 
@@ -624,6 +624,7 @@ public class SurveyController {
 			logger.info("SRT: " + surveyResultTarget.get(0).toString());
 //			logger.info("Result Model: " + surveyResultList.get(0).toString());
 		logger.info("subjectiveResultList: " + subjectiveResultList);
+		logger.info("MRL: " + mixResultList);
 
 			return "survey_result";
 		}

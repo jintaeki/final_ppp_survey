@@ -56,11 +56,11 @@
 							</tr>
 						</thead>
 						<tbody>
-
+						   <c:if test="${ORL.size() !=0}">
 							<tr>
 								<td colspan="8">객관식 목록</td>
 							</tr>
-
+						  </c:if>
 							<c:forEach items="${objectiveResultList}" var="ORL">
 								<tr>
 									<td>${ORL.rnum}</td>
@@ -74,11 +74,14 @@
 								</tr>
 							</c:forEach>
 
-								<tr>
+								<c:if test="${SRL.size() !=0}">
+									<tr>
 								<td colspan="8">주관식 목록</td>
-							    </tr>
+									</tr>
+						  		</c:if>
 
 							   <c:forEach items="${subjectiveResultList}" var="SRL">
+
 								<tr>
 									<td>${SRL.rnum}</td>
 									<td>${SRL.raterName}</td>
@@ -88,6 +91,26 @@
 									<td>${SRL.questionContent}</td>
 									<td>${SRL.itemContent}</td>
 									<td>${SRL.itemScore}</td>
+								</tr>
+							</c:forEach>
+
+								<c:if test="${MRL.size() !=0}">
+									<tr>
+								<td colspan="8">혼합식 목록</td>
+									</tr>
+						  		</c:if>
+
+
+							 <c:forEach items="${mixResultList}" var="MRL">
+								<tr>
+									<td>${MRL.rnum}</td>
+									<td>${MRL.raterName}</td>
+									<td>${MRL.raterDepartmentName}</td>
+									<td>${MRL.raterGrade}</td>
+									<td>${MRL.questionType}</td>
+									<td>${MRL.questionContent}</td>
+									<td>${MRL.itemContent}</td>
+									<td>${MRL.itemScore}</td>
 								</tr>
 							</c:forEach>
 

@@ -24,6 +24,10 @@
 }
 
 
+.row {
+    overflow-y: scroll;
+    height: 820px;
+}
 
 .forshadowing {
     background-color: white;
@@ -54,6 +58,7 @@
 
 
 .table{
+
 	max-width: 1300px;
 	height: 700px;
 	margin:auto;

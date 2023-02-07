@@ -16,24 +16,32 @@
 
 
 						   <select class="subSelection" name="selection2">
-						   		<option value="참여">참여여부</option>
-                           		<option value="사원">사원</option>
-                           		<option value="대리">대리</option>
-                           		<option value="과장">부장</option>
-                           		<option value="차장">부장</option>
-                                <option value="부장">부장</option>
+								 <option value=""
+						   			<c:out value ='${paigingDto.selection2== null? "selected":""}'/>>직급</option>
+                           		<option value="사원"
+                           			<c:out value = '${param.selection2 eq "사원"? "selected":"사원"}'/>>사원</option>
+                           		<option value="대리"
+                           		<c:out value = '${param.selection2 eq "대리"? "selected":"대리"}'/>>대리</option>
+                           		<option value="과장"
+                           		<c:out value = '${param.selection2 eq "사원"? "selected":"과장"}'/>>과장</option>
+                           		<option value="차장"
+                           		<c:out value = '${param.selection2 eq "사원"? "selected":"차장"}'/>>차장</option>
+                                <option value="부장"
+                                <c:out value = '${param.selection2 eq "사원"? "selected":"부장"}'/>>부장</option>
+
                         	</select>
 
                         <select class="selection" name="selection">
-                      	  <option value="departmentName"
-                              <c:if test="${pagingDto.selection2 eq 'departmentName'}">selected</c:if>>부서명</option>
 
-                           <option value="employeeName"
-                              <c:if test="${pagingDto.selection eq 'employeeName'}">selected</c:if>>이름</option>
+                      	 <option value="employeeName"
+                              <c:if test="${pagram.selection eq 'employeeName'}">selected</c:if>>이름</option>
+
+                      	  <option value="departmentName"
+                              <c:if test="${param.selection eq 'departmentName'}">selected</c:if>>부서명</option>
 
                         </select> <input type="text" class="form-control" id="selectedKeyword"
                            placeholder="search" name="keyword"
-                           value="${pagingDto.keyword}" aria-describedby="button-addon2">
+                           value="${pagingDto.keyword}${param.keyword}" aria-describedby="button-addon2">
                         <input type="hidden" name="pageNo" value="1"> <input
                            type="hidden" name="surveySeq" value="${surveySeq}" />
                         <div class="input-group-append">
@@ -52,7 +60,7 @@
                         <th scope="col">부서</th>
                         <th scope="col">직급</th>
                         <th scope="col">이름</th>
-                        <th scope="col">참여여부</th>
+
                         <th scope="col">결과</th>
                      </tr>
                   </thead>
@@ -63,12 +71,6 @@
                            <td class="sv_name">${EL.DEPARTMENT_NAME}</td>
                            <td>${EL.GRADE_NAME}</td>
                            <td>${EL.EMPLOYEE_NAME}</td>
-                           <c:if test="${EL.SURVEY_COMPLETE_YN eq 'Y'}">
-                           <td>설문 참여</td>
-                           </c:if>
-                            <c:if test="${EL.SURVEY_COMPLETE_YN eq 'N'}">
-                           <td>설문 비참여</td>
-                           </c:if>
                            <c:if test="${EL.GRADE_NAME eq '부장'}">
                            <td><input type="button" class="btn btn-link"
                               onclick="result_search_btn(${surveySeq},${EL.EMPLOYEE_ID})"
@@ -190,5 +192,9 @@ function result_search_btn(surveySeq, employeeId) {
 			</div>
 		</div>
 	</div>
+
+	<script>
+
+	</script>
 
 	<!-- modal(설문 등록 시 뜨는 팝업창) 끝-->

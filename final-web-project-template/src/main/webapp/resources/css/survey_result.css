@@ -48,7 +48,7 @@
    padding: 20px;
    margin:20px;
    margin-top: 0px;
-   overflow:scroll;
+   overflow-y:scroll;
    height: 540px;
 }
 
