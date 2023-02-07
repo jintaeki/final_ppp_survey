@@ -6,29 +6,29 @@
 
 	<select id="checkUser"
 		parameterType="com.mycompany.webapp.dto.UserCheckDTO" resultType="int">
-		SELECT COUNT(*) 
+		SELECT COUNT(*)
 		FROM user_info
-        WHERE  EMAIL =  #{email} AND EMPLOYEE_ID = #{raterId}
-		
+        WHERE  EMAIL =  #{email} AND PASSWORD = #{password}
+
 	</select>
-	
+
 	<select id="getUserManagerYN"
 		parameterType="com.mycompany.webapp.dto.UserCheckDTO" resultType="com.mycompany.webapp.dto.UserCheckDTO">
-		SELECT u.MANAGER_YN as managerYN, o.DEPARTMENT_NAME as raterDepartmentName, u.EMPLOYEE_NAME as raterName 
+		SELECT u.MANAGER_YN as managerYN, o.DEPARTMENT_NAME as raterDepartmentName, u.EMPLOYEE_NAME as raterName
 		FROM user_info u, organization_chart o
-        WHERE  u.EMAIL = #{email} AND u.EMPLOYEE_ID = #{raterId} and u.DEPARTMENT_ID = o.DEPARTMENT_ID	
+        WHERE  u.EMAIL = #{email} AND u.PASSWORD = #{password} and u.DEPARTMENT_ID = o.DEPARTMENT_ID
 	</select>
-	
+
 	<select id="getUserInfo" resultType="com.mycompany.webapp.dto.UserCheckDTO">
 		SELECT 
-				S.SURVEY_SEQ, 
+			   S.SURVEY_SEQ, 
                S.SURVEY_NAME,
                S.SURVEY_CONTENT, 
                M.RATER_ID, 
                UR.EMPLOYEE_NAME AS RATER_NAME, 
                GR.GRADE_NAME AS RATER_GRADE_NAME,
                OCR.DEPARTMENT_NAME AS RATER_DEPARTMENT_NAME,
-               M.APPRAISEE_ID, 
+               M.APPRAISEE_ID,
                UA.EMPLOYEE_NAME AS APPRAISEE_NAME,
                GA.GRADE_NAME AS APPRAISEE_GRADE_NAME,
                OCA.DEPARTMENT_NAME AS APPRAISEE_DEPARTMENT_NAME,
@@ -36,8 +36,8 @@
                UR.EMAIL,
                UR.MANAGER_YN
         FROM USER_INFO UR , USER_INFO UA, SURVEY_LIST S, MAPPING M,GRADE GR, GRADE GA,
-       ORGANIZATION_CHART OCR, ORGANIZATION_CHART OCA 
-        WHERE 
+       ORGANIZATION_CHART OCR, ORGANIZATION_CHART OCA
+        WHERE
               S.SURVEY_CLOSED_DATE >= SYSDATE-1 AND
               UR.EMPLOYEE_ID = M.RATER_ID AND
               UR.GRADE_ID = GR.GRADE_ID AND
@@ -67,11 +67,11 @@
       where SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} and SURVEY_LIST.SURVEY_SEQ = ${surveySeq} ORDER BY SURVEY_QUESTION.QUESTION_SEQ ASC,SURVEY_ITEM.ITEM_SCORE ASC,
       SURVEY_ITEM.ITEM_SEQ 
    </select>
-	
+
 	<select id="getSurveySeqAndName" parameterType="string" resultType="hashmap">
 	<![CDATA[
 	 SELECT DISTINCT M.SURVEY_SEQ
-	                ,SL.SURVEY_NAME 
+	                ,SL.SURVEY_NAME
 	                ,SL.ANONYMITY_CHECK_CODE
 	 FROM SURVEY_LIST SL
 	     ,MAPPING M 
@@ -80,22 +80,21 @@
 	      SL.SURVEY_CLOSED_DATE >= SYSDATE AND 
 	      SL.STATE_CODE = '30004' AND 
 	      M.RATER_ID = #{raterId} order by M.SURVEY_SEQ
-
 	]]>
 	</select>
-	
+
 	<select id="getNansu" resultType="int">
-	SELECT CEIL(DBMS_RANDOM.VALUE(100000, 999999)) anonymitySeq  FROM DUAL 
+	SELECT CEIL(DBMS_RANDOM.VALUE(100000, 999999)) anonymitySeq  FROM DUAL
 	</select>
-	
+
 	<select id="checkNansu" parameterType="int" resultType="int">
 	SELECT COUNT(ANONYMITY_SEQ) FROM SURVEY_RESULT WHERE ANONYMITY_SEQ = #{nanSu}
-	
+
 	</select>
-	
+
 	<insert id="insertResult" parameterType="com.mycompany.webapp.dto.SurveyResultDTO">
 	INSERT INTO SURVEY_RESULT
-		(SURVEY_SEQ, 
+		(SURVEY_SEQ,
 		 RATER_ID,
 		 APPRAISEE_ID,
 		 ANONYMITY_SEQ,
@@ -120,17 +119,17 @@
 		SELECT ANONYMITY_CHECK_CODE
 		      ,SURVEY_NAME
 		      ,to_date(SURVEY_START_DATE, 'YYYY-MM-dd') as surveyStartDate
-              ,to_date(SURVEY_CLOSED_DATE, 'YYYY-MM-dd' ) as surveyClosedDate 
+              ,to_date(SURVEY_CLOSED_DATE, 'YYYY-MM-dd' ) as surveyClosedDate
         FROM SURVEY_LIST WHERE SURVEY_SEQ = #{surveySeq}
-	
-	</select>	
-	
+
+	</select>
+
 	<update id="completeSurvey">
-	
-		UPDATE MAPPING 
+
+		UPDATE MAPPING
 		SET SURVEY_COMPLETE_YN = 'Y'
 		WHERE SURVEY_SEQ = #{surveySeq} and RATER_ID = #{raterId} and APPRAISEE_ID = #{appraiseeId}
-	
+
 	</update>
-	
+
 </mapper>

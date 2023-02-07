@@ -4,22 +4,24 @@
 	href="${pageContext.request.contextPath}/resources/css/mapping_view.css" />
 
 <script>
+jQuery.noConflict(); 
 
 var surveySeq="";
 var raterId="";
 
 $(document).ready(function() {
-    $('#popup').on('show.bs.modal', function(event) {
-        surveySeq = $(event.relatedTarget).data('survey');
-        raterId = $(event.relatedTarget).data('rater');
+    $('#popup').on('shown.bs.modal', function(event) {
+        surveySeq = $(event.relatedTarget).data('surveyseq');
+        raterId = $(event.relatedTarget).data('raterid');
+        console.log(surveySeq);
     });
 });
 
 function popup(){
 	var month = $('#month').val();
-
-	let popUrl ="/mapping/popup.do?pageNo=1"+"&surveySeq="+surveySeq+"&raterId="+raterId
-			   +"&month="+month+"&keyword=&keyword2=&selection=60004&selectGD=60004";
+	
+	let popUrl ="/mapping/popup.do?pageNo=1&surveySeq="+surveySeq+"&raterId="+raterId
+			   +"&month="+month+"&keyword=&selection=60004&selectGD=60004";
 	let popOption = "width=800, height=820, left=470, top=100";
 	window.open(popUrl, "다면평가 대상 추가", popOption);
 }
@@ -27,7 +29,7 @@ function popup(){
 function mapInsert(surveySeq){
 
 	let popUrl ="/mapping/another.do?surveySeq="+surveySeq
-			   +"&keyword=&selection=60004&selection2=60004&selectGD=60004";
+			   +"&keyword=&keyword2=&selection=60004&selection2=60004&selectGD=60004";
 	let popOption = "width=800, height=820, left=470, top=100";
 	window.open(popUrl, "다면평가 대상 추가", popOption);
 }
@@ -63,11 +65,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 <div class="col-11">
 	<div class="card">
 		<div class="card-body">
-
-
-			<div class="forshadowing">
-				
-				<div></div>
+			<div class="forshadowing">		
 				<div class="row">
 					<div class="hmenu">
 						<div class="survey_list_form_upper_dv">
@@ -96,7 +94,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 									</c:forEach>
 								</select> 
 								</div>
-								<div class="input-group-append" style="margin-left:460px;">
+								<div class="input-group-append">
 								<input type="text" class="form-control" id="selectedKeyword"
 									placeholder="search" name="keyword"
 									value="${pagingdto.keyword}" aria-describedby="button-addon2">
@@ -152,8 +150,8 @@ function map_delete(surveySeq, raterId, appraiseeId){
 											<td>${mapping.gradeName}</td>
 											<td><button type="button" id="get_mapping"
 													class="btn btn-link" data-toggle="modal"
-													data-target="#popup" data-survey="${mapping.surveySeq}"
-													data-rater="${mapping.raterId}">
+													data-target="#popup" data-surveyseq="${mapping.surveySeq}"
+													data-raterid="${mapping.raterId}">
 													${mapping.raterName}</button></td>
 											<td>${mapping.appraiseeName}</td>
 											<td><button id="map_delete"
@@ -223,6 +221,8 @@ function map_delete(surveySeq, raterId, appraiseeId){
 			<div class="modal-body">
 				<br>
 				<h5>다면평가에 포함될 프로젝트의 범위 정하기</h5>
+				<input type="hidden" id="surveySeq" name="surveySeq" value=serveySeq>
+				<input type="hidden" id="raterId" name="raterId" value=raterId>
 				<select class="form-control" id="month">
 				<c:forEach items="${commonDateList}" var="month">
 					<option value="${month.codeDetailName}">최근 ${month.codeDetailName}개월 동안에 끝난 프로젝트</option>

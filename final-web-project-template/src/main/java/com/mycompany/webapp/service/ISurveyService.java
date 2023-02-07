@@ -31,6 +31,9 @@ public interface ISurveyService {
 	void UpdateQuestion(String questionContent, int questionSeq, String questionTypeCode);
 
 	List<Map<String, String>> selectSurveyEvaluate(int surveySeq);
+	
+	List<Map<String, String>> selectSurveyMessage(int surveySeq);
+
 
 	SurveyListDTO selectSurvey(int surveySeq);
 
@@ -66,6 +69,8 @@ public interface ISurveyService {
 	void deleteSurvey(int surveySeq);
 
 	List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
+	
+	List<Map<String, Object>> searchByMessage(PagingDTO pagingdto);
 
 	List<SurveyResultDTO> surveyResult(int employeeId, int surveyId);
 

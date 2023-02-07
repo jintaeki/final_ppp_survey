@@ -65,14 +65,16 @@ public class HomeController {
 	@Autowired
 	IJsonRepository ijr;
 	
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
- 
+
 		UserCheckDTO UCD = new UserCheckDTO();
 		model.addAttribute("UCD",UCD);
 		return "login";
 	}
-	
+
+
 	
 	@RequestMapping("/survey/fileuploadprojecthistory.do")	
 	@ResponseBody
@@ -125,6 +127,7 @@ public class HomeController {
 		}
 
 	}
+
 	
 	@RequestMapping("/survey/fileUploadOrganization.do")
 	@ResponseBody
@@ -168,17 +171,19 @@ public class HomeController {
 			
 		}
 	}
-	@RequestMapping("/logincheck")
-	public String loginAfter(@ModelAttribute("UCD")  @Valid UserCheckDTO UCD, 
+
+	@RequestMapping("/logincheck.do")
+	public String loginAfter(@ModelAttribute("UCD")  @Valid UserCheckDTO UCD,
+
 							  BindingResult result,
 							  HttpSession session, Model model) {
 		logger.info("실행");
 		logger.info(UCD.toString());
 		if(loginCheckService.checkUser(UCD)==1) {
 			logger.info("로그인 가능");
+			session.setAttribute("signIn", UCD);
 			UserCheckDTO check =  loginCheckService.getUserManagerYN(UCD);
-			
-			
+
 			if(check.getManagerYN().equals("N")) {
 				logger.info("평가자 진입");
 				// 평가자가 평가해야할 설문지 조회
@@ -197,24 +202,25 @@ public class HomeController {
 			}else {
 				logger.info("관리자 진입");
 				session.setAttribute("checked", check);
-				return "redirect:/survey/surveysearch";
+				return "redirect:/survey/surveysearch.do";
 			}
-			
+
 		}else {
 			logger.info("로그인 불가");
+			session.setAttribute("signIn", null);
 			return "login";
 		}
-		
-		
+
+
 	}
-	
-	@RequestMapping("/logout")
+
+	@RequestMapping("/logout.do")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "login";
 	}
-	
-	
+
+
 	@RequestMapping("/getAppraisee.do/{raterId}/{surveySeq}")
 	@ResponseBody
 	public List<UserCheckDTO> getAppraisee (@PathVariable String raterId,@PathVariable int surveySeq){
@@ -222,37 +228,37 @@ public class HomeController {
 		// surveySeq 필요
 		List<UserCheckDTO> UCDList = loginCheckService.getUserInfo(raterId, surveySeq);
 		logger.info(UCDList.toString());
-		
+
 		return UCDList;
 	}
-	
+
 	@RequestMapping("/getquestionforsurvey.do/{surveySeq}")
 	@ResponseBody
 	public List<Map<String, Object>> getQuestionForSurvey(@PathVariable int surveySeq) {
 		logger.info("실행");
 		logger.info(String.valueOf(surveySeq));
 		List<Map<String, Object>> QuestionForSurvey = loginCheckService.getQuestion(surveySeq);
-		
+
 		return QuestionForSurvey;
 	}
-	
-	
+
+
 	@RequestMapping("/insertSurveyResult.do")
 	@ResponseBody
 	public String insertSurveyResult(@ModelAttribute ("surveyResult") SurveyResultDTO surveyResult ) {
 		logger.info(surveyResult.toString());
-		
+
 		String surveySeqs = surveyResult.getSurveySeq();
 		int cntcontent = (surveySeqs.length() - surveySeqs.replace(",", "").length())+1;
-		
-		String anonymityCodes = surveyResult.getAnonymityCode();	
+
+		String anonymityCodes = surveyResult.getAnonymityCode();
 		String raterIds = surveyResult.getRaterId();
 		String appraiseeIds = surveyResult.getAppraiseeId();
 		String questionSeqs = surveyResult.getQuestionSeq();
 		String itemSeqs = surveyResult.getItemSeq();
 		String answerContents =surveyResult.getAnswerContent();
 		String anonymitySeqs = surveyResult.getAnonymitySeq();
-		
+
 		String[] anonymityCode = anonymityCodes.split(",");
 		String[] surveySeq = surveySeqs.split(",");
 		String[] raterId = raterIds.split(",");
@@ -261,7 +267,7 @@ public class HomeController {
 		String[] itemSeq = itemSeqs.split(",");
 		String[] answerContent = answerContents.split(",");
 		String[] anonymitySeq  = anonymitySeqs.split(",");
-		
+
 		surveyResult.setSurveySeq(surveySeq[0]);
 		surveyResult.setAppraiseeId(appraiseeId[0]);
 		surveyResult.setRaterId(raterId[0]);
@@ -275,7 +281,7 @@ public class HomeController {
 				surveyResult.setQuestionSeq(questionSeq[i]);
 				surveyResult.setItemSeq(itemSeq[i]);
 				surveyResult.setAnswerContent(answerContent[i]);
-				
+
 				loginCheckService.insertResult(surveyResult);
 				loginCheckService.completeSurvey(surveyResult.getSurveySeq(),surveyResult.getAppraiseeId(),surveyResult.getRaterId());
 			}
@@ -286,49 +292,49 @@ public class HomeController {
 				surveyResult.setQuestionSeq(questionSeq[i]);
 				surveyResult.setItemSeq(itemSeq[i]);
 				surveyResult.setAnswerContent(answerContent[i]);
-				
+
 				loginCheckService.insertResult(surveyResult);
 				loginCheckService.completeSurvey(surveyResult.getSurveySeq(),surveyResult.getAppraiseeId(),surveyResult.getRaterId());
 
 			}
 		}
-		
 
-		
-		
+
+
+
 		return "성공";
 	}
-	
+
 	@RequestMapping("/getAnonymityCode.do/{surveySeq}")
 	@ResponseBody
 	public SurveyListDTO getAnonimityCode(@PathVariable int surveySeq) {
-		
-		
-		
+
+
+
 		return loginCheckService.getAnonimityCode(surveySeq);
-		
+
 	}
-	
-	
+
+
 	@RequestMapping("/getAnonySeq.do")
 	@ResponseBody
 	public String getAnonySeq() {
-		
+
 		return checknansu();
 	}
-	
+
 	// 일련번호 발급 및 중복 확인 메소드, 재귀함수
 	public String checknansu() {
 		nansu = loginCheckService.getNansu();
 		if(loginCheckService.checkNansu(nansu)==0) {
-			
+
 		}else {
 			checknansu();
 		}
 		return String.valueOf(nansu);
-			
+
 		}
-	
+
 }
-	
+
 

@@ -47,13 +47,15 @@
                $tr = $("#tr_" + plusId);
                addObj.projectId      = $tr.find("input[name='projectId']").val();
                addObj.gradeId        = $tr.find("input[name='gradeId']").val();
-               addObj.departmentId   = $tr.find("input[name='departmentId']").val();
+               addObj.rDepartmentId   = $tr.find("input[name='rDepartmentId']").val();
+               addObj.aDepartmentId   = $tr.find("input[name='aDepartmentId']").val();
                addObj.surveySeq      = $tr.find("input[name='surveySeq']").val();
                addObj.raterId        = $tr.find("input[name='raterId']").val();
                addObj.appraiseeId    = $tr.find("input[name='appraiseeId']").val();
                addObj.projectName    = $tr.find("input[name='projectName']").val();
                addObj.surveyName     = $tr.find("input[name='surveyName']").val();
-               addObj.departmentName = $tr.find("input[name='departmentName']").val();
+               addObj.rDepartmentName = $tr.find("input[name='rDepartmentName']").val();
+               addObj.aDepartmentName = $tr.find("input[name='aDepartmentName']").val();
                addObj.raterName      = $tr.find("input[name='raterName']").val();
                addObj.appraiseeName  = $tr.find("input[name='appraiseeName']").val();
                addObj.gradeName      = $tr.find("input[name='gradeName']").val();
@@ -140,8 +142,9 @@
                <tr>
                   <th class="check"><input type="checkbox" id="check_all" /></th>
                   <th>평가자</th>
-                  <th>부서</th>
+                  <th>평가자 부서</th>
                   <th>피평가자</th>
+                  <th>피평가자 부서</th>
                </tr>
             </thead>
             <tbody>
@@ -156,21 +159,24 @@
 							<tr id="tr_${result.raterId}${result.appraiseeId}">
 								<input type="hidden" name="projectId" value="${result.projectId}" />
 								<input type="hidden" name="gradeId" value="${result.gradeId}" />
-								<input type="hidden" name="departmentId" value="${result.departmentId}" />
+								<input type="hidden" name="rDepartmentId" value="${result.rDepartmentId}" />
+								<input type="hidden" name="aDepartmentId" value="${result.aDepartmentId}" />
 								<input type="hidden" name="surveySeq" value="${result.surveySeq}" />
 								<input type="hidden" name="raterId" value="${result.raterId}" />
 								<input type="hidden" name="appraiseeId" value="${result.appraiseeId}" />
 								<input type="hidden" name="projectName" value="${result.projectName}" />
 								<input type="hidden" name="surveyName" value="${result.surveyName}" />
-								<input type="hidden" name="departmentName" value="${result.departmentName}" />
+								<input type="hidden" name="rDepartmentName" value="${result.rDepartmentName}" />
+								<input type="hidden" name="aDepartmentName" value="${result.aDepartmentName}" />
 								<input type="hidden" name="raterName" value="${result.raterName}" />
 								<input type="hidden" name="appraiseeName" value="${result.appraiseeName}" />
 								<input type="hidden" name="gradeName" value="${result.gradeName}" />
 								
 								<td><input type="checkbox" name="chk_res" value="${result.raterId}${result.appraiseeId}"/></td>
 								<td class="raterName"><c:out value="${result.raterName}" /></td>
-								<td class=departmentName><c:out value="${result.departmentName}" /></td>
+								<td class="rDepartmentName"><c:out value="${result.rDepartmentName}" /></td>
 								<td class="appraiseeName"><c:out value="${result.appraiseeName}" /></td>
+								<td class="aDepartmentName"><c:out value="${result.aDepartmentName}" /></td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>

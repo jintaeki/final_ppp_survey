@@ -42,7 +42,7 @@
 
 		</table>
 		<div style="margin-top:10px;">
-			<a style="margin-left: 100px;" href="/logout">로그아웃</a>
+			<a style="margin-left: 100px;" href="/logout.do">로그아웃</a>
 		</div>
 	</div>
 </div>

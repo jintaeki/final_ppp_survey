@@ -20,7 +20,7 @@
 							<thead class="chartselect">
 								<tr>
 									<th scope="col">
-										<form action="<c:url value='/survey/surveyresultDetail'/>"
+										<form action="<c:url value='/survey/surveyresultDetail.do'/>"
 											method="get" class="survey_list_form">
 											<select name="surveySeq" id="surveySeq" onchange="typeFn();">
 												<option value="1">--선택--</option>
@@ -34,9 +34,9 @@
 											</div>
 											<div class="input-group-append">
 												<input type="submit" class="btn btn-outline-secondary"
-													id="button-addon2" value="검색"> <input type="reset"
-													class="btn btn-outline-secondary" id="button-addon2"
-													value="초기화">
+													id="button-addon2" value="검색"> 
+											    <input type="reset" class="btn btn-outline-secondary" 
+											        id="button-addon2" value="초기화">
 											</div>
 										</form>
 									</th>
@@ -50,8 +50,7 @@
 				</div>
 				<div class="chartdiv">
 				<!-- CHART -->
-				<figure class="highcharts-figure"
-					style="overflow: auto; height: 500px; width: 1200px; display: flex;">
+				<figure class="highcharts-figure" style="overflow: auto; height: 520px; width: 1250px; display: flex;">
 					<div class="scroll_body">
 						<div class="chartGP">
 
@@ -135,7 +134,31 @@ function typeFn() {
 	     });
 		}
 	}
+	
+function statics(survyeSeq, departmentId){
+	
+	console.log(surveySeq);
+	console.log(departmentId);
+	var submitObj = new Object();
+		submitObj.surveySeq= surveySeq;
+		submitObj.departmentId= departmentId;
+		$.ajax({
+			url: "surveyresultDetail.do",
+		    type: "POST",
+		    contentType: "application/json;charset=UTF-8",
+		    data:JSON.stringify(submitObj),
+		    dataType : "json"
+		    })
+		    .done(function(resMap) {
+		    	
+		    })
+		    .fail(function(e) {
+		        alert("통계검색을 실패하였습니다.");
+		    })
+		    .always(function() {
+		    });
 
+}
 
 	/* CHART 설정부분 */
 

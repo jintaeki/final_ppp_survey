@@ -1,14 +1,5 @@
 @charset "UTF-8";
 
-
-.card-body{
-   height: 865px;
-   width:1500px;
-   background: darkgray;
-   display: flex;
-    justify-content: center;
-}
-
 /* .forshadowing{ */
 /*    background-color: white; */
 /*     box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px, rgb(10 37 64 / 35%) 0px -2px 6px 0px inset; */
@@ -21,16 +12,16 @@
 /*     justify-content: center; */
 /* } */
 
-.survey_list_form_upper_dv{
-	display:flex;
-/* 	margin-left:200px; */
-}
 
 #survey_list_form_id{
 	display: flex;
-    margin-left: 360px;
 }
-
+.input-group-append{
+	margin-left:526.5px;	
+}
+#button-addon2 {
+    margin-left: 6px;
+}
 
 .table{
 	max-width: 1300px;

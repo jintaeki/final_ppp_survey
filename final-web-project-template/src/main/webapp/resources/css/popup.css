@@ -28,12 +28,12 @@ tbody {
 }
 
 .tableAnother th, td {
-  width: 25%; /* to enable "word-break: break-all" */
+  width: 20%; /* to enable "word-break: break-all" */
   word-break: break-all; /* 4. */
 }
 
 .tablePop th, td{
-	width: 20%; /* to enable "word-break: break-all" */
+	width: 16%; /* to enable "word-break: break-all" */
   word-break: break-all; /* 4. */
 }
 tr {
