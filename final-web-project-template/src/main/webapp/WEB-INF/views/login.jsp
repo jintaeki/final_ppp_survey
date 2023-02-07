@@ -26,12 +26,12 @@
 
 </head>
 <body>
-		
-			<div class="container_login">
+
+			<div id="container_login" class="shadow p-3 mb-5 bg-white rounded">
 					<img src="${pageContext.request.contextPath}/resources/images/logo_img.png" class="login_img">
 				<div class="login_text">다 함께 성장하는, 다면평가 시스템</div>
 				<c:url value="/logincheck" var="actionURL" scope="page" />
-					<form:form action="${actionURL }" modelAttribute="UCD" style="margin: 50px 150px;">
+					<form:form action="${actionURL }" modelAttribute="UCD" style="margin: 60px 150px;">
 						<div class="login_form">
 							<input type="text" class="form-control" name="email" id="email"
 								value="RQELZD@kcc.co.kr" required> <label
@@ -43,11 +43,11 @@
 								class="login_form-placeholder" for="id">ID</label>
 						</div>
 						<div class="login_btn">
-							<button type="submit" class="btn btn-primary">로그인</button>
+							<button type="submit" class="btn btn-primary" style="background-color: #8258FA!important;">로그인</button>
 							<!-- 							<button type="button" class="btn btn-primary" -->
 							<!-- 								onclick="location.href='survey/surveylist'">관리자 로그인</button> -->
 						</div>
-					
+
 					</form:form>
 			</div>
 </body>

@@ -243,7 +243,7 @@
 	        ,department_name
 	        ,grade_name
 	        ,employee_name
-	        ,SURVEY_COMPLETE_YN
+
 	        FROM (
 	         SELECT
 	                ROWNUM AS rnum
@@ -251,7 +251,7 @@
 	                ,department_name
 	                ,grade_name
 	                ,employee_name
-	                ,survey_complete_yn
+
 	          FROM ( SELECT
 	                        distinct
 	                        m.survey_seq
@@ -259,20 +259,54 @@
 	                        ,g.grade_name
 	                        ,ui.employee_name
 	                        ,ui.employee_id
-	                        ,m.survey_complete_yn
+
 	                 FROM grade g ,user_info ui ,mapping m ,ORGANIZATION_CHART oc
 	                 WHERE
 	                     m.APPRAISEE_ID = ui.employee_id
 	                     AND g.grade_id = ui.grade_id and oc.department_id = ui.department_id
-	                     AND ((#{selection} = 'employeeName'
-	                    	AND ui.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
-	                		OR (#{selection} = 'departmentName'
-	                        	AND oc.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
-	                    	OR (#{selection} = 'gradeName'
-	                    		AND g.GRADE_NAME LIKE '%' || #{keyword} || '%')
-	                    	OR(#{selection} = 'surveyCompleteYn'
-	                    	   AND m.survey_complete_YN LIKE '%' || #{keyword} || '%')
-
+	                   	<choose>
+							<when test = "keyword == ''">
+								and ui.employee_name like '%' || '' || '%'
+							</when>
+							<otherwise>
+							 	and ui.employee_name like '%' || #{keyword} || '%'
+							</otherwise>
+						</choose>
+                        <choose>
+                         <when test = "selection == 'employeeName'">
+							and ui.employee_name like  '%' || #{keyword} || '%'
+                    	</when>
+						</choose>
+						<choose>
+                        <when test= "selection == 'departmentName'">
+							and oc.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%'
+                        </when>
+						</choose>
+						<choose>
+						<when test= "selection2 == '사원'">
+							and g.grade_name = #{selection2}
+                        </when>
+						</choose>
+							<choose>
+						<when test= "selection2 == '부장'">
+							and g.grade_name = #{selection2}
+                        </when>
+						</choose>
+							<choose>
+						<when test= "selection2 == '차장'">
+							and g.grade_name = #{selection2}
+                        </when>
+						</choose>
+							<choose>
+						<when test= "selection2 == '과장'">
+							and g.grade_name = #{selection2}
+                        </when>
+						</choose>
+							<choose>
+						<when test= "selection2 == '대리'">
+							and g.grade_name = #{selection2}
+                        </when>
+						</choose>
 	                            )
 
 	               )

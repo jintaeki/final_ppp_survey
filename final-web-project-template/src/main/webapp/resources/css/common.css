@@ -121,15 +121,17 @@ select:disabled {
 }
 
 .login_img {
-	display: block;
-	margin: 30px auto; width : 200px;
-	height: 200px;
-	width: 200px;
+	margin-top: 40px;
+    margin-left: 170px;
+    height: 200px;
+    width: 200px;
 }
 
 .login_text {
+	font-size: 16pt;
 	text-align: center;
 	font-weight: bold;
+	margin-top: 40px
 }
 
 .login_title {
@@ -320,4 +322,10 @@ thead{
 	border-radius: 10px;
 	color: white;
 	background-color: #8258FA;
+}
+
+#container_login {
+    margin: 160px auto;
+    width: 550px;
+    height: 650px;
 }
