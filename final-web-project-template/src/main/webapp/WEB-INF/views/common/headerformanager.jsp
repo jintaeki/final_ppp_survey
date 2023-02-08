@@ -31,7 +31,7 @@
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> -->
 </head>
 <body>
-   <div class="d-flex flex-column">
+   <div class="d-flex flex-column" style="background-color: #031436;">
 
             <div style="height:20px;">
 				&nbsp;

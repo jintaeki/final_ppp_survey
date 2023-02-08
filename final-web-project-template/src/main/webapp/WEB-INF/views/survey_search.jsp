@@ -415,6 +415,8 @@ function delete_mapping_btn(){
 		<div class="card-body">
 			<div class="forshadowing">
 				<div class="row">
+				<div class="col-12" style="margin-bottom:30px;"><h3 style="text-align: center;
+    height: 60px; line-height: 60px;"><b>평가지 목록</b></h3></div>
 					<div class="hmenu">
 						<div class="survey_list_form_upper_dv">
 							<form action="<c:url value='/survey/surveysearch'/>"
@@ -476,8 +478,7 @@ function delete_mapping_btn(){
 
 						</div>
 					</div>
-					<div class="col-12" style="margin-bottom:30px;"><h3 style="text-align:center;"><b>평가지 목록</b></h3></div>
-					<table class="table">
+					<table class="table table-sm table-striped table-hover">
 						<thead>
 							<tr>
 								<th scope="col"></th>
@@ -497,7 +498,7 @@ function delete_mapping_btn(){
 
 									<th scope="row">
 										<button class="delete_survey_btn"
-											style="background: white; border: 1px solid #fff; border-radius: 35em;"
+											style="border: none; opacity: 0.3;"
 											onclick="delete_survey_btn(this,${list.surveySeq}, ${pagingdto.selection},  ${pagingdto.pageNo}, ${paging.anonyMityCheckCode},${paging.surveyStartDateLeft},${paging.surveyStartDateRight} )">
 
 											<i class="fas fa-xmark"></i>
@@ -544,21 +545,16 @@ function delete_mapping_btn(){
 								</tr>
 							</c:forEach>
 						</tbody>
-						<tbody>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td style="float: right;"><button id="upper_dv_btn"
-										type="button" class="btn btn-outline-secondary" data-toggle="modal"
-										data-target="#exampleModal" data-whatever="@mdo">등록</button></td>
-							</tr>
-						</tbody>
-						<tbody style="border: none;">
+					</table>
+					<table class="paging-table">
+						<div style="border: none;">
 							<tr>
 								<td colspan="12" class="text-center" style="border: none;">
+
+								<button id="upper_dv_btn"
+										type="button" class="btn btn-outline-secondary" data-toggle="modal"
+										data-target="#exampleModal" data-whatever="@mdo">등록</button>
+
 									<div>
 
 										<a class="btn btn-outline-secondary"
@@ -589,11 +585,11 @@ function delete_mapping_btn(){
 									</div>
 								</td>
 							</tr>
-						</tbody>
-					</table>
+						</table>
 
 
 				</div>
+
 			</div>
 			<!--  평가지  -->
 		</div>

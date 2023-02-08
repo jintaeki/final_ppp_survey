@@ -243,7 +243,7 @@
 	        ,department_name
 	        ,grade_name
 	        ,employee_name
-
+			,SURVEY_SEQ
 	        FROM (
 	         SELECT
 	                ROWNUM AS rnum
@@ -255,7 +255,7 @@
 	          FROM ( SELECT
 	                        distinct
 	                        m.survey_seq
-	                         ,oc.department_name
+	                        ,oc.department_name
 	                        ,g.grade_name
 	                        ,ui.employee_name
 	                        ,ui.employee_id
@@ -313,7 +313,7 @@
 	               ORDER BY ROWNUM  DESC
 	     )
 			 where survey_seq = #{surveySeq}
-	     )
+
 	</select>
 
 </mapper>

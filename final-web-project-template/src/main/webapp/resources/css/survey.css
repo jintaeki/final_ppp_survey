@@ -38,8 +38,8 @@
 }
 
 #scroll_area{
-	overflow: auto; 
-	
+	overflow: auto;
+
 }
 
 #surveyForm{
@@ -49,11 +49,11 @@
 
 #surveyForm p{
 	font-size: 17px;
-	
+
 }
 .noQuestion{
 	font-size: 20px;
-	
+
 }
 
 #menu_btn:hober{
@@ -92,7 +92,7 @@
 }
 
 .create_btn{
-	padding: 10px 20px; 
+	padding: 10px 20px;
 	margin: 10px 0px 10px 0px;
 }
 
@@ -114,25 +114,26 @@
     box-shadow: 1px 1px 5px 1px grey;
     border-radius: 20px;
     padding: 20px;
-    font-size: 17px; 
+    font-size: 17px;
     text-align: center;
     z-index: 1;
-    
+
 }
 
 .appraiseeList_list{
-	background: aliceblue;
+	background: #F9F9F9;
 /* 	height: 100%; */
-	overflow: auto; 
+	overflow: auto;
     max-height: 760px;
 /*     margin-top: 10px; */
     box-shadow: 1px 1px 5px 1px grey;
+    margin-left:15px;
     border-radius: 20px;
     padding: 10px;
-    font-size: 17px; 
+    font-size: 17px;
     text-align: center;
     z-index: 1;
-    
+
 }
 
 .submit_btn button{
@@ -211,3 +212,11 @@
 
 }
 
+.head{
+	display: flex;
+    height: 50px;
+    box-shadow: 0px 0px 6px -4px #dee2e6;
+    margin-bottom: 10px;
+    width: 100%;
+    border-bottom: 2px solid #dee2e6;
+}

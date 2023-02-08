@@ -28,7 +28,7 @@
 .hmenu {
 
 	margin: auto;
-	margin-bottom: 30px;
+	/* margin-bottom: 30px;*/
 	margin-top: 50px;
 }
 
@@ -41,7 +41,7 @@
 
 .survey_list_form_upper_dv{
 	width:1500px;
-	margin-left:100px;
+	margin-left:20px;
 }
 
 .searchRangeAll{
@@ -50,7 +50,7 @@
 }
 
 .searchRange{
-	margin-right:290px;
+	margin-right:440px;
 }
 
 .forshadowing {

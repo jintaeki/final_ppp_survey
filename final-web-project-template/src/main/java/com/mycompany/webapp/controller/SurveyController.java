@@ -503,7 +503,7 @@ public class SurveyController {
 
 			int totalRows = pagingService.getTotalBoardNum(keyword, selection, surveyStartDateLeft,surveyStartDateRight, anonyMityCheckCode);
 			logger.info(String.valueOf(totalRows));
-			pagingdto = new PagingDTO(7, 10, totalRows, pageNo);
+			pagingdto = new PagingDTO(11, 10, totalRows, pageNo);
 			pagingdto.setSelection(selection);
 			pagingdto.setKeyword(keyword);
 			pagingdto.setSurveyStartDateLeft(surveyStartDateLeft);
