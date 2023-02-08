@@ -404,7 +404,7 @@ function delete_mapping_btn(){
 								
 								<div class="input-group-append">
 								<input type="text" class="form-control" id="selectedKeyword"
-									placeholder="search" name="keyword" value=""
+									placeholder="search" name="keyword"
 									value="${pagingdto.keyword}" aria-describedby="button-addon2">
 								<input type="hidden" name="pageNo" value="1">
 								
