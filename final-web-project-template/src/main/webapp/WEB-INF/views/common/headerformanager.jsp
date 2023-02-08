@@ -39,18 +39,16 @@
 			<div class="">
 				<div class="h-100"
 					style="width: 160px; box-shadow: rgb(50 50 93/ 25%) 0px 50px 100px -20px, rgb(0 0 0/ 30%) 0px 30px 60px -30px, rgb(10 37 64/ 35%) 0px -2px 6px 0px inset; border-radius: 5px;">
-<!-- 					<div class="flex-grow-1"> -->
 						<%@ include file="/WEB-INF/views/common/menuformanager.jsp"%>
 		</c:if>
 		<c:if test="${checked.managerYN eq 'N' }">
-			<div class="col-2">
-				<div class="h-100 d-flex flex-column"
-					style="background: #031436; border-radius: 0.25rem;">
-					<div class="flex-grow-1">
+			<div class="">
+				<div class="h-100 "
+					style="width: 160px; box-shadow: rgb(50 50 93/ 25%) 0px 50px 100px -20px, rgb(0 0 0/ 30%) 0px 30px 60px -30px, rgb(10 37 64/ 35%) 0px -2px 6px 0px inset; border-radius: 5px;">
 						<%@ include file="/WEB-INF/views/common/menu.jsp"%>
 		</c:if>
 
-				</div> <!-- 40번줄과 연결 menuformanager-->
-			</div> <!--  39번줄과 연결 menuformanager -->
+				</div> <!-- 40번줄 & 46번줄과 연결 menuformanager&menu-->
+			</div> <!--  39번줄& 45번줄과 연결 menuformanager&menu -->
 
 	<div class="">  <!-- 바디 부분을 묶은 곳 -->

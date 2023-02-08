@@ -489,7 +489,6 @@
 
 <!-- 문항 시작 -->
 <div class="card" style=" margin-left:0px;">
-<div class="card-body" style="	width:1400px;background: #031436; margin-left:0px; border-radius: 0.25rem;">
 <div class="forshadowing" style="margin:auto; ">
 	<div  style="display: flex; margin-left: 20px; margin-bottom: 20px;">
 		<select name="surveySeq" onclick="selectSurvey(this,${raterId})">
@@ -501,90 +500,90 @@
 		</select>
 	</div>
 
-	<div class="row" style="width: 1360px;">
+		<div class="row" style="width: 1360px;">
 
 
-		<div class="col-5">
-			<div class="appraiseeList_list">
+			<div class="col-5">
+				<div class="appraiseeList_list">
 
-				<c:forEach items="${surveySeqAndName}" var="surveySeqAndName">
-					<div class="appraiseeList">
-						<div class="input_title">피평가자 목록 (${surveySeqAndName.SURVEY_NAME})</div>
+					<c:forEach items="${surveySeqAndName}" var="surveySeqAndName">
+						<div class="appraiseeList">
+							<div class="input_title">피평가자 목록
+								(${surveySeqAndName.SURVEY_NAME})</div>
 
-						<div id="scroll_area">
+							<div id="scroll_area">
 
 
-							<div class="row">
-								<div class="col-3">피평가자</div>
-								<div class="col-4">부서</div>
-								<div class="col-2">직급</div>
-								<div class="col-3"></div>
+								<div class="row">
+									<div class="col-3">피평가자</div>
+									<div class="col-4">부서</div>
+									<div class="col-2">직급</div>
+									<div class="col-3"></div>
+
+								</div>
+
+								<c:forEach items="${allUser}" var="allAppraisee">
+
+									<c:if test="${allUser} eq null }">
+										<div class="noAppraisee">
+											<b>평가 대상이 없습니다.</b>
+										</div>
+									</c:if>
+									<c:if
+										test="${surveySeqAndName.SURVEY_SEQ eq allAppraisee.surveySeq }">
+										<div id="appendArea" class="row">
+											<div class="col-3">${allAppraisee.appraiseeName}</div>
+											<div class="col-4">${allAppraisee.appraiseeDepartmentName}</div>
+											<div class="col-2">${allAppraisee.appraiseeGradeName}</div>
+											<c:if test="${allAppraisee.surveyCompleteYN eq 'N'}">
+												<div class="col-3">
+
+													<button class="create_btn" style="color: blue;"
+														onclick="selectSurvey(this,${raterId})"
+														value="${allAppraisee.surveySeq }">평가지 선택</button>
+												</div>
+											</c:if>
+											<c:if test="${allAppraisee.surveyCompleteYN eq 'Y'}">
+												<div class="col-3">
+													<button style="padding: 10px 13px;" class="create_btn"
+														disabled>평가완료</button>
+												</div>
+											</c:if>
+
+										</div>
+									</c:if>
+								</c:forEach>
+
+
 
 							</div>
-
-							<c:forEach items="${allUser}" var="allAppraisee">
-
-								<c:if test="${allUser} eq null }">
-									<div class="noAppraisee">
-										<b>평가 대상이 없습니다.</b>
-									</div>
-								</c:if>
-								<c:if test="${surveySeqAndName.SURVEY_SEQ eq allAppraisee.surveySeq }">
-									<div id="appendArea" class="row">
-										<div class="col-3">${allAppraisee.appraiseeName}</div>
-										<div class="col-4">${allAppraisee.appraiseeDepartmentName}</div>
-										<div class="col-2">${allAppraisee.appraiseeGradeName}</div>										
-										<c:if test="${allAppraisee.surveyCompleteYN eq 'N'}">
-											<div class="col-3">
-
-												<button class="create_btn" style="color:blue;"onclick="selectSurvey(this,${raterId})" value="${allAppraisee.surveySeq }">평가지
-													선택</button>
-											</div>
-										</c:if>
-										<c:if test="${allAppraisee.surveyCompleteYN eq 'Y'}">
-											<div class="col-3">
-												<button style="padding: 10px 13px; "
-													class="create_btn" disabled>평가완료</button>
-											</div>
-										</c:if>
-
-									</div>
-								</c:if>
-							</c:forEach>
-
-
-
 						</div>
-					</div>
-				</c:forEach>
+					</c:forEach>
+				</div>
+
 			</div>
 
-		</div>
 
 
+			<div class="question-box col-6">
+				<div class="surveyName"></div>
 
-		<div class="question-box col-6">
-			<div class="surveyName"></div>
-		
-    
-         <div id="scroll_area" style="max-height: 630px; margin-left:10px; ">
-            <div class="survey_list">
 
-               <form:form id="surveyForm" modelAttribute="surveyResult">
-               <div class="noQuestion">
-               <b>설문을 먼저 선택하세요.</b>
-               </div>
-               <!-- 문제 들어가는 곳 -->
-               </form:form>
-            </div>
-         </div>
-           <div class="submit_btn"></div>
-      </div>
-<%--       <img src="${pageContext.request.contextPath}/resources/images/evaluate.png"  --%>
-<!--       style="width: 600px; margin-top: 300px; margin-left: -28px; position: fixed; opacity: 0.1;"> -->
-   </div>
-   </div>
-   </div>
-</div>
+				<div id="scroll_area" style="max-height: 630px; margin-left: 10px;">
+					<div class="survey_list">
+
+						<form:form id="surveyForm" modelAttribute="surveyResult">
+							<div class="noQuestion">
+								<b>설문을 먼저 선택하세요.</b>
+							</div>
+							<!-- 문제 들어가는 곳 -->
+						</form:form>
+					</div>
+				</div>
+				<div class="submit_btn"></div>
+			</div>
+		</div> 
+	</div> <!-- forshadowing -->
+</div> <!-- card -->
 
 <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>

@@ -3,9 +3,7 @@
 <%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/survey_result.css" />
-<div class="col-11">
 	<div class="card">
-		<div class="card-body">
 			<div class="forshadowing">
 			  <div class="container_flex">
 			  <div class="title" style="font-size: 24px;">설문 결과</div>
@@ -122,9 +120,5 @@
 				</div>
 			</div>
 			<!-- forshadowing 종료 -->
-		</div>
-		<!--card-body 종료  -->
 	</div>
-	<!-- col-11 종료 -->
-</div>
 <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>

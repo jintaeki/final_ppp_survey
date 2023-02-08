@@ -10,9 +10,7 @@
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
-<div class="col-11">
 	<div class="card">
-		<div class="card-body">
 			<div class="forshadowing">
 				<div class="result_container">
 					<div class="hmenu">
@@ -76,9 +74,7 @@
 				</figure>
 				</div>
 			</div>
-		</div>
 	</div>
-</div>
 <script>
 	/* 선택지 비동기 부분 */
 function typeFn() {

@@ -61,10 +61,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 
 </script>
 
-<div class="col-11">
 	<div class="card">
-		<div class="card-body">
-
 			<div class="forshadowing">
 
 				<div class="title" style="font-size: 24px; text-align: center;">
@@ -195,8 +192,6 @@ function map_delete(surveySeq, raterId, appraiseeId){
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
 <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
 
 <!-- Modal -->

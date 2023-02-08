@@ -2,12 +2,8 @@
 <%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/survey_evaluate.css"/>
 
-<div class="col-11">
    <div class="card">
-      <div class="card-body">
          <div class="forshadowing">
-           <div class="title">평가 대상자 목록</div>
-            <div class="row">
                <div class="hmenu">
                   <div class="survey_list_form_upper_dv">
                      <form
@@ -62,15 +58,18 @@
                      </form>
                   </div>
                </div>
+
+			<div class="col-12" style=""><h3 style="text-align:center;"><b>평가 대상자 목록</b></h3></div>
+               
                <table class="table table-striped">
                   <thead>
                      <tr>
 
-                        <th class="col-2"></th>
-                        <th class="col-2">이름</th>
-                        <th class="col-2">직급</th>
-                        <th class="col-3">부서</th>
-                        <th class="col-3">결과</th>
+                        <th class=""></th>
+                        <th class="">이름</th>
+                        <th class="">직급</th>
+                        <th class="">부서</th>
+                        <th class="">결과</th>
 
 
                      </tr>
@@ -133,13 +132,10 @@
                      </td>
                   </tr>
                </table>
-            </div>
          </div>
-      </div>
    </div>
-</div>
 
-
+   <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
 <script>
 //평가 유무 비동기 체크
 function result_search_btn(surveySeq, employeeId) {
@@ -175,5 +171,5 @@ function result_search_btn(surveySeq, employeeId) {
    }
 </script>
 
-   <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
+
 

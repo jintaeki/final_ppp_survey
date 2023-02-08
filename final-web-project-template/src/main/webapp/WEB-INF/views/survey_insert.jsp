@@ -11,9 +11,7 @@
 </style>
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
-<div class="col-11">
 	<div class="card" >
-		<div class="card-body" style="height:890px;">
 			<div class="forshadowing" style="height:860px;">
 
 				<button style="float: right;" class="btn btn-link"
@@ -229,25 +227,8 @@
 				</div>
 			</div>
 		</div>
-	</div>
 </div>
 <script>
-
-
-// 문제 버튼없이 저장 및 수정
-// var cnt = 0;
-// function ho(tag){
-// 	$().keydown(function(){
-// 	    if(event.keyCode === 13) {
-	
-	    	
-// 	    	tag.parent().parent().parent().next().children().next().children().first().children().next().next().focus();
-// 	    	tag.parent().parent().parent().next().children().next().children().first().children().next().next().click();
-// 	    	}
-	    	
-
-// });
-// }
 
 function manageItem(obj,questionSeq){
 	
