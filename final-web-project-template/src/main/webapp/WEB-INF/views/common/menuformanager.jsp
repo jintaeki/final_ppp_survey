@@ -8,6 +8,7 @@ body {
 
 </style>
 
+<!--  모달 -->
 <div class="modal fade" id="json" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -56,7 +57,7 @@ body {
 
 			</div>
 		</div>
-	</div>
+	</div><!--  모달 끝 -->
 
 <div class="menu_profile">
 	<div style="border-bottom: 1px solid white; text-align: center;">

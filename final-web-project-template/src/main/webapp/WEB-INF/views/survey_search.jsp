@@ -293,7 +293,6 @@ function delete_mapping_btn(){
 
 </script>
 
-<div class="col-11" >
 	<!-- modal(설문 등록 시 뜨는 팝업창) -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
 		aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -356,11 +355,10 @@ function delete_mapping_btn(){
 	</div>
 	<!-- modal(설문 등록 시 뜨는 팝업창) 끝-->
 
-
+	<!--  평가지 목록 -->
 	<div class="card" id="beforeModal">
 			<div class="forshadowing">
-				<div class="row">
-					<div class="hmenu">
+					<div class="hmenu"> <!-- 상단 검색 창 -->
 						<div class="survey_list_form_upper_dv">
 							<form action="<c:url value='/survey/surveysearch.do'/>"
 								method="POST" class="survey_list_form" style="display: flex;">
@@ -538,9 +536,7 @@ function delete_mapping_btn(){
 					</table>
 
 
-				</div>
 			</div>
-			<!--  평가지  -->
-	</div>
-</div>
+			
+	</div><!--  평가지  목록-->
 <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
