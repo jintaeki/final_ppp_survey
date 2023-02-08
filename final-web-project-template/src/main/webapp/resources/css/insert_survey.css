@@ -22,8 +22,8 @@ input {
 
 .item_management{
 	margin-top:30px;
-	border-radius: 20px;
-	box-shadow: 1px 1px 10px 0px;
+	border-radius: 20px; 
+	box-shadow: 1px 1px 10px 0px  #c0c0c0;
 	padding: 20px;
 	width:400px;
 	
@@ -40,7 +40,7 @@ input {
 .question_management{
 	margin-top: 30px;
 	width: 880px;
-	box-shadow: 1px 1px 10px 0px;
+	box-shadow: 1px 1px 10px 0px #c0c0c0;
 	border-radius: 20px;
 	padding: 20px;
 }
@@ -52,7 +52,7 @@ input {
 
 .container_flex {
 	border-radius: 20px;
-	box-shadow: 1px 1px 10px 0px; 
+/* 	box-shadow: 1px 1px 10px 0px #c0c0c0;  */
 /* 	padding: 20px;  */
 /* 	width:450px; */
 /* 	align-items: center !important; */
@@ -109,23 +109,12 @@ input#is{
 }
 
 .insert_category {
-	border-radius: 10px;
-	border: transparent;
-	background-color: transparent;
-	margin-right: 8px;
-/* 	box-shadow: inset 2px 2px 5px #ededed, inset -5px -5px 10px #fff; */
-	width: 100%;
-	box-sizing: border-box;
-	transition: all 0.2s ease-in-out;
-	appearance: none;
-	-webkit-appearance: none;
-	border: 0;
-	outline: 0;
-	font-size: 16px;
-	border-radius: 320px;
-/* 	padding: 16px; */
-/* 	background-color: #f8f8f8; */
-	text-shadow: 1px 1px 0 #fff;
+	text-align:center;
+
+	box-shadow: inset 2px 2px 5px #ededed, inset -5px -5px 10px #fff;
+
+	border-radius: 20px;
+
 }
 
 .form-check-input {

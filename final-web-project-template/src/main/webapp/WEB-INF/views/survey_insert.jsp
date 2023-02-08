@@ -13,45 +13,48 @@
    href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
 <div class="card">
 	<div class="forshadowing" style="height: 860px;">
-
-		<button style="float: right;" class="btn btn-link"
-			onclick="insertComplete(${SLD.surveySeq})">등록완료</button>
+		<div style="    display: flex;
+    justify-content: space-between;
+    border: none">
+			<div class="input_title"
+					style="display: flex;
+    border: none;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 700px;">기본 설정</div>
+		<div><button style="float: right;" class="btn btn-link"
+			onclick="insertComplete(${SLD.surveySeq})">등록완료</button></div>
+		</div>
 		<!-- 설문지 설정 진택 -->
 
 		<div class="container_survey">
-			<div class="row" style="margin-top: 45px;"></div>
+			<div class="row" ></div>
 
 			<div class="container_flex"
-				style="border-radius: 20px; box-shadow: 1px 1px 10px 0px;">
-				<div class="input_title"
-					style="margin-right: 0px; text-align: center;">기본 설정</div>
+				style="z">
+	
 				<form:form modelAttribute="SLD" id="survey_setting_form">
-					<table style="text-align: center;">
-
-						<tr class="col-12">
-							<th class="col-1"><span class="insert_category"><b>설문지
-										제목</b><label for="survey_name"></label></span></th>
-							<th class="col-2"><span class="insert_category"> <b>평가
-										기간</b>
-							</span></th>
-							<th class="col-1"><span class="insert_category"> <b>익명/기명</b></span></th>
-							<th class="col-3"><span class="insert_category"><b>상세
-										설명</b></span></th>
-							<th class="col-1"></th>
-						</tr>
-
-						<tr>
-							<td class="col-1"><input type="text" id="survey_name"
+					<div style="display:flex; justify-content: space-around;">
+							<div>
+							<div class="insert_category"><b>설문지 제목</b><label for="survey_name"></label></div>
+							<input type="text" id="survey_name"
 								name="surveyName" style="width: 200px;"
-								value="${SLD.surveyName}"></td>
-
-							<td class="col-2"><input type="date" name="surveyStartDate"
+								value="${SLD.surveyName}">
+							</div>
+							
+							<div>
+							<div class="insert_category"> <b>평가 기간</b></div>	
+							<input type="date" name="surveyStartDate"
 								class="survey_date"
 								value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">-
 								<input type="date" name="surveyClosedDate" class="survey_date"
-								value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />"></td>
-
-							<td class="col-1"><c:if
+								value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />">
+							
+							</div>
+							
+							<div>
+							<div class="insert_category"> <b>익명/기명</b></div>
+							<c:if
 									test="${SLD.anonymityCheckCode eq '20001'}">
 									<input type="radio" name="anonymityCheckCode"
 										id="survey_type_check" value="20001" checked>
@@ -59,7 +62,8 @@
 									<input type="radio" name="anonymityCheckCode"
 										id="survey_type_check" value="20002">
 									<label style="margin-bottom: 0px;" for="survey_type_check"><b>기명</b></label>
-								</c:if> <c:if test="${SLD.anonymityCheckCode eq '20002'}">
+							</c:if> 
+							<c:if test="${SLD.anonymityCheckCode eq '20002'}">
 									<input type="radio" name="anonymityCheckCode"
 										id="survey_type_check" value="20001">
 									<label style="margin-bottom: 0px;" for="survey_type_check"><b>익명</b></label>
@@ -67,22 +71,25 @@
 									<input type="radio" name="anonymityCheckCode"
 										id="survey_type_check" value="20002" checked>
 									<label style="margin-bottom: 0px;" for="survey_type_check"><b>기명</b></label>
-								</c:if></td>
-
-
-							<td class="col-3"><textarea class="visually-hidden"
+							</c:if>
+							</div>
+							
+							<div>
+							<div class="insert_category"><b>상세 설명</b></div>
+							<textarea class="visually-hidden"
 									id="message-text" name="surveyContent"
-									style="width: 400px; height: 100px; max-width: 350px;">${SLD.surveyContent }</textarea></td>
+									style="width: 400px; height: 100px; max-width: 350px;">${SLD.surveyContent }</textarea>
+							</div>
+							
+							
 
 
-							<td class="col-1"><input type="button" class="update_btn"
-								style="padding: 5px 26px 26px 26px;" onclick="register()"
-								value="적용"></td>
-						</tr>
-
-					</table>
+							<div><input type="button" class="update_btn" style="margin-top:70px"
+								style="" onclick="register()"
+								value="적용"></div>
 
 
+					</div>
 					<input type="hidden" name="stateCode" value="30001">
 					<input type="hidden" name="surveySeq" id="surveyseq"
 						value="${SLD.surveySeq}">
