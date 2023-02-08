@@ -357,23 +357,29 @@ public class SurveyController {
 	// 문제 등록
 	@RequestMapping(value = "/insertquestion.do")
 	@ResponseBody
-	public String insertQuestion(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model) {
+	public List<SurveyQuestionDTO> insertQuestion(@ModelAttribute("SQD") @Valid SurveyQuestionDTO SQD, BindingResult result, Model model) {
 		logger.info("문제 생성 진입했나?");
-		model.addAttribute("SQD", SQD);
 		logger.info(SQD.getQuestionTypeCode());
-		if(SQD.getQuestionContent()==null || SQD.getQuestionContent().equals("")) {
-			return "0";
-		}
+		System.out.println("평가번호:"+SQD.toString());
 		surveyService.insertQuestion(SQD);
-
+		List<SurveyQuestionDTO> LSQD = new ArrayList<>();
+		System.out.println("출력해라:"+SQD);
+		
+		if(SQD.getQuestionContent()==null || SQD.getQuestionContent().equals("")) {
+			return LSQD;
+		}
+		
+	
 		if(SQD.getQuestionTypeCode().equals("10002")) {
 
 		SQD.setItemScore("0");
 		surveyService.deleteItemByQSeq(SQD.getQuestionSeq());
 		SQD.setItemContent("주관식 문제입니다.");
 		surveyService.insertItem(SQD);
+		LSQD.add(SQD);
 		}
-		return "1";
+		LSQD.add(SQD);
+		return LSQD;
 	}
 
 	// 문제 업데이트

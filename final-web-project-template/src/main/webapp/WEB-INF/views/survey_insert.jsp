@@ -138,56 +138,56 @@
 												type="hidden" name="questionSeq"
 												value="${qlist.questionSeq }"> <input
 												name="questionContent" type="text" id="input_qus"
-												onclick="manageQus(this,${qlist.questionSeq},${qlist.questionTypeCode }); this.onclick=null;"
+												onclick="manageQus(this,${qlist.questionSeq},${qlist.questionTypeCode },${qlist.surveySeq} ); this.onclick=null;"
 												value="${qlist.questionContent }">
 
-										</div>
+										</div>&nbsp;
 										<c:if test="${qlist.questionTypeCode eq '10001' }">
-											<input type="radio" id="obj_radio"
+											&nbsp;<input type="radio" id="obj_radio"
 												name="${qlist.questionSeq}" value="10001"
 												onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
 												checked> 객관식
-													<input type="radio" id="subj_radio"
+													&nbsp;<input type="radio" id="subj_radio"
 												name="${qlist.questionSeq}" value="10002"
 												onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
-													<input type="radio" id="mix_radio"
+													&nbsp;<input type="radio" id="mix_radio"
 												name="${qlist.questionSeq}" value="10003"
 												onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 혼합식												
 												</c:if>
 										<c:if test="${qlist.questionTypeCode eq '10002' }">
-											<input type="radio" id="obj_radio"
+											&nbsp;<input type="radio" id="obj_radio"
 												name="${qlist.questionSeq}" value="10001"
 												onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 객관식
-													<input type="radio" id="subj_radio"
+													&nbsp;<input type="radio" id="subj_radio"
 												name="${qlist.questionSeq}" value="10002"
 												onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
 												checked> 주관식
-													<input type="radio" id="mix_radio"
+													&nbsp;<input type="radio" id="mix_radio"
 												name="${qlist.questionSeq}" value="10003"
 												onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 혼합식												
 												</c:if>
 										<c:if test="${qlist.questionTypeCode eq '10003' }">
-											<input type="radio" id="obj_radio"
+											&nbsp;<input type="radio" id="obj_radio"
 												name="${qlist.questionSeq}" value="10001"
 												onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 객관식
-													<input type="radio" id="subj_radio"
+													&nbsp;<input type="radio" id="subj_radio"
 												name="${qlist.questionSeq}" value="10002"
 												onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
-													<input type="radio" id="mix_radio"
+													&nbsp;<input type="radio" id="mix_radio"
 												name="${qlist.questionSeq}" value="10003"
 												onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
 												checked> 혼합식												
 											</c:if>
 										<c:if
 											test="${qlist.questionTypeCode ne '10001' and qlist.questionTypeCode ne '10002' and qlist.questionTypeCode ne '10003' }">
-											<input type="radio" id="obj_radio"
+											&nbsp;<input type="radio" id="obj_radio"
 												name="${qlist.questionSeq}" value="10001"
 												onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
 												checked> 객관식
-													<input type="radio" id="subj_radio"
+													&nbsp;<input type="radio" id="subj_radio"
 												name="${qlist.questionSeq}" value="10002"
 												onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
-													<input type="radio" id="mix_radio"
+													&nbsp;<input type="radio" id="mix_radio"
 												name="${qlist.questionSeq}" value="10003"
 												onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 혼합식												
 											</c:if>
@@ -280,7 +280,7 @@ function manageItem(obj,questionSeq){
 	
 }
 
-function manageQus(obj,questionSeq,questionTypeCodes){
+function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 	const tag = $(obj);
 	
 	keyArray = [];
@@ -290,7 +290,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 			
 			
 			
-			if(questionSeq ==0){
+			if(questionSeq1 ==0){
 				var form = $('#0')[0];
 				var formdata = new FormData(form);
 				for(const pairkeys of formdata.keys()){
@@ -323,16 +323,23 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 				         contentType : false,
 				         cache : false,
 				         timeout : 600000,
-				         dataType: 'html',
+				         dataType: 'json',
 				         beforeSend : function() {
 				            // 전송 전 실행 코드
 				         },
 				         success : function(data) {
-				        	 if(data==0){
+				 				tag.parent().parent().parent().remove();
+
+				        	 console.log(data[0].questionSeq);
+				        	 if(data[0].questionSeq==0){
 				        		 alert("빈 텍스트는 저장이 불가합니다."); 
 				        		 location.reload();
 				        	 }else{
-				     	    	
+				        		 console.log(data);
+				        		 location.reload();
+				        	
+				        	      	
+
 				        	 }
 								
 
@@ -345,7 +352,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 					})
 					
 			}else{
-				var form = $('#'+questionSeq)[0];
+				var form = $('#'+questionSeq1)[0];
 				var formdata = new FormData(form);
 				for(const pairkeys of formdata.keys()){
 		             keyArray.push(pairkeys);
@@ -356,7 +363,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 		          }
 		          
 		          for(var i = 0 ; i < cnt ; i++){
-		        	  if(keyArray[i]==questionSeq){
+		        	  if(keyArray[i]==questionSeq1){
 		        		  formdata.append('questionTypeCode',valueArray[i]);
 		        		  break;
 		        	  }
@@ -379,7 +386,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 				        		 alert("빈 텍스트는 저장이 불가합니다.");
 				        		 location.reload();
 				        	 }else{
-				     	    	
+				        		
 				        	 }
 				         },
 				         error : function(e) {
@@ -388,8 +395,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 				         }
 					})
 			}
-			//엔터키로 내려가기... 어렵네...
-			ho(tag);	
+			
 	});
 	
 		
@@ -433,6 +439,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
    // 문제 누르면 touch버튼(돋보기) 활성화
    $(document).ready(function(){
         $('div#checkTouch').click(function(){
+        	console.log($(this).parent().next('button'));
            $(this).parent().next('button').click();
 
         });
@@ -497,25 +504,28 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 	   	testDiv +='<div class="input_qus" id="checkTouch">';
 	   	testDiv +='<input type="hidden" name= "surveySeq" value="'+surveySeq+'" id="surveySequence">';
 		testDiv +='<input type="hidden" name= "questionSeq" value="0">';
-		testDiv +='<input type="text" name="questionContent"  id="input_qus"  onclick="manageQus(this,0,10001); this.onclick=null;" value="hi">';	
-		testDiv +='</div>';
-		testDiv +='<input type="radio" id="obj_radio" name="0'+newQuestionCnt+'" value="10001" onclick="checkit1(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+'" checked> 객관식';
-		testDiv +='<input type="radio" id="subj_radio" name="0'+newQuestionCnt+'" value="10002" onclick="checkit2(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+')"> 주관식';
-		testDiv +='<input type="radio" id="mix_radio" name="0'+newQuestionCnt+'" value="10003" onclick="checkit3(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+')"> 혼합식';									
+		testDiv +='<input type="text" name="questionContent"  id="input_qus"  onclick="manageQus(this,0,10001,'+surveySeq+'); this.onclick=null;" value="hi">';	
+		testDiv +='</div>&nbsp;';
+		testDiv +='&nbsp;&nbsp;<input type="radio" id="obj_radio" name="0'+newQuestionCnt+'" value="10001" onclick="checkit1(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+')" checked> 객관식';
+		testDiv +='&nbsp;&nbsp;<input type="radio" id="subj_radio" name="0'+newQuestionCnt+'" value="10002" onclick="checkit2(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+')"> 주관식';
+		testDiv +='&nbsp;&nbsp;<input type="radio" id="mix_radio" name="0'+newQuestionCnt+'" value="10003" onclick="checkit3(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+')"> 혼합식';									
       	testDiv +='</form>';
       	testDiv +='<button value="'+0+'" onclick="touchQuestion(this)"style="display:none;">';
       	testDiv +='	<i class="fas fa-search"></i>';
       	testDiv +='</button>';
 		
       	testDiv +='<div class="blank_under"></div>';
-      	testDiv +='</div>'
+      	testDiv +='</div>';
       	
         $('#queAfter').prepend(testDiv);
 
-        
+     $('#queAfter div form div input[name=questionContent]').first().focus();
+     $('#0').children().children().next().next().click();
+//      $('#0').children().children().next().next().click();
 
-        $('#queAfter div form div input[name=questionContent]').first().focus();
-        $('#0').children().children().next().next().click();
+       
+
+// 		location.reload();
         newQuestionCnt = newQuestionCnt + 1;
 	}
    
