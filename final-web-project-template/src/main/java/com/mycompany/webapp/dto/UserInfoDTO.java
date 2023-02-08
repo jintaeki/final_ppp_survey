@@ -8,7 +8,8 @@ public class UserInfoDTO {
 	private String phone;
 	private String email;
 	private String managerYN;
-
+	private String gender;
+	
 	public String getEmployeeId() {
 		return employeeId;
 	}
@@ -51,12 +52,17 @@ public class UserInfoDTO {
 	public void setManagerYN(String managerYN) {
 		this.managerYN = managerYN;
 	}
-
-
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	
 	@Override
 	public String toString() {
 		return "UserInfoDTO [employeeId=" + employeeId + ", departmentId=" + departmentId + ", employeeName="
 				+ employeeName + ", gradeId=" + gradeId + ", phone=" + phone + ", email=" + email + ", managerYN="
-				+ managerYN + "]";
+				+ managerYN + ", gender=" + gender + "]";
 	}
 }

@@ -2,9 +2,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div class="menu_profile">
 	<div style="margin-right:20px; ">
+		<c:if test="${checked.gender eq '남'}">
 		<img src="${pageContext.request.contextPath}/resources/images/profile.gif"
 			style="width: 350px; position: fixed; left: -25px;">
-
+ 		</c:if>
+ 		<c:if test="${checked.gender eq '녀'}">
+		<img src="${pageContext.request.contextPath}/resources/images/profile2.gif"
+			style="width: 350px; position: fixed; left: -25px;">
+ 		</c:if>
 	</div>
 	<br>
 <!-- 	<table style="margin-top: 200px; -->

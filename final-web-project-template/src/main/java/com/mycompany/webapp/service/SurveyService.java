@@ -1,7 +1,6 @@
 
 package com.mycompany.webapp.service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,17 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import org.springframework.transaction.annotation.Transactional;
-
 import com.mycompany.webapp.dao.IMappingRepository;
 import com.mycompany.webapp.dao.ISurveyRepository;
-import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.PagingDTO;
-import com.mycompany.webapp.dto.PopupDTO;
-import com.mycompany.webapp.dto.ProjectDTO;
-import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 import com.mycompany.webapp.dto.SurveyResultDTO;
@@ -87,11 +79,6 @@ public class SurveyService implements ISurveyService{
 	public void UpdateQuestion(String questionContent, int questionSeq, String questionTypeCode) {
 		 surveyDao.UpdateQuestion(questionContent, questionSeq,  questionTypeCode);
 
-	}
-
-	@Override
-	public void sendMessage(int surveySeq) {
-		surveyDao.sendMessage(surveySeq);
 	}
 
 	@Override

@@ -129,17 +129,13 @@
        WHERE QUESTION_SEQ=#{questionSeq}
    </update>
 
-   <update id="sendMessage" parameterType="int">
-      UPDATE SURVEY_LIST SET    STATE_CODE='30004' WHERE SURVEY_SEQ =#{surveySeq}
-   </update>
-
-
     <update id="updateEmail" parameterType="com.mycompany.webapp.dto.NoticeEmailDTO">
    	  UPDATE NOTICE_EMAIL
    	  	 SET DELIVERY_YN = 'Y',
    	  	 	 DELIVERY_CONTENT = #{deliveryContent},
    	  	 	 UPDATE_DATE = SYSDATE
    	   WHERE SURVEY_SEQ = #{surveySeq}
+   	     AND DELIVERY_YN = 'N'
 
    </update>
 
@@ -150,6 +146,7 @@
    	  	     DELIVERY_CONTENT = #{deliveryContent},
    	  	 	 UPDATE_DATE = SYSDATE
        WHERE SURVEY_SEQ = #{surveySeq}
+         AND DELIVERY_YN = 'N'
    </update>
 
    <update id="sendReEmail" parameterType="com.mycompany.webapp.dto.NoticeEmailDTO">

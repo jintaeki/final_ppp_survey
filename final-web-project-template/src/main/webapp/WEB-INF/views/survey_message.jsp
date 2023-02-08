@@ -134,7 +134,7 @@
     						<label for="exampleFormControlTextarea1">
     							평가를 하지 않은 평가자에게 재전송할 메세지를 입력하시오
     						</label>
-    						<textarea class="form-control" name="deliveryContent" rows="3"></textarea>
+    						<textarea class="form-control" name="deliveryContent" rows="3">설문 날짜가 얼마 남지 않았습니다. 해당 주소로 들어가 로그인하여 다면 평가를 빨리 진행해주시길 바랍니다.</textarea>
   						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary"

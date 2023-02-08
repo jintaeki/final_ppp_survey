@@ -125,6 +125,13 @@
               AND EMPLOYEE_ID = RATER_ID
               AND MAPPING.SURVEY_SEQ = SURVEY_LIST.SURVEY_SEQ
             ORDER BY EMPLOYEE_ID)
+        LEFT JOIN
+    		(SELECT 
+          		RATER_ID AS RATER
+     		 FROM NOTICE_EMAIL 
+            WHERE SURVEY_SEQ = #{surveySeq}) L
+          ON RATER_ID = L.RATER
+       WHERE L.RATER IS NULL
 	</insert>
 	
 	<insert id="insertSMS" parameterType="com.mycompany.webapp.dto.NoticeSmsDTO">
@@ -168,6 +175,13 @@
               AND EMPLOYEE_ID = RATER_ID
               AND MAPPING.SURVEY_SEQ = SURVEY_LIST.SURVEY_SEQ
             ORDER BY EMPLOYEE_ID)
+        LEFT JOIN
+    		(SELECT 
+          		RATER_ID AS RATER
+     		 FROM NOTICE_SMS 
+            WHERE SURVEY_SEQ = #{surveySeq}) L
+          ON RATER_ID = L.RATER
+       WHERE L.RATER IS NULL
 	</insert>
 	
 	<delete id="deleteEmail" parameterType="com.mycompany.webapp.dto.NoticeEmailDTO">
