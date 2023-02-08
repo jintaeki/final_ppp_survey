@@ -33,9 +33,9 @@
 				<c:url value="/logincheck.do" var="actionURL" scope="page" />
 					<form:form action="${actionURL }" modelAttribute="UCD" style="margin: 50px 150px;">
 						<div class="login_form">
-							<input type="text" class="form-control" name="email" id="email"
-								value="RQELZD@kcc.co.kr" required> <label
-								class="login_form-placeholder" for="email">Email</label>
+							<input type="text" class="form-control" name="raterId" id="raterId"
+								value="118879" required> <label
+								class="login_form-placeholder" for="raterId">사원 번호</label>
 						</div>
 						<div class="login_form">
 							<input type="text" class="form-control" name="password"

@@ -236,18 +236,18 @@
 
 // 문제 버튼없이 저장 및 수정
 // var cnt = 0;
-function ho(tag){
-	$().keydown(function(){
-	    if(event.keyCode === 13) {
+// function ho(tag){
+// 	$().keydown(function(){
+// 	    if(event.keyCode === 13) {
 	
 	    	
-	    	tag.parent().parent().parent().next().children().next().children().first().children().next().next().focus();
-	    	tag.parent().parent().parent().next().children().next().children().first().children().next().next().click();
-	    	}
+// 	    	tag.parent().parent().parent().next().children().next().children().first().children().next().next().focus();
+// 	    	tag.parent().parent().parent().next().children().next().children().first().children().next().next().click();
+// 	    	}
 	    	
 
-});
-}
+// });
+// }
 
 function manageItem(obj,questionSeq){
 	
@@ -479,8 +479,11 @@ function manageQus(obj,questionSeq,questionTypeCodes){
             // 전송 전 실행 코드
          },
          success : function(data) {
-            // 전송 후 성공 시 실행 코드
-            console.log(data);
+        	 if(data=="nameEmpty"){alert('제목을 입력해 주세요.'); return false;}
+        	 if(data=="datemissmatch"){alert('날짜 조건이 알맞지 않습니다.'); return false;}
+        	 else{
+        		 alert("등록 성공"); return false;
+        	 }
          },
          error : function(e) {
             // 전송 후 에러 발생 시 실행 코드

@@ -196,6 +196,8 @@ public class SurveyController {
 	@ResponseBody
 	public String setSurvey(@ModelAttribute("SLD") SurveyListDTO SLD, BindingResult bindingresult, HttpSession session,
 			RedirectAttributes redirectAttrs) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
 		logger.info(SLD.toString());
 		if(SLD.getSurveyName()==null || SLD.getSurveyName().isEmpty()) {
 			return "nameEmpty" ;
@@ -205,7 +207,7 @@ public class SurveyController {
 			return "noCode";
 		}if(SLD.getSurveyContent().getBytes().length>500) {
 			return "contentLarge";
-		}if(SLD.getSurveyStartDate() ==null || SLD.getStateCode()==null) {
+		}if(SLD.getSurveyStartDate() ==null || SLD.getSurveyClosedDate()==null) {
 			return "dateEmpty";
 		}if(SLD.getSurveySeq() != 0) {
 			List<SurveyQuestionDTO> SQD = surveyService.getQuestionListOrderByAsc(SLD.getSurveySeq());
@@ -216,6 +218,8 @@ public class SurveyController {
 
 			surveyService.insertQuestionsAndItems(SQD);
 			session.setAttribute("SLD", SLD);
+		}if(SLD.getSurveyStartDate().compareTo(SLD.getSurveyClosedDate())>0){
+			return "datemissmatch";
 		}else {
 			surveyService.setSurvey(SLD);
 			session.setAttribute("SLD", SLD);
@@ -228,13 +232,20 @@ public class SurveyController {
 	// 설문 설정 변경
 	@RequestMapping(value = "/updatesurvey.do")
 	@ResponseBody
-	public SurveyListDTO updateSurvey(@ModelAttribute("SLD") @Valid SurveyListDTO SLD, BindingResult result,
+	public String updateSurvey(@ModelAttribute("SLD") @Valid SurveyListDTO SLD, BindingResult result,
 			Model model, RedirectAttributes redirectAttrs) {
-				logger.info("모달창을 통해 설문 등록 페이지 진입");
-		logger.info(SLD.toString());
-		surveyService.updateSurvey(SLD);
+		if(SLD.getSurveyStartDate().compareTo(SLD.getSurveyClosedDate())>0){
+			return "datemissmatch";
+		}if(SLD.getSurveyName()==null || SLD.getSurveyName().isEmpty()) {
+			return "nameEmpty" ;
+		}else {
+			surveyService.updateSurvey(SLD);
+			return "success";
+		}
 
-		return SLD;
+
+
+		
 
 	}
 
@@ -457,31 +468,17 @@ public class SurveyController {
 //	}
 
 
-	@RequestMapping("/deletesurvey.do/{surveyseq}/{pageno}/{keyword}/{selection}/{anonyMityCheckCode}/{surveyStartDateLeft}/{surveyStartDateRight}")
-	public String DeleteSurvey(@PathVariable int surveyseq, @PathVariable int pageno,
-			@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDateLeft, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDateRight,
-			@PathVariable String selection, @PathVariable String keyword, @PathVariable String anonyMityCheckCode) {
+	@RequestMapping("/deletesurvey.do/{surveyseq}")
+	@ResponseBody
+	public String DeleteSurvey(@PathVariable int surveyseq) {
 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String strDateLeft = (String) sdf.format(surveyStartDateLeft);
-		String strDateRight = (String) sdf.format(surveyStartDateRight);
-
-		if (sdf.format(surveyStartDateLeft).equals("1111-11-11")) {
-			strDateLeft = "";
-		}
-		if (sdf.format(surveyStartDateRight).equals("1111-11-11")) {
-			strDateRight ="";
-		}
-		if (keyword.equals("empty")) {
-			keyword = "";
-		}
+	
 
 		logger.info("deletesurvey 컨트롤러 진입");
 			  surveyService.deleteSurvey(surveyseq);
 		      mappingService.deleteEmail(surveyseq);
 		      mappingService.deleteSMS(surveyseq);
-		return "redirect:/survey/surveysearch?pageNo=" + pageno + "&keyword=" + keyword + "&selection=" + selection +"anonyMityCheckCode" + anonyMityCheckCode
-				+ "&surveyStartDateLeft=" + strDateLeft+"&surveyStartDateRight=" + strDateRight;
+		return "";
 
 	}
 
@@ -489,7 +486,7 @@ public class SurveyController {
 
 	public String search(@RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "1") int pageNo,
 			@RequestParam(defaultValue = "30005") String selection, @RequestParam(defaultValue="30005") String anonyMityCheckCode,
-			@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDateLeft, @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDateRight,
+			@RequestParam(defaultValue="") @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDateLeft,@RequestParam(defaultValue="") @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDateRight,
 			 HttpSession session, Model model) {
 
 		model.addAttribute("commonCodeList", commonCodeService.selectStateCode());

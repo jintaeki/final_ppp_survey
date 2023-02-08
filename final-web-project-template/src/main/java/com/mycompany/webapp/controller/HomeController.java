@@ -6,6 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -177,6 +180,12 @@ public class HomeController {
 
 							  BindingResult result,
 							  HttpSession session, Model model) {
+		
+		
+		if(SHA256(UCD.getPassword()) != "") {
+			UCD.setPassword(SHA256(UCD.getPassword()));
+		}
+		
 		logger.info("실행");
 		logger.info(UCD.toString());
 		if(loginCheckService.checkUser(UCD)==1) {
@@ -335,6 +344,31 @@ public class HomeController {
 
 		}
 
+	public String SHA256(String password){
+		 MessageDigest md;
+		 String result="";
+		try {
+			md = MessageDigest.getInstance("SHA-256");
+			md.update(password.getBytes());
+//		     MessageDigest tc1 = md.clone();
+		     byte[] toSHA256 = md.digest();
+		     result = new BigInteger(1, toSHA256).toString(16).toUpperCase(); 
+		     System.out.println(result);
+		     return result;
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println(result);
+			return result;
+		}
+
+		
+		
+
+			
+		
+	}
+	
 }
 
 

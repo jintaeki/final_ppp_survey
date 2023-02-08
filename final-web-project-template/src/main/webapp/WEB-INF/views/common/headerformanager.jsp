@@ -30,28 +30,29 @@
    	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-   <div class="d-flex flex-column">
+   <div class="">
 
             <div style="height:20px;">
 				&nbsp;
 				
            </div>
-		<div class="flex-grow-1 container-fluid">
-			<div class="row h-100">
+		<div class="">
+			<div class="row">
 
-<%-- 				<c:if test="${checked.managerYN eq 'Y' }"> --%>
+				<c:if test="${checked.managerYN eq 'Y' }">
 					<div class="col-1">
-						<div class="h-100 d-flex flex-column"
-							style="width: 160px; background: #031436; border-radius: 0.25rem;">
+						<div class="h-100"
+							style="width: 160px; box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px, rgb(10 37 64 / 35%) 0px -2px 6px 0px inset;
+    border-radius: 5px;">
 							<div class="flex-grow-1">
 								<%@ include file="/WEB-INF/views/common/menuformanager.jsp"%>
-<%-- 				</c:if> --%>
-<%-- 				<c:if test="${checked.managerYN eq 'N' }"> --%>
-<!-- 					<div class="col-2"> -->
-<!-- 						<div class="h-100 d-flex flex-column" style="background: #031436; border-radius: 0.25rem;"> -->
-<!-- 							<div class="flex-grow-1"> -->
-<%-- 								<%@ include file="/WEB-INF/views/common/menu.jsp"%> --%>
-<%-- 				</c:if> --%>
+				</c:if>
+				<c:if test="${checked.managerYN eq 'N' }">
+					<div class="col-2">
+						<div class="h-100 d-flex flex-column" style="background: #031436; border-radius: 0.25rem;">
+							<div class="flex-grow-1">
+								<%@ include file="/WEB-INF/views/common/menu.jsp"%>
+				</c:if>
 						</div>
 					</div>
 				</div>
