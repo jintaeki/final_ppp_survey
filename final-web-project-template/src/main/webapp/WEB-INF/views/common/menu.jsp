@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<div class="menu_profile">
+<div class="menu_profile_survey">
 	<div style="margin-right:20px; ">
 		<c:if test="${checked.gender eq '남'}">
 		<img src="${pageContext.request.contextPath}/resources/images/profile.gif"

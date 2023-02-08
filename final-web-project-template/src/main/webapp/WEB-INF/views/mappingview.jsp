@@ -64,11 +64,8 @@ function map_delete(surveySeq, raterId, appraiseeId){
 	<div class="card">
 			<div class="forshadowing">
 
-				<div class="title" style="font-size: 24px; text-align: center;">
-					<b>${surveyInfo.surveyName}매핑 목록</b>
-				</div>
+			
 
-				<div class="row">
 					<div class="hmenu">
 						<div class="survey_list_form_upper_dv">
 							<form action="<c:url value='/mapping/set.do'/>" method="POST"
@@ -116,6 +113,8 @@ function map_delete(surveySeq, raterId, appraiseeId){
 
 						</div>
 					</div>
+										<div class="col-12" style=""><h3 style="text-align:center;"><b>${surveyInfo.surveyName}매핑 목록</b></h3></div>
+					
 					<table class="table table-striped" id="mapTb">
 						<thead>
 							<tr>
@@ -189,7 +188,6 @@ function map_delete(surveySeq, raterId, appraiseeId){
 							</td>
 						</tr>
 					</table>
-				</div>
 			</div>
 		</div>
 <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>

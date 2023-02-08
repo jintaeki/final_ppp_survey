@@ -37,18 +37,13 @@
 
 		<c:if test="${checked.managerYN eq 'Y' }">
 			<div class="">
-				<div class="h-100"
-					style="width: 160px; box-shadow: rgb(50 50 93/ 25%) 0px 50px 100px -20px, rgb(0 0 0/ 30%) 0px 30px 60px -30px, rgb(10 37 64/ 35%) 0px -2px 6px 0px inset; border-radius: 5px;">
 						<%@ include file="/WEB-INF/views/common/menuformanager.jsp"%>
 		</c:if>
 		<c:if test="${checked.managerYN eq 'N' }">
-			<div class="">
-				<div class="h-100 "
-					style="width: 160px; box-shadow: rgb(50 50 93/ 25%) 0px 50px 100px -20px, rgb(0 0 0/ 30%) 0px 30px 60px -30px, rgb(10 37 64/ 35%) 0px -2px 6px 0px inset; border-radius: 5px;">
+			<div class="">			
 						<%@ include file="/WEB-INF/views/common/menu.jsp"%>
 		</c:if>
 
-				</div> <!-- 40번줄 & 46번줄과 연결 menuformanager&menu-->
 			</div> <!--  39번줄& 45번줄과 연결 menuformanager&menu -->
 
-	<div class="">  <!-- 바디 부분을 묶은 곳 -->
+	<div>  <!-- 바디 부분을 묶은 곳 -->

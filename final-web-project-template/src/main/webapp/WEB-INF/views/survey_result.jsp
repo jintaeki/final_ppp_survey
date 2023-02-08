@@ -6,7 +6,6 @@
 	<div class="card">
 			<div class="forshadowing">
 			  <div class="container_flex">
-			  <div class="title" style="font-size: 24px;">설문 결과</div>
 				<div class="individual">
 					<div class="row" style="text-align: center">
 						<div class="info" style="display: contents;">
@@ -40,6 +39,8 @@
 			 </div>
 
 				<div class="table_container_flex">
+									<div class="col-12" style=""><h3 style="text-align:center;"><b>설문 결과</b></h3></div>
+				
 					<table class="table table-bordered table-striped text-center">
 						<thead>
 							<tr>

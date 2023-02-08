@@ -11,222 +11,222 @@
 </style>
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
-	<div class="card" >
-			<div class="forshadowing" style="height:860px;">
+<div class="card">
+	<div class="forshadowing" style="height: 860px;">
 
-				<button style="float: right;" class="btn btn-link"
-					onclick="insertComplete(${SLD.surveySeq})">등록완료</button>
-				<!-- 설문지 설정 진택 -->
+		<button style="float: right;" class="btn btn-link"
+			onclick="insertComplete(${SLD.surveySeq})">등록완료</button>
+		<!-- 설문지 설정 진택 -->
 
-				<div class="container_survey">
-					<div class="row" style="margin-top: 45px;"></div>
+		<div class="container_survey">
+			<div class="row" style="margin-top: 45px;"></div>
 
-<!-- 					<div class="inner_container"> -->
-					<div class="container_flex"
-						style="border-radius: 20px; box-shadow: 1px 1px 10px 0px;">
-						<div class="input_title" style="margin-right:0px; text-align:center;">기본 설정</div>
-						<form:form modelAttribute="SLD" id="survey_setting_form">
-							<table style="text-align:center;">
-								<!-- 									<tr> -->
-								<!-- 										<th><div style="margin-top: 8px;"></div></th> -->
-								<!-- 									</tr> -->
+			<div class="container_flex"
+				style="border-radius: 20px; box-shadow: 1px 1px 10px 0px;">
+				<div class="input_title"
+					style="margin-right: 0px; text-align: center;">기본 설정</div>
+				<form:form modelAttribute="SLD" id="survey_setting_form">
+					<table style="text-align: center;">
 
-								<tr class="col-12">
+						<tr class="col-12">
+							<th class="col-1"><span class="insert_category"><b>설문지
+										제목</b><label for="survey_name"></label></span></th>
+							<th class="col-2"><span class="insert_category"> <b>평가
+										기간</b>
+							</span></th>
+							<th class="col-1"><span class="insert_category"> <b>익명/기명</b></span></th>
+							<th class="col-3"><span class="insert_category"><b>상세
+										설명</b></span></th>
+							<th class="col-1"></th>
+						</tr>
 
-									<th class="col-1"><span class="insert_category"><b>설문지 제목</b><label
-											for="survey_name"></label></span></th>
-									<th class="col-2"><span class="insert_category"> <b>평가 기간</b>
-									</span></th>
-									<th class="col-1"><span class="insert_category"> <b>익명/기명</b></span></th>
-									<th class="col-3"><span class="insert_category"><b>상세 설명</b></span></th>
-									<th class="col-1"></th>
-								</tr>
+						<tr>
+							<td class="col-1"><input type="text" id="survey_name"
+								name="surveyName" style="width: 200px;"
+								value="${SLD.surveyName}"></td>
 
-								<tr>
-									<td class="col-1"><input type="text" id="survey_name" name="surveyName"
-										style="width: 200px;" value="${SLD.surveyName}"></td>
+							<td class="col-2"><input type="date" name="surveyStartDate"
+								class="survey_date"
+								value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">-
+								<input type="date" name="surveyClosedDate" class="survey_date"
+								value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />"></td>
 
-									<td class="col-2"><input type="date" name="surveyStartDate"
-										class="survey_date"
-										value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">-
-										<input type="date" name="surveyClosedDate" class="survey_date"
-										value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />"></td>
+							<td class="col-1"><c:if
+									test="${SLD.anonymityCheckCode eq '20001'}">
+									<input type="radio" name="anonymityCheckCode"
+										id="survey_type_check" value="20001" checked>
+									<label style="margin-bottom: 0px;" for="survey_type_check"><b>익명</b></label>
+									<input type="radio" name="anonymityCheckCode"
+										id="survey_type_check" value="20002">
+									<label style="margin-bottom: 0px;" for="survey_type_check"><b>기명</b></label>
+								</c:if> <c:if test="${SLD.anonymityCheckCode eq '20002'}">
+									<input type="radio" name="anonymityCheckCode"
+										id="survey_type_check" value="20001">
+									<label style="margin-bottom: 0px;" for="survey_type_check"><b>익명</b></label>
 
-									<td class="col-1"><c:if test="${SLD.anonymityCheckCode eq '20001'}">
-											<input type="radio" name="anonymityCheckCode"
-												id="survey_type_check" value="20001" checked>
-											<label style="margin-bottom: 0px;" for="survey_type_check"><b>익명</b></label>
-											<input type="radio" name="anonymityCheckCode"
-												id="survey_type_check" value="20002">
-											<label style="margin-bottom: 0px;" for="survey_type_check"><b>기명</b></label>
-										</c:if> <c:if test="${SLD.anonymityCheckCode eq '20002'}">
-											<input type="radio" name="anonymityCheckCode"
-												id="survey_type_check" value="20001">
-											<label style="margin-bottom: 0px;" for="survey_type_check"><b>익명</b></label>
+									<input type="radio" name="anonymityCheckCode"
+										id="survey_type_check" value="20002" checked>
+									<label style="margin-bottom: 0px;" for="survey_type_check"><b>기명</b></label>
+								</c:if></td>
 
-											<input type="radio" name="anonymityCheckCode"
-												id="survey_type_check" value="20002" checked>
-											<label style="margin-bottom: 0px;" for="survey_type_check"><b>기명</b></label>
-										</c:if></td>
-										
-										
-											<td class="col-3"><textarea class="visually-hidden" id="message-text"
-								name="surveyContent"
-								style="width: 400px; height: 100px; max-width: 350px;">${SLD.surveyContent }</textarea></td>
-										
-										
-										<td class="col-1"><input type="button" class="update_btn" style="padding:5px 26px 26px 26px;" onclick="register()" value="적용">
-										</td>
-								</tr>
 
-							</table>
+							<td class="col-3"><textarea class="visually-hidden"
+									id="message-text" name="surveyContent"
+									style="width: 400px; height: 100px; max-width: 350px;">${SLD.surveyContent }</textarea></td>
 
-		
-							<input type="hidden" name="stateCode" value="30001">
-							<input type="hidden" name="surveySeq" id="surveyseq"
-								value="${SLD.surveySeq}">
-							
-						</form:form>
-						
+
+							<td class="col-1"><input type="button" class="update_btn"
+								style="padding: 5px 26px 26px 26px;" onclick="register()"
+								value="적용"></td>
+						</tr>
+
+					</table>
+
+
+					<input type="hidden" name="stateCode" value="30001">
+					<input type="hidden" name="surveySeq" id="surveyseq"
+						value="${SLD.surveySeq}">
+
+				</form:form>
+
+			</div>
+
+
+
+
+			<div class="questionAndItem"
+				style="display: flex; justify-content: space-around;">
+				<div class="question_management">
+					<div class="input_title" style="display: contents">
+						문제 목록
+						<button type="button"
+							onclick="question_copy(this,${SLD.surveySeq} )"
+							style="background: white; border: 1px solid #fff; border-radius: 35em;">
+							<i class="fas fa-plus"></i>
+						</button>
 					</div>
 
+					<div id="scroll_area" style="overflow: auto; height: 500px;">
 
 
-
-					<div class="questionAndItem"
-						style="display: flex; justify-content: space-around;">
-						<div class="question_management">
-							<div class="input_title" style="display: contents">
-								문제 목록
-								<button type="button"
-									onclick="question_copy(this,${SLD.surveySeq} )"
-									style="background: white; border: 1px solid #fff; border-radius: 35em;">
-									<i class="fas fa-plus"></i>
-								</button>
-							</div>
-
-							<div id="scroll_area" style="overflow: auto; height: 500px;">
-
-								
-								<!-- 여기까지 문제 div -->
-								<div id="queAfter">
-								<c:if test="${empty SQL}">
+						<!-- 여기까지 문제 div -->
+						<div id="queAfter">
+							<c:if test="${empty SQL}">
 								<div class="noquestion">
-									<br>
-									<b>${NoQuestion}</b>
+									<br> <b>${NoQuestion}</b>
 								</div>
-								</c:if>
-									<c:forEach items="${SQL}" var="qlist">
-										<div class="deleteThis" style="display: flex;">
-											<button class="delete_btn"
-												onclick="deleteQus(this,${qlist.surveySeq})"
-												style="background: white;" value="${qlist.questionSeq }">
-												<i class="fas fa-xmark"></i>
-											</button>
-											<form id="${qlist.questionSeq }" onsubmit="return false;">
+							</c:if>
+							<c:forEach items="${SQL}" var="qlist">
+								<div class="deleteThis" style="display: flex;">
+									<button class="delete_btn"
+										onclick="deleteQus(this,${qlist.surveySeq})"
+										style="background: white;" value="${qlist.questionSeq }">
+										<i class="fas fa-xmark"></i>
+									</button>
+									<form id="${qlist.questionSeq }" onsubmit="return false;">
 
-												<div class="input_qus" id="checkTouch">
-													<input type="hidden" name="surveySeq"
-														value="${qlist.surveySeq }" id="surveySequence"> <input
-														type="hidden" name="questionSeq"
-														value="${qlist.questionSeq }"> <input
-														name="questionContent" type="text" id="input_qus" 
-														onclick="manageQus(this,${qlist.questionSeq},${qlist.questionTypeCode }); this.onclick=null;"
-														value="${qlist.questionContent }">
+										<div class="input_qus" id="checkTouch">
+											<input type="hidden" name="surveySeq"
+												value="${qlist.surveySeq }" id="surveySequence"> <input
+												type="hidden" name="questionSeq"
+												value="${qlist.questionSeq }"> <input
+												name="questionContent" type="text" id="input_qus"
+												onclick="manageQus(this,${qlist.questionSeq},${qlist.questionTypeCode }); this.onclick=null;"
+												value="${qlist.questionContent }">
 
-												</div>
-												<c:if test="${qlist.questionTypeCode eq '10001' }">
-													<input type="radio" id="obj_radio"
-														name="${qlist.questionSeq}" value="10001"
-														onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
-														checked> 객관식
-													<input type="radio" id="subj_radio"
-														name="${qlist.questionSeq}" value="10002"
-														onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
-													<input type="radio" id="mix_radio"
-														name="${qlist.questionSeq}" value="10003"
-														onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 혼합식												
-												</c:if>
-												<c:if test="${qlist.questionTypeCode eq '10002' }">
-													<input type="radio" id="obj_radio"
-														name="${qlist.questionSeq}" value="10001"
-														onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 객관식
-													<input type="radio" id="subj_radio"
-														name="${qlist.questionSeq}" value="10002"
-														onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
-														checked> 주관식
-													<input type="radio" id="mix_radio"
-														name="${qlist.questionSeq}" value="10003"
-														onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 혼합식												
-												</c:if>
-												<c:if test="${qlist.questionTypeCode eq '10003' }">
-													<input type="radio" id="obj_radio"
-														name="${qlist.questionSeq}" value="10001"
-														onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 객관식
-													<input type="radio" id="subj_radio"
-														name="${qlist.questionSeq}" value="10002"
-														onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
-													<input type="radio" id="mix_radio"
-														name="${qlist.questionSeq}" value="10003"
-														onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
-														checked> 혼합식												
-											</c:if>
-												<c:if
-													test="${qlist.questionTypeCode ne '10001' and qlist.questionTypeCode ne '10002' and qlist.questionTypeCode ne '10003' }">
-													<input type="radio" id="obj_radio"
-														name="${qlist.questionSeq}" value="10001"
-														onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
-														checked> 객관식
-													<input type="radio" id="subj_radio"
-														name="${qlist.questionSeq}" value="10002"
-														onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
-													<input type="radio" id="mix_radio"
-														name="${qlist.questionSeq}" value="10003"
-														onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 혼합식												
-											</c:if>
-
-
-
-											</form>
-
-											<!-- 조회 버튼 -->
-											<button value="${qlist.questionSeq }"
-												onclick="touchQuestion(this)" style="display: none;">
-												<i class="fas fa-search"></i>
-											</button>
-
-
-											<div class="blank_under"></div>
 										</div>
-									</c:forEach>
+										<c:if test="${qlist.questionTypeCode eq '10001' }">
+											<input type="radio" id="obj_radio"
+												name="${qlist.questionSeq}" value="10001"
+												onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
+												checked> 객관식
+													<input type="radio" id="subj_radio"
+												name="${qlist.questionSeq}" value="10002"
+												onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
+													<input type="radio" id="mix_radio"
+												name="${qlist.questionSeq}" value="10003"
+												onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 혼합식												
+												</c:if>
+										<c:if test="${qlist.questionTypeCode eq '10002' }">
+											<input type="radio" id="obj_radio"
+												name="${qlist.questionSeq}" value="10001"
+												onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 객관식
+													<input type="radio" id="subj_radio"
+												name="${qlist.questionSeq}" value="10002"
+												onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
+												checked> 주관식
+													<input type="radio" id="mix_radio"
+												name="${qlist.questionSeq}" value="10003"
+												onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 혼합식												
+												</c:if>
+										<c:if test="${qlist.questionTypeCode eq '10003' }">
+											<input type="radio" id="obj_radio"
+												name="${qlist.questionSeq}" value="10001"
+												onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 객관식
+													<input type="radio" id="subj_radio"
+												name="${qlist.questionSeq}" value="10002"
+												onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
+													<input type="radio" id="mix_radio"
+												name="${qlist.questionSeq}" value="10003"
+												onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
+												checked> 혼합식												
+											</c:if>
+										<c:if
+											test="${qlist.questionTypeCode ne '10001' and qlist.questionTypeCode ne '10002' and qlist.questionTypeCode ne '10003' }">
+											<input type="radio" id="obj_radio"
+												name="${qlist.questionSeq}" value="10001"
+												onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
+												checked> 객관식
+													<input type="radio" id="subj_radio"
+												name="${qlist.questionSeq}" value="10002"
+												onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
+													<input type="radio" id="mix_radio"
+												name="${qlist.questionSeq}" value="10003"
+												onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 혼합식												
+											</c:if>
+
+
+
+									</form>
+
+									<!-- 조회 버튼 -->
+									<button value="${qlist.questionSeq }"
+										onclick="touchQuestion(this)" style="display: none;">
+										<i class="fas fa-search"></i>
+									</button>
+
+
+									<div class="blank_under"></div>
 								</div>
-							</div>
-						</div>
-
-
-
-						<div class="item_management">
-						<div style="display:flex">
-							<div class="input_title">문항 관리</div>
-							
-							<p class="beforeTouch">문제를 클릭하여 문항을 관리해 보세요.</p>
-							
-							<div class="itemAfter">
-							
-								<!-- 객관식 -->
-								<c:forEach items="${SQL}" var="qlist">
-
-								</c:forEach>
-							</div>
+							</c:forEach>
 						</div>
 					</div>
-
-					<!--  문제관리 끝 -->
-
-
 				</div>
+
+
+
+				<div class="item_management">
+					<div style="display: flex">
+						<div class="input_title">문항 관리</div>
+
+						<p class="beforeTouch">문제를 클릭하여 문항을 관리해 보세요.</p>
+
+						<div class="itemAfter">
+
+							<!-- 객관식 -->
+							<c:forEach items="${SQL}" var="qlist">
+
+							</c:forEach>
+						</div>
+					</div>
+				</div>
+
+				<!--  문제관리 끝 -->
+
+
 			</div>
 		</div>
+	</div>
 </div>
 <script>
 
