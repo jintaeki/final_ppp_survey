@@ -47,7 +47,7 @@ public class MappingController {
 	
 	// 매핑 출력
 	@RequestMapping(value="/set.do")
-	public String setMapping(int surveySeq, int month, 
+	public String setMapping(int surveySeq, int month,
 			 				 @RequestParam(defaultValue="0")int number, 
 							 @RequestParam(defaultValue="0")String newCheck,
 							 @RequestParam(defaultValue="") String keyword,
@@ -76,7 +76,7 @@ public class MappingController {
 					mappingService.updateState(surveySeq, "30002");	
 					mappingService.deleteEmail(surveySeq);
 					mappingService.deleteSMS(surveySeq);
-					return "redirect:/survey/surveysearch";	
+					return "redirect:/survey/surveysearch.do";	
 				}
 			}
 			List<PopupDTO> mappingList = null;
@@ -101,6 +101,7 @@ public class MappingController {
 			model.addAttribute("pagingdto", pagingdto);
 			model.addAttribute("keyword", keyword);
 			model.addAttribute("surveySeq",surveySeq);
+			model.addAttribute("stateCode", mappingService.stateCheck(surveySeq));
 			model.addAttribute("surveyInfo",surveyInfo);
 
 		} catch (Exception e) {
@@ -220,8 +221,6 @@ public class MappingController {
 				
 				//해당 데이터 매핑 테이블에 입력
 				mappingService.insertAppraisee(surveySeq, raterId, appraiseeId);
-				mappingService.deleteEmail(surveySeq);
-				mappingService.deleteSMS(surveySeq);
 				mappingService.insertEmail(surveySeq);
 				mappingService.insertSMS(surveySeq);
 				

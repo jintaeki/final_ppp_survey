@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,9 +21,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.ObjectUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,22 +31,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.mycompany.webapp.dto.CommonDTO;
 import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.PagingDTO;
-import com.mycompany.webapp.dto.PopupDTO;
-import com.mycompany.webapp.dto.ProjectDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 import com.mycompany.webapp.dto.SurveyResultDTO;
 
 import com.mycompany.webapp.dto.SurveyResultTeamDTO;
-import com.mycompany.webapp.service.CommonCodeService;
 import com.mycompany.webapp.service.ICommonCodeService;
 import com.mycompany.webapp.service.IMappingService;
 import com.mycompany.webapp.service.IPagingService;
 import com.mycompany.webapp.service.ISurveyService;
-import com.mycompany.webapp.service.SurveyService;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -74,22 +66,25 @@ public class SurveyController {
 
 	 Map<String, String> errors = new HashMap<>();
 
-	@RequestMapping("/sendmessage.do/{surveyseq}/{pageno}")
+    @RequestMapping("/evaluateStart.do/{surveySeq}")
 	@ResponseBody
-	public String sendmessage(@PathVariable int surveyseq, @PathVariable int pageno,
+	public String evaluateStart(@PathVariable int surveySeq) {
+		mappingService.updateState(surveySeq, "30004");
+
+		return "성공";
+	}
+	 
+	@RequestMapping("/sendmessage.do/{surveyseq}")
+	@ResponseBody
+	public String sendmessage(@PathVariable int surveyseq,
 			                  @RequestParam("deliveryContent") String deliveryContent) {
 
 		logger.info(deliveryContent);
 		surveyService.updateEmail(surveyseq, deliveryContent);
 		surveyService.updateSMS(surveyseq, deliveryContent);
-		surveyService.sendMessage(surveyseq);
 
 		return "성공";
 	}
-
-
-
-
 
 	//처음 들어왔을때 용 화면, 아무런 데이터 없이 선택지만 가동
 	@RequestMapping("/surveyresultteam.do")

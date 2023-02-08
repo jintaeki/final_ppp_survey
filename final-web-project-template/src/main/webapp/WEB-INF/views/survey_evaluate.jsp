@@ -67,10 +67,10 @@
                      <tr>
 
                         <th class="col-2"></th>
-                        <th class="col-3">부서</th>
-                        <th class="col-2">직급</th>
                         <th class="col-2">이름</th>
-                        <th class="col-4">결과</th>
+                        <th class="col-2">직급</th>
+                        <th class="col-3">부서</th>
+                        <th class="col-3">결과</th>
 
 
                      </tr>
@@ -79,9 +79,9 @@
                      <c:forEach items="${evaluateList}" var="EL">
                         <tr>
                            <th scope="row">${EL.RNUM}</th>
-                           <td class="sv_name">${EL.DEPARTMENT_NAME}</td>
-                           <td>${EL.GRADE_NAME}</td>
                            <td>${EL.EMPLOYEE_NAME}</td>
+                           <td>${EL.GRADE_NAME}</td>
+                           <td class="sv_name">${EL.DEPARTMENT_NAME}</td>
                            <c:if test="${EL.GRADE_NAME eq '부장'}">
                            <td><input type="button" class="btn btn-link"
                               onclick="result_search_btn(${surveySeq},${EL.EMPLOYEE_ID})"
@@ -95,24 +95,9 @@
                      </c:forEach>
 
                   </tbody>
-                  <tbody>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td style="float: right;">
-								<button type="button" class="btn btn-outline-primary" 
-								        onclick="location.href='<c:url value='/survey/evaluateMessage.do/${surveySeq}'/>'">
-								        설문지 참여 여부 확인 하러 가기</button>
-								</td>
-							</tr>
-						</tbody>
-                  <tr>
-						
 							
                   <tr class="table-light">
-                     <td colspan="12" class="text-center">
+                     <td colspan="12" class="text-center" style="border: none;">
                         <div>
                            <a class="btn btn-outline-secondary"
                               href="?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}&surveySeq=${pagingdto.surveySeq}">처음</a>
@@ -139,6 +124,11 @@
                            </c:if>
                            <a class="btn btn-outline-secondary"
                               href="?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&surveySeq=${pagingdto.surveySeq}">맨끝</a>
+                        </div>
+                        <div style="float: right;">
+                        <button type="button" class="btn btn-outline-primary" onclick="location.href='<c:url value='/survey/evaluateMessage.do/${surveySeq}'/>'">
+							 설문지 참여 여부 확인 하러 가기
+						</button>
                         </div>
                      </td>
                   </tr>

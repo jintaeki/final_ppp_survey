@@ -14,7 +14,7 @@
 
 	<select id="getUserManagerYN"
 		parameterType="com.mycompany.webapp.dto.UserCheckDTO" resultType="com.mycompany.webapp.dto.UserCheckDTO">
-		SELECT u.MANAGER_YN as managerYN, o.DEPARTMENT_NAME as raterDepartmentName, u.EMPLOYEE_NAME as raterName
+		SELECT u.MANAGER_YN as managerYN, o.DEPARTMENT_NAME as raterDepartmentName, u.EMPLOYEE_NAME as raterName, U.GENDER as gender
 		FROM user_info u, organization_chart o
         WHERE  u.EMPLOYEE_ID = #{raterId} AND u.PASSWORD = #{password} and u.DEPARTMENT_ID = o.DEPARTMENT_ID
 	</select>

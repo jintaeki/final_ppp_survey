@@ -1,19 +1,5 @@
 @charset "UTF-8";
 
-<<<<<<< HEAD
-/* .forshadowing{ */
-/*    background-color: white; */
-/*     box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px, rgb(10 37 64 / 35%) 0px -2px 6px 0px inset; */
-/*     border-radius: 5px; */
-/*     height: 840px; */
-/*     width: 100%; */
-/*     padding: 1em; */
-/*     display: flex; */
-/*     flex-direction: column; */
-/*     justify-content: center; */
-/* } */
-=======
-
 .card-body{
    height: 900px;
    width:1500px;
@@ -38,8 +24,7 @@
 
 
 .row {
-    overflow-y: scroll;
-    height: 820px;
+    height: 720px;
 }
 
 .forshadowing {
@@ -55,21 +40,13 @@
 	font-size: 24px;
     text-align: center;
 }
->>>>>>> refs/remotes/origin/min
-
 
 #survey_list_form_id{
 	display: flex;
-<<<<<<< HEAD
-=======
 }
 
-.selection {
-
->>>>>>> refs/remotes/origin/min
-}
 .input-group-append{
-	margin-left:526.5px;	
+	margin-left:484.5px;	
 }
 #button-addon2 {
     margin-left: 6px;

@@ -1,18 +1,10 @@
 package com.mycompany.webapp.service;
 
-
-
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-
-import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.PagingDTO;
-import com.mycompany.webapp.dto.PopupDTO;
-import com.mycompany.webapp.dto.ProjectDTO;
-import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 import com.mycompany.webapp.dto.SurveyResultDTO;
@@ -40,9 +32,6 @@ public interface ISurveyService {
 	public List<SurveyQuestionDTO> getQuestionListOrderByDesc(int surveySeq);
 
 	public List<SurveyQuestionDTO> getQuestionListOrderByAsc(int surveySeq);
-
-
-	void sendMessage(int surveySeq);
 
 	// 메일 발송시 상태 업데이트
 	void updateEmail(int surveyseq, String deliveryContent);

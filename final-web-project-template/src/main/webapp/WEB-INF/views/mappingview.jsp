@@ -4,7 +4,6 @@
 	href="${pageContext.request.contextPath}/resources/css/mapping_view.css" />
 
 <script>
-jQuery.noConflict(); 
 
 var surveySeq="";
 var raterId="";
@@ -68,7 +67,9 @@ function map_delete(surveySeq, raterId, appraiseeId){
 
 			<div class="forshadowing">
 
-				<div></div>
+				<div class="title" style="font-size: 24px; text-align: center;">
+					<b>${surveyInfo.surveyName}매핑 목록</b>
+				</div>
 
 				<div class="row">
 					<div class="hmenu">
@@ -118,17 +119,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 
 						</div>
 					</div>
-					<div>
-						<div class="mappingsearchMenu">
-						 <div>
-							<h3 style="width:500px;">
-								<b>${surveyInfo.surveyName}매핑 목록</b>
-							</h3>
-						</div>
-
-						</div>
-					</div>
-					<table class="table" id="mapTb">
+					<table class="table table-striped" id="mapTb">
 						<thead>
 							<tr>
 								<th scope="col">직급</th>
@@ -154,26 +145,25 @@ function map_delete(surveySeq, raterId, appraiseeId){
 													data-raterid="${mapping.raterId}">
 													${mapping.raterName}</button></td>
 											<td>${mapping.appraiseeName}</td>
-											<td><button id="map_delete"
-												style="background: white; border: 1px solid #fff; border-radius: 35em;"
-												onclick="map_delete('${mapping.surveySeq}', '${mapping.raterId}', '${mapping.appraiseeId}');"
-												value="삭제"><i class="fas fa-xmark"></i></button></td>
+											<td>
+												<c:if test="${stateCode ne 30004}">
+													<button id="map_delete" style="background: white; border: 1px solid #fff; border-radius: 35em;"
+													onclick="map_delete('${mapping.surveySeq}', '${mapping.raterId}', '${mapping.appraiseeId}');" value="삭제">
+														<i class="fas fa-xmark"></i>
+													</button>
+												 </c:if>
+												 <c:if test="${stateCode eq 30004}">
+													삭제 불가
+												 </c:if>
+											</td>
 										</tr>
 									</c:forEach>
 								</c:otherwise>
 							</c:choose>
 						</tbody>
-						<tr>
-							<td colspan="4" class="text-center">
-								<!-- 								<div class="page_wrap"> --> <!-- 									<div class="page_nation"> -->
+						<tr class="table-light">
+							<td colspan="12" class="text-center" style="border: none;">
 								<div>
-
-							<button type="button" id="map_insert"
-								class="btn btn-outline-primary"
-								onclick="mapInsert('${surveySeq}')">조건과 관계없이 추가</button>
-
-									<%-- 맨처음 페이지 이동
-      									<a class="arrow prev" href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a> --%>
 									<c:if test="${pagingdto.groupNo>1}">
 										<a class="btn btn-outline-secondary"
 											href="set.do?pageNo=${pagingdto.startPageNo-1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">이전</a>
@@ -193,19 +183,16 @@ function map_delete(surveySeq, raterId, appraiseeId){
 										<a class="btn btn-outline-secondary"
 											href="set.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">다음</a>
 									</c:if>
-									<%-- 맨마지막 페이지 이동
-       						  			<a class="arrow next" href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">맨끝</a> --%>
-
-
-								</div> <!-- 									</div> --> <!-- 								</div> -->
-
+								</div> 
+								<div style="float: right;">
+									<button type="button" id="map_insert" class="btn btn-outline-primary" onclick="mapInsert('${surveySeq}')">
+										조건과 관계없이 추가
+									</button>
+								</div>
 							</td>
 						</tr>
 					</table>
-
 				</div>
-
-
 			</div>
 		</div>
 	</div>

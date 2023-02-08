@@ -16,7 +16,7 @@ table th{
 }
 tbody {
   display: block; 
-  max-height: 480px;
+  max-height: 456px;
   width: 788px; 
   overflow-y: auto; 
 }
@@ -41,6 +41,10 @@ tr {
   display: table;
   width: 788px; 
 }
+tr:nth-child(even) {
+  background-color: #F9F9F9;
+}
+
 td {
   text-align: center;
   border-bottom: 1px solid #dee2e6;

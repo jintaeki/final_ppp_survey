@@ -24,8 +24,8 @@
 							<c:forEach items="${personalStats}" var="PS">
 								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">점수</div></div>
 								<div class="col-2"><div class="infodiv">${PS.score}</div></div>
-								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">등급</div></div>
-								<div class="col-2"><div class="infodiv">${PS.grd}</div></div>
+								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">백분율|순위</div></div>
+								<div class="col-2"><div class="infodiv">상위  ${PS.grd}% | ${PS.rank}/${PS.tot}</div></div>
 								<div class="input-group-text col-1" id="basic-addon1"><div style="margin:auto;">설문 내<br>최소점</div></div>
 								<div class="col-2"><div class="infodiv">${PS.min}</div></div>
 								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">설문 평균 <br>점수</div></div>

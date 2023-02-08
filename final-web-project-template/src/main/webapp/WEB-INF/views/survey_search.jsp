@@ -8,14 +8,13 @@
 
 
 <script>
-
-
-
 function delete_mapping_btn(){
-	  if (confirm("정말 삭제하시겠습니까??") == true){    //확인
+	  if (confirm("정말 삭제하시겠습니까??")){    //확인
 	      document.form.submit();
-	  }else{   //취소
-	      return;
+	  }else{
+		  alert("취소");
+		  event.preventDefault();
+		  return false;
 	  }
 	}
 
@@ -43,36 +42,8 @@ function delete_mapping_btn(){
 		}
 	};
 
-
-	function sendRe(obj){
-		var pageno = $('#pageNo').val();
-  		var surveyseq = $(obj).val();
-  		console.log(surveyseq)
-//   		$.ajax({
-// 			method:'POST', //어떤 방식으로 보낼 지
-// 			url:'sendmessage.do/'+surveyseq+'/'+pageno, // qdiv를 보낼 경로 설정
-// 		    beforeSend : function() { //보내기 전 실행
-// 			console.log("요청이 보내지는가?");
-// 		   },
-// 		   success:function () {	 //전송 성공시 실행
-// 			console.log("굿");
-// 			const tag = $(obj);
-// 			console.log(tag);
-// 			const completeMsg = `전송완료`;
-
-// 			tag.parent().html(completeMsg);
-// 			tag.hide
-
-// 		   }, error:function(e) {	//실패, 에러
-// 			   console.log("Error", e);
-// 		   }
-// 			});
-	}
-
-
   	function send() {
 
-  		var pageno = $('#pageNo').val();
   		var surveyseq = $('#surveyseq').val();
   		var deliverycontent = $('#deliverycontent').val();
 
@@ -80,7 +51,7 @@ function delete_mapping_btn(){
 
 		$.ajax({
 			method:'POST', //어떤 방식으로 보낼 지
-			url:'sendmessage.do/'+surveyseq+'/'+pageno, // qdiv를 보낼 경로 설정
+			url:'sendmessage.do/'+surveyseq, // qdiv를 보낼 경로 설정
 			data:{
 				deliveryContent: deliverycontent
 			},
@@ -89,39 +60,42 @@ function delete_mapping_btn(){
 		   },
 		   success:function (data) {	 //전송 성공시 실행
 			console.log("굿");
-			const tag = $('#'+surveyseq+'_send');
-			console.log(tag);
-			console.log(surveyseq);
+			alert('메일과 SMS가 잘 전송 되었습니다.');
+
+			$('#exampleModal1').modal('hide');
+			
+		   }, error:function(e) {	//실패, 에러
+			   console.log("Error", e);
+		   }
+		});
+	}
+  	
+  	function evaluateStart(surveySeq){
+  		
+  		console.log(surveySeq);
+		if(confirm("평가를 실행하겠습니까? 더이상 설문지를 변경하실수 없게 됩니다.")){
+		$.ajax({
+			method:'POST', //어떤 방식으로 보낼 지
+			url:'evaluateStart.do/'+surveySeq, // qdiv를 보낼 경로 설정
+			data:{
+				surveySeq: surveySeq
+			},
+		    beforeSend : function() { //보내기 전 실행
+			console.log("요청이 보내지는가?");
+		   },
+		   success:function (data) {	 //전송 성공시 실행
+			console.log("굿");
 
 			$('#exampleModal1').modal('hide');
 
-			const text = '<button type="button" class="btn btn-link" onclick="location.href='+'\'evaluateSearch/' +surveyseq+ '\'">조회</button>';
- 			tag.parent().parent().next().append(text);
-
- 			const done = `매핑완료`;
-			tag.parent().parent().next().next().append(done);
-			console.log(tag.parent().parent().next().next().children('button'));
-			tag.parent().parent().next().next().children().hide();
-			tag.parent().parent().prev().prev().children().click(function(){return false;});
-			tag.parent().parent().prev().prev().children('#surveyUP').css('color', '#ccc');
-
- 			const complete = `알림발송완료`;
- 			tag.parent().html(complete);
- 			tag.parent().css('font-weight', 'bold');
- 			tag.parent().css('color', '#F06');
-
-			tag.parent().parent().parent().closest('td').css('color', 'black');
-			tag.parent().parent().parent().closest('td').css('disabled', true);
-
+			window.location.reload();
 
 		   }, error:function(e) {	//실패, 에러
 			   console.log("Error", e);
 		   }
-			});
-
-
-	}
-
+		});
+		}
+  	}
 
   	$(document).ready(function() {
   	    const stateCode = $(".stateCode");
@@ -141,6 +115,8 @@ function delete_mapping_btn(){
   		  newMapping(surveySeq)
   	    }else if(stateCode == '30003'){
   		  reMapping(surveySeq)
+  	    }else if(stateCode == '30004'){
+  	      plusMapping(surveySeq)
   	    }
   	}
 
@@ -183,17 +159,36 @@ function delete_mapping_btn(){
   	    html += '</div></form:form></div></div></div></div>';
   	    $('#beforeModal').after(html);
   	}
+  	
+  	function plusMapping(serveySeq){
+  		html ="";
+  		html += '<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+  		html += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">평가조합을 추가하시겠습니까?</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+  	    html += '<span aria-hidden="true">&times;</span></button>';
+  	    html += '</div>';
+  	    html += '<div class="modal-body">'
+  	   	html += '<c:url value="/mapping/set.do" var="actionURL"/>';
+  	   	html += '<form:form action="${actionURL}" modelAttribute="map">';
+  	   	html += '<input type="hidden" id="surveySeq" name="surveySeq" value="'+serveySeq+'">';
+  	   	html += '<input type="hidden" id="month" name="month" value="3">';
+  	   	html += '<input type="hidden" id="number" name="number" value="3">';
+  	   	html += '<br> <h5> 해당 다면평가의 매핑조합을 추가 하시겠습니까? </h5>';
+  	   	html += '<button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 매핑 데이터로 넘어가기</button>';
+  	    html += '<div class="modal-footer"><br><button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>';
+  	    html += '</div></form:form></div></div></div></div>';
+  	    $('#beforeModal').after(html);
+  	}
 
   	function updatemessage(surveyseq){
 		html ="";
   	  	html +='<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-  	  	html +='<div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">평가 공시 재전송</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+  	  	html +='<div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">다면 평가 메세지 전송화면</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
   	  	html +='<span aria-hidden="true">&times;</span></button>';
   	  	html +='</div>';
   	  	html +='<div class="modal-body">';
   	  	html +='<input type="hidden" id="surveyseq" value="'+surveyseq+'">';
-  	  	html +='<div class="form-group"> <label for="exampleFormControlTextarea1">평가를 하지 않은 평가자에게 재전송할 메세지를 입력하시오</label>';
-  	  	html +='<textarea class="form-control" id="deliverycontent" rows="3"></textarea></div>';
+  	  	html +='<div class="form-group"> <label for="exampleFormControlTextarea1">평가를 할 평가자에게 전송할 메세지를 입력하시오</label>';
+  	  	html +='<textarea class="form-control" id="deliverycontent" rows="3">다면평가 평가원으로 선정되셨습니다. 해당 주소로 들어가 로그인하여 다면 평가를 진행해주시길 바랍니다.</textarea></div>';
   	  	html +='<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>';
   	  	html +='<button type="button" class="btn btn-primary" onclick="send()">등록</button>';
   	  	html +='</div></div></div></div></div>';
@@ -271,8 +266,8 @@ function delete_mapping_btn(){
 					
 		html +=`	<select name="anonyMityCheckCode">
 					<option value="30005">전체</option>
-					<option value="30002">기명</option>
-					<option value="300001">익명</option>
+					<option value="20002">기명</option>
+					<option value="20001">익명</option>
 					</select>
 				<select name="selection">
 
@@ -343,7 +338,7 @@ function delete_mapping_btn(){
 						<select name="surveySeq">
 							<option value="0">평가지 선택</option>
 							<c:forEach var="list" items="${surveylist}">
-								<option value="${list.surveySeq} ">${list.surveyName }</option>
+								<option value="${list.surveySeq} ">${list.surveyName}</option>
 							</c:forEach>					
 						</select>
 						<br>
@@ -362,7 +357,7 @@ function delete_mapping_btn(){
 	<!-- modal(설문 등록 시 뜨는 팝업창) 끝-->
 
 
-<!-- 	<div class="card" id="beforeModal"> -->
+	<div class="card" id="beforeModal">
 			<div class="forshadowing">
 				<div class="row">
 					<div class="hmenu">
@@ -426,9 +421,11 @@ function delete_mapping_btn(){
 
 						</div>
 					</div>
+
 					<div class="col-12" style=""><h3 style="text-align:center;"><b>평가지 목록</b></h3></div>
-					<table class="table">
+					<table class="table  table-striped">
 						<thead style="background-color:#F8F9FA">
+
 							<tr>
 								<th scope="col" style="color:black"></th>
 								<th scope="col" style="color:black">다면평가 목록</th>
@@ -466,16 +463,20 @@ function delete_mapping_btn(){
 											pattern='yyyy-MM-dd' /> &nbsp;~&nbsp; <fmt:formatDate
 											value="${list.surveyClosedDate }" pattern='yyyy-MM-dd' /></td>
 
-									<td><span class="wait" id="stateCode"> <c:if
-												test="${list.stateCode eq '30003'}">
-												<button class="btn btn-outline-primary" data-toggle="modal"
-													data-target="#exampleModal1" id="${list.surveySeq}_send"
-													onclick="updatemessage('${list.surveySeq}')">발송</button>
-											</c:if> <c:if test="${list.stateCode ne '30003'}">
-										${list.codeDetailName }
-									</c:if>
-
-									</span></td>
+									<td><span class="wait" id="stateCode"> 
+										<c:if test="${list.stateCode ne '30003' && list.stateCode ne '30004'}">
+											${list.codeDetailName}
+										</c:if>
+										<c:if test="${list.stateCode eq '30003'}">
+											<button class="btn btn-outline-primary" id="${list.surveySeq}_send" onclick="evaluateStart('${list.surveySeq}')">평가 실행</button>
+										</c:if>
+										<c:if test="${list.stateCode eq '30004'}">
+											<button class="btn btn-outline-primary" data-toggle="modal"
+													data-target="#exampleModal1" onclick="updatemessage('${list.surveySeq}')">
+													발송</button>
+										</c:if> 
+										</span>
+									</td>
 
 									<td><c:if test="${list.stateCode eq '30004'}">
 											<button type="button" class="btn btn-link"
@@ -483,33 +484,21 @@ function delete_mapping_btn(){
 										</c:if> <input type="hidden" id="pageNo" name=pageNo
 										value="${pagingdto.startPageNo}"></td>
 
-									<td><c:if test="${list.stateCode ne '30004'}">
-											<input type="hidden" class="stateCode"
-												value="${list.stateCode}">
-											<button type="button" class="btn btn-outline-primary"
+									<td>
+										<input type="hidden" class="stateCode" value="${list.stateCode}">
+										<button type="button" class="btn btn-outline-primary"
 												id="btn_for_mapping" data-toggle="modal"
 												data-target="#exampleModal1"
-												onclick="btn_for_mapping('${list.surveySeq}', '${list.stateCode}')">매핑</button>
-										</c:if> <c:if test="${list.stateCode eq '30004'}">
-									<button type="button" class="btn btn-secondary" disabled>매핑완료</button>
-								</c:if></td>
+												onclick="btn_for_mapping('${list.surveySeq}', '${list.stateCode}')">
+												매핑
+										</button>
+									</td>
 								</tr>
 							</c:forEach>
 						</tbody>
-						<tbody>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td style="float: right;"><button id="upper_dv_btn"
-										type="button" class="btn btn-outline-secondary" data-toggle="modal"
-										data-target="#exampleModal" data-whatever="@mdo">등록</button></td>
-							</tr>
-						</tbody>
+						
 						<tbody style="border: none;">
-							<tr>
+							<tr class="table-light">
 								<td colspan="12" class="text-center" style="border: none;">
 									<div>
 
@@ -539,6 +528,10 @@ function delete_mapping_btn(){
 										<a class="btn btn-outline-secondary"
 											href="surveysearch.do?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">맨끝</a>
 									</div>
+									<div style="float: right;">
+									<button id="upper_dv_btn" type="button" class="btn btn-outline-secondary" data-toggle="modal"
+										data-target="#exampleModal" data-whatever="@mdo">등록</button>
+								   </div>
 								</td>
 							</tr>
 						</tbody>
@@ -548,6 +541,6 @@ function delete_mapping_btn(){
 				</div>
 			</div>
 			<!--  평가지  -->
-<!-- 	</div> -->
+	</div>
 </div>
 <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>

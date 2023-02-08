@@ -50,11 +50,10 @@
 				</div>
 				<div class="chartdiv">
 				<!-- CHART -->
-				<figure class="highcharts-figure" style="overflow: auto; height: 520px; width: 1250px; display: flex;">
+				<figure class="highcharts-figure">
 					<div class="scroll_body">
 						<div class="chartGP">
-
-						<div class="container_flex">
+						<div class="container_flex" style="float: left">
 							<c:if test="${chartJSONResult[0].s eq null}">
 								설문지를 선택하면 그래프가 나올 것 입니다.
 							</c:if>
@@ -62,11 +61,8 @@
 								<div id="chart_container"></div>
 								<p class="highcharts-description">다면평가에 대한 팀별 결과를 조회합니다.</p>
 							</c:if>
-							</div>
 						</div>
-						<br>
-						<div class="chartGP">
-						<div class="container_flex">
+						<div class="container_flex" style="float: right">
 							<c:if test="${chartJSONDp[0].s eq null}">
 								설문지를 선택하면 그래프가 나올 것 입니다.
 							</c:if>
@@ -74,7 +70,7 @@
 								<div id="chart_container2"></div>
 								<p class="highcharts-description">부서별 소속 팀원들의 결과를 조회할 수 있습니다.</p>
 							</c:if>
-							</div>
+						</div>
 						</div>
 					</div>
 				</figure>

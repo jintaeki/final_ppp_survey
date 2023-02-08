@@ -39,7 +39,7 @@
 						</div>
 						<div class="login_form">
 							<input type="text" class="form-control" name="password"
-								value="20220720" id="password" required> <label
+								value="000000" id="password" required> <label
 								class="login_form-placeholder" for="password">password</label>
 						</div>
 						<div class="login_btn">
