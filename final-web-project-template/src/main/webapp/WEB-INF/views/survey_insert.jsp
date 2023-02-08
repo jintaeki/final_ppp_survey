@@ -280,6 +280,14 @@ function manageItem(obj,questionSeq){
 	
 }
 
+$(document).ready(function(){
+    $('div#checkTouch1').click(function(){
+    	console.log($(this).parent().next('button'));
+       $(this).parent().parent().next().next('button').click();
+
+    });
+  });
+
 function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 	const tag = $(obj);
 	
@@ -337,9 +345,33 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 				        	 }else{
 				        		 console.log(data);
 				        		 location.reload();
-				        	
+
 				        	      	
 
+// 				        	         var testDiv ='';
+// 	   	testDiv +='<div class="deleteThis" style="display:flex;">';
+//       	testDiv +='<button class="delete_btn" onclick="deleteQus(this,'+surveySeq+')" style="background: white;" value="'+data[0].questionSeq+'"><i class="fas fa-xmark"></i></button>';
+// 	 	testDiv +='<form id="'+data[0].questionSeq+'" name="'+data[0].questionSeq+'" onsubmit="return false;">';
+// 	   	testDiv +='<div class="input_qus" id="checkTouch1">';
+// 	   	testDiv +='<input type="hidden" name= "surveySeq" value="'+surveySeq+'" id="surveySequence">';
+// 		testDiv +='<input type="hidden" name= "questionSeq" value="'+data[0].questionSeq+'">';
+// 		testDiv +='<input type="text" name="questionContent"  id="input_qus"  onclick="manageQus(this,'+data[0].questionSeq+',10001,'+surveySeq+'); this.onclick=null;" value="'+data[0].questionContent+'">';	
+// 		testDiv +='</div>&nbsp;';
+// 		testDiv +='&nbsp;&nbsp;<input type="radio" id="obj_radio" name="'+data[0].questionSeq+'" value="10001" onclick="checkit1(this,10001,'+data[0].questionSeq+','+data[0].questionSeq+')" checked> 객관식';
+// 		testDiv +='&nbsp;&nbsp;<input type="radio" id="subj_radio" name="'+data[0].questionSeq+'" value="10002" onclick="checkit2(this,10001,'+data[0].questionSeq+','+data[0].questionSeq+')"> 주관식';
+// 		testDiv +='&nbsp;&nbsp;<input type="radio" id="mix_radio" name="'+data[0].questionSeq+'" value="10003" onclick="checkit3(this,10001,'+data[0].questionSeq+','+data[0].questionSeq+')"> 혼합식';									
+//       	testDiv +='</form>';
+//       	testDiv +='<button value="'+data[0].questionSeq+'" onclick="touchQuestion(this)"style="display:none;">';
+//       	testDiv +='</button>';
+		
+//       	testDiv +='<div class="blank_under"></div>';
+//       	testDiv +='</div>';
+// 	        $('#queAfter').prepend(testDiv);
+// 	        $(obj).parent().next('button').click();
+// 	        console.log( $(obj).parent().next('button'));
+
+// 				        	        $('#queAfter div form div input[name=questionContent]').first().focus();
+// 				        	        $('#'+data[0].questionSeq).children().children().next().next().click();
 				        	 }
 								
 
@@ -752,7 +784,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 			 if(cntObj == 2 || cntMix ==2){
 				 alert("문항은 최소 2개를 유지해 주세요.")
 			 }else if(itemSeq ==0){
-         		$(obj).parent().remove();
+         		$(obj).parent().parent().remove();
 				cntObj = cntObj - 1;
 				cntMix = cntMix - 1;
 			 }else{
