@@ -173,13 +173,6 @@
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
-				<c:if test="${fn:length(popupList) == 0}">
-                  <tr class="center">
-                     <td colspan="5">
-                     <spring:message code="list.noResult" text="추가할 인원을 선택해주세요" />
-                     </td>
-                  </tr>
-               </c:if>
             </tbody>
          </table>
 
@@ -188,7 +181,8 @@
 
       <!-- selectItem : 체크값이 없을 경우 체크하라는 유효성 검사 -->
       <div id=button class="d-grid gap-2">
-      <button type="button" class="btn btn-primary" onclick="selectItem();">추가</button>
+      <spring:message code="list.noResult" text="추가할 인원을 선택해주세요" /><br><br>
+      <button type="button" class="btn btn-primary" onclick="selectItem();">추가</button><br><br>
       </div>
       <div class="page_wrap">
 			<div class="page_nation">

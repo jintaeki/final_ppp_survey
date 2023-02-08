@@ -291,14 +291,16 @@
     <![CDATA[
      	SELECT
      		PROJECT_ID,
+     		PROJECT_NAME,
      		GRADE_ID,
-     		DEPARTMENT_ID,
+     		R_DEPARTMENT_ID,
+     		A_DEPARTMENT_ID,
      		SURVEY_SEQ,
      		RATER_ID,
      		APPRAISEE_ID,
-     		PROJECT_NAME,
      		SURVEY_NAME,
-     		DEPARTMENT_NAME,
+     		R_DEPARTMENT_NAME,
+     		A_DEPARTMENT_NAME,
      		RATER_NAME,
      		APPRAISEE_NAME,
      		GRADE_NAME
@@ -306,36 +308,41 @@
 			SELECT 
 				ROWNUM AS rnum,
 				PROJECT_ID,
+				PROJECT_NAME,
      			GRADE_ID,
-     			DEPARTMENT_ID,
-     			SURVEY_SEQ,
-     			RATER_ID,
-     			APPRAISEE_ID,
-     			PROJECT_NAME,
-     			SURVEY_NAME,
-     			DEPARTMENT_NAME,
-     			RATER_NAME,
-     			APPRAISEE_NAME,
-     			GRADE_NAME
+     		    R_DEPARTMENT_ID,
+     		    A_DEPARTMENT_ID,
+     		    SURVEY_SEQ,
+     		    RATER_ID,
+     		    APPRAISEE_ID,
+     		    SURVEY_NAME,
+     		    R_DEPARTMENT_NAME,
+     		    A_DEPARTMENT_NAME,
+     		    RATER_NAME,
+     		    APPRAISEE_NAME,
+     		    GRADE_NAME
    			FROM(SELECT
      			 	A.PROJECT_ID,
+     			 	P.PROJECT_NAME,
      			 	UR.GRADE_ID,
-     			 	UR.DEPARTMENT_ID,
-     			 	S.SURVEY_SEQ,
-     			 	UR.EMPLOYEE_ID   AS "RATER_ID",
-     			 	UA.EMPLOYEE_ID   AS "APPRAISEE_ID",
-            	 	P.PROJECT_NAME,
-            	 	S.SURVEY_NAME,
-            	 	O.DEPARTMENT_NAME,
-            	 	UR.EMPLOYEE_NAME AS "RATER_NAME",
-            	 	UA.EMPLOYEE_NAME AS "APPRAISEE_NAME",
-            	 	G.GRADE_NAME
+				    UR.DEPARTMENT_ID   AS "R_DEPARTMENT_ID",
+				    UA.DEPARTMENT_ID   AS "A_DEPARTMENT_ID",
+				    S.SURVEY_SEQ,
+				    UR.EMPLOYEE_ID     AS "RATER_ID", 
+				    UA.EMPLOYEE_ID     AS "APPRAISEE_ID",
+			    	S.SURVEY_NAME,
+			    	O.DEPARTMENT_NAME  AS "R_DEPARTMENT_NAME",
+				    OA.DEPARTMENT_NAME AS "A_DEPARTMENT_NAME",
+	     		    UR.EMPLOYEE_NAME   AS "RATER_NAME",
+	      		    UA.EMPLOYEE_NAME   AS "APPRAISEE_NAME",
+	     		    G.GRADE_NAME
        			FROM
             		SURVEY_LIST S,
             		PROJECT_HISTORY R,
             		PROJECT_HISTORY A,
             		PROJECT P,
             		ORGANIZATION_CHART O,
+            		ORGANIZATION_CHART OA,
              		USER_INFO UA,
              		USER_INFO UR,
              		GRADE G
@@ -345,6 +352,7 @@
          	  	  AND UR.GRADE_ID = G.GRADE_ID
          	   	  AND UA.EMPLOYEE_ID = A.PARTICIPATION_EMPLOYEE_ID
          	  	  AND UR.DEPARTMENT_ID = O.DEPARTMENT_ID
+         	  	  AND UA.DEPARTMENT_ID = OA.DEPARTMENT_ID
               	  AND R.PARTICIPATION_EMPLOYEE_ID = UR.EMPLOYEE_ID
               	  AND R.PROJECT_ID = P.PROJECT_ID
          	  	  AND P.PROJECT_CLOSED_DATE >= TO_CHAR(SYSDATE -(30 * #{month}), 'YYYY-MM-dd')

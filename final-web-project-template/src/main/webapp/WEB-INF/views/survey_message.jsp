@@ -42,13 +42,13 @@
                   </div>
                </div>
 
-               <table class="table">
+               <table class="table table-striped">
                   <thead>
                      <tr>
                         <th class="col-2"></th>
-                        <th class="col-2">부서</th>
-                        <th class="col-2">직급</th>
                         <th class="col-2">이름</th>
+                        <th class="col-2">직급</th>
+                        <th class="col-2">부서</th>
                         <th class="col-3">참여여부</th>
                      </tr>
                   </thead>
@@ -56,9 +56,9 @@
                      <c:forEach items="${evaluateList}" var="EL">
                         <tr>
                            <th scope="row">${EL.RNUM}</th>
-                           <td class="sv_name">${EL.DEPARTMENT_NAME}</td>
-                           <td>${EL.GRADE_NAME}</td>
                            <td>${EL.EMPLOYEE_NAME}</td>
+                           <td>${EL.GRADE_NAME}</td>
+                           <td class="sv_name">${EL.DEPARTMENT_NAME}</td>
                            <td>
                            	 <c:if test="${EL.SURVEY_COMPLETE_YN eq Y}">
                           		예
@@ -70,21 +70,8 @@
                         </tr>
                      </c:forEach>
                   </tbody>
-                  <tbody>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td style="float: right;"><button id="upper_dv_btn"
-										type="button" class="btn btn-outline-primary" data-toggle="modal"
-										data-target="#exampleModal" >재전송</button></td>
-							</tr>
-						</tbody>
-                  <tr>
-						
-							
-                     <td colspan="12" class="text-center">
+                  <tr class="table-light">
+                     <td colspan="12" class="text-center" style="border: none;">
                         <div>
                            <a class="btn btn-outline-secondary"
                               href="?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}&surveySeq=${pagingdto.surveySeq}">처음</a>
@@ -111,6 +98,9 @@
                            </c:if>
                            <a class="btn btn-outline-secondary"
                               href="?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&surveySeq=${pagingdto.surveySeq}">맨끝</a>
+                        </div>
+                        <div style="float: right">
+ 			               <button id="upper_dv_btn" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">재전송</button>
                         </div>
                      </td>
                   </tr>

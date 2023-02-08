@@ -380,6 +380,7 @@ function delete_mapping_btn(){
 	<div class="card" id="beforeModal">
 		<div class="card-body">
 			<div class="forshadowing">
+				<div class="title"><h3 style="text-align:center;"><b>평가지 목록</b></h3></div>
 				<div class="row">
 					<div class="hmenu">
 						<div class="survey_list_form_upper_dv">
@@ -442,8 +443,7 @@ function delete_mapping_btn(){
 
 						</div>
 					</div>
-					<div class="col-12" style="margin-bottom:30px;"><h3 style="text-align:center;"><b>평가지 목록</b></h3></div>
-					<table class="table">
+					<table  class="table table-striped">
 						<thead>
 							<tr>
 								<th scope="col"></th>
@@ -509,20 +509,9 @@ function delete_mapping_btn(){
 								</tr>
 							</c:forEach>
 						</tbody>
-						<tbody>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td style="float: right;"><button id="upper_dv_btn"
-										type="button" class="btn btn-outline-secondary" data-toggle="modal"
-										data-target="#exampleModal" data-whatever="@mdo">등록</button></td>
-							</tr>
-						</tbody>
+						
 						<tbody style="border: none;">
-							<tr>
+							<tr class="table-light">
 								<td colspan="12" class="text-center" style="border: none;">
 									<div>
 
@@ -552,6 +541,10 @@ function delete_mapping_btn(){
 										<a class="btn btn-outline-secondary"
 											href="surveysearch.do?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">맨끝</a>
 									</div>
+									<div style="float: right;">
+									<button id="upper_dv_btn" type="button" class="btn btn-outline-secondary" data-toggle="modal"
+										data-target="#exampleModal" data-whatever="@mdo">등록</button>
+								   </div>
 								</td>
 							</tr>
 						</tbody>
