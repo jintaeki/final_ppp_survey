@@ -18,7 +18,7 @@ $(document).ready(function() {
 
 function popup(){
 	var month = $('#month').val();
-	
+
 	let popUrl ="/mapping/popup.do?pageNo=1&surveySeq="+surveySeq+"&raterId="+raterId
 			   +"&month="+month+"&keyword=&selection=60004&selectGD=60004";
 	let popOption = "width=800, height=820, left=470, top=100";
@@ -64,7 +64,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 	<div class="card">
 			<div class="forshadowing">
 
-			
+
 
 					<div class="hmenu">
 						<div class="survey_list_form_upper_dv">
@@ -114,8 +114,8 @@ function map_delete(surveySeq, raterId, appraiseeId){
 						</div>
 					</div>
 										<div class="col-12" style=""><h3 style="text-align:center;"><b>${surveyInfo.surveyName}매핑 목록</b></h3></div>
-					
-					<table class="table table-striped" id="mapTb">
+
+					<table class="table table-sm table-striped table-bordered" id="mapTb">
 						<thead>
 							<tr>
 								<th scope="col">직급</th>
@@ -179,7 +179,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 										<a class="btn btn-outline-secondary"
 											href="set.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">다음</a>
 									</c:if>
-								</div> 
+								</div>
 								<div style="float: right;">
 									<button type="button" id="map_insert" class="btn btn-outline-primary" onclick="mapInsert('${surveySeq}')">
 										조건과 관계없이 추가

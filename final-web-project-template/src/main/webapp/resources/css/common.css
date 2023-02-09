@@ -86,9 +86,10 @@ table {
 }
 
 
+/*  페이지별 차이가 나는 경우가 생겨서  height 추석처리 하였음 */
 input {
 	border-radius: 10px;
-	height: 40px;
+	/* height: 40px; */
 	border: 2px solid #e8e8e8;
 }
 

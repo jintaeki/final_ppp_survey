@@ -11,21 +11,12 @@
 .survey_list_form{
 	display: flex;
 }
-.survey_list_form select{
-	margin-right: 10px;
-}
 
-#button-addon2{
-	margin-left: 6px;
-}
 
 .input-group-append{
 	margin-left:460px;
 }
 
-#upper_dv_btn{
-	margin-left: 6px;
-}
 
 .table{
 	max-width: 1300px;
@@ -65,4 +56,8 @@
     float: right;
 }
 
+.paiging-btn-table{
+	   width: 1300px;
+    margin-left: 80px;
+}
 
