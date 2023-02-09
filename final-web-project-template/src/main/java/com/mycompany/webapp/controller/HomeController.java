@@ -175,12 +175,25 @@ public class HomeController {
 		}
 	}
 
+	@RequestMapping("/survey.do")
+	public String tosurvey() {
+		
+		return "survey";
+	}
+	
+	
+	
 	@RequestMapping("/logincheck.do")
+	@ResponseBody
 	public String loginAfter(@ModelAttribute("UCD")  @Valid UserCheckDTO UCD,
 
-							  BindingResult result,
+							  
 							  HttpSession session, Model model) {
-		
+		if(UCD.getPassword().equals("")) {
+			return "noPassword";
+		}if(UCD.getRaterId().equals("")) {
+			return "noId";
+		}
 		
 		if(SHA256(UCD.getPassword()) != "") {
 			UCD.setPassword(SHA256(UCD.getPassword()));
@@ -197,27 +210,27 @@ public class HomeController {
 				logger.info("평가자 진입");
 				// 평가자가 평가해야할 설문지 조회
 				List<Map<String,Object>> surveySeqAndName = loginCheckService.getSurveySeqAndName(UCD.getRaterId());
-				model.addAttribute("raterId",UCD.getRaterId());
-				model.addAttribute("surveySeqAndName",surveySeqAndName);
-				model.addAttribute("surveyResult", new SurveyResultDTO());
+				session.setAttribute("raterId",UCD.getRaterId());
+				session.setAttribute("surveySeqAndName",surveySeqAndName);
+				session.setAttribute("surveyResult", new SurveyResultDTO());
 				session.setAttribute("checked", check);
 				int nosurveySeqForGetAllUser = 0;
 
 				List<UserCheckDTO> allUser = loginCheckService.getUserInfo(UCD.getRaterId(), nosurveySeqForGetAllUser);
 				
-				model.addAttribute("allUser",allUser);
+				session.setAttribute("allUser",allUser);
 
-				return "survey";
+				return "successRater";
 			}else {
 				logger.info("관리자 진입");
 				session.setAttribute("checked", check);
-				return "redirect:/survey/surveysearch.do";
+				return "successManager";
 			}
 
 		}else {
 			logger.info("로그인 불가");
 			session.setAttribute("signIn", null);
-			return "login";
+			return "loginFail";
 		}
 
 

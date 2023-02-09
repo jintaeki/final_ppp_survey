@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+ <%@ page contentType="text/html; charset=UTF-8"%>
 
 <%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
 <!-- <link rel="stylesheet" type="text/css" href="/survey.css"> -->
@@ -197,12 +197,24 @@
 
    }
 
+   function gowithoutConfirm(obj){
+	var content = $(obj).val();
+	console.log('content:'+content);
+	   Swal.fire({
+			text: content,
+			 confirmButtonText: '확인',
+				 
+		});
+	   
+   }
+   
+   
    var cntForGO = 0;
    function go(content){
 
 		if(cntForGO==0){
 			Swal.fire({
-				text: '<b>'+content+'/<b>',
+				text: content,
 				 confirmButtonText: '확인',
 					 preConfirm:()=>{
 						 if(confirm('평가지 내용을 그만 보시겠습니까?')){
@@ -217,6 +229,7 @@
 
    function selectSurvey(obj,raterId){
 	   cntForGO = 0;
+	   
       $('.submit_btn').empty();
       $('.surveyName').empty();
       console.log(raterId);
@@ -281,9 +294,10 @@
 
 
    function appraisee(data,anonymitycode,theSeq,surveySeq){
+	   $('.forContent').empty();
       var size = data.length;
       var html = '';
-
+	  
 		if (surveySeq ==1){
 
 			location.reload();
@@ -317,8 +331,12 @@
             html +=`</div>
 					</div>`;
             $('.appraiseeList_list').append(html);
-
-
+			
+         
+            $('.forContent').empty;
+            var contentViewBtn = '';
+            contentViewBtn = '<button style="margin:0px;" id="contentBtn" class="create_btn" value="'+data[0].surveyContent+'"onclick="gowithoutConfirm(this)">평가 참고 사항</button>';
+			$('.forContent').append(contentViewBtn);
 		}
 
    }
@@ -498,6 +516,8 @@
 				<option value="${surveySeqAndName.SURVEY_SEQ}">${surveySeqAndName.SURVEY_NAME}</option>
 			</c:forEach>
 		</select>
+	
+		<div class="forContent" style="margin-left:1000px;"></div>
 	</div>
 
 		<div class="row" style="width: 1360px;">

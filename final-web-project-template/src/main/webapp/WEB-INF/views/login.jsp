@@ -33,7 +33,7 @@
 			class="login_img">
 		<div class="login_text">다 함께 성장하는, 다면평가 시스템</div>
 		<c:url value="/logincheck.do" var="actionURL" scope="page" />
-		<form:form action="${actionURL }" modelAttribute="UCD"
+		<form:form action="${actionURL }" modelAttribute="UCD" id = "loginCheck"
 			style="margin: 50px 150px;">
 			<div class="login_form">
 				<input type="text" class="form-control" name="raterId" id="raterId"
@@ -46,11 +46,45 @@
 					class="login_form-placeholder" for="password">password</label>
 			</div>
 			<div class="login_btn">
-				<button type="submit" class="btn btn-primary">로그인</button>
+				<button type="button" onclick="login()" class="btn btn-primary">로그인</button>
 
 			</div>
 
 		</form:form>
 	</div>
 </body>
+<script>
+function login(){
+	var data = $('#loginCheck')[0];
+	var formdata = new FormData(data);
+	
+	$.ajax({
+		method : "POST",
+         url : 'logincheck.do/', // form을 전송할 실제 파일경로
+         data: formdata,
+         processData : false,
+         contentType : false,
+         cache : false,
+         timeout : 600000,
+         dataType: 'html',
+         beforeSend : function() {
+            // 전송 전 실행 코드
+         },
+         success : function(data) {
+        	 if(data=='noPassword'){alert("비밀번호를 입력해 주세요."); return false;};
+        	 if(data=='noId'){alert("아이디를 입력해 주세요."); return false;};
+        	 if(data=='successRater'){var raterName = sessionStorage.getItem('raterName');alert(raterName+" 님 어서오세요");location.href="/survey.do" };
+        	 if(data=='successManager'){alert("관리자 님 어서오세요.");location.href="/survey/surveysearch.do" };
+        	 if(data=='loginFail'){alert("아이디 혹은 비밀번호를 정확하게 입력해 주세요."); return false;};
+         },
+         error : function(e) {
+            // 전송 후 에러 발생 시 실행 코드
+            console.log("ERROR : ", e);
+         }
+	})
+	
+}
+
+
+</script>
 </html>

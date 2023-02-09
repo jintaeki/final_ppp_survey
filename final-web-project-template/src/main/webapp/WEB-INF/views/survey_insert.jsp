@@ -276,7 +276,7 @@ function manageItem(obj,questionSeq){
 
 
 
-function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
+function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 	const tag = $(obj);
 	
 	keyArray = [];
@@ -286,7 +286,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 			
 			
 			
-			if(questionSeq1 ==0){
+			if(questionSeq ==0){
 				var form = $('#0')[0];
 				var formdata = new FormData(form);
 				for(const pairkeys of formdata.keys()){
@@ -372,7 +372,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 					})
 					
 			}else{
-				var form = $('#'+questionSeq1)[0];
+				var form = $('#'+questionSeq)[0];
 				var formdata = new FormData(form);
 				for(const pairkeys of formdata.keys()){
 		             keyArray.push(pairkeys);
@@ -383,7 +383,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 		          }
 		          
 		          for(var i = 0 ; i < cnt ; i++){
-		        	  if(keyArray[i]==questionSeq1){
+		        	  if(keyArray[i]==questionSeq){
 		        		  formdata.append('questionTypeCode',valueArray[i]);
 		        		  break;
 		        	  }
@@ -571,7 +571,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 			   html  += '<i class="fas fa-xmark"></i>';
 			   html  +=   '</button>';
 			   html  += '<input type="text" name="itemContent" placeholder="문항 입력..." id="input_item" onclick="manageItem(this,'+questionSeq+');this.onclick=null;">';
-			   html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+			   html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+questionSeq+');this.onclick=null;">';
 			   html  +='<input type="hidden" name="itemSeq" value="0">';
 			   html +='</div>';
 			   html  += '</div>';
@@ -590,7 +590,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 		       html  += '<i class="fas fa-xmark"></i>';
 			   html  += '</button>';
 		       html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+questionSeq+');this.onclick=null;" >';
-		 	   html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" >';
+		 	   html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+questionSeq+');this.onclick=null;">';
 			   html  +='<input type="hidden" name="itemSeq" value="0">';
 			   html +='</div>';
 		   	   html  += '</div>';
@@ -654,7 +654,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 					html  += '<i class="fas fa-xmark"></i>';
 					html  +=   '</button>';
 					html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
-					html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+					html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
 					html  +='<input type="hidden" name="itemSeq" value="0">';
 					html  +='</div>'
 				    html  += '</div>';
@@ -665,7 +665,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 				    html  += '<i class="fas fa-xmark"></i>';
 				    html  +=   '</button>';
 				    html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
-				    html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+				    html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
 				    html  +='<input type="hidden" name="itemSeq" value="0">';
 				    html  +='</div>';
 				    html  += '</div>';
@@ -709,7 +709,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 			        html += '<i class="fas fa-xmark"></i>';
 			        html +=   '</button>'
 			        html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
-			        html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+			        html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
 			        html  +='<input type="hidden" name="itemSeq" value="0">';
 			        html  +='</div>';
 			        html  += '</div>';
@@ -717,7 +717,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 					html +='<div id="TouchItem">';
 			        html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
 			        html  += '<i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><input type="text" name="itemContent" placeholder="기타" value="기타" id="guitar" readonly>';
-			        html  +='<input type="hidden" name="itemScore"  value="0">';
+			        html  +='<input type="hidden" name="itemScore"  value="0" >';
 			        html  +='<input type="hidden" name="itemSeq" value="0">';
 					html  +='</div>';
 					html +='</div>';
@@ -744,7 +744,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 				        html  += '<i class="fas fa-xmark"></i>';
 					    html  +=   '</button>';
 				 		html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;" value="'+data[i].ITEM_CONTENT+'">';
-				 		html  +='<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
+				 		html  +='<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
 					    html  +='<input type="hidden" name="itemSeq" value="'+data[i].ITEM_SEQ+'">';
 					    html  += '</div>';
 					    html +='</div>';
