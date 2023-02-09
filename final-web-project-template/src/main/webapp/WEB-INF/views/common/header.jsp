@@ -15,13 +15,13 @@
 <title>다면평가 시스템</title>
 
    <!-- CSS -->
-   	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+   	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
    	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common.css" />
    	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/paging.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700&family=Nanum+Gothic+Coding:wght@700&family=Nanum+Gothic:wght@800&family=Noto+Serif+KR:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One&display=swap" rel="stylesheet">
    <!-- Javascript -->
    	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
    	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -53,8 +53,8 @@
 				<br>
            </div>
 		<div class="flex-grow-1 container-fluid">
-			<div class="row h-100">
-				<div class="col-md-2 p-3">
+			<div class="row">
+					<div class="col-md-2 p-3">
 					<div class="h-100 d-flex flex-column">
 						<div class="flex-grow-1">
 							<%@ include file="/WEB-INF/views/common/menu.jsp"%>
@@ -63,5 +63,5 @@
 				</div>
 
 				<div class="col-md-10 p-3">
-					<div class=" h-100 d-flex flex-column">
+					<div class=" h-100 d-flex flex-column" style="background-corlor:#031436">
 						<div class="flex-grow-1 pr-3" style="height: 0px">

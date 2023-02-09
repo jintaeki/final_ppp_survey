@@ -21,8 +21,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/paging.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@700&family=Nanum+Gothic+Coding:wght@700&family=Nanum+Gothic:wght@800&family=Noto+Serif+KR:wght@600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Alumni+Sans+Collegiate+One&display=swap" rel="stylesheet">
    <!-- Javascript -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -31,7 +30,6 @@
 </head>
 <body>
 
-	<div style="height: 20px;">&nbsp;</div>
 
 	<div class="row"> 		<!-- footer에 있는 div와 연결됨  footerformanager에 div하나 있어-->
 
@@ -40,7 +38,7 @@
 						<%@ include file="/WEB-INF/views/common/menuformanager.jsp"%>
 		</c:if>
 		<c:if test="${checked.managerYN eq 'N' }">
-			<div class="">			
+			<div class="">
 						<%@ include file="/WEB-INF/views/common/menu.jsp"%>
 		</c:if>
 

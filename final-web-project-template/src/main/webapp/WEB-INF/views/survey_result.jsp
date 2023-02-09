@@ -6,7 +6,7 @@
 			<div class="forshadowing">
 			  <div class="container_flex">
 				<div class="individual">
-					<div class="row" style="text-align: center">
+					<div class="row" style="text-align: center; background-color: white;">
 						<div class="info" style="display: contents;">
 							<c:forEach items="${surveyResultTarget}" var="SRT">
 								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">소속</div></div>
@@ -31,16 +31,15 @@
 							</c:forEach>
 
 						</div>
-						<div class="col-12">&nbsp;</div>
-						<div class="col-12">&nbsp;</div>
+
 					</div>
 				</div>
 			 </div>
 
-				<div class="table_container_flex">
-									<div class="col-12" style=""><h3 style="text-align:center;"><b>설문 결과</b></h3></div>
-				
-					<table class="table table-bordered table-striped text-center">
+				<div class="table-container">
+									<div class="col-12" style=""><h3 style="text-align:left;"><b>설문 결과</b></h3></div>
+
+					<table class="table table-sm table-striped table-bordered">
 						<thead>
 							<tr>
 								<th class="col-xs">#</th>

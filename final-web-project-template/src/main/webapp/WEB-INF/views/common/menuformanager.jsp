@@ -3,7 +3,7 @@
 <style>
 
 body {
-  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif; 
+ font-family: RegularFont, NanumGothic, sans-serif;
 }
 
 </style>
@@ -15,7 +15,7 @@ body {
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel">프로젝트 이력 및 조직도 업로드</h5>
-					
+
 				</div>
 
 
@@ -26,16 +26,16 @@ body {
 							<label for="recipient-name" class="col-form-label">프로젝트 이력</label>
 							<input type="file" id="filePath" name="projecthistoryjson" class="form-control">
 						</div>
-	
-						
+
+
 					<div class="modal-footer">
-								
+
 							<input type="button" onclick="uploadProjectHistory()" class="btn btn-primary" value="등록">
 						</div>
-						
+
 					</form>
-					
-					
+
+
 					<form  id="organizationForm">
 
 						<div class="form-group">
@@ -43,16 +43,16 @@ body {
 							<input type="file" name="organizationjson" class="form-control"
 							>
 						</div>
-	
-						
-						
+
+
+
 					<div class="modal-footer">
-							
+
 							<input type="button" onclick="uploadOrganization()" class="btn btn-primary" value="등록">
 						</div>
-						
+
 					</form>
-					
+
 				</div>
 
 			</div>
@@ -72,13 +72,13 @@ body {
 				목록 조회</a>
 		</div>
 		<br> <br>
-	
-		
+
+
 		<div class="menu_item" style="">
 			<a style="color:black;" href="<c:url value='/survey/surveyresultteam.do'/>">결과 통계</a>
 		</div>
 		<br> <br>
-		<c:if test="${checked ne '' }">		
+		<c:if test="${checked ne '' }">
 		<div class="menu_item" style="">
 			<a style="color:black;" href="<c:url value='/logout.do'/>">로그아웃</a>
 		</div>
@@ -90,11 +90,11 @@ body {
 		</c:if>
 		<br> <br>
 		<div class="menu_item"style="height: 70px;">
-			<a data-toggle="modal" style="color:black;" data-target="#json" onclick="">프로젝트 이력 및 조직도 업로드</a>
-			
+			<a data-toggle="modal" style="color:black;" data-target="#json" onclick="">프로젝트 이력 및<br>조직도 업로드</a>
+
 		</div>
-		
-		
+
+
 	</div>
 	<!--<a class="btn btn-success btn-sm" href="#">로그아웃</a> -->
 </div>
@@ -105,16 +105,16 @@ body {
 function uploadProjectHistory(){
 	var projectHistoryForm = $('#projectHistoryForm')[0];
  	var projecthistoryJSONformData = new FormData(projectHistoryForm);
-	
+
   $.ajax({
      method:'POST', //어떤 방식으로 보낼 지
      url:'/survey/fileuploadprojecthistory.do/', // qdiv를 보낼 경로 설정
 	 data:projecthistoryJSONformData,
-	 enctype: 'multipart/form-data',  
+	 enctype: 'multipart/form-data',
      processData : false,
-     contentType : false,           
+     contentType : false,
      beforeSend : function() { //보내기 전 실행
-     console.log("요청이 보내지는가?"); 
+     console.log("요청이 보내지는가?");
      },
      success:function (result) {    //전송 성공시 실행
 		if(result=="2"){
@@ -122,10 +122,10 @@ function uploadProjectHistory(){
 		}else if(result=="1") {
 			alert("프로젝트 이력 파일인지 확인해 주세요.");
 		}else if(result=="0"){
-			alert("json타입의 파일만 지원 가능합니다.");	 
+			alert("json타입의 파일만 지원 가능합니다.");
 		}
-     
-    
+
+
 
         }, error:function(e) {   //실패, 에러
            console.log("Error", e);
@@ -140,11 +140,11 @@ function uploadOrganization(){
 	     method:'POST', //어떤 방식으로 보낼 지
 	     url:'/survey/fileUploadOrganization.do/', // qdiv를 보낼 경로 설정
 		 data: organizationJSONformData,
-		 enctype: 'multipart/form-data',  
+		 enctype: 'multipart/form-data',
 	     processData : false,
-	     contentType : false,           
+	     contentType : false,
 	     beforeSend : function() { //보내기 전 실행
-	     console.log("요청이 보내지는가?"); 
+	     console.log("요청이 보내지는가?");
 	     },
 	     success:function (result) {    //전송 성공시 실행
 	    	 if(result=="2"){
@@ -152,7 +152,7 @@ function uploadOrganization(){
 	 		}else if(result=="1") {
 	 			alert("프로젝트 이력 파일인지 확인해 주세요.");
 	 		}else if(result=="0"){
-	 			alert("json타입의 파일만 지원 가능합니다.");	 
+	 			alert("json타입의 파일만 지원 가능합니다.");
 	 		}
 
 

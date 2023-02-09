@@ -73,7 +73,7 @@ public class SurveyController {
 
 		return "성공";
 	}
-	 
+
 	@RequestMapping("/sendmessage.do/{surveyseq}")
 	@ResponseBody
 	public String sendmessage(@PathVariable int surveyseq,
@@ -192,7 +192,7 @@ public class SurveyController {
 	public String setSurvey(@ModelAttribute("SLD") SurveyListDTO SLD, BindingResult bindingresult, HttpSession session,
 			RedirectAttributes redirectAttrs) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
+
 		logger.info(SLD.toString());
 		if(SLD.getSurveyName()==null || SLD.getSurveyName().isEmpty()) {
 			return "nameEmpty" ;
@@ -240,7 +240,7 @@ public class SurveyController {
 
 
 
-		
+
 
 	}
 
@@ -364,12 +364,12 @@ public class SurveyController {
 		surveyService.insertQuestion(SQD);
 		List<SurveyQuestionDTO> LSQD = new ArrayList<>();
 		System.out.println("출력해라:"+SQD);
-		
+
 		if(SQD.getQuestionContent()==null || SQD.getQuestionContent().equals("")) {
 			return LSQD;
 		}
-		
-	
+
+
 		if(SQD.getQuestionTypeCode().equals("10002")) {
 
 		SQD.setItemScore("0");
@@ -473,7 +473,7 @@ public class SurveyController {
 	@ResponseBody
 	public String DeleteSurvey(@PathVariable int surveyseq) {
 
-	
+
 
 		logger.info("deletesurvey 컨트롤러 진입");
 			  surveyService.deleteSurvey(surveyseq);
@@ -498,7 +498,7 @@ public class SurveyController {
 
 			int totalRows = pagingService.getTotalBoardNum(keyword, selection, surveyStartDateLeft,surveyStartDateRight, anonyMityCheckCode);
 			logger.info(String.valueOf(totalRows));
-			pagingdto = new PagingDTO(7, 10, totalRows, pageNo);
+			pagingdto = new PagingDTO(12, 10, totalRows, pageNo);
 			pagingdto.setSelection(selection);
 			pagingdto.setKeyword(keyword);
 			pagingdto.setSurveyStartDateLeft(surveyStartDateLeft);
@@ -581,7 +581,7 @@ public class SurveyController {
 		return "survey_evaluate";
 	}
 
-		
+
 	@RequestMapping("/evaluateMessage.do/{surveySeq}")
 	public String searchByMessage(
 						 @PathVariable("surveySeq") int surveySeq,
@@ -634,8 +634,8 @@ public class SurveyController {
 		logger.info("검색 테스트");
 		return "survey_message";
 	}
-		
-		
+
+
 
 
 

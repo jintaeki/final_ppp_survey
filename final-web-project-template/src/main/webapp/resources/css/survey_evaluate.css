@@ -34,39 +34,39 @@
 /*     width: 1460px; */
 /* } */
 
-.title{
-	font-size: 24px;
-    text-align: center;
-}
 
 /* #survey_list_form_id{ */
 /* 	display: flex; */
 /* } */
 
 .input-group-append{
-	margin-left:484.5px;	
-}
-#button-addon2 {
-    margin-left: 6px;
+	margin-left:484.5px;
 }
 
 .table{
-	max-width: 1300px;
-	margin:auto;
+	max-width: 98%;
+    margin: auto;
+    margin-bottom: 15px;
+    box-shadow: 0px 0px 1px 1px #c0c0c0;
 }
 .sv_name{
 	text-align: center;
 }
+.table td:not(.sv_name){
+	text-align: center;
+
+}
 .table thead th{
-	height: 65px;
+	height: 50px;
 	text-align: center;
 	vertical-align: middle;
+	color:#828D99;
 }
 .table td, .table th{
-	height: 65px;
+	height: 25px;
 	vertical-align: middle;
 	border-top: 1px solid #dee2e6;
-	text-align: center;
+	    text-align: center;
 
 }
 
@@ -79,4 +79,18 @@
 	margin-top: 20px;
 	margin-right:58px;
 	float:right;
+}
+
+.paging-table{
+	    width: 1300px;
+    margin-left: 80px;
+}
+
+.paiging-btn-table{
+	border: none;
+	width: 99%;
+}
+
+.searchRange {
+    margin-right: 490px;
 }

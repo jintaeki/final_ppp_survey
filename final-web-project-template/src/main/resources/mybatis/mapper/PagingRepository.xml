@@ -311,9 +311,9 @@
                   )
                   ORDER BY ROWNUM  DESC
         )
-          where survey_seq = #{surveySeq}
+        where survey_seq = #{surveySeq}
 	</select>
-	
+
 	<select id="getEvaluateMessageBoardNum"  resultType="int">
 
       select count(ROWNUM)
@@ -343,8 +343,8 @@
                  FROM grade g ,user_info ui ,mapping m ,ORGANIZATION_CHART oc
                  WHERE
                      m.rater_id = ui.employee_id
-                     and g.grade_id = ui.grade_id and oc.department_id = ui.department_id 
-                     
+                     and g.grade_id = ui.grade_id and oc.department_id = ui.department_id
+
                      AND ((#{selection} = '50003'
                     	AND ui.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
                 		OR (#{selection} = '50001'
@@ -363,8 +363,8 @@
                      )
 	               ORDER BY ROWNUM  DESC
 	    		 )
-			 where survey_seq = #{surveySeq}
-	     )
+			 where survey_seq = #{surveySeq} )
+
 	</select>
 
 </mapper>
