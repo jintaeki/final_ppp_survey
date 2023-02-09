@@ -124,7 +124,7 @@ function delete_mapping_btn(){
   	function newMapping(serveySeq){
   		html ="";
   		html += '<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-  		html += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">매핑 조건 선택</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+  		html += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">매칭 조건 선택</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
   	    html += '<span aria-hidden="true">&times;</span></button>';
   	    html += '</div>';
   	    html += '<div class="modal-body">'
@@ -135,7 +135,7 @@ function delete_mapping_btn(){
   	   	html += '<br> <h5> 다면평가에 포함될 프로젝트의 범위 정하기 </h5> <select class="form-control" name="month"> <option value="3">최근 3개월 동안에 끝난 프로젝트</option> <option value="6">최근 6개월 동안에 끝난 프로젝트</option> <option value="12">최근 1년 동안에 끝난 프로젝트</option>';
   		html +=	'<option value="24">최근 2년 동안에 끝난 프로젝트</option> <option value="36">최근 3년 동안에 끝난 프로젝트</option> </select>';
   		html += '<br> <h5>피평가자 최대 인원</h5> <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;">';
-  	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> <input type="submit" class="btn btn-primary" value="매핑">';
+  	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> <input type="submit" class="btn btn-primary" value="매칭">';
   	    html += '</div></form:form></div></div></div></div>';
   	    $('#beforeModal').after(html);
   	}
@@ -143,7 +143,7 @@ function delete_mapping_btn(){
   	function reMapping(serveySeq){
   		html ="";
   		html += '<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-  		html += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">다시 매핑 하시겠습니까?</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+  		html += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">다시 매칭 하시겠습니까?</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
   	    html += '<span aria-hidden="true">&times;</span></button>';
   	    html += '</div>';
   	    html += '<div class="modal-body">'
@@ -152,9 +152,9 @@ function delete_mapping_btn(){
   	   	html += '<input type="hidden" id="surveySeq" name="surveySeq" value="'+serveySeq+'">';
   	   	html += '<input type="hidden" id="month" name="month" value="3">';
   	   	html += '<input type="hidden" id="number" name="number" value="3">';
-  	   	html += '<br> <h5> 해당 다면평가의 매핑을 새로 하시겠습니까? </h5>';
+  	   	html += '<br> <h5> 해당 다면평가의 매칭을 새로 하시겠습니까? </h5>';
   	   	html += '<br><button type="submit" class="btn btn-outline-danger" id="newCheck" name="newCheck" value="1" onclick="delete_mapping_btn();">삭제하고 새로 시작하기</button>';
-  	   	html += '<button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 매핑 데이터로 넘어가기</button>';
+  	   	html += '<button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 매칭 목록으로 넘어가기</button>';
   	    html += '<div class="modal-footer"><br><button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>';
   	    html += '</div></form:form></div></div></div></div>';
   	    $('#beforeModal').after(html);
@@ -163,7 +163,7 @@ function delete_mapping_btn(){
   	function plusMapping(serveySeq){
   		html ="";
   		html += '<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-  		html += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">평가조합을 추가하시겠습니까?</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+  		html += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">평가 조합을 추가하시겠습니까?</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
   	    html += '<span aria-hidden="true">&times;</span></button>';
   	    html += '</div>';
   	    html += '<div class="modal-body">'
@@ -172,8 +172,8 @@ function delete_mapping_btn(){
   	   	html += '<input type="hidden" id="surveySeq" name="surveySeq" value="'+serveySeq+'">';
   	   	html += '<input type="hidden" id="month" name="month" value="3">';
   	   	html += '<input type="hidden" id="number" name="number" value="3">';
-  	   	html += '<br> <h5> 해당 다면평가의 매핑조합을 추가 하시겠습니까? </h5>';
-  	   	html += '<button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 매핑 데이터로 넘어가기</button>';
+  	   	html += '<br> <h5> 해당 다면평가의 매칭조합을 추가 하시겠습니까? </h5>';
+  	   	html += '<button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 매칭 목록으로 넘어가기</button>';
   	    html += '<div class="modal-footer"><br><button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>';
   	    html += '</div></form:form></div></div></div></div>';
   	    $('#beforeModal').after(html);
@@ -273,7 +273,7 @@ function delete_mapping_btn(){
 
 				<option value="30005">전체</option>
 				<option value="30004">알림 발송 완료</option>
-				<option value="30003">매핑 완료</option>
+				<option value="30003">매칭 완료</option>
 				<option value="30002">평가지 등록 완료</option>
 				<option value="30001">작성 중</option>
 				</select> </div>`;
@@ -485,7 +485,7 @@ function delete_mapping_btn(){
 												id="btn_for_mapping" data-toggle="modal"
 												data-target="#exampleModal1"
 												onclick="btn_for_mapping('${list.surveySeq}', '${list.stateCode}')">
-												매핑
+												매칭
 										</button>
 									</td>
 								</tr>

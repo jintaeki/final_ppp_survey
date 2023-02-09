@@ -767,6 +767,7 @@ FROM(
                        AND R.APPRAISEE_ID = U.EMPLOYEE_ID
                        AND I.QUESTION_SEQ = Q.QUESTION_SEQ
                        AND Q.QUESTION_TYPE_CODE = '10001'
+                       AND R.SURVEY_SEQ = #{surveySeq}
                   GROUP BY EMPLOYEE_ID, R.SURVEY_SEQ) t
                 )
             )
