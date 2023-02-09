@@ -63,11 +63,10 @@
 	color:#828D99;
 }
 .table td, .table th{
-	height: 48px;
+	height: 25px;
 	vertical-align: middle;
 	border-top: 1px solid #dee2e6;
 	    text-align: center;
-
 }
 
 .pagination{
@@ -93,4 +92,11 @@
 
 .searchRange {
     margin-right: 490px;
+}
+.btn btn-link {
+	    --bs-btn-padding-y: .25rem;
+    --bs-btn-padding-x: .5rem;
+    --bs-btn-font-size: .5rem;
+    line-height: 1;
+    font-size: 1rem;
 }

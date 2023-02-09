@@ -83,11 +83,20 @@
                            <td class="sv_name">${EL.DEPARTMENT_NAME}</td>
                            <c:if test="${EL.GRADE_NAME eq '부장'}">
                            <td><input type="button" class="btn btn-link"
+                           style="--bs-btn-padding-y: .25rem;
+    								 --bs-btn-padding-x: .5rem;
+									 --bs-btn-font-size: .5rem;
+   									 line-height: 1;
+   									 font-size: 1rem;"
                               onclick="result_search_btn(${surveySeq},${EL.EMPLOYEE_ID})"
                               value="조회"></td>
                            </c:if>
                            <c:if test="${EL.GRADE_NAME ne '부장'}">
-                           <td><input type="button" class="btn btn-link"
+                           <td><input type="button" class="btn btn-link"  style="--bs-btn-padding-y: .25rem;
+    --bs-btn-padding-x: .5rem;
+    --bs-btn-font-size: .5rem;
+    line-height: 1;
+    font-size: 1rem;"
                               value="조회" disabled></td>
                            </c:if>
                         </tr>

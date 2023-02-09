@@ -11,7 +11,13 @@
 .survey_list_form{
 	display: flex;
 }
-
+.btn btn-link {
+	    --bs-btn-padding-y: .25rem;
+    --bs-btn-padding-x: .5rem;
+    --bs-btn-font-size: .5rem;
+    line-height: 1;
+    font-size: 1rem;
+}
 
 .input-group-append{
 	margin-left:460px;
@@ -19,21 +25,22 @@
 
 
 .table{
-	max-width: 1300px;
+	max-width: 98%;
 	margin:auto;
 }
 .table td:not(.sv_name){
 	text-align: center;
 }
 .table thead th{
-	height: 65px;
+	height: 50px;
 	text-align: center;
 	vertical-align: middle;
 }
 .table td, .table th{
-	height: 65px;
+	height: 25px;
 	vertical-align: middle;
 	border-top: 1px solid #dee2e6;
+	  text-align: center;
 }
 .wait{
 		color: #F06;

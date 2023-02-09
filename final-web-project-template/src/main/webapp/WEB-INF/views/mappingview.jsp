@@ -113,7 +113,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 
 						</div>
 					</div>
-										<div class="col-12" style=""><h3 style="text-align:center;"><b>${surveyInfo.surveyName}매핑 목록</b></h3></div>
+										<div class="col-12"><h3 style="text-align:left;"><b>${surveyInfo.surveyName} 매핑 목록</b></h3></div>
 
 					<table class="table table-sm table-striped table-bordered" id="mapTb">
 						<thead>
@@ -135,7 +135,8 @@ function map_delete(surveySeq, raterId, appraiseeId){
 									<c:forEach var="mapping" items="${mappingList}">
 										<tr id="${mapping.raterId}">
 											<td>${mapping.gradeName}</td>
-											<td><button type="button" id="get_mapping"
+											<td><button type="button" id="get_mapping" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem;
+   												 	--bs-btn-font-size: .5rem; line-height: 1; font-size: 1rem;"
 													class="btn btn-link" data-toggle="modal"
 													data-target="#popup" data-surveyseq="${mapping.surveySeq}"
 													data-raterid="${mapping.raterId}">
@@ -157,6 +158,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 								</c:otherwise>
 							</c:choose>
 						</tbody>
+						<table class="paiging-btn-table">
 						<tr class="table-light">
 							<td colspan="12" class="text-center" style="border: none;">
 								<div>
@@ -187,6 +189,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 								</div>
 							</td>
 						</tr>
+					  </table>
 					</table>
 			</div>
 		</div>
