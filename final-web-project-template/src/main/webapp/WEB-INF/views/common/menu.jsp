@@ -7,7 +7,7 @@
 			style="width: 350px; position: fixed; left: -25px;">
  		</c:if>
  		<c:if test="${checked.gender eq '녀'}">
-		<img src="${pageContext.request.contextPath}/resources/images/profile2.gif"
+		<img src="${pageContext.request.contextPath}/resources/images/profile_woman.gif"
 			style="width: 350px; position: fixed; left: -25px;">
  		</c:if>
 	</div>

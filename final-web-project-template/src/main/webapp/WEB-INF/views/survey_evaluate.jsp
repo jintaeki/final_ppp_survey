@@ -125,8 +125,11 @@
                               href="?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&surveySeq=${pagingdto.surveySeq}">맨끝</a>
                         </div>
                         <div style="float: right;">
-                        <button type="button" class="btn btn-outline-primary" style="float: right;" onclick="location.href='<c:url value='/survey/evaluateMessage.do/${surveySeq}'/>'">
-							 설문지 참여 여부 확인 하러 가기
+
+                        <button type="button" class="btn btn-outline-primary" onclick="location.href='<c:url value='/survey/evaluateMessage.do/${surveySeq}'/>'">
+							 평가 참여 여부 확인 하러 가기
+
+
 						</button>
                        </div>
                      </td>
@@ -136,7 +139,7 @@
          </div>
    </div>
 
-   <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
+   <%@include file="/WEB-INF/views/common/footerformanager.jsp"%>
 <script>
 //평가 유무 비동기 체크
 function result_search_btn(surveySeq, employeeId) {
