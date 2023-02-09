@@ -246,7 +246,7 @@ public class SurveyController {
 
 	// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
 	@RequestMapping("/surveyinsert.do")
-	public String survey_insert(@RequestParam("surveyseq") int surveySeq, Model model, HttpSession session) {
+	public String surveyInsert(@RequestParam("surveyseq") int surveySeq, Model model, HttpSession session) {
 		if (!String.valueOf(session.getAttribute("SLD")).equals("null")) {
 			SurveyListDTO SLD = (SurveyListDTO) session.getAttribute("SLD");
 			model.addAttribute("SLD", SLD);
@@ -484,7 +484,6 @@ public class SurveyController {
 	}
 
 	@RequestMapping("/surveysearch.do")
-
 	public String search(@RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "1") int pageNo,
 			@RequestParam(defaultValue = "30005") String selection, @RequestParam(defaultValue="30005") String anonyMityCheckCode,
 			@RequestParam(defaultValue="") @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDateLeft,@RequestParam(defaultValue="") @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDateRight,

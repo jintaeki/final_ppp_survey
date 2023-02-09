@@ -11,6 +11,11 @@
 
 }
 
+.delete_btn{
+	border:none;
+	background:none;
+}
+
 .card {
 	margin-left: 20px;
 	position: relative;
