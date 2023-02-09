@@ -299,7 +299,7 @@ function delete_mapping_btn(){
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h3 class="modal-title" id="exampleModalLabel">평가지 설정</h5>
+					<h3 class="modal-title" id="exampleModalLabel">평가지 설정</h3>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>

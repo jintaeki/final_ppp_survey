@@ -127,7 +127,7 @@ input#is{
 
 .insert_category {
 	text-align:center;
-
+	background: rgba(0,0,0,.05);
 	box-shadow: inset 2px 2px 5px #ededed, inset -5px -5px 10px #fff;
 
 	border-radius: 20px;

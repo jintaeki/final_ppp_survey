@@ -209,15 +209,15 @@
 				<div class="item_management">
 					<div style="display: flex">
 						<div class="input_title">문항 관리</div>
-
-						<p class="beforeTouch">문제를 클릭하여 문항을 관리해 보세요.</p>
-
+						
+							
 						<div class="itemAfter">
-
 							<!-- 객관식 -->
 							<c:forEach items="${SQL}" var="qlist">
 
 							</c:forEach>
+<!-- 							<div><p class="beforeTouch"><b>문제를 클릭하여 문항을 관리해 보세요.</b></p></div> -->
+							
 						</div>
 					</div>
 				</div>
@@ -274,13 +274,7 @@ function manageItem(obj,questionSeq){
 	
 }
 
-$(document).ready(function(){
-    $('div#checkTouch1').click(function(){
-    	console.log($(this).parent().next('button'));
-       $(this).parent().parent().next().next('button').click();
 
-    });
-  });
 
 function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 	const tag = $(obj);
@@ -466,7 +460,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
    $(document).ready(function(){
         $('div#checkTouch').click(function(){
         	console.log($(this).parent().next('button'));
-           $(this).parent().next('button').click();
+           $(this).parent().next().click();
 
         });
       });
@@ -524,7 +518,8 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
    function question_copy(obj,surveySeq){
 		$('.noquestion').empty();
 	   var testDiv ='';
-	   	testDiv +='<div class="deleteThis" style="display:flex;">';
+	   	testDiv +='<tr class="deleteThis">';
+	   	testDiv +='<td style="display:flex;">'
       	testDiv +='<button class="delete_btn" onclick="deleteQus(this,'+surveySeq+')" value="'+0+'"><i class="fas fa-xmark"></i></button>';
 	 	testDiv +='<form id="0" name="0" onsubmit="return false;">';
 	   	testDiv +='<div class="input_qus" id="checkTouch">';
@@ -541,11 +536,12 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
       	testDiv +='</button>';
 		
       	testDiv +='<div class="blank_under"></div>';
-      	testDiv +='</div>';
+      	testDiv +='</td>';
+      	testDiv +='</tr>';
       	
         $('#queAfter').prepend(testDiv);
 
-     $('#queAfter div form div input[name=questionContent]').first().focus();
+     $('#queAfter tr form div input[name=questionContent]').first().focus();
      $('#0').children().children().next().next().click();
 //      $('#0').children().children().next().next().click();
 
@@ -923,8 +919,9 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
    };
 
    $(document).ready(function(){
-	   $('#queAfter div form div input[name=questionContent]').first().focus();
-	   $('#queAfter div form div input[name=questionContent]').first().click();
+	   $('#queAfter tr form div input[name=questionContent]').first().focus();
+	   $('#queAfter tr form div input[name=questionContent]').first().click();
+
 
    });
 
