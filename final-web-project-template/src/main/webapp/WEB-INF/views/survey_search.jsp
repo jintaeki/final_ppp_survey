@@ -21,53 +21,7 @@ function delete_mapping_btn(){
 
 	function delete_survey_btn(obj,surveyseq){
 		if(confirm("삭제하시겠습니까?")){
-<<<<<<< HEAD
-		let bselection = selection;
-		let bpageno = pageno;
-		let banonyMityCheckCode = anonyMityCheckCode;
-		let bkeyword = $('#selectedKeyword').val();
-		let bsurveyStartDateLeft = surveyStartDateLeft;
-		let bsurveyStartDateRight = surveyStartDateRight;
-	  	var keyword = $('#selectedKeyword').val();
-// 		if(date==''){
-// 			date = new Date('1111-11-11');
-// 			const year = date.getFullYear();
-// 			const month = date.getMonth();
-// 			const day = date.getDate();
 
-// 			currentDay = new Date(year, month, day).toLocaleDateString();
-// 			currentDay = currentDay.replaceAll('.','-');
-// 			currentDay = currentDay.replaceAll(' ', '');
-// 			currentDay = currentDay.slice(0,-1);
-
-// 			let firstTemp = currentDay.split('-')[0];
-// 			let middleTemp = currentDay.split('-')[1];
-
-// 			let lastTemp = currentDay.split('-')[2];
-// 			if(Number(firstTemp<10)) firstTemp = '0' +firstTemp;
-// 			if(Number(middleTemp<10)) middleTemp = '0' + middleTemp;
-// 			if(Number(lastTemp<10)) lastTemp = '0'+lastTemp;
-
-// 			currentDay = firstTemp+'-'+middleTemp+'-'+lastTemp;
-// 			date = currentDay;
-
-// 		}
-	  	if(surveyStartDateLeft ==''){
-			surveyStartDateLeft == 'emptyLeftDate';
-		}
-		if(surveyStartDateRight ==''){
-			surveyStartDateRight == 'emptyRightDate';
-		}
-		if(keyword==''){
-			keyword= 'empty';
-
-		}
-
-		console.log(date);
-
-=======
-	
->>>>>>> refs/remotes/origin/master
 		$.ajax({
 	         method:'POST', //어떤 방식으로 보낼 지
 	            url:'deletesurvey.do/'+ surveyseq, // qdiv를 보낼 경로 설정
@@ -80,7 +34,7 @@ function delete_mapping_btn(){
 	         },
 	            success:function (data) {    //전송 성공시 실행
 				location.reload();
-	    		
+
 	            }
 	       });
 
@@ -109,15 +63,15 @@ function delete_mapping_btn(){
 			alert('메일과 SMS가 잘 전송 되었습니다.');
 
 			$('#exampleModal1').modal('hide');
-			
+
 		   }, error:function(e) {	//실패, 에러
 			   console.log("Error", e);
 		   }
 		});
 	}
-  	
+
   	function evaluateStart(surveySeq){
-  		
+
   		console.log(surveySeq);
 		if(confirm("평가를 실행하겠습니까? 더이상 설문지를 변경하실수 없게 됩니다.")){
 		$.ajax({
@@ -205,7 +159,7 @@ function delete_mapping_btn(){
   	    html += '</div></form:form></div></div></div></div>';
   	    $('#beforeModal').after(html);
   	}
-  	
+
   	function plusMapping(serveySeq){
   		html ="";
   		html += '<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
@@ -241,33 +195,33 @@ function delete_mapping_btn(){
   	    $('#beforeModal').after(html);
 	}
 
-  	
-  	
-  	
+
+
+
   	function search(){
   		var dateleft = $('[name=surveyStartDateLeft]').val();
   		var dateright = $('[name=surveyStartDateRight]').val();
   		console.log
 		if (dateleft > dateright){
-			
+
 			alert("날짜 조건이 알맞지 않습니다.");
 			 event.preventDefault(); // 자식 하나만 영향
-				
+
 			 // event.stopPropagation(); 부모까지 영향 미치지 않고 그 외 자식만 영향
 			return false;
 		}else{
-			
+
 			document.getElementById('frm').submit();
 		}
-		
-		
-  		
-  		
-  		
-  		
-  		
+
+
+
+
+
+
+
   	}
-  	
+
   	function setdataform(){
 
   		var form = $('#surveyDataForm')[0];
@@ -289,40 +243,8 @@ function delete_mapping_btn(){
   			if(result=="noCode"){alert('익명 혹은 기명을 선택해 주세요.');  return false;};
   			if(result=="contentLarge"){alert('부가 설명이 너무 길어요. 150자 내로 입력 가능합니다.');  return false;}
   			if(result=="dateEmpty"){alert('날짜를 선택해 주세요.'); return false;}
-<<<<<<< HEAD
-  			else{alert("등록 성공. 관리 페이지로 이동합니다.");location.href="/survey/surveyinsert?surveyseq="+result;
-			};
-
-
-  		}
-	});
-
-  }
-
-
-  	function setforcedataform() {
-  		var form = $('#surveyDataForm')[0];
-  		var dataform = new FormData(form);
-
-  		$.ajax({
-  		url:'/survey/forcemappingset.do',
-  		method:'POST',
-  		data: dataform,
-  		dataType: 'html',
-  		processData : false,
-        contentType : false,
-        cache : false,
-  		success:function(result){
-  			if(result=="nameEmpty"){alert('제목을 입력해 주세요.'); return false;}
-  			if(result=="nameLarge"){alert('제목이 너무 길어요. 15자까지 작성 가능합니다.');  return false;}
-  			if(result=="noCode"){alert('익명 혹은 기명을 선택해 주세요.');  return false;};
-  			if(result=="contentLarge"){alert('부가 설명이 너무 길어요. 150자 내로 입력 가능합니다.');  return false;}
-  			if(result=="dateEmpty"){alert('날짜를 선택해 주세요.'); return false;}
-  			else{alert("등록 성공. 관리 페이지로 이동합니다.");location.href="/survey/surveyinsert?surveyseq="+result;
-=======
   			if(result=="datemissmatch"){alert('날짜 조건이 알맞지 않습니다.'); return false;}
   			else{alert("등록 성공. 관리 페이지로 이동합니다.");location.href="/survey/surveyinsert.do?surveyseq="+result;
->>>>>>> refs/remotes/origin/master
 		};
 
 
@@ -332,11 +254,8 @@ function delete_mapping_btn(){
 
 
   		});
+
   	}
-
-
-
-
 
   	function reset_btn(){
   		$('.searchRangeAll').empty();
@@ -380,7 +299,7 @@ function delete_mapping_btn(){
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">평가지 설정</h5>
+					<h3 class="modal-title" id="exampleModalLabel">평가지 설정</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -418,13 +337,8 @@ function delete_mapping_btn(){
 						<select name="surveySeq">
 							<option value="0">평가지 선택</option>
 							<c:forEach var="list" items="${surveylist}">
-<<<<<<< HEAD
-								<option value="${list.surveySeq} ">${list.surveyName }</option>
-							</c:forEach>
-=======
 								<option value="${list.surveySeq} ">${list.surveyName}</option>
-							</c:forEach>					
->>>>>>> refs/remotes/origin/master
+							</c:forEach>
 						</select>
 						<br>
 						<br>
@@ -432,7 +346,6 @@ function delete_mapping_btn(){
 							<button type="button" class="btn btn-secondary"
 								data-dismiss="modal">취소</button>
 							<input type="button" onclick="setdataform()" class="btn btn-primary" value="등록">
-
 						</div>
 					</form:form>
 				</div>
@@ -445,14 +358,7 @@ function delete_mapping_btn(){
 	<!--  평가지 목록 -->
 	<div class="card" id="beforeModal">
 			<div class="forshadowing">
-<<<<<<< HEAD
-				<div class="row">
-				<div class="col-12" style="margin-bottom:30px;"><h3 style="text-align: center;
-    height: 60px; line-height: 60px;"><b>평가지 목록</b></h3></div>
-					<div class="hmenu">
-=======
 					<div class="hmenu"> <!-- 상단 검색 창 -->
->>>>>>> refs/remotes/origin/master
 						<div class="survey_list_form_upper_dv">
 							<form action="<c:url value='/survey/surveysearch.do'/>"
 								method="POST" class="survey_list_form" style="display: flex;">
@@ -463,7 +369,7 @@ function delete_mapping_btn(){
 									value="<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />">
 								<input type="date" name="surveyStartDateRight" id="selectedDate"
 									value="<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">
-								<select name="anonyMityCheckCode" >
+								<select name="anonyMityCheckCode" style="color:#D2D6DA;" >
 									<c:forEach items="${commonCodeList}" var="commonCode">
 										<c:if
 											test="${pagingdto.anonyMityCheckCode eq commonCode.codeDetailId}">
@@ -480,7 +386,7 @@ function delete_mapping_btn(){
 											</c:if>
 										</c:if>
 									</c:forEach>
-								</select> <select name="selection" >
+								</select> <select name="selection" style="color:#D2D6DA;" >
 									<c:forEach items="${commonCodeList}" var="commonCode">
 										<c:if test="${commonCode.codeId eq '300' }">
 											<c:if
@@ -496,16 +402,15 @@ function delete_mapping_btn(){
 								</select>
 								</div>
 
-								<div class="input-group-append">
+								<div class="input-group" style="width: 400px; right: 50px;">
 								<input type="text" class="form-control" id="selectedKeyword"
 									placeholder="search" name="keyword"
 									value="${pagingdto.keyword}" aria-describedby="button-addon2">
-								<input type="hidden" name="pageNo" value="1">
-
 									<input type="submit" class="btn btn-outline-secondary"
-										id="button-addon2" value="검색" onclick="search()"> <input type="button" style="margin-left:10px;"
-										class="btn btn-outline-secondary" onclick="reset_btn()"
+										id="button-addon2" value="검색" onclick="search()">
+									<input type="button" class="btn btn-outline-secondary" onclick="reset_btn()"
 										value="초기화">
+								<input type="hidden" name="pageNo" value="1">
 								</div>
 								</div>
 							</form>
@@ -513,23 +418,18 @@ function delete_mapping_btn(){
 
 						</div>
 					</div>
-<<<<<<< HEAD
-					<table class="table table-sm table-striped table-hover">
-						<thead>
-=======
 
-					<div class="col-12" style=""><h3 style="text-align:center;"><b>평가지 목록</b></h3></div>
-					<table class="table  table-striped">
+					<div class="col-12" style=""><h3 style="text-align:left;"><b>평가지 목록</b></h3></div>
+					<table class="table table-sm table-striped table-bordered">
 						<thead style="background-color:#F8F9FA">
 
->>>>>>> refs/remotes/origin/master
 							<tr>
-								<th scope="col" style="color:black"></th>
-								<th scope="col" style="color:black">다면평가 목록</th>
-								<th scope="col" style="color:black">평가 기간</th>
-								<th scope="col" style="color:black">진행상태</th>
-								<th scope="col" style="color:black">결과</th>
-								<th scope="col" style="color:black">평가자 매칭</th>
+								<th scope="col" >#</th>
+								<th scope="col" >다면평가 목록</th>
+								<th scope="col" >평가 기간</th>
+								<th scope="col" >진행상태</th>
+								<th scope="col" >결과</th>
+								<th scope="col" >평가자 매칭</th>
 
 							</tr>
 						</thead>
@@ -540,24 +440,13 @@ function delete_mapping_btn(){
 
 
 									<th scope="row">
-<<<<<<< HEAD
-										<button class="delete_survey_btn"
-											style="border: none; opacity: 0.3;"
-											onclick="delete_survey_btn(this,${list.surveySeq}, ${pagingdto.selection},  ${pagingdto.pageNo}, ${paging.anonyMityCheckCode},${paging.surveyStartDateLeft},${paging.surveyStartDateRight} )">
-
-											<i class="fas fa-xmark"></i>
-										</button>
-=======
-									
-										
+											<div style="text-align:center;">
 												<button class="delete_survey_btn"
-												style="background: white; border: 1px solid #fff; border-radius: 35em;"
 												onclick="delete_survey_btn(this,${list.surveySeq})">
 												<i class="fas fa-xmark"></i>
 												</button>
-										
-										
->>>>>>> refs/remotes/origin/master
+											</div>
+
 									<td><c:if test="${list.stateCode ne '30004'}">
 											<a href="surveyinsert.do?surveyseq=${list.surveySeq}"  id="surveyUP">${list.surveyName }</a> &nbsp;
 
@@ -569,20 +458,7 @@ function delete_mapping_btn(){
 											pattern='yyyy-MM-dd' /> &nbsp;~&nbsp; <fmt:formatDate
 											value="${list.surveyClosedDate }" pattern='yyyy-MM-dd' /></td>
 
-<<<<<<< HEAD
-									<td><span class="wait" id="stateCode"> <c:if
-												test="${list.stateCode eq '30003'}">
-												<button class="btn btn-outline-primary" data-toggle="modal"
-													data-target="#exampleModal1" id="${list.surveySeq}_send"
-													onclick="updatemessage('${list.surveySeq}')">발송</button>
-														<input type="button" onclick="setforcedataform()" class="btn btn-primary" value="강제 진행">
-											</c:if> <c:if test="${list.stateCode ne '30003'}">
-										${list.codeDetailName }
-									</c:if>
-
-									</span></td>
-=======
-									<td><span class="wait" id="stateCode"> 
+									<td><span class="wait" id="stateCode">
 										<c:if test="${list.stateCode ne '30003' && list.stateCode ne '30004'}">
 											${list.codeDetailName}
 										</c:if>
@@ -593,10 +469,9 @@ function delete_mapping_btn(){
 											<button class="btn btn-outline-primary" data-toggle="modal"
 													data-target="#exampleModal1" onclick="updatemessage('${list.surveySeq}')">
 													발송</button>
-										</c:if> 
+										</c:if>
 										</span>
 									</td>
->>>>>>> refs/remotes/origin/master
 
 									<td><c:if test="${list.stateCode eq '30004'}">
 											<button type="button" class="btn btn-link"
@@ -616,22 +491,10 @@ function delete_mapping_btn(){
 								</tr>
 							</c:forEach>
 						</tbody>
-<<<<<<< HEAD
-					</table>
-					<table class="paging-table">
-						<div style="border: none;">
-							<tr>
-=======
-						
-						<tbody style="border: none;">
+
+						<table class="paiging-btn-table">
 							<tr class="table-light">
->>>>>>> refs/remotes/origin/master
 								<td colspan="12" class="text-center" style="border: none;">
-
-								<button id="upper_dv_btn"
-										type="button" class="btn btn-outline-secondary" data-toggle="modal"
-										data-target="#exampleModal" data-whatever="@mdo">등록</button>
-
 									<div>
 
 										<a class="btn btn-outline-secondary"
@@ -659,22 +522,18 @@ function delete_mapping_btn(){
 										</c:if>
 										<a class="btn btn-outline-secondary"
 											href="surveysearch.do?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">맨끝</a>
-									</div>
+									</td>
 									<div style="float: right;">
 									<button id="upper_dv_btn" type="button" class="btn btn-outline-secondary" data-toggle="modal"
 										data-target="#exampleModal" data-whatever="@mdo">등록</button>
-								   </div>
+								   </td>
 								</td>
 							</tr>
 						</table>
+					</table>
 
 
-<<<<<<< HEAD
-				</div>
-
-=======
->>>>>>> refs/remotes/origin/master
 			</div>
-			
+
 	</div><!--  평가지  목록-->
 <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
