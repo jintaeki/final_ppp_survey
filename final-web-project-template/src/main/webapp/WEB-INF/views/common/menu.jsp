@@ -1,25 +1,20 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<div class="menu_profile">
+<div class="menu_profile_survey">
 	<div style="margin-right:20px; ">
+		<c:if test="${checked.gender eq '남'}">
 		<img src="${pageContext.request.contextPath}/resources/images/profile.gif"
 			style="width: 350px; position: fixed; left: -25px;">
-
+ 		</c:if>
+ 		<c:if test="${checked.gender eq '녀'}">
+		<img src="${pageContext.request.contextPath}/resources/images/profile2.gif"
+			style="width: 350px; position: fixed; left: -25px;">
+ 		</c:if>
 	</div>
 	<br>
-<!-- 	<table style="margin-top: 200px; -->
-<!--     margin-left: 30px; background:#665998; border-radius: 20px 20px 20px 20px;"> -->
-<!-- 		<tr style="/* border:5px solid #665998; *//*  background:#665998; */"> -->
-<!-- 			<th class="col-5" style="font-size:15px; color:white; text-align:center; /* border:5px solid #665998; */ /* background:#665998; */">부서명</th> -->
-<%-- 			<td class="col-7"><div class="menu_profile_text">${checked.raterDepartmentName }</div></td> --%>
-<!-- 		</tr> -->
 
-<!-- 		<tr style="/* border:5px solid #665998; *//* background:#665998; */"> -->
-<!-- 			<th class="col-5" style="font-size:15px; color:white; text-align:center; border:/* 5px solid #665998; */ /* background:#665998; */">이름</th> -->
-<%-- 			<td class="col-7"><div class="menu_profile_text">${checked.raterName }</div></td> --%>
-<!-- 		</tr> -->
 
-<!-- 	</table> -->
+
 	<div style=" margin-top: 200px; z-index:1">
 
 		<table
@@ -42,7 +37,7 @@
 
 		</table>
 		<div style="margin-top:10px;">
-			<a style="margin-left: 100px;" href="/logout">로그아웃</a>
+			<a style="margin-left: 100px;" href="/logout.do">로그아웃</a>
 		</div>
 	</div>
 </div>

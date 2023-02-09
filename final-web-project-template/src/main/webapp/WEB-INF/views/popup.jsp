@@ -47,13 +47,15 @@
                $tr = $("#tr_" + plusId);
                addObj.projectId      = $tr.find("input[name='projectId']").val();
                addObj.gradeId        = $tr.find("input[name='gradeId']").val();
-               addObj.departmentId   = $tr.find("input[name='departmentId']").val();
+               addObj.rDepartmentId   = $tr.find("input[name='rDepartmentId']").val();
+               addObj.aDepartmentId   = $tr.find("input[name='aDepartmentId']").val();
                addObj.surveySeq      = $tr.find("input[name='surveySeq']").val();
                addObj.raterId        = $tr.find("input[name='raterId']").val();
                addObj.appraiseeId    = $tr.find("input[name='appraiseeId']").val();
                addObj.projectName    = $tr.find("input[name='projectName']").val();
                addObj.surveyName     = $tr.find("input[name='surveyName']").val();
-               addObj.departmentName = $tr.find("input[name='departmentName']").val();
+               addObj.rDepartmentName = $tr.find("input[name='rDepartmentName']").val();
+               addObj.aDepartmentName = $tr.find("input[name='aDepartmentName']").val();
                addObj.raterName      = $tr.find("input[name='raterName']").val();
                addObj.appraiseeName  = $tr.find("input[name='appraiseeName']").val();
                addObj.gradeName      = $tr.find("input[name='gradeName']").val();
@@ -84,7 +86,6 @@
    }
 </script>
 <div class="entire_popup">
-<div class="popup-title">다면평가 대상 추가</div>
 	<div class="hmenu_popup">
 		<div class="survey_list_form_upper_dv">
 			<form action="<c:url value='/mapping/popup.do'/>" method="get" class="survey_list_form">
@@ -125,14 +126,17 @@
 		</div>
 	</div>
    <div class="table-table-hover">
+   					<div class="col-12" style=""><h3 style="text-align:center;"><b>다면평가 대상 추가</b></h3></div>
+   
          <table id="resTb" class="tablePop">
             <thead>
                <tr>
                   <th class="check"><input type="checkbox" id="check_all" /></th>
                   <th>프로젝트</th>
                   <th>평가자</th>
-                  <th>부서</th>
+                  <th>평가자 부서</th>
                   <th>피평가자</th>
+                  <th>피평가자 부서</th>
                </tr>
             </thead>
             <tbody>
@@ -147,13 +151,15 @@
 							<tr id="tr_${result.raterId}${result.appraiseeId}">
 								<input type="hidden" name="projectId" value="${result.projectId}" />
 								<input type="hidden" name="gradeId" value="${result.gradeId}" />
-								<input type="hidden" name="departmentId" value="${result.departmentId}" />
+								<input type="hidden" name="rDepartmentId" value="${result.rDepartmentId}" />
+								<input type="hidden" name="aDepartmentId" value="${result.aDepartmentId}" />
 								<input type="hidden" name="surveySeq" value="${result.surveySeq}" />
 								<input type="hidden" name="raterId" value="${result.raterId}" />
 								<input type="hidden" name="appraiseeId" value="${result.appraiseeId}" />
 								<input type="hidden" name="projectName" value="${result.projectName}" />
 								<input type="hidden" name="surveyName" value="${result.surveyName}" />
-								<input type="hidden" name="departmentName" value="${result.departmentName}" />
+								<input type="hidden" name="rDepartmentName" value="${result.rDepartmentName}" />
+								<input type="hidden" name="aDepartmentName" value="${result.aDepartmentName}" />
 								<input type="hidden" name="raterName" value="${result.raterName}" />
 								<input type="hidden" name="appraiseeName" value="${result.appraiseeName}" />
 								<input type="hidden" name="gradeName" value="${result.gradeName}" />
@@ -161,19 +167,13 @@
 								<td><input type="checkbox" name="chk_res" value="${result.raterId}${result.appraiseeId}"/></td>
 								<td class="projectName"><c:out value="${result.projectName}" /></td>
 								<td class="raterName"><c:out value="${result.raterName}" /></td>
-								<td class=departmentName><c:out value="${result.departmentName}" /></td>
+								<td class="rDepartmentName"><c:out value="${result.rDepartmentName}" /></td>
 								<td class="appraiseeName"><c:out value="${result.appraiseeName}" /></td>
+								<td class="aDepartmentName"><c:out value="${result.aDepartmentName}" /></td>
 							</tr>
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
-				<c:if test="${fn:length(popupList) == 0}">
-                  <tr class="center">
-                     <td colspan="5">
-                     <spring:message code="list.noResult" text="추가할 인원을 선택해주세요" />
-                     </td>
-                  </tr>
-               </c:if>
             </tbody>
          </table>
 
@@ -182,7 +182,8 @@
 
       <!-- selectItem : 체크값이 없을 경우 체크하라는 유효성 검사 -->
       <div id=button class="d-grid gap-2">
-      <button type="button" class="btn btn-primary" onclick="selectItem();">추가</button>
+      <spring:message code="list.noResult" text="추가할 인원을 선택해주세요" /><br><br>
+      <button type="button" class="btn btn-primary" onclick="selectItem();">추가</button><br><br>
       </div>
       <div class="page_wrap">
 			<div class="page_nation">

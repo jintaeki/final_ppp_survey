@@ -3,12 +3,9 @@
 <%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/survey_result.css" />
-<div class="col-11">
 	<div class="card">
-		<div class="card-body">
 			<div class="forshadowing">
 			  <div class="container_flex">
-			  <div class="title" style="font-size: 24px;">설문 결과</div>
 				<div class="individual">
 					<div class="row" style="text-align: center">
 						<div class="info" style="display: contents;">
@@ -24,8 +21,8 @@
 							<c:forEach items="${personalStats}" var="PS">
 								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">점수</div></div>
 								<div class="col-2"><div class="infodiv">${PS.score}</div></div>
-								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">등급</div></div>
-								<div class="col-2"><div class="infodiv">${PS.grd}</div></div>
+								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">백분율|순위</div></div>
+								<div class="col-2"><div class="infodiv">상위  ${PS.grd}% | ${PS.rank}/${PS.tot}</div></div>
 								<div class="input-group-text col-1" id="basic-addon1"><div style="margin:auto;">설문 내<br>최소점</div></div>
 								<div class="col-2"><div class="infodiv">${PS.min}</div></div>
 								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">설문 평균 <br>점수</div></div>
@@ -42,6 +39,8 @@
 			 </div>
 
 				<div class="table_container_flex">
+									<div class="col-12" style=""><h3 style="text-align:center;"><b>설문 결과</b></h3></div>
+				
 					<table class="table table-bordered table-striped text-center">
 						<thead>
 							<tr>
@@ -122,9 +121,5 @@
 				</div>
 			</div>
 			<!-- forshadowing 종료 -->
-		</div>
-		<!--card-body 종료  -->
 	</div>
-	<!-- col-11 종료 -->
-</div>
 <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>

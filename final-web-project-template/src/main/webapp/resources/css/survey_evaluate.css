@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-
 .card-body{
    height: 900px;
    width:1500px;
@@ -8,11 +7,11 @@
    display: flex;
 }
 
-.hmenu {
-    margin: auto;
-    margin-bottom: 10px;
-    margin-top: 50px;
-    }
+/* .hmenu { */
+/*     margin: auto; */
+/*     margin-bottom: 10px; */
+/*     margin-top: 50px; */
+/*     } */
 
 .form-control {
     border: 0;
@@ -24,43 +23,35 @@
 }
 
 
-.row {
-    overflow-y: scroll;
-    height: 820px;
-}
 
-.forshadowing {
-    background-color: white;
-    box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px, rgb(10 37 64 / 35%) 0px -2px 6px 0px inset;
-    border-radius: 5px;
-    height: 860px;
-    padding: 1em;
-    width: 1460px;
-}
+
+/* .forshadowing { */
+/*     background-color: white; */
+/*     box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px, rgb(10 37 64 / 35%) 0px -2px 6px 0px inset; */
+/*     border-radius: 5px; */
+/*     height: 860px; */
+/*     padding: 1em; */
+/*     width: 1460px; */
+/* } */
 
 .title{
 	font-size: 24px;
     text-align: center;
 }
 
-.survey_list_form_upper_dv{
-	display:flex;
-/* 	margin-left:200px; */
+/* #survey_list_form_id{ */
+/* 	display: flex; */
+/* } */
+
+.input-group-append{
+	margin-left:484.5px;	
 }
-
-#survey_list_form_id{
-	display: flex;
+#button-addon2 {
+    margin-left: 6px;
 }
-
-.selection {
-
-}
-
 
 .table{
-
 	max-width: 1300px;
-	height: 700px;
 	margin:auto;
 }
 .sv_name{

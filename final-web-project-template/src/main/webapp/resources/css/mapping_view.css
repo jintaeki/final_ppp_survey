@@ -4,9 +4,14 @@
 	width: 1450px;
 	text-align: center;
 	margin-bottom: 30px;
+<<<<<<< HEAD
+	display: flex; 
+	justify-content: flex-end;		
+=======
 	display: flex;
 	justify-content: center;
 
+>>>>>>> refs/remotes/origin/min
 }
 
 .survey_list_form{
@@ -17,8 +22,11 @@
 }
 
 #button-addon2{
-		margin-left: 6px;
+	margin-left: 6px;
+}
 
+.input-group-append{
+	margin-left:460px;
 }
 
 #upper_dv_btn{

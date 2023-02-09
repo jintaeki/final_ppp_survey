@@ -11,7 +11,9 @@ public interface IPagingRepository {
 
 	int getTotalMappingNum(@Param("keyword")String keyword, @Param("selection") String selection,
 			@Param("surveySeq") int surveySeq, @Param("selectGD") String selectGD);
-
+	
+	int getEvaluateMessageBoardNum(@Param("keyword")String keyword, @Param("selection") String selection, @Param("surveySeq") int surveySeq);
+	
 	int getTotalInsertNum(@Param("keyword")String keyword, @Param("selection") String selection,
 			@Param("surveySeq") int surveySeq, @Param("selectGD") String selectGD, @Param("raterId") String raterId , @Param("month") int month);
 

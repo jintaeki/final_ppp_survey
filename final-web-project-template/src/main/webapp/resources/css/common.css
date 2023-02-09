@@ -21,14 +21,15 @@
 	background-color: #fff;
 	background-clip: border-box;
 	border: 1px solid rgba(0, 0, 0, .125);
-	border-radius: 0.25rem;
+	border-radius: 20px;
+	box-shadow: 1px 1px 10px 0px  #c0c0c0;
 	width: 1503px;
 }
 
 .hmenu {
 
-	margin: auto;
-	/* margin-bottom: 30px;*/
+		margin: auto;
+	margin-bottom: 30px;
 	margin-top: 50px;
 }
 
@@ -41,7 +42,7 @@
 
 .survey_list_form_upper_dv{
 	width:1500px;
-	margin-left:20px;
+	margin-left:100px;
 }
 
 .searchRangeAll{
@@ -50,14 +51,24 @@
 }
 
 .searchRange{
-	margin-right:440px;
+
+	margin-right:290px;
+
 }
+
+
+.menu_item{
+	box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px, rgb(10 37 64 / 35%) 0px -2px 6px 0px inset;
+    border-radius: 5px;
+    height: 50px; padding: 10px;
+
+}
+
 
 .forshadowing {
 	background-color: white;
-	box-shadow: rgb(50 50 93/ 25%) 0px 50px 100px -20px, rgb(0 0 0/ 30%) 0px
-		30px 60px -30px, rgb(10 37 64/ 35%) 0px -2px 6px 0px inset;
-	border-radius: 5px;
+	border-radius: 20px;
+	box-shadow: 1px 1px 10px 0px  #c0c0c0;
 	height: 860px;
 	padding: 1em;
 }
@@ -121,17 +132,15 @@ select:disabled {
 }
 
 .login_img {
-	margin-top: 40px;
-    margin-left: 170px;
-    height: 200px;
-    width: 200px;
+	display: block;
+	margin: 30px auto; width : 200px;
+	height: 200px;
+	width: 200px;
 }
 
 .login_text {
-	font-size: 16pt;
 	text-align: center;
 	font-weight: bold;
-	margin-top: 40px
 }
 
 .login_title {
@@ -182,6 +191,23 @@ select:disabled {
 	margin: 50px auto 30px auto;
 	width: 100px;
 	text-align: center;
+}
+
+
+.menu_profile{
+	width: 160px;
+	box-shadow: rgb(50 50 93/ 25%) 0px 50px 100px -20px,
+				rgb(0 0 0/ 30%) 0px 30px 60px -30px, rgb(10 37 64/ 35%) 0px -2px 6px 0px inset;
+	border-radius: 5px;
+	height:900px;
+}
+
+.menu_profile_survey{
+	width: 300px;
+	box-shadow: rgb(50 50 93/ 25%) 0px 50px 100px -20px,
+				rgb(0 0 0/ 30%) 0px 30px 60px -30px, rgb(10 37 64/ 35%) 0px -2px 6px 0px inset;
+	border-radius: 5px;
+	height:900px;
 }
 
 .menu_profile_text {

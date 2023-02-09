@@ -16,7 +16,7 @@ table th{
 }
 tbody {
   display: block; 
-  max-height: 480px;
+  max-height: 456px;
   width: 788px; 
   overflow-y: auto; 
 }
@@ -28,12 +28,12 @@ tbody {
 }
 
 .tableAnother th, td {
-  width: 25%; /* to enable "word-break: break-all" */
+  width: 20%; /* to enable "word-break: break-all" */
   word-break: break-all; /* 4. */
 }
 
 .tablePop th, td{
-	width: 20%; /* to enable "word-break: break-all" */
+	width: 16%; /* to enable "word-break: break-all" */
   word-break: break-all; /* 4. */
 }
 tr {
@@ -41,6 +41,10 @@ tr {
   display: table;
   width: 788px; 
 }
+tr:nth-child(even) {
+  background-color: #F9F9F9;
+}
+
 td {
   text-align: center;
   border-bottom: 1px solid #dee2e6;

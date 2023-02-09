@@ -11,241 +11,231 @@
 </style>
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
-<div class="col-11">
-	<div class="card" >
-		<div class="card-body" style="height:890px;">
-			<div class="forshadowing" style="height:860px;">
+<div class="card">
+	<div class="forshadowing" style="height: 860px;">
+		<div style="    display: flex;
+    justify-content: space-between;
+    border: none">
+			<div class="input_title"
+					style="display: flex;
+    border: none;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 700px;">기본 설정</div>
+		<div><button style="float: right;" class="btn btn-link"
+			onclick="insertComplete(${SLD.surveySeq})">등록완료</button></div>
+		</div>
+		<!-- 설문지 설정 진택 -->
 
-				<button style="float: right;" class="btn btn-link"
-					onclick="insertComplete(${SLD.surveySeq})">등록완료</button>
-				<!-- 설문지 설정 진택 -->
+		<div class="container_survey">
+			<div class="row" ></div>
 
-				<div class="container_survey">
-					<div class="row" style="margin-top: 45px;"></div>
-
-<!-- 					<div class="inner_container"> -->
-					<div class="container_flex"
-						style="border-radius: 20px; box-shadow: 1px 1px 10px 0px;">
-						<div class="input_title" style="margin-right:0px; text-align:center;">기본 설정</div>
-						<form:form modelAttribute="SLD" id="survey_setting_form">
-							<table style="text-align:center;">
-								<!-- 									<tr> -->
-								<!-- 										<th><div style="margin-top: 8px;"></div></th> -->
-								<!-- 									</tr> -->
-
-								<tr class="col-12">
-
-									<th class="col-1"><span class="insert_category"><b>설문지 제목</b><label
-											for="survey_name"></label></span></th>
-									<th class="col-2"><span class="insert_category"> <b>평가 기간</b>
-									</span></th>
-									<th class="col-1"><span class="insert_category"> <b>익명/기명</b></span></th>
-									<th class="col-3"><span class="insert_category"><b>상세 설명</b></span></th>
-									<th class="col-1"></th>
-								</tr>
-
-								<tr>
-									<td class="col-1"><input type="text" id="survey_name" name="surveyName"
-										style="width: 200px;" value="${SLD.surveyName}"></td>
-
-									<td class="col-2"><input type="date" name="surveyStartDate"
-										class="survey_date"
-										value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">-
-										<input type="date" name="surveyClosedDate" class="survey_date"
-										value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />"></td>
-
-									<td class="col-1"><c:if test="${SLD.anonymityCheckCode eq '20001'}">
-											<input type="radio" name="anonymityCheckCode"
-												id="survey_type_check" value="20001" checked>
-											<label style="margin-bottom: 0px;" for="survey_type_check"><b>익명</b></label>
-											<input type="radio" name="anonymityCheckCode"
-												id="survey_type_check" value="20002">
-											<label style="margin-bottom: 0px;" for="survey_type_check"><b>기명</b></label>
-										</c:if> <c:if test="${SLD.anonymityCheckCode eq '20002'}">
-											<input type="radio" name="anonymityCheckCode"
-												id="survey_type_check" value="20001">
-											<label style="margin-bottom: 0px;" for="survey_type_check"><b>익명</b></label>
-
-											<input type="radio" name="anonymityCheckCode"
-												id="survey_type_check" value="20002" checked>
-											<label style="margin-bottom: 0px;" for="survey_type_check"><b>기명</b></label>
-										</c:if></td>
-										
-										
-											<td class="col-3"><textarea class="visually-hidden" id="message-text"
-								name="surveyContent"
-								style="width: 400px; height: 100px; max-width: 350px;">${SLD.surveyContent }</textarea></td>
-										
-										
-										<td class="col-1"><input type="button" class="update_btn" style="padding:5px 26px 26px 26px;" onclick="register()" value="적용">
-										</td>
-								</tr>
-
-							</table>
-
-		
-							<input type="hidden" name="stateCode" value="30001">
-							<input type="hidden" name="surveySeq" id="surveyseq"
-								value="${SLD.surveySeq}">
+			<div class="container_flex"
+				style="z">
+	
+				<form:form modelAttribute="SLD" id="survey_setting_form">
+					<div style="display:flex; justify-content: space-around;">
+							<div>
+							<div class="insert_category"><b>설문지 제목</b><label for="survey_name"></label></div>
+							<input type="text" id="survey_name"
+								name="surveyName" style="width: 200px;"
+								value="${SLD.surveyName}">
+							</div>
 							
-						</form:form>
-						
+							<div>
+							<div class="insert_category"> <b>평가 기간</b></div>	
+							<input type="date" name="surveyStartDate"
+								class="survey_date"
+								value="<fmt:formatDate value='${SLD.surveyStartDate}' pattern='yyyy-MM-dd' />">-
+								<input type="date" name="surveyClosedDate" class="survey_date"
+								value="<fmt:formatDate value='${SLD.surveyClosedDate}' pattern='yyyy-MM-dd' />">
+							
+							</div>
+							
+							<div>
+							<div class="insert_category"> <b>익명/기명</b></div>
+							<c:if
+									test="${SLD.anonymityCheckCode eq '20001'}">
+									<input type="radio" name="anonymityCheckCode"
+										id="survey_type_check" value="20001" checked>
+									<label style="margin-bottom: 0px;" for="survey_type_check"><b>익명</b></label>
+									<input type="radio" name="anonymityCheckCode"
+										id="survey_type_check" value="20002">
+									<label style="margin-bottom: 0px;" for="survey_type_check"><b>기명</b></label>
+							</c:if> 
+							<c:if test="${SLD.anonymityCheckCode eq '20002'}">
+									<input type="radio" name="anonymityCheckCode"
+										id="survey_type_check" value="20001">
+									<label style="margin-bottom: 0px;" for="survey_type_check"><b>익명</b></label>
+
+									<input type="radio" name="anonymityCheckCode"
+										id="survey_type_check" value="20002" checked>
+									<label style="margin-bottom: 0px;" for="survey_type_check"><b>기명</b></label>
+							</c:if>
+							</div>
+							
+							<div>
+							<div class="insert_category"><b>상세 설명</b></div>
+							<textarea class="visually-hidden"
+									id="message-text" name="surveyContent"
+									style="width: 400px; height: 100px; max-width: 350px;">${SLD.surveyContent }</textarea>
+							</div>
+							
+							
+
+
+							<div><input type="button" class="update_btn" style="margin-top:70px"
+								style="" onclick="register()"
+								value="적용"></div>
+
+
+					</div>
+					<input type="hidden" name="stateCode" value="30001">
+					<input type="hidden" name="surveySeq" id="surveyseq"
+						value="${SLD.surveySeq}">
+
+				</form:form>
+
+			</div>
+
+
+
+
+			<div class="questionAndItem"
+				style="display: flex; justify-content: space-around;">
+				<div class="question_management">
+					<div class="input_title" style="display: contents">
+						문제 목록
+						<button type="button"
+							onclick="question_copy(this,${SLD.surveySeq} )"
+							style="background: white; border: 1px solid #fff; border-radius: 35em;">
+							<i class="fas fa-plus"></i>
+						</button>
 					</div>
 
+					<div id="scroll_area" style="overflow: auto; height: 500px;">
 
 
-
-					<div class="questionAndItem"
-						style="display: flex; justify-content: space-around;">
-						<div class="question_management">
-							<div class="input_title" style="display: contents">
-								문제 목록
-								<button type="button"
-									onclick="question_copy(this,${SLD.surveySeq} )"
-									style="background: white; border: 1px solid #fff; border-radius: 35em;">
-									<i class="fas fa-plus"></i>
-								</button>
-							</div>
-
-							<div id="scroll_area" style="overflow: auto; height: 500px;">
-
-								<c:if test="${empty SQL}">
-									<br>
-									<b>${NoQuestion}</b>
-								</c:if>
-								<!-- 여기까지 문제 div -->
-								<div id="queAfter">
-
-									<c:forEach items="${SQL}" var="qlist">
-										<div class="deleteThis" style="display: flex;">
-											<button class="delete_btn"
-												onclick="deleteQus(this,${qlist.surveySeq})"
-												style="background: white;" value="${qlist.questionSeq }">
-												<i class="fas fa-xmark"></i>
-											</button>
-											<form id="${qlist.questionSeq }" onsubmit="return false;">
-
-												<div class="input_qus" id="checkTouch">
-													<input type="hidden" name="surveySeq"
-														value="${qlist.surveySeq }" id="surveySequence"> <input
-														type="hidden" name="questionSeq"
-														value="${qlist.questionSeq }"> <input
-														name="questionContent" type="text" id="input_qus" 
-														onclick="manageQus(this,${qlist.questionSeq},${qlist.questionTypeCode }); this.onclick=null;"
-														value="${qlist.questionContent }">
-
-												</div>
-												<c:if test="${qlist.questionTypeCode eq '10001' }">
-													<input type="radio" id="obj_radio"
-														name="${qlist.questionSeq}" value="10001"
-														onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
-														checked> 객관식
-													<input type="radio" id="subj_radio"
-														name="${qlist.questionSeq}" value="10002"
-														onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
-													<input type="radio" id="mix_radio"
-														name="${qlist.questionSeq}" value="10003"
-														onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 혼합식												
-												</c:if>
-												<c:if test="${qlist.questionTypeCode eq '10002' }">
-													<input type="radio" id="obj_radio"
-														name="${qlist.questionSeq}" value="10001"
-														onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 객관식
-													<input type="radio" id="subj_radio"
-														name="${qlist.questionSeq}" value="10002"
-														onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
-														checked> 주관식
-													<input type="radio" id="mix_radio"
-														name="${qlist.questionSeq}" value="10003"
-														onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 혼합식												
-												</c:if>
-												<c:if test="${qlist.questionTypeCode eq '10003' }">
-													<input type="radio" id="obj_radio"
-														name="${qlist.questionSeq}" value="10001"
-														onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 객관식
-													<input type="radio" id="subj_radio"
-														name="${qlist.questionSeq}" value="10002"
-														onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
-													<input type="radio" id="mix_radio"
-														name="${qlist.questionSeq}" value="10003"
-														onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
-														checked> 혼합식												
-											</c:if>
-												<c:if
-													test="${qlist.questionTypeCode ne '10001' and qlist.questionTypeCode ne '10002' and qlist.questionTypeCode ne '10003' }">
-													<input type="radio" id="obj_radio"
-														name="${qlist.questionSeq}" value="10001"
-														onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
-														checked> 객관식
-													<input type="radio" id="subj_radio"
-														name="${qlist.questionSeq}" value="10002"
-														onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
-													<input type="radio" id="mix_radio"
-														name="${qlist.questionSeq}" value="10003"
-														onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 혼합식												
-											</c:if>
-
-
-
-											</form>
-
-											<!-- 조회 버튼 -->
-											<button value="${qlist.questionSeq }"
-												onclick="touchQuestion(this)" style="display: none;">
-												<i class="fas fa-search"></i>
-											</button>
-
-
-											<div class="blank_under"></div>
-										</div>
-									</c:forEach>
+						<!-- 여기까지 문제 div -->
+						<div id="queAfter">
+							<c:if test="${empty SQL}">
+								<div class="noquestion">
+									<br> <b>${NoQuestion}</b>
 								</div>
-							</div>
-						</div>
+							</c:if>
+							<c:forEach items="${SQL}" var="qlist">
+								<div class="deleteThis" style="display: flex;">
+									<button class="delete_btn"
+										onclick="deleteQus(this,${qlist.surveySeq})"
+										style="background: white;" value="${qlist.questionSeq }">
+										<i class="fas fa-xmark"></i>
+									</button>
+									<form id="${qlist.questionSeq }" onsubmit="return false;">
+
+										<div class="input_qus" id="checkTouch">
+											<input type="hidden" name="surveySeq"
+												value="${qlist.surveySeq }" id="surveySequence"> <input
+												type="hidden" name="questionSeq"
+												value="${qlist.questionSeq }"> <input
+												name="questionContent" type="text" id="input_qus"
+												onclick="manageQus(this,${qlist.questionSeq},${qlist.questionTypeCode },${qlist.surveySeq} ); this.onclick=null;"
+												value="${qlist.questionContent }">
+
+										</div>&nbsp;
+										<c:if test="${qlist.questionTypeCode eq '10001' }">
+											&nbsp;<input type="radio" id="obj_radio"
+												name="${qlist.questionSeq}" value="10001"
+												onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
+												checked> 객관식
+													&nbsp;<input type="radio" id="subj_radio"
+												name="${qlist.questionSeq}" value="10002"
+												onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
+													&nbsp;<input type="radio" id="mix_radio"
+												name="${qlist.questionSeq}" value="10003"
+												onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 혼합식												
+												</c:if>
+										<c:if test="${qlist.questionTypeCode eq '10002' }">
+											&nbsp;<input type="radio" id="obj_radio"
+												name="${qlist.questionSeq}" value="10001"
+												onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 객관식
+													&nbsp;<input type="radio" id="subj_radio"
+												name="${qlist.questionSeq}" value="10002"
+												onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
+												checked> 주관식
+													&nbsp;<input type="radio" id="mix_radio"
+												name="${qlist.questionSeq}" value="10003"
+												onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 혼합식												
+												</c:if>
+										<c:if test="${qlist.questionTypeCode eq '10003' }">
+											&nbsp;<input type="radio" id="obj_radio"
+												name="${qlist.questionSeq}" value="10001"
+												onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 객관식
+													&nbsp;<input type="radio" id="subj_radio"
+												name="${qlist.questionSeq}" value="10002"
+												onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
+													&nbsp;<input type="radio" id="mix_radio"
+												name="${qlist.questionSeq}" value="10003"
+												onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
+												checked> 혼합식												
+											</c:if>
+										<c:if
+											test="${qlist.questionTypeCode ne '10001' and qlist.questionTypeCode ne '10002' and qlist.questionTypeCode ne '10003' }">
+											&nbsp;<input type="radio" id="obj_radio"
+												name="${qlist.questionSeq}" value="10001"
+												onclick="checkit1(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"
+												checked> 객관식
+													&nbsp;<input type="radio" id="subj_radio"
+												name="${qlist.questionSeq}" value="10002"
+												onclick="checkit2(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 주관식
+													&nbsp;<input type="radio" id="mix_radio"
+												name="${qlist.questionSeq}" value="10003"
+												onclick="checkit3(this,${qlist.questionTypeCode},${qlist.questionSeq},${qlist.questionSeq})"> 혼합식												
+											</c:if>
 
 
 
-						<div class="item_management">
-						<div style="display:flex">
-							<div class="input_title">문항 관리</div>
-							
-							<p class="beforeTouch">문제를 클릭하여 문항을 관리해 보세요.</p>
-							
-							<div class="itemAfter">
-							
-								<!-- 객관식 -->
-								<c:forEach items="${SQL}" var="qlist">
+									</form>
 
-								</c:forEach>
-							</div>
+									<!-- 조회 버튼 -->
+									<button value="${qlist.questionSeq }"
+										onclick="touchQuestion(this)" style="display: none;">
+										<i class="fas fa-search"></i>
+									</button>
+
+
+									<div class="blank_under"></div>
+								</div>
+							</c:forEach>
 						</div>
 					</div>
-
-					<!--  문제관리 끝 -->
-
-
 				</div>
+
+
+
+				<div class="item_management">
+					<div style="display: flex">
+						<div class="input_title">문항 관리</div>
+
+						<p class="beforeTouch">문제를 클릭하여 문항을 관리해 보세요.</p>
+
+						<div class="itemAfter">
+
+							<!-- 객관식 -->
+							<c:forEach items="${SQL}" var="qlist">
+
+							</c:forEach>
+						</div>
+					</div>
+				</div>
+
+				<!--  문제관리 끝 -->
+
+
 			</div>
 		</div>
 	</div>
 </div>
 <script>
-
-
-// 문제 버튼없이 저장 및 수정
-// var cnt = 0;
-function ho(tag){
-	$().keydown(function(){
-	    if(event.keyCode === 13) {
-	
-	    	
-	    	tag.parent().parent().parent().next().children().next().children().first().children().next().next().focus();
-	    	tag.parent().parent().parent().next().children().next().children().first().children().next().next().click();
-	    	}
-	    	
-
-});
-}
 
 function manageItem(obj,questionSeq){
 	
@@ -290,7 +280,15 @@ function manageItem(obj,questionSeq){
 	
 }
 
-function manageQus(obj,questionSeq,questionTypeCodes){
+$(document).ready(function(){
+    $('div#checkTouch1').click(function(){
+    	console.log($(this).parent().next('button'));
+       $(this).parent().parent().next().next('button').click();
+
+    });
+  });
+
+function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 	const tag = $(obj);
 	
 	keyArray = [];
@@ -300,7 +298,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 			
 			
 			
-			if(questionSeq ==0){
+			if(questionSeq1 ==0){
 				var form = $('#0')[0];
 				var formdata = new FormData(form);
 				for(const pairkeys of formdata.keys()){
@@ -333,16 +331,47 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 				         contentType : false,
 				         cache : false,
 				         timeout : 600000,
-				         dataType: 'html',
+				         dataType: 'json',
 				         beforeSend : function() {
 				            // 전송 전 실행 코드
 				         },
 				         success : function(data) {
-				        	 if(data==0){
+				 				tag.parent().parent().parent().remove();
+
+				        	 console.log(data[0].questionSeq);
+				        	 if(data[0].questionSeq==0){
 				        		 alert("빈 텍스트는 저장이 불가합니다."); 
 				        		 location.reload();
 				        	 }else{
-				     	    	
+				        		 console.log(data);
+				        		 location.reload();
+
+				        	      	
+
+// 				        	         var testDiv ='';
+// 	   	testDiv +='<div class="deleteThis" style="display:flex;">';
+//       	testDiv +='<button class="delete_btn" onclick="deleteQus(this,'+surveySeq+')" style="background: white;" value="'+data[0].questionSeq+'"><i class="fas fa-xmark"></i></button>';
+// 	 	testDiv +='<form id="'+data[0].questionSeq+'" name="'+data[0].questionSeq+'" onsubmit="return false;">';
+// 	   	testDiv +='<div class="input_qus" id="checkTouch1">';
+// 	   	testDiv +='<input type="hidden" name= "surveySeq" value="'+surveySeq+'" id="surveySequence">';
+// 		testDiv +='<input type="hidden" name= "questionSeq" value="'+data[0].questionSeq+'">';
+// 		testDiv +='<input type="text" name="questionContent"  id="input_qus"  onclick="manageQus(this,'+data[0].questionSeq+',10001,'+surveySeq+'); this.onclick=null;" value="'+data[0].questionContent+'">';	
+// 		testDiv +='</div>&nbsp;';
+// 		testDiv +='&nbsp;&nbsp;<input type="radio" id="obj_radio" name="'+data[0].questionSeq+'" value="10001" onclick="checkit1(this,10001,'+data[0].questionSeq+','+data[0].questionSeq+')" checked> 객관식';
+// 		testDiv +='&nbsp;&nbsp;<input type="radio" id="subj_radio" name="'+data[0].questionSeq+'" value="10002" onclick="checkit2(this,10001,'+data[0].questionSeq+','+data[0].questionSeq+')"> 주관식';
+// 		testDiv +='&nbsp;&nbsp;<input type="radio" id="mix_radio" name="'+data[0].questionSeq+'" value="10003" onclick="checkit3(this,10001,'+data[0].questionSeq+','+data[0].questionSeq+')"> 혼합식';									
+//       	testDiv +='</form>';
+//       	testDiv +='<button value="'+data[0].questionSeq+'" onclick="touchQuestion(this)"style="display:none;">';
+//       	testDiv +='</button>';
+		
+//       	testDiv +='<div class="blank_under"></div>';
+//       	testDiv +='</div>';
+// 	        $('#queAfter').prepend(testDiv);
+// 	        $(obj).parent().next('button').click();
+// 	        console.log( $(obj).parent().next('button'));
+
+// 				        	        $('#queAfter div form div input[name=questionContent]').first().focus();
+// 				        	        $('#'+data[0].questionSeq).children().children().next().next().click();
 				        	 }
 								
 
@@ -355,7 +384,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 					})
 					
 			}else{
-				var form = $('#'+questionSeq)[0];
+				var form = $('#'+questionSeq1)[0];
 				var formdata = new FormData(form);
 				for(const pairkeys of formdata.keys()){
 		             keyArray.push(pairkeys);
@@ -366,7 +395,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 		          }
 		          
 		          for(var i = 0 ; i < cnt ; i++){
-		        	  if(keyArray[i]==questionSeq){
+		        	  if(keyArray[i]==questionSeq1){
 		        		  formdata.append('questionTypeCode',valueArray[i]);
 		        		  break;
 		        	  }
@@ -389,7 +418,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 				        		 alert("빈 텍스트는 저장이 불가합니다.");
 				        		 location.reload();
 				        	 }else{
-				     	    	
+				        		
 				        	 }
 				         },
 				         error : function(e) {
@@ -398,8 +427,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 				         }
 					})
 			}
-			//엔터키로 내려가기... 어렵네...
-			ho(tag);	
+			
 	});
 	
 		
@@ -443,6 +471,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
    // 문제 누르면 touch버튼(돋보기) 활성화
    $(document).ready(function(){
         $('div#checkTouch').click(function(){
+        	console.log($(this).parent().next('button'));
            $(this).parent().next('button').click();
 
         });
@@ -477,8 +506,11 @@ function manageQus(obj,questionSeq,questionTypeCodes){
             // 전송 전 실행 코드
          },
          success : function(data) {
-            // 전송 후 성공 시 실행 코드
-            console.log(data);
+        	 if(data=="nameEmpty"){alert('제목을 입력해 주세요.'); return false;}
+        	 if(data=="datemissmatch"){alert('날짜 조건이 알맞지 않습니다.'); return false;}
+        	 else{
+        		 alert("등록 성공"); return false;
+        	 }
          },
          error : function(e) {
             // 전송 후 에러 발생 시 실행 코드
@@ -496,33 +528,36 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 	// 문제 추가
 	var newQuestionCnt = 0;
    function question_copy(obj,surveySeq){
-		
+		$('.noquestion').empty();
 	   var testDiv ='';
 	   	testDiv +='<div class="deleteThis" style="display:flex;">';
-      	testDiv +='<button class="delete_btn" onclick="deleteQus(this,'+surveySeq+')" style="background: white;" value="'+0+'"><i class="fa-regular fa-trash-can"></i></button>';
+      	testDiv +='<button class="delete_btn" onclick="deleteQus(this,'+surveySeq+')" style="background: white;" value="'+0+'"><i class="fas fa-xmark"></i></button>';
 	 	testDiv +='<form id="0" name="0" onsubmit="return false;">';
 	   	testDiv +='<div class="input_qus" id="checkTouch">';
 	   	testDiv +='<input type="hidden" name= "surveySeq" value="'+surveySeq+'" id="surveySequence">';
 		testDiv +='<input type="hidden" name= "questionSeq" value="0">';
-		testDiv +='<input type="text" name="questionContent"  id="input_qus"  onclick="manageQus(this,0,10001); this.onclick=null;" value="hi">';	
-		testDiv +='</div>';
-		testDiv +='<input type="radio" id="obj_radio" name="0'+newQuestionCnt+'" value="10001" onclick="checkit1(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+'" checked> 객관식';
-		testDiv +='<input type="radio" id="subj_radio" name="0'+newQuestionCnt+'" value="10002" onclick="checkit2(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+')"> 주관식';
-		testDiv +='<input type="radio" id="mix_radio" name="0'+newQuestionCnt+'" value="10003" onclick="checkit3(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+')"> 혼합식';									
+		testDiv +='<input type="text" name="questionContent"  id="input_qus"  onclick="manageQus(this,0,10001,'+surveySeq+'); this.onclick=null;" value="hi">';	
+		testDiv +='</div>&nbsp;';
+		testDiv +='&nbsp;&nbsp;<input type="radio" id="obj_radio" name="0'+newQuestionCnt+'" value="10001" onclick="checkit1(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+')" checked> 객관식';
+		testDiv +='&nbsp;&nbsp;<input type="radio" id="subj_radio" name="0'+newQuestionCnt+'" value="10002" onclick="checkit2(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+')"> 주관식';
+		testDiv +='&nbsp;&nbsp;<input type="radio" id="mix_radio" name="0'+newQuestionCnt+'" value="10003" onclick="checkit3(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+')"> 혼합식';									
       	testDiv +='</form>';
       	testDiv +='<button value="'+0+'" onclick="touchQuestion(this)"style="display:none;">';
       	testDiv +='	<i class="fas fa-search"></i>';
       	testDiv +='</button>';
 		
       	testDiv +='<div class="blank_under"></div>';
-      	testDiv +='</div>'
+      	testDiv +='</div>';
       	
         $('#queAfter').prepend(testDiv);
 
-        
+     $('#queAfter div form div input[name=questionContent]').first().focus();
+     $('#0').children().children().next().next().click();
+//      $('#0').children().children().next().next().click();
 
-        $('#queAfter div form div input[name=questionContent]').first().focus();
-        $('#0').children().children().next().next().click();
+       
+
+// 		location.reload();
         newQuestionCnt = newQuestionCnt + 1;
 	}
    
@@ -691,7 +726,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 			        html  +='<div class="icon_line" id="guitar">';
 					html +='<div id="TouchItem">';
 			        html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
-			        html  += '<input type="text" name="itemContent" placeholder="기타" value="기타" id="guitar" readonly>';
+			        html  += '<i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><input type="text" name="itemContent" placeholder="기타" value="기타" id="guitar" readonly>';
 			        html  +='<input type="hidden" name="itemScore"  value="0">';
 			        html  +='<input type="hidden" name="itemSeq" value="0">';
 					html  +='</div>';
@@ -704,7 +739,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 		                html  +='<div class="icon_line" id="guitar">';
 		 			    html +='<div id="TouchItem">';
 		                html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
-		                html  += '<input type="text" name="itemContent" id="guitar" value="'+data[i].ITEM_CONTENT+'" readonly>';
+		                html  += '<i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><input type="text" name="itemContent" id="guitar" value="'+data[i].ITEM_CONTENT+'" readonly>';
 		                html  +='<input type="hidden" name="itemScore"  value="0">';
 		                html  +='<input type="hidden" name="itemSeq" value="'+data[i].ITEM_SEQ+'">';
 		                html  += '</div>';
@@ -749,7 +784,7 @@ function manageQus(obj,questionSeq,questionTypeCodes){
 			 if(cntObj == 2 || cntMix ==2){
 				 alert("문항은 최소 2개를 유지해 주세요.")
 			 }else if(itemSeq ==0){
-         		$(obj).parent().remove();
+         		$(obj).parent().parent().remove();
 				cntObj = cntObj - 1;
 				cntMix = cntMix - 1;
 			 }else{

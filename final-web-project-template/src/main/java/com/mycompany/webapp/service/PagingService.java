@@ -27,6 +27,10 @@ public class PagingService implements IPagingService{
 		return pagingRepo.getEvaluateSearchBoardNum(keyword, selection, selection2, surveySeq);
 	}
 	@Override
+	public int getEvaluateMessageBoardNum(String keyword, String selection, int surveySeq) {
+		return pagingRepo.getEvaluateMessageBoardNum(keyword, selection, surveySeq);
+	}
+	@Override
 	public int getTotalMappingNum(String keyword, String selection, int surveySeq, String selectGD) {
 		return pagingRepo.getTotalMappingNum(keyword, selection, surveySeq, selectGD);
 	}

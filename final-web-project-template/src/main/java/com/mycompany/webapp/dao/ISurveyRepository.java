@@ -1,18 +1,13 @@
 package com.mycompany.webapp.dao;
 
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.PagingDTO;
-import com.mycompany.webapp.dto.PopupDTO;
-import com.mycompany.webapp.dto.ProjectDTO;
-import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 import com.mycompany.webapp.dto.SurveyResultDTO;
@@ -36,9 +31,6 @@ public interface ISurveyRepository {
 	List<SurveyQuestionDTO> getQuestionListOrderByDesc(int surveySeq);
 
 	List<SurveyQuestionDTO> getQuestionListOrderByAsc(int surveySeq);
-
-
-	void sendMessage(int surveySeq);
 
 	// 메일 발송시 상태 업데이트
 	void updateEmail(@Param("surveySeq") int surveySeq, @Param("deliveryContent") String deliveryContent);
@@ -66,6 +58,10 @@ public interface ISurveyRepository {
 	List<Map<String, String>> selectSurveyEvaluate(int surveySeq);
 
 	List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
+	
+	List<Map<String, String>> selectSurveyMessage(int surveySeq);
+
+	List<Map<String, Object>> searchByMessage(PagingDTO pagingdto);
 
 	// 결과 통계 페이지
 	List<SurveyListDTO> surveyList();

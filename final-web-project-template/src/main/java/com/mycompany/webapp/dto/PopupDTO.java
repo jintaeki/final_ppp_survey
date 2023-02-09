@@ -3,13 +3,15 @@ package com.mycompany.webapp.dto;
 public class PopupDTO {
 	private String projectId;		// 프로젝트 아이디
 	private String gradeId;		    // 평가자 직급 아이디
-	private String departmentId; 	// 평가자 부서 아이디
+	private String rDepartmentId; 	// 평가자 부서 아이디
+	private String aDepartmentId; 	// 피평가자 부서 아이디
 	private int surveySeq;	 	    // 설문 아이디
 	private String raterId;		    // 평가자 아이디
 	private String appraiseeId;	    // 피평가자 아이디
 	private String projectName;     // 프로젝트 이름
 	private String surveyName;      // 설문명
-	private String departmentName;  // 평가자 부서명
+	private String rDepartmentName;  // 평가자 부서명
+	private String aDepartmentName;  // 피평가자 부서명
 	private String raterName;    	// 평가자 이름
 	private String appraiseeName;   // 피평가자 이름
 	private String gradeName;       // 평가자 직급 이름
@@ -26,11 +28,17 @@ public class PopupDTO {
 	public void setGradeId(String gradeId) {
 		this.gradeId = gradeId;
 	}
-	public String getDepartmentId() {
-		return departmentId;
+	public String getrDepartmentId() {
+		return rDepartmentId;
 	}
-	public void setDepartmentId(String departmentId) {
-		this.departmentId = departmentId;
+	public void setrDepartmentId(String rDepartmentId) {
+		this.rDepartmentId = rDepartmentId;
+	}
+	public String getaDepartmentId() {
+		return aDepartmentId;
+	}
+	public void setaDepartmentId(String aDepartmentId) {
+		this.aDepartmentId = aDepartmentId;
 	}
 	public int getSurveySeq() {
 		return surveySeq;
@@ -62,11 +70,17 @@ public class PopupDTO {
 	public void setSurveyName(String surveyName) {
 		this.surveyName = surveyName;
 	}
-	public String getDepartmentName() {
-		return departmentName;
+	public String getrDepartmentName() {
+		return rDepartmentName;
 	}
-	public void setDepartmentName(String departmentName) {
-		this.departmentName = departmentName;
+	public void setrDepartmentName(String rDepartmentName) {
+		this.rDepartmentName = rDepartmentName;
+	}
+	public String getaDepartmentName() {
+		return aDepartmentName;
+	}
+	public void setaDepartmentName(String aDepartmentName) {
+		this.aDepartmentName = aDepartmentName;
 	}
 	public String getRaterName() {
 		return raterName;
@@ -89,9 +103,12 @@ public class PopupDTO {
 	
 	@Override
 	public String toString() {
-		return "PopupDTO [projectId=" + projectId + ", gradeId=" + gradeId + ", departmentId=" + departmentId
-				+ ", surveySeq=" + surveySeq + ", raterId=" + raterId + ", appraiseeId=" + appraiseeId
-				+ ", projectName=" + projectName + ", surveyName=" + surveyName + ", departmentName=" + departmentName
-				+ ", raterName=" + raterName + ", appraiseeName=" + appraiseeName + ", gradeName=" + gradeName + "]";
+		return "PopupDTO [projectId=" + projectId + ", gradeId=" + gradeId + ", rDepartmentId=" + rDepartmentId
+				+ ", aDepartmentId=" + aDepartmentId + ", surveySeq=" + surveySeq + ", raterId=" + raterId
+				+ ", appraiseeId=" + appraiseeId + ", projectName=" + projectName + ", surveyName=" + surveyName
+				+ ", rDepartmentName=" + rDepartmentName + ", aDepartmentName=" + aDepartmentName + ", raterName="
+				+ raterName + ", appraiseeName=" + appraiseeName + ", gradeName=" + gradeName + "]";
 	}
+	
+
 }

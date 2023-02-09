@@ -7,6 +7,10 @@
     max-width: 1600px;
 }
 
+#scroll_area div{
+	max-width: 480px;
+}
+
 .survey_info b{
 	color: white;
 }
@@ -61,7 +65,7 @@
 }
 
 .input_title {
-	width: 300px;
+	width: 400px;
     text-align: center;
     font-weight: bold;
     color: #0089ff;

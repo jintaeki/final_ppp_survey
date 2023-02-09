@@ -1,7 +1,6 @@
 
 package com.mycompany.webapp.service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,17 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import org.springframework.transaction.annotation.Transactional;
-
 import com.mycompany.webapp.dao.IMappingRepository;
 import com.mycompany.webapp.dao.ISurveyRepository;
-import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.PagingDTO;
-import com.mycompany.webapp.dto.PopupDTO;
-import com.mycompany.webapp.dto.ProjectDTO;
-import com.mycompany.webapp.dto.SurveyItemDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyQuestionDTO;
 import com.mycompany.webapp.dto.SurveyResultDTO;
@@ -90,11 +82,6 @@ public class SurveyService implements ISurveyService{
 	}
 
 	@Override
-	public void sendMessage(int surveySeq) {
-		surveyDao.sendMessage(surveySeq);
-	}
-
-	@Override
 	public void updateEmail(int surveyseq, String deliveryContent) {
 		surveyDao.updateEmail(surveyseq, deliveryContent);
 	}
@@ -160,12 +147,26 @@ public class SurveyService implements ISurveyService{
 
 		return surveyDao.selectSurveyEvaluate(surveySeq);
 	}
+	
+	@Override
+	public List<Map<String, String>> selectSurveyMessage(int surveySeq) {
+		logger.info("selectSurveyEvaluate 서비스 진입");
+		logger.info("서비스: " +surveySeq);
+
+		return surveyDao.selectSurveyMessage(surveySeq);
+	}
 
 	@Override
 	public List<Map<String, Object>> searchByEvaluate(PagingDTO pagingDto) {
 		logger.info("검색:" + surveyDao.searchByEvaluate(pagingDto));
 		logger.info("검색 전 dto: " + pagingDto.toString());
 		return surveyDao.searchByEvaluate(pagingDto);
+	}
+	
+	@Override
+	public List<Map<String, Object>> searchByMessage(PagingDTO pagingdto) {
+		logger.info("검색:" + surveyDao.searchByMessage(pagingdto).toString());
+		return surveyDao.searchByMessage(pagingdto);
 	}
 
 	@Override
