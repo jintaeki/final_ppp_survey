@@ -41,7 +41,7 @@
 					class="login_form-placeholder" for="raterId">사원 번호</label>
 			</div>
 			<div class="login_form">
-				<input type="text" class="form-control" name="password"
+				<input type="password" class="form-control" name="password"
 					value="000000" id="password" required> <label
 					class="login_form-placeholder" for="password">password</label>
 			</div>

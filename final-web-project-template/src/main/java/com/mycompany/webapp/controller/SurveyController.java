@@ -1,7 +1,6 @@
 package com.mycompany.webapp.controller;
 
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -191,7 +190,6 @@ public class SurveyController {
 	@ResponseBody
 	public String setSurvey(@ModelAttribute("SLD") SurveyListDTO SLD, BindingResult bindingresult, HttpSession session,
 			RedirectAttributes redirectAttrs) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		logger.info(SLD.toString());
 		if(SLD.getSurveyName()==null || SLD.getSurveyName().isEmpty()) {
