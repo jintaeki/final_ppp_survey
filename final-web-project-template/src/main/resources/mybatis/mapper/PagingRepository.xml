@@ -363,7 +363,7 @@
                      )
 	               ORDER BY ROWNUM  DESC
 	    		 )
-			 where survey_seq = #{surveySeq}
+			 where survey_seq = #{surveySeq} )
 
 	</select>
 
