@@ -43,6 +43,7 @@ import com.mycompany.webapp.dto.SurveyResultDTO;
 import com.mycompany.webapp.dto.UserCheckDTO;
 import com.mycompany.webapp.dto.DTO_for_json;
 import com.mycompany.webapp.dto.DTO_for_json2;
+import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.ProjectHistoryDTO;
 import com.mycompany.webapp.service.ILoginCheckService;
 import com.mycompany.webapp.service.json.IJsonService;
@@ -71,53 +72,94 @@ public class HomeController {
 	}
 
 	
-	@GetMapping("/projectHistoryexcel.do")
-	@ResponseBody
-    public String downloadExcel(HttpServletResponse response)  {
- 
-	
-		
-        Workbook workbook = new HSSFWorkbook();
-        Sheet sheet = workbook.createSheet("프로젝트 이력");
-        int rowNo = 0;
- 
-        Row headerRow = sheet.createRow(rowNo++);
-        headerRow.createCell(0).setCellValue("PARTICIPATION_EMPLOYEE_ID");
-        headerRow.createCell(1).setCellValue("PROJECT_ID");
-        String outputFileName = "";
- 
-        String fileName = "프로젝트 이력.xls";
-        try {
-			 outputFileName = new String(fileName.getBytes("KSC5601"), "8859_1");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-               
-        List<ProjectHistoryDTO> list =  ijr.getHistoryList();
-        Object o = new Object();
-        logger.info(list.toString());
-        System.out.println(list.lastIndexOf(o));
-        System.out.println(list.indexOf(o));
-        
-        for (ProjectHistoryDTO dto : list) {
-            Row row = sheet.createRow(rowNo++);
-            row.createCell(0).setCellValue(dto.getParticipationEmployeeId());
-            row.createCell(1).setCellValue(dto.getProjectId());
+	@GetMapping("/excelDownload.do/{fileType}")
+    public void downloadExcel(HttpServletResponse response, @PathVariable String fileType)  {
+		 Workbook workbook = new HSSFWorkbook();
+		if(fileType.equals("project")) {
+			 Sheet sheet = workbook.createSheet("프로젝트 이력");
+		        int rowNo = 0;
+		 
+		        Row headerRow = sheet.createRow(rowNo++);
+		        headerRow.createCell(0).setCellValue("PARTICIPATION_EMPLOYEE_ID");
+		        headerRow.createCell(1).setCellValue("PROJECT_ID");
+		        String outputFileName = "";
+		 
+		        String fileName = "프로젝트 이력.xls";
+		        try {
+					 outputFileName = new String(fileName.getBytes("KSC5601"), "8859_1");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+		               
+		        List<ProjectHistoryDTO> list =  ijr.getHistoryList();
 
-        }
- 
-        response.setContentType("ms-vnd/excel");
-        response.setHeader("Content-Disposition", "attachment;fileName=\"" + outputFileName + "\"");
-        
-        try {
-			workbook.write(response.getOutputStream());
-			workbook.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		        for (ProjectHistoryDTO dto : list) {
+		            Row row = sheet.createRow(rowNo++);
+		            row.createCell(0).setCellValue(dto.getParticipationEmployeeId());
+		            row.createCell(1).setCellValue(dto.getProjectId());
+
+		        }
+		 
+		        response.setContentType("ms-vnd/excel");
+		        response.setHeader("Content-Disposition", "attachment;fileName=\"" + outputFileName + "\"");
+		        
+		        try {
+					workbook.write(response.getOutputStream());
+					workbook.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		        
 		}
-        
-        return "0";
+		
+       if(fileType.equals("OC")){
+    	   Sheet sheet = workbook.createSheet("조직정보");
+	        int rowNo = 0;
+	        		
+	        Row headerRow = sheet.createRow(rowNo++);
+	        headerRow.createCell(0).setCellValue("HIGH_DEPARTMENT_ID");
+	        headerRow.createCell(1).setCellValue("DEPARTMENT_ID");
+	        headerRow.createCell(2).setCellValue("DEPARTMENT_NAME");
+
+	        String outputFileName = "";
+	 
+	        String fileName = "조직정보.xls";
+	        try {
+				 outputFileName = new String(fileName.getBytes("KSC5601"), "8859_1");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	               
+	        List<OrganizationChartDTO> list =  ijr.getOCList();
+	        Object o = new Object();
+	        logger.info(list.toString());
+	        System.out.println(list.lastIndexOf(o));
+	        System.out.println(list.indexOf(o));
+	        
+	        for (OrganizationChartDTO dto : list) {
+	            Row row = sheet.createRow(rowNo++);
+	            row.createCell(0).setCellValue(dto.getHighDepartmentId());
+	            row.createCell(1).setCellValue(dto.getDepartmentId());
+	            row.createCell(2).setCellValue(dto.getDepartmentName());
+
+	        }
+	 
+	        response.setContentType("ms-vnd/excel");
+	        response.setHeader("Content-Disposition", "attachment;fileName=\"" + outputFileName + "\"");
+	        
+	        try {
+				workbook.write(response.getOutputStream());
+				workbook.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        
+	        
+       }
+//       return "0";
+
     }
 
 	

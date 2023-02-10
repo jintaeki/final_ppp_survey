@@ -18,9 +18,10 @@ body {
 
 				</div>
 
-
+			
 				<div class="modal-body">
 					<form  id="projectHistoryForm"  method="POST" >
+				<a href="<c:url value='/excelDownload.do/project'/>"> 이력 다운받기</a>
 
 						<div class="form-group">
 							<label for="recipient-name" class="col-form-label">프로젝트 이력</label>
@@ -34,16 +35,16 @@ body {
 						</div>
 
 					</form>
-										<a href="<c:url value='/projectHistoryexcel.do'/>"> 이력 다운받기</a>
+							
 
 						
 					
 					
-
 					<form  id="organizationForm">
+<a href="<c:url value='/excelDownload.do/OC'/>"> 조직정보 다운받기</a>
 
 						<div class="form-group">
-							<label for="recipient-name" class="col-form-label">조직도</label>
+							<label for="recipient-name" class="col-form-label">조직정보</label>
 							<input type="file" name="organizationjson" class="form-control"
 							>
 						</div>
@@ -56,7 +57,7 @@ body {
 						</div>
 
 					</form>
-									<a href="<c:url value='/OCexcel.do'/>"> 이력 다운받기</a>
+										
 				</div>
 
 			</div>
