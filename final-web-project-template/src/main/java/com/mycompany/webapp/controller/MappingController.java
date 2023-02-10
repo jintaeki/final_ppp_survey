@@ -163,8 +163,6 @@ public class MappingController {
 		model.addAttribute("commonMapList", commonService.selectMappingCode());
 		model.addAttribute("commonDateList", commonService.selectDateCode());
 		model.addAttribute("gradeList", mappingService.selectGradeList());
-		logger.info("지금 가져온 선택지:"+selection);
-		logger.info("키워드"+keyword+"1");
 		try {
 			List<PopupDTO> getPopup = null;
 			PagingDTO pagingdto = null;
@@ -178,7 +176,6 @@ public class MappingController {
 			pagingdto.setSelectGD(selectGD);
 			
 			getPopup = mappingService.getAnother(pagingdto);
-			logger.info("리스트:" +getPopup.toString());
 			model.addAttribute("getPopup", getPopup);
 
 			model.addAttribute("pagingdto", pagingdto);
