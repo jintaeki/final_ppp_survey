@@ -61,7 +61,7 @@
 
          <div class="col-12" style=""><h3 style="text-align:left;"><b>평가 대상자 목록</b></h3></div>
 
-               <table class="table table-sm table-striped table-bordered">
+               <table class="table table-sm table-striped table-bordered" style="text-align: center;">
                   <thead>
                      <tr>
 
@@ -103,7 +103,7 @@
                      </c:forEach>
 
                   </tbody>
-   <table class="paiging-btn-table">
+   <table class="paiging-btn-table" style="width:100%; text-align:center;">
                   <tr class="table-light">
                      <td colspan="12" class="text-center" style="border: none;">
                         <div>

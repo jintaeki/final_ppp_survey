@@ -370,3 +370,7 @@ thead{
     width: 550px;
     height: 650px;
 }
+
+.paiging-btn-table{
+	width:100%;
+}
