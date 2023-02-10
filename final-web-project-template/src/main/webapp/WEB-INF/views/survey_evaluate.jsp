@@ -19,11 +19,11 @@
                                  <option value="대리"
                                  <c:out value = '${param.selection2 eq "대리"? "selected":"대리"}'/>>대리</option>
                                  <option value="과장"
-                                 <c:out value = '${param.selection2 eq "사원"? "selected":"과장"}'/>>과장</option>
+                                 <c:out value = '${param.selection2 eq "과장"? "selected":"과장"}'/>>과장</option>
                                  <option value="차장"
-                                 <c:out value = '${param.selection2 eq "사원"? "selected":"차장"}'/>>차장</option>
+                                 <c:out value = '${param.selection2 eq "차장"? "selected":"차장"}'/>>차장</option>
                                 <option value="부장"
-                                <c:out value = '${param.selection2 eq "사원"? "selected":"부장"}'/>>부장</option>
+                                <c:out value = '${param.selection2 eq "부장"? "selected":"부장"}'/>>부장</option>
 
                            </select>
 
@@ -61,7 +61,7 @@
 
          <div class="col-12" style=""><h3 style="text-align:left;"><b>평가 대상자 목록</b></h3></div>
 
-               <table class="table table-sm table-striped table-bordered">
+               <table class="table table-sm table-striped table-bordered" style="text-align: center;">
                   <thead>
                      <tr>
 
@@ -103,7 +103,7 @@
                      </c:forEach>
 
                   </tbody>
-   <table class="paiging-btn-table">
+   <table class="paiging-btn-table" style="width:100%; text-align:center;">
                   <tr class="table-light">
                      <td colspan="12" class="text-center" style="border: none;">
                         <div>

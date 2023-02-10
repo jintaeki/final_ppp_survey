@@ -62,8 +62,8 @@
                resArr.push(addObj);
       console.log(plusId);
       });
-      console.log(resArr);   
-     
+      console.log(resArr);
+
      $.ajax({
 		 url: "popup.do",
 		 type: "POST",
@@ -82,7 +82,7 @@
 	  always(function() {
 		 alert(resMap.msg);
 
-	  });   
+	  });
    }
 </script>
 <div class="entire_popup">
@@ -99,7 +99,7 @@
 							<option value="${grade.gradeId}">${grade.gradeName}</option>
 						</c:if>
 					</c:forEach>
-				</select> 
+				</select>
 				<select name="selection">
 					<c:forEach items="${commonMapList}" var="commonMap">
 						<c:if test="${pagingdto.selection eq commonMap.codeDetailId }">
@@ -109,9 +109,10 @@
 							<option value="${commonMap.codeDetailId}">${commonMap.codeDetailName }</option>
 						</c:if>
 					</c:forEach>
-				</select> 
+				</select>
+					<div class="input-group" id="search-div">
 				<input type="text" class="form-control" id="selectedKeyword" placeholder="search"
-					   name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2"> 
+					   name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2">
 				<input type="hidden" name="pageNo" value="1">
 				<input type="hidden" name="surveySeq" value="${pagingdto.surveySeq}">
 				<input type="hidden" name="raterId" value="${pagingdto.raterId}">
@@ -121,14 +122,15 @@
 						id="button-addon2" value="검색">
 					<input type="reset" class="btn btn-outline-secondary"
 						id="button-addon2" value="초기화">
+					</div>
 				</div>
 			</form>
 		</div>
 	</div>
    <div class="table-table-hover">
    					<div class="col-12" style=""><h3 style="text-align:center;"><b>다면평가 대상 추가</b></h3></div>
-   
-         <table id="resTb" class="tablePop">
+
+         <table id="resTb" class="table table-sm table-striped table-bordered">
             <thead>
                <tr>
                   <th class="check"><input type="checkbox" id="check_all" /></th>
@@ -163,7 +165,7 @@
 								<input type="hidden" name="raterName" value="${result.raterName}" />
 								<input type="hidden" name="appraiseeName" value="${result.appraiseeName}" />
 								<input type="hidden" name="gradeName" value="${result.gradeName}" />
-								
+
 								<td><input type="checkbox" name="chk_res" value="${result.raterId}${result.appraiseeId}"/></td>
 								<td class="projectName"><c:out value="${result.projectName}" /></td>
 								<td class="raterName"><c:out value="${result.raterName}" /></td>
@@ -187,7 +189,7 @@
       </div>
       <div class="page_wrap">
 			<div class="page_nation">
-				<%-- 맨처음 페이지 이동    
+				<%-- 맨처음 페이지 이동
       				<a class="arrow prev" href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a> --%>
 				<c:if test="${pagingdto.groupNo>1}">
 					<a class="arrow prev"
@@ -195,7 +197,7 @@
 				</c:if>
 				<c:forEach var="i" begin="${pagingdto.startPageNo}" end="${pagingdto.endPageNo}">
 					<c:if test="${pagingdto.pageNo != i}">
-						<a class="active" 
+						<a class="active"
 						   href="popup.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&raterId=${pagingdto.raterId}&month=${pagingdto.month}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
 					</c:if>
 					<c:if test="${pagingdto.pageNo == i}">
@@ -207,7 +209,7 @@
 					<a class="arrow next"
 					   href="popup.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&raterId=${pagingdto.raterId}&month=${pagingdto.month}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">다음</a>
 				</c:if>
-				<%-- 맨마지막 페이지 이동 
+				<%-- 맨마지막 페이지 이동
        			<a class="arrow next" href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">맨끝</a> --%>
 			</div>
 		</div>

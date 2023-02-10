@@ -603,7 +603,7 @@ public class SurveyController {
 			    logger.info("모델 :" + model);
 				int totalRows = pagingService.getEvaluateMessageBoardNum(beforeKeyword, selection, surveySeq);
 
-			    pagingDto = new PagingDTO(7, 10, totalRows, pageNo);
+			    pagingDto = new PagingDTO(12, 10, totalRows, pageNo);
 
 				pagingDto.setSelection(selection);
 				pagingDto.setKeyword(keyword);

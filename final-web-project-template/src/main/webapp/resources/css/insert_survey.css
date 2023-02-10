@@ -26,7 +26,7 @@ input {
 /* 	box-shadow: 1px 1px 10px 0px  #c0c0c0; */
 /* 	padding: 20px; */
 	width:500px;
-	
+
 }
 
 .itemdeletebtn{
@@ -37,6 +37,7 @@ input {
 }
 .item{
 	width:500px;
+	text-align:center;
 }
 .question_inputdv{
 	margin: auto;
@@ -44,10 +45,10 @@ input {
 	border-radius: 20px;
 /* 	padding: 20px; */
 	width: 550px;
-	
+
 }
 .question_management{
-	margin-top: 30px;
+
 	width: 930px;
 /* 	box-shadow: 1px 1px 10px 0px #c0c0c0; */
 /* 	border-radius: 20px; */
@@ -78,15 +79,15 @@ border-bottom: 1px solid;
 }
 
 .questionAndItem{
-	display: flex; 
-	justify-content: space-around; 
+	display: flex;
+	justify-content: space-around;
 	height:657px;
 }
 
 #is{
 	text-align:center;
 	width:40px;
-	
+
 }
 
 .title{
@@ -96,7 +97,7 @@ border-bottom: 1px solid;
     /* margin-top: 10px; */
     /* margin-bottom: 10px; */
     justify-content: space-between;
-    background: rgba(0,0,0,.05);
+    background: #F6F9FF;
     padding: 10px 10px 0px 10px;
     border-radius: 20px 20px 0px 0px;
 }
@@ -109,7 +110,6 @@ border-bottom: 1px solid;
 	min-width: 6rem;
 	color: #0089ff;
 	font-size: 20px;
-	margin-left: 700px;
 }
 
 .form-control {
@@ -183,4 +183,7 @@ input#is{
 .select_radio{
 	justify-content: space-around;
 	align-items: center;
+}
+td {
+    align-items: flex-end;
 }

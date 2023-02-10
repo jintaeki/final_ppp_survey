@@ -62,8 +62,8 @@
                resArr.push(addObj);
       console.log(plusId);
       });
-      console.log(resArr);   
-     
+      console.log(resArr);
+
      $.ajax({
 		 url: "popup.do",
 		 type: "POST",
@@ -81,8 +81,7 @@
 	  })
 	  always(function() {
 		 alert(resMap.msg);
-
-	  });   
+	  });
    }
 </script>
 <div class="entire_popup">
@@ -99,7 +98,7 @@
 							<option value="${grade.gradeId}">${grade.gradeName}</option>
 						</c:if>
 					</c:forEach>
-				</select> 
+				</select>
 				<select name="selection">
 					<c:forEach items="${commonMapList}" var="commonMap">
 						<c:if test="${pagingdto.selection eq commonMap.codeDetailId }">
@@ -109,9 +108,9 @@
 							<option value="${commonMap.codeDetailId}">${commonMap.codeDetailName }</option>
 						</c:if>
 					</c:forEach>
-				</select> 
+				</select>
 				<input type="text" class="form-control" id="selectedKeyword" placeholder="평가자  검색창"
-					   name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2"> 
+					   name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2">
 				<select name="selection2" style="margin-left:100px">
 					<c:forEach items="${commonMapList}" var="commonMap">
 						<c:if test="${pagingdto.selection2 eq commonMap.codeDetailId }">
@@ -121,9 +120,9 @@
 							<option value="${commonMap.codeDetailId}">${commonMap.codeDetailName }</option>
 						</c:if>
 					</c:forEach>
-				</select> 
+				</select>
 				<input type="text" class="form-control" id="selectedKeyword" placeholder="피평가자 검색창"
-					   name="keyword2" value="${pagingdto.keyword2}" aria-describedby="button-addon2"> 
+					   name="keyword2" value="${pagingdto.keyword2}" aria-describedby="button-addon2">
 				<input type="hidden" name="pageNo" value="1">
 				<input type="hidden" name="surveySeq" value="${pagingdto.surveySeq}">
 				<div class="input-group-append">
@@ -137,7 +136,7 @@
 	</div>
    <div class="table-table-hover">
       					<div class="col-12" style=""><h3 style="text-align:center;"><b>다면평가 대상 추가</b></h3></div>
-   
+
          <table id="resTb" class="tableAnother">
             <thead>
                <tr>
@@ -172,7 +171,7 @@
 								<input type="hidden" name="raterName" value="${result.raterName}" />
 								<input type="hidden" name="appraiseeName" value="${result.appraiseeName}" />
 								<input type="hidden" name="gradeName" value="${result.gradeName}" />
-								
+
 								<td><input type="checkbox" name="chk_res" value="${result.raterId}${result.appraiseeId}"/></td>
 								<td class="raterName"><c:out value="${result.raterName}" /></td>
 								<td class="rDepartmentName"><c:out value="${result.rDepartmentName}" /></td>

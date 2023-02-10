@@ -37,9 +37,9 @@
                      </form>
                   </div>
                </div>
-			<div class="col-12" style=""><h3 style="text-align:left;"><b>설문지 평가 완료여부 목록</b></h3></div>
+			<div class="col-12" style=""><h3 style="text-align:left;"><b>설문지 평가 완료여부 목록</b> <button class="btn btn-outline-primary" style="float:right;"  onclick="history.back()">뒤로가기</button></h3></div>
 
-            <table class="table table-sm table-striped table-bordered">
+            <table class="table table-sm table-striped table-bordered" style="text-align:center;">
                   <thead>
                      <tr>
                         <th class="">#</th>
