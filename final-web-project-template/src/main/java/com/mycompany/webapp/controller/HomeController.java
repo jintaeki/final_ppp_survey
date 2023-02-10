@@ -249,66 +249,61 @@ public class HomeController {
 
 
 	@RequestMapping("/insertSurveyResult.do")
-	@ResponseBody
-	public String insertSurveyResult(@ModelAttribute ("surveyResult") SurveyResultDTO surveyResult ) {
-		logger.info(surveyResult.toString());
+	   @ResponseBody
+	   public String insertSurveyResult(@ModelAttribute ("surveyResult") SurveyResultDTO surveyResult ) {
+	      logger.info(surveyResult.toString());
 
-		String surveySeqs = surveyResult.getSurveySeq();
-		int cntcontent = (surveySeqs.length() - surveySeqs.replace(",", "").length())+1;
+	      String surveySeqs = surveyResult.getSurveySeq();
+	      int cntcontent = (surveySeqs.length() - surveySeqs.replace(",", "").length())+1;
 
-		String anonymityCodes = surveyResult.getAnonymityCode();
-		String raterIds = surveyResult.getRaterId();
-		String appraiseeIds = surveyResult.getAppraiseeId();
-		String questionSeqs = surveyResult.getQuestionSeq();
-		String itemSeqs = surveyResult.getItemSeq();
-		String answerContents =surveyResult.getAnswerContent();
-		String anonymitySeqs = surveyResult.getAnonymitySeq();
+	      String anonymityCodes = surveyResult.getAnonymityCode();
+	      String raterIds = surveyResult.getRaterId();
+	      String appraiseeIds = surveyResult.getAppraiseeId();
+	      String questionSeqs = surveyResult.getQuestionSeq();
+	      String itemSeqs = surveyResult.getItemSeq();
+	      String answerContents =surveyResult.getAnswerContent();
+	      String anonymitySeqs = surveyResult.getAnonymitySeq();
 
-		String[] anonymityCode = anonymityCodes.split(",");
-		String[] surveySeq = surveySeqs.split(",");
-		String[] raterId = raterIds.split(",");
-		String[] appraiseeId = appraiseeIds.split(",");
-		String[] questionSeq = questionSeqs.split(",");
-		String[] itemSeq = itemSeqs.split(",");
-		String[] answerContent = answerContents.split(",");
-		String[] anonymitySeq  = anonymitySeqs.split(",");
+	      String[] anonymityCode = anonymityCodes.split(",");
+	      String[] surveySeq = surveySeqs.split(",");
+	      String[] raterId = raterIds.split(",");
+	      String[] appraiseeId = appraiseeIds.split(",");
+	      String[] questionSeq = questionSeqs.split(",");
+	      String[] itemSeq = itemSeqs.split(",");
+	      String[] answerContent = answerContents.split(",");
+	      String[] anonymitySeq  = anonymitySeqs.split(",");
 
-		surveyResult.setSurveySeq(surveySeq[0]);
-		surveyResult.setAppraiseeId(appraiseeId[0]);
-		surveyResult.setRaterId(raterId[0]);
+	      surveyResult.setSurveySeq(surveySeq[0]);
+	      surveyResult.setAppraiseeId(appraiseeId[0]);
+	      surveyResult.setRaterId(raterId[0]);
+	      String raterid = surveyResult.getRaterId();
+	            if(anonymityCode[0].equals("20001")) {
+	         surveyResult.setAnonymitySeq(anonymitySeq[0]);
+	         surveyResult.setRaterId("");
 
-		//
-		if(anonymityCode[0].equals("20001")) {
-			surveyResult.setAnonymitySeq(anonymitySeq[0]);
-//			surveyResult.setRaterId("null");
+	         for(int i =0; i<cntcontent;i++) {
+	            surveyResult.setQuestionSeq(questionSeq[i]);
+	            surveyResult.setItemSeq(itemSeq[i]);
+	            surveyResult.setAnswerContent(answerContent[i]);
 
-			for(int i =0; i<cntcontent;i++) {
-				surveyResult.setQuestionSeq(questionSeq[i]);
-				surveyResult.setItemSeq(itemSeq[i]);
-				surveyResult.setAnswerContent(answerContent[i]);
+	            loginCheckService.insertResult(surveyResult);
+	            loginCheckService.completeSurvey(surveyResult.getSurveySeq(),surveyResult.getAppraiseeId(),raterid);
+	         }
+	      }else {
+	         for(int i =0; i<cntcontent;i++) {
+	            surveyResult.setAnonymitySeq("");
+	            surveyResult.setRaterId(raterId[i]);
+	            surveyResult.setQuestionSeq(questionSeq[i]);
+	            surveyResult.setItemSeq(itemSeq[i]);
+	            surveyResult.setAnswerContent(answerContent[i]);
 
-				loginCheckService.insertResult(surveyResult);
-				loginCheckService.completeSurvey(surveyResult.getSurveySeq(),surveyResult.getAppraiseeId(),surveyResult.getRaterId());
-			}
-		}else {
-			for(int i =0; i<cntcontent;i++) {
-				surveyResult.setAnonymitySeq("0");
-//				surveyResult.setRaterId(raterId[i]);
-				surveyResult.setQuestionSeq(questionSeq[i]);
-				surveyResult.setItemSeq(itemSeq[i]);
-				surveyResult.setAnswerContent(answerContent[i]);
+	            loginCheckService.insertResult(surveyResult);
+	            loginCheckService.completeSurvey(surveyResult.getSurveySeq(),surveyResult.getAppraiseeId(),raterid);
 
-				loginCheckService.insertResult(surveyResult);
-				loginCheckService.completeSurvey(surveyResult.getSurveySeq(),surveyResult.getAppraiseeId(),surveyResult.getRaterId());
-
-			}
-		}
-
-
-
-
-		return "성공";
-	}
+	         }
+	      }
+	      return "성공";
+	   }
 
 	@RequestMapping("/getAnonymityCode.do/{surveySeq}")
 	@ResponseBody
