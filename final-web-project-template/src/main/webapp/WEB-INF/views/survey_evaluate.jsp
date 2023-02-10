@@ -19,11 +19,11 @@
                                  <option value="대리"
                                  <c:out value = '${param.selection2 eq "대리"? "selected":"대리"}'/>>대리</option>
                                  <option value="과장"
-                                 <c:out value = '${param.selection2 eq "사원"? "selected":"과장"}'/>>과장</option>
+                                 <c:out value = '${param.selection2 eq "과장"? "selected":"과장"}'/>>과장</option>
                                  <option value="차장"
-                                 <c:out value = '${param.selection2 eq "사원"? "selected":"차장"}'/>>차장</option>
+                                 <c:out value = '${param.selection2 eq "차장"? "selected":"차장"}'/>>차장</option>
                                 <option value="부장"
-                                <c:out value = '${param.selection2 eq "사원"? "selected":"부장"}'/>>부장</option>
+                                <c:out value = '${param.selection2 eq "부장"? "selected":"부장"}'/>>부장</option>
 
                            </select>
 
