@@ -12,43 +12,43 @@
                         <div class="searchRangeAll">
                         <div class="searchRange">
                           <select class="subSelection" name="selection2">
-								 <option value=""
-						   			<c:out value ='${paigingDto.selection2== null? "selected":""}'/>>직급</option>
-                           		<option value="사원"
-                           			<c:out value = '${param.selection2 eq "사원"? "selected":"사원"}'/>>사원</option>
-                           		<option value="대리"
-                           		<c:out value = '${param.selection2 eq "대리"? "selected":"대리"}'/>>대리</option>
-                           		<option value="과장"
-                           		<c:out value = '${param.selection2 eq "사원"? "selected":"과장"}'/>>과장</option>
-                           		<option value="차장"
-                           		<c:out value = '${param.selection2 eq "사원"? "selected":"차장"}'/>>차장</option>
+                         <option value=""
+                              <c:out value ='${paigingDto.selection2== null? "selected":""}'/>>직급</option>
+                                 <option value="사원"
+                                    <c:out value = '${param.selection2 eq "사원"? "selected":"사원"}'/>>사원</option>
+                                 <option value="대리"
+                                 <c:out value = '${param.selection2 eq "대리"? "selected":"대리"}'/>>대리</option>
+                                 <option value="과장"
+                                 <c:out value = '${param.selection2 eq "사원"? "selected":"과장"}'/>>과장</option>
+                                 <option value="차장"
+                                 <c:out value = '${param.selection2 eq "사원"? "selected":"차장"}'/>>차장</option>
                                 <option value="부장"
                                 <c:out value = '${param.selection2 eq "사원"? "selected":"부장"}'/>>부장</option>
 
-                        	</select>
+                           </select>
 
                         <select class="selection" name="selection">
 
-                      	 <option value="employeeName"
+                          <option value="employeeName"
                               <c:if test="${pagram.selection eq 'employeeName'}">selected</c:if>>이름</option>
 
-                      	  <option value="departmentName"
+                           <option value="departmentName"
                               <c:if test="${param.selection eq 'departmentName'}">selected</c:if>>부서명</option>
 
-                        </select> 
+                        </select>
                         </div>
-                        
+
                         <div class="input-group-append">
-  
 
 
 
-						 
+
+
                         <input type="text" class="form-control" id="selectedKeyword"
                            placeholder="search" name="keyword"
                            value="${pagingDto.keyword}${param.keyword}" aria-describedby="button-addon2">
                         <input type="hidden" name="pageNo" value="1"> <input
-                           type="hidden" name="surveySeq" value="${surveySeq}" /> 
+                           type="hidden" name="surveySeq" value="${surveySeq}" />
                         <input type="submit" class="btn btn-outline-secondary"
                               id="button-addon2" value="검색"> <input type="reset"
                               class="btn btn-outline-secondary" id="button-addon2"
@@ -59,13 +59,13 @@
                   </div>
                </div>
 
-			<div class="col-12" style=""><h3 style="text-align:center;"><b>평가 대상자 목록</b></h3></div>
-               
-               <table class="table table-striped">
+         <div class="col-12" style=""><h3 style="text-align:left;"><b>평가 대상자 목록</b></h3></div>
+
+               <table class="table table-sm table-striped table-bordered">
                   <thead>
                      <tr>
 
-                        <th class=""></th>
+                        <th class="">#</th>
                         <th class="">이름</th>
                         <th class="">직급</th>
                         <th class="">부서</th>
@@ -83,18 +83,27 @@
                            <td class="sv_name">${EL.DEPARTMENT_NAME}</td>
                            <c:if test="${EL.GRADE_NAME eq '부장'}">
                            <td><input type="button" class="btn btn-link"
+                           style="--bs-btn-padding-y: .25rem;
+                             --bs-btn-padding-x: .5rem;
+                            --bs-btn-font-size: .5rem;
+                               line-height: 1;
+                               font-size: 1rem;"
                               onclick="result_search_btn(${surveySeq},${EL.EMPLOYEE_ID})"
                               value="조회"></td>
                            </c:if>
                            <c:if test="${EL.GRADE_NAME ne '부장'}">
-                           <td><input type="button" class="btn btn-link"
+                           <td><input type="button" class="btn btn-link"  style="--bs-btn-padding-y: .25rem;
+    --bs-btn-padding-x: .5rem;
+    --bs-btn-font-size: .5rem;
+    line-height: 1;
+    font-size: 1rem;"
                               value="조회" disabled></td>
                            </c:if>
                         </tr>
                      </c:forEach>
 
                   </tbody>
-							
+   <table class="paiging-btn-table">
                   <tr class="table-light">
                      <td colspan="12" class="text-center" style="border: none;">
                         <div>
@@ -125,17 +134,21 @@
                               href="?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&surveySeq=${pagingdto.surveySeq}">맨끝</a>
                         </div>
                         <div style="float: right;">
+
                         <button type="button" class="btn btn-outline-primary" onclick="location.href='<c:url value='/survey/evaluateMessage.do/${surveySeq}'/>'">
-							 설문지 참여 여부 확인 하러 가기
-						</button>
-                        </div>
+                      평가 참여 여부 확인 하러 가기
+
+
+                  </button>
+                       </div>
                      </td>
                   </tr>
-               </table>
+                 </table>
+              </table>
          </div>
    </div>
 
-   <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
+   <%@include file="/WEB-INF/views/common/footerformanager.jsp"%>
 <script>
 //평가 유무 비동기 체크
 function result_search_btn(surveySeq, employeeId) {
@@ -170,6 +183,5 @@ function result_search_btn(surveySeq, employeeId) {
       });
    }
 </script>
-
 
 

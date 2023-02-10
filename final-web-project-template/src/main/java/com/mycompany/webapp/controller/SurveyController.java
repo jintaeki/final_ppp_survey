@@ -72,7 +72,7 @@ public class SurveyController {
 
 		return "성공";
 	}
-	 
+
 	@RequestMapping("/sendmessage.do/{surveyseq}")
 	@ResponseBody
 	public String sendmessage(@PathVariable int surveyseq,
@@ -190,7 +190,7 @@ public class SurveyController {
 	@ResponseBody
 	public String setSurvey(@ModelAttribute("SLD") SurveyListDTO SLD, BindingResult bindingresult, HttpSession session,
 			RedirectAttributes redirectAttrs) {
-		
+
 		logger.info(SLD.toString());
 		if(SLD.getSurveyName()==null || SLD.getSurveyName().isEmpty()) {
 			return "nameEmpty" ;
@@ -238,13 +238,13 @@ public class SurveyController {
 
 
 
-		
+
 
 	}
 
 	// 목록에서 설문지 이름을 누르면 설문 관리 페이지로 이동하는 컨트롤러
 	@RequestMapping("/surveyinsert.do")
-	public String survey_insert(@RequestParam("surveyseq") int surveySeq, Model model, HttpSession session) {
+	public String surveyInsert(@RequestParam("surveyseq") int surveySeq, Model model, HttpSession session) {
 		if (!String.valueOf(session.getAttribute("SLD")).equals("null")) {
 			SurveyListDTO SLD = (SurveyListDTO) session.getAttribute("SLD");
 			model.addAttribute("SLD", SLD);
@@ -362,12 +362,12 @@ public class SurveyController {
 		surveyService.insertQuestion(SQD);
 		List<SurveyQuestionDTO> LSQD = new ArrayList<>();
 		System.out.println("출력해라:"+SQD);
-		
+
 		if(SQD.getQuestionContent()==null || SQD.getQuestionContent().equals("")) {
 			return LSQD;
 		}
-		
-	
+
+
 		if(SQD.getQuestionTypeCode().equals("10002")) {
 
 		SQD.setItemScore("0");
@@ -471,7 +471,7 @@ public class SurveyController {
 	@ResponseBody
 	public String DeleteSurvey(@PathVariable int surveyseq) {
 
-	
+
 
 		logger.info("deletesurvey 컨트롤러 진입");
 			  surveyService.deleteSurvey(surveyseq);
@@ -482,7 +482,6 @@ public class SurveyController {
 	}
 
 	@RequestMapping("/surveysearch.do")
-
 	public String search(@RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "1") int pageNo,
 			@RequestParam(defaultValue = "30005") String selection, @RequestParam(defaultValue="30005") String anonyMityCheckCode,
 			@RequestParam(defaultValue="") @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDateLeft,@RequestParam(defaultValue="") @DateTimeFormat(pattern = "yyyy-MM-dd") Date surveyStartDateRight,
@@ -497,7 +496,7 @@ public class SurveyController {
 
 			int totalRows = pagingService.getTotalBoardNum(keyword, selection, surveyStartDateLeft,surveyStartDateRight, anonyMityCheckCode);
 			logger.info(String.valueOf(totalRows));
-			pagingdto = new PagingDTO(7, 10, totalRows, pageNo);
+			pagingdto = new PagingDTO(12, 10, totalRows, pageNo);
 			pagingdto.setSelection(selection);
 			pagingdto.setKeyword(keyword);
 			pagingdto.setSurveyStartDateLeft(surveyStartDateLeft);
@@ -547,7 +546,7 @@ public class SurveyController {
 				int totalRows = pagingService.getEvaluateSearchBoardNum(keyword, selection, selection2,  surveySeq);
 
 				System.out.println("totolRows:" + totalRows);
-			    pagingDto = new PagingDTO(100, 100, totalRows, pageNo);
+			    pagingDto = new PagingDTO(13, 10, totalRows, pageNo);
 
 				pagingDto.setSelection(selection);
 				pagingDto.setSelection2(selection2);
@@ -580,7 +579,7 @@ public class SurveyController {
 		return "survey_evaluate";
 	}
 
-		
+
 	@RequestMapping("/evaluateMessage.do/{surveySeq}")
 	public String searchByMessage(
 						 @PathVariable("surveySeq") int surveySeq,
@@ -633,8 +632,8 @@ public class SurveyController {
 		logger.info("검색 테스트");
 		return "survey_message";
 	}
-		
-		
+
+
 
 
 

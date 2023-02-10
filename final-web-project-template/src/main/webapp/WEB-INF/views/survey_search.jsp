@@ -21,7 +21,7 @@ function delete_mapping_btn(){
 
 	function delete_survey_btn(obj,surveyseq){
 		if(confirm("삭제하시겠습니까?")){
-	
+
 		$.ajax({
 	         method:'POST', //어떤 방식으로 보낼 지
 	            url:'deletesurvey.do/'+ surveyseq, // qdiv를 보낼 경로 설정
@@ -34,7 +34,7 @@ function delete_mapping_btn(){
 	         },
 	            success:function (data) {    //전송 성공시 실행
 				location.reload();
-	    		
+
 	            }
 	       });
 
@@ -63,15 +63,15 @@ function delete_mapping_btn(){
 			alert('메일과 SMS가 잘 전송 되었습니다.');
 
 			$('#exampleModal1').modal('hide');
-			
+
 		   }, error:function(e) {	//실패, 에러
 			   console.log("Error", e);
 		   }
 		});
 	}
-  	
+
   	function evaluateStart(surveySeq){
-  		
+
   		console.log(surveySeq);
 		if(confirm("평가를 실행하겠습니까? 더이상 설문지를 변경하실수 없게 됩니다.")){
 		$.ajax({
@@ -124,7 +124,7 @@ function delete_mapping_btn(){
   	function newMapping(serveySeq){
   		html ="";
   		html += '<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-  		html += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">매핑 조건 선택</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+  		html += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">매칭 조건 선택</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
   	    html += '<span aria-hidden="true">&times;</span></button>';
   	    html += '</div>';
   	    html += '<div class="modal-body">'
@@ -135,7 +135,7 @@ function delete_mapping_btn(){
   	   	html += '<br> <h5> 다면평가에 포함될 프로젝트의 범위 정하기 </h5> <select class="form-control" name="month"> <option value="3">최근 3개월 동안에 끝난 프로젝트</option> <option value="6">최근 6개월 동안에 끝난 프로젝트</option> <option value="12">최근 1년 동안에 끝난 프로젝트</option>';
   		html +=	'<option value="24">최근 2년 동안에 끝난 프로젝트</option> <option value="36">최근 3년 동안에 끝난 프로젝트</option> </select>';
   		html += '<br> <h5>피평가자 최대 인원</h5> <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;">';
-  	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> <input type="submit" class="btn btn-primary" value="매핑">';
+  	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> <input type="submit" class="btn btn-primary" value="매칭">';
   	    html += '</div></form:form></div></div></div></div>';
   	    $('#beforeModal').after(html);
   	}
@@ -143,7 +143,7 @@ function delete_mapping_btn(){
   	function reMapping(serveySeq){
   		html ="";
   		html += '<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-  		html += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">다시 매핑 하시겠습니까?</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+  		html += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">다시 매칭 하시겠습니까?</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
   	    html += '<span aria-hidden="true">&times;</span></button>';
   	    html += '</div>';
   	    html += '<div class="modal-body">'
@@ -152,18 +152,18 @@ function delete_mapping_btn(){
   	   	html += '<input type="hidden" id="surveySeq" name="surveySeq" value="'+serveySeq+'">';
   	   	html += '<input type="hidden" id="month" name="month" value="3">';
   	   	html += '<input type="hidden" id="number" name="number" value="3">';
-  	   	html += '<br> <h5> 해당 다면평가의 매핑을 새로 하시겠습니까? </h5>';
+  	   	html += '<br> <h5> 해당 다면평가의 매칭을 새로 하시겠습니까? </h5>';
   	   	html += '<br><button type="submit" class="btn btn-outline-danger" id="newCheck" name="newCheck" value="1" onclick="delete_mapping_btn();">삭제하고 새로 시작하기</button>';
-  	   	html += '<button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 매핑 데이터로 넘어가기</button>';
+  	   	html += '<button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 매칭 목록으로 넘어가기</button>';
   	    html += '<div class="modal-footer"><br><button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>';
   	    html += '</div></form:form></div></div></div></div>';
   	    $('#beforeModal').after(html);
   	}
-  	
+
   	function plusMapping(serveySeq){
   		html ="";
   		html += '<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">';
-  		html += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">평가조합을 추가하시겠습니까?</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+  		html += ' <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <h5 class="modal-title" id="exampleModalLabel">평가 조합을 추가하시겠습니까?</h5> <button type="button" class="close" data-dismiss="modal" aria-label="Close">';
   	    html += '<span aria-hidden="true">&times;</span></button>';
   	    html += '</div>';
   	    html += '<div class="modal-body">'
@@ -172,8 +172,8 @@ function delete_mapping_btn(){
   	   	html += '<input type="hidden" id="surveySeq" name="surveySeq" value="'+serveySeq+'">';
   	   	html += '<input type="hidden" id="month" name="month" value="3">';
   	   	html += '<input type="hidden" id="number" name="number" value="3">';
-  	   	html += '<br> <h5> 해당 다면평가의 매핑조합을 추가 하시겠습니까? </h5>';
-  	   	html += '<button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 매핑 데이터로 넘어가기</button>';
+  	   	html += '<br> <h5> 해당 다면평가의 매칭조합을 추가 하시겠습니까? </h5>';
+  	   	html += '<button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 매칭 목록으로 넘어가기</button>';
   	    html += '<div class="modal-footer"><br><button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>';
   	    html += '</div></form:form></div></div></div></div>';
   	    $('#beforeModal').after(html);
@@ -195,33 +195,33 @@ function delete_mapping_btn(){
   	    $('#beforeModal').after(html);
 	}
 
-  	
-  	
-  	
+
+
+
   	function search(){
   		var dateleft = $('[name=surveyStartDateLeft]').val();
   		var dateright = $('[name=surveyStartDateRight]').val();
   		console.log
 		if (dateleft > dateright){
-			
+
 			alert("날짜 조건이 알맞지 않습니다.");
 			 event.preventDefault(); // 자식 하나만 영향
-				
+
 			 // event.stopPropagation(); 부모까지 영향 미치지 않고 그 외 자식만 영향
 			return false;
 		}else{
-			
+
 			document.getElementById('frm').submit();
 		}
-		
-		
-  		
-  		
-  		
-  		
-  		
+
+
+
+
+
+
+
   	}
-  	
+
   	function setdataform(){
 
   		var form = $('#surveyDataForm')[0];
@@ -263,7 +263,7 @@ function delete_mapping_btn(){
   		html +=`<div class="searchRange"><b>평가 시작 시간:</b>`;
 		html +=`<input type="date" name="surveyStartDateLeft" id="selectedDate">
 				<input type="date" name="surveyStartDateRight" id="selectedDate">`;
-					
+
 		html +=`	<select name="anonyMityCheckCode">
 					<option value="30005">전체</option>
 					<option value="20002">기명</option>
@@ -273,12 +273,12 @@ function delete_mapping_btn(){
 
 				<option value="30005">전체</option>
 				<option value="30004">알림 발송 완료</option>
-				<option value="30003">매핑 완료</option>
+				<option value="30003">매칭 완료</option>
 				<option value="30002">평가지 등록 완료</option>
 				<option value="30001">작성 중</option>
 				</select> </div>`;
-				
-		html +=`<div class="input-group-append">	
+
+		html +=`<div class="input-group-append">
 				<input type="text" class="form-control" id="selectedKeyword" placeholder="search" name="keyword" aria-describedby="button-addon2">
 				<input type="hidden" name="pageNo" value="1">
 				<input type="submit" class="btn btn-outline-secondary"
@@ -299,7 +299,7 @@ function delete_mapping_btn(){
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">평가지 설정</h5>
+					<h3 class="modal-title" id="exampleModalLabel">평가지 설정</h3>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -338,7 +338,7 @@ function delete_mapping_btn(){
 							<option value="0">평가지 선택</option>
 							<c:forEach var="list" items="${surveylist}">
 								<option value="${list.surveySeq} ">${list.surveyName}</option>
-							</c:forEach>					
+							</c:forEach>
 						</select>
 						<br>
 						<br>
@@ -369,7 +369,7 @@ function delete_mapping_btn(){
 									value="<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />">
 								<input type="date" name="surveyStartDateRight" id="selectedDate"
 									value="<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">
-								<select name="anonyMityCheckCode" >
+								<select name="anonyMityCheckCode" style="color:#D2D6DA;" >
 									<c:forEach items="${commonCodeList}" var="commonCode">
 										<c:if
 											test="${pagingdto.anonyMityCheckCode eq commonCode.codeDetailId}">
@@ -386,7 +386,7 @@ function delete_mapping_btn(){
 											</c:if>
 										</c:if>
 									</c:forEach>
-								</select> <select name="selection" >
+								</select> <select name="selection" style="color:#D2D6DA;" >
 									<c:forEach items="${commonCodeList}" var="commonCode">
 										<c:if test="${commonCode.codeId eq '300' }">
 											<c:if
@@ -399,19 +399,18 @@ function delete_mapping_btn(){
 											</c:if>
 										</c:if>
 									</c:forEach>
-								</select> 
+								</select>
 								</div>
-								
-								<div class="input-group-append">
+
+								<div class="input-group" style="width: 400px; right: 50px;">
 								<input type="text" class="form-control" id="selectedKeyword"
 									placeholder="search" name="keyword"
 									value="${pagingdto.keyword}" aria-describedby="button-addon2">
-								<input type="hidden" name="pageNo" value="1">
-								
 									<input type="submit" class="btn btn-outline-secondary"
-										id="button-addon2" value="검색" onclick="search()"> <input type="button" style="margin-left:10px;"
-										class="btn btn-outline-secondary" onclick="reset_btn()"
-										value="초기화">						
+										id="button-addon2" value="검색" onclick="search()">
+									<input type="button" class="btn btn-outline-secondary" onclick="reset_btn()"
+										value="초기화">
+								<input type="hidden" name="pageNo" value="1">
 								</div>
 								</div>
 							</form>
@@ -420,17 +419,17 @@ function delete_mapping_btn(){
 						</div>
 					</div>
 
-					<div class="col-12" style=""><h3 style="text-align:center;"><b>평가지 목록</b></h3></div>
-					<table class="table  table-striped">
+					<div class="col-12" style=""><h3 style="text-align:left;"><b>평가지 목록</b></h3></div>
+					<table class="table table-sm table-striped table-bordered">
 						<thead style="background-color:#F8F9FA">
 
 							<tr>
-								<th scope="col" style="color:black"></th>
-								<th scope="col" style="color:black">다면평가 목록</th>
-								<th scope="col" style="color:black">평가 기간</th>
-								<th scope="col" style="color:black">진행상태</th>
-								<th scope="col" style="color:black">결과</th>
-								<th scope="col" style="color:black">평가자 매칭</th>
+								<th scope="col" >#</th>
+								<th scope="col" >다면평가 목록</th>
+								<th scope="col" >평가 기간</th>
+								<th scope="col" >진행상태</th>
+								<th scope="col" >결과</th>
+								<th scope="col" >평가자 매칭</th>
 
 							</tr>
 						</thead>
@@ -441,15 +440,13 @@ function delete_mapping_btn(){
 
 
 									<th scope="row">
-									
-										
+											<div style="text-align:center;">
 												<button class="delete_survey_btn"
-												style="background: white; border: 1px solid #fff; border-radius: 35em;"
 												onclick="delete_survey_btn(this,${list.surveySeq})">
 												<i class="fas fa-xmark"></i>
 												</button>
-										
-										
+											</div>
+
 									<td><c:if test="${list.stateCode ne '30004'}">
 											<a href="surveyinsert.do?surveyseq=${list.surveySeq}"  id="surveyUP">${list.surveyName }</a> &nbsp;
 
@@ -461,7 +458,7 @@ function delete_mapping_btn(){
 											pattern='yyyy-MM-dd' /> &nbsp;~&nbsp; <fmt:formatDate
 											value="${list.surveyClosedDate }" pattern='yyyy-MM-dd' /></td>
 
-									<td><span class="wait" id="stateCode"> 
+									<td><span class="wait" id="stateCode">
 										<c:if test="${list.stateCode ne '30003' && list.stateCode ne '30004'}">
 											${list.codeDetailName}
 										</c:if>
@@ -472,7 +469,7 @@ function delete_mapping_btn(){
 											<button class="btn btn-outline-primary" data-toggle="modal"
 													data-target="#exampleModal1" onclick="updatemessage('${list.surveySeq}')">
 													발송</button>
-										</c:if> 
+										</c:if>
 										</span>
 									</td>
 
@@ -488,14 +485,14 @@ function delete_mapping_btn(){
 												id="btn_for_mapping" data-toggle="modal"
 												data-target="#exampleModal1"
 												onclick="btn_for_mapping('${list.surveySeq}', '${list.stateCode}')">
-												매핑
+												매칭
 										</button>
 									</td>
 								</tr>
 							</c:forEach>
 						</tbody>
-						
-						<tbody style="border: none;">
+
+						<table class="paiging-btn-table">
 							<tr class="table-light">
 								<td colspan="12" class="text-center" style="border: none;">
 									<div>
@@ -525,18 +522,18 @@ function delete_mapping_btn(){
 										</c:if>
 										<a class="btn btn-outline-secondary"
 											href="surveysearch.do?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&anonyMityCheckCode=${pagingdto.anonyMityCheckCode}&surveyStartDateLeft=<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />&surveyStartDateRight=<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">맨끝</a>
-									</div>
+									</td>
 									<div style="float: right;">
 									<button id="upper_dv_btn" type="button" class="btn btn-outline-secondary" data-toggle="modal"
 										data-target="#exampleModal" data-whatever="@mdo">등록</button>
-								   </div>
+								   </td>
 								</td>
 							</tr>
-						</tbody>
+						</table>
 					</table>
 
 
 			</div>
-			
+
 	</div><!--  평가지  목록-->
 <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>

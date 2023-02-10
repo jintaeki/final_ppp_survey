@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+ <%@ page contentType="text/html; charset=UTF-8"%>
 
 <%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
 <!-- <link rel="stylesheet" type="text/css" href="/survey.css"> -->
@@ -180,7 +180,7 @@
          }
 
 
-          
+
       }
       itemSeqArray[0] = itemSeqArray.length;
       console.log(itemSeqArray);
@@ -194,29 +194,42 @@
 	  $('.surveyName').empty();
 	  $('.surveyName').append('<div class="input_title">피평가자 : '+appraiseeName+'</div>');
       $('#surveyForm').append(surveyQandA);
-      
+
    }
 
+   function gowithoutConfirm(obj){
+	var content = $(obj).val();
+	console.log('content:'+content);
+	   Swal.fire({
+			text: content,
+			 confirmButtonText: '확인',
+				 
+		});
+	   
+   }
+   
+   
    var cntForGO = 0;
    function go(content){
 
 		if(cntForGO==0){
 			Swal.fire({
-				text: '<b>'+content+'/<b>',
+				text: content,
 				 confirmButtonText: '확인',
 					 preConfirm:()=>{
 						 if(confirm('평가지 내용을 그만 보시겠습니까?')){
 								cntForGO = cntForGO + 1;
 							}
 					 }
-			});		
+			});
 		}
-		
-	
+
+
 	}
-   
+
    function selectSurvey(obj,raterId){
 	   cntForGO = 0;
+	   
       $('.submit_btn').empty();
       $('.surveyName').empty();
       console.log(raterId);
@@ -234,7 +247,7 @@
                var anonymitycode = result.anonymityCheckCode;
                var htmlQuestion = '';
                   $('#surveyForm').empty();
-			
+
                // 전체로 두고 조회했을 때
                if($(obj).val()==1){
             	   surveySeq = 1;
@@ -250,7 +263,7 @@
                      dataType: 'json',
                      success: function(result){
                         console.log('result '+result);
-                       
+
                         var appraisees = result;
 
                        $.ajax({
@@ -258,7 +271,7 @@
                            method: 'GET',
                            dataType: 'html',
                            success: function(theSeq){
-                              
+
                               appraisee(appraisees,anonymitycode,theSeq,surveySeq);
                              var htmlQuestion='<div class="noQuestion"><b>평가 버튼을 눌러 평가를 진행해주세요.</b></div>';
                               $('#surveyForm').append(htmlQuestion);
@@ -272,7 +285,7 @@
                   });
 
 
-          
+
             }
          });
 
@@ -281,15 +294,16 @@
 
 
    function appraisee(data,anonymitycode,theSeq,surveySeq){
+	   $('.forContent').empty();
       var size = data.length;
       var html = '';
-    
+	  
 		if (surveySeq ==1){
-			
+
 			location.reload();
 			return false();
 		}else if (surveySeq==0){
-			
+
 		}
 		else{
 			  $('.appraiseeList_list').empty();
@@ -299,7 +313,7 @@
 			   html +=`<div class="row">
 				   	<div class="col-3">피평가자</div>
 					  <div class="col-4">부서</div>
-					  <div class="col-2">직급</div>					  
+					  <div class="col-2">직급</div>
 					  <div class="col-3"></div>
 					  </div>
 			          <div id="appendArea" class="row">`;
@@ -317,15 +331,19 @@
             html +=`</div>
 					</div>`;
             $('.appraiseeList_list').append(html);
-          
-            
+			
+         
+            $('.forContent').empty;
+            var contentViewBtn = '';
+            contentViewBtn = '<button style="margin:0px;" id="contentBtn" class="create_btn" value="'+data[0].surveyContent+'"onclick="gowithoutConfirm(this)">평가 참고 사항</button>';
+			$('.forContent').append(contentViewBtn);
 		}
-		 
+
    }
 
    function surveyStart(obj,appraiseeId,raterId,anonymitycode,theSeq,surveySeq,content){
       var appraiseeName = $(obj).val();
-      go(content);      
+      go(content);
       $.ajax({
             url: 'getquestionforsurvey.do/'+surveySeq,
             method: 'GET',
@@ -375,7 +393,7 @@
              }
           }
 
-      
+
           var cntCheckedAnswer=0;
 				//1번부터 진행하는 이유는 itemSeqArray에 i를 대입할 때 index가 1부터시작(i-itemNum+1)했기 때문에 0은 null값이 들어가있다
              for(var i =1; i<itemSeqArray.length; i++){
@@ -388,10 +406,10 @@
                 	}else if($('textarea[name="'+i+'answerContent"]').val()!=''){
                 		cntCheckedAnswer = cntCheckedAnswer + 1;
                 	}else{
-                		
+
                 		cntCheckedAnswer = cntCheckedAnswer + 1;
                 	}
-                    
+
                  }else if(!$('input[name="'+itemSeqArray[i]+'num"]').is(':checked') ) {
                 	 // 실제 주관식 문제가 비어있는 지 확인하고 alert
                        if($('textarea[name="'+i+'answerContent"]').val()==''){
@@ -454,13 +472,13 @@
 	   if(surveySeq ==0){
 		   html +='<br><br><b>평가지를 선택해 주세요.</b>';
 	   }else if (surveySeq == 1){
-		   
+
 	   }else{
 		   html +='<br><b>설문 참여가능 기간</b><br>';
 		   html +='<p>'+startDate+' ~ '+ closedDate+'</p>';
 		   html +='<p><b>참여 중인 설문</b><br> '+surveyName +'<br></p>';
 	   }
-	   
+
 
 
 	$('.survey_info').empty();
@@ -481,7 +499,7 @@
        			<button id="menu_btn" onclick="selectSurvey(this,${raterId})" value="${surveySeqAndName.SURVEY_SEQ}" style="border:none;"><b>${surveySeqAndName.SURVEY_NAME}</b></button>
        		<br>
        		</c:forEach>
-         
+
    </div>
 </div>
 
@@ -498,6 +516,8 @@
 				<option value="${surveySeqAndName.SURVEY_SEQ}">${surveySeqAndName.SURVEY_NAME}</option>
 			</c:forEach>
 		</select>
+	
+		<div class="forContent" style="margin-left:1000px;"></div>
 	</div>
 
 		<div class="row" style="width: 1360px;">
@@ -582,7 +602,7 @@
 				</div>
 				<div class="submit_btn"></div>
 			</div>
-		</div> 
+		</div>
 	</div> <!-- forshadowing -->
 </div> <!-- card -->
 

@@ -7,6 +7,10 @@
 color:green;
 }
 
+.hmenu{
+
+}
+
 .copySurvey_btn:hover #copySurvey_btn_plus{
     display: block;
 }
@@ -15,7 +19,10 @@ color:green;
 
 #selectedDate{
 	margin-right:10px;
+	color:#D2D6DA;
 }
+
+
 
 .survey_list_form{
 	display: flex;
@@ -24,39 +31,41 @@ color:green;
 	margin-right: 10px;
 }
 
-#button-addon2{
-		margin-left: 6px;
-
+.delete_survey_btn{
+background-color:transparent;
+border:none;
 }
+
 
 #upper_dv_btn{
-	margin-left: 6px;
+	 margin-right: 13px;
+	float:right;
 }
 
-.table td {
-/* 	width: 350px; */
-
-}
-
-.table th {
-/* 	width: 150px; */
-
+.paiging-btn-table{
+	border: none;
+	width: 1398px;
 }
 
 .table{
-	max-width: 1300px;
+	max-width: 98%;
 	margin:auto;
+	margin-bottom: 15px;
+	box-shadow: 0px 0px 1px 1px #c0c0c0;
+
 }
 .table td:not(.sv_name){
 	text-align: center;
+
 }
 .table thead th{
-	height: 65px;
+	height: 50px;
 	text-align: center;
 	vertical-align: middle;
+	color:#828D99;
 }
 .table td, .table th{
-	height: 65px;
+	height: 25px;
 	vertical-align: middle;
 	border-top: 1px solid #dee2e6;
 }
@@ -76,4 +85,7 @@ color:green;
 	color: #ccc;
 }
 
-
+.paging-table{
+	    width: 1300px;
+    margin-left: 80px;
+}

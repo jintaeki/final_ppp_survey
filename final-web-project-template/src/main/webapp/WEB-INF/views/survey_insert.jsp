@@ -12,17 +12,10 @@
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/insert_survey.css" />
 <div class="card">
-	<div class="forshadowing" style="height: 860px;">
-		<div style="    display: flex;
-    justify-content: space-between;
-    border: none">
-			<div class="input_title"
-					style="display: flex;
-    border: none;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-left: 700px;">기본 설정</div>
-		<div><button style="float: right;" class="btn btn-link"
+	<div class="forshadowing" style="height: 860px;padding:0px;">
+		<div class="title">
+			<div class="input_title">기본 설정</div>
+		<div><button  class="btn btn-link"
 			onclick="insertComplete(${SLD.surveySeq})">등록완료</button></div>
 		</div>
 		<!-- 설문지 설정 진택 -->
@@ -30,8 +23,7 @@
 		<div class="container_survey">
 			<div class="row" ></div>
 
-			<div class="container_flex"
-				style="z">
+			<div class="container_flex">
 	
 				<form:form modelAttribute="SLD" id="survey_setting_form">
 					<div style="display:flex; justify-content: space-around;">
@@ -86,13 +78,15 @@
 
 							<div><input type="button" class="update_btn" style="margin-top:70px"
 								style="" onclick="register()"
-								value="적용"></div>
+								value="적용">
+							<input type="hidden" name="stateCode" value="30001">
+					<input type="hidden" name="surveySeq" id="surveyseq"value="${SLD.surveySeq}">	
+							</div>
 
-
+				
 					</div>
-					<input type="hidden" name="stateCode" value="30001">
-					<input type="hidden" name="surveySeq" id="surveyseq"
-						value="${SLD.surveySeq}">
+
+						
 
 				</form:form>
 
@@ -101,8 +95,7 @@
 
 
 
-			<div class="questionAndItem"
-				style="display: flex; justify-content: space-around;">
+			<div class="questionAndItem">
 				<div class="question_management">
 					<div class="input_title" style="display: contents">
 						문제 목록
@@ -117,19 +110,19 @@
 
 
 						<!-- 여기까지 문제 div -->
-						<div id="queAfter">
+						<table id="queAfter" class="table  table-striped">
 							<c:if test="${empty SQL}">
-								<div class="noquestion">
-									<br> <b>${NoQuestion}</b>
-								</div>
+								<tr class="noquestion">
+									<td><b>${NoQuestion}</b></td>
+								</tr>
 							</c:if>
 							<c:forEach items="${SQL}" var="qlist">
-								<div class="deleteThis" style="display: flex;">
-									<button class="delete_btn"
-										onclick="deleteQus(this,${qlist.surveySeq})"
-										style="background: white;" value="${qlist.questionSeq }">
+								<tr class="deleteThis">
+									<td style="display: flex;">
+									<button class="delete_btn" onclick="deleteQus(this,${qlist.surveySeq})" value="${qlist.questionSeq }">
 										<i class="fas fa-xmark"></i>
 									</button>
+															
 									<form id="${qlist.questionSeq }" onsubmit="return false;">
 
 										<div class="input_qus" id="checkTouch">
@@ -204,26 +197,27 @@
 
 
 									<div class="blank_under"></div>
-								</div>
+									</td>
+								</tr>
 							</c:forEach>
-						</div>
+						</table>
 					</div>
 				</div>
 
-
+				<div style="border-right:1px solid; height:653px"></div>
 
 				<div class="item_management">
 					<div style="display: flex">
 						<div class="input_title">문항 관리</div>
-
-						<p class="beforeTouch">문제를 클릭하여 문항을 관리해 보세요.</p>
-
+						
+							
 						<div class="itemAfter">
-
 							<!-- 객관식 -->
 							<c:forEach items="${SQL}" var="qlist">
 
 							</c:forEach>
+<!-- 							<div><p class="beforeTouch"><b>문제를 클릭하여 문항을 관리해 보세요.</b></p></div> -->
+							
 						</div>
 					</div>
 				</div>
@@ -280,15 +274,9 @@ function manageItem(obj,questionSeq){
 	
 }
 
-$(document).ready(function(){
-    $('div#checkTouch1').click(function(){
-    	console.log($(this).parent().next('button'));
-       $(this).parent().parent().next().next('button').click();
 
-    });
-  });
 
-function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
+function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 	const tag = $(obj);
 	
 	keyArray = [];
@@ -298,7 +286,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 			
 			
 			
-			if(questionSeq1 ==0){
+			if(questionSeq ==0){
 				var form = $('#0')[0];
 				var formdata = new FormData(form);
 				for(const pairkeys of formdata.keys()){
@@ -350,7 +338,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 
 // 				        	         var testDiv ='';
 // 	   	testDiv +='<div class="deleteThis" style="display:flex;">';
-//       	testDiv +='<button class="delete_btn" onclick="deleteQus(this,'+surveySeq+')" style="background: white;" value="'+data[0].questionSeq+'"><i class="fas fa-xmark"></i></button>';
+//       	testDiv +='<button class="delete_btn" onclick="deleteQus(this,'+surveySeq+')"  value="'+data[0].questionSeq+'"><i class="fas fa-xmark"></i></button>';
 // 	 	testDiv +='<form id="'+data[0].questionSeq+'" name="'+data[0].questionSeq+'" onsubmit="return false;">';
 // 	   	testDiv +='<div class="input_qus" id="checkTouch1">';
 // 	   	testDiv +='<input type="hidden" name= "surveySeq" value="'+surveySeq+'" id="surveySequence">';
@@ -384,7 +372,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 					})
 					
 			}else{
-				var form = $('#'+questionSeq1)[0];
+				var form = $('#'+questionSeq)[0];
 				var formdata = new FormData(form);
 				for(const pairkeys of formdata.keys()){
 		             keyArray.push(pairkeys);
@@ -395,7 +383,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 		          }
 		          
 		          for(var i = 0 ; i < cnt ; i++){
-		        	  if(keyArray[i]==questionSeq1){
+		        	  if(keyArray[i]==questionSeq){
 		        		  formdata.append('questionTypeCode',valueArray[i]);
 		        		  break;
 		        	  }
@@ -472,7 +460,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
    $(document).ready(function(){
         $('div#checkTouch').click(function(){
         	console.log($(this).parent().next('button'));
-           $(this).parent().next('button').click();
+           $(this).parent().next().click();
 
         });
       });
@@ -530,8 +518,9 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
    function question_copy(obj,surveySeq){
 		$('.noquestion').empty();
 	   var testDiv ='';
-	   	testDiv +='<div class="deleteThis" style="display:flex;">';
-      	testDiv +='<button class="delete_btn" onclick="deleteQus(this,'+surveySeq+')" style="background: white;" value="'+0+'"><i class="fas fa-xmark"></i></button>';
+	   	testDiv +='<tr class="deleteThis">';
+	   	testDiv +='<td style="display:flex;">'
+      	testDiv +='<button class="delete_btn" onclick="deleteQus(this,'+surveySeq+')" value="'+0+'"><i class="fas fa-xmark"></i></button>';
 	 	testDiv +='<form id="0" name="0" onsubmit="return false;">';
 	   	testDiv +='<div class="input_qus" id="checkTouch">';
 	   	testDiv +='<input type="hidden" name= "surveySeq" value="'+surveySeq+'" id="surveySequence">';
@@ -547,11 +536,12 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
       	testDiv +='</button>';
 		
       	testDiv +='<div class="blank_under"></div>';
-      	testDiv +='</div>';
+      	testDiv +='</td>';
+      	testDiv +='</tr>';
       	
         $('#queAfter').prepend(testDiv);
 
-     $('#queAfter div form div input[name=questionContent]').first().focus();
+     $('#queAfter tr form div input[name=questionContent]').first().focus();
      $('#0').children().children().next().next().click();
 //      $('#0').children().children().next().next().click();
 
@@ -577,11 +567,11 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 			   html  +='<div class="icon_line">';
 			   html +='<div id="TouchItem">';
 			   html  +='<input type="hidden" name="questionSeq" value="' + questionSeq +'">';
-			   html  +='<button type="button" style="background:white;" class="delete_btn" onclick="deleteItem(this,0)" >';
+			   html  +='<button type="button"  class="delete_btn" onclick="deleteItem(this,0)" >';
 			   html  += '<i class="fas fa-xmark"></i>';
 			   html  +=   '</button>';
 			   html  += '<input type="text" name="itemContent" placeholder="문항 입력..." id="input_item" onclick="manageItem(this,'+questionSeq+');this.onclick=null;">';
-			   html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+			   html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+questionSeq+');this.onclick=null;">';
 			   html  +='<input type="hidden" name="itemSeq" value="0">';
 			   html +='</div>';
 			   html  += '</div>';
@@ -596,11 +586,11 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 			   html  +='<div class="icon_line">';
 			   html +='<div id="TouchItem">';
 		 	   html  +='<input type="hidden" name="questionSeq" value="' + questionSeq +'">';
-		       html  +='<button type="button" style="background:white;" class="delete_btn" onclick="deleteItem(this,0)" >';
+		       html  +='<button type="button"  class="delete_btn" onclick="deleteItem(this,0)" >';
 		       html  += '<i class="fas fa-xmark"></i>';
 			   html  += '</button>';
 		       html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+questionSeq+');this.onclick=null;" >';
-		 	   html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" >';
+		 	   html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+questionSeq+');this.onclick=null;">';
 			   html  +='<input type="hidden" name="itemSeq" value="0">';
 			   html +='</div>';
 		   	   html  += '</div>';
@@ -660,22 +650,22 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 					html  +='<div class="icon_line">';
 					html +='<div id="TouchItem">';
 					html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
-					html  +='<button type="button" style="background:white;" class="delete_btn" onclick="deleteItem(this,0)" value="'+data[i].QUESTION_SEQ+'">';
+					html  +='<button type="button"  class="delete_btn" onclick="deleteItem(this,0)" value="'+data[i].QUESTION_SEQ+'">';
 					html  += '<i class="fas fa-xmark"></i>';
 					html  +=   '</button>';
 					html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
-					html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+					html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
 					html  +='<input type="hidden" name="itemSeq" value="0">';
 					html  +='</div>'
 				    html  += '</div>';
 				    html  +='<div class="icon_line">';
 					html +='<div id="TouchItem">';
 					html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
-				    html  +='<button type="button" style="background:white;" class="delete_btn" onclick="deleteItem(this,0)" value="'+data[i].QUESTION_SEQ+'">';
+				    html  +='<button type="button"  class="delete_btn" onclick="deleteItem(this,0)" value="'+data[i].QUESTION_SEQ+'">';
 				    html  += '<i class="fas fa-xmark"></i>';
 				    html  +=   '</button>';
 				    html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
-				    html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+				    html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
 				    html  +='<input type="hidden" name="itemSeq" value="0">';
 				    html  +='</div>';
 				    html  += '</div>';
@@ -686,7 +676,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 					 html  +='<div class="icon_line">';
 					 html +='<div id="TouchItem">';
 					 html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
-			         html  +='<button type="button" style="background:white;" class="delete_btn" onclick="deleteItem(this,'+data[i].ITEM_SEQ+')" value="'+data[i].QUESTION_SEQ+'">';
+			         html  +='<button type="button"  class="delete_btn" onclick="deleteItem(this,'+data[i].ITEM_SEQ+')" value="'+data[i].QUESTION_SEQ+'">';
 				     html  += '<i class="fas fa-xmark"></i>';
 				     html  +=   '</button>';
 			         html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;" value="'+data[i].ITEM_CONTENT+'">';
@@ -715,11 +705,11 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 					html  +='<div class="icon_line">';
 					html +='<div id="TouchItem">';
 			        html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
-			        html +='<button type="button" style="background:white;" class="delete_btn" onclick="deleteItem(this,0)" value="'+data[i].QUESTION_SEQ+'">';
+			        html +='<button type="button"  class="delete_btn" onclick="deleteItem(this,0)" value="'+data[i].QUESTION_SEQ+'">';
 			        html += '<i class="fas fa-xmark"></i>';
 			        html +=   '</button>'
 			        html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
-			        html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is">';
+			        html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
 			        html  +='<input type="hidden" name="itemSeq" value="0">';
 			        html  +='</div>';
 			        html  += '</div>';
@@ -727,7 +717,7 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 					html +='<div id="TouchItem">';
 			        html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
 			        html  += '<i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><input type="text" name="itemContent" placeholder="기타" value="기타" id="guitar" readonly>';
-			        html  +='<input type="hidden" name="itemScore"  value="0">';
+			        html  +='<input type="hidden" name="itemScore"  value="0" >';
 			        html  +='<input type="hidden" name="itemSeq" value="0">';
 					html  +='</div>';
 					html +='</div>';
@@ -750,11 +740,11 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
 				 		html  +='<div class="icon_line">';
 						html +='<div id="TouchItem">';
 				 		html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
-				        html  +='<button type="button" style="background:white;" class="delete_btn" onclick="deleteItem(this,'+data[i].ITEM_SEQ+')" value="'+data[i].QUESTION_SEQ+'">';
+				        html  +='<button type="button"  class="delete_btn" onclick="deleteItem(this,'+data[i].ITEM_SEQ+')" value="'+data[i].QUESTION_SEQ+'">';
 				        html  += '<i class="fas fa-xmark"></i>';
 					    html  +=   '</button>';
 				 		html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;" value="'+data[i].ITEM_CONTENT+'">';
-				 		html  +='<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
+				 		html  +='<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
 					    html  +='<input type="hidden" name="itemSeq" value="'+data[i].ITEM_SEQ+'">';
 					    html  += '</div>';
 					    html +='</div>';
@@ -929,8 +919,9 @@ function manageQus(obj,questionSeq1,questionTypeCodes,surveySeq){
    };
 
    $(document).ready(function(){
-	   $('#queAfter div form div input[name=questionContent]').first().focus();
-	   $('#queAfter div form div input[name=questionContent]').first().click();
+	   $('#queAfter tr form div input[name=questionContent]').first().focus();
+	   $('#queAfter tr form div input[name=questionContent]').first().click();
+
 
    });
 

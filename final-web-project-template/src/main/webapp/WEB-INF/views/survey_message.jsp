@@ -10,7 +10,7 @@
                         action="<c:url value='/survey/evaluateMessage.do/${surveySeq}'/>"
                         method="GET" class="survey_list_form" id="survey_list_form_id">
                         <div class="searchRangeAll">
-                        <div class="searchRange">
+                        <div class="searchRange" style="margin-right: 540px;">
                         <select name="selection">
 	                        <c:forEach items="${CommonEvaluteList}" var="common">
 							<c:if test="${pagingdto.selection eq common.codeDetailId }">
@@ -20,14 +20,14 @@
 								<option value="${common.codeDetailId}">${common.codeDetailName}</option>
 							</c:if>
 						 </c:forEach>
-                        </select> 
+                        </select>
                         </div>
                         <div class="input-group-append">
                         <input type="text" class="form-control" id="selectedKeyword"
                            placeholder="search" name="keyword"
                            value="${pagingDto.keyword}" aria-describedby="button-addon2">
                         <input type="hidden" name="pageNo" value="1"> <input
-                           type="hidden" name="surveySeq" value="${surveySeq}" /> 
+                           type="hidden" name="surveySeq" value="${surveySeq}" />
                         <input type="submit" class="btn btn-outline-secondary"
                               id="button-addon2" value="검색"> <input type="reset"
                               class="btn btn-outline-secondary" id="button-addon2"
@@ -37,12 +37,12 @@
                      </form>
                   </div>
                </div>
-			<div class="col-12" style=""><h3 style="text-align:center;"><b>설문지 평가 완료여부 목록</b></h3></div>
+			<div class="col-12" style=""><h3 style="text-align:left;"><b>설문지 평가 완료여부 목록</b></h3></div>
 
-               <table class="table table-striped">
+            <table class="table table-sm table-striped table-bordered">
                   <thead>
                      <tr>
-                        <th class=""></th>
+                        <th class="">#</th>
                         <th class="">이름</th>
                         <th class="">직급</th>
                         <th class="">부서</th>
@@ -63,10 +63,11 @@
                              <c:if test="${EL.SURVEY_COMPLETE_YN ne Y}">
                           		아니오
                              </c:if>
-                           </td> 
+                           </td>
                         </tr>
                      </c:forEach>
                   </tbody>
+                 <table class="paiging-btn-table">
                   <tr class="table-light">
                      <td colspan="12" class="text-center" style="border: none;">
                         <div>
@@ -101,12 +102,13 @@
                         </div>
                      </td>
                   </tr>
+                 </table>
                </table>
          </div>
       </div>
    <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
-	
-	
+
+
 
 	<!-- modal(이메일 보낼시) -->
 	<div class="modal fade" id="exampleModal" tabindex="-1"
@@ -142,3 +144,4 @@
 	</div>
 
 	<!-- modal(설문 등록 시 뜨는 팝업창) 끝-->
+<!-- 제발 -->
