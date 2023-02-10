@@ -34,7 +34,11 @@ body {
 						</div>
 
 					</form>
+										<a href="<c:url value='/projectHistoryexcel.do'/>"> 이력 다운받기</a>
 
+						
+					
+					
 
 					<form  id="organizationForm">
 
@@ -52,7 +56,7 @@ body {
 						</div>
 
 					</form>
-
+									<a href="<c:url value='/OCexcel.do'/>"> 이력 다운받기</a>
 				</div>
 
 			</div>
@@ -101,6 +105,8 @@ body {
 
 
 <script>
+
+
 
 function uploadProjectHistory(){
 	var projectHistoryForm = $('#projectHistoryForm')[0];

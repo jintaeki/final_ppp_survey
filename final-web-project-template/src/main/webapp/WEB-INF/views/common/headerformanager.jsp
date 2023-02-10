@@ -29,7 +29,7 @@
    	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-
+	<div style="height: 30px;">&nbsp;</div>
 
 	<div class="row"> 		<!-- footer에 있는 div와 연결됨  footerformanager에 div하나 있어-->
 

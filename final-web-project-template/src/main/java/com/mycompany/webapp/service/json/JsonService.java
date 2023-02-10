@@ -1,11 +1,15 @@
 package com.mycompany.webapp.service.json;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.IJsonRepository;
 import com.mycompany.webapp.dto.DTO_for_json;
 import com.mycompany.webapp.dto.DTO_for_json2;
+import com.mycompany.webapp.dto.OrganizationChartDTO;
+import com.mycompany.webapp.dto.ProjectHistoryDTO;
 
 @Service
 public class JsonService implements IJsonService{
@@ -31,5 +35,18 @@ public class JsonService implements IJsonService{
 		ijr.insert_into_mappingtable();
 		
 	}
+
+
+	@Override
+	public List<ProjectHistoryDTO> getHistoryList() {
+		return ijr.getHistoryList();
+	}
+
+
+	@Override
+	public List<OrganizationChartDTO> getOCList() {
+		return ijr.getOCList();
+	}
+	
 	
 }
