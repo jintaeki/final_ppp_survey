@@ -517,43 +517,54 @@
 	</select>
 
 	<select id="resultList" resultType="com.mycompany.webapp.dto.SurveyResultTeamDTO">
-		SELECT AVG(SCORE) AS SCORE,
+			SELECT AVG(SCORE) AS SCORE,
          	   DEPARTMENT_NAME
   		  FROM(
-  		  	SELECT SUM(ITEM_SCORE) AS SCORE,
+  		    SELECT ROUND(SUM(ITEM_SCORE)/DIV,1) AS SCORE,
                EMPLOYEE_NAME,
                DEPARTMENT_NAME
           FROM SURVEY_ITEM I,
                SURVEY_RESULT R,
                ORGANIZATION_CHART O,
                USER_INFO U,
-               SURVEY_QUESTION Q
+               SURVEY_QUESTION Q,
+               ( SELECT DISTINCT COUNT(M.APPRAISEE_ID) AS DIV, 
+                        M.APPRAISEE_ID AS DIVIDE_ID
+                        FROM MAPPING M
+                        WHERE M.SURVEY_SEQ = #{surveySeq}
+                        GROUP BY  M.APPRAISEE_ID) D  
          WHERE I.ITEM_SEQ = R.ITEM_SEQ
            AND R.SURVEY_SEQ = #{surveySeq}
            AND R.APPRAISEE_ID = U.EMPLOYEE_ID
            AND U.DEPARTMENT_ID = O.DEPARTMENT_ID
            AND I.QUESTION_SEQ = Q.QUESTION_SEQ
-           AND Q.QUESTION_TYPE_CODE = 10001
-      GROUP BY EMPLOYEE_NAME, DEPARTMENT_NAME
+           AND D.DIVIDE_ID = R.APPRAISEE_ID
+      GROUP BY EMPLOYEE_NAME, DEPARTMENT_NAME, DIV
    	      )
-   	  GROUP BY EMPLOYEE_NAME, DEPARTMENT_NAME
+   	  GROUP BY DEPARTMENT_NAME
+      ORDER BY DEPARTMENT_NAME
 	</select>
 
 	<select id="resultDPList" resultType="com.mycompany.webapp.dto.SurveyResultTeamDTO">
-		SELECT SUM(ITEM_SCORE) AS SCORE,
+		  SELECT ROUND(SUM(ITEM_SCORE)/DIV,1) AS SCORE,
                EMPLOYEE_NAME
           FROM SURVEY_ITEM I,
                SURVEY_RESULT R,
                USER_INFO U,
-               SURVEY_QUESTION Q
+               SURVEY_QUESTION Q,
+               (SELECT DISTINCT COUNT(M.APPRAISEE_ID) AS DIV, 
+                        M.APPRAISEE_ID AS DIVIDE_ID
+                        FROM MAPPING M
+                        WHERE M.SURVEY_SEQ = #{surveySeq}
+                        GROUP BY  M.APPRAISEE_ID) D  
          WHERE I.ITEM_SEQ = R.ITEM_SEQ
            AND R.SURVEY_SEQ = #{surveySeq}
            AND R.APPRAISEE_ID = U.EMPLOYEE_ID
            AND U.DEPARTMENT_ID = #{departmentId}
            AND I.QUESTION_SEQ = Q.QUESTION_SEQ
-           AND Q.QUESTION_TYPE_CODE = 10001
-      GROUP BY EMPLOYEE_NAME
-	</select>
+           AND D.DIVIDE_ID = R.APPRAISEE_ID
+      GROUP BY EMPLOYEE_NAME, DIV
+      </select>
 
 
 <select id="objectiveResult" resultType="com.mycompany.webapp.dto.SurveyResultDTO">
@@ -756,19 +767,24 @@ FROM(
                   , COUNT(*) OVER(PARTITION BY SURVEY_SEQ, score) cnt
                   , COUNT(*) OVER(PARTITION BY SURVEY_SEQ) tot
                   FROM (
-                   SELECT SUM(ITEM_SCORE) AS SCORE,
-                           EMPLOYEE_ID,
-                           R.SURVEY_SEQ
-                      FROM SURVEY_ITEM I,
-                           SURVEY_RESULT R,
-                           USER_INFO U,
-                           SURVEY_QUESTION Q
-                     WHERE I.ITEM_SEQ = R.ITEM_SEQ
-                       AND R.APPRAISEE_ID = U.EMPLOYEE_ID
-                       AND I.QUESTION_SEQ = Q.QUESTION_SEQ
-                       AND Q.QUESTION_TYPE_CODE = '10001'
-                       AND R.SURVEY_SEQ = #{surveySeq}
-                  GROUP BY EMPLOYEE_ID, R.SURVEY_SEQ) t
+                  SELECT ROUND(SUM(ITEM_SCORE)/DIV,1) AS SCORE,
+               			EMPLOYEE_ID,
+              			R.SURVEY_SEQ
+          		   FROM SURVEY_ITEM I,
+                        SURVEY_RESULT R,
+                        USER_INFO U,
+                        SURVEY_QUESTION Q,
+                        (SELECT DISTINCT COUNT(M.APPRAISEE_ID) AS DIV, 
+                                M.APPRAISEE_ID AS DIVIDE_ID
+                           FROM MAPPING M
+                          WHERE M.SURVEY_SEQ = #{surveySeq}
+                      GROUP BY  M.APPRAISEE_ID) D  
+                   WHERE I.ITEM_SEQ = R.ITEM_SEQ
+                     AND R.SURVEY_SEQ = #{surveySeq}
+                     AND R.APPRAISEE_ID = U.EMPLOYEE_ID
+                     AND I.QUESTION_SEQ = Q.QUESTION_SEQ
+                     AND D.DIVIDE_ID = R.APPRAISEE_ID
+                GROUP BY EMPLOYEE_ID, DIV, R.SURVEY_SEQ) t
                 )
             )
         ) S
@@ -777,19 +793,24 @@ FROM(
                  MIN(SCORE) AS MIN,
                  SURVEY_SEQ
              FROM(
-                 SELECT SUM(ITEM_SCORE) AS SCORE,
-                        EMPLOYEE_NAME,
-                        R.SURVEY_SEQ
-                   FROM SURVEY_ITEM I,
+                 SELECT ROUND(SUM(ITEM_SCORE)/DIV,1) AS SCORE,
+               			EMPLOYEE_ID,
+              			R.SURVEY_SEQ
+          		   FROM SURVEY_ITEM I,
                         SURVEY_RESULT R,
                         USER_INFO U,
-                        SURVEY_QUESTION Q
-                  WHERE I.ITEM_SEQ = R.ITEM_SEQ
-                    AND R.APPRAISEE_ID = U.EMPLOYEE_ID
-                    AND I.QUESTION_SEQ = Q.QUESTION_SEQ
-                    AND Q.QUESTION_TYPE_CODE = '10001'
-                    AND R.SURVEY_SEQ = #{surveySeq}
-                  GROUP BY EMPLOYEE_NAME, R.SURVEY_SEQ
+                        SURVEY_QUESTION Q,
+                        (SELECT DISTINCT COUNT(M.APPRAISEE_ID) AS DIV, 
+                                M.APPRAISEE_ID AS DIVIDE_ID
+                           FROM MAPPING M
+                          WHERE M.SURVEY_SEQ = #{surveySeq}
+                      GROUP BY  M.APPRAISEE_ID) D  
+                   WHERE I.ITEM_SEQ = R.ITEM_SEQ
+                     AND R.SURVEY_SEQ = #{surveySeq}
+                     AND R.APPRAISEE_ID = U.EMPLOYEE_ID
+                     AND I.QUESTION_SEQ = Q.QUESTION_SEQ
+                     AND D.DIVIDE_ID = R.APPRAISEE_ID
+                GROUP BY EMPLOYEE_ID, DIV, R.SURVEY_SEQ
                   )
             GROUP BY SURVEY_SEQ
          ) A
