@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+
 .card-body{
    height: 900px;
    width:1500px;
@@ -43,56 +44,103 @@
 
 .table{
 	max-width: 98%;
+
+.card-body{
+   height: 900px;
+   width:1500px;
+   background: #031436;
+   display: flex;
+}
+
+/* .hmenu { */
+/*     margin: auto; */
+/*     margin-bottom: 10px; */
+/*     margin-top: 50px; */
+/*     } */
+
+.form-control {
+    border: 0;
+    outline: 0;
+    border-bottom: 2px solid #eee;
+    font-size: 16px;
+    color: #ccc;
+    background-color: transparent;
+}
+
+
+
+
+/* .forshadowing { */
+/*     background-color: white; */
+/*     box-shadow: rgb(50 50 93 / 25%) 0px 50px 100px -20px, rgb(0 0 0 / 30%) 0px 30px 60px -30px, rgb(10 37 64 / 35%) 0px -2px 6px 0px inset; */
+/*     border-radius: 5px; */
+/*     height: 860px; */
+/*     padding: 1em; */
+/*     width: 1460px; */
+/* } */
+
+
+/* #survey_list_form_id{ */
+/*    display: flex; */
+/* } */
+
+.input-group-append{
+   margin-left:484.5px;
+}
+
+.table{
+   max-width: 98%;
+>>>>>>> refs/remotes/origin/master
     margin: auto;
     margin-bottom: 15px;
     box-shadow: 0px 0px 1px 1px #c0c0c0;
 }
 .sv_name{
-	text-align: center;
+   text-align: center;
 }
 .table td:not(.sv_name){
-	text-align: center;
+   text-align: center;
 
 }
 .table thead th{
-	height: 50px;
-	text-align: center;
-	vertical-align: middle;
-	color:#828D99;
+   height: 50px;
+   text-align: center;
+   vertical-align: middle;
+   color:#828D99;
 }
 .table td, .table th{
-	height: 25px;
-	vertical-align: middle;
-	border-top: 1px solid #dee2e6;
-	    text-align: center;
+   height: 25px;
+   vertical-align: middle;
+   border-top: 1px solid #dee2e6;
+       text-align: center;
 }
 
 .pagination{
-	margin-top: 20px;
-	margin-left: auto;
-	margin-right: auto;
+   margin-top: 20px;
+   margin-left: auto;
+   margin-right: auto;
 }
 .lmenu{
-	margin-top: 20px;
-	margin-right:58px;
-	float:right;
+   margin-top: 20px;
+   margin-right:58px;
+   float:right;
 }
 
 .paging-table{
-	    width: 1300px;
+       width: 1300px;
     margin-left: 80px;
 }
 
 .paiging-btn-table{
-	border: none;
-	width: 99%;
+   border: none;
+   width: 99%;
 }
 
 .searchRange {
     margin-right: 490px;
 }
 .btn btn-link {
-	    --bs-btn-padding-y: .25rem;
+       --bs-btn-padding-y: .25rem;
     --bs-btn-padding-x: .5rem;
     --bs-btn-font-size: .5rem;
     line-height: 1;

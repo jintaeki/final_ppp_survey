@@ -1,17 +1,8 @@
 package com.mycompany.webapp.controller;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -22,7 +13,6 @@ import javax.validation.Valid;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,29 +21,22 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyResultDTO;
 import com.mycompany.webapp.dto.UserCheckDTO;
-import com.mycompany.webapp.service.ISurveyService;
-import com.mycompany.webapp.dao.IJsonRepository;
 import com.mycompany.webapp.dto.DTO_for_json;
 import com.mycompany.webapp.dto.DTO_for_json2;
-import com.mycompany.webapp.dto.MappingDTO;
-import com.mycompany.webapp.dto.PopupDTO;
 import com.mycompany.webapp.service.ILoginCheckService;
-import com.mycompany.webapp.service.IMappingService;
+import com.mycompany.webapp.service.json.IJsonService;
 
-import lombok.extern.log4j.Log4j2;
 
 
 @Controller
@@ -66,7 +49,7 @@ public class HomeController {
 	ILoginCheckService loginCheckService;
 	
 	@Autowired
-	IJsonRepository ijr;
+	IJsonService ijr;
 	
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -175,12 +158,25 @@ public class HomeController {
 		}
 	}
 
+	@RequestMapping("/survey.do")
+	public String tosurvey() {
+		
+		return "survey";
+	}
+	
+	
+	
 	@RequestMapping("/logincheck.do")
+	@ResponseBody
 	public String loginAfter(@ModelAttribute("UCD")  @Valid UserCheckDTO UCD,
 
-							  BindingResult result,
+							  
 							  HttpSession session, Model model) {
-		
+		if(UCD.getPassword().equals("")) {
+			return "noPassword";
+		}if(UCD.getRaterId().equals("")) {
+			return "noId";
+		}
 		
 		if(SHA256(UCD.getPassword()) != "") {
 			UCD.setPassword(SHA256(UCD.getPassword()));
@@ -197,27 +193,27 @@ public class HomeController {
 				logger.info("평가자 진입");
 				// 평가자가 평가해야할 설문지 조회
 				List<Map<String,Object>> surveySeqAndName = loginCheckService.getSurveySeqAndName(UCD.getRaterId());
-				model.addAttribute("raterId",UCD.getRaterId());
-				model.addAttribute("surveySeqAndName",surveySeqAndName);
-				model.addAttribute("surveyResult", new SurveyResultDTO());
+				session.setAttribute("raterId",UCD.getRaterId());
+				session.setAttribute("surveySeqAndName",surveySeqAndName);
+				session.setAttribute("surveyResult", new SurveyResultDTO());
 				session.setAttribute("checked", check);
 				int nosurveySeqForGetAllUser = 0;
 
 				List<UserCheckDTO> allUser = loginCheckService.getUserInfo(UCD.getRaterId(), nosurveySeqForGetAllUser);
 				
-				model.addAttribute("allUser",allUser);
+				session.setAttribute("allUser",allUser);
 
-				return "survey";
+				return "successRater";
 			}else {
 				logger.info("관리자 진입");
 				session.setAttribute("checked", check);
-				return "redirect:/survey/surveysearch.do";
+				return "successManager";
 			}
 
 		}else {
 			logger.info("로그인 불가");
 			session.setAttribute("signIn", null);
-			return "login";
+			return "loginFail";
 		}
 
 
