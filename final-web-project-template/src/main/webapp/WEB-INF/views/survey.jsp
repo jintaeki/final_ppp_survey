@@ -317,13 +317,13 @@
 					  <div class="col-3"></div>
 					  </div>
 			          <div id="appendArea" class="row">`;
-            for(var i=0; i<size; i++){
+            for(var i=size-1; i>=0; i--){
                 html +='<div class="col-3">'+data[i].appraiseeName+'</div>';
                 html +='<div class="col-4">'+data[i].appraiseeDepartmentName+'</div>';
                 html +='<div class="col-2">'+data[i].appraiseeGradeName+'</div>';
 
                if(data[i].surveyCompleteYN=='N'){
-               html +='<div class="col-3"><button style="color:green;" class="create_btn" id="'+data[i].appraiseeId+'" onclick="surveyStart(this,'+data[i].appraiseeId+','+data[i].raterId+','+anonymitycode+','+theSeq+','+data[i].surveySeq+','+data[i].surveyContent+')" value="'+data[i].appraiseeName+'">평가하기</button></div>';
+               html +='<div class="col-3"><button style="color:green;" class="create_btn" id="'+data[i].appraiseeId+'" onclick="surveyStart(this,'+data[i].appraiseeId+','+data[i].raterId+','+anonymitycode+','+theSeq+','+data[i].surveySeq+','+"'"+data[i].surveyContent+"'"+')" value="'+data[i].appraiseeName+'">평가하기</button></div>';
                }else{
                html +='<div class="col-3"><button style="padding: 10px 13px; " class="create_btn" disabled>평가완료</button></div>';
                }
