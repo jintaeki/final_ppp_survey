@@ -73,7 +73,6 @@ public class HomeController {
 		JSONArray jsonArr = new JSONArray();
 		String jsonstr;
 		
-		
 		if(jsonFile.getContentType().equals("application/json")) {
 		
 			try {
@@ -118,7 +117,14 @@ public class HomeController {
 	@RequestMapping("/survey/fileUploadOrganization.do")
 	@ResponseBody
 	public String jsonFileUploadOrganization (@RequestParam(value="organizationjson") MultipartFile jsonFile ) {
-		if(jsonFile.getContentType().equals("application/json")) {
+		System.out.println("파일타입:"+jsonFile.getContentType());
+
+		String fileType = jsonFile.getContentType();
+		int index = fileType.length();
+		System.out.println("길이:"+ index);
+		System.out.println("타입:"+fileType.substring(index-3));
+		if(fileType.equals("application/json")||fileType.substring(index-4).equals("xlsx")) {
+			System.out.println("들어옴");
 			JSONObject jsonObj = null;
 			byte[] jsonData= null ;
 			DTO_for_json dfj = new DTO_for_json();
@@ -276,11 +282,10 @@ public class HomeController {
 		surveyResult.setSurveySeq(surveySeq[0]);
 		surveyResult.setAppraiseeId(appraiseeId[0]);
 		surveyResult.setRaterId(raterId[0]);
-
-		//
-		if(anonymityCode[0].equals("20001")) {
+		String raterid = surveyResult.getRaterId();
+				if(anonymityCode[0].equals("20001")) {
 			surveyResult.setAnonymitySeq(anonymitySeq[0]);
-//			surveyResult.setRaterId("null");
+			surveyResult.setRaterId("");
 
 			for(int i =0; i<cntcontent;i++) {
 				surveyResult.setQuestionSeq(questionSeq[i]);
@@ -288,18 +293,18 @@ public class HomeController {
 				surveyResult.setAnswerContent(answerContent[i]);
 
 				loginCheckService.insertResult(surveyResult);
-				loginCheckService.completeSurvey(surveyResult.getSurveySeq(),surveyResult.getAppraiseeId(),surveyResult.getRaterId());
+				loginCheckService.completeSurvey(surveyResult.getSurveySeq(),surveyResult.getAppraiseeId(),raterid);
 			}
 		}else {
 			for(int i =0; i<cntcontent;i++) {
-				surveyResult.setAnonymitySeq("0");
-//				surveyResult.setRaterId(raterId[i]);
+				surveyResult.setAnonymitySeq("");
+				surveyResult.setRaterId(raterId[i]);
 				surveyResult.setQuestionSeq(questionSeq[i]);
 				surveyResult.setItemSeq(itemSeq[i]);
 				surveyResult.setAnswerContent(answerContent[i]);
 
 				loginCheckService.insertResult(surveyResult);
-				loginCheckService.completeSurvey(surveyResult.getSurveySeq(),surveyResult.getAppraiseeId(),surveyResult.getRaterId());
+				loginCheckService.completeSurvey(surveyResult.getSurveySeq(),surveyResult.getAppraiseeId(),raterid);
 
 			}
 		}
@@ -346,13 +351,11 @@ public class HomeController {
 		try {
 			md = MessageDigest.getInstance("SHA-256");
 			md.update(password.getBytes());
-//		     MessageDigest tc1 = md.clone();
 		     byte[] toSHA256 = md.digest();
 		     result = new BigInteger(1, toSHA256).toString(16).toUpperCase(); 
 		     System.out.println(result);
 		     return result;
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println(result);
 			return result;

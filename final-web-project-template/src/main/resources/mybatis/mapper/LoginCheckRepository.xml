@@ -50,7 +50,7 @@
               S.SURVEY_SEQ = #{surveySeq} AND
               </if>
               UR.EMPLOYEE_ID = #{raterId}
-              ORDER BY S.SURVEY_SEQ
+              ORDER BY S.SURVEY_SEQ, UA.EMPLOYEE_NAME ASC
 	</select>
 
 	<select id="getQuestion" parameterType="int" resultType="hashmap">

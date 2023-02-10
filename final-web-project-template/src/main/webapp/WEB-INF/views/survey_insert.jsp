@@ -93,7 +93,7 @@
 			</div>
 
 
-
+			<div style="box-shadow: 0px 0px 1px 1px #c0c0c0; border: 4px solid #F2F2F2;"></div>
 
 			<div class="questionAndItem">
 				<div class="question_management">
@@ -204,7 +204,8 @@
 					</div>
 				</div>
 
-				<div style="border-right:1px solid; height:653px"></div>
+				<div style="box-shadow: 1px 1px 1px 0px #c0c0c0; border-left: 4px solid #F2F2F2; border-right: 4px solid #F2F2F2;
+    				height: 645.3px;"></div>
 
 				<div class="item_management">
 					<div style="display: flex">
@@ -214,7 +215,7 @@
 						<div class="itemAfter">
 							<!-- 객관식 -->
 							<c:forEach items="${SQL}" var="qlist">
-
+									
 							</c:forEach>
 <!-- 							<div><p class="beforeTouch"><b>문제를 클릭하여 문항을 관리해 보세요.</b></p></div> -->
 							
@@ -444,7 +445,7 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 	            if(data == '0'){
 	            	alert("문항이 최소 1개는 존재해야 합니다.")
 	            }else{
-	            	window.location.replace("/survey/surveysearch");
+	            	window.location.replace("/survey/surveysearch.do");
 	            }
 
 	         },
@@ -564,17 +565,17 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 		   if(cntObj ==5){
 			   alert("객관식 문항은 최대 5개까지 생성 가능합니다.");
 		   }else if(cntObj < 5){
-			   html  +='<div class="icon_line">';
-			   html +='<div id="TouchItem">';
-			   html  +='<input type="hidden" name="questionSeq" value="' + questionSeq +'">';
+// 			   html  +='<div class="icon_line">';
+			   html +='<tr id="TouchItem">';
+			   html  +='<td><input type="hidden" name="questionSeq" value="' + questionSeq +'">';
 			   html  +='<button type="button"  class="delete_btn" onclick="deleteItem(this,0)" >';
 			   html  += '<i class="fas fa-xmark"></i>';
-			   html  +=   '</button>';
-			   html  += '<input type="text" name="itemContent" placeholder="문항 입력..." id="input_item" onclick="manageItem(this,'+questionSeq+');this.onclick=null;">';
-			   html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+questionSeq+');this.onclick=null;">';
-			   html  +='<input type="hidden" name="itemSeq" value="0">';
-			   html +='</div>';
-			   html  += '</div>';
+			   html  +=   '</button></td>';
+			   html  += '<td><input type="text" name="itemContent" placeholder="문항 입력..." id="input_item" onclick="manageItem(this,'+questionSeq+');this.onclick=null;">';
+			   html  +='</td><td><input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+questionSeq+');this.onclick=null;">';
+			   html  +='<input type="hidden" name="itemSeq" value="0"></td>';
+			   html +='</tr>';
+// 			   html  += '</div>';
 			   cntObj = cntObj +1;
 
 		   }
@@ -583,23 +584,23 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 		   if(cntMix ==5){
 			   alert("객관식 문항은 최대 5개까지 생성 가능합니다.");
 		   }else if(cntMix < 5){
-			   html  +='<div class="icon_line">';
-			   html +='<div id="TouchItem">';
-		 	   html  +='<input type="hidden" name="questionSeq" value="' + questionSeq +'">';
+// 			   html  +='<div class="icon_line">';
+			   html +='<tr id="TouchItem">';
+		 	   html  +='<td><input type="hidden" name="questionSeq" value="' + questionSeq +'">';
 		       html  +='<button type="button"  class="delete_btn" onclick="deleteItem(this,0)" >';
 		       html  += '<i class="fas fa-xmark"></i>';
-			   html  += '</button>';
-		       html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+questionSeq+');this.onclick=null;" >';
-		 	   html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+questionSeq+');this.onclick=null;">';
-			   html  +='<input type="hidden" name="itemSeq" value="0">';
-			   html +='</div>';
-		   	   html  += '</div>';
+			   html  += '</button></td>';
+		       html  += '<td><input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+questionSeq+');this.onclick=null;" >';
+		 	   html  +='</td><td><input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+questionSeq+');this.onclick=null;">';
+			   html  +='<input type="hidden" name="itemSeq" value="0"></td>';
+			   html +='</tr>';
+// 		   	   html  += '</div>';
 		   	   cntMix = cntMix +1;
 		   }
 	   }
-	   $('.itemAfter').prepend(html);
+	   $('.item').children().children().first().after(html);
 	  
-	   $('.itemAfter div div input[name=itemContent]').first().focus();
+	   $('.item table table-stripe tbody tr td input[name=itemContent]').first().focus();
 
 
 	   	   
@@ -640,50 +641,54 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 						html  +='<form id="i'+data[i].QUESTION_SEQ+'"onsubmit="return false;">';
 						html +='<input type="hidden" name=surveySeq value="'+data[i].SURVEY_SEQ+'">';
 						html +='<input type="hidden" name="questionTypeCode" value="'+data[i].QUESTION_TYPE_CODE+'">';
-						html  +='<div class="itemAfter">';
+						html+='<table class="item table table-stripe"><tr><th class="itemdeletebtn"></th><th class="itemContent">문항</th><th>점수</th></tr>';
+// 						html  +='<div class="itemAfter">';
+						 
+
 						cntForTopOfItem = cntForTopOfItem + 1;						 
 					 }
 				 }
 			 if(data[i].QUESTION_TYPE_CODE == "10001"){
 				 console.log(data[i].QUESTION_TYPE_CODE);
 				 if(data[i].ITEM_SEQ == null){
-					html  +='<div class="icon_line">';
-					html +='<div id="TouchItem">';
-					html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
+// 					html  +='<div class="icon_line">';
+					html +='<tr id="TouchItem">';
+					html  +='<td><input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
 					html  +='<button type="button"  class="delete_btn" onclick="deleteItem(this,0)" value="'+data[i].QUESTION_SEQ+'">';
 					html  += '<i class="fas fa-xmark"></i>';
-					html  +=   '</button>';
-					html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
-					html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
-					html  +='<input type="hidden" name="itemSeq" value="0">';
-					html  +='</div>'
-				    html  += '</div>';
-				    html  +='<div class="icon_line">';
-					html +='<div id="TouchItem">';
-					html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
+					html  +=   '</button></td>';
+					html  += '<td><input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
+					html  +='</td><td><input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
+					html  +='<input type="hidden" name="itemSeq" value="0"></td>';
+// 					html  +='</div>'
+				    html  += '</tr>';
+// 				    html  +='<div class="icon_line">';
+					html +='<tr id="TouchItem">';
+					html  +='<td><input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
 				    html  +='<button type="button"  class="delete_btn" onclick="deleteItem(this,0)" value="'+data[i].QUESTION_SEQ+'">';
 				    html  += '<i class="fas fa-xmark"></i>';
-				    html  +=   '</button>';
-				    html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
-				    html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
-				    html  +='<input type="hidden" name="itemSeq" value="0">';
-				    html  +='</div>';
-				    html  += '</div>';
+				    html  +=   '</button></td>';
+				    html  += '<td><input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
+				    html  +='</td><td><input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
+				    html  +='<input type="hidden" name="itemSeq" value="0"></td>';
+				    html  +='</tr>';
+// 				    html  += '</div>';
 
 				        cntObj = cntObj + 2;
 				        
 				 }else{
-					 html  +='<div class="icon_line">';
-					 html +='<div id="TouchItem">';
-					 html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
+					 
+// 					 html  +='<div class="icon_line">';
+					 html +='<tr id="TouchItem">';
+					 html  +='<td><input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
 			         html  +='<button type="button"  class="delete_btn" onclick="deleteItem(this,'+data[i].ITEM_SEQ+')" value="'+data[i].QUESTION_SEQ+'">';
 				     html  += '<i class="fas fa-xmark"></i>';
-				     html  +=   '</button>';
-			         html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;" value="'+data[i].ITEM_CONTENT+'">';
-			         html  +='<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'">';
-				     html  +='<input type="hidden" name="itemSeq" value="'+data[i].ITEM_SEQ+'">';
-				     html  +='</div>';
-				     html  += '</div>';
+				     html  +=   '</button></td>';
+			         html  += '<td><input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;" value="'+data[i].ITEM_CONTENT+'">';
+			         html  +='</td><td><input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
+				     html  +='<input type="hidden" name="itemSeq" value="'+data[i].ITEM_SEQ+'"></td>';
+				     html  +='</tr>';
+// 				     html  += '</div>';
 
 				     cntObj = cntObj + 1;
 				        
@@ -702,52 +707,52 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 			 }//주관식
 			 else if(data[i].QUESTION_TYPE_CODE == "10003"){
 				 if(data[i].ITEM_SEQ == null){
-					html  +='<div class="icon_line">';
-					html +='<div id="TouchItem">';
-			        html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
+// 					html  +='<div class="icon_line">';
+					html +='<tr id="TouchItem">';
+			        html  +='<td><input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
 			        html +='<button type="button"  class="delete_btn" onclick="deleteItem(this,0)" value="'+data[i].QUESTION_SEQ+'">';
 			        html += '<i class="fas fa-xmark"></i>';
-			        html +=   '</button>'
-			        html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
-			        html  +='<input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
-			        html  +='<input type="hidden" name="itemSeq" value="0">';
-			        html  +='</div>';
-			        html  += '</div>';
-			        html  +='<div class="icon_line" id="guitar">';
-					html +='<div id="TouchItem">';
-			        html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
-			        html  += '<i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><input type="text" name="itemContent" placeholder="기타" value="기타" id="guitar" readonly>';
-			        html  +='<input type="hidden" name="itemScore"  value="0" >';
-			        html  +='<input type="hidden" name="itemSeq" value="0">';
-					html  +='</div>';
-					html +='</div>';
+			        html +=   '</button></td>';
+			        html  += '<td><input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;">';
+			        html  +='</td><td><input type="number" name="itemScore" min="0" value="0" style="min-width: 20px; max-width: 40px;" id="is" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
+			        html  +='<input type="hidden" name="itemSeq" value="0"></td>';
+			        html  +='</tr>';
+// 			        html  += '</div>';
+// 			        html  +='<div class="icon_line" id="guitar">';
+					html +='<tr id="TouchItem">';
+			        html  +='<td> <input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
+			        html  += '<i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i></td><td><input type="text" name="itemContent" placeholder="기타" value="기타" id="guitar" readonly>';
+			        html  +='</td><td><input type="hidden" name="itemScore"  value="0" >';
+			        html  +='<input type="hidden" name="itemSeq" value="0"></td>';
+					html  +='</tr>';
+// 					html +='</div>';
 					console.log(cntMix);
 			        cntMix = cntMix + 2;
 				     
 				 }else{
 					 if(data[i].ITEM_CONTENT =="기타"){
-		                html  +='<div class="icon_line" id="guitar">';
-		 			    html +='<div id="TouchItem">';
-		                html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
-		                html  += '<i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i><input type="text" name="itemContent" id="guitar" value="'+data[i].ITEM_CONTENT+'" readonly>';
-		                html  +='<input type="hidden" name="itemScore"  value="0">';
-		                html  +='<input type="hidden" name="itemSeq" value="'+data[i].ITEM_SEQ+'">';
-		                html  += '</div>';
-		                html +='</div>';
+// 		                html  +='<div class="icon_line" id="guitar">';
+		 			    html +='<tr id="TouchItem">';
+		                html  +='<td><input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
+		                html  += '<i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i></td><td><input type="text" name="itemContent" id="guitar" value="'+data[i].ITEM_CONTENT+'" readonly>';
+		                html  +='</td><td><input type="hidden" name="itemScore"  value="0">';
+		                html  +='<input type="hidden" name="itemSeq" value="'+data[i].ITEM_SEQ+'"></td>';
+		                html  += '</tr>';
+// 		                html +='</div>';
 		                console.log(cntMix);
 		                cntMix = cntMix + 1;
 				 	 }else{
-				 		html  +='<div class="icon_line">';
-						html +='<div id="TouchItem">';
-				 		html  +='<input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
+// 				 		html  +='<div class="icon_line">';
+						html +='<tr id="TouchItem">';
+				 		html  +='<td><input type="hidden" name="questionSeq" value="' + data[i].QUESTION_SEQ +'">';
 				        html  +='<button type="button"  class="delete_btn" onclick="deleteItem(this,'+data[i].ITEM_SEQ+')" value="'+data[i].QUESTION_SEQ+'">';
 				        html  += '<i class="fas fa-xmark"></i>';
-					    html  +=   '</button>';
-				 		html  += '<input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;" value="'+data[i].ITEM_CONTENT+'">';
-				 		html  +='<input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
-					    html  +='<input type="hidden" name="itemSeq" value="'+data[i].ITEM_SEQ+'">';
-					    html  += '</div>';
-					    html +='</div>';
+					    html  += '</button></td>';
+				 		html  += '<td><input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;" value="'+data[i].ITEM_CONTENT+'">';
+				 		html  +='</td><input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
+					    html  +='<input type="hidden" name="itemSeq" value="'+data[i].ITEM_SEQ+'"></td>';
+					    html  += '</tr>';
+// 					    html +='</div>';
 					    console.log(cntMix);
 		                cntMix = cntMix + 1;
 		                
@@ -760,7 +765,8 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 			  }//혼합식
 			}//특정 문제의 문항만 출력
 		 }//첫 for문
- 		html  +='</div>';
+		 html +='</table>';
+//  		html  +='</div>';
  		html  +='</form>';		 
 		$('.item_management').append(html );
 		console.log(cntObj);
@@ -788,7 +794,7 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 		           		console.log("삭제 요청이 보내지는가?");
 		         	},
 		            success:function () {    //전송 성공시 실행
-		         		$(obj).parent().remove();
+		         		$(obj).parent().parent().remove();
 						cntObj = cntObj - 1;
 						cntMix = cntMix - 1;
 		            }
@@ -918,12 +924,12 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
       }
    };
 
-   $(document).ready(function(){
-	   $('#queAfter tr form div input[name=questionContent]').first().focus();
-	   $('#queAfter tr form div input[name=questionContent]').first().click();
+//    $(document).ready(function(){
+// 	   $('#queAfter tr form div input[name=questionContent]').first().focus();
+// 	   $('#queAfter tr form div input[name=questionContent]').first().click();
 
 
-   });
+//    });
 
    function checkit1(obj,questionType,questionSeq,name) {
 	   $(".beforeTouch").empty();
