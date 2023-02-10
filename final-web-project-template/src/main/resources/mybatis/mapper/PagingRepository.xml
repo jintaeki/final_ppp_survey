@@ -267,17 +267,11 @@
                      <when test = "keyword == ''">
                         and ui.employee_name like '%' || '' || '%'
                      </when>
-                     <otherwise>
-                         and ui.employee_name like '%' || #{keyword} || '%'
-                     </otherwise>
+                    
                   </choose>
-                        <choose>
-                         <when test = "selection == 'employeeName'">
-                     and ui.employee_name like  '%' || #{keyword} || '%'
-                       </when>
-                  </choose>
+                       
                   <choose>
-                        <when test= "selection == 'departmentName'">
+                        <when test= "selection=='departmentName'">
                      and oc.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%'
                         </when>
                   </choose>
