@@ -132,10 +132,7 @@ public class HomeController {
 			}
 	               
 	        List<OrganizationChartDTO> list =  ijr.getOCList();
-	        Object o = new Object();
-	        logger.info(list.toString());
-	        System.out.println(list.lastIndexOf(o));
-	        System.out.println(list.indexOf(o));
+
 	        
 	        for (OrganizationChartDTO dto : list) {
 	            Row row = sheet.createRow(rowNo++);
@@ -158,7 +155,6 @@ public class HomeController {
 	        
 	        
        }
-//       return "0";
 
     }
 
