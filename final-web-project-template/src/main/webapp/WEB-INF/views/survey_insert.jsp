@@ -301,6 +301,10 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 		          for(const pairvalues of formdata.values()){
 		        	  console.log(pairvalues);
 
+		        	  if(pairvalues==''){
+		        		  alert("빈 텍스트는 저장이 불가합니다.");
+		        		  return false;
+		        	  }
 		             valueArray.push(pairvalues);
 		          }
 

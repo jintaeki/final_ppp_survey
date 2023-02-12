@@ -546,7 +546,7 @@ public class SurveyController {
 				int totalRows = pagingService.getEvaluateSearchBoardNum(keyword, selection, selection2,  surveySeq);
 
 				System.out.println("totolRows:" + totalRows);
-			    pagingDto = new PagingDTO(13, 10, totalRows, pageNo);
+			    pagingDto = new PagingDTO(12, 10, totalRows, pageNo);
 
 				pagingDto.setSelection(selection);
 				pagingDto.setSelection2(selection2);
