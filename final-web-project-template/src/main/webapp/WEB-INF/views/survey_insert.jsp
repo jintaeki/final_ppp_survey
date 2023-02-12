@@ -751,7 +751,7 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 				        html  += '<i class="fas fa-xmark"></i>';
 					    html  += '</button></td>';
 				 		html  += '<td><input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;" value="'+data[i].ITEM_CONTENT+'">';
-				 		html  +='</td><input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
+				 		html  +='</td><td><input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
 					    html  +='<input type="hidden" name="itemSeq" value="'+data[i].ITEM_SEQ+'"></td>';
 					    html  += '</tr>';
 // 					    html +='</div>';
