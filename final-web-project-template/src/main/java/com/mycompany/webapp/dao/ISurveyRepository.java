@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
@@ -55,18 +56,17 @@ public interface ISurveyRepository {
 
 	void deleteItem (@Param("questionSeq") int questionSeq, @Param("itemSeq") int itemSeq);
 
-	List<Map<String, String>> selectSurveyEvaluate(int surveySeq);
-
 	List<Map<String, Object>> searchByEvaluate(PagingDTO pagingdto);
-	
-	List<Map<String, String>> selectSurveyMessage(int surveySeq);
 
 	List<Map<String, Object>> searchByMessage(PagingDTO pagingdto);
 
 	// 결과 통계 페이지
 	List<SurveyListDTO> surveyList();
 	List<OrganizationChartDTO> organList(int surveySeq);
-
+	List<OrganizationChartDTO> organAppraiseeList(int surveySeq);
+	List<OrganizationChartDTO> organRaterList(int surveySeq);
+	List<MappingDTO> checkList();
+	
 	//결과 목록
 	List<SurveyResultTeamDTO> resultList(int surveySeq);
 	List<SurveyResultTeamDTO> resultDPList(@Param("surveySeq") int surveySeq, @Param("departmentId") String departmentId);

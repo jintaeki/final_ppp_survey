@@ -20,7 +20,7 @@ function popup(){
 	var month = $('#month').val();
 
 	let popUrl ="/mapping/popup.do?pageNo=1&surveySeq="+surveySeq+"&raterId="+raterId
-			   +"&month="+month+"&keyword=&selection=60004&selectGD=60004";
+			   +"&month="+month+"&keyword=&keyword2=&selection=60004&selection2=60004&selectGD=60004";
 	let popOption = "width=800, height=820, left=470, top=100";
 	window.open(popUrl, "다면평가 대상 추가", popOption);
 }
@@ -73,7 +73,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 								<div class="searchRangeAll">
 								<div class="searchRange">
 								<select name="selectGD">
-									<option value="60004">전체</option>
+									<option value="60004">평가자 직급</option>
 									<c:forEach items="${gradeList}" var="grade">
 										<c:if test="${pagingdto.selectGD eq grade.gradeId}">
 											<option selected value="${pagingdto.selectGD}">${grade.gradeName}</option>
@@ -82,21 +82,35 @@ function map_delete(surveySeq, raterId, appraiseeId){
 											<option value="${grade.gradeId}">${grade.gradeName}</option>
 										</c:if>
 									</c:forEach>
-								</select> <select name="selection">
-									<c:forEach items="${commonMapList}" var="commonMap">
-										<c:if test="${pagingdto.selection eq commonMap.codeDetailId }">
-											<option selected value="${pagingdto.selection}">${commonMap.codeDetailName }</option>
+								</select> 
+								<select name="selection">
+							     	<option value="60004">평가자 부서</option>
+									<c:forEach items="${raterDepartment}" var="rdp">
+										<c:if test="${pagingdto.selection eq rdp.departmentId }">
+											<option selected value="${pagingdto.selection}">${rdp.departmentName}</option>
 										</c:if>
-										<c:if test="${pagingdto.selection ne commonMap.codeDetailId }">
-											<option value="${commonMap.codeDetailId}">${commonMap.codeDetailName }</option>
+										<c:if test="${pagingdto.selection ne rDp.departmentId }">
+											<option value="${rdp.departmentId}">${rdp.departmentName}</option>
 										</c:if>
 									</c:forEach>
 								</select>
+								<input type="text" class="form-control" id="selectedKeyword" placeholder="평가자  이름 검색창"
+					   				   name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2">  
 								</div>
 								<div class="input-group-append">
-								<input type="text" class="form-control" id="selectedKeyword"
-									placeholder="search" name="keyword"
-									value="${pagingdto.keyword}" aria-describedby="button-addon2">
+								<select name="selection2" style="margin-left:100px">
+									<option value="60004">피평가자 부서</option>
+										<c:forEach items="${appraiseeDepartment}" var="adp">
+											<c:if test="${pagingdto.selection2 eq adp.departmentId}">
+												<option selected value="${pagingdto.selection2}">${adp.departmentName}</option>
+											</c:if>
+											<c:if test="${pagingdto.selection2 ne adp.departmentId }">
+												<option value="${adp.departmentId}">${adp.departmentName}</option>
+											</c:if>
+										</c:forEach>
+								</select> 
+								<input type="text" class="form-control" id="selectedKeyword" placeholder="피평가자 이름 검색창"
+					   				   name="keyword2" value="${pagingdto.keyword2}" aria-describedby="button-addon2"> 
 								<input type="hidden" name="pageNo" value="1"> <input
 									type="hidden" name="surveySeq" value="${pagingdto.surveySeq}">
 								<input type="hidden" name="month" value="${pagingdto.month}">
@@ -164,22 +178,22 @@ function map_delete(surveySeq, raterId, appraiseeId){
 								<div>
 									<c:if test="${pagingdto.groupNo>1}">
 										<a class="btn btn-outline-secondary"
-											href="set.do?pageNo=${pagingdto.startPageNo-1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">이전</a>
+											href="set.do?pageNo=${pagingdto.startPageNo-1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">이전</a>
 									</c:if>
 									<c:forEach var="i" begin="${pagingdto.startPageNo}"
 										end="${pagingdto.endPageNo}">
 										<c:if test="${pagingdto.pageNo != i}">
 											<a class="btn btn-outline-secondary"
-												href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
+												href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
 										</c:if>
 										<c:if test="${pagingdto.pageNo == i}">
 											<a class="btn btn-secondary"
-												href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
+												href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
 										</c:if>
 									</c:forEach>
 									<c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
 										<a class="btn btn-outline-secondary"
-											href="set.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">다음</a>
+											href="set.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">다음</a>
 									</c:if>
 								</div>
 								<div style="float: right;">

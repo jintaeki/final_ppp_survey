@@ -62,81 +62,84 @@
                resArr.push(addObj);
       console.log(plusId);
       });
-      console.log(resArr);
-
+      console.log(resArr);   
+     
      $.ajax({
-		 url: "popup.do",
-		 type: "POST",
-		 contentType: "application/json;charset=UTF-8",
-		 data:JSON.stringify(resArr),
-		 dataType : "json"
-	   })
-	  .done(function(resMap) {
-	     alert(resMap.msg);
-		 opener.parent.location.reload();
-		 window.close();
-	  })
-	  .fail(function(e) {
-	 	 alert("추가 실패");
-	  })
-	  always(function() {
-		 alert(resMap.msg);
-	  });
+       url: "popup.do",
+       type: "POST",
+       contentType: "application/json;charset=UTF-8",
+       data:JSON.stringify(resArr),
+       dataType : "json"
+      })
+     .done(function(resMap) {
+        alert(resMap.msg);
+       opener.parent.location.reload();
+       window.close();
+     })
+     .fail(function(e) {
+        alert("추가 실패");
+     })
+     always(function() {
+       alert(resMap.msg);
+
+     });   
    }
 </script>
 <div class="entire_popup">
-	<div class="hmenu_popup_An">
-		<div class="survey_list_form_upper_dv_An">
-			<form action="<c:url value='/mapping/another.do'/>" method="get" class="survey_list_form_An">
-				<select name="selectGD">
-					<option value="60004">평가자 직급</option>
-					<c:forEach items="${gradeList}" var="grade">
-						<c:if test="${pagingdto.selectGD eq grade.gradeId}">
-							<option selected value="${pagingdto.selectGD}">${grade.gradeName}</option>
-						</c:if>
-						<c:if test="${pagingdto.selectGD ne grade.gradeId}">
-							<option value="${grade.gradeId}">${grade.gradeName}</option>
-						</c:if>
-					</c:forEach>
-				</select>
-				<select name="selection">
-					<c:forEach items="${commonMapList}" var="commonMap">
-						<c:if test="${pagingdto.selection eq commonMap.codeDetailId }">
-							<option selected value="${pagingdto.selection}">${commonMap.codeDetailName}</option>
-						</c:if>
-						<c:if test="${pagingdto.selection ne commonMap.codeDetailId }">
-							<option value="${commonMap.codeDetailId}">${commonMap.codeDetailName }</option>
-						</c:if>
-					</c:forEach>
-				</select>
-				<input type="text" class="form-control" id="selectedKeyword" placeholder="평가자  검색창"
-					   name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2">
-				<select name="selection2" style="margin-left:100px">
-					<c:forEach items="${commonMapList}" var="commonMap">
-						<c:if test="${pagingdto.selection2 eq commonMap.codeDetailId }">
-							<option selected value="${pagingdto.selection2}">${commonMap.codeDetailName}</option>
-						</c:if>
-						<c:if test="${pagingdto.selection2 ne commonMap.codeDetailId }">
-							<option value="${commonMap.codeDetailId}">${commonMap.codeDetailName }</option>
-						</c:if>
-					</c:forEach>
-				</select>
-				<input type="text" class="form-control" id="selectedKeyword" placeholder="피평가자 검색창"
-					   name="keyword2" value="${pagingdto.keyword2}" aria-describedby="button-addon2">
-				<input type="hidden" name="pageNo" value="1">
-				<input type="hidden" name="surveySeq" value="${pagingdto.surveySeq}">
-				<div class="input-group-append">
-					<input type="submit" class="btn btn-outline-secondary"
-						id="button-addon2" value="검색">
-					<input type="reset" class="btn btn-outline-secondary"
-						id="button-addon2" value="초기화">
-				</div>
-			</form>
-		</div>
-	</div>
+   <div class="hmenu_popup_An">
+      <div class="survey_list_form_upper_dv_An">
+         <form action="<c:url value='/mapping/another.do'/>" method="get" class="survey_list_form_An">
+            <select name="selectGD">
+               <option value="60004">평가자 직급</option>
+               <c:forEach items="${gradeList}" var="grade">
+                  <c:if test="${pagingdto.selectGD eq grade.gradeId}">
+                     <option selected value="${pagingdto.selectGD}">${grade.gradeName}</option>
+                  </c:if>
+                  <c:if test="${pagingdto.selectGD ne grade.gradeId}">
+                     <option value="${grade.gradeId}">${grade.gradeName}</option>
+                  </c:if>
+               </c:forEach>
+            </select> 
+            <select name="selection">
+               <option value="60004">평가자 부서</option>
+               <c:forEach items="${raterDepartment}" var="rdp">
+                  <c:if test="${pagingdto.selection eq rdp.departmentId }">
+                     <option selected value="${pagingdto.selection}">${rdp.departmentName}</option>
+                  </c:if>
+                  <c:if test="${pagingdto.selection ne rDp.departmentId }">
+                     <option value="${rdp.departmentId}">${rdp.departmentName}</option>
+                  </c:if>
+               </c:forEach>
+            </select> 
+            <input type="text" class="form-control" id="selectedKeyword" placeholder="평가자  이름 검색창"
+                  name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2"> 
+            <select name="selection2" style="margin-left:100px">
+               <option value="60004">피평가자 부서</option>
+               <c:forEach items="${appraiseeDepartment}" var="adp">
+                  <c:if test="${pagingdto.selection2 eq adp.departmentId}">
+                     <option selected value="${pagingdto.selection2}">${adp.departmentName}</option>
+                  </c:if>
+                  <c:if test="${pagingdto.selection2 ne adp.departmentId }">
+                     <option value="${adp.departmentId}">${adp.departmentName}</option>
+                  </c:if>
+               </c:forEach>
+            </select> 
+            <input type="text" class="form-control" id="selectedKeyword" placeholder="피평가자 이름 검색창"
+                  name="keyword2" value="${pagingdto.keyword2}" aria-describedby="button-addon2"> 
+            <input type="hidden" name="pageNo" value="1">
+            <input type="hidden" name="surveySeq" value="${pagingdto.surveySeq}">
+            <div class="input-group-append">
+               <input type="submit" class="btn btn-outline-secondary"
+                  id="button-addon2" value="검색">
+               <input type="reset" class="btn btn-outline-secondary"
+                  id="button-addon2" value="초기화">
+            </div>
+         </form>
+      </div>
+   </div>
    <div class="table-table-hover">
-      					<div class="col-12" style=""><h3 style="text-align:center;"><b>다면평가 대상 추가</b></h3></div>
-
+                     <div class="col-12" style=""><h3 style="text-align:center;"><b>다면평가 대상 추가</b></h3></div>
+   
          <table id="resTb" class="tableAnother">
             <thead>
                <tr>
@@ -148,39 +151,39 @@
                </tr>
             </thead>
             <tbody>
-				<c:choose>
-					<c:when test="${empty getPopup}">
-						<tr>
-							<td>매칭된 평가자가 없습니다.
-						<tr>
-					</c:when>
-					<c:otherwise>
-						<c:forEach var="result" items="${getPopup}">
-							<tr id="tr_${result.raterId}${result.appraiseeId}">
-								<input type="hidden" name="projectId" value="${result.projectId}" />
-								<input type="hidden" name="gradeId" value="${result.gradeId}" />
-								<input type="hidden" name="rDepartmentId" value="${result.rDepartmentId}" />
-								<input type="hidden" name="aDepartmentId" value="${result.aDepartmentId}" />
-								<input type="hidden" name="surveySeq" value="${result.surveySeq}" />
-								<input type="hidden" name="raterId" value="${result.raterId}" />
-								<input type="hidden" name="appraiseeId" value="${result.appraiseeId}" />
-								<input type="hidden" name="projectName" value="${result.projectName}" />
-								<input type="hidden" name="surveyName" value="${result.surveyName}" />
-								<input type="hidden" name="rDepartmentName" value="${result.rDepartmentName}" />
-								<input type="hidden" name="aDepartmentName" value="${result.aDepartmentName}" />
-								<input type="hidden" name="raterName" value="${result.raterName}" />
-								<input type="hidden" name="appraiseeName" value="${result.appraiseeName}" />
-								<input type="hidden" name="gradeName" value="${result.gradeName}" />
-
-								<td><input type="checkbox" name="chk_res" value="${result.raterId}${result.appraiseeId}"/></td>
-								<td class="raterName"><c:out value="${result.raterName}" /></td>
-								<td class="rDepartmentName"><c:out value="${result.rDepartmentName}" /></td>
-								<td class="appraiseeName"><c:out value="${result.appraiseeName}" /></td>
-								<td class="aDepartmentName"><c:out value="${result.aDepartmentName}" /></td>
-							</tr>
-						</c:forEach>
-					</c:otherwise>
-				</c:choose>
+            <c:choose>
+               <c:when test="${empty getPopup}">
+                  <tr>
+                     <td>매칭된 평가자가 없습니다.
+                  <tr>
+               </c:when>
+               <c:otherwise>
+                  <c:forEach var="result" items="${getPopup}">
+                     <tr id="tr_${result.raterId}${result.appraiseeId}">
+                        <input type="hidden" name="projectId" value="${result.projectId}" />
+                        <input type="hidden" name="gradeId" value="${result.gradeId}" />
+                        <input type="hidden" name="rDepartmentId" value="${result.rDepartmentId}" />
+                        <input type="hidden" name="aDepartmentId" value="${result.aDepartmentId}" />
+                        <input type="hidden" name="surveySeq" value="${result.surveySeq}" />
+                        <input type="hidden" name="raterId" value="${result.raterId}" />
+                        <input type="hidden" name="appraiseeId" value="${result.appraiseeId}" />
+                        <input type="hidden" name="projectName" value="${result.projectName}" />
+                        <input type="hidden" name="surveyName" value="${result.surveyName}" />
+                        <input type="hidden" name="rDepartmentName" value="${result.rDepartmentName}" />
+                        <input type="hidden" name="aDepartmentName" value="${result.aDepartmentName}" />
+                        <input type="hidden" name="raterName" value="${result.raterName}" />
+                        <input type="hidden" name="appraiseeName" value="${result.appraiseeName}" />
+                        <input type="hidden" name="gradeName" value="${result.gradeName}" />
+                        
+                        <td><input type="checkbox" name="chk_res" value="${result.raterId}${result.appraiseeId}"/></td>
+                        <td class="raterName"><c:out value="${result.raterName}" /></td>
+                        <td class="rDepartmentName"><c:out value="${result.rDepartmentName}" /></td>
+                        <td class="appraiseeName"><c:out value="${result.appraiseeName}" /></td>
+                        <td class="aDepartmentName"><c:out value="${result.aDepartmentName}" /></td>
+                     </tr>
+                  </c:forEach>
+               </c:otherwise>
+            </c:choose>
             </tbody>
          </table>
 

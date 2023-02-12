@@ -11,21 +11,57 @@
                         method="GET" class="survey_list_form" id="survey_list_form_id">
                         <div class="searchRangeAll">
                         <div class="searchRange" style="margin-right: 540px;">
-                        <select name="selection">
-	                        <c:forEach items="${CommonEvaluteList}" var="common">
-							<c:if test="${pagingdto.selection eq common.codeDetailId }">
-								<option selected value="${pagingdto.selection}">${common.codeDetailName}</option>
-							</c:if>
-							<c:if test="${pagingdto.selection ne common.codeDetailId }">
-								<option value="${common.codeDetailId}">${common.codeDetailName}</option>
-							</c:if>
-						 </c:forEach>
-                        </select>
+                        <select name="selectGD">
+							<option value="60004">평가자 직급</option>
+							<c:forEach items="${gradeList}" var="grade">
+								<c:if test="${pagingdto.selectGD eq grade.gradeId}">
+									<option selected value="${pagingdto.selectGD}">${grade.gradeName}</option>
+								</c:if>
+								<c:if test="${pagingdto.selectGD ne grade.gradeId}">
+									<option value="${grade.gradeId}">${grade.gradeName}</option>
+								</c:if>
+						</c:forEach>
+						</select> 
+						<select name="selection">
+							<option value="60004">평가자 부서</option>
+							<c:forEach items="${raterDepartment}" var="rdp">
+								<c:if test="${pagingdto.selection eq rdp.departmentId }">
+									<option selected value="${pagingdto.selection}">${rdp.departmentName}</option>
+								</c:if>
+								<c:if test="${pagingdto.selection ne rdp.departmentId }">
+									<option value="${rdp.departmentId}">${rdp.departmentName}</option>
+								</c:if>
+							</c:forEach>
+						</select> 
+						<select name="selection2">
+							<option value="60004">평가자 참여 여부</option>
+							<c:forEach items="${checkList}" var="CL">
+								<c:if test="${pagingdto.selection2 eq CL.surveyCompleteYN}">
+									<option selected value="${pagingdto.selection2}">
+										<c:if test="${CL.surveyCompleteYN eq 'Y'}">
+                          					예
+                             			</c:if>
+                             			<c:if test="${CL.surveyCompleteYN ne 'Y'}">
+                          					아니오
+                             			</c:if>
+									</option>
+								</c:if>
+								<c:if test="${pagingdto.selection2 ne CL.surveyCompleteYN}">
+									<option value="${CL.surveyCompleteYN}">
+										<c:if test="${CL.surveyCompleteYN eq 'Y'}">
+                          					예
+                             			</c:if>
+                             			<c:if test="${CL.surveyCompleteYN ne 'Y'}">
+                          					아니오
+                             			</c:if>
+                             		</option>
+								</c:if>
+							</c:forEach>
+						</select> 
                         </div>
                         <div class="input-group-append">
-                        <input type="text" class="form-control" id="selectedKeyword"
-                           placeholder="search" name="keyword"
-                           value="${pagingDto.keyword}" aria-describedby="button-addon2">
+                       		<input type="text" class="form-control" id="selectedKeyword" placeholder="평가자  이름 검색창"
+							       name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2"> 
                         <input type="hidden" name="pageNo" value="1"> <input
                            type="hidden" name="surveySeq" value="${surveySeq}" />
                         <input type="submit" class="btn btn-outline-secondary"
@@ -57,10 +93,10 @@
                            <td>${EL.GRADE_NAME}</td>
                            <td class="sv_name">${EL.DEPARTMENT_NAME}</td>
                            <td>
-                           	 <c:if test="${EL.SURVEY_COMPLETE_YN eq Y}">
+                           	 <c:if test="${EL.SURVEY_COMPLETE_YN eq 'Y'}">
                           		예
                              </c:if>
-                             <c:if test="${EL.SURVEY_COMPLETE_YN ne Y}">
+                             <c:if test="${EL.SURVEY_COMPLETE_YN ne 'Y'}">
                           		아니오
                              </c:if>
                            </td>

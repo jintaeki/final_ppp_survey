@@ -3,6 +3,7 @@ package com.mycompany.webapp.service;
 import java.util.List;
 import java.util.Map;
 
+import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
@@ -21,11 +22,6 @@ public interface ISurveyService {
 	void insertItem(SurveyQuestionDTO sqd);
 
 	void UpdateQuestion(String questionContent, int questionSeq, String questionTypeCode);
-
-	List<Map<String, String>> selectSurveyEvaluate(int surveySeq);
-	
-	List<Map<String, String>> selectSurveyMessage(int surveySeq);
-
 
 	SurveyListDTO selectSurvey(int surveySeq);
 
@@ -70,6 +66,9 @@ public interface ISurveyService {
 	// 결과 통계 페이지
 	List<SurveyListDTO> surveyList();
 	List<OrganizationChartDTO> organList(int surveySeq);
+	List<OrganizationChartDTO> organAppraiseeList(int surveySeq);
+	List<OrganizationChartDTO> organRaterList(int surveySeq);
+	List<MappingDTO> checkList();
 
 	//결과 목록
 	List<Map<String, Object>> getResultTarget(int employeeId);
