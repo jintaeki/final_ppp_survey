@@ -21,7 +21,7 @@ function popup(){
 
 	let popUrl ="/mapping/popup.do?pageNo=1&surveySeq="+surveySeq+"&raterId="+raterId
 			   +"&month="+month+"&keyword=&keyword2=&selection=60004&selection2=60004&selectGD=60004";
-	let popOption = "width=800, height=820, left=470, top=100";
+	let popOption = "width=1000, height=820, left=370, top=100";
 	window.open(popUrl, "다면평가 대상 추가", popOption);
 }
 
@@ -29,7 +29,7 @@ function mapInsert(surveySeq){
 
 	let popUrl ="/mapping/another.do?surveySeq="+surveySeq
 			   +"&keyword=&keyword2=&selection=60004&selection2=60004&selectGD=60004";
-	let popOption = "width=800, height=820, left=470, top=100";
+	let popOption = "width=1000, height=820, left=370, top=100";
 	window.open(popUrl, "다면평가 대상 추가", popOption);
 }
 
@@ -98,7 +98,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 					   				   name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2">  
 								</div>
 								<div class="input-group-append">
-								<select name="selection2" style="margin-left:100px">
+								<select name="selection2">
 									<option value="60004">피평가자 부서</option>
 										<c:forEach items="${appraiseeDepartment}" var="adp">
 											<c:if test="${pagingdto.selection2 eq adp.departmentId}">
@@ -127,7 +127,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 
 						</div>
 					</div>
-										<div class="col-12"><h3 style="text-align:left;"><b>${surveyInfo.surveyName} 매핑 목록</b></h3></div>
+					<div class="col-12"><h3 style="text-align:left;"><b>${surveyInfo.surveyName} 매핑 목록</b></h3></div>
 
 					<table class="table table-sm table-striped table-bordered" id="mapTb">
 						<thead>

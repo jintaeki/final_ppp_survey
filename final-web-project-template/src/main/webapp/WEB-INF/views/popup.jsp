@@ -8,10 +8,10 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <script
    src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/popup.css"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/common.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/paging.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/popup.css"/>
+
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
@@ -89,6 +89,8 @@
    <div class="hmenu_popup">
       <div class="survey_list_form_upper_dv">
          <form action="<c:url value='/mapping/popup.do'/>" method="get" class="survey_list_form">
+            <div class="searchRangeAll">
+            <div class="searchRange">
             <select name="selectGD">
                <option value="60004">평가자 직급</option>
                <c:forEach items="${gradeList}" var="grade">
@@ -113,7 +115,8 @@
             </select> 
             <input type="text" class="form-control" id="selectedKeyword" placeholder="평가자  이름 검색창"
                   name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2"> 
-            <select name="selection2" style="margin-left:100px">
+             </div>
+            <select name="selection2" class="selection2">
                <option value="60004">피평가자 부서</option>
                <c:forEach items="${appraiseeDepartment}" var="adp">
                   <c:if test="${pagingdto.selection2 eq adp.departmentId}">
@@ -135,6 +138,7 @@
                   id="button-addon2" value="검색">
                <input type="reset" class="btn btn-outline-secondary"
                   id="button-addon2" value="초기화">
+            </div>
             </div>
          </form>
       </div>
@@ -196,6 +200,7 @@
 
       <!-- selectItem : 체크값이 없을 경우 체크하라는 유효성 검사 -->
       <div id=button class="d-grid gap-2">
+      <br><br>
       <spring:message code="list.noResult" text="추가할 인원을 선택해주세요" /><br><br>
       <button type="button" class="btn btn-primary" onclick="selectItem();">추가</button><br><br>
       </div>
@@ -227,7 +232,3 @@
       </div>
    </div>
 </div>
-<!--
-<input type="button" type="submit" value="저장" />
-<input type="button" type="reset" value="닫기" onclick="window.close();" />
--->

@@ -100,7 +100,6 @@ public class MappingController {
 			logger.info("페이징:" +pagingdto.toString());
 
 			mappingList = mappingService.selectMappingData(pagingdto);
-			logger.info("리스트:" +mappingList.toString());
 			model.addAttribute("mappingList", mappingList);
 
 			model.addAttribute("pagingdto", pagingdto);

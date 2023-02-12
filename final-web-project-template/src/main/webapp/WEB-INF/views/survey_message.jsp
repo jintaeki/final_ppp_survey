@@ -10,7 +10,7 @@
                         action="<c:url value='/survey/evaluateMessage.do/${surveySeq}'/>"
                         method="GET" class="survey_list_form" id="survey_list_form_id">
                         <div class="searchRangeAll">
-                        <div class="searchRange" style="margin-right: 540px;">
+                        <div class="searchRange" style="margin-right: 190px;">
                         <select name="selectGD">
 							<option value="60004">평가자 직급</option>
 							<c:forEach items="${gradeList}" var="grade">
