@@ -209,7 +209,7 @@
 
 				<div class="item_management">
 					<div class="hey" style="height:20px; width:200px;"></div>
-					<div style="display: flex">
+					<div style="display: flex;align-items: baseline;">
 
 						<div class="input_title">문항 관리</div>
 
@@ -627,14 +627,14 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 			 if(data[i].QUESTION_SEQ==questionSeq){
 				 if(cntForTopOfItem==0){
 					 if(data[i].QUESTION_TYPE_CODE == "10002"){
-						html +='<div style="display:flex">';
+						html +='<div style="display:flex; align-items: baseline;">';
 						html  +='<div class="input_title">문항 관리</div>';
 						html   += '</div>';
 						html  +='<div class="itemAfter">';
 						cntForTopOfItem = cntForTopOfItem + 1;
 
 					 }else{
-						html +='<div style="display:flex">';
+						html +='<div style="display:flex;align-items: baseline;">';
 						html  +='<div class="input_title">문항 관리</div>';
 						html  +='<button type="button" value="'+data[i].QUESTION_SEQ+'" onclick="item_copy(this,'+data[i].QUESTION_TYPE_CODE+')" style="background: white; border: 1px solid #fff; border-radius: 35em;">';
 						html 	+='<i class="fas fa-plus"></i>';
@@ -926,12 +926,12 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
       }
    };
 
-//    $(document).ready(function(){
-// 	   $('#queAfter tr form div input[name=questionContent]').first().focus();
-// 	   $('#queAfter tr form div input[name=questionContent]').first().click();
+   $(document).ready(function(){
+	   $('#queAfter tr form div input[name=questionContent]').first().focus();
+	   $('#queAfter tr form div input[name=questionContent]').first().click();
 
 
-//    });
+   });
 
    function checkit1(obj,questionType,questionSeq,name) {
 	   $(".beforeTouch").empty();
