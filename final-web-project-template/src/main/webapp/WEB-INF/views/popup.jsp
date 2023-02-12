@@ -90,7 +90,7 @@
 		<div class="survey_list_form_upper_dv">
 			<form action="<c:url value='/mapping/popup.do'/>" method="get" class="survey_list_form">
 				<select name="selectGD">
-					<option value="60004">전체</option>
+					<option value="60004">평가자 직급</option>
 					<c:forEach items="${gradeList}" var="grade">
 						<c:if test="${pagingdto.selectGD eq grade.gradeId}">
 							<option selected value="${pagingdto.selectGD}">${grade.gradeName}</option>
@@ -101,17 +101,31 @@
 					</c:forEach>
 				</select> 
 				<select name="selection">
-					<c:forEach items="${commonMapList}" var="commonMap">
-						<c:if test="${pagingdto.selection eq commonMap.codeDetailId }">
-							<option selected value="${pagingdto.selection}">${commonMap.codeDetailName }</option>
+					<option value="60004">평가자 부서</option>
+					<c:forEach items="${raterDepartment}" var="rdp">
+						<c:if test="${pagingdto.selection eq rdp.departmentId }">
+							<option selected value="${pagingdto.selection}">${rdp.departmentName}</option>
 						</c:if>
-						<c:if test="${pagingdto.selection ne commonMap.codeDetailId }">
-							<option value="${commonMap.codeDetailId}">${commonMap.codeDetailName }</option>
+						<c:if test="${pagingdto.selection ne rDp.departmentId }">
+							<option value="${rdp.departmentId}">${rdp.departmentName}</option>
 						</c:if>
 					</c:forEach>
 				</select> 
-				<input type="text" class="form-control" id="selectedKeyword" placeholder="search"
+				<input type="text" class="form-control" id="selectedKeyword" placeholder="평가자  이름 검색창"
 					   name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2"> 
+				<select name="selection2" style="margin-left:100px">
+					<option value="60004">피평가자 부서</option>
+					<c:forEach items="${appraiseeDepartment}" var="adp">
+						<c:if test="${pagingdto.selection2 eq adp.departmentId}">
+							<option selected value="${pagingdto.selection2}">${adp.departmentName}</option>
+						</c:if>
+						<c:if test="${pagingdto.selection2 ne adp.departmentId}">
+							<option value="${adp.departmentId}">${adp.departmentName}</option>
+						</c:if>
+					</c:forEach>
+				</select> 
+				<input type="text" class="form-control" id="selectedKeyword" placeholder="피평가자 이름 검색창"
+					   name="keyword2" value="${pagingdto.keyword2}" aria-describedby="button-addon2"> 
 				<input type="hidden" name="pageNo" value="1">
 				<input type="hidden" name="surveySeq" value="${pagingdto.surveySeq}">
 				<input type="hidden" name="raterId" value="${pagingdto.raterId}">
@@ -191,21 +205,21 @@
       				<a class="arrow prev" href="surveysearch?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">처음</a> --%>
 				<c:if test="${pagingdto.groupNo>1}">
 					<a class="arrow prev"
-					   href="popup.do?pageNo=${pagingdto.startPageNo-1}&surveySeq=${pagingdto.surveySeq}&raterId=${pagingdto.raterId}&month=${pagingdto.month}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">이전</a>
+					   href="popup.do?pageNo=${pagingdto.startPageNo-1}&surveySeq=${pagingdto.surveySeq}&raterId=${pagingdto.raterId}&month=${pagingdto.month}&keyword=${pagingdto.keyword}&keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection2}&selectGD=${pagingdto.selectGD}">이전</a>
 				</c:if>
 				<c:forEach var="i" begin="${pagingdto.startPageNo}" end="${pagingdto.endPageNo}">
 					<c:if test="${pagingdto.pageNo != i}">
 						<a class="active" 
-						   href="popup.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&raterId=${pagingdto.raterId}&month=${pagingdto.month}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
+						   href="popup.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&raterId=${pagingdto.raterId}&month=${pagingdto.month}&keyword=${pagingdto.keyword}&keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection2}&selectGD=${pagingdto.selectGD}">${i}</a>
 					</c:if>
 					<c:if test="${pagingdto.pageNo == i}">
 					<a class="page_nation"
-						   href="popup.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&raterId=${pagingdto.raterId}&month=${pagingdto.month}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
+						   href="popup.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&raterId=${pagingdto.raterId}&month=${pagingdto.month}&keyword=${pagingdto.keyword}&keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection2}&selectGD=${pagingdto.selectGD}">${i}</a>
 					</c:if>
 				</c:forEach>
 				<c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
 					<a class="arrow next"
-					   href="popup.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&raterId=${pagingdto.raterId}&month=${pagingdto.month}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">다음</a>
+					   href="popup.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&raterId=${pagingdto.raterId}&month=${pagingdto.month}&keyword=${pagingdto.keyword}&keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection2}&selectGD=${pagingdto.selectGD}">다음</a>
 				</c:if>
 				<%-- 맨마지막 페이지 이동 
        			<a class="arrow next" href="surveysearch?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveyStartDate=<fmt:formatDate value='${pagingdto.surveyStartDate}' pattern='yyyy-MM-dd' />">맨끝</a> --%>

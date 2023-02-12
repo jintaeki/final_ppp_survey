@@ -27,21 +27,16 @@ public class PagingService implements IPagingService{
 		return pagingRepo.getEvaluateSearchBoardNum(keyword, selection, selection2, surveySeq);
 	}
 	@Override
-	public int getEvaluateMessageBoardNum(String keyword, String selection, int surveySeq) {
-		return pagingRepo.getEvaluateMessageBoardNum(keyword, selection, surveySeq);
+	public int getEvaluateMessageBoardNum(String keyword, String selection, String selection2, int surveySeq, String selectGD) {
+		return pagingRepo.getEvaluateMessageBoardNum(keyword, selection, selection2, surveySeq, selectGD);
 	}
 	@Override
-	public int getTotalMappingNum(String keyword, String selection, int surveySeq, String selectGD) {
-		return pagingRepo.getTotalMappingNum(keyword, selection, surveySeq, selectGD);
-	}
-
-	@Override
-	public int getTotalNonMappingNum(String keyword, String selection, int surveySeq, String selectGD) {
-		return pagingRepo.getTotalNonMappingNum(keyword, selection, surveySeq, selectGD);
+	public int getTotalMappingNum(String keyword, String keyword2, String selection, String selection2, int surveySeq, String selectGD) {
+		return pagingRepo.getTotalMappingNum(keyword, keyword2, selection, selection2, surveySeq, selectGD);
 	}
 
 	@Override
-	public int getTotalInsertNum(String keyword, String selection, int surveySeq, String selectGD, String raterId, int month) {
-		return pagingRepo.getTotalInsertNum(keyword, selection, surveySeq, selectGD, raterId, month);
+	public int getTotalInsertNum(String keyword, String keyword2, String selection, String selection2, int surveySeq, String selectGD, String raterId, int month) {
+		return pagingRepo.getTotalInsertNum(keyword, keyword2, selection, selection2, surveySeq, selectGD, raterId, month);
 	}
 }

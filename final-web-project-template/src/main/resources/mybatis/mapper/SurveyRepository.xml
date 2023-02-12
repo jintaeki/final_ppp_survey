@@ -314,23 +314,6 @@
 		DELETE FROM SURVEY_LIST WHERE SURVEY_SEQ = #{surveySeq}
 	</delete>
 
-
-
-  <select id="selectSurveyEvaluate" parameterType="int" resultType="hashmap">
-  		SELECT
-              oc.department_name
-             ,g.grade_name
-             ,ui.employee_name
-             ,m.SURVEY_COMPLETE_YN
-        FROM grade g
-             ,user_info ui
-             ,mapping m
-             ,ORGANIZATION_CHART oc
-        WHERE m.appraisee_id = ui.employee_id and g.grade_id = ui.grade_id
-        AND oc.department_id = ui.department_id and  m.survey_seq = #{surveySeq}
-
-  </select>
-
 	<select id="searchByEvaluate" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="hashmap">
 
     SELECT
@@ -414,22 +397,6 @@
             ]]>
 </select>
 
-
- <select id="selectSurveyMessage" parameterType="int" resultType="hashmap">
-  		SELECT
-              oc.department_name
-             ,g.grade_name
-             ,ui.employee_name
-             ,m.SURVEY_COMPLETE_YN
-        FROM grade g
-             ,user_info ui
-             ,mapping m
-             ,ORGANIZATION_CHART oc
-        WHERE m.rater_id = ui.employee_id and g.grade_id = ui.grade_id
-        AND oc.department_id = ui.department_id and  m.survey_seq = #{surveySeq}
-
-  </select>
-
 	<select id="searchByMessage" parameterType="com.mycompany.webapp.dto.PagingDTO" resultType="hashmap">
  	<![CDATA[
 		SELECT
@@ -440,7 +407,7 @@
         ,SURVEY_COMPLETE_YN
         ,SURVEY_SEQ
         ,EMPLOYEE_ID
-        FROM ( SELECT
+        FROM (SELECT
                  ROWNUM AS rnum
                 ,SURVEY_SEQ
                 ,DEPARTMENT_NAME
@@ -448,41 +415,43 @@
                 ,EMPLOYEE_NAME
                 ,SURVEY_COMPLETE_YN
                 ,EMPLOYEE_ID
-        FROM ( SELECT
-                        distinct
+        	  FROM (SELECT DISTINCT
                         m.SURVEY_SEQ
                         ,oc.DEPARTMENT_NAME
                         ,g.GRADE_NAME
                         ,ui.EMPLOYEE_NAME
                         ,ui.EMPLOYEE_ID
                         ,m.SURVEY_COMPLETE_YN
-                 FROM GRADE g ,USER_INFO ui ,MAPPING m ,ORGANIZATION_CHART oc
-                 WHERE
-                     m.RATER_ID = ui.EMPLOYEE_ID
-                    and g.grade_id = ui.grade_id and oc.department_id = ui.department_id
-
-                 AND ((#{selection} = '50003'
-                    	AND ui.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
-                		OR (#{selection} = '50001'
-                        	AND oc.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
-                    	OR (#{selection} = '50002'
-                    		AND g.GRADE_NAME LIKE '%' || #{keyword} || '%')
-                    	OR(#{selection} = '50004'
-                    	   AND m.survey_complete_YN LIKE '%' || #{keyword} || '%')
-                    	OR(#{selection} = '50005'
-                    	   AND(ui.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
-                               OR oc.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%'
-                               OR g.GRADE_NAME LIKE '%' || #{keyword} || '%'
-                               OR m.survey_complete_YN LIKE '%' || #{keyword} || '%')
-                            )
-                        )
-                    )
+                    FROM GRADE g
+                         ,USER_INFO ui
+                         ,MAPPING m 
+                         ,ORGANIZATION_CHART oc
+                   WHERE m.RATER_ID = ui.EMPLOYEE_ID
+                     AND g.GRADE_ID = ui.GRADE_ID 
+                     AND oc.DEPARTMENT_ID = ui.DEPARTMENT_ID
+                     AND UI.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
+                     AND UI.DEPARTMENT_ID LIKE (
+                         CASE WHEN #{selection} = '60004' 
+                              THEN '%' || '' || '%' 
+                              ELSE '%' || #{selection} || '%'
+                     END) 
+                     AND M.SURVEY_COMPLETE_YN LIKE (
+                         CASE WHEN #{selection2} = '60004' 
+                              THEN '%' || '' || '%' 
+                              ELSE '%' || #{selection2} || '%'
+                     END)	
+                     AND UI.GRADE_ID LIKE (
+                         CASE WHEN #{selectGD} = '60004' 
+                              THEN '%' || '' || '%' 
+                              ELSE '%' || #{selectGD} || '%'
+                     END) 
+               )
                where survey_seq = #{surveySeq}
                ORDER BY ROWNUM  ASC
-             )
+        )
 		WHERE rnum >= #{startRowNo} and rnum <= #{endRowNo}
- 	]]>
-</select>
+ 	    ]]>
+    </select>
 
 	<select id="surveyList" resultType="SLD">
 		SELECT
@@ -515,7 +484,39 @@
            AND U.DEPARTMENT_ID = O.DEPARTMENT_ID
       ORDER BY U.DEPARTMENT_ID
 	</select>
-
+	
+	<select id="organAppraiseeList" resultType="com.mycompany.webapp.dto.OrganizationChartDTO">
+		SELECT DISTINCT
+    		   U.DEPARTMENT_ID AS departmentId,
+    	       DEPARTMENT_NAME
+          FROM ORGANIZATION_CHART O,
+               MAPPING,
+               USER_INFO U
+         WHERE SURVEY_SEQ = #{surveySeq}
+           AND APPRAISEE_ID = EMPLOYEE_ID
+           AND U.DEPARTMENT_ID = O.DEPARTMENT_ID
+      ORDER BY U.DEPARTMENT_ID
+	</select>
+	
+	<select id="organRaterList" resultType="com.mycompany.webapp.dto.OrganizationChartDTO">
+		SELECT DISTINCT
+    		   U.DEPARTMENT_ID AS departmentId,
+    	       DEPARTMENT_NAME
+          FROM ORGANIZATION_CHART O,
+               MAPPING,
+               USER_INFO U
+         WHERE SURVEY_SEQ = #{surveySeq}
+           AND RATER_ID = EMPLOYEE_ID
+           AND U.DEPARTMENT_ID = O.DEPARTMENT_ID
+      ORDER BY U.DEPARTMENT_ID
+	</select>
+	
+	<select id="checkList" resultType="com.mycompany.webapp.dto.MappingDTO">
+		SELECT DISTINCT
+			   SURVEY_COMPLETE_YN AS surveyCompleteYN
+	      FROM MAPPING
+	</select>
+	
 	<select id="resultList" resultType="com.mycompany.webapp.dto.SurveyResultTeamDTO">
 			SELECT AVG(SCORE) AS SCORE,
          	   DEPARTMENT_NAME

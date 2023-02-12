@@ -101,28 +101,30 @@
 					</c:forEach>
 				</select> 
 				<select name="selection">
-					<c:forEach items="${commonMapList}" var="commonMap">
-						<c:if test="${pagingdto.selection eq commonMap.codeDetailId }">
-							<option selected value="${pagingdto.selection}">${commonMap.codeDetailName}</option>
+					<option value="60004">평가자 부서</option>
+					<c:forEach items="${raterDepartment}" var="rdp">
+						<c:if test="${pagingdto.selection eq rdp.departmentId }">
+							<option selected value="${pagingdto.selection}">${rdp.departmentName}</option>
 						</c:if>
-						<c:if test="${pagingdto.selection ne commonMap.codeDetailId }">
-							<option value="${commonMap.codeDetailId}">${commonMap.codeDetailName }</option>
+						<c:if test="${pagingdto.selection ne rDp.departmentId }">
+							<option value="${rdp.departmentId}">${rdp.departmentName}</option>
 						</c:if>
 					</c:forEach>
 				</select> 
-				<input type="text" class="form-control" id="selectedKeyword" placeholder="평가자  검색창"
+				<input type="text" class="form-control" id="selectedKeyword" placeholder="평가자  이름 검색창"
 					   name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2"> 
 				<select name="selection2" style="margin-left:100px">
-					<c:forEach items="${commonMapList}" var="commonMap">
-						<c:if test="${pagingdto.selection2 eq commonMap.codeDetailId }">
-							<option selected value="${pagingdto.selection2}">${commonMap.codeDetailName}</option>
+					<option value="60004">피평가자 부서</option>
+					<c:forEach items="${appraiseeDepartment}" var="adp">
+						<c:if test="${pagingdto.selection2 eq adp.departmentId}">
+							<option selected value="${pagingdto.selection2}">${adp.departmentName}</option>
 						</c:if>
-						<c:if test="${pagingdto.selection2 ne commonMap.codeDetailId }">
-							<option value="${commonMap.codeDetailId}">${commonMap.codeDetailName }</option>
+						<c:if test="${pagingdto.selection2 ne adp.departmentId }">
+							<option value="${adp.departmentId}">${adp.departmentName}</option>
 						</c:if>
 					</c:forEach>
 				</select> 
-				<input type="text" class="form-control" id="selectedKeyword" placeholder="피평가자 검색창"
+				<input type="text" class="form-control" id="selectedKeyword" placeholder="피평가자 이름 검색창"
 					   name="keyword2" value="${pagingdto.keyword2}" aria-describedby="button-addon2"> 
 				<input type="hidden" name="pageNo" value="1">
 				<input type="hidden" name="surveySeq" value="${pagingdto.surveySeq}">

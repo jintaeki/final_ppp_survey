@@ -546,7 +546,7 @@ public class SurveyController {
 				int totalRows = pagingService.getEvaluateSearchBoardNum(keyword, selection, selection2,  surveySeq);
 
 				System.out.println("totolRows:" + totalRows);
-			    pagingDto = new PagingDTO(13, 10, totalRows, pageNo);
+			    pagingDto = new PagingDTO(12, 10, totalRows, pageNo);
 
 				pagingDto.setSelection(selection);
 				pagingDto.setSelection2(selection2);
@@ -585,15 +585,20 @@ public class SurveyController {
 						 @PathVariable("surveySeq") int surveySeq,
 			             @RequestParam(defaultValue="") String keyword,
 						 @RequestParam(defaultValue="1") int pageNo,
-						 @RequestParam(defaultValue="50005") String selection,
-						  Model model) {
+						 @RequestParam(defaultValue="60004") String selection,
+						 @RequestParam(defaultValue="60004") String selection2,
+						 @RequestParam(defaultValue="60004") String selectGD,
+						 Model model) {
 		logger.info("지금 가져온 선택지:"+selection);
 		logger.info("페이지 수"+pageNo);
 		logger.info("키워드"+keyword);
 		logger.info("설문지 번호" + surveySeq);
 
 		try {
-			model.addAttribute("CommonEvaluteList", commonCodeService.selectEvaluateCode());
+			model.addAttribute("raterDepartment", surveyService.organRaterList(surveySeq));
+			model.addAttribute("appraiseeDepartment", surveyService.organAppraiseeList(surveySeq));
+			model.addAttribute("gradeList", mappingService.selectGradeList());
+			model.addAttribute("checkList", surveyService.checkList());
 			List<Map<String, Object>> evaluateList = null;
 			PagingDTO pagingDto = null;
 			String beforeKeyword = keyword;
@@ -601,14 +606,16 @@ public class SurveyController {
 			 	model.addAttribute("selecton", selection);
 
 			    logger.info("모델 :" + model);
-				int totalRows = pagingService.getEvaluateMessageBoardNum(beforeKeyword, selection, surveySeq);
+				int totalRows = pagingService.getEvaluateMessageBoardNum(beforeKeyword, selection, selection2, surveySeq, selectGD);
 
-			    pagingDto = new PagingDTO(7, 10, totalRows, pageNo);
+			    pagingDto = new PagingDTO(12, 10, totalRows, pageNo);
 
 				pagingDto.setSelection(selection);
+				pagingDto.setSelection2(selection2);
 				pagingDto.setKeyword(keyword);
 				pagingDto.setSurveySeq(surveySeq);
-
+				pagingDto.setSelectGD(selectGD);
+				
 				logger.info("selection:" + pagingDto.getSelection());
 				logger.info("keyword: "+pagingDto.getKeyword());
 				logger.info("paigingdto:" + pagingDto);
@@ -623,9 +630,7 @@ public class SurveyController {
 
 			logger.info(keyword);
 			model.addAttribute("pagingdto", pagingDto);
-			model.addAttribute("keyword", keyword);
 			model.addAttribute("surveySeq", surveySeq);
-
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
