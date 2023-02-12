@@ -51,7 +51,7 @@
                            type="hidden" name="surveySeq" value="${surveySeq}" />
                         <input type="submit" class="btn btn-outline-secondary"
                               id="button-addon2" value="검색"> <input type="reset"
-                              class="btn btn-outline-secondary" id="button-addon2"
+                              class="btn btn-outline-secondary" id="button-addon2" onclick="reset_btn_evaluate()"
                               value="초기화">
                         </div>
                         </div>
@@ -108,30 +108,30 @@
                      <td colspan="12" class="text-center" style="border: none;">
                         <div>
                            <a class="btn btn-outline-secondary"
-                              href="?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}&surveySeq=${pagingdto.surveySeq}">처음</a>
+                              href="?pageNo=1&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selection2=${pagingdto.selection2}&surveySeq=${pagingdto.surveySeq}">처음</a>
                            <c:if test="${pagingdto.groupNo>1}">
                               <a class="btn btn-outline-secondary"
-                                 href="?pageNo=${pagingdto.startPageNo-1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}">이전</a>
+                                 href="?pageNo=${pagingdto.startPageNo-1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selection2=${pagingdto.selection2}&surveySeq=${pagingdto.surveySeq}">이전</a>
                            </c:if>
 
                            <c:forEach var="i" begin="${pagingdto.startPageNo}"
                               end="${pagingdto.endPageNo}">
                               <c:if test="${pagingdto.pageNo != i}">
                                  <a class="btn btn-outline-secondary"
-                                    href="${surveySeq}?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}">${i}</a>
+                                    href="${surveySeq}?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selection2=${pagingdto.selection2}&surveySeq=${pagingdto.surveySeq}">${i}</a>
                               </c:if>
                               <c:if test="${pagingdto.pageNo == i}">
                                  <a class="btn btn-secondary"
-                                    href="${surveySeq}?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}">${i}</a>
+                                    href="${surveySeq}?pageNo=${i}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selection2=${pagingdto.selection2}&surveySeq=${pagingdto.surveySeq}">${i}</a>
                               </c:if>
                            </c:forEach>
 
                            <c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
                               <a class="btn btn-outline-secondary"
-                                 href="?pageNo=${pagingdto.endPageNo+1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&surveySeq=${pagingdto.surveySeq}">다음</a>
+                                 href="?pageNo=${pagingdto.endPageNo+1}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selection2=${pagingdto.selection2}&surveySeq=${pagingdto.surveySeq}">다음</a>
                            </c:if>
                            <a class="btn btn-outline-secondary"
-                              href="?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&surveySeq=${pagingdto.surveySeq}">맨끝</a>
+                              href="?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selection2=${pagingdto.selection2}&surveySeq=${pagingdto.surveySeq}">맨끝</a>
                         </div>
                         <div style="float: right;">
 
@@ -182,6 +182,46 @@ function result_search_btn(surveySeq, employeeId) {
           }
       });
    }
+   
+   
+function reset_btn_evaluate(){
+	$('.searchRangeAll').empty();
+	html='';
+	
+	html +='<div class="searchRange">';
+    html +='<select class="subSelection" name="selection2">';
+    html += `<option value="">직급</option>
+           <option value="사원">사원</option>
+           <option value="대리">대리</option>
+           <option value="과장">과장</option>
+           <option value="차장">차장</option>
+          <option value="부장">부장</option>
+
+     </select>`;
+	html +=`&nbsp;<select class="selection" name="selection">
+    <option value="employeeName" selected>이름</option>
+
+     <option value="departmentName">부서명</option>
+
+  </select>
+  </div>`;
+
+	html +=`<div class="input-group-append">
+
+        <input type="text" class="form-control" id="selectedKeyword"
+           placeholder="search" name="keyword"
+            aria-describedby="button-addon2">
+        <input type="hidden" name="pageNo" value="1"> <input
+           type="hidden" name="surveySeq" value="${surveySeq}" />
+        <input type="submit" class="btn btn-outline-secondary"
+              id="button-addon2" value="검색"> <input type="reset"
+              class="btn btn-outline-secondary" id="button-addon2" onclick="reset_btn_evaluate()"
+              value="초기화">
+        </div>`;
+	$('.searchRangeAll').append(html);
+
+} 
+   
 </script>
 
 
