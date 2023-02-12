@@ -264,7 +264,7 @@ public class HomeController {
 
 	@RequestMapping("/survey.do")
 	public String tosurvey() {
-		
+
 		return "survey";
 	}
 	

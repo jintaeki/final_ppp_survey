@@ -316,7 +316,7 @@
 					  <div class="col-3"></div>
 					  </div>
 			          <div id="appendArea" class="row">`;
-            for(var i=size-1; i>=0; i--){
+            for(var i=0; i<size; i++){
 
                 html +='<div class="col-3">'+data[i].appraiseeName+'</div>';
                 html +='<div class="col-4">'+data[i].appraiseeDepartmentName+'</div>';
@@ -411,7 +411,7 @@
                    }
 
                  }else if(!$('input[name="'+itemSeqArray[i]+'num"]').is(':checked') ) {
-                    // 실제 주관식 문제가 비어있는 지 확인하고 alert
+                    // 혼합식 문제 확인하고 alert
                        if($('textarea[name="'+i+'answerContent"]').val()==''){
                           alert(i+"번을 채워주세요.");
                           $('input[name="'+itemSeqArray[i]+'num"]').focus();
