@@ -59,6 +59,60 @@ function map_delete(surveySeq, raterId, appraiseeId){
 	};
 }
 
+function reset_btn_mapping(surveySeq, month, number){
+	$('.searchRangeAll').empty();
+	html='';
+	html += `<div class="searchRange">
+	<select name="selectGD">
+		<option value="60004">평가자 직급</option>
+		<option value="1">사장</option>
+		<option value="2">부장</option>
+		<option value="3">차장</option>
+		<option value="4">과장</option>
+		<option value="5">대리</option>
+		<option value="6">사원</option>			
+	</select> 
+	<select name="selection">
+     	<option value="60004">평가자 부서</option>
+		<option value="">SI사업부 제1팀</option>
+		<option value="">SI사업부 제2팀</option>
+		<option value="">SI사업부 제3팀</option>
+		<option value="">SI사업부 제4팀</option>
+		<option value="">SI사업부 제5팀</option>
+		<option value="">SI사업부 제6팀</option>
+		<option value="">연구실 1팀</option>
+	</select>
+	<input type="text" class="form-control" id="selectedKeyword" placeholder="평가자  이름 검색창"
+			   name="keyword"  aria-describedby="button-addon2">  
+	</div>`;
+	
+
+html +=`<div class="input-group-append">
+		<select name="selection2">
+			<option value="60004">피평가자 부서</option>
+			<option value="">SI사업부 제1팀</option>
+			<option value="">SI사업부 제2팀</option>
+			<option value="">SI사업부 제3팀</option>
+			<option value="">SI사업부 제4팀</option>
+			<option value="">SI사업부 제5팀</option>
+			<option value="">SI사업부 제6팀</option>
+			<option value="">연구실 1팀</option>
+		</select>
+		
+		<input type="text" class="form-control" id="selectedKeyword" placeholder="피평가자 이름 검색창" name="keyword2" aria-describedby="button-addon2">
+		<input type="hidden" name="pageNo" value="1">`;
+	html +='<input type="hidden" name="surveySeq" value="'+surveySeq+'">';
+	
+	html +='<input type="hidden" name="month" value="'+month+'">';
+	html+='<input type="hidden" name="number" value="'+number+'">'; 
+	html += `<input type="hidden" name="newCheck" value="0">
+		<input type="submit" class="btn btn-outline-secondary"
+			id="button-addon2" value="검색"> `;
+		html+='<input type="button" style="margin-left:10px;" class="btn btn-outline-secondary" onclick="reset_btn_mapping('+surveySeq+','+month+','+number+')" value="초기화"></div>';
+	$('.searchRangeAll').append(html);
+
+}
+
 </script>
 
 	<div class="card">
@@ -119,7 +173,7 @@ function map_delete(surveySeq, raterId, appraiseeId){
 
 									<input type="submit" class="btn btn-outline-secondary"
 										id="button-addon2" value="검색"> <input type="reset"
-										class="btn btn-outline-secondary" id="button-addon2"
+										class="btn btn-outline-secondary" id="button-addon2" onclick="reset_btn_mapping(${pagingdto.surveySeq},${pagingdto.month},${number})"
 										value="초기화">
 								</div>
 								</div>
