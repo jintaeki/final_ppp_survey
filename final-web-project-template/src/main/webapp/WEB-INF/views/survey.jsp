@@ -5,6 +5,8 @@
 <!-- <script src="resources/js/survey.js"></script> -->
 <!-- <script src="resources/js/surveycountdown.js"></script> -->
 <script>
+	
+
 
    function answerBox_on(obj){
       var radioItemSeq = $(obj).val();
@@ -206,8 +208,12 @@
    }
 
    function gowithoutConfirm(obj){
-   var content = $(obj).val();
-   console.log('content:'+content);
+	   var content = $(obj).val();
+	   console.log('content:'+content);
+	   
+	      
+	
+
       Swal.fire({
          text: content,
           confirmButtonText: '확인',
@@ -323,7 +329,7 @@
                 html +='<div class="col-2">'+data[i].appraiseeGradeName+'</div>';
 
                if(data[i].surveyCompleteYN=='N'){
-               html +='<div class="col-3"><button style="color:green; margin-bottom: 10px;" class="create_btn" id="'+data[i].appraiseeId+'" onclick="surveyStart(this,'+data[i].appraiseeId+','+data[i].raterId+','+anonymitycode+','+theSeq+','+data[i].surveySeq+','+"'"+data[i].surveyContent+"'"+')" value="'+data[i].appraiseeName+'">평가하기</button></div>';
+               html +='<div class="col-3"><button style="color:green; margin-bottom: 10px;" class="create_btn" id="'+data[i].appraiseeId+'" onclick="surveyStart(this,'+data[i].appraiseeId+','+data[i].raterId+','+anonymitycode+','+theSeq+','+data[i].surveySeq+')" value="'+data[i].appraiseeName+'">평가하기</button></div>';
                }else{
                html +='<div class="col-3"><button style="margin-bottom: 10px;" class="create_btn" disabled>평가완료</button></div>';
                }
@@ -342,9 +348,9 @@
 
    }
 
-   function surveyStart(obj,appraiseeId,raterId,anonymitycode,theSeq,surveySeq,content){
+   function surveyStart(obj,appraiseeId,raterId,anonymitycode,theSeq,surveySeq){
       var appraiseeName = $(obj).val();
-      go(content);
+     
       $.ajax({
             url: 'getquestionforsurvey.do/'+surveySeq,
             method: 'GET',

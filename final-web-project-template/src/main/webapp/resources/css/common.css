@@ -13,7 +13,7 @@ font-family: "segoe";
 .forContent{
 	display:flex;
 	margin-left: 20px;
-	
+	font-size:15px;
 }
 
 //추가
