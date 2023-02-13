@@ -1,10 +1,9 @@
 @charset "UTF-8";
 
-
-
 @font-face{
 /* font-family: RegularFont, NanumGothic, sans-serif; */
-font-family: RegularFont, NanumGothic, sans-serif;
+font-family: "segoe";
+   src: url('/manyface/src/main/webapp/resources/font/Segoe UI Bold.ttf');
 
 }
 
@@ -12,6 +11,124 @@ font-family: RegularFont, NanumGothic, sans-serif;
    box-sizing: border-box;
 }
 
+//추가
+label {
+/*    margin-bottom: 0.5rem; */
+/*    color: black; */
+/*    font-size: 13px; */
+/*    line-height: 27px; */
+}
+.survey_textarea {
+   margin-top: 10px;
+    overflow: auto;
+    resize: none;
+    width: 505px;
+}
+.survey_section::-webkit-scrollbar {
+	width:7px !important; /* 스크롤바 굵기 */
+}
+
+.survey_section::-webkit-scrollbar-thumb {
+   height: 10% !important; /* ?ㅽ겕濡ㅻ컮??湲몄씠 */
+   background: #e0e0e0 !important; /* ?ㅽ겕濡ㅻ컮???됱긽 */
+   border-radius: 10px !important;
+}
+
+.survey_section::-webkit-scrollbar-track {
+   background: ##f5f5f594 !important; /*?ㅽ겕濡ㅻ컮 ??諛곌꼍 ?됱긽*/
+}
+
+.menu_item {
+   box-shadow: rgb(50 50 93/ 25%) 0px 50px 100px -20px, rgb(0 0 0/ 30%) 0px
+      30px 60px -30px, rgb(10 37 64/ 35%) 0px -2px 6px 0px inset;
+   border-radius: 5px;
+   height: 50px;
+   padding: 10px;
+}
+body { /*밑에 하나 더 있음*/
+/*    margin: 0px; */
+/*    font-size: 1rem; */
+/*    overflow: hidden; */
+}
+.input_title { /*밑에 하나 더 있음*/
+/*    font-weight: bold; */
+/*    border-radius: 20px; */
+/*    color: #417eff; */
+/*    margin-bottom: 10px; */
+}
+.create_btn {/*밑에 하나 더 있음*/
+/*    box-shadow: inset 0px 0px 0px 0px #ffffff; */
+/*    background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%); */
+/*    background-color: #ffffff; */
+/*    border-radius: 20px; */
+/*    border: 1px solid #dcdcdc; */
+/*    display: inline-block; */
+/*    cursor: pointer; */
+/*    color: #ababab; */
+/*    font-family: Arial; */
+/*    font-size: 13px; */
+/*    font-weight: bold; */
+/*    padding: 3px 7px; */
+/*    text-decoration: none; */
+/*    text-shadow: 0px 1px 0px #ffffff; */
+/*    text-decoration: none; */
+}
+
+.item_form {/*밑에 하나 더 있음*/
+   display: flex;
+   align-items: flex-end;
+   margin-left: 10px;
+}
+
+table {
+   line-height: 30px;
+   word-break: break-all;
+   vertical-align: middle;
+}
+input {
+   border-radius: 10px;
+   height: 40px;
+   border: 2px solid #e8e8e8;
+}
+select {
+   border-radius: 10px;
+   height: 40px;
+   border: 2px solid #e8e8e8;
+}
+select:hover { /* select */
+   border-color: #888;
+}
+select:focus {
+   border-color: #aaa;
+   box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
+   box-shadow: 0 0 0 3px -moz-mac-focusring;
+   color: #222;
+   outline: none;
+}
+select:disabled {
+   opacity: 0.5;
+}
+.survey_section {
+   text-align: center;
+   width: 100%;
+   padding: 35px 35px 15px 35px;
+   overflow: overlay;
+   background: white;
+   box-shadow: 0px 0px 1px 1px #c0c0c0;
+   border-radius: 5px;
+   height: 700px;
+}
+
+.question-item-form {
+   background: #f3f3f399;
+   box-shadow: 0px 0px 1px 1px #e8e8e880;
+   border-radius: 5px;
+   padding: 15px;
+   margin-bottom: 20px;
+}
+
+
+//추가 끝
 body::-webkit-scrollbar {
    width: 7px !important; /* 스크롤바의 너비 */
 }
@@ -87,19 +204,25 @@ body::-webkit-scrollbar-track {
 }
 
 .menu_logout {
-   color: #c8c8c8;
-   font-size: 10px;
+   color: black;
+   font-size: 14px;
    text-decoration: none;
    background-color: transparent;
 }
 
 /* survey.jsp */
+.survey_list {
+   display: flex;
+   color: #c0c0c0;
+   align-items: center;
+   flex-direction: column;
+}
+
 .forshadowing_bj {
    background: #F5F5F5;
    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
       rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-   height: 650px;
-   width: 1200px;
+
    position: relative;
    padding: 20px;
 }
@@ -107,7 +230,7 @@ body::-webkit-scrollbar-track {
 .appraiseeList_list {
    text-align: center;
    overflow: overlay;
-   max-height: 520px;
+   max-height: 620px;
    padding: 15px;
 }
 
@@ -135,7 +258,7 @@ body::-webkit-scrollbar-track {
 }
 
 #scroll_area div {
-   max-width: 480px;
+   max-width: 100%;
 }
 
 .seach_float {
@@ -171,7 +294,6 @@ body::-webkit-scrollbar-track {
    font-family: Arial;
    font-size: 13px;
    font-weight: bold;
-   padding: 10px 25px;
    text-decoration: none;
    text-shadow: 0px 1px 0px #ffffff;
 }
@@ -243,253 +365,31 @@ body::-webkit-scrollbar-track {
    margin-left: 10px;
 }
 
-thead {
-   border-radius: 10px;
-   color: white;
-   background-color: #8258FA;
-}
-
-body::-webkit-scrollbar {
-	width: 7px !important; /* 스크롤바의 너비 */
-}
-
-body::-webkit-scrollbar-thumb {
-	height: 10% !important; /* 스크롤바의 길이 */
-	background: #e0e0e0 !important; /* 스크롤바의 색상 */
-	border-radius: 10px !important;
-}
-
-body::-webkit-scrollbar-track {
-	background: ##f5f5f594 !important; /*스크롤바 뒷 배경 색상*/
-}
-
-.appraiseeList_list::-webkit-scrollbar {
-	width: 7px !important; /* 스크롤바의 너비 */
-}
-
-.appraiseeList_list::-webkit-scrollbar-thumb {
-	height: 10% !important; /* 스크롤바의 길이 */
-	background: #e0e0e0 !important; /* 스크롤바의 색상 */
-	border-radius: 10px !important;
-}
-
-.appraiseeList_list::-webkit-scrollbar-track {
-	background: ##f5f5f594 !important; /*스크롤바 뒷 배경 색상*/
-}
-
-/* ----- 병준 좌측 메뉴 ----- */
-.menu_profile_survey { /* 메뉴 전체 */
-	display: grid;
-	height: auto;
-	padding: 55px;
-	justify-items: center;
-	padding: 55px;
-}
-
-.menu_profile_img_circle {
-	position: relative;
-	border-radius: 50%;
-	background-color: transparent;
-	box-shadow: 0 0 16px rgb(128 134 139/ 40%);
-	width: 150px;
-	height: 150px;
-	border-radius: 50%;
-}
-
-.menu_profile_img {
-	position: absolute;
-	width: 150px;
-	margin: 30px 0 0 0;
-}
-
-.menu_profile_text {
-	display: flex;
-	flex-direction: column;
-	padding: 20px;
-	align-items: center;
-	text-align: center;
-	width: 100%;
-}
-
-.menu_departmentName {
-	font-size: 14px;
-	font-weight: bold;
-	color: #959595;
-}
-
-.menu_raterName {
-	font-size: 20px;
-	font-weight: bold;
-	margin-top: 8px;
-}
-
-.menu_logout {
-	color: #c8c8c8;
-	font-size: 10px;
-	text-decoration: none;
-	background-color: transparent;
-}
-
 /* survey.jsp */
-.forshadowing_bj {
-	background: #F5F5F5;
-	box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
-		rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-	height: 650px;
-	width: 1200px;
-	position: relative;
-	padding: 20px;
-}
-
-.appraiseeList_list {
-	text-align: center;
-	overflow: overlay;
-	max-height: 520px;
-	padding: 15px;
-}
-
-.appraiseeList {
-	background: white;
-	max-height: 700px;
-	margin-top: 10px;
-	box-shadow: 0px 0px 1px 1px #c0c0c0;
-	border-radius: 5px;
-	padding: 35px 35px 15px 35px;
-	font-size : 14px;
-	text-align: center;
-	z-index: 1;
-	font-size: 14px;
-}
-
-.input_title {
-	width: 100%;
-	text-align: center;
-	font-weight: bold;
-	color: #0089ff;
-	font-size: 15px;
-	margin: auto;
-	margin-bottom: 10px;
-}
-
-#scroll_area div {
-	max-width: 480px;
-}
-
-.seach_float {
-	position: absolute;
-	top: 45px;
-	right: 200px;
-}
-
-.modal_class {
-	display: flex;
-	justify-content: space-between;
-	max-width: 420px;
-	align-items: center;
-	margin-bottom: 20px;
-}
-
-}
-.search_form {
-	padding-bottom: 200px; ! important;
-	border-radius: 10px;
-	border: 1px #e8e8e8;
-}
-
-.create_btn {
-	box-shadow: inset 0px 0px 0px 0px #ffffff;
-	background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
-	background-color: #ffffff;
-	border-radius: 20px;
-	border: 1px solid #dcdcdc;
-	display: inline-block;
-	cursor: pointer;
-	color: #ababab;
-	font-family: Arial;
-	font-size: 13px;
-	font-weight: bold;
-	padding: 10px 25px;
-	text-decoration: none;
-	text-shadow: 0px 1px 0px #ffffff;
-}
-
-.create_btn:hover {
-	background: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
-	background-color: #f6f6f6;
-}
-
-.create_btn:active {
-	position: relative;
-	top: 1px;
-}
-
-.login_btn {
-	display: grid;
-	align-items: center;
-}
-
-.seach_btn {
-	position: relative;
-	margin-left: 580px;
-	padding: .6em 1.4em .5em .8em;
-	margin: 0;
-}
-
-.item_btn {
-	margin: 2px;
-	box-shadow: inset 0px 1px 0px 0px #ffffff;
-	background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
-	background-color: #ffffff;
-	border-radius: 32px;
-	border: 1px solid #e3e3e3;
-	display: inline-block;
-	cursor: pointer;
-	color: #666666;
-	font-family: Arial;
-	font-size: 12px;
-	font-weight: bold;
-	padding: 3px 9px;
-	text-decoration: none;
-	text-shadow: 0px 1px 0px #ffffff;
-}
-
-.item_btn:hover {
-	background: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
-	background-color: #f6f6f6;
-}
-
-.item_btn:active {
-	position: relative;
-	top: 1px;
-}
-
-.form_area {
-/* 	padding: 15px 15px 15px 30px;
-	margin: 10px;
-	border: 1px solid #e8e8e8;
-	border-radius: 7px; */
-}
-
-.question-form {
-	margin-bottom: 10px;
-	font-weight: bold;
-	font-size: 13px;
-}
-
-.item_form {
-	margin-left: 10px;
-}
-
-thead {
-	border-radius: 10px;
-	color: white;
-	background-color: #8258FA;
-}
 
 .delete_btn{
    border:none;
    background:none;
 }
+
+.card_bj{
+	margin-left: 20px;
+    margin-top: 40px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, .125);
+    height: 800px;
+    border-radius: 20px;
+    box-shadow: 1px 1px 10px 0px #c0c0c0;
+    width: 1400px;
+}
+
+
 
 .card {
    margin-left: 20px;
@@ -513,23 +413,25 @@ thead {
    margin-bottom: 15px;
    margin-top: 50px;
 }
+
 .row {
-   background-color: #F2F2F2;
+/*    background-color: #F2F2F2; */
    margin-right:0px;
+
 }
 
 .card-body {
    height: 900px;
    width: 1500px;
-   /*    margin-left:50px; */
    background: #031436;
 }
 
 .survey_list_form_upper_dv{
-   width:1500px;
+   width:1500px; /*병준이는 1100px*/
    margin-left:25px;
 }
 /* SurveySearch 페이지*/
+
 .searchRangeAll{
    display:flex;
    position: relative;
@@ -555,17 +457,13 @@ thead {
 
 body {
    font-family: RegularFont, NanumGothic, sans-serif;
-   background-color: #F2F2F2;
+   /*background-color: #F2F2F2;*/
+   background-color:white;
     height: 935px;
    margin: 0px;
    font-size: 1rem;
 }
 
-table {
-   line-height: 30px;
-   word-break: break-all;
-   vertical-align: middle;
-}
 
 
 /*  페이지별 차이가 나는 경우가 생겨서  height 추석처리 하였음 */
@@ -575,32 +473,12 @@ input {
    border: 2px solid #e8e8e8;
 }
 
-select {
-   border-radius: 10px;
-   height: 40px;
-   border: 2px solid #e8e8e8;
-}
 
-select:hover { /* select */
-   border-color: #888;
-}
-
-select:focus {
-   border-color: #aaa;
-   box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
-   box-shadow: 0 0 0 3px -moz-mac-focusring;
-   color: #222;
-   outline: none;
-}
-
-select:disabled {
-   opacity: 0.5;
-}
 
 .container {
    margin: 0 auto;
    padding: 100px 50px 50px 50px;
-   width: 1500px;
+   width: 1500px; /*병준이 1200px*/
    height: 900px;
    background-color: white;
    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
@@ -670,12 +548,7 @@ select:disabled {
 }
 
 /* 메뉴 */
-.menu_profile_img {
-   display: block;
-   margin: 50px auto 30px auto;
-   width: 100px;
-   text-align: center;
-}
+
 
 .menu_item{
 
@@ -690,113 +563,6 @@ select:disabled {
    background-color:white;
    box-shadow: 0px 0px 1px 1px #c0c0c0;
    height: 955px;
-}
-
-.menu_profile_survey{
-   width: 300px;
-   box-shadow: rgb(50 50 93/ 25%) 0px 50px 100px -20px,
-            rgb(0 0 0/ 30%) 0px 30px 60px -30px, rgb(10 37 64/ 35%) 0px -2px 6px 0px inset;
-   border-radius: 5px;
-   height:900px;
-}
-
-.menu_profile_text {
-   /*    width: 100%; */
-   /*    float: left; */
-   /*    font-size: 18px; */
-   /*    text-align: center; */
-   color: white;
-   /*    margin-left: 0px; */
-   /*    font-weight: 450; */
-   /*    margin-left: 0px; */
-}
-
-.seach_float {
-   position: absolute;
-   top: 45px;
-   right: 200px;
-}
-
-.modal_class {
-   display: flex;
-   justify-content: space-between;
-   max-width: 420px;
-   align-items: center;
-   margin-bottom: 20px;
-}
-
-}
-.search_form {
-   padding-bottom: 200px; ! important;
-   border-radius: 10px;
-   border: 1px #e8e8e8;
-}
-
-.create_btn {
-   box-shadow: inset 0px 0px 0px 0px #ffffff;
-   background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
-   background-color: #ffffff;
-   border-radius: 20px;
-   border: 1px solid #dcdcdc;
-   display: inline-block;
-   cursor: pointer;
-   color: #ababab;
-   font-family: Arial;
-   font-size: 13px;
-   font-weight: bold;
-   padding: 10px 25px;
-   text-decoration: none;
-   text-shadow: 0px 1px 0px #ffffff;
-}
-
-.create_btn:hover {
-   background: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
-   background-color: #f6f6f6;
-}
-
-.create_btn:active {
-   position: relative;
-   top: 1px;
-}
-
-.login_btn {
-   display: grid;
-   align-items: center;
-}
-
-.seach_btn {
-   position: relative;
-   margin-left: 580px;
-   padding: .6em 1.4em .5em .8em;
-   margin: 0;
-}
-
-.item_btn {
-   margin: 2px;
-   box-shadow: inset 0px 1px 0px 0px #ffffff;
-   background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
-   background-color: #ffffff;
-   border-radius: 32px;
-   border: 1px solid #e3e3e3;
-   display: inline-block;
-   cursor: pointer;
-   color: #666666;
-   font-family: Arial;
-   font-size: 12px;
-   font-weight: bold;
-   padding: 3px 9px;
-   text-decoration: none;
-   text-shadow: 0px 1px 0px #ffffff;
-}
-
-.item_btn:hover {
-   background: linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
-   background-color: #f6f6f6;
-}
-
-.item_btn:active {
-   position: relative;
-   top: 1px;
 }
 
 /* survey */
@@ -817,22 +583,7 @@ select:disabled {
    border-radius: 50%;
 }
 
-.form_area {
-   padding: 15px 15px 15px 30px;
-   margin: 10px;
-   border: 1px solid #e8e8e8;
-   border-radius: 7px;
-}
 
-.question-form {
-   margin-bottom: 10px;
-   font-weight: bold;
-   font-size: 13px;
-}
-
-.item_form {
-   margin-left: 10px;
-}
 
 thead{
    border-radius: 10px;
@@ -848,5 +599,5 @@ thead{
 }
 
 .paiging-btn-table{
-	width:100%;
+   width:100%;
 }

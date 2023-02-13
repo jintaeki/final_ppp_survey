@@ -29,8 +29,9 @@
    	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+	<c:if test="${checked.managerYN eq 'N' }">
 	<div style="height: 30px;">&nbsp;</div>
-
+	</c:if>
 	<div class="row"> 		<!-- footer에 있는 div와 연결됨  footerformanager에 div하나 있어-->
 
 		<c:if test="${checked.managerYN eq 'Y' }">

@@ -58,10 +58,10 @@ public class HomeController {
 
 	@Autowired
 	ILoginCheckService loginCheckService;
-	
+
 	@Autowired
 	IJsonService ijr;
-	
+
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpSession session) {
@@ -71,26 +71,26 @@ public class HomeController {
 		return "login";
 	}
 
-	
+
 	@GetMapping("/excelDownload.do/{fileType}")
     public void downloadExcel(HttpServletResponse response, @PathVariable String fileType)  {
 		 Workbook workbook = new HSSFWorkbook();
 		if(fileType.equals("project")) {
 			 Sheet sheet = workbook.createSheet("프로젝트 이력");
 		        int rowNo = 0;
-		 
+
 		        Row headerRow = sheet.createRow(rowNo++);
 		        headerRow.createCell(0).setCellValue("PARTICIPATION_EMPLOYEE_ID");
 		        headerRow.createCell(1).setCellValue("PROJECT_ID");
 		        String outputFileName = "";
-		 
+
 		        String fileName = "프로젝트 이력.xls";
 		        try {
 					 outputFileName = new String(fileName.getBytes("KSC5601"), "8859_1");
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}
-		               
+
 		        List<ProjectHistoryDTO> list =  ijr.getHistoryList();
 
 		        for (ProjectHistoryDTO dto : list) {
@@ -99,10 +99,10 @@ public class HomeController {
 		            row.createCell(1).setCellValue(dto.getProjectId());
 
 		        }
-		 
+
 		        response.setContentType("ms-vnd/excel");
 		        response.setHeader("Content-Disposition", "attachment;fileName=\"" + outputFileName + "\"");
-		        
+
 		        try {
 					workbook.write(response.getOutputStream());
 					workbook.close();
@@ -110,30 +110,30 @@ public class HomeController {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		        
+
 		}
-		
+
        if(fileType.equals("OC")){
     	   Sheet sheet = workbook.createSheet("조직정보");
 	        int rowNo = 0;
-	        		
+
 	        Row headerRow = sheet.createRow(rowNo++);
 	        headerRow.createCell(0).setCellValue("HIGH_DEPARTMENT_ID");
 	        headerRow.createCell(1).setCellValue("DEPARTMENT_ID");
 	        headerRow.createCell(2).setCellValue("DEPARTMENT_NAME");
 
 	        String outputFileName = "";
-	 
+
 	        String fileName = "조직정보.xls";
 	        try {
 				 outputFileName = new String(fileName.getBytes("KSC5601"), "8859_1");
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-	               
+
 	        List<OrganizationChartDTO> list =  ijr.getOCList();
 
-	        
+
 	        for (OrganizationChartDTO dto : list) {
 	            Row row = sheet.createRow(rowNo++);
 	            row.createCell(0).setCellValue(dto.getHighDepartmentId());
@@ -141,10 +141,10 @@ public class HomeController {
 	            row.createCell(2).setCellValue(dto.getDepartmentName());
 
 	        }
-	 
+
 	        response.setContentType("ms-vnd/excel");
 	        response.setHeader("Content-Disposition", "attachment;fileName=\"" + outputFileName + "\"");
-	        
+
 	        try {
 				workbook.write(response.getOutputStream());
 				workbook.close();
@@ -152,15 +152,15 @@ public class HomeController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	        
-	        
+
+
        }
 
     }
 
-	
-	
-	@RequestMapping("/survey/fileuploadprojecthistory.do")	
+
+
+	@RequestMapping("/survey/fileuploadprojecthistory.do")
 	@ResponseBody
 	public String jsonFileUploadProjectHistory (@RequestParam(value="projecthistoryjson") MultipartFile jsonFile ) {
 		JSONObject jsonObj = null;
@@ -170,9 +170,9 @@ public class HomeController {
 		Object obj  ;
 		JSONArray jsonArr = new JSONArray();
 		String jsonstr;
-		
+
 		if(jsonFile.getContentType().equals("application/json")) {
-		
+
 			try {
 				jsonData = jsonFile.getBytes();
 				jsonstr = new String(jsonData);
@@ -181,29 +181,29 @@ public class HomeController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		
-			
-		
+
+
+
 			//JSON 읽어와서 쿼리에 담기위한 사전작업
-			
+
 			JSONObject checkKey=(JSONObject)jsonArr.get(0);
 			if(checkKey.containsKey("PROJECT_ID")&&checkKey.containsKey("PARTICIPATION_EMPLOYEE_ID")){
 				if(jsonArr.size()>0) {
 					for(int i=0; i<jsonArr.size(); i++) {
 						jsonObj = (JSONObject)jsonArr.get(i);
-						//jsonObj.get("projectid") for문 안에 VO 객체 set 메소드로 값을 설정하고 mapper에 insert하는 방식				
+						//jsonObj.get("projectid") for문 안에 VO 객체 set 메소드로 값을 설정하고 mapper에 insert하는 방식
 						dfj.setParticipationEmployeeId((long) jsonObj.get("PARTICIPATION_EMPLOYEE_ID"));
 						dfj.setProjectId((long) jsonObj.get("PROJECT_ID"));
 						//ijr.insert_into_pjhistorys(dfj);
 					logger.info("입력 성공");
 					}
 				}
-			
+
 				return "2";
 			}else {
 				return "1";
 			}
-	
+
 		}
 		else {
 			return "0";
@@ -211,7 +211,7 @@ public class HomeController {
 
 	}
 
-	
+
 	@RequestMapping("/survey/fileUploadOrganization.do")
 	@ResponseBody
 	public String jsonFileUploadOrganization (@RequestParam(value="organizationjson") MultipartFile jsonFile ) {
@@ -238,13 +238,13 @@ public class HomeController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-				
+
 			//JSON 읽어와서 쿼리에 담기위한 사전작업
 			JSONObject checkKey=(JSONObject)jsonArr.get(0);
 			if(checkKey.containsKey("HIGH_DEPARTMENT_ID")&&checkKey.containsKey("DEPARTMENT_ID")&&checkKey.containsKey("DEPARTMENT_NAME")){
 				if(jsonArr.size()>0) {
-					for(int i=0; i<jsonArr.size(); i++) {				
-						jsonObj = (JSONObject)jsonArr.get(i);		
+					for(int i=0; i<jsonArr.size(); i++) {
+						jsonObj = (JSONObject)jsonArr.get(i);
 						dfj.setHighDepartmentId((long) jsonObj.get("HIGH_DEPARTMENT_ID"));
 						dfj.setDepartmentId((long) jsonObj.get("DEPARTMENT_ID"));
 						dfj.setDepartmentName((String) jsonObj.get("DEPARTMENT_NAME"));
@@ -258,7 +258,7 @@ public class HomeController {
 			}
 		}else {
 			return "0";
-			
+
 		}
 	}
 
@@ -267,25 +267,25 @@ public class HomeController {
 
 		return "survey";
 	}
-	
-	
-	
+
+
+
 	@RequestMapping("/logincheck.do")
 	@ResponseBody
 	public String loginAfter(@ModelAttribute("UCD")  @Valid UserCheckDTO UCD,
 
-							  
+
 							  HttpSession session, Model model) {
 		if(UCD.getPassword().equals("")) {
 			return "noPassword";
 		}if(UCD.getRaterId().equals("")) {
 			return "noId";
 		}
-		
+
 		if(SHA256(UCD.getPassword()) != "") {
 			UCD.setPassword(SHA256(UCD.getPassword()));
 		}
-		
+
 		logger.info("실행");
 		logger.info(UCD.toString());
 		if(loginCheckService.checkUser(UCD)==1) {
@@ -304,7 +304,7 @@ public class HomeController {
 				int nosurveySeqForGetAllUser = 0;
 
 				List<UserCheckDTO> allUser = loginCheckService.getUserInfo(UCD.getRaterId(), nosurveySeqForGetAllUser);
-				
+
 				session.setAttribute("allUser",allUser);
 
 				return "successRater";
@@ -394,7 +394,7 @@ public class HomeController {
 
 	            loginCheckService.insertResult(surveyResult);
 	            loginCheckService.completeSurvey(surveyResult.getSurveySeq(),surveyResult.getAppraiseeId(),raterid);
-	     
+
 			}
 		}else {
 			for(int i =0; i<cntcontent;i++) {
@@ -452,7 +452,7 @@ public class HomeController {
 			md = MessageDigest.getInstance("SHA-256");
 			md.update(password.getBytes());
 		     byte[] toSHA256 = md.digest();
-		     result = new BigInteger(1, toSHA256).toString(16).toUpperCase(); 
+		     result = new BigInteger(1, toSHA256).toString(16).toUpperCase();
 		     System.out.println(result);
 		     return result;
 		} catch (NoSuchAlgorithmException e) {
@@ -461,13 +461,13 @@ public class HomeController {
 			return result;
 		}
 
-		
-		
 
-			
-		
+
+
+
+
 	}
-	
+
 }
 
 

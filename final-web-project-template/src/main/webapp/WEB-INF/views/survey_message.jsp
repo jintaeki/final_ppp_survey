@@ -32,7 +32,7 @@ function reset_btn_mapping_pop(surveySeq){
       </c:forEach>
     </select>
     </div>`;
-    
+
     html+=`<div class="input-group-append">
        <input type="text" class="form-control" id="selectedKeyword" placeholder="평가자 이름 검색창" name="keyword" aria-describedby="button-addon2">
        <input type="hidden" name="pageNo" value="1">`;
@@ -62,7 +62,7 @@ function reset_btn_mapping_pop(surveySeq){
                            <option value="${grade.gradeId}">${grade.gradeName}</option>
                         </c:if>
                   </c:forEach>
-                  </select> 
+                  </select>
                   <select name="selection">
                      <option value="60004">평가자 부서</option>
                      <c:forEach items="${raterDepartment}" var="rdp">
@@ -73,7 +73,7 @@ function reset_btn_mapping_pop(surveySeq){
                            <option value="${rdp.departmentId}">${rdp.departmentName}</option>
                         </c:if>
                      </c:forEach>
-                  </select> 
+                  </select>
                   <select name="selection2">
                      <option value="60004">평가자 참여 여부</option>
                      <c:forEach items="${checkList}" var="CL">
@@ -98,16 +98,16 @@ function reset_btn_mapping_pop(surveySeq){
                                    </option>
                         </c:if>
                      </c:forEach>
-                  </select> 
+                  </select>
                         </div>
                         <div class="input-group-append">
                              <input type="text" class="form-control" id="selectedKeyword" placeholder="평가자  이름 검색창"
-                            name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2"> 
+                            name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2">
                         <input type="hidden" name="pageNo" value="1"> <input
                            type="hidden" name="surveySeq" value="${surveySeq}" />
                         <input type="submit" class="btn btn-outline-secondary"
-                              id="button-addon2" value="검색"> 
-                        <input type="button" style="margin-left:10px;" class="btn btn-outline-secondary" onclick="reset_btn_mapping_pop(${surveySeq})" value="초기화">
+                              id="button-addon2" value="검색">
+                        <input type="button"  class="btn btn-outline-secondary" onclick="reset_btn_mapping_pop(${surveySeq})" value="초기화">
                         </div>
                         </div>
                      </form>
@@ -175,6 +175,7 @@ function reset_btn_mapping_pop(surveySeq){
                         </div>
                         <div style="float: right">
                          <button id="upper_dv_btn" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">재전송</button>
+                         <button class="btn btn-outline-primary btn" onclick="history.back()">뒤로가기</button>
                         </div>
                      </td>
                   </tr>

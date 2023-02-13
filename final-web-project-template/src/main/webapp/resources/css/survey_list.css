@@ -89,3 +89,10 @@ border:none;
 	    width: 1300px;
     margin-left: 80px;
 }
+
+.anonimityCheck_label {
+	vertical-align:middle;
+}
+input[type=checkbox], input[type=radio] {
+   vertical-align:middle;
+}

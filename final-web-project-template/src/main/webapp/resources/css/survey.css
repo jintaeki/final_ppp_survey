@@ -1,5 +1,22 @@
 @charset "UTF-8";
 
+.card_bj{
+	margin-left: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, .125);
+    border-radius: 20px;
+    box-shadow: 1px 1px 10px 0px #c0c0c0;
+    width: 1400px;
+    height: 800px;
+}
+
+
 .container{
 	padding: 20px 20px 50px 50px;
     width: 1360px;
@@ -72,7 +89,7 @@
     font-size: 20px;
     margin:auto;
     margin-bottom: 10px;
-    
+
 }
 
 #survey_btn {
@@ -126,19 +143,10 @@
 }
 
 .appraiseeList_list{
-	background: #F9F9F9;
-/* 	height: 100%; */
-	overflow: auto;
-    max-height: 760px;
-/*     margin-top: 10px; */
-    box-shadow: 1px 1px 5px 1px grey;
-    margin-left:15px;
-    border-radius: 20px;
-    padding: 10px;
-    font-size: 17px;
     text-align: center;
-    z-index: 1;
-
+    overflow: overlay;
+    max-height: 620px;
+    padding: 15px;
 }
 
 .submit_btn button{

@@ -76,9 +76,9 @@ function reset_btn_mapping_pop(surveySeq, month, number){
       </c:forEach>
     </select>
     <input type="text" class="form-control" id="selectedKeyword" placeholder="평가자  이름 검색창"
-             name="keyword"  aria-describedby="button-addon2">  
+             name="keyword"  aria-describedby="button-addon2">
     </div>`;
-    
+
 
  html +=`<div class="input-group-append">
        <select name="selection2">
@@ -87,13 +87,13 @@ function reset_btn_mapping_pop(surveySeq, month, number){
            <option value="${adp.departmentId}">${adp.departmentName}</option>
         </c:forEach>
        </select>
-       
+
        <input type="text" class="form-control" id="selectedKeyword" placeholder="피평가자 이름 검색창" name="keyword2" aria-describedby="button-addon2">
        <input type="hidden" name="pageNo" value="1">`;
     html +='<input type="hidden" name="surveySeq" value="'+surveySeq+'">';
     html +='<input type="hidden" name="month" value="'+month+'">';
-    html+='<input type="hidden" name="number" value="'+number+'">'; 
-    html+='<input type="hidden" name="newCheck" value="0">'; 
+    html+='<input type="hidden" name="number" value="'+number+'">';
+    html+='<input type="hidden" name="newCheck" value="0">';
     html+=`<input type="submit" class="btn btn-outline-secondary"
           id="button-addon2" value="검색"> `;
        html+='<input type="button" style="margin-left:10px;" class="btn btn-outline-secondary" onclick="reset_btn_mapping_pop('+surveySeq+','+month+','+number+')" value="초기화"></div>';
@@ -124,7 +124,7 @@ function reset_btn_mapping_pop(surveySeq, month, number){
                                  <option value="${grade.gradeId}">${grade.gradeName}</option>
                               </c:if>
                            </c:forEach>
-                        </select> 
+                        </select>
                         <select name="selection">
                              <option value="60004">평가자 부서</option>
                            <c:forEach items="${raterDepartment}" var="rdp">
@@ -137,7 +137,7 @@ function reset_btn_mapping_pop(surveySeq, month, number){
                            </c:forEach>
                         </select>
                         <input type="text" class="form-control" id="selectedKeyword" placeholder="평가자  이름 검색창"
-                                 name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2">  
+                                 name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2">
                         </div>
                         <div class="input-group-append">
                         <select name="selection2">
@@ -150,15 +150,15 @@ function reset_btn_mapping_pop(surveySeq, month, number){
                                     <option value="${adp.departmentId}">${adp.departmentName}</option>
                                  </c:if>
                               </c:forEach>
-                        </select> 
+                        </select>
                         <input type="text" class="form-control" id="selectedKeyword" placeholder="피평가자 이름 검색창"
-                                 name="keyword2" value="${pagingdto.keyword2}" aria-describedby="button-addon2"> 
-                        <input type="hidden" name="pageNo" value="1"> 
+                                 name="keyword2" value="${pagingdto.keyword2}" aria-describedby="button-addon2">
+                        <input type="hidden" name="pageNo" value="1">
                         <input type="hidden" name="surveySeq" value="${pagingdto.surveySeq}">
                         <input type="hidden" name="month" value="${pagingdto.month}">
-                        <input type="hidden" name="number" value="${number}"> 
+                        <input type="hidden" name="number" value="${number}">
                         <input type="hidden" name="newCheck" value="0">
-                        <input type="submit" class="btn btn-outline-secondary" id="button-addon2" value="검색"> 
+                        <input type="submit" class="btn btn-outline-secondary" id="button-addon2" value="검색">
                         <input type="button" style="margin-left:10px;" class="btn btn-outline-secondary" onclick="reset_btn_mapping_pop(${pagingdto.surveySeq},${pagingdto.month},${number})" value="초기화">
                         </div>
                         </div>
@@ -197,7 +197,7 @@ function reset_btn_mapping_pop(surveySeq, month, number){
                                  <td>${mapping.appraiseeName}</td>
                                  <td>
                                     <c:if test="${stateCode ne 30004}">
-                                       <button id="map_delete" style="background: white; border: 1px solid #fff; border-radius: 35em;"
+                                       <button id="map_delete" border-radius: 35em;"
                                        onclick="map_delete('${mapping.surveySeq}', '${mapping.raterId}', '${mapping.appraiseeId}');" value="삭제">
                                           <i class="fas fa-xmark"></i>
                                        </button>

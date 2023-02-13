@@ -312,25 +312,31 @@ function delete_mapping_btn(){
 					<form:form action="${actionURL}" modelAttribute="SLD" id="surveyDataForm">
 
 						<div class="form-group">
-							<label for="recipient-name" class="col-form-label">평가지 이름</label>
+							<label for="recipient-name" class="col-form-label"><span style="color:red">*</span> 평가지 이름</label>
 							<input type="text" class="form-control" id="recipient-name"
 								name="surveyName">
 						</div>
 						<div class="form-group">
-							<label for="message-text" class="col-form-label">평가 부가 설명</label>
+							<label for="message-text" class="col-form-label"><span style="color:red">*</span> 평가 부가 설명</label>
 							<textarea class="form-control" id="message-text"
 								name="surveyContent"></textarea>
 						</div>
 						<input type="hidden" name="stateCode" value="30001">
-						<input type="hidden"> 평가 진행 기간<br>
+						<input type="hidden"><span style="color:red">*</span> 평가 진행 기간<br>
 
 						<input type="date" name="surveyStartDate" pattern="yyyy-MM-dd">~<input
 							type="date" name="surveyClosedDate" pattern="yyyy-MM-dd">
 						<br>
 						<br>
-						<div style="display: flex;align-items: center;">
-						<input type="radio" name="anonymityCheckCode" value="20001">익명 &nbsp;
-						<input type="radio" name="anonymityCheckCode" value="20002">기명
+						<div>
+						<label for="anonimityCheck-choose" class="col-form-label"><span style="color:red">*</span> 익명 기명 선택</label>
+						<br>
+						<label class="anonimityCheck_label"><input type="radio" name="anonymityCheckCode" value="20001">
+							<span>익명</span>
+						</label>
+						<label class="anonimityCheck_label"><input type="radio" name="anonymityCheckCode" value="20002">
+							<span>기명</span>
+						</label>
 						</div>
 						<br>
 						<input type="hidden"> 평가지 복사<br>
@@ -408,7 +414,7 @@ function delete_mapping_btn(){
 									value="${pagingdto.keyword}" aria-describedby="button-addon2">
 									<input type="submit" class="btn btn-outline-secondary"
 										id="button-addon2" value="검색" onclick="search()">
-									<input type="button" class="btn btn-outline-secondary" style="margin-left:10px;" onclick="reset_btn()"
+									<input type="button" class="btn btn-outline-secondary"  onclick="reset_btn()"
 										value="초기화">
 								<input type="hidden" name="pageNo" value="1">
 								</div>

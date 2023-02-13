@@ -26,7 +26,7 @@ select{
 }
 
 .searchRange{
-	display: flex !important; 
+	display: flex !important;
 }
 
 .table{
@@ -69,7 +69,10 @@ select{
 }
 
 .paiging-btn-table{
-	   width: 1300px;
-    margin-left: 80px;
-}
+	   width: 100%;
 
+}
+#map_delete{
+	background-color:transparent;
+	border:0px;
+}
