@@ -71,11 +71,12 @@ function login(){
             // 전송 전 실행 코드
          },
          success : function(data) {
-        	 if(data=='noPassword'){alert("비밀번호를 입력해 주세요."); return false;};
-        	 if(data=='noId'){alert("아이디를 입력해 주세요."); return false;};
-        	 if(data=='successRater'){var raterName = sessionStorage.getItem('raterName');alert(raterName+" 님 어서오세요");location.href="/survey.do" };
-        	 if(data=='successManager'){alert("관리자 님 어서오세요.");location.href="/survey/surveysearch.do" };
-        	 if(data=='loginFail'){alert("아이디 혹은 비밀번호를 정확하게 입력해 주세요."); return false;};
+        	 if(data=='noPassword'){alert("비밀번호를 입력해 주세요."); return false;}
+        	 else if(data=='noId'){alert("아이디를 입력해 주세요."); return false;}
+        	 else if(data=='successRater'){var raterName = sessionStorage.getItem('raterName');alert(raterName+" 님 어서오세요");location.href="/survey.do" }
+        	 else if(data=='successManager'){alert("관리자 님 어서오세요.");location.href="/survey/surveysearch.do" }
+        	 else if(data=='loginFail'){alert("아이디 혹은 비밀번호를 정확하게 입력해 주세요."); return false;}
+        	 else{alert(raterName+"님 어서오세요");location.href="/survey.do" };
          },
          error : function(e) {
             // 전송 후 에러 발생 시 실행 코드

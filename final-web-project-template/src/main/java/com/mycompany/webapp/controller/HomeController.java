@@ -270,7 +270,7 @@ public class HomeController {
 
 
 
-	@RequestMapping("/logincheck.do")
+	@RequestMapping(value="/logincheck.do",produces = "application/text; charset=UTF-8")
 	@ResponseBody
 	public String loginAfter(@ModelAttribute("UCD")  @Valid UserCheckDTO UCD,
 
@@ -307,7 +307,7 @@ public class HomeController {
 
 				session.setAttribute("allUser",allUser);
 
-				return "successRater";
+				return check.getRaterName();
 			}else {
 				logger.info("관리자 진입");
 				session.setAttribute("checked", check);
