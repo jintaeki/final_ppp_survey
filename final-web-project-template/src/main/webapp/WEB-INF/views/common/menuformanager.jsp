@@ -18,7 +18,7 @@ body {
 
 				</div>
 
-			
+
 				<div class="modal-body">
 					<form  id="projectHistoryForm"  method="POST" >
 				<a href="<c:url value='/excelDownload.do/project'/>"> 이력 다운받기</a>
@@ -35,11 +35,11 @@ body {
 						</div>
 
 					</form>
-							
 
-						
-					
-					
+
+
+
+
 					<form  id="organizationForm">
 <a href="<c:url value='/excelDownload.do/OC'/>"> 조직정보 다운받기</a>
 
@@ -57,7 +57,7 @@ body {
 						</div>
 
 					</form>
-										
+
 				</div>
 
 			</div>
@@ -83,6 +83,11 @@ body {
 			<a style="color:black;" href="<c:url value='/survey/surveyresultteam.do'/>">결과 통계</a>
 		</div>
 		<br> <br>
+
+		<div class="menu_item"style="height: 70px;">
+			<a data-toggle="modal" style="color:black;" data-target="#json" onclick="">프로젝트 이력 및<br>조직도 업로드</a>
+		</div>
+		<br> <br>
 		<c:if test="${checked ne '' }">
 		<div class="menu_item" style="">
 			<a style="color:black;" href="<c:url value='/logout.do'/>">로그아웃</a>
@@ -93,13 +98,6 @@ body {
 			<a style="color:black;" href="<c:url value='/login.do'/>">로그인</a>
 		</div>
 		</c:if>
-		<br> <br>
-		<div class="menu_item"style="height: 70px;">
-			<a data-toggle="modal" style="color:black;" data-target="#json" onclick="">프로젝트 이력 및<br>조직도 업로드</a>
-
-		</div>
-
-
 	</div>
 	<!--<a class="btn btn-success btn-sm" href="#">로그아웃</a> -->
 </div>

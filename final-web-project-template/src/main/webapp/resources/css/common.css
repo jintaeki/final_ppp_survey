@@ -39,8 +39,10 @@ label {
 }
 
 .menu_item {
+	/*
    box-shadow: rgb(50 50 93/ 25%) 0px 50px 100px -20px, rgb(0 0 0/ 30%) 0px
       30px 60px -30px, rgb(10 37 64/ 35%) 0px -2px 6px 0px inset;
+  */
    border-radius: 5px;
    height: 50px;
    padding: 10px;
@@ -204,8 +206,8 @@ body::-webkit-scrollbar-track {
 }
 
 .menu_logout {
-   color: black;
-   font-size: 14px;
+ color: #606060;
+   font-size: 10px;
    text-decoration: none;
    background-color: transparent;
 }
@@ -451,7 +453,7 @@ body::-webkit-scrollbar-track {
    background-color: white;
    border-radius: 20px;
    box-shadow: 1px 1px 10px 0px  #c0c0c0;
-   height: 860px;
+   height: 900px;
    padding: 1em;
 }
 
@@ -561,7 +563,7 @@ input {
 .menu_profile{
    width: 160px;
    background-color:white;
-   box-shadow: 0px 0px 1px 1px #c0c0c0;
+   box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
    height: 955px;
 }
 

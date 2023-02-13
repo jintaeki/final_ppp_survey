@@ -6,6 +6,8 @@
 <!-- <script src="resources/js/surveycountdown.js"></script> -->
 <script>
 
+
+
    function answerBox_on(obj){
       var radioItemSeq = $(obj).val();
       var tag = $(obj);
@@ -206,8 +208,12 @@
    }
 
    function gowithoutConfirm(obj){
-   var content = $(obj).val();
-   console.log('content:'+content);
+      var content = $(obj).val();
+      console.log('content:'+content);
+
+
+
+
       Swal.fire({
          text: content,
           confirmButtonText: '확인',
@@ -323,7 +329,7 @@
                 html +='<div class="col-2">'+data[i].appraiseeGradeName+'</div>';
 
                if(data[i].surveyCompleteYN=='N'){
-               html +='<div class="col-3"><button style="color:green; margin-bottom: 10px;" class="create_btn" id="'+data[i].appraiseeId+'" onclick="surveyStart(this,'+data[i].appraiseeId+','+data[i].raterId+','+anonymitycode+','+theSeq+','+data[i].surveySeq+','+"'"+data[i].surveyContent+"'"+')" value="'+data[i].appraiseeName+'">평가하기</button></div>';
+               html +='<div class="col-3"><button style="color:green; margin-bottom: 10px;" class="create_btn" id="'+data[i].appraiseeId+'" onclick="surveyStart(this,'+data[i].appraiseeId+','+data[i].raterId+','+anonymitycode+','+theSeq+','+data[i].surveySeq+')" value="'+data[i].appraiseeName+'">평가하기</button></div>';
                }else{
                html +='<div class="col-3"><button style="margin-bottom: 10px;" class="create_btn" disabled>평가완료</button></div>';
                }
@@ -336,15 +342,15 @@
 
             $('.forContent').empty;
             var contentViewBtn = '';
-            contentViewBtn = '<button style="margin:0px;" id="contentBtn" class="create_btn" value="'+data[0].surveyContent+'"onclick="gowithoutConfirm(this)">평가 참고 사항</button>';
+            contentViewBtn = '<button style="font-size: 15px;;" id="contentBtn" class="create_btn" value="'+data[0].surveyContent+'"onclick="gowithoutConfirm(this)">가이드</button>';
          $('.forContent').append(contentViewBtn);
       }
 
    }
 
-   function surveyStart(obj,appraiseeId,raterId,anonymitycode,theSeq,surveySeq,content){
+   function surveyStart(obj,appraiseeId,raterId,anonymitycode,theSeq,surveySeq){
       var appraiseeName = $(obj).val();
-      go(content);
+
       $.ajax({
             url: 'getquestionforsurvey.do/'+surveySeq,
             method: 'GET',
@@ -508,6 +514,7 @@
 <!-- 문항 시작 -->
 <div class="card_bj">
    <div class="forshadowing_bj">
+   <div style="display:flex;">
       <select name="surveySeq" onclick="selectSurvey(this,${raterId})">
          <option value="0">평가 선택</option>
          <option value="1">전체 조회</option>
@@ -515,6 +522,8 @@
             <option value="${surveySeqAndName.SURVEY_SEQ}">${surveySeqAndName.SURVEY_NAME}</option>
          </c:forEach>
       </select>
+      <div class="forContent"></div>
+      </div>
       <div class="row">
 
          <div class="col-5" style="padding:0px;">
