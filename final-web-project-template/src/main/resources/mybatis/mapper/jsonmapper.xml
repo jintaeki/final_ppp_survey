@@ -36,11 +36,19 @@
                 SELECT 1
                 FROM PROJECT_HISTORY_COPY
                 WHERE PROJECT_ID = #{projectId} and PARTICIPATION_EMPLOYEE_ID = #{participationEmployeeId})
-		   
 
-			 
-	
 	</insert>
+
+
+	<select id="getHistoryList" resultType="com.mycompany.webapp.dto.ProjectHistoryDTO">
+		SELECT PROJECT_ID, PARTICIPATION_EMPLOYEE_ID from PROJECT_HISTORY
+	
+	</select>
+
+	<select id="getOCList" resultType="com.mycompany.webapp.dto.OrganizationChartDTO">
+		SELECT  DEPARTMENT_ID, HIGH_DEPARTMENT_ID, DEPARTMENT_NAME FROM ORGANIZATION_CHART
+	 
+	</select>
 
 
 </mapper>

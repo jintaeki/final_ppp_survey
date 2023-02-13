@@ -1,5 +1,7 @@
 package com.mycompany.webapp.controller;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -7,9 +9,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,8 +26,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +43,8 @@ import com.mycompany.webapp.dto.SurveyResultDTO;
 import com.mycompany.webapp.dto.UserCheckDTO;
 import com.mycompany.webapp.dto.DTO_for_json;
 import com.mycompany.webapp.dto.DTO_for_json2;
+import com.mycompany.webapp.dto.OrganizationChartDTO;
+import com.mycompany.webapp.dto.ProjectHistoryDTO;
 import com.mycompany.webapp.service.ILoginCheckService;
 import com.mycompany.webapp.service.json.IJsonService;
 
@@ -60,7 +71,94 @@ public class HomeController {
 		return "login";
 	}
 
+	
+	@GetMapping("/excelDownload.do/{fileType}")
+    public void downloadExcel(HttpServletResponse response, @PathVariable String fileType)  {
+		 Workbook workbook = new HSSFWorkbook();
+		if(fileType.equals("project")) {
+			 Sheet sheet = workbook.createSheet("프로젝트 이력");
+		        int rowNo = 0;
+		 
+		        Row headerRow = sheet.createRow(rowNo++);
+		        headerRow.createCell(0).setCellValue("PARTICIPATION_EMPLOYEE_ID");
+		        headerRow.createCell(1).setCellValue("PROJECT_ID");
+		        String outputFileName = "";
+		 
+		        String fileName = "프로젝트 이력.xls";
+		        try {
+					 outputFileName = new String(fileName.getBytes("KSC5601"), "8859_1");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+		               
+		        List<ProjectHistoryDTO> list =  ijr.getHistoryList();
 
+		        for (ProjectHistoryDTO dto : list) {
+		            Row row = sheet.createRow(rowNo++);
+		            row.createCell(0).setCellValue(dto.getParticipationEmployeeId());
+		            row.createCell(1).setCellValue(dto.getProjectId());
+
+		        }
+		 
+		        response.setContentType("ms-vnd/excel");
+		        response.setHeader("Content-Disposition", "attachment;fileName=\"" + outputFileName + "\"");
+		        
+		        try {
+					workbook.write(response.getOutputStream());
+					workbook.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		        
+		}
+		
+       if(fileType.equals("OC")){
+    	   Sheet sheet = workbook.createSheet("조직정보");
+	        int rowNo = 0;
+	        		
+	        Row headerRow = sheet.createRow(rowNo++);
+	        headerRow.createCell(0).setCellValue("HIGH_DEPARTMENT_ID");
+	        headerRow.createCell(1).setCellValue("DEPARTMENT_ID");
+	        headerRow.createCell(2).setCellValue("DEPARTMENT_NAME");
+
+	        String outputFileName = "";
+	 
+	        String fileName = "조직정보.xls";
+	        try {
+				 outputFileName = new String(fileName.getBytes("KSC5601"), "8859_1");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+	               
+	        List<OrganizationChartDTO> list =  ijr.getOCList();
+
+	        
+	        for (OrganizationChartDTO dto : list) {
+	            Row row = sheet.createRow(rowNo++);
+	            row.createCell(0).setCellValue(dto.getHighDepartmentId());
+	            row.createCell(1).setCellValue(dto.getDepartmentId());
+	            row.createCell(2).setCellValue(dto.getDepartmentName());
+
+	        }
+	 
+	        response.setContentType("ms-vnd/excel");
+	        response.setHeader("Content-Disposition", "attachment;fileName=\"" + outputFileName + "\"");
+	        
+	        try {
+				workbook.write(response.getOutputStream());
+				workbook.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        
+	        
+       }
+
+    }
+
+	
 	
 	@RequestMapping("/survey/fileuploadprojecthistory.do")	
 	@ResponseBody
@@ -166,7 +264,7 @@ public class HomeController {
 
 	@RequestMapping("/survey.do")
 	public String tosurvey() {
-		
+
 		return "survey";
 	}
 	
@@ -255,29 +353,29 @@ public class HomeController {
 
 
 	@RequestMapping("/insertSurveyResult.do")
-	@ResponseBody
-	public String insertSurveyResult(@ModelAttribute ("surveyResult") SurveyResultDTO surveyResult ) {
-		logger.info(surveyResult.toString());
+	   @ResponseBody
+	   public String insertSurveyResult(@ModelAttribute ("surveyResult") SurveyResultDTO surveyResult ) {
+	      logger.info(surveyResult.toString());
 
-		String surveySeqs = surveyResult.getSurveySeq();
-		int cntcontent = (surveySeqs.length() - surveySeqs.replace(",", "").length())+1;
+	      String surveySeqs = surveyResult.getSurveySeq();
+	      int cntcontent = (surveySeqs.length() - surveySeqs.replace(",", "").length())+1;
 
-		String anonymityCodes = surveyResult.getAnonymityCode();
-		String raterIds = surveyResult.getRaterId();
-		String appraiseeIds = surveyResult.getAppraiseeId();
-		String questionSeqs = surveyResult.getQuestionSeq();
-		String itemSeqs = surveyResult.getItemSeq();
-		String answerContents =surveyResult.getAnswerContent();
-		String anonymitySeqs = surveyResult.getAnonymitySeq();
+	      String anonymityCodes = surveyResult.getAnonymityCode();
+	      String raterIds = surveyResult.getRaterId();
+	      String appraiseeIds = surveyResult.getAppraiseeId();
+	      String questionSeqs = surveyResult.getQuestionSeq();
+	      String itemSeqs = surveyResult.getItemSeq();
+	      String answerContents =surveyResult.getAnswerContent();
+	      String anonymitySeqs = surveyResult.getAnonymitySeq();
 
-		String[] anonymityCode = anonymityCodes.split(",");
-		String[] surveySeq = surveySeqs.split(",");
-		String[] raterId = raterIds.split(",");
-		String[] appraiseeId = appraiseeIds.split(",");
-		String[] questionSeq = questionSeqs.split(",");
-		String[] itemSeq = itemSeqs.split(",");
-		String[] answerContent = answerContents.split(",");
-		String[] anonymitySeq  = anonymitySeqs.split(",");
+	      String[] anonymityCode = anonymityCodes.split(",");
+	      String[] surveySeq = surveySeqs.split(",");
+	      String[] raterId = raterIds.split(",");
+	      String[] appraiseeId = appraiseeIds.split(",");
+	      String[] questionSeq = questionSeqs.split(",");
+	      String[] itemSeq = itemSeqs.split(",");
+	      String[] answerContent = answerContents.split(",");
+	      String[] anonymitySeq  = anonymitySeqs.split(",");
 
 		surveyResult.setSurveySeq(surveySeq[0]);
 		surveyResult.setAppraiseeId(appraiseeId[0]);
@@ -287,13 +385,16 @@ public class HomeController {
 			surveyResult.setAnonymitySeq(anonymitySeq[0]);
 			surveyResult.setRaterId("");
 
-			for(int i =0; i<cntcontent;i++) {
-				surveyResult.setQuestionSeq(questionSeq[i]);
-				surveyResult.setItemSeq(itemSeq[i]);
-				surveyResult.setAnswerContent(answerContent[i]);
 
-				loginCheckService.insertResult(surveyResult);
-				loginCheckService.completeSurvey(surveyResult.getSurveySeq(),surveyResult.getAppraiseeId(),raterid);
+	         for(int i =0; i<cntcontent;i++) {
+	            surveyResult.setQuestionSeq(questionSeq[i]);
+	            surveyResult.setItemSeq(itemSeq[i]);
+	            surveyResult.setAnswerContent(answerContent[i]);
+
+
+	            loginCheckService.insertResult(surveyResult);
+	            loginCheckService.completeSurvey(surveyResult.getSurveySeq(),surveyResult.getAppraiseeId(),raterid);
+	     
 			}
 		}else {
 			for(int i =0; i<cntcontent;i++) {
@@ -303,17 +404,16 @@ public class HomeController {
 				surveyResult.setItemSeq(itemSeq[i]);
 				surveyResult.setAnswerContent(answerContent[i]);
 
+
+
 				loginCheckService.insertResult(surveyResult);
 				loginCheckService.completeSurvey(surveyResult.getSurveySeq(),surveyResult.getAppraiseeId(),raterid);
 
-			}
-		}
 
-
-
-
-		return "성공";
-	}
+	         }
+	      }
+	      return "성공";
+	   }
 
 	@RequestMapping("/getAnonymityCode.do/{surveySeq}")
 	@ResponseBody

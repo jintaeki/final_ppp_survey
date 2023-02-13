@@ -271,7 +271,7 @@ Highcharts.chart('chart_container', {
 
   tooltip: {
     headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> 점<br/>'
+    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.3f}</b> 점<br/>'
   },
 
   series: [

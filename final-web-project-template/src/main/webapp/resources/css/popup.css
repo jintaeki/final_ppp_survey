@@ -1,14 +1,102 @@
+@charset "UTF-8";
+
+body{
+   height: 820px !important;
+}
+
+.entire_popup {
+   text-align: center;
+}
+.popup-title {
+   padding: 10px;
+   font-size: 30px;
+   }
+
+table{
+   margin-left: auto;
+   margin-right: auto;
+}
+thead{
+   display: table; 
+   width: calc(100% - 17px);
+}
+table th{
+   text-align: center;
+}
+tbody {
+  display: block; 
+  max-height: 456px;
+  width: 788px; 
+  overflow-y: auto; 
+}
+td {
+  text-align: center;
+  border-bottom: 1px solid #dee2e6;
+}
+tr {
+  height: 65px;
+  display: table;
+  width: 788px; 
+}
+tr:nth-child(even) {
+  background-color: #F9F9F9;
+}
+.tablePop th{
+  width: 16%; /* to enable "word-break: break-all" */
+  word-break: break-all; /* 4. */
+}
+.tablePop td{
+  width: 16%; /* to enable "word-break: break-all" */
+  word-break: break-all; /* 4. */
+}
+.tableAnother thead tr{
+   width: 760px; 
+}
+.tableAnother tbody tr{
+   width: 760px; 
+}
+
+.tableAnother th{
+  width: 20%; /* to enable "word-break: break-all" */
+  word-break: break-all; /* 4. */
+}
+.tableAnother td{
+  width: 20%; /* to enable "word-break: break-all" */
+  word-break: break-all; /* 4. */
+}
+.table-table-hover{
+   max-height:550px; 
+   margin-left: 10px;
+   margin-right: 10px;
+}
+.button{
+   text-align: center;
+   margin-bottom: 20px;
+}
+.searchRangeAll{
+   bottom: -10px !important;
+}
+.searchRange{
+   display: flex !important; 
+   margin-right: 30px !important;
+}
+.selection2{
+   margin-left: 30px !important;
+}
 .survey_list_form_upper_dv{
-    width: 790px!important;
-    margin: 0px !important;
+   display:flex;
 }
-.survey_list_form {
-	width: 790px;
+.survey_list_form .form-control{
+   outline: 0;
+    width: 180px;
+    border: 0;
+    border-bottom: 2px solid #eee;
 }
-#button{
-	text-align:center;
+.survey_list_form select{
+   margin-right: 10px;
 }
-#search-div {
-	width: 300px;
-    float: right;
+.hmenu_popup {
+     display: flex;
+    margin-bottom: 13px;
+    margin-top: 13px;
 }

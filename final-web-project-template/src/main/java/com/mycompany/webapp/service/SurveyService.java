@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.mycompany.webapp.dao.IMappingRepository;
 import com.mycompany.webapp.dao.ISurveyRepository;
+import com.mycompany.webapp.dto.MappingDTO;
 import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.PagingDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
@@ -139,23 +140,6 @@ public class SurveyService implements ISurveyService{
 		surveyDao.deleteSurvey(surveySeq);
 
 	}
-
-
-	public List<Map<String, String>> selectSurveyEvaluate(int surveySeq) {
-		logger.info("selectSurveyEvaluate 서비스 진입");
-		logger.info("서비스: " +surveySeq);
-
-		return surveyDao.selectSurveyEvaluate(surveySeq);
-	}
-	
-	@Override
-	public List<Map<String, String>> selectSurveyMessage(int surveySeq) {
-		logger.info("selectSurveyEvaluate 서비스 진입");
-		logger.info("서비스: " +surveySeq);
-
-		return surveyDao.selectSurveyMessage(surveySeq);
-	}
-
 	@Override
 	public List<Map<String, Object>> searchByEvaluate(PagingDTO pagingDto) {
 		logger.info("검색:" + surveyDao.searchByEvaluate(pagingDto));
@@ -177,6 +161,21 @@ public class SurveyService implements ISurveyService{
 	@Override
 	public List<OrganizationChartDTO> organList(int surveySeq) {
 		return surveyDao.organList(surveySeq);
+	}
+	
+	@Override
+	public List<OrganizationChartDTO> organAppraiseeList(int surveySeq) {
+		return surveyDao.organAppraiseeList(surveySeq);
+	}
+	
+	@Override
+	public List<OrganizationChartDTO> organRaterList(int surveySeq) {
+		return surveyDao.organRaterList(surveySeq);
+	}
+	
+	@Override
+	public List<MappingDTO> checkList() {
+		return surveyDao.checkList();
 	}
 
 	@Override
@@ -278,11 +277,6 @@ public class SurveyService implements ISurveyService{
 
 		return surveyDao.getItemCnt(surveySeq);
 	}
-
-
-
-
-
 
 }
 

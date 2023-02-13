@@ -51,11 +51,14 @@ public class MappingController {
 			 				 @RequestParam(defaultValue="0")int number,
 							 @RequestParam(defaultValue="0")String newCheck,
 							 @RequestParam(defaultValue="") String keyword,
+							 @RequestParam(defaultValue="") String keyword2,
 							 @RequestParam(defaultValue="1") int pageNo,
 							 @RequestParam(defaultValue="60004") String selection,
+							 @RequestParam(defaultValue="60004") String selection2,
 							 @RequestParam(defaultValue="60004") String selectGD,
 							 Model model, RedirectAttributes redirectAttrs) {
-		model.addAttribute("commonMapList", commonService.selectMappingCode());
+		model.addAttribute("raterDepartment", surveyService.organRaterList(surveySeq));
+		model.addAttribute("appraiseeDepartment", surveyService.organAppraiseeList(surveySeq));
 		model.addAttribute("commonDateList", commonService.selectDateCode());
 		model.addAttribute("gradeList", mappingService.selectGradeList());
 		model.addAttribute("number", number);
@@ -83,11 +86,13 @@ public class MappingController {
 			PagingDTO pagingdto = null;
 			SurveyListDTO surveyInfo = surveyService.selectSurvey(surveySeq);
 
-			int totalRows = pagingService.getTotalMappingNum(keyword, selection, surveySeq, selectGD);
+			int totalRows = pagingService.getTotalMappingNum(keyword, keyword2, selection, selection2, surveySeq, selectGD);
 			logger.info("줄수"+totalRows);
 			pagingdto = new PagingDTO(13, 10, totalRows, pageNo);
 			pagingdto.setKeyword(keyword);
+			pagingdto.setKeyword2(keyword2);
 			pagingdto.setSelection(selection);
+			pagingdto.setSelection2(selection2);
 			pagingdto.setSurveySeq(surveySeq);
 			pagingdto.setSelectGD(selectGD);
 			pagingdto.setMonth(month);
@@ -95,11 +100,9 @@ public class MappingController {
 			logger.info("페이징:" +pagingdto.toString());
 
 			mappingList = mappingService.selectMappingData(pagingdto);
-			logger.info("리스트:" +mappingList.toString());
 			model.addAttribute("mappingList", mappingList);
 
 			model.addAttribute("pagingdto", pagingdto);
-			model.addAttribute("keyword", keyword);
 			model.addAttribute("surveySeq",surveySeq);
 			model.addAttribute("stateCode", mappingService.stateCheck(surveySeq));
 			model.addAttribute("surveyInfo",surveyInfo);
@@ -117,25 +120,32 @@ public class MappingController {
 	@RequestMapping(value="/popup.do", method=RequestMethod.GET)
 	public String plusMapping(int surveySeq, String raterId, int month,
 							@RequestParam(defaultValue="") String keyword,
+							@RequestParam(defaultValue="") String keyword2,
 							@RequestParam(defaultValue="1") int pageNo,
 							@RequestParam(defaultValue="60004") String selection,
+							@RequestParam(defaultValue="60004") String selection2,
 							@RequestParam(defaultValue="60004") String selectGD, Model model) {
-		model.addAttribute("commonMapList", commonService.selectMappingCode());
+		model.addAttribute("raterDepartment", surveyService.organRaterList(surveySeq));
+		model.addAttribute("appraiseeDepartment", surveyService.organAppraiseeList(surveySeq));
 		model.addAttribute("commonDateList", commonService.selectDateCode());
 		model.addAttribute("gradeList", mappingService.selectGradeList());
 		logger.info("지금 가져온 선택지:"+selection);
+		logger.info("지금 가져온 선택지:"+selection2);
 		logger.info("페이지 수"+pageNo);
 		logger.info("키워드"+keyword+"1");
+		logger.info("키워드"+keyword2+"1");
 		logger.info("직급"+selectGD);
 		try {
 			List<PopupDTO> getPopup = null;
 			PagingDTO pagingdto = null;
 
-			int totalRows = pagingService.getTotalInsertNum(keyword, selection, surveySeq, selectGD, raterId, month);
+			int totalRows = pagingService.getTotalInsertNum(keyword, keyword2, selection, selection2, surveySeq, selectGD, raterId, month);
 			logger.info("줄수"+totalRows);
-			pagingdto = new PagingDTO(7, 10, totalRows, pageNo);
+			pagingdto = new PagingDTO(13, 10, totalRows, pageNo);
 			pagingdto.setKeyword(keyword);
+			pagingdto.setKeyword2(keyword2);
 			pagingdto.setSelection(selection);
+			pagingdto.setSelection2(selection2);
 			pagingdto.setSurveySeq(surveySeq);
 			pagingdto.setSelectGD(selectGD);
 			pagingdto.setRaterId(raterId);
@@ -146,8 +156,6 @@ public class MappingController {
 			model.addAttribute("getPopup", getPopup);
 
 			model.addAttribute("pagingdto", pagingdto);
-			model.addAttribute("keyword", keyword);
-
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -162,7 +170,8 @@ public class MappingController {
 								@RequestParam(defaultValue="60004") String selection,
 								@RequestParam(defaultValue="60004") String selection2,
 								@RequestParam(defaultValue="60004") String selectGD,Model model) {
-		model.addAttribute("commonMapList", commonService.selectMappingCode());
+		model.addAttribute("raterDepartment", surveyService.organRaterList(surveySeq));
+		model.addAttribute("appraiseeDepartment", surveyService.organAppraiseeList(surveySeq));
 		model.addAttribute("commonDateList", commonService.selectDateCode());
 		model.addAttribute("gradeList", mappingService.selectGradeList());
 

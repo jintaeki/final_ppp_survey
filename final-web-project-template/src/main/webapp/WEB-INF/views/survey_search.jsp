@@ -202,7 +202,7 @@ function delete_mapping_btn(){
   		var dateleft = $('[name=surveyStartDateLeft]').val();
   		var dateright = $('[name=surveyStartDateRight]').val();
   		console.log
-		if (dateleft > dateright){
+		if (dateleft > dateright && dateright != ''){
 
 			alert("날짜 조건이 알맞지 않습니다.");
 			 event.preventDefault(); // 자식 하나만 영향
@@ -260,7 +260,7 @@ function delete_mapping_btn(){
   	function reset_btn(){
   		$('.searchRangeAll').empty();
   		html='';
-  		html +=`<div class="searchRange"><b>평가 시작 시간:</b>`;
+  		html +=`<div class="searchRange"><b>평가 시작 시간: </b>`;
 		html +=`<input type="date" name="surveyStartDateLeft" id="selectedDate">
 				<input type="date" name="surveyStartDateRight" id="selectedDate">`;
 
@@ -278,7 +278,7 @@ function delete_mapping_btn(){
 				<option value="30001">작성 중</option>
 				</select> </div>`;
 
-		html +=`<div class="input-group-append">
+		html +=`<div class="input-group" style="width: 400px; right: 50px;">
 				<input type="text" class="form-control" id="selectedKeyword" placeholder="search" name="keyword" aria-describedby="button-addon2">
 				<input type="hidden" name="pageNo" value="1">
 				<input type="submit" class="btn btn-outline-secondary"
@@ -369,7 +369,7 @@ function delete_mapping_btn(){
 									value="<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />">
 								<input type="date" name="surveyStartDateRight" id="selectedDate"
 									value="<fmt:formatDate value='${pagingdto.surveyStartDateRight}' pattern='yyyy-MM-dd' />">
-								<select name="anonyMityCheckCode" style="color:#D2D6DA;" >
+								<select name="anonyMityCheckCode" >
 									<c:forEach items="${commonCodeList}" var="commonCode">
 										<c:if
 											test="${pagingdto.anonyMityCheckCode eq commonCode.codeDetailId}">
@@ -386,7 +386,7 @@ function delete_mapping_btn(){
 											</c:if>
 										</c:if>
 									</c:forEach>
-								</select> <select name="selection" style="color:#D2D6DA;" >
+								</select> <select name="selection"  >
 									<c:forEach items="${commonCodeList}" var="commonCode">
 										<c:if test="${commonCode.codeId eq '300' }">
 											<c:if
@@ -408,7 +408,7 @@ function delete_mapping_btn(){
 									value="${pagingdto.keyword}" aria-describedby="button-addon2">
 									<input type="submit" class="btn btn-outline-secondary"
 										id="button-addon2" value="검색" onclick="search()">
-									<input type="button" class="btn btn-outline-secondary" onclick="reset_btn()"
+									<input type="button" class="btn btn-outline-secondary" style="margin-left:10px;" onclick="reset_btn()"
 										value="초기화">
 								<input type="hidden" name="pageNo" value="1">
 								</div>

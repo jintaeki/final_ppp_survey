@@ -209,7 +209,7 @@
 
 				<div class="item_management">
 					<div class="hey" style="height:20px; width:200px;"></div>
-					<div style="display: flex">
+					<div style="display: flex;align-items: baseline;">
 
 						<div class="input_title">문항 관리</div>
 
@@ -301,6 +301,10 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 		          for(const pairvalues of formdata.values()){
 		        	  console.log(pairvalues);
 
+		        	  if(pairvalues==''){
+		        		  alert("빈 텍스트는 저장이 불가합니다.");
+		        		  return false;
+		        	  }
 		             valueArray.push(pairvalues);
 		          }
 
@@ -627,14 +631,14 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 			 if(data[i].QUESTION_SEQ==questionSeq){
 				 if(cntForTopOfItem==0){
 					 if(data[i].QUESTION_TYPE_CODE == "10002"){
-						html +='<div style="display:flex">';
+						html +='<div style="display:flex; align-items: baseline;">';
 						html  +='<div class="input_title">문항 관리</div>';
 						html   += '</div>';
 						html  +='<div class="itemAfter">';
 						cntForTopOfItem = cntForTopOfItem + 1;
 
 					 }else{
-						html +='<div style="display:flex">';
+						html +='<div style="display:flex;align-items: baseline;">';
 						html  +='<div class="input_title">문항 관리</div>';
 						html  +='<button type="button" value="'+data[i].QUESTION_SEQ+'" onclick="item_copy(this,'+data[i].QUESTION_TYPE_CODE+')" style="background: white; border: 1px solid #fff; border-radius: 35em;">';
 						html 	+='<i class="fas fa-plus"></i>';
@@ -751,7 +755,7 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 				        html  += '<i class="fas fa-xmark"></i>';
 					    html  += '</button></td>';
 				 		html  += '<td><input type="text" name="itemContent" placeholder="문항 입력..."  id="input_item" onclick="manageItem(this,'+data[i].QUESTION_SEQ+'); this.onclick=null;" value="'+data[i].ITEM_CONTENT+'">';
-				 		html  +='</td><input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
+				 		html  +='</td><td><input type="number" name="itemScore" min="0" value="'+data[i].ITEM_SCORE+'" style="min-width: 20px; max-width: 40px;" id="is" value="'+data[i].ITEM_SCORE+'" onclick="manageItem(this,'+data[i].QUESTION_SEQ+');this.onclick=null;">';
 					    html  +='<input type="hidden" name="itemSeq" value="'+data[i].ITEM_SEQ+'"></td>';
 					    html  += '</tr>';
 // 					    html +='</div>';
@@ -926,12 +930,12 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
       }
    };
 
-//    $(document).ready(function(){
-// 	   $('#queAfter tr form div input[name=questionContent]').first().focus();
-// 	   $('#queAfter tr form div input[name=questionContent]').first().click();
+   $(document).ready(function(){
+	   $('#queAfter tr form div input[name=questionContent]').first().focus();
+	   $('#queAfter tr form div input[name=questionContent]').first().click();
 
 
-//    });
+   });
 
    function checkit1(obj,questionType,questionSeq,name) {
 	   $(".beforeTouch").empty();

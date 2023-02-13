@@ -265,27 +265,24 @@
                     AND UR.DEPARTMENT_ID = O.DEPARTMENT_ID
     			    AND M.SURVEY_SEQ = S.SURVEY_SEQ
     			    AND M.SURVEY_SEQ = #{surveySeq}
-    			    AND ((#{selection} = '60001'
-                    	AND(UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
-                        	OR
-                        	UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
-                        	)
-                		OR (#{selection} = '60002'
-                        	AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')    
-                    	OR(#{selection} = '60004'
-                    	   AND((UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
-                        	   OR
-                        	   UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
-                            OR O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
-                            )
-                   		) 
+	    			AND UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
+                	AND UR.DEPARTMENT_ID LIKE (
+                    	CASE WHEN #{selection} = '60004' 
+                         	 THEN '%' || '' || '%' 
+                         	 ELSE '%' || #{selection} || '%'
+                    	END) 	
                 	AND UR.GRADE_ID LIKE (
                     	CASE WHEN #{selectGD} = '60004' 
                          	 THEN '%' || '' || '%' 
                          	 ELSE '%' || #{selectGD} || '%'
                     	END) 
-                    	ORDER BY GRADE_ID DESC, RATER_NAME
-					)
+                    AND UA.EMPLOYEE_NAME LIKE '%' || #{keyword2} || '%'
+               		AND UA.DEPARTMENT_ID LIKE (
+                    	CASE WHEN #{selection2} = '60004' 
+                         	 THEN '%' || '' || '%' 
+                         	 ELSE '%' || #{selection2} || '%'
+                    	END)
+						)
 				WHERE ROWNUM <= #{endRowNo}		
 			)
 		WHERE rnum  >= #{startRowNo}
@@ -378,27 +375,24 @@
                  		WHERE M.APPRAISEE_ID = UA.EMPLOYEE_ID
                    		  AND M.RATER_ID = UR.EMPLOYEE_ID
                    	  	  AND M.SURVEY_SEQ = #{surveySeq})
-              	  AND ((#{selection} = '60001'
-                        AND(UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
-                        	OR
-                        	UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
-                        	)
-                		OR (#{selection} = '60002'
-                        	AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')   
-                    	OR(#{selection} = '60004'
-                    	   AND((UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
-                        	   OR
-                        	   UA.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
-                            OR O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
-                            )
-                   		) 
-                  AND UR.GRADE_ID LIKE (
-                    	CASE WHEN #{selectGD} = '60004' 
-                         	 THEN '%' || '' || '%' 
-                         	 ELSE '%' || #{selectGD} || '%'
-                    	END)
-        		  ORDER BY UA.EMPLOYEE_NAME
-        		  )
+              	 AND UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
+                 AND UR.DEPARTMENT_ID LIKE (
+                     CASE WHEN #{selection} = '60004' 
+                          THEN '%' || '' || '%' 
+                          ELSE '%' || #{selection} || '%'
+                     END) 	
+                 AND UR.GRADE_ID LIKE (
+                     CASE WHEN #{selectGD} = '60004' 
+                          THEN '%' || '' || '%' 
+                          ELSE '%' || #{selectGD} || '%'
+                     END) 
+                 AND UA.EMPLOYEE_NAME LIKE '%' || #{keyword2} || '%'
+                 AND UA.DEPARTMENT_ID LIKE (
+                     CASE WHEN #{selection2} = '60004' 
+                          THEN '%' || '' || '%' 
+                          ELSE '%' || #{selection2} || '%'
+                     END)
+				 )
 			WHERE ROWNUM <= #{endRowNo}		
 			)
 		WHERE rnum  >= #{startRowNo}
@@ -454,31 +448,25 @@
                 	WHERE M.APPRAISEE_ID = UA.EMPLOYEE_ID
                       AND M.RATER_ID = UR.EMPLOYEE_ID
                       AND M.SURVEY_SEQ = #{surveySeq})
-           	  AND ((#{selection} = '60001'
-                   	AND UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%')
-               		OR (#{selection} = '60002'
-                       	AND O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')   
-                   	OR (#{selection} = '60004'
-                   	    AND(UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
-                           OR O.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%')
-                        )
-                    ) 
-               AND UR.GRADE_ID LIKE (
-                   	CASE WHEN #{selectGD} = '60004' 
-                       	 THEN '%' || '' || '%' 
-                         ELSE '%' || #{selectGD} || '%'
-                    END)
-               AND ((#{selection2} = '60001'
-                   	AND UA.EMPLOYEE_NAME LIKE '%' || #{keyword2} || '%')
-               		OR (#{selection2} = '60002'
-                       	AND OA.DEPARTMENT_NAME LIKE '%' || #{keyword2} || '%')   
-                   	OR(#{selection2} = '60004'
-                   	   AND(UA.EMPLOYEE_NAME LIKE '%' || #{keyword2} || '%'
-                           OR OA.DEPARTMENT_NAME LIKE '%' || #{keyword2} || '%')
-                       )
-                 )
-			ORDER BY G.GRADE_ID DESC, UR.EMPLOYEE_NAME
-			)
+           	  AND UR.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
+              AND UR.DEPARTMENT_ID LIKE (
+                  CASE WHEN #{selection} = '60004' 
+                       THEN '%' || '' || '%' 
+                       ELSE '%' || #{selection} || '%'
+                  END) 	
+              AND UR.GRADE_ID LIKE (
+                  CASE WHEN #{selectGD} = '60004' 
+                       THEN '%' || '' || '%' 
+                       ELSE '%' || #{selectGD} || '%'
+                  END) 
+              AND UA.EMPLOYEE_NAME LIKE '%' || #{keyword2} || '%'
+              AND UA.DEPARTMENT_ID LIKE (
+                  CASE WHEN #{selection2} = '60004' 
+                       THEN '%' || '' || '%' 
+                       ELSE '%' || #{selection2} || '%'
+                  END)
+		ORDER BY G.GRADE_ID DESC, UR.EMPLOYEE_NAME
+		)
    	]]>
    	</select>
    	

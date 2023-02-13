@@ -18,11 +18,16 @@
     line-height: 1;
     font-size: 1rem;
 }
-
+select{
+	margin-right: 10px;
+}
 .input-group-append{
-	margin-left:460px;
+	margin-left:30px;
 }
 
+.searchRange{
+	display: flex !important; 
+}
 
 .table{
 	max-width: 98%;
