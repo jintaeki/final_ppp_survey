@@ -348,45 +348,34 @@
                      <when test = "keyword == ''">
                         and ui.employee_name like '%' || '' || '%'
                      </when>
-                     <otherwise>
-                         and ui.employee_name like '%' || #{keyword} || '%'
-                     </otherwise>
-                  </choose>
-                        <choose>
-                         <when test = "selection == 'employeeName'">
+                     <when test = "selection == 'employeeName'">
                      and ui.employee_name like  '%' || #{keyword} || '%'
                        </when>
-                  </choose>
-                  <choose>
                         <when test= "selection == 'departmentName'">
                      and oc.DEPARTMENT_NAME LIKE '%' || #{keyword} || '%'
                         </when>
                   </choose>
                   <choose>
-                  <when test= "selection2 == '사원'">
+
+                        <when test= "selection2 == '사원'">
                      and g.grade_name = #{selection2}
                         </when>
-                  </choose>
-                     <choose>
-                  <when test= "selection2 == '부장'">
+                		 <when test= "selection2 == '부장'">
                      and g.grade_name = #{selection2}
                         </when>
-                  </choose>
-                     <choose>
-                  <when test= "selection2 == '차장'">
+                  		<when test= "selection2 == '차장'">
                      and g.grade_name = #{selection2}
                         </when>
-                  </choose>
-                     <choose>
-                  <when test= "selection2 == '과장'">
+                         <when test= "selection2 == '과장'">
                      and g.grade_name = #{selection2}
                         </when>
-                  </choose>
-                     <choose>
-                  <when test= "selection2 == '대리'">
+                         <when test= "selection2 == '대리'">
                      and g.grade_name = #{selection2}
                         </when>
+
                   </choose>
+
+
 
                             )
                where survey_seq = #{surveySeq}

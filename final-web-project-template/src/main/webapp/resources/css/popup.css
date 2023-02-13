@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 body{
-	height: 820px !important;
+   height: 820px !important;
 }
 
 .entire_popup {
@@ -13,15 +13,15 @@ body{
    }
 
 table{
-	margin-left: auto;
-	margin-right: auto;
+   margin-left: auto;
+   margin-right: auto;
 }
 thead{
-	display: table; 
-	width: calc(100% - 17px);
+   display: table; 
+   width: calc(100% - 17px);
 }
 table th{
-	text-align: center;
+   text-align: center;
 }
 tbody {
   display: block; 
@@ -50,10 +50,10 @@ tr:nth-child(even) {
   word-break: break-all; /* 4. */
 }
 .tableAnother thead tr{
-	width: 760px; 
+   width: 760px; 
 }
 .tableAnother tbody tr{
-	width: 760px; 
+   width: 760px; 
 }
 
 .tableAnother th{
@@ -65,35 +65,35 @@ tr:nth-child(even) {
   word-break: break-all; /* 4. */
 }
 .table-table-hover{
-	max-height:550px; 
-	margin-left: 10px;
-	margin-right: 10px;
+   max-height:550px; 
+   margin-left: 10px;
+   margin-right: 10px;
 }
 .button{
-	text-align: center;
-	margin-bottom: 20px;
+   text-align: center;
+   margin-bottom: 20px;
 }
 .searchRangeAll{
-	bottom: -10px !important;
+   bottom: -10px !important;
 }
 .searchRange{
-	display: flex !important; 
-	margin-right: 30px !important;
+   display: flex !important; 
+   margin-right: 30px !important;
 }
 .selection2{
-	margin-left: 30px !important;
+   margin-left: 30px !important;
 }
 .survey_list_form_upper_dv{
-	display:flex;
+   display:flex;
 }
 .survey_list_form .form-control{
-	outline: 0;
+   outline: 0;
     width: 180px;
     border: 0;
     border-bottom: 2px solid #eee;
 }
 .survey_list_form select{
-	margin-right: 10px;
+   margin-right: 10px;
 }
 .hmenu_popup {
      display: flex;

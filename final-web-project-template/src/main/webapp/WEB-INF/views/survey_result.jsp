@@ -37,7 +37,10 @@
 			 </div>
 
 				<div class="table-container">
-									<div class="col-12" style=""><h3 style="text-align:left;"><b>설문 결과</b></h3></div>
+					<div class="col-12" style="">
+						<h3 style="text-align:left;"><b>설문 결과</b> <button class="btn btn-outline-primary btn-sm" style="float:right;" onclick="history.back()">뒤로가기</button></h3>
+					</div>
+
 
 					<table class="table table-sm table-striped table-bordered">
 						<thead>
@@ -116,8 +119,7 @@
 						<tbody>
 					</table>
 					<!-- table_container_flex 종료 -->
-				</div>
-			</div>
+
 			<!-- forshadowing 종료 -->
 	</div>
 <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>

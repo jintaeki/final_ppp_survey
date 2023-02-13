@@ -316,7 +316,7 @@
 					  <div class="col-3"></div>
 					  </div>
 			          <div id="appendArea" class="row">`;
-            for(var i=size-1; i>=0; i--){
+            for(var i=0; i<size; i++){
 
                 html +='<div class="col-3">'+data[i].appraiseeName+'</div>';
                 html +='<div class="col-4">'+data[i].appraiseeDepartmentName+'</div>';
@@ -411,7 +411,7 @@
                    }
 
                  }else if(!$('input[name="'+itemSeqArray[i]+'num"]').is(':checked') ) {
-                    // 실제 주관식 문제가 비어있는 지 확인하고 alert
+                    // 혼합식 문제 확인하고 alert
                        if($('textarea[name="'+i+'answerContent"]').val()==''){
                           alert(i+"번을 채워주세요.");
                           $('input[name="'+itemSeqArray[i]+'num"]').focus();
@@ -506,104 +506,95 @@
 
 
 <!-- 문항 시작 -->
-<div class="card" style=" margin-left:0px;">
-<div class="forshadowing" style="margin:auto; ">
-   <div  style="display: flex; margin-left: 20px; margin-bottom: 20px;">
-      <select name="surveySeq" onclick="selectSurvey(this,${raterId})">
-         <option value="0">평가지 선택</option>
-         <option value="1">전체 평가지</option>
-         <c:forEach items="${surveySeqAndName}" var="surveySeqAndName">
-            <option value="${surveySeqAndName.SURVEY_SEQ}">${surveySeqAndName.SURVEY_NAME}</option>
-         </c:forEach>
-      </select>
-   
-      <div class="forContent" style="margin-left:1000px;"></div>
-   </div>
+<div class="card">
+<div class="forshadowing_bj">
+		<select name="surveySeq" onclick="selectSurvey(this,${raterId})">
+			<option value="0">평가지 선택</option>
+			<option value="1">전체 평가지</option>
+			<c:forEach items="${surveySeqAndName}" var="surveySeqAndName">
+				<option value="${surveySeqAndName.SURVEY_SEQ}">${surveySeqAndName.SURVEY_NAME}</option>
+			</c:forEach>
+		</select>
+		<div class="forContent" style="margin-left:1000px;"></div>
+		<div class="row">
 
-      <div class="row" style="width: 1360px;">
+			<div class="col-5">
+				<div class="appraiseeList_list">
 
+					<c:forEach items="${surveySeqAndName}" var="surveySeqAndName">
+						<div class="appraiseeList">
+							<div class="input_title">피평가자 목록
+								(${surveySeqAndName.SURVEY_NAME})</div>
 
-         <div class="col-5">
-            <div class="appraiseeList_list">
-
-               <c:forEach items="${surveySeqAndName}" var="surveySeqAndName">
-                  <div class="appraiseeList">
-                     <div class="input_title">피평가자 목록
-                        (${surveySeqAndName.SURVEY_NAME})</div>
-
-                     <div id="scroll_area">
+							<div id="scroll_area">
 
 
-                        <div class="row">
-                           <div class="col-3">피평가자</div>
-                           <div class="col-4">부서</div>
-                           <div class="col-2">직급</div>
-                           <div class="col-3"></div>
+								<div class="row" style="font-weight: bold; border-radius: 20px; background-color: #f3f3f3; color:#8a8a8a; margin-bottom:10px;">
+									<div class="col-3">피평가자</div>
+									<div class="col-4">부서</div>
+									<div class="col-2">직급</div>
+									<div class="col-3"></div>
 
-                        </div>
+								</div>
 
-                        <c:forEach items="${allUser}" var="allAppraisee">
+								<c:forEach items="${allUser}" var="allAppraisee">
 
-                           <c:if test="${allUser} eq null }">
-                              <div class="noAppraisee">
-                                 <b>평가 대상이 없습니다.</b>
-                              </div>
-                           </c:if>
-                           <c:if
-                              test="${surveySeqAndName.SURVEY_SEQ eq allAppraisee.surveySeq }">
-                              <div id="appendArea" class="row">
-                                 <div class="col-3">${allAppraisee.appraiseeName}</div>
-                                 <div class="col-4">${allAppraisee.appraiseeDepartmentName}</div>
-                                 <div class="col-2">${allAppraisee.appraiseeGradeName}</div>
-                                 <c:if test="${allAppraisee.surveyCompleteYN eq 'N'}">
-                                    <div class="col-3">
+									<c:if test="${allUser} eq null }">
+										<div class="noAppraisee">
+											<b>평가 대상이 없습니다.</b>
+										</div>
+									</c:if>
+									<c:if
+										test="${surveySeqAndName.SURVEY_SEQ eq allAppraisee.surveySeq }">
+										<div id="appendArea" class="row" style="margin-bottom: 12px;">
+											<div class="col-3">${allAppraisee.appraiseeName}</div>
+											<div class="col-4">${allAppraisee.appraiseeDepartmentName}</div>
+											<div class="col-2">${allAppraisee.appraiseeGradeName}</div>
+											<c:if test="${allAppraisee.surveyCompleteYN eq 'N'}">
+												<div class="col-3">
 
-                                       <button class="create_btn" style="color: blue;"
-                                          onclick="selectSurvey(this,${raterId})"
-                                          value="${allAppraisee.surveySeq }">평가지 선택</button>
-                                    </div>
-                                 </c:if>
-                                 <c:if test="${allAppraisee.surveyCompleteYN eq 'Y'}">
-                                    <div class="col-3">
-                                       <button style="padding: 10px 13px;" class="create_btn"
-                                          disabled>평가완료</button>
-                                    </div>
-                                 </c:if>
+													<button class="create_btn" style="color: blue;"
+														onclick="selectSurvey(this,${raterId})"
+														value="${allAppraisee.surveySeq }">평가지 선택</button>
+												</div>
+											</c:if>
+											<c:if test="${allAppraisee.surveyCompleteYN eq 'Y'}">
+												<div class="col-3">
+													<button style="padding: 3px 7px;" class="create_btn" disabled>평가완료</button>
+												</div>
+											</c:if>
 
-                              </div>
-                           </c:if>
-                        </c:forEach>
+										</div>
+									</c:if>
+								</c:forEach>
 
 
 
-                     </div>
-                  </div>
-               </c:forEach>
-            </div>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
 
-         </div>
+			</div>
 
+			<div class="">
+				<div class="surveyName"></div>
 
+				<div id="scroll_area" style="max-height: 630px;">
+					<div class="survey_list">
 
-         <div class="question-box col-6">
-            <div class="surveyName"></div>
-
-
-            <div id="scroll_area" style="max-height: 630px; margin-left: 10px;">
-               <div class="survey_list">
-
-                  <form:form id="surveyForm" modelAttribute="surveyResult">
-                     <div class="noQuestion">
-                        <b>설문을 먼저 선택하세요.</b>
-                     </div>
-                     <!-- 문제 들어가는 곳 -->
-                  </form:form>
-               </div>
-            </div>
-            <div class="submit_btn"></div>
-         </div>
-      </div>
-   </div> <!-- forshadowing -->
+						<form:form id="surveyForm" modelAttribute="surveyResult">
+							<div class="noQuestion">
+								<b>설문을 먼저 선택하세요.</b>
+							</div>
+							<!-- 문제 들어가는 곳 -->
+						</form:form>
+					</div>
+				</div>
+				<div class="submit_btn"></div>
+			</div>
+		</div> 
+	</div> <!-- forshadowing_bj -->
 </div> <!-- card -->
 
 <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>
