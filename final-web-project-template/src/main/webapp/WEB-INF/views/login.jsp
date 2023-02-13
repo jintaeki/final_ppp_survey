@@ -76,7 +76,7 @@ function login(){
         	 else if(data=='successRater'){var raterName = sessionStorage.getItem('raterName');alert(raterName+" 님 어서오세요");location.href="/survey.do" }
         	 else if(data=='successManager'){alert("관리자 님 어서오세요.");location.href="/survey/surveysearch.do" }
         	 else if(data=='loginFail'){alert("아이디 혹은 비밀번호를 정확하게 입력해 주세요."); return false;}
-        	 else{alert(raterName+"님 어서오세요");location.href="/survey.do" };
+        	 else{alert(data+"님 어서오세요");location.href="/survey.do" };
          },
          error : function(e) {
             // 전송 후 에러 발생 시 실행 코드

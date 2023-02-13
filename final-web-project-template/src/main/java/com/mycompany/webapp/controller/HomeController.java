@@ -273,8 +273,6 @@ public class HomeController {
 	@RequestMapping(value="/logincheck.do",produces = "application/text; charset=UTF-8")
 	@ResponseBody
 	public String loginAfter(@ModelAttribute("UCD")  @Valid UserCheckDTO UCD,
-
-
 							  HttpSession session, Model model) {
 		if(UCD.getPassword().equals("")) {
 			return "noPassword";
