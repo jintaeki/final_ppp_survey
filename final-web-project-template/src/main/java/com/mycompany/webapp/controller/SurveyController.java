@@ -488,7 +488,7 @@ public class SurveyController {
 			 HttpSession session, Model model) {
 
 		model.addAttribute("commonCodeList", commonCodeService.selectStateCode());
-
+		model.addAttribute("commonDateList", commonCodeService.selectDateCode());
 		try {
 
 			List<SurveyListDTO> surveylist = null;

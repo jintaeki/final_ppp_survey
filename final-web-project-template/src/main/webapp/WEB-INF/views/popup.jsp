@@ -84,6 +84,47 @@
 
 	  });   
    }
+   
+   function reset_btn_mapping_pop(surveySeq, raterId, month){
+	    $('.searchRangeAll').empty();
+	    html='';
+	    html += `<div class="searchRange">
+	    <select name="selectGD">
+	      <option selected value="60004">평가자 직급</option>
+	      <c:forEach items="${gradeList}" var="grade">
+	 	    <option value="${grade.gradeId}">${grade.gradeName}</option>
+	      </c:forEach>
+	    </select>
+	    <select name="selection">
+	       <option selected value="60004">평가자 부서</option>
+	       <c:forEach items="${raterDepartment}" var="rdp">
+				<option value="${rdp.departmentId}">${rdp.departmentName}</option>
+			</c:forEach>
+	    </select>
+	    <input type="text" class="form-control" id="selectedKeyword" placeholder="평가자  이름 검색창"
+	             name="keyword"  aria-describedby="button-addon2">  
+	    </div>`;
+	    
+
+	 html +=` <select name="selection2" class="selection2">
+	          <option selected value="60004">피평가자 부서</option>
+	          <c:forEach items="${appraiseeDepartment}" var="adp">
+			     <option value="${adp.departmentId}">${adp.departmentName}</option>
+			  </c:forEach>
+	       </select>
+	       
+	       <input type="text" class="form-control" id="selectedKeyword" placeholder="피평가자 이름 검색창" name="keyword2" aria-describedby="button-addon2">
+	       <input type="hidden" name="pageNo" value="1">`;
+	    html +='<input type="hidden" name="surveySeq" value="'+surveySeq+'">';
+	    html +='<input type="hidden" name="raterId" value="'+raterId+'">';
+	    html+='<input type="hidden" name="month" value="'+month+'">';  
+	    html+='<div class="input-group-append">';  
+	    html+=`<input type="submit" class="btn btn-outline-secondary"
+	          id="button-addon2" value="검색"> `;
+	    html+='<input type="button" style="margin-left:10px;" class="btn btn-outline-secondary" onclick="reset_btn_mapping_pop('+surveySeq+','+raterId+','+month+')" value="초기화"></div>';
+	    $('.searchRangeAll').append(html);
+
+	 }
 </script>
 <div class="entire_popup">
 	<div class="hmenu_popup">
@@ -108,7 +149,7 @@
 						<c:if test="${pagingdto.selection eq rdp.departmentId }">
 							<option selected value="${pagingdto.selection}">${rdp.departmentName}</option>
 						</c:if>
-						<c:if test="${pagingdto.selection ne rDp.departmentId }">
+						<c:if test="${pagingdto.selection ne rdp.departmentId }">
 							<option value="${rdp.departmentId}">${rdp.departmentName}</option>
 						</c:if>
 					</c:forEach>
@@ -134,10 +175,8 @@
 				<input type="hidden" name="raterId" value="${pagingdto.raterId}">
 				<input type="hidden" name="month" value="${pagingdto.month}">
 				<div class="input-group-append">
-					<input type="submit" class="btn btn-outline-secondary"
-						id="button-addon2" value="검색">
-					<input type="reset" class="btn btn-outline-secondary"
-						id="button-addon2" value="초기화">
+					<input type="submit" class="btn btn-outline-secondary" id="button-addon2" value="검색">
+					<input type="button" style="margin-left:10px;" class="btn btn-outline-secondary" onclick="reset_btn_mapping_pop(${pagingdto.surveySeq},${pagingdto.raterId},${pagingdto.month})" value="초기화">
 				</div>
 				</div>
 			</form>
