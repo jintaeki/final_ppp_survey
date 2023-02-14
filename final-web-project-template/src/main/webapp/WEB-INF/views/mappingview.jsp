@@ -166,7 +166,7 @@ function reset_btn_mapping_pop(surveySeq, month, number){
 
                   </div>
                </div>
-               <div class="col-12"><h3 style="text-align:left;"><b>${surveyInfo.surveyName} 매핑 목록</b></h3></div>
+               <div class="col-12"><h3 style="text-align:left;"><b><${surveyInfo.surveyName}> 매핑 목록</b></h3></div>
 
                <table class="table table-sm table-striped table-bordered" id="mapTb">
                   <thead>

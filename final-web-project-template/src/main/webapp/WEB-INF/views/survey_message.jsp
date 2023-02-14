@@ -75,7 +75,7 @@ function reset_btn_mapping_pop(surveySeq){
                      </c:forEach>
                   </select>
                   <select name="selection2">
-                     <option value="60004">평가자 참여 여부</option>
+                     <option value="60004">평가 참여 여부</option>
                      <c:forEach items="${checkList}" var="CL">
                         <c:if test="${pagingdto.selection2 eq CL.surveyCompleteYN}">
                            <option selected value="${pagingdto.selection2}">
@@ -113,7 +113,7 @@ function reset_btn_mapping_pop(surveySeq){
                      </form>
                   </div>
                </div>
-         <div class="col-12" style=""><h3 style="text-align:left;"><b>설문지 평가 완료여부 목록</b></h3></div>
+         <div class="col-12" style=""><h3 style="text-align:left;"><b>평가자 목록</b></h3></div>
 
             <table class="table table-sm table-striped table-bordered">
                   <thead>

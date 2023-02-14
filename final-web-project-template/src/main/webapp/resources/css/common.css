@@ -232,7 +232,7 @@ body::-webkit-scrollbar-track {
 .appraiseeList_list {
    text-align: center;
    overflow: overlay;
-   max-height: 620px;
+   max-height: 700px;
    padding: 15px;
 }
 
