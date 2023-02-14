@@ -127,7 +127,6 @@
     }
 </script>
 <div class="entire_popup">
-
    <div class="hmenu_popup">
       <div class="survey_list_form_upper_dv">
          <form action="<c:url value='/mapping/popup.do'/>" method="get" class="survey_list_form">
@@ -184,7 +183,7 @@
       </div>
    </div>
    <div class="table-table-hover">
-      <div class="col-12" style=""><h3 style="text-align:center;"><b>다면평가 대상 추가</b></h3></div>
+      <div class="col-12" style=""><h3 style="text-align:center;"><b>다면평가 대상 추가</b></h3><br></div>
          <table id="resTb" class="tablePop">
             <thead>
                <tr>
@@ -239,7 +238,7 @@
 
       <!-- selectItem : 체크값이 없을 경우 체크하라는 유효성 검사 -->
       <div id=button class="d-grid gap-2">
-      <br><br>
+      <br>
       <spring:message code="list.noResult" text="추가할 인원을 선택해주세요" /><br><br>
       <button type="button" class="btn btn-primary" onclick="selectItem();">추가</button><br><br>
       </div>

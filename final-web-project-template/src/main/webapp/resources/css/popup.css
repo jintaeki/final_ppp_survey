@@ -96,7 +96,7 @@ tr:nth-child(even) {
    margin-right: 10px;
 }
 .hmenu_popup {
-     display: flex;
+    display: flex;
     margin-bottom: 13px;
     margin-top: 13px;
 }
