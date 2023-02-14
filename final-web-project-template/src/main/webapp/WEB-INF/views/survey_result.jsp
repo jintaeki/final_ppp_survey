@@ -122,7 +122,7 @@
 
 
 			</div>
-			<button class="btn btn-outline-primary btn-sm" style="float:right; position: relative;bottom: 15px;" onclick="history.back()">뒤로가기</button>
+			<button class="btn btn-outline-primary btn-sm" style="float:right; position: relative;bottom: 15px; margin-right: 20px;" onclick="history.back()">뒤로가기</button>
 			<!-- forshadowing 종료 -->
 	</div>
 </div>

@@ -163,7 +163,8 @@ function reset_btn_mapping_pop(surveySeq, month, number){
 
                   </div>
                </div>
-               <div class="col-12"><h3 style="text-align:left;"><b>${surveyInfo.surveyName} 매핑 목록</b></h3></div>
+
+               <div class="col-12"><h3 style="text-align:left;"><b><${surveyInfo.surveyName}> 매핑 목록</b></h3></div>
                <table class="table table-sm table-striped table-bordered" id="mapTb">
                   <thead>
                      <tr>
@@ -193,7 +194,7 @@ function reset_btn_mapping_pop(surveySeq, month, number){
                                  <td>
                                     <c:if test="${stateCode ne 30004}">
 
-                                       <button id="map_delete" border-radius: 35em;"
+                                       <button id="map_delete" style="border-radius: 35em;"
                                        onclick="map_delete('${mapping.surveySeq}', '${mapping.raterId}', '${mapping.appraiseeId}');" value="삭제">
                                           <i class="fas fa-xmark"></i>
                                        </button>

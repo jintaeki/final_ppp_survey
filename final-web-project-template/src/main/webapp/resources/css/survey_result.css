@@ -32,7 +32,6 @@ width: 1400px;
 }
 */
 .row {
-    justify-content: center;
      text-align: center;
 }
 
@@ -52,7 +51,7 @@ width: 1400px;
    margin:20px;
    margin-top: 0px;
    overflow-y:scroll;
-   height: 640px;
+   height: 670px;
 }
 
 

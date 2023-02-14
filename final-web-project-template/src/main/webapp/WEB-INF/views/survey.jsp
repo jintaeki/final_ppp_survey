@@ -8,6 +8,8 @@
 	
 
 
+
+
    function answerBox_on(obj){
       var radioItemSeq = $(obj).val();
       var tag = $(obj);
@@ -208,11 +210,19 @@
    }
 
    function gowithoutConfirm(obj){
+<<<<<<< HEAD
 	   var content = $(obj).val();
 	   console.log('content:'+content);
 	   
 	      
 	
+=======
+      var content = $(obj).val();
+      console.log('content:'+content);
+
+
+
+>>>>>>> refs/remotes/origin/min
 
       Swal.fire({
          text: content,
@@ -350,7 +360,11 @@
 
    function surveyStart(obj,appraiseeId,raterId,anonymitycode,theSeq,surveySeq){
       var appraiseeName = $(obj).val();
+<<<<<<< HEAD
      
+=======
+
+>>>>>>> refs/remotes/origin/min
       $.ajax({
             url: 'getquestionforsurvey.do/'+surveySeq,
             method: 'GET',

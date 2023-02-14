@@ -32,8 +32,8 @@
 											</div>
 											<div class="input-group-append">
 												<input type="submit" class="btn btn-outline-secondary"
-													id="button-addon2" value="검색"> 
-											    <input type="reset" class="btn btn-outline-secondary" 
+													id="button-addon2" value="검색">
+											    <input type="reset" class="btn btn-outline-secondary"
 											        id="button-addon2" value="초기화">
 											</div>
 										</form>
@@ -53,7 +53,7 @@
 						<div class="chartGP">
 						<div class="container_flex" style="float: left">
 							<c:if test="${chartJSONResult[0].s eq null}">
-								설문지를 선택하면 그래프가 나올 것 입니다.
+								평가지를 선택하면 그래프가 나올 것 입니다.
 							</c:if>
 							<c:if test="${chartJSONResult[0].s ne null}">
 								<div id="chart_container"></div>
@@ -62,7 +62,7 @@
 						</div>
 						<div class="container_flex" style="float: right">
 							<c:if test="${chartJSONDp[0].s eq null}">
-								설문지를 선택하면 그래프가 나올 것 입니다.
+								평가지를 선택하면 그래프가 나올 것 입니다.
 							</c:if>
 							<c:if test="${chartJSONDp[0].s ne null}">
 								<div id="chart_container2"></div>
@@ -126,9 +126,9 @@ function typeFn() {
 	     });
 		}
 	}
-	
+
 function statics(survyeSeq, departmentId){
-	
+
 	console.log(surveySeq);
 	console.log(departmentId);
 	var submitObj = new Object();
@@ -142,7 +142,7 @@ function statics(survyeSeq, departmentId){
 		    dataType : "json"
 		    })
 		    .done(function(resMap) {
-		    	
+
 		    })
 		    .fail(function(e) {
 		        alert("통계검색을 실패하였습니다.");

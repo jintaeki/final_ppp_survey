@@ -66,8 +66,8 @@
 							</c:if>
 							</div>
 
-							<div>
-							<div class="insert_category"><b>상세 설명</b></div>
+							<div style="z-index:1">
+							<div class="insert_category" ><b>상세 설명</b></div>
 							<textarea class="visually-hidden"
 									id="message-text" name="surveyContent"
 									style="width: 400px; height: 100px; max-width: 350px;">${SLD.surveyContent }</textarea>

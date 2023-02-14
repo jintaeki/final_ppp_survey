@@ -608,14 +608,14 @@ public class SurveyController {
 			    logger.info("모델 :" + model);
 				int totalRows = pagingService.getEvaluateMessageBoardNum(beforeKeyword, selection, selection2, surveySeq, selectGD);
 
-			    pagingDto = new PagingDTO(12, 10, totalRows, pageNo);
+			    pagingDto = new PagingDTO(14, 10, totalRows, pageNo);
 
 				pagingDto.setSelection(selection);
 				pagingDto.setSelection2(selection2);
 				pagingDto.setKeyword(keyword);
 				pagingDto.setSurveySeq(surveySeq);
 				pagingDto.setSelectGD(selectGD);
-				
+
 				logger.info("selection:" + pagingDto.getSelection());
 				logger.info("keyword: "+pagingDto.getKeyword());
 				logger.info("paigingdto:" + pagingDto);
