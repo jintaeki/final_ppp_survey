@@ -22,13 +22,9 @@ function reset_btn_mapping_pop(surveySeq){
        <option selected value="60004">평가자 참여 여부</option>
        <c:forEach items="${checkList}" var="CL">
          <option value="${CL.surveyCompleteYN}">
-            <c:if test="${CL.surveyCompleteYN eq 'Y'}">
-                 예
-              </c:if>
-              <c:if test="${CL.surveyCompleteYN ne 'Y'}">
-                 아니오
-              </c:if>
-           </option>
+            <c:if test="${CL.surveyCompleteYN eq 'Y'}">예</c:if>
+            <c:if test="${CL.surveyCompleteYN ne 'Y'}">아니오</c:if>
+          </option>
       </c:forEach>
     </select>
     </div>`;
@@ -79,23 +75,15 @@ function reset_btn_mapping_pop(surveySeq){
                      <c:forEach items="${checkList}" var="CL">
                         <c:if test="${pagingdto.selection2 eq CL.surveyCompleteYN}">
                            <option selected value="${pagingdto.selection2}">
-                              <c:if test="${CL.surveyCompleteYN eq 'Y'}">
-                                         예
-                                      </c:if>
-                                      <c:if test="${CL.surveyCompleteYN ne 'Y'}">
-                                         아니오
-                                      </c:if>
+                              <c:if test="${CL.surveyCompleteYN eq 'Y'}">예</c:if>
+                              <c:if test="${CL.surveyCompleteYN ne 'Y'}">아니오</c:if>
                            </option>
                         </c:if>
                         <c:if test="${pagingdto.selection2 ne CL.surveyCompleteYN}">
                            <option value="${CL.surveyCompleteYN}">
-                              <c:if test="${CL.surveyCompleteYN eq 'Y'}">
-                                         예
-                                      </c:if>
-                                      <c:if test="${CL.surveyCompleteYN ne 'Y'}">
-                                         아니오
-                                      </c:if>
-                                   </option>
+                              <c:if test="${CL.surveyCompleteYN eq 'Y'}">예</c:if>
+                              <c:if test="${CL.surveyCompleteYN ne 'Y'}">아니오</c:if>
+                           </option>
                         </c:if>
                      </c:forEach>
                   </select>
@@ -133,12 +121,8 @@ function reset_btn_mapping_pop(surveySeq){
                            <td>${EL.GRADE_NAME}</td>
                            <td class="sv_name">${EL.DEPARTMENT_NAME}</td>
                            <td>
-                               <c:if test="${EL.SURVEY_COMPLETE_YN eq 'Y'}">
-                                예
-                             </c:if>
-                             <c:if test="${EL.SURVEY_COMPLETE_YN ne 'Y'}">
-                                아니오
-                             </c:if>
+                             <c:if test="${EL.SURVEY_COMPLETE_YN eq 'Y'}">예</c:if>
+                             <c:if test="${EL.SURVEY_COMPLETE_YN ne 'Y'}">아니오</c:if>
                            </td>
                         </tr>
                      </c:forEach>

@@ -301,7 +301,7 @@
                    AND M.survey_complete_yn LIKE (
                        CASE WHEN #{selection2} = '60004' 
                             THEN '%' || '' || '%' 
-                            ELSE '%' || #{selection} || '%'
+                            ELSE '%' || #{selection2} || '%'
                      END) 	
                    AND UI.GRADE_ID LIKE (
                        CASE WHEN #{selectGD} = '60004' 

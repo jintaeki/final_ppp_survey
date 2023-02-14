@@ -122,7 +122,6 @@
        html+='<input type="button" style="margin-left:10px;" class="btn btn-outline-secondary" onclick="reset_btn_mapping_pop('+surveySeq+')" value="초기화"></div>';
        $('.searchRangeAll').append(html);
    }
-       
 </script>
 <div class="entire_popup">
    <div class="hmenu_popup_An">
@@ -179,8 +178,7 @@
       </div>
    </div>
    <div class="table-table-hover">
-                     <div class="col-12" style=""><h3 style="text-align:center;"><b>다면평가 대상 추가</b></h3></div>
-   
+      <div class="col-12" style=""><h3 style="text-align:center;"><b>다면평가 대상 추가</b></h3></div>   
          <table id="resTb" class="tableAnother">
             <thead>
                <tr>
@@ -227,8 +225,6 @@
             </c:choose>
             </tbody>
          </table>
-
-
       <div class="d-flex justify-content-between"></div>
       <!-- selectItem : 체크값이 없을 경우 체크하라는 유효성 검사 -->
    </div>

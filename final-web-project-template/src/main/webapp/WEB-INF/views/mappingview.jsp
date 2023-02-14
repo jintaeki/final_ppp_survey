@@ -86,6 +86,7 @@ function reset_btn_mapping_pop(surveySeq, month, number){
           <c:forEach items="${appraiseeDepartment}" var="adp">
            <option value="${adp.departmentId}">${adp.departmentName}</option>
         </c:forEach>
+
        </select>
 
        <input type="text" class="form-control" id="selectedKeyword" placeholder="피평가자 이름 검색창" name="keyword2" aria-describedby="button-addon2">
@@ -102,12 +103,8 @@ function reset_btn_mapping_pop(surveySeq, month, number){
  }
 
 </script>
-
    <div class="card">
          <div class="forshadowing">
-
-
-
                <div class="hmenu">
                   <div class="survey_list_form_upper_dv">
                      <form action="<c:url value='/mapping/set.do'/>" method="POST"
@@ -152,8 +149,8 @@ function reset_btn_mapping_pop(surveySeq, month, number){
                               </c:forEach>
                         </select>
                         <input type="text" class="form-control" id="selectedKeyword" placeholder="피평가자 이름 검색창"
-                                 name="keyword2" value="${pagingdto.keyword2}" aria-describedby="button-addon2">
-                        <input type="hidden" name="pageNo" value="1">
+                               name="keyword2" value="${pagingdto.keyword2}" aria-describedby="button-addon2"> 
+                        <input type="hidden" name="pageNo" value="1"> 
                         <input type="hidden" name="surveySeq" value="${pagingdto.surveySeq}">
                         <input type="hidden" name="month" value="${pagingdto.month}">
                         <input type="hidden" name="number" value="${number}">
@@ -167,7 +164,6 @@ function reset_btn_mapping_pop(surveySeq, month, number){
                   </div>
                </div>
                <div class="col-12"><h3 style="text-align:left;"><b>${surveyInfo.surveyName} 매핑 목록</b></h3></div>
-
                <table class="table table-sm table-striped table-bordered" id="mapTb">
                   <thead>
                      <tr>
@@ -188,8 +184,7 @@ function reset_btn_mapping_pop(surveySeq, month, number){
                            <c:forEach var="mapping" items="${mappingList}">
                               <tr id="${mapping.raterId}">
                                  <td>${mapping.gradeName}</td>
-                                 <td><button type="button" id="get_mapping" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem;
-                                           --bs-btn-font-size: .5rem; line-height: 1; font-size: 1rem;"
+                                 <td><button type="button" id="get_mapping" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .5rem; line-height: 1; font-size: 1rem;"
                                        class="btn btn-link" data-toggle="modal"
                                        data-target="#popup" data-surveyseq="${mapping.surveySeq}"
                                        data-raterid="${mapping.raterId}">
@@ -197,13 +192,14 @@ function reset_btn_mapping_pop(surveySeq, month, number){
                                  <td>${mapping.appraiseeName}</td>
                                  <td>
                                     <c:if test="${stateCode ne 30004}">
-                                       <button id="map_delete" border-radius: 35em;"
-                                       onclick="map_delete('${mapping.surveySeq}', '${mapping.raterId}', '${mapping.appraiseeId}');" value="삭제">
+
+                                       <button id="map_delete" style="background: white; border: 1px solid #fff; border-radius: 35em;"
+                                               onclick="map_delete('${mapping.surveySeq}', '${mapping.raterId}', '${mapping.appraiseeId}');" value="삭제">
                                           <i class="fas fa-xmark"></i>
                                        </button>
                                      </c:if>
                                      <c:if test="${stateCode eq 30004}">
-                                       삭제 불가
+                                     	 삭제 불가
                                      </c:if>
                                  </td>
                               </tr>
@@ -237,12 +233,12 @@ function reset_btn_mapping_pop(surveySeq, month, number){
                         </div>
                         <div style="float: right;">
                            <button type="button" id="map_insert" class="btn btn-outline-primary" onclick="mapInsert('${surveySeq}')">
-                              조건과 관계없이 추가
+                             	 조건과 관계없이 추가
                            </button>
                         </div>
                      </td>
                   </tr>
-                 </table>
+               </table>
                </table>
          </div>
       </div>

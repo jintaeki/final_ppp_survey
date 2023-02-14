@@ -132,8 +132,7 @@ function delete_mapping_btn(){
   	   	html += '<form:form action="${actionURL}" modelAttribute="map">';
   	   	html += '<input type="hidden" id="surveySeq" name="surveySeq" value="'+serveySeq+'">';
   	   	html += '<input type="hidden" id="newCheck" name="newCheck" value="0">';
-  	   	html += '<br> <h5> 다면평가에 포함될 프로젝트의 범위 정하기 </h5> <select class="form-control" name="month"> <option value="3">최근 3개월 동안에 끝난 프로젝트</option> <option value="6">최근 6개월 동안에 끝난 프로젝트</option> <option value="12">최근 1년 동안에 끝난 프로젝트</option>';
-  		html +=	'<option value="24">최근 2년 동안에 끝난 프로젝트</option> <option value="36">최근 3년 동안에 끝난 프로젝트</option> </select>';
+  	   	html += '<br> <h5> 다면평가에 포함될 프로젝트의 범위 정하기 </h5> <select class="form-control" name="month"> <c:forEach items="${commonDateList}" var="month"> <option value="${month.codeDetailName}">최근 ${month.codeDetailName}개월 동안에 끝난 프로젝트</option> </c:forEach> </select>';
   		html += '<br> <h5>피평가자 최대 인원</h5> <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;">';
   	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> <input type="submit" class="btn btn-primary" value="매핑">';
   	    html += '</div></form:form></div></div></div></div>';
