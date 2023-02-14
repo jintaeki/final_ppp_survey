@@ -172,7 +172,7 @@ function delete_mapping_btn(){
   	   	html += '<input type="hidden" id="month" name="month" value="3">';
   	   	html += '<input type="hidden" id="number" name="number" value="3">';
   	   	html += '<br> <h5> 해당 다면평가의 매핑조합을 추가 하시겠습니까? </h5>';
-  	   	html += '<button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 핑칭 목록으로 넘어가기</button>';
+  	   	html += '<button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 매핑 목록으로 넘어가기</button>';
   	    html += '<div class="modal-footer"><br><button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>';
   	    html += '</div></form:form></div></div></div></div>';
   	    $('#beforeModal').after(html);

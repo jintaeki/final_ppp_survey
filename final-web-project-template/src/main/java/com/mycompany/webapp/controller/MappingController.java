@@ -141,7 +141,7 @@ public class MappingController {
 
 			int totalRows = pagingService.getTotalInsertNum(keyword, keyword2, selection, selection2, surveySeq, selectGD, raterId, month);
 			logger.info("줄수"+totalRows);
-			pagingdto = new PagingDTO(13, 10, totalRows, pageNo);
+			pagingdto = new PagingDTO(7, 10, totalRows, pageNo);
 			pagingdto.setKeyword(keyword);
 			pagingdto.setKeyword2(keyword2);
 			pagingdto.setSelection(selection);

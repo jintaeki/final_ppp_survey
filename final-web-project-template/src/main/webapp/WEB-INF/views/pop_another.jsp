@@ -124,7 +124,7 @@
    }
 </script>
 <div class="entire_popup">
-   <div class="hmenu_popup_An">
+   <div class="hmenu_popup">
       <div class="survey_list_form_upper_dv">
          <form action="<c:url value='/mapping/another.do'/>" method="get" class="survey_list_form">
              <div class="searchRangeAll">
@@ -178,7 +178,7 @@
       </div>
    </div>
    <div class="table-table-hover">
-      <div class="col-12" style=""><h3 style="text-align:center;"><b>다면평가 대상 추가</b></h3></div>   
+      <div class="col-12" style=""><h3 style="text-align:center;"><b>다면평가 대상 추가</b></h3><br></div>   
          <table id="resTb" class="tableAnother">
             <thead>
                <tr>
