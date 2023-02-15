@@ -648,7 +648,7 @@ public class SurveyController {
 		surveyService.sendReEmail(surveySeq, deliveryContent);
 		surveyService.sendReSMS(surveySeq, deliveryContent);;
 
-		return "redirect:/survey/evaluatesearch/"+surveySeq;
+		return "redirect:/survey/evaluatesearch.do/"+surveySeq;
 	}
 
 

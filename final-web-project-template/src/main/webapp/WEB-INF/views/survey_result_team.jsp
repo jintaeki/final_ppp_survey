@@ -77,274 +77,272 @@
 	</div>
 <script>
 	/* 선택지 비동기 부분 */
-function typeFn() {
-	$("#departmentId").attr("disabled",true);
+	function typeFn() {
+		$("#departmentId").attr("disabled",true);
 
-	console.log($("#surveySeq").val());
+		console.log($("#surveySeq").val());
 
-	if($("select[name=surveySeq] > option:selected").val() != null){
-	$("#select").show();
-	$("#departmentId > option").remove();
-	$("#departmentId").attr("disabled",true);
-	$("#departmentId").append("<option value=\"\">--선택--</option>");
+		if($("select[name=surveySeq] > option:selected").val() != null){
+		$("#select").show();
+		$("#departmentId > option").remove();
+		$("#departmentId").attr("disabled",true);
+		$("#departmentId").append("<option value=\"\">--선택--</option>");
 
-	var surveySeq = $("#surveySeq").val();
+		var surveySeq = $("#surveySeq").val();
 
-	var submitObj = new Object();
-	submitObj.surveySeq= surveySeq;
-
-	$.ajax({
-	      url: "select_ajax.do",
-	      type: "POST",
-	      contentType: "application/json;charset=UTF-8",
-	      data:JSON.stringify(submitObj),
-	      dataType : "json",
-	      progress: true
-	     })
-	     .done(function(data) {
-
-	$('#departmentId').children('option:not(:first)').remove();
-
-	        var laborOption = "";
-	        for(var k in data.Odt){
-	          var obj = data.Odt[k];
-	          var departmentName = obj.departmentName;
-	          var departmentId = obj.departmentId;
-
-	          laborOption = "<option value='" + departmentId + "'>" + departmentName + "</option>";
-	          $("#departmentId").append(laborOption);
-	      }
-
-	$("#departmentId").attr("disabled",false);
-
-	     })
-	     .fail(function(e) {
-	         alert("FAIL - "+e);
-	     })
-	     .always(function() {
-	      $("#departmentId").attr("disabled",false);
-	     });
-		}
-	}
-
-function statics(survyeSeq, departmentId){
-
-	console.log(surveySeq);
-	console.log(departmentId);
-	var submitObj = new Object();
+		var submitObj = new Object();
 		submitObj.surveySeq= surveySeq;
-		submitObj.departmentId= departmentId;
+
 		$.ajax({
-			url: "surveyresultDetail.do",
-		    type: "POST",
-		    contentType: "application/json;charset=UTF-8",
-		    data:JSON.stringify(submitObj),
-		    dataType : "json"
-		    })
-		    .done(function(resMap) {
+		      url: "select_ajax.do",
+		      type: "POST",
+		      contentType: "application/json;charset=UTF-8",
+		      data:JSON.stringify(submitObj),
+		      dataType : "json",
+		      progress: true
+		     })
+		     .done(function(data) {
 
-		    })
-		    .fail(function(e) {
-		        alert("통계검색을 실패하였습니다.");
-		    })
-		    .always(function() {
-		    });
+		$('#departmentId').children('option:not(:first)').remove();
 
-}
+		        var laborOption = "";
+		        for(var k in data.Odt){
+		          var obj = data.Odt[k];
+		          var departmentName = obj.departmentName;
+		          var departmentId = obj.departmentId;
 
-	/* CHART 설정부분 */
+		          laborOption = "<option value='" + departmentId + "'>" + departmentName + "</option>";
+		          $("#departmentId").append(laborOption);
+		      }
 
-	var scoreInfo = null;
+		$("#departmentId").attr("disabled",false);
 
-	function getScoreCnt(type){
-		if(${chartJSONResult} != null) {
-	    	if(scoreInfo==null) scoreInfo=${chartJSONResult};
-	    	var scoreInfoMap = resultProcLineChart(scoreInfo);
-	    	if(scoreInfoMap==null) return null;
-	    	if(type=="data"){
-	    	    return scoreInfoMap.get("data");
-	    	}else{
-	    	    return scoreInfoMap.get("cateArr");
-	    	}
+		     })
+		     .fail(function(e) {
+		         alert("FAIL - "+e);
+		     })
+		     .always(function() {
+		      $("#departmentId").attr("disabled",false);
+		     });
+			}
 		}
+
+	function statics(survyeSeq, departmentId){
+
+		console.log(surveySeq);
+		console.log(departmentId);
+		var submitObj = new Object();
+			submitObj.surveySeq= surveySeq;
+			submitObj.departmentId= departmentId;
+			$.ajax({
+				url: "surveyresultDetail.do",
+			    type: "POST",
+			    contentType: "application/json;charset=UTF-8",
+			    data:JSON.stringify(submitObj),
+			    dataType : "json"
+			    })
+			    .done(function(resMap) {
+
+			    })
+			    .fail(function(e) {
+			        alert("통계검색을 실패하였습니다.");
+			    })
+			    .always(function() {
+			    });
+
 	}
-	function resultProcLineChart($obj){
-	    if($obj==null) return null;
-	    var resMap = new Map();
 
-	    var cateArr = new Array();
-	    var dataArr = new Array();
+		/* CHART 설정부분 */
 
-	    for(var k in $obj){
-	        var xobj =$obj[k];
+		var scoreInfo = null;
 
-	        cateArr.push(xobj.d);
-	        dataArr.push(xobj.s);
+		function getScoreCnt(type){
+			if(${chartJSONResult} != null) {
+		    	if(scoreInfo==null) scoreInfo=${chartJSONResult};
+		    	var scoreInfoMap = resultProcLineChart(scoreInfo);
+		    	if(scoreInfoMap==null) return null;
+		    	if(type=="data"){
+		    	    return scoreInfoMap.get("data");
+		    	}else{
+		    	    return scoreInfoMap.get("cateArr");
+		    	}
+			}
+		}
+		function resultProcLineChart($obj){
+		    if($obj==null) return null;
+		    var resMap = new Map();
+
+		    var cateArr = new Array();
+		    var dataArr = new Array();
+
+		    for(var k in $obj){
+		        var xobj =$obj[k];
+
+		        cateArr.push(xobj.d);
+		        dataArr.push(xobj.s);
+		    }
+
+		    resMap.set("cateArr",cateArr);
+		    resMap.set("data",dataArr);
+
+		    return resMap;
+		}
+
+		var todayInfo = null;
+
+		function getDPScoreCnt(type){
+			if(${chartJSONDp} != null) {
+		    	if(todayInfo==null) todayInfo=${chartJSONDp};
+		    	var todayInfoMap = resultDPProcLineChart(todayInfo);
+		    	if(todayInfoMap==null) return null;
+		    	if(type=="data"){
+		    	    return todayInfoMap.get("data");
+		    	}else{
+		    	    return todayInfoMap.get("cateArr");
+		    	}
+			}
+		}
+		function resultDPProcLineChart($obj){
+		    if($obj==null) return null;
+		    var resMap = new Map();
+
+		    var cateArr = new Array();
+		    var dataArr = new Array();
+
+		    for(var k in $obj){
+		        var xobj =$obj[k];
+
+		        cateArr.push(xobj.e);
+		        dataArr.push(xobj.s);
+		    }
+
+		    resMap.set("cateArr",cateArr);
+		    resMap.set("data",dataArr);
+
+		    return resMap;
+		}
+
+	/* CHART 설정 끝 */
+
+	/* CHART 전체 START */
+	// Create the chart
+	Highcharts.chart('chart_container', {
+	  chart: {
+	    type: 'column'
+	  },
+	  credits: {
+	      enabled: false
+	  },
+	  navigation: {
+	      buttonOptions: {
+	          enabled: false
+	      }
+	  },
+	  title: {
+	    align: 'left',
+	    text: '다면평가 전체 결과 통계'
+	  },
+	  accessibility: {
+	    announceNewData: {
+	      enabled: true
+	    }
+	  },
+	  xAxis: {
+		 categories: getScoreCnt("cateArr")
+	  },
+	  yAxis: {
+	    title: {
+	      text: 'score'
 	    }
 
-	    resMap.set("cateArr",cateArr);
-	    resMap.set("data",dataArr);
+	  },
+	  legend: {
+	    enabled: false
+	  },
+	  plotOptions: {
+	    series: {
+	      borderWidth: 0,
+	      dataLabels: {
+	        enabled: true,
+	        format: '{point.y:.1f}'
+	      }
+	    }
+	  },
 
-	    return resMap;
-	}
+	  tooltip: {
+	    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+	    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.3f}</b> 점<br/>'
+	  },
 
-	var todayInfo = null;
+	  series: [
+	    {
+	      name: '전체',
+	      colorByPoint: true,
+	      data:getScoreCnt("data")
+	     }
+	  ],
+	});
+	/* CHART 전체 END */
 
-	function getDPScoreCnt(type){
-		if(${chartJSONDp} != null) {
-	    	if(todayInfo==null) todayInfo=${chartJSONDp};
-	    	var todayInfoMap = resultDPProcLineChart(todayInfo);
-	    	if(todayInfoMap==null) return null;
-	    	if(type=="data"){
-	    	    return todayInfoMap.get("data");
-	    	}else{
-	    	    return todayInfoMap.get("cateArr");
-	    	}
-		}
-	}
-	function resultDPProcLineChart($obj){
-	    if($obj==null) return null;
-	    var resMap = new Map();
-
-	    var cateArr = new Array();
-	    var dataArr = new Array();
-
-	    for(var k in $obj){
-	        var xobj =$obj[k];
-
-	        cateArr.push(xobj.e);
-	        dataArr.push(xobj.s);
+	/* CHART 팀별 START */
+	// Create the chart
+	Highcharts.chart('chart_container2', {
+	  chart: {
+	    type: 'column'
+	  },
+	  credits: {
+	      enabled: false
+	  },
+	  navigation: {
+	      buttonOptions: {
+	          enabled: false
+	      }
+	  },
+	  title: {
+	    align: 'left',
+	    text: '다면평가 부서 결과 통계'
+	  },
+	  accessibility: {
+	    announceNewData: {
+	      enabled: true
+	    }
+	  },
+	  xAxis: {
+		 categories: getDPScoreCnt("cateArr")
+	  },
+	  yAxis: {
+	    title: {
+	      text: 'score'
 	    }
 
-	    resMap.set("cateArr",cateArr);
-	    resMap.set("data",dataArr);
+	  },
+	  legend: {
+	    enabled: false
+	  },
+	  plotOptions: {
+	    series: {
+	      borderWidth: 0,
+	      dataLabels: {
+	        enabled: true,
+	        format: '{point.y:.1f}'
+	      }
+	    }
+	  },
 
-	    return resMap;
-	}
+	  tooltip: {
+	    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+	    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> 점<br/>'
+	  },
 
-/* CHART 설정 끝 */
+	  series: [
+	    {
+	      name: '전체',
+	      colorByPoint: true,
+	      data: getDPScoreCnt("data")
+	     }
+	  ],
+	});
 
-/* CHART 전체 START */
-// Create the chart
-Highcharts.chart('chart_container', {
-  chart: {
-    type: 'column'
-  },
-  credits: {
-      enabled: false
-  },
-  navigation: {
-      buttonOptions: {
-          enabled: false
-      }
-  },
-  title: {
-    align: 'left',
-    text: '다면평가 전체 결과 통계'
-  },
-  accessibility: {
-    announceNewData: {
-      enabled: true
-    }
-  },
-  xAxis: {
-	 categories: getScoreCnt("cateArr")
-  },
-  yAxis: {
-    title: {
-      text: 'score'
-    }
-
-  },
-  legend: {
-    enabled: false
-  },
-  plotOptions: {
-    series: {
-      borderWidth: 0,
-      dataLabels: {
-        enabled: true,
-        format: '{point.y:.1f}'
-      }
-    }
-  },
-
-  tooltip: {
-    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.3f}</b> 점<br/>'
-  },
-
-  series: [
-    {
-      name: '전체',
-      colorByPoint: true,
-      data:getScoreCnt("data")
-     }
-  ],
-});
-/* CHART 전체 END */
-
-/* CHART 팀별 START */
-// Create the chart
-Highcharts.chart('chart_container2', {
-  chart: {
-    type: 'column'
-  },
-  credits: {
-      enabled: false
-  },
-  navigation: {
-      buttonOptions: {
-          enabled: false
-      }
-  },
-  title: {
-    align: 'left',
-    text: '다면평가 부서 결과 통계'
-  },
-  accessibility: {
-    announceNewData: {
-      enabled: true
-    }
-  },
-  xAxis: {
-	 categories: getDPScoreCnt("cateArr")
-  },
-  yAxis: {
-    title: {
-      text: 'score'
-    }
-
-  },
-  legend: {
-    enabled: false
-  },
-  plotOptions: {
-    series: {
-      borderWidth: 0,
-      dataLabels: {
-        enabled: true,
-        format: '{point.y:.1f}'
-      }
-    }
-  },
-
-  tooltip: {
-    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> 점<br/>'
-  },
-
-  series: [
-    {
-      name: '전체',
-      colorByPoint: true,
-      data: getDPScoreCnt("data")
-     }
-  ],
-});
-
-/* CHART 팀별 END */
-
+	/* CHART 팀별 END */
 </script>
-
 <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>

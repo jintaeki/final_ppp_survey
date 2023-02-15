@@ -35,15 +35,15 @@
 
 
 /* #survey_list_form_id{ */
-/* 	display: flex; */
+/*    display: flex; */
 /* } */
 
 .input-group-append{
-	margin-left: 550px;
+   margin-left: 550px;
 }
 
 .table{
-	max-width: 99%;
+   max-width: 99%;
 
 
 
@@ -138,6 +138,5 @@
     line-height: 1;
     font-size: 1rem;
 }
-
 
 

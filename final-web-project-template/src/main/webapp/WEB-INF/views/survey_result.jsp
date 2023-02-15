@@ -89,7 +89,7 @@
 									<td>${SRL.raterGrade}</td>
 									<td>${SRL.questionType}</td>
 									<td>${SRL.questionContent}</td>
-									<td>${SRL.itemContent}</td>
+									<td>${SRL.answerContent}</td>
 									<td>${SRL.itemScore}</td>
 								</tr>
 							</c:forEach>
@@ -109,7 +109,12 @@
 									<td>${MRL.raterGrade}</td>
 									<td>${MRL.questionType}</td>
 									<td>${MRL.questionContent}</td>
-									<td>${MRL.itemContent}</td>
+									<c:if test="${MRL.itemContent eq '기타'}">									
+										<td>${MRL.answerContent}</td>
+									</c:if>
+									<c:if test="${MRL.itemContent ne '기타'}">									
+										<td>${MRL.itemContent}</td>
+									</c:if>
 									<td>${MRL.itemScore}</td>
 								</tr>
 							</c:forEach>
