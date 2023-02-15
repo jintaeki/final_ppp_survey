@@ -131,5 +131,10 @@
 		WHERE SURVEY_SEQ = #{surveySeq} and RATER_ID = #{raterId} and APPRAISEE_ID = #{appraiseeId}
 
 	</update>
-
+	
+	<insert id="insertExcel" parameterType="com.mycompany.webapp.dto.OrganizationChartDTO">
+       <foreach collection="excelContent" item="item" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+       		INTO ORGANIZATION_CHART_COPY(HIGH_DEPARTMENT_ID,DEPARTMENT_ID,DEPARTMENT_NAME) VALUES(#{item.A},#{item.B},#{item.C})
+       </foreach>        
+    </insert>
 </mapper>

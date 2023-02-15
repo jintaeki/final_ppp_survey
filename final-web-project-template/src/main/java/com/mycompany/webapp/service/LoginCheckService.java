@@ -1,12 +1,17 @@
 package com.mycompany.webapp.service;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mycompany.webapp.dao.ExcelRead;
+import com.mycompany.webapp.dao.ExcelReadOption;
 import com.mycompany.webapp.dao.ILoginCheckRepository;
+import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyResultDTO;
 import com.mycompany.webapp.dto.UserCheckDTO;
@@ -77,6 +82,29 @@ public class LoginCheckService implements ILoginCheckService{
 		loginCheckRepository.completeSurvey(surveySeq, appraiseeId, raterId);
 	}
 
-	
-	
+	  @Override
+	    public void excelUpload(File destFile) {
+	        
+	        ExcelReadOption excelReadOption = new ExcelReadOption();
+	        
+	        //파일경로 추가
+	        excelReadOption.setFilePath(destFile.getAbsolutePath());
+	        
+	        //추출할 컬럼명 추가
+	        excelReadOption.setOutputColumns("A", "B", "C");
+	        
+	        //시작행
+	        excelReadOption.setStartRow(2);
+	        
+	        List<Map<String, String>>excelContent  = ExcelRead.read(excelReadOption);
+	        
+	        Map<String, Object> paramMap = new HashMap<String, Object>();
+	        paramMap.put("excelContent", excelContent);
+	        
+	        try {
+	            loginCheckRepository.insertExcel(paramMap);
+	        }catch(Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
 }

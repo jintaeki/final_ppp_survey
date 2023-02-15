@@ -1,5 +1,6 @@
 package com.mycompany.webapp.service;
 
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -28,5 +29,7 @@ public interface ILoginCheckService {
 	public SurveyListDTO getAnonimityCode(int surveySeq);
 	
 	public void completeSurvey(String surveySeq, String appraiseeId, String raterId);
+	
+	public void excelUpload(File destFile);
 
 }

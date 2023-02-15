@@ -17,7 +17,20 @@ body {
 					<h5 class="modal-title" id="exampleModalLabel">프로젝트 이력 및 조직도 업로드</h5>
 
 				</div>
-
+				<form action="/excelUploadAjax.do" id="excelUploadForm" name="excelUploadForm" enctype="multpart/form-data" method="post">
+					<div class="contents">
+						<div>첨부파일은 한개만 가능합니다.</div>
+						
+						<dl class="vm_name">
+							<dt class="down w90">첨부파일</dt>
+							<dd><input id="excelFile" type="file" name="excelFile"/></dd>
+						</dl>
+					</div>
+					
+					<div class="bottom">
+						<button type="button" id="addExcelImportBtn" class="btn" onclick="check()"><span>추가</span></button>
+					</div>
+				</form>
 
 				<div class="modal-body">
 					<form  id="projectHistoryForm"  method="POST" >
@@ -101,11 +114,42 @@ body {
 	</div>
 	<!--<a class="btn btn-success btn-sm" href="#">로그아웃</a> -->
 </div>
-
-
+	
+<script src="https://malsup.github.io/jquery.form.js"></script>
 <script>
+function checkFileType(filePath) {
+	var fileFormat = filePath.split(".");
+	
+	 if (fileFormat.indexOf("xls") > -1 || fileFormat.indexOf("xlsx") > -1) {
+         return true;
+         } else {
+         return false;
+       }
+     }
 
-
+function check() {
+	var file =$("#excelFile").val();
+	
+	if(file==""||file==null){
+		alert("파일을 선택해주세요.");
+		return false;	
+	}else if(!checkFileType(file)){
+		alert("엑셀 파일만 업로드 가능합니다.");
+		return false;
+	}
+	
+	if(confirm("업로드 하시겠습니까?")){
+		var options={
+				success:function(data){
+					console.log(data);
+					alert("모든 데이터가 업로드 되었습니다.");
+				},
+		type:"POST"
+		};
+		
+		$("#excelUploadForm").ajaxSubmit(options);
+	}
+}
 
 function uploadProjectHistory(){
 	var projectHistoryForm = $('#projectHistoryForm')[0];
