@@ -17,74 +17,12 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/popup.js"></script>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!-- contextPath가 변경돼도 소스 수정없이 적용 (유지보수 용이) -->
 
 
 <script>
-   var path = "${pageContext.request.contextPath }";
-   /* 전체 선택 */
-   $(function() {
-      $("#check_all").click(function() {
-         var chk = $(this).is(":checked");
-         if (chk)
-            $("#resTb input[name='chk_res']").prop('checked', true);
-         else
-            $("#resTb input[name='chk_res']").prop('checked', false);
-      });
-   });
-   /* 체크값이 없을 경우 알림 */
-   function selectItem() {
-      if ($("#resTb input[name='chk_res']:checked").length == 0) {
-         alert("추가할 인원을 선택해주세요");
-         return false;
-      }
-      var resArr = new Array();
-      $("#resTb input[name='chk_res']:checked").each(
-            function(index) {
-               var plusId = $(this).val();
-               var addObj = new Object();
-               $tr = $("#tr_" + plusId);
-               addObj.projectId      = $tr.find("input[name='projectId']").val();
-               addObj.gradeId        = $tr.find("input[name='gradeId']").val();
-               addObj.rDepartmentId   = $tr.find("input[name='rDepartmentId']").val();
-               addObj.aDepartmentId   = $tr.find("input[name='aDepartmentId']").val();
-               addObj.surveySeq      = $tr.find("input[name='surveySeq']").val();
-               addObj.raterId        = $tr.find("input[name='raterId']").val();
-               addObj.appraiseeId    = $tr.find("input[name='appraiseeId']").val();
-               addObj.projectName    = $tr.find("input[name='projectName']").val();
-               addObj.surveyName     = $tr.find("input[name='surveyName']").val();
-               addObj.rDepartmentName = $tr.find("input[name='rDepartmentName']").val();
-               addObj.aDepartmentName = $tr.find("input[name='aDepartmentName']").val();
-               addObj.raterName      = $tr.find("input[name='raterName']").val();
-               addObj.appraiseeName  = $tr.find("input[name='appraiseeName']").val();
-               addObj.gradeName      = $tr.find("input[name='gradeName']").val();
-               resArr.push(addObj);
-      console.log(plusId);
-      });
-      console.log(resArr);   
-     
-     $.ajax({
-       url: "popup.do",
-       type: "POST",
-       contentType: "application/json;charset=UTF-8",
-       data:JSON.stringify(resArr),
-       dataType : "json"
-      })
-     .done(function(resMap) {
-        alert(resMap.msg);
-       opener.parent.location.reload();
-       window.close();
-     })
-     .fail(function(e) {
-        alert("추가 실패");
-     })
-     always(function() {
-       alert(resMap.msg);
-
-     });   
-   }
-   
    function reset_btn_mapping_pop(surveySeq, raterId, month){
        $('.searchRangeAll').empty();
        html='';

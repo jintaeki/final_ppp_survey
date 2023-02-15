@@ -109,11 +109,11 @@
 									<td>${MRL.raterGrade}</td>
 									<td>${MRL.questionType}</td>
 									<td>${MRL.questionContent}</td>
-									<c:if test="${MRL.itemContent eq '기타' }">
-									<td>${MRL.answerContent}</td>
+									<c:if test="${MRL.itemContent eq '기타'}">									
+										<td>${MRL.answerContent}</td>
 									</c:if>
-									<c:if test="${MRL.itemContent ne '기타' }">
-									<td>${MRL.itemContent}</td>
+									<c:if test="${MRL.itemContent ne '기타'}">									
+										<td>${MRL.itemContent}</td>
 									</c:if>
 									<td>${MRL.itemScore}</td>
 								</tr>
