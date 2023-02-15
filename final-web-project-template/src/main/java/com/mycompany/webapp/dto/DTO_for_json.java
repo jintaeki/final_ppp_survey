@@ -4,23 +4,23 @@ public class DTO_for_json {
 
 	// 조직조
 	
-	private long highDepartmentId;
-	private long departmentId;
+	private String highDepartmentId;
+	private String departmentId;
 	private String departmentName;
 	
-	public long getHighDepartmentId() {
+	public String getHighDepartmentId() {
 		return highDepartmentId;
 	}
-	public long getDepartmentId() {
+	public String getDepartmentId() {
 		return departmentId;
 	}
 	public String getDepartmentName() {
 		return departmentName;
 	}
-	public void setHighDepartmentId(long highDepartmentId) {
+	public void setHighDepartmentId(String highDepartmentId) {
 		this.highDepartmentId = highDepartmentId;
 	}
-	public void setDepartmentId(long departmentId) {
+	public void setDepartmentId(String departmentId) {
 		this.departmentId = departmentId;
 	}
 	public void setDepartmentName(String departmentName) {

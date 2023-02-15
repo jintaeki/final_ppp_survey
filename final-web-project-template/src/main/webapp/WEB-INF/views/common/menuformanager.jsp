@@ -20,45 +20,40 @@ body {
 
 
 				<div class="modal-body">
-					<form  id="projectHistoryForm"  method="POST" >
-				<a href="<c:url value='/excelDownload.do/project'/>"> 이력 다운받기</a>
 
-						<div class="form-group">
-							<label for="recipient-name" class="col-form-label">프로젝트 이력</label>
-							<input type="file" id="filePath" name="projecthistoryjson" class="form-control">
-						</div>
-
-
-					<div class="modal-footer">
-
-							<input type="button" onclick="uploadProjectHistory()" class="btn btn-primary" value="등록">
-						</div>
-
-					</form>
+				<form id="excelUploadForm" name="excelUploadForm"
+					enctype="multipart/form-data" method="post"
+					action="<c:url value='/survey/excelUpload_project.do'/>">
+					<a href="<c:url value='/excelDownload.do/project'/>"> 이력 다운받기</a>
+					<div class="upload_file">
+						<label for="excelFile">Excel 업로드</label> <input type="file"
+							id="excelFile" name="excelFile" />
+						<button type="submit"">
+							<span>저장</span>
+						</button>
+					</div>
+				</form>
 
 
 
 
 
-					<form  id="organizationForm">
-<a href="<c:url value='/excelDownload.do/OC'/>"> 조직정보 다운받기</a>
 
-						<div class="form-group">
-							<label for="recipient-name" class="col-form-label">조직정보</label>
-							<input type="file" name="organizationjson" class="form-control"
-							>
-						</div>
+				<form id="excelUploadForm" name="excelUploadForm"
+					enctype="multipart/form-data" method="post"
+					action="<c:url value='/survey/excelUpload_OC.do'/>">
+					<a href="<c:url value='/excelDownload.do/OC'/>"> 조직정보 다운받기</a>
+					<div class="upload_file">
+						<label for="excelFile">Excel 업로드</label> <input type="file"
+							id="excelFile" name="excelFile" />
+						<button type="submit"">
+							<span>저장</span>
+						</button>
+					</div>
+				</form>
 
 
-
-					<div class="modal-footer">
-
-							<input type="button" onclick="uploadOrganization()" class="btn btn-primary" value="등록">
-						</div>
-
-					</form>
-
-				</div>
+			</div>
 
 			</div>
 		</div>
@@ -165,5 +160,31 @@ function uploadOrganization(){
 	           console.log("Error", e);
 	        }
 	  });
+}
+
+
+function check() {
+    if(confirm("업로드 여부")) {
+    	var organizationForm = $('.excelUploadForm')[0];
+    	  var organizationJSONformData = new FormData(organizationForm);
+    	  $.ajax({
+    		     method:'POST', //어떤 방식으로 보낼 지
+    		     url:'/survey/excelUpload_project.do', // qdiv를 보낼 경로 설정
+    			 data: organizationJSONformData,
+    			 enctype: 'multipart/form-data',
+    		     processData : false,
+    		     contentType : false,
+    		     beforeSend : function() { //보내기 전 실행
+    		     console.log("요청이 보내지는가?");
+    		     },
+    		     success:function (result) {    //전송 성공시 실행
+    		   
+
+
+    		        }, error:function(e) {   //실패, 에러
+    		           console.log("Error", e);
+    		        }
+    		  });
+ }
 }
 </script>
