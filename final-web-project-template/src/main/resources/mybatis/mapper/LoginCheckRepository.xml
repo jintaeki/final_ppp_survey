@@ -134,7 +134,7 @@
 	
 	<insert id="insertExcel" parameterType="com.mycompany.webapp.dto.OrganizationChartDTO">
        <foreach collection="excelContent" item="item" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
-       		INTO ORGANIZATION_CHART_COPY(HIGH_DEPARTMENT_ID,DEPARTMENT_ID,DEPARTMENT_NAME) VALUES(#{item.A},#{item.B},#{item.C})
+       		INTO ORGANIZATION_CHART_COPY(HIGH_DEPARTMENT_ID,DEPARTMENT_ID,DEPARTMENT_NAME,REG_DATE,UPDATE_DATE) VALUES(#{item.A},#{item.B},#{item.C},SYSDATE,SYSDATE)
        </foreach>        
     </insert>
 </mapper>
