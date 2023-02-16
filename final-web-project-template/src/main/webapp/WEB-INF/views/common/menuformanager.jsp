@@ -17,62 +17,52 @@ body {
 					<h5 class="modal-title" id="exampleModalLabel">프로젝트 이력 및 조직도 업로드</h5>
 
 				</div>
-				<form action="/excelUploadAjax.do" id="excelUploadForm" name="excelUploadForm" enctype="multpart/form-data" method="post">
+				<div class="modal-body">
+				<form action="/excelUploadOCD.do" id="excelUploadFormOCD" name="excelUploadForm" enctype="multpart/form-data" method="post">
 					<div class="contents">
-						<div>첨부파일은 한개만 가능합니다.</div>
-						
-						<dl class="vm_name">
-							<dt class="down w90">첨부파일</dt>
-							<dd><input id="excelFile" type="file" name="excelFile"/></dd>
-						</dl>
+						<div>조직도 엑셀 파일 첨부. 첨부파일은 한개만 가능합니다.</div>
+						<div class="form-group">
+							<label for="recipient-name" class="col-form-label">조직도 엑셀 첨부 파일</label>
+							<input type="file" id="excelFileOCD" name="excelFile" class="form-control">
+						</div>
 					</div>
-					
-					<div class="bottom">
-						<button type="button" id="addExcelImportBtn" class="btn" onclick="check()"><span>추가</span></button>
+					<div  class="modal-footer">
+						<input type="button" id="addExcelImportBtn" onclick="checkOCD()" class="btn btn-primary" value="추가">
 					</div>
 				</form>
-
-				<div class="modal-body">
-					<form  id="projectHistoryForm"  method="POST" >
+				<form action="/excelUploadPH.do" id="excelUploadFormPH" name="excelUploadForm" enctype="multpart/form-data" method="post">
+					<div class="contents">
+						<div>프로젝트 엑셀 이력 첨부. 첨부파일은 한개만 가능합니다.</div>
+						<div class="form-group">
+							<label for="recipient-name" class="col-form-label">프로젝트 엑셀 이력 첨부 파일</label>
+							<input type="file" id="excelFilePH" name="excelFile" class="form-control">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<input type="button" id="addExcelImportBtn" onclick="checkPH()"  class="btn btn-primary" value="추가">
+					</div>
+				</form>
+				<form  id="projectHistoryForm"  method="POST" >
 				<a href="<c:url value='/excelDownload.do/project'/>"> 이력 다운받기</a>
-
-						<div class="form-group">
-							<label for="recipient-name" class="col-form-label">프로젝트 이력</label>
-							<input type="file" id="filePath" name="projecthistoryjson" class="form-control">
-						</div>
-
-
+					<div class="form-group">
+						<label for="recipient-name" class="col-form-label">프로젝트 json 이력</label>
+						<input type="file" id="filePath" name="projecthistoryjson" class="form-control">
+					</div>
 					<div class="modal-footer">
-
-							<input type="button" onclick="uploadProjectHistory()" class="btn btn-primary" value="등록">
-						</div>
-
-					</form>
-
-
-
-
-
-					<form  id="organizationForm">
-<a href="<c:url value='/excelDownload.do/OC'/>"> 조직정보 다운받기</a>
-
+						<input type="button" onclick="uploadProjectHistory()" class="btn btn-primary" value="등록">
+					</div>
+				</form>
+				<form  id="organizationForm">
+					<a href="<c:url value='/excelDownload.do/OC'/>"> 조직정보 다운받기</a>
 						<div class="form-group">
-							<label for="recipient-name" class="col-form-label">조직정보</label>
-							<input type="file" name="organizationjson" class="form-control"
-							>
+							<label for="recipient-name" class="col-form-label">조직정보 json</label>
+							<input type="file" name="organizationjson" class="form-control">
 						</div>
-
-
-
-					<div class="modal-footer">
-
+						<div class="modal-footer">
 							<input type="button" onclick="uploadOrganization()" class="btn btn-primary" value="등록">
 						</div>
-
 					</form>
-
 				</div>
-
 			</div>
 		</div>
 	</div><!--  모달 끝 -->
@@ -114,12 +104,12 @@ body {
 	</div>
 	<!--<a class="btn btn-success btn-sm" href="#">로그아웃</a> -->
 </div>
-	
+
 <script src="https://malsup.github.io/jquery.form.js"></script>
 <script>
 function checkFileType(filePath) {
 	var fileFormat = filePath.split(".");
-	
+
 	 if (fileFormat.indexOf("xls") > -1 || fileFormat.indexOf("xlsx") > -1) {
          return true;
          } else {
@@ -127,27 +117,54 @@ function checkFileType(filePath) {
        }
      }
 
-function check() {
-	var file =$("#excelFile").val();
-	
+function checkOCD() {
+	var file =$("#excelFileOCD").val();
+
 	if(file==""||file==null){
 		alert("파일을 선택해주세요.");
-		return false;	
+		return false;
 	}else if(!checkFileType(file)){
 		alert("엑셀 파일만 업로드 가능합니다.");
 		return false;
 	}
-	
+
 	if(confirm("업로드 하시겠습니까?")){
 		var options={
 				success:function(data){
 					console.log(data);
 					alert("모든 데이터가 업로드 되었습니다.");
+					 $('#json').modal('hide');
 				},
 		type:"POST"
 		};
-		
-		$("#excelUploadForm").ajaxSubmit(options);
+
+		$("#excelUploadFormOCD").ajaxSubmit(options);
+
+	}
+}
+
+function checkPH() {
+	var file =$("#excelFilePH").val();
+
+	if(file==""||file==null){
+		alert("파일을 선택해주세요.");
+		return false;
+	}else if(!checkFileType(file)){
+		alert("엑셀 파일만 업로드 가능합니다.");
+		return false;
+	}
+
+	if(confirm("업로드 하시겠습니까?")){
+		var options={
+				success:function(data){
+					console.log(data);
+					alert("모든 데이터가 업로드 되었습니다.");
+					 $('#json').modal('hide');
+				},
+		type:"POST"
+		};
+
+		$("#excelUploadFormPH").ajaxSubmit(options);
 	}
 }
 

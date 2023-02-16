@@ -66,7 +66,7 @@
 							</c:if>
 							<c:if test="${chartJSONDp[0].s ne null}">
 								<div id="chart_container2"></div>
-								<p class="highcharts-description">부서별 소속 팀원들의 결과를 조회할 수 있습니다.</p>
+								<p class="highcharts-description">부서별 소속 팀원들의 결과를 조회합니다.</p>
 							</c:if>
 						</div>
 						</div>

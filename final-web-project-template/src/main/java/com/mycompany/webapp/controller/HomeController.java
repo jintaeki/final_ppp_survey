@@ -35,7 +35,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyResultDTO;
@@ -46,8 +45,6 @@ import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.ProjectHistoryDTO;
 import com.mycompany.webapp.service.ILoginCheckService;
 import com.mycompany.webapp.service.json.IJsonService;
-
-
 
 @Controller
 public class HomeController {
@@ -71,39 +68,63 @@ public class HomeController {
 	}
 
 	@ResponseBody
-    @RequestMapping(value = "/excelUploadAjax.do", method = RequestMethod.POST)
-        public ModelAndView excelUploadAjax(MultipartFile testFile, MultipartHttpServletRequest request) throws  Exception{
-        
+    @RequestMapping(value = "/excelUploadOCD.do", method = RequestMethod.POST)
+        public boolean excelUploadOCD(MultipartFile testFile, MultipartHttpServletRequest request) throws  Exception{
+
         System.out.println("업로드 진행");
-        
+
         MultipartFile excelFile = request.getFile("excelFile");
-        
+
         if(excelFile == null || excelFile.isEmpty()) {
             throw new RuntimeException("엑셀파일을 선택해 주세요");
         }
-        
+
         File destFile = new File("C:\\upload\\"+excelFile.getOriginalFilename());
-        
+
         try {
-            //내가 설정한 위치에 내가 올린 파일을 만들고 
+            //내가 설정한 위치에 내가 올린 파일을 만들고
             excelFile.transferTo(destFile);
         }catch(Exception e) {
             throw new RuntimeException(e.getMessage(),e);
         }
-        
+
         //업로드를 진행하고 다시 지우기
-        loginCheckService.excelUpload(destFile);
-        
+        loginCheckService.excelUploadOCD(destFile);
+
         destFile.delete();
-        
-        ModelAndView view = new ModelAndView();
-        view.setViewName("/egovSampleList.do");
-        
-        return view;
+
+        return true;
     }
 
-	
-	
+	@ResponseBody
+    @RequestMapping(value = "/excelUploadPH.do", method = RequestMethod.POST)
+        public boolean excelUploadPH(MultipartFile testFile, MultipartHttpServletRequest request) throws  Exception{
+
+        MultipartFile excelFile = request.getFile("excelFile");
+
+        if(excelFile == null || excelFile.isEmpty()) {
+            throw new RuntimeException("엑셀파일을 선택해 주세요");
+        }
+
+        File destFile = new File("C:\\upload\\"+excelFile.getOriginalFilename());
+
+        try {
+            //내가 설정한 위치에 내가 올린 파일을 만들고
+            excelFile.transferTo(destFile);
+        }catch(Exception e) {
+            throw new RuntimeException(e.getMessage(),e);
+        }
+
+        //업로드를 진행하고 다시 지우기
+        loginCheckService.excelUploadPH(destFile);
+
+        destFile.delete();
+
+        return true;
+    }
+
+
+
 	@GetMapping("/excelDownload.do/{fileType}")
     public void downloadExcel(HttpServletResponse response, @PathVariable String fileType)  {
 		 Workbook workbook = new HSSFWorkbook();

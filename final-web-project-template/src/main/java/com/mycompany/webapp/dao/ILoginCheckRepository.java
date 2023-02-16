@@ -31,6 +31,7 @@ public interface ILoginCheckRepository {
 	public SurveyListDTO getAnonimityCode(int surveySeq);
 
 	public void completeSurvey(@Param("surveySeq") String surveySeq,@Param("appraiseeId") String appraiseeId,@Param("raterId") String raterId);
-	
-	void insertExcel(Map<String, Object> paramMap) throws Exception;
+
+	void insertExcelOCD(Map<String, Object> paramMap) throws Exception;
+	void insertExcelPH(Map<String, Object> paramMap) throws Exception;
 }

@@ -20,12 +20,12 @@
 	</select>
 
 	<select id="getUserInfo" resultType="com.mycompany.webapp.dto.UserCheckDTO">
-		SELECT 
-			   S.SURVEY_SEQ, 
+		SELECT
+			   S.SURVEY_SEQ,
                S.SURVEY_NAME,
-               S.SURVEY_CONTENT, 
-               M.RATER_ID, 
-               UR.EMPLOYEE_NAME AS RATER_NAME, 
+               S.SURVEY_CONTENT,
+               M.RATER_ID,
+               UR.EMPLOYEE_NAME AS RATER_NAME,
                GR.GRADE_NAME AS RATER_GRADE_NAME,
                OCR.DEPARTMENT_NAME AS RATER_DEPARTMENT_NAME,
                M.APPRAISEE_ID,
@@ -54,7 +54,7 @@
 	</select>
 
 	<select id="getQuestion" parameterType="int" resultType="hashmap">
-      SELECT SURVEY_LIST.SURVEY_NAME 
+      SELECT SURVEY_LIST.SURVEY_NAME
       		,SURVEY_QUESTION.SURVEY_SEQ
        		,SURVEY_QUESTION.QUESTION_SEQ
             ,SURVEY_QUESTION.QUESTION_CONTENT
@@ -65,7 +65,7 @@
       FROM  SURVEY_LIST,(SURVEY_ITEM  right join SURVEY_QUESTION
       on SURVEY_ITEM.QUESTION_SEQ = SURVEY_QUESTION.QUESTION_SEQ)
       where SURVEY_QUESTION.SURVEY_SEQ = #{surveySeq} and SURVEY_LIST.SURVEY_SEQ = ${surveySeq} ORDER BY SURVEY_QUESTION.QUESTION_SEQ ASC,SURVEY_ITEM.ITEM_SCORE ASC,
-      SURVEY_ITEM.ITEM_SEQ 
+      SURVEY_ITEM.ITEM_SEQ
    </select>
 
 	<select id="getSurveySeqAndName" parameterType="string" resultType="hashmap">
@@ -74,11 +74,11 @@
 	                ,SL.SURVEY_NAME
 	                ,SL.ANONYMITY_CHECK_CODE
 	 FROM SURVEY_LIST SL
-	     ,MAPPING M 
-	 WHERE SL.SURVEY_SEQ = M.SURVEY_SEQ  AND 
-	      SL.SURVEY_START_DATE <= SYSDATE AND 
-	      SL.SURVEY_CLOSED_DATE >= SYSDATE AND 
-	      SL.STATE_CODE = '30004' AND 
+	     ,MAPPING M
+	 WHERE SL.SURVEY_SEQ = M.SURVEY_SEQ  AND
+	      SL.SURVEY_START_DATE <= SYSDATE AND
+	      SL.SURVEY_CLOSED_DATE >= SYSDATE AND
+	      SL.STATE_CODE = '30004' AND
 	      M.RATER_ID = #{raterId} order by M.SURVEY_SEQ
 	]]>
 	</select>
@@ -131,10 +131,16 @@
 		WHERE SURVEY_SEQ = #{surveySeq} and RATER_ID = #{raterId} and APPRAISEE_ID = #{appraiseeId}
 
 	</update>
-	
-	<insert id="insertExcel" parameterType="com.mycompany.webapp.dto.OrganizationChartDTO">
+
+	<insert id="insertExcelOCD" parameterType="com.mycompany.webapp.dto.OrganizationChartDTO">
        <foreach collection="excelContent" item="item" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
        		INTO ORGANIZATION_CHART_COPY(HIGH_DEPARTMENT_ID,DEPARTMENT_ID,DEPARTMENT_NAME,REG_DATE,UPDATE_DATE) VALUES(#{item.A},#{item.B},#{item.C},SYSDATE,SYSDATE)
-       </foreach>        
+       </foreach>
+    </insert>
+
+    <insert id="insertExcelPH" parameterType="com.mycompany.webapp.dto.ProjectHistoryDTO">
+       <foreach collection="excelContent" item="item" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+       		INTO PROJECT_HISTORY_COPY(PARTICIPATION_EMPLOYEE_ID,PROJECT_ID,REG_DATE,UPDATE_DATE) VALUES(#{item.A},#{item.B},SYSDATE,SYSDATE)
+       </foreach>
     </insert>
 </mapper>
