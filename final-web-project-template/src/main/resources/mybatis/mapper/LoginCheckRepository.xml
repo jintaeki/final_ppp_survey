@@ -79,7 +79,7 @@
 	      SL.SURVEY_START_DATE <= SYSDATE AND 
 	      SL.SURVEY_CLOSED_DATE >= SYSDATE AND 
 	      SL.STATE_CODE = '30004' AND 
-	      M.RATER_ID = #{raterId} order by M.SURVEY_SEQ
+	      M.RATER_ID = #{raterId} order by to_date(SL.SURVEY_START_DATE)
 	]]>
 	</select>
 
