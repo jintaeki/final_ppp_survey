@@ -146,6 +146,8 @@
                               href="?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selection2=${pagingdto.selection2}&surveySeq=${pagingdto.surveySeq}">맨끝</a>
                         </div>
                         <div style="float: right;">
+                          <button type="button" class="btn btn-outline-primary" onclick="location.href='<c:url value='/survey/evaluateMessage.do/${surveySeq}'/>'">
+                     		 평가 참여 여부 확인 하러 가기
                        </div>
                      </td>
                   </tr>
