@@ -6,6 +6,9 @@ font-family: "segoe";
    src: url('/manyface/src/main/webapp/resources/font/Segoe UI Bold.ttf');
 
 }
+.btn{
+	display: inline;
+}
 .menu_a {
 color:black;
 }
