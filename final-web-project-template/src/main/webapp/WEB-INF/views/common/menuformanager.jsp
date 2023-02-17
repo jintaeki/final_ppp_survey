@@ -130,7 +130,7 @@ body {
 		</div>
 		</div>
 
-		<div class="menu_item"style="height: 70px;">
+		<div class="menu_item"style="height: 70px;cursor: pointer;">
 			<a data-toggle="modal" style="color:black;" data-target="#json" onclick="">프로젝트 이력 및<br>조직도 업로드</a>
 		</div>
 
