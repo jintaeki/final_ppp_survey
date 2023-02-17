@@ -150,7 +150,7 @@
 						<input type="hidden"> 평가지 복사<br>
 						<select name="surveySeq">
 							<option value="0">평가지 선택</option>
-							<c:forEach var="list" items="${surveylist}">
+							<c:forEach var="list" items="${surveyAllList}">
 								<option value="${list.surveySeq} ">${list.surveyName}</option>
 							</c:forEach>
 						</select>

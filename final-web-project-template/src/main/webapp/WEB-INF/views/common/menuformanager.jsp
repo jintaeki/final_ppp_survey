@@ -55,25 +55,27 @@ body {
 
 				<form action="/excelUploadOCD.do" id="excelUploadFormOCD" name="excelUploadForm" enctype="multpart/form-data" method="post">
 					<div class="contents">
-						<div>조직도 엑셀 파일 첨부. 첨부파일은 한개만 가능합니다.</div>
+						<div>첨부파일은 한개만 가능합니다.</div>
 						<div class="form-group">
 							<label for="recipient-name" class="col-form-label">조직도 엑셀 첨부 파일</label>
 							<input type="file" id="excelFileOCD" name="excelFile" class="form-control">
 						</div>
 					</div>
 					<div  class="modal-footer">
+						<a href="<c:url value='/excelDownload.do/project'/>"> 이력 다운받기</a>
 						<input type="button" id="addExcelImportBtn" onclick="checkOCD()" class="btn btn-primary" value="추가">
 					</div>
 				</form>
 				<form action="/excelUploadPH.do" id="excelUploadFormPH" name="excelUploadForm" enctype="multpart/form-data" method="post">
 					<div class="contents">
-						<div>프로젝트 엑셀 이력 첨부. 첨부파일은 한개만 가능합니다.</div>
+						<div>첨부파일은 한개만 가능합니다.</div>
 						<div class="form-group">
 							<label for="recipient-name" class="col-form-label">프로젝트 엑셀 이력 첨부 파일</label>
 							<input type="file" id="excelFilePH" name="excelFile" class="form-control">
 						</div>
 					</div>
 					<div class="modal-footer">
+					<a href="<c:url value='/excelDownload.do/OC'/>"> 조직정보 다운받기</a>
 						<input type="button" id="addExcelImportBtn" onclick="checkPH()"  class="btn btn-primary" value="추가">
 					</div>
 					</form>

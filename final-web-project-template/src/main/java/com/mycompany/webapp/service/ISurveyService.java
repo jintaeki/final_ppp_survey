@@ -84,6 +84,8 @@ public interface ISurveyService {
 
 	int getItemCnt(int surveySeq);
 
+	List<SurveyListDTO> getAllSurvey();
+
 }
 
 

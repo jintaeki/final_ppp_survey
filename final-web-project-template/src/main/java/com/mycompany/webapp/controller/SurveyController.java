@@ -504,10 +504,10 @@ public class SurveyController {
 			pagingdto.setAnonyMityCheckCode(anonyMityCheckCode);
 
 			surveylist = surveyService.searchListByKeyword(pagingdto);
-
+			List<SurveyListDTO>surveyAllList = surveyService.getAllSurvey(); 
 
 			model.addAttribute("surveylist", surveylist);
-
+			model.addAttribute("surveyAllList",surveyAllList);
 			model.addAttribute("pagingdto", pagingdto);
 			model.addAttribute("keyword", keyword);
 
