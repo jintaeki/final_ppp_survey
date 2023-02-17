@@ -96,15 +96,15 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 				            // 전송 전 실행 코드
 				         },
 				         success : function(data) {
-				 				tag.parent().parent().parent().remove();
+//				 				tag.parent().parent().parent().remove();
 
 				        	 console.log(data[0].questionSeq);
 				        	 if(data[0].questionSeq==0){
 				        		 alert("빈 텍스트는 저장이 불가합니다.");
-				        		 location.reload();
+//				        		 location.reload();
 				        	 }else{
 				        		 console.log(data);
-				        		 location.reload();
+//				        		 location.reload();
 
 
 
@@ -590,7 +590,6 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
             		contentType : false,
              		cache : false,
              		beforeSend : function() { //보내기 전 실행
-            		console.log("삭제 요청이 보내지는가?");
          			},
             		success:function (data) {    //전송 성공시 실행
             			$(obj).parent().remove();
@@ -643,7 +642,6 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
             contentType : false,
              cache : false,
             beforeSend: function() {
-               console.log("요청 보냈음");
             },
             success: function(data) {
 
@@ -660,7 +658,6 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
                         cache : false,
                        beforeSend: function() {
                           console.log("요청 보냈음");
-                          alert("업데이트 beforesend");
                        },
                        success: function(jsondata) {
 							cntObj = 0;
