@@ -29,6 +29,10 @@ label {
     resize: none;
     width: 505px;
 }
+.menu_a {
+color:black;
+}
+
 .survey_section::-webkit-scrollbar {
 	width:7px !important; /* 스크롤바 굵기 */
 }
