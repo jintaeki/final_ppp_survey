@@ -3,7 +3,7 @@
 
 <mapper namespace="com.mycompany.webapp.dao.IJsonRepository">
 
-<insert id="insert_into_groupinfo"
+<insert id="excelUpload_OC"
 		parameterType="com.mycompany.webapp.dto.DTO_for_json">
 
 			INSERT INTO 
@@ -24,7 +24,7 @@
 	
 	</insert>
 
-<insert id="insert_into_pjhistorys"
+	<insert id="excelUpload_PROJECT"
 		parameterType="com.mycompany.webapp.dto.DTO_for_json2">
 	
 		INSERT INTO 

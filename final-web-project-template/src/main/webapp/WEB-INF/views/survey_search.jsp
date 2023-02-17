@@ -5,109 +5,10 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/survey_list.css" />
 
-
+ <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/survey_search.js"></script>
 
 <script>
-function delete_mapping_btn(){
-	  if (confirm("정말 삭제하시겠습니까??")){    //확인
-	      document.form.submit();
-	  }else{
-		  alert("취소");
-		  event.preventDefault();
-		  return false;
-	  }
-	}
 
-
-	function delete_survey_btn(obj,surveyseq){
-		if(confirm("삭제하시겠습니까?")){
-
-		$.ajax({
-	         method:'POST', //어떤 방식으로 보낼 지
-	            url:'deletesurvey.do/'+ surveyseq, // qdiv를 보낼 경로 설정
-	            processData : false,
-	            async: false,
-	            contentType : false,
-	            cache : false,
-	            beforeSend : function() { //보내기 전 실행
-	            console.log("삭제 요청이 보내지는가?");
-	         },
-	            success:function (data) {    //전송 성공시 실행
-				location.reload();
-
-	            }
-	       });
-
-
-		}
-	};
-
-  	function send() {
-
-  		var surveyseq = $('#surveyseq').val();
-  		var deliverycontent = $('#deliverycontent').val();
-
-  		console.log(deliverycontent);
-
-		$.ajax({
-			method:'POST', //어떤 방식으로 보낼 지
-			url:'sendmessage.do/'+surveyseq, // qdiv를 보낼 경로 설정
-			data:{
-				deliveryContent: deliverycontent
-			},
-		    beforeSend : function() { //보내기 전 실행
-			console.log("요청이 보내지는가?");
-		   },
-		   success:function (data) {	 //전송 성공시 실행
-			console.log("굿");
-			alert('메일과 SMS가 잘 전송 되었습니다.');
-
-			$('#exampleModal1').modal('hide');
-
-		   }, error:function(e) {	//실패, 에러
-			   console.log("Error", e);
-		   }
-		});
-	}
-
-  	function evaluateStart(surveySeq){
-
-  		console.log(surveySeq);
-		if(confirm("평가를 실행하겠습니까? 더이상 설문지를 변경하실수 없게 됩니다.")){
-		$.ajax({
-			method:'POST', //어떤 방식으로 보낼 지
-			url:'evaluateStart.do/'+surveySeq, // qdiv를 보낼 경로 설정
-			data:{
-				surveySeq: surveySeq
-			},
-		    beforeSend : function() { //보내기 전 실행
-			console.log("요청이 보내지는가?");
-		   },
-		   success:function (data) {	 //전송 성공시 실행
-			console.log("굿");
-
-			$('#exampleModal1').modal('hide');
-
-			window.location.reload();
-
-		   }, error:function(e) {	//실패, 에러
-			   console.log("Error", e);
-		   }
-		});
-		}
-  	}
-
-  	$(document).ready(function() {
-  	    const stateCode = $(".stateCode");
-
-  	    stateCode.each((index, element) => {
-  	    	const value = $(element).val();
-  	    	console.log($(element).parent().prev().prev().prev().prev().children());
-  	    	if(value == 30001){
-	  	    	$(element).next().attr('disabled', 'disabled');
-  	    	}
-  	    });
-  	});
 
 
   	function btn_for_mapping(surveySeq, stateCode){
@@ -132,8 +33,7 @@ function delete_mapping_btn(){
   	   	html += '<form:form action="${actionURL}" modelAttribute="map">';
   	   	html += '<input type="hidden" id="surveySeq" name="surveySeq" value="'+serveySeq+'">';
   	   	html += '<input type="hidden" id="newCheck" name="newCheck" value="0">';
-  	   	html += '<br> <h5> 다면평가에 포함될 프로젝트의 범위 정하기 </h5> <select class="form-control" name="month"> <option value="3">최근 3개월 동안에 끝난 프로젝트</option> <option value="6">최근 6개월 동안에 끝난 프로젝트</option> <option value="12">최근 1년 동안에 끝난 프로젝트</option>';
-  		html +=	'<option value="24">최근 2년 동안에 끝난 프로젝트</option> <option value="36">최근 3년 동안에 끝난 프로젝트</option> </select>';
+  	   	html += '<br> <h5> 다면평가에 포함될 프로젝트의 범위 정하기 </h5> <select class="form-control" name="month"> <c:forEach items="${commonDateList}" var="month"> <option value="${month.codeDetailName}">최근 ${month.codeDetailName}개월 동안에 끝난 프로젝트</option> </c:forEach> </select>';
   		html += '<br> <h5>피평가자 최대 인원</h5> <input type="number" name="number" placeholder="인원을 입력해주세요" min="1" style="width: 100%; height: calc(1.5em + 0.75rem + 2px); padding: 0.375rem 0.75rem;">';
   	    html += '<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button> <input type="submit" class="btn btn-primary" value="매핑">';
   	    html += '</div></form:form></div></div></div></div>';
@@ -173,7 +73,7 @@ function delete_mapping_btn(){
   	   	html += '<input type="hidden" id="month" name="month" value="3">';
   	   	html += '<input type="hidden" id="number" name="number" value="3">';
   	   	html += '<br> <h5> 해당 다면평가의 매핑조합을 추가 하시겠습니까? </h5>';
-  	   	html += '<button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 핑칭 목록으로 넘어가기</button>';
+  	   	html += '<button type="submit" class="btn btn-outline-success" id="newCheck" name="newCheck" value="0">저장된 매핑 목록으로 넘어가기</button>';
   	    html += '<div class="modal-footer"><br><button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>';
   	    html += '</div></form:form></div></div></div></div>';
   	    $('#beforeModal').after(html);
@@ -197,98 +97,6 @@ function delete_mapping_btn(){
 
 
 
-
-  	function search(){
-  		var dateleft = $('[name=surveyStartDateLeft]').val();
-  		var dateright = $('[name=surveyStartDateRight]').val();
-  		console.log
-		if (dateleft > dateright && dateright != ''){
-
-			alert("날짜 조건이 알맞지 않습니다.");
-			 event.preventDefault(); // 자식 하나만 영향
-
-			 // event.stopPropagation(); 부모까지 영향 미치지 않고 그 외 자식만 영향
-			return false;
-		}else{
-
-			document.getElementById('frm').submit();
-		}
-
-
-
-
-
-
-
-  	}
-
-  	function setdataform(){
-
-  		var form = $('#surveyDataForm')[0];
-  		var dataform = new FormData(form);
-
-
-
-  		$.ajax({
-  		url:'/survey/set.do' ,
-  		method:'POST',
-  		data: dataform,
-  		dataType: 'html',
-  		processData : false,
-        contentType : false,
-        cache : false,
-  		success:function(result){
-  			if(result=="nameEmpty"){alert('제목을 입력해 주세요.'); return false;}
-  			if(result=="nameLarge"){alert('제목이 너무 길어요. 15자까지 작성 가능합니다.');  return false;}
-  			if(result=="noCode"){alert('익명 혹은 기명을 선택해 주세요.');  return false;};
-  			if(result=="contentLarge"){alert('부가 설명이 너무 길어요. 150자 내로 입력 가능합니다.');  return false;}
-  			if(result=="dateEmpty"){alert('날짜를 선택해 주세요.'); return false;}
-  			if(result=="datemissmatch"){alert('날짜 조건이 알맞지 않습니다.'); return false;}
-  			else{alert("등록 성공. 관리 페이지로 이동합니다.");location.href="/survey/surveyinsert.do?surveyseq="+result;
-		};
-
-
-  		}
-
-
-
-
-  		});
-
-  	}
-
-  	function reset_btn(){
-  		$('.searchRangeAll').empty();
-  		html='';
-  		html +=`<div class="searchRange"><b>평가 시작 시간: </b>`;
-		html +=`<input type="date" name="surveyStartDateLeft" id="selectedDate">
-				<input type="date" name="surveyStartDateRight" id="selectedDate">`;
-
-		html +=`	<select name="anonyMityCheckCode">
-					<option value="30005">전체</option>
-					<option value="20002">기명</option>
-					<option value="20001">익명</option>
-					</select>
-				<select name="selection">
-
-				<option value="30005">전체</option>
-				<option value="30004">알림 발송 완료</option>
-				<option value="30003">매핑 완료</option>
-				<option value="30002">평가지 등록 완료</option>
-				<option value="30001">작성 중</option>
-				</select> </div>`;
-
-		html +=`<div class="input-group" style="width: 400px; right: 50px;">
-				<input type="text" class="form-control" id="selectedKeyword" placeholder="search" name="keyword" aria-describedby="button-addon2">
-				<input type="hidden" name="pageNo" value="1">
-				<input type="submit" class="btn btn-outline-secondary"
-					id="button-addon2" value="검색"> <input type="button" style="margin-left:10px;"
-					class="btn btn-outline-secondary" onclick="reset_btn()" value="초기화">
-				</div>
-				</div>`;
-  		$('.searchRangeAll').append(html);
-
-  	}
 
 
 </script>

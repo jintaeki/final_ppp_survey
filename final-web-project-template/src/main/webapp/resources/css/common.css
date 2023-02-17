@@ -10,6 +10,11 @@ font-family: "segoe";
 * {
    box-sizing: border-box;
 }
+.forContent{
+	display:flex;
+	margin-left: 20px;
+	font-size:15px;
+}
 
 //추가
 label {

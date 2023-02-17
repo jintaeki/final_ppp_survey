@@ -4,15 +4,15 @@ import java.sql.Date;
 
 public class DTO_for_json2 {
 	// 프로젝트 투입 이력
-	private long participationEmployeeId;
-	private long projectId;
+	private String participationEmployeeId;
+	private String projectId;
 	private Date projectStartDate;
 	private Date projectClosedDate;
 	
-	public long getParticipationEmployeeId() {
+	public String getParticipationEmployeeId() {
 		return participationEmployeeId;
 	}
-	public long getProjectId() {
+	public String getProjectId() {
 		return projectId;
 	}
 	public Date getProjectStartDate() {
@@ -21,10 +21,10 @@ public class DTO_for_json2 {
 	public Date getProjectClosedDate() {
 		return projectClosedDate;
 	}
-	public void setParticipationEmployeeId(long participationEmployeeId) {
-		this.participationEmployeeId = participationEmployeeId;
+	public void setParticipationEmployeeId(String string) {
+		this.participationEmployeeId = string;
 	}
-	public void setProjectId(long projectId) {
+	public void setProjectId(String projectId) {
 		this.projectId = projectId;
 	}
 	public void setProjectStartDate(Date projectStartDate) {

@@ -3,62 +3,8 @@
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/resources/css/mapping_view.css" />
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/mappingview.js"></script>
 <script>
-
-var surveySeq="";
-var raterId="";
-
-$(document).ready(function() {
-    $('#popup').on('shown.bs.modal', function(event) {
-        surveySeq = $(event.relatedTarget).data('surveyseq');
-        raterId = $(event.relatedTarget).data('raterid');
-        console.log(surveySeq);
-    });
-});
-
-function popup(){
-   var month = $('#month').val();
-
-   let popUrl ="/mapping/popup.do?pageNo=1&surveySeq="+surveySeq+"&raterId="+raterId
-            +"&month="+month+"&keyword=&keyword2=&selection=60004&selection2=60004&selectGD=60004";
-   let popOption = "width=1000, height=820, left=370, top=100";
-   window.open(popUrl, "다면평가 대상 추가", popOption);
-}
-
-function mapInsert(surveySeq){
-
-   let popUrl ="/mapping/another.do?surveySeq="+surveySeq
-            +"&keyword=&keyword2=&selection=60004&selection2=60004&selectGD=60004";
-   let popOption = "width=1000, height=820, left=370, top=100";
-   window.open(popUrl, "다면평가 대상 추가", popOption);
-}
-
-
-function map_delete(surveySeq, raterId, appraiseeId){
-   if(confirm("삭제를 하시겠습니까?")){
-      var submitObj = new Object();
-      submitObj.surveySeq= surveySeq;
-      submitObj.raterId= raterId;
-      submitObj.appraiseeId= appraiseeId;
-      $.ajax({
-         url: "deleteMapping.do",
-          type: "POST",
-          contentType: "application/json;charset=UTF-8",
-          data:JSON.stringify(submitObj),
-          dataType : "json"
-          })
-          .done(function(resMap) {
-             alert(resMap.msg);
-             window.location.reload();
-          })
-          .fail(function(e) {
-              alert("삭제를 실패하였습니다.");
-          })
-          .always(function() {
-          });
-   };
-}
-
 function reset_btn_mapping_pop(surveySeq, month, number){
     $('.searchRangeAll').empty();
     html='';
@@ -86,6 +32,7 @@ function reset_btn_mapping_pop(surveySeq, month, number){
           <c:forEach items="${appraiseeDepartment}" var="adp">
            <option value="${adp.departmentId}">${adp.departmentName}</option>
         </c:forEach>
+
        </select>
 
        <input type="text" class="form-control" id="selectedKeyword" placeholder="피평가자 이름 검색창" name="keyword2" aria-describedby="button-addon2">
@@ -98,16 +45,11 @@ function reset_btn_mapping_pop(surveySeq, month, number){
           id="button-addon2" value="검색"> `;
        html+='<input type="button" style="margin-left:10px;" class="btn btn-outline-secondary" onclick="reset_btn_mapping_pop('+surveySeq+','+month+','+number+')" value="초기화"></div>';
     $('.searchRangeAll').append(html);
-
  }
-
-</script>
+ </script>
 
    <div class="card">
          <div class="forshadowing">
-
-
-
                <div class="hmenu">
                   <div class="survey_list_form_upper_dv">
                      <form action="<c:url value='/mapping/set.do'/>" method="POST"
@@ -152,7 +94,7 @@ function reset_btn_mapping_pop(surveySeq, month, number){
                               </c:forEach>
                         </select>
                         <input type="text" class="form-control" id="selectedKeyword" placeholder="피평가자 이름 검색창"
-                                 name="keyword2" value="${pagingdto.keyword2}" aria-describedby="button-addon2">
+                               name="keyword2" value="${pagingdto.keyword2}" aria-describedby="button-addon2">
                         <input type="hidden" name="pageNo" value="1">
                         <input type="hidden" name="surveySeq" value="${pagingdto.surveySeq}">
                         <input type="hidden" name="month" value="${pagingdto.month}">
@@ -166,8 +108,8 @@ function reset_btn_mapping_pop(surveySeq, month, number){
 
                   </div>
                </div>
-               <div class="col-12"><h3 style="text-align:left;"><b><${surveyInfo.surveyName}> 매핑 목록</b></h3></div>
 
+               <div class="col-12"><h3 style="text-align:left;"><b><${surveyInfo.surveyName}> 매핑 목록</b></h3></div>
                <table class="table table-sm table-striped table-bordered" id="mapTb">
                   <thead>
                      <tr>
@@ -188,8 +130,7 @@ function reset_btn_mapping_pop(surveySeq, month, number){
                            <c:forEach var="mapping" items="${mappingList}">
                               <tr id="${mapping.raterId}">
                                  <td>${mapping.gradeName}</td>
-                                 <td><button type="button" id="get_mapping" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem;
-                                           --bs-btn-font-size: .5rem; line-height: 1; font-size: 1rem;"
+                                 <td><button type="button" id="get_mapping" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .5rem; line-height: 1; font-size: 1rem;"
                                        class="btn btn-link" data-toggle="modal"
                                        data-target="#popup" data-surveyseq="${mapping.surveySeq}"
                                        data-raterid="${mapping.raterId}">
@@ -197,13 +138,14 @@ function reset_btn_mapping_pop(surveySeq, month, number){
                                  <td>${mapping.appraiseeName}</td>
                                  <td>
                                     <c:if test="${stateCode ne 30004}">
-                                       <button id="map_delete" border-radius: 35em;"
+
+                                       <button id="map_delete" style="border-radius: 35em;"
                                        onclick="map_delete('${mapping.surveySeq}', '${mapping.raterId}', '${mapping.appraiseeId}');" value="삭제">
                                           <i class="fas fa-xmark"></i>
                                        </button>
                                      </c:if>
                                      <c:if test="${stateCode eq 30004}">
-                                       삭제 불가
+                                     	 삭제 불가
                                      </c:if>
                                  </td>
                               </tr>
@@ -217,32 +159,32 @@ function reset_btn_mapping_pop(surveySeq, month, number){
                         <div>
                            <c:if test="${pagingdto.groupNo>1}">
                               <a class="btn btn-outline-secondary"
-                                 href="set.do?pageNo=${pagingdto.startPageNo-1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}=keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">이전</a>
+                                 href="set.do?pageNo=${pagingdto.startPageNo-1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">이전</a>
                            </c:if>
                            <c:forEach var="i" begin="${pagingdto.startPageNo}"
                               end="${pagingdto.endPageNo}">
                               <c:if test="${pagingdto.pageNo != i}">
                                  <a class="btn btn-outline-secondary"
-                                    href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}=keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
+                                    href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
                               </c:if>
                               <c:if test="${pagingdto.pageNo == i}">
                                  <a class="btn btn-secondary"
-                                    href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}=keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
+                                    href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
                               </c:if>
                            </c:forEach>
                            <c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
                               <a class="btn btn-outline-secondary"
-                                 href="set.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}=keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">다음</a>
+                                 href="set.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}&keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">다음</a>
                            </c:if>
                         </div>
                         <div style="float: right;">
                            <button type="button" id="map_insert" class="btn btn-outline-primary" onclick="mapInsert('${surveySeq}')">
-                              조건과 관계없이 추가
+                             	 조건과 관계없이 추가
                            </button>
                         </div>
                      </td>
                   </tr>
-                 </table>
+               </table>
                </table>
          </div>
       </div>

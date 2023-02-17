@@ -488,7 +488,7 @@ public class SurveyController {
 			 HttpSession session, Model model) {
 
 		model.addAttribute("commonCodeList", commonCodeService.selectStateCode());
-
+		model.addAttribute("commonDateList", commonCodeService.selectDateCode());
 		try {
 
 			List<SurveyListDTO> surveylist = null;
@@ -648,7 +648,7 @@ public class SurveyController {
 		surveyService.sendReEmail(surveySeq, deliveryContent);
 		surveyService.sendReSMS(surveySeq, deliveryContent);;
 
-		return "redirect:/survey/evaluatesearch/"+surveySeq;
+		return "redirect:/survey/evaluatesearch.do/"+surveySeq;
 	}
 
 

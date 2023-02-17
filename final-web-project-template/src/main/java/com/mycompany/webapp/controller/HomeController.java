@@ -1,10 +1,15 @@
 package com.mycompany.webapp.controller;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.NoSuchFileException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -25,18 +30,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.mycompany.webapp.dto.SurveyListDTO;
 import com.mycompany.webapp.dto.SurveyResultDTO;
@@ -47,8 +48,6 @@ import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.ProjectHistoryDTO;
 import com.mycompany.webapp.service.ILoginCheckService;
 import com.mycompany.webapp.service.json.IJsonService;
-
-
 
 @Controller
 public class HomeController {
@@ -70,6 +69,63 @@ public class HomeController {
 		model.addAttribute("UCD",UCD);
 		return "login";
 	}
+
+	@ResponseBody
+    @RequestMapping(value = "/excelUploadOCD.do", method = RequestMethod.POST)
+        public boolean excelUploadOCD(MultipartFile testFile, MultipartHttpServletRequest request) throws  Exception{
+
+        System.out.println("업로드 진행");
+
+        MultipartFile excelFile = request.getFile("excelFile");
+
+        if(excelFile == null || excelFile.isEmpty()) {
+            throw new RuntimeException("엑셀파일을 선택해 주세요");
+        }
+
+        File destFile = new File("C:\\upload\\"+excelFile.getOriginalFilename());
+
+        try {
+            //내가 설정한 위치에 내가 올린 파일을 만들고
+            excelFile.transferTo(destFile);
+        }catch(Exception e) {
+            throw new RuntimeException(e.getMessage(),e);
+        }
+
+        //업로드를 진행하고 다시 지우기
+        loginCheckService.excelUploadOCD(destFile);
+
+        destFile.delete();
+
+        return true;
+    }
+
+	@ResponseBody
+    @RequestMapping(value = "/excelUploadPH.do", method = RequestMethod.POST)
+        public boolean excelUploadPH(MultipartFile testFile, MultipartHttpServletRequest request) throws  Exception{
+
+        MultipartFile excelFile = request.getFile("excelFile");
+
+        if(excelFile == null || excelFile.isEmpty()) {
+            throw new RuntimeException("엑셀파일을 선택해 주세요");
+        }
+
+        File destFile = new File("C:\\upload\\"+excelFile.getOriginalFilename());
+
+        try {
+            //내가 설정한 위치에 내가 올린 파일을 만들고
+            excelFile.transferTo(destFile);
+        }catch(Exception e) {
+            throw new RuntimeException(e.getMessage(),e);
+        }
+
+        //업로드를 진행하고 다시 지우기
+        loginCheckService.excelUploadPH(destFile);
+
+        destFile.delete();
+
+        return true;
+    }
+
 
 
 	@GetMapping("/excelDownload.do/{fileType}")
@@ -160,107 +216,107 @@ public class HomeController {
 
 
 
-	@RequestMapping("/survey/fileuploadprojecthistory.do")
-	@ResponseBody
-	public String jsonFileUploadProjectHistory (@RequestParam(value="projecthistoryjson") MultipartFile jsonFile ) {
-		JSONObject jsonObj = null;
-		byte[] jsonData= null ;
-		DTO_for_json2 dfj = new DTO_for_json2();
-		JSONParser parser = new JSONParser();
-		Object obj  ;
-		JSONArray jsonArr = new JSONArray();
-		String jsonstr;
+//	@RequestMapping("/survey/fileuploadprojecthistory.do")
+//	@ResponseBody
+//	public String jsonFileUploadProjectHistory (@RequestParam(value="projecthistoryjson") MultipartFile jsonFile ) {
+//		JSONObject jsonObj = null;
+//		byte[] jsonData= null ;
+//		DTO_for_json2 dfj = new DTO_for_json2();
+//		JSONParser parser = new JSONParser();
+//		Object obj  ;
+//		JSONArray jsonArr = new JSONArray();
+//		String jsonstr;
+//
+//		if(jsonFile.getContentType().equals("application/json")) {
+//
+//			try {
+//				jsonData = jsonFile.getBytes();
+//				jsonstr = new String(jsonData);
+//				obj = parser.parse(jsonstr);
+//				jsonArr = (JSONArray) obj;
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//
+//
+//
+//			//JSON 읽어와서 쿼리에 담기위한 사전작업
+//
+//			JSONObject checkKey=(JSONObject)jsonArr.get(0);
+//			if(checkKey.containsKey("PROJECT_ID")&&checkKey.containsKey("PARTICIPATION_EMPLOYEE_ID")){
+//				if(jsonArr.size()>0) {
+//					for(int i=0; i<jsonArr.size(); i++) {
+//						jsonObj = (JSONObject)jsonArr.get(i);
+//						//jsonObj.get("projectid") for문 안에 VO 객체 set 메소드로 값을 설정하고 mapper에 insert하는 방식
+//						dfj.setParticipationEmployeeId((long) jsonObj.get("PARTICIPATION_EMPLOYEE_ID"));
+//						dfj.setProjectId((long) jsonObj.get("PROJECT_ID"));
+//						//ijr.insert_into_pjhistorys(dfj);
+//					logger.info("입력 성공");
+//					}
+//				}
+//
+//				return "2";
+//			}else {
+//				return "1";
+//			}
+//
+//		}
+//		else {
+//			return "0";
+//		}
+//
+//	}
 
-		if(jsonFile.getContentType().equals("application/json")) {
 
-			try {
-				jsonData = jsonFile.getBytes();
-				jsonstr = new String(jsonData);
-				obj = parser.parse(jsonstr);
-				jsonArr = (JSONArray) obj;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-
-
-			//JSON 읽어와서 쿼리에 담기위한 사전작업
-
-			JSONObject checkKey=(JSONObject)jsonArr.get(0);
-			if(checkKey.containsKey("PROJECT_ID")&&checkKey.containsKey("PARTICIPATION_EMPLOYEE_ID")){
-				if(jsonArr.size()>0) {
-					for(int i=0; i<jsonArr.size(); i++) {
-						jsonObj = (JSONObject)jsonArr.get(i);
-						//jsonObj.get("projectid") for문 안에 VO 객체 set 메소드로 값을 설정하고 mapper에 insert하는 방식
-						dfj.setParticipationEmployeeId((long) jsonObj.get("PARTICIPATION_EMPLOYEE_ID"));
-						dfj.setProjectId((long) jsonObj.get("PROJECT_ID"));
-						//ijr.insert_into_pjhistorys(dfj);
-					logger.info("입력 성공");
-					}
-				}
-
-				return "2";
-			}else {
-				return "1";
-			}
-
-		}
-		else {
-			return "0";
-		}
-
-	}
-
-
-	@RequestMapping("/survey/fileUploadOrganization.do")
-	@ResponseBody
-	public String jsonFileUploadOrganization (@RequestParam(value="organizationjson") MultipartFile jsonFile ) {
-		System.out.println("파일타입:"+jsonFile.getContentType());
-
-		String fileType = jsonFile.getContentType();
-		int index = fileType.length();
-		System.out.println("길이:"+ index);
-		System.out.println("타입:"+fileType.substring(index-3));
-		if(fileType.equals("application/json")||fileType.substring(index-4).equals("xlsx")) {
-			System.out.println("들어옴");
-			JSONObject jsonObj = null;
-			byte[] jsonData= null ;
-			DTO_for_json dfj = new DTO_for_json();
-			JSONParser parser = new JSONParser();
-			Object obj  ;
-			JSONArray jsonArr = new JSONArray();
-			String jsonstr;
-			try {
-				jsonData = jsonFile.getBytes();
-				jsonstr = new String(jsonData);
-				obj = parser.parse(jsonstr);
-				jsonArr = (JSONArray) obj;
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			//JSON 읽어와서 쿼리에 담기위한 사전작업
-			JSONObject checkKey=(JSONObject)jsonArr.get(0);
-			if(checkKey.containsKey("HIGH_DEPARTMENT_ID")&&checkKey.containsKey("DEPARTMENT_ID")&&checkKey.containsKey("DEPARTMENT_NAME")){
-				if(jsonArr.size()>0) {
-					for(int i=0; i<jsonArr.size(); i++) {
-						jsonObj = (JSONObject)jsonArr.get(i);
-						dfj.setHighDepartmentId((long) jsonObj.get("HIGH_DEPARTMENT_ID"));
-						dfj.setDepartmentId((long) jsonObj.get("DEPARTMENT_ID"));
-						dfj.setDepartmentName((String) jsonObj.get("DEPARTMENT_NAME"));
-						ijr.insert_into_groupinfo(dfj);
-					}
-				}
-				return "2";
-			}else {
-				return "1";
-
-			}
-		}else {
-			return "0";
-
-		}
-	}
+//	@RequestMapping("/survey/fileUploadOrganization.do")
+//	@ResponseBody
+//	public String jsonFileUploadOrganization (@RequestParam(value="organizationjson") MultipartFile jsonFile ) {
+//		System.out.println("파일타입:"+jsonFile.getContentType());
+//
+//		String fileType = jsonFile.getContentType();
+//		int index = fileType.length();
+//		System.out.println("길이:"+ index);
+//		System.out.println("타입:"+fileType.substring(index-3));
+//		if(fileType.equals("application/json")||fileType.substring(index-4).equals("xlsx")) {
+//			System.out.println("들어옴");
+//			JSONObject jsonObj = null;
+//			byte[] jsonData= null ;
+//			DTO_for_json dfj = new DTO_for_json();
+//			JSONParser parser = new JSONParser();
+//			Object obj  ;
+//			JSONArray jsonArr = new JSONArray();
+//			String jsonstr;
+//			try {
+//				jsonData = jsonFile.getBytes();
+//				jsonstr = new String(jsonData);
+//				obj = parser.parse(jsonstr);
+//				jsonArr = (JSONArray) obj;
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//
+//			//JSON 읽어와서 쿼리에 담기위한 사전작업
+//			JSONObject checkKey=(JSONObject)jsonArr.get(0);
+//			if(checkKey.containsKey("HIGH_DEPARTMENT_ID")&&checkKey.containsKey("DEPARTMENT_ID")&&checkKey.containsKey("DEPARTMENT_NAME")){
+//				if(jsonArr.size()>0) {
+//					for(int i=0; i<jsonArr.size(); i++) {
+//						jsonObj = (JSONObject)jsonArr.get(i);
+//						dfj.setHighDepartmentId((long) jsonObj.get("HIGH_DEPARTMENT_ID"));
+//						dfj.setDepartmentId((long) jsonObj.get("DEPARTMENT_ID"));
+//						dfj.setDepartmentName((String) jsonObj.get("DEPARTMENT_NAME"));
+//						ijr.insert_into_groupinfo(dfj);
+//					}
+//				}
+//				return "2";
+//			}else {
+//				return "1";
+//
+//			}
+//		}else {
+//			return "0";
+//
+//		}
+//	}
 
 	@RequestMapping("/survey.do")
 	public String tosurvey() {
@@ -270,11 +326,9 @@ public class HomeController {
 
 
 
-	@RequestMapping("/logincheck.do")
+	@RequestMapping(value="/logincheck.do",produces = "application/text; charset=UTF-8")
 	@ResponseBody
 	public String loginAfter(@ModelAttribute("UCD")  @Valid UserCheckDTO UCD,
-
-
 							  HttpSession session, Model model) {
 		if(UCD.getPassword().equals("")) {
 			return "noPassword";
@@ -307,7 +361,7 @@ public class HomeController {
 
 				session.setAttribute("allUser",allUser);
 
-				return "successRater";
+				return check.getRaterName();
 			}else {
 				logger.info("관리자 진입");
 				session.setAttribute("checked", check);
@@ -461,13 +515,139 @@ public class HomeController {
 			return result;
 		}
 
-
-
-
-
-
 	}
 
+
+	@RequestMapping(value = "/survey/excelUpload_project.do", method = RequestMethod.POST)
+	public String excelUploadAjax(MultipartHttpServletRequest request) throws Exception{
+	    Map<String, String> result = new HashMap<String, String>();
+	    MultipartFile excelFile = request.getFile("excelFile");
+	    System.out.println("파일이름:"+excelFile.getContentType());
+	    try { 
+	        if(excelFile != null || !excelFile.isEmpty()) {
+	        	System.out.println("hahah");
+	            String originalFileNm = ""; 
+	            String fileNm = "";  // 파일명
+	            String fileExt = ""; // 확장자명
+	            
+	            // jsp에서 hidden으로 받아온 날짜 data
+//	            String presentDate = request.getParameter("presentDate"); 
+//	            presentDate = presentDate.substring(0,4)+"-"+presentDate.substring(4,6)+"-"+presentDate.substring(6,8);
+	           
+	            // 업로드 파일 위치 지정
+	            String fileDir = "C:\\"+excelFile.getOriginalFilename();
+	            fileDir = ( fileDir).replaceAll("\n", "").replaceAll("\r", "").replaceAll("&", "");
+	            String uploadDir = fileDir + "xxx" + File.separator;
+	            
+	            fileExt = excelFile.getOriginalFilename();
+//	            fileNm = CleanUtil.cleanFileNm(fileNm);
+//	            fileExt = CleanUtil.allowExt(fileNm);
+	            
+	            if(fileExt == null || fileExt.equals("")) {
+	            	System.out.println("if뿅");
+	            	
+	            	result.put("code", "1");
+	                result.put("msg", "허용되지 않는 확장자명");
+	            }else {
+	            	System.out.println("뿅");
+	            	System.out.println(fileExt);
+	            	File destFile = new File(fileExt);
+	                excelFile.transferTo(destFile); // 엑셀파일 생성
+	             // 엑셀 cell 1개 데이터 가져오기
+//	                String excelDate = ijr.excelDate(destFile); 
+//	                if(!excelDate.equals(presentDate)) {
+//	                    result.put("code", "2");
+//	                    result.put("msg", "엑셀 날짜와 업로드 날짜 불일치");
+//	                }
+	                
+	                    ijr.excelUpload_project(destFile); // service단 호출
+	                    result.put("code", "3");
+	                    result.put("msg", "업도르 성공");
+	                
+	                destFile.delete(); // 업로드된 엑셀파일 삭제
+	            }
+	        }else {
+	            result.put("code", "4");
+	            result.put("msg", "업로드 실패");
+	        }
+	    }catch(FileAlreadyExistsException e) {
+	        System.out.println("FileAlreadyExistsException");
+	    }catch(NoSuchFileException e) {
+	        System.out.println("NoSuchFileException");
+	    }catch(FileNotFoundException e) {
+	        System.out.println("FileNotFoundException");
+	    }catch(IOException e) {
+	        System.out.println("IOException");
+	    } 
+	    return "redirect:/survey/surveysearch.do";
+	}
+
+	
+	@RequestMapping(value = "/survey/excelUpload_OC.do", method = RequestMethod.POST)
+	public String excelUploadAjaxOC(MultipartHttpServletRequest request) throws Exception{
+	    Map<String, String> result = new HashMap<String, String>();
+	    MultipartFile excelFile = request.getFile("excelFile");
+	    System.out.println("파일이름:"+excelFile.getContentType());
+	    try { 
+	        if(excelFile != null || !excelFile.isEmpty()) {
+	        	System.out.println("hahah");
+	            String originalFileNm = ""; 
+	            String fileNm = "";  // 파일명
+	            String fileExt = ""; // 확장자명
+	            
+	            // jsp에서 hidden으로 받아온 날짜 data
+//	            String presentDate = request.getParameter("presentDate"); 
+//	            presentDate = presentDate.substring(0,4)+"-"+presentDate.substring(4,6)+"-"+presentDate.substring(6,8);
+	           
+	            // 업로드 파일 위치 지정
+	            String fileDir = "C:\\"+excelFile.getOriginalFilename();
+	            fileDir = ( fileDir).replaceAll("\n", "").replaceAll("\r", "").replaceAll("&", "");
+	            String uploadDir = fileDir + "xxx" + File.separator;
+	            
+	            fileExt = excelFile.getOriginalFilename();
+//	            fileNm = CleanUtil.cleanFileNm(fileNm);
+//	            fileExt = CleanUtil.allowExt(fileNm);
+	            
+	            if(fileExt == null || fileExt.equals("")) {
+	            	System.out.println("if뿅");
+	            	
+	            	result.put("code", "1");
+	                result.put("msg", "허용되지 않는 확장자명");
+	            }else {
+	            	System.out.println("뿅");
+	            	System.out.println(fileExt);
+	            	File destFile = new File(fileExt);
+	                excelFile.transferTo(destFile); // 엑셀파일 생성
+	             // 엑셀 cell 1개 데이터 가져오기
+//	                String excelDate = ijr.excelDate(destFile); 
+//	                if(!excelDate.equals(presentDate)) {
+//	                    result.put("code", "2");
+//	                    result.put("msg", "엑셀 날짜와 업로드 날짜 불일치");
+//	                }
+	                
+	                    ijr.excelUpload_OC(destFile); // service단 호출
+	                    result.put("code", "3");
+	                    result.put("msg", "업도르 성공");
+	                
+	                destFile.delete(); // 업로드된 엑셀파일 삭제
+	            }
+	        }else {
+	            result.put("code", "4");
+	            result.put("msg", "업로드 실패");
+	        }
+	    }catch(FileAlreadyExistsException e) {
+	        System.out.println("FileAlreadyExistsException");
+	    }catch(NoSuchFileException e) {
+	        System.out.println("NoSuchFileException");
+	    }catch(FileNotFoundException e) {
+	        System.out.println("FileNotFoundException");
+	    }catch(IOException e) {
+	        System.out.println("IOException");
+	    } 
+	    return "redirect:/survey/surveysearch.do";
+	}
+	
+	
 }
 
 

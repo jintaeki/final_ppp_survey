@@ -20,14 +20,14 @@
 							<c:forEach items="${personalStats}" var="PS">
 								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">점수</div></div>
 								<div class="col-2"><div class="infodiv">${PS.score}</div></div>
-								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">백분율|순위</div></div>
-								<div class="col-2"><div class="infodiv">상위  ${PS.grd}% | ${PS.rank}/${PS.tot}</div></div>
+								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">백분율, 순위</div></div>
+								<div class="col-2"><div class="infodiv">상위  ${PS.grd}% | 총 ${PS.tot}명 중 ${PS.rank}등</div></div>
 								<div class="input-group-text col-1" id="basic-addon1"><div style="margin:auto;">설문 내<br>최소점</div></div>
 								<div class="col-2"><div class="infodiv">${PS.min}</div></div>
-								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">설문 평균 <br>점수</div></div>
-								<div class="col-2"><div class="infodiv">${PS.avg}</div></div>
 								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">설문 내<br>최고점</div></div>
 								<div class="col-2"><div class="infodiv">${PS.max}</div></div>
+								<div class="input-group-text col-1" id="basic-addon1"><div class="infodiv">설문 평균 <br>점수</div></div>
+								<div class="col-2"><div class="infodiv">${PS.avg}</div></div>
 							</c:forEach>
 
 						</div>
@@ -89,7 +89,7 @@
 									<td>${SRL.raterGrade}</td>
 									<td>${SRL.questionType}</td>
 									<td>${SRL.questionContent}</td>
-									<td>${SRL.aNContent}</td>
+									<td>${SRL.answerContent}</td>
 									<td>${SRL.itemScore}</td>
 								</tr>
 							</c:forEach>
@@ -109,7 +109,12 @@
 									<td>${MRL.raterGrade}</td>
 									<td>${MRL.questionType}</td>
 									<td>${MRL.questionContent}</td>
-									<td>${MRL.itemContent}</td>
+									<c:if test="${MRL.itemContent eq '기타'}">
+										<td>${MRL.answerContent}</td>
+									</c:if>
+									<c:if test="${MRL.itemContent ne '기타'}">
+										<td>${MRL.itemContent}</td>
+									</c:if>
 									<td>${MRL.itemScore}</td>
 								</tr>
 							</c:forEach>

@@ -114,7 +114,7 @@
                 'localhost/manyface' AS SURVEY_LINK,
                 SYSDATE AS DELIVERY_DATE,
                 'N' AS DELIVERY_YN,
-                '다면평가 평가원으로 선정되셨습니다. 해당 주소로 들어가 로그인하여 다면 평가를 진행해주시길 바랍니다.' AS DELIVERY_CONTENT,
+                '이메일 생성' AS DELIVERY_CONTENT,
                 MAPPING.SURVEY_SEQ,
                 SYSDATE AS REG_DATE,
                 SYSDATE AS UPDATE_DATE
@@ -164,7 +164,7 @@
                 'localhost/manyface' AS SURVEY_LINK,
                 SYSDATE AS DELIVERY_DATE,
                 'N' AS DELIVERY_YN,
-                '다면평가 평가원으로 선정되셨습니다. 해당 주소로 들어가 로그인하여 다면 평가를 진행해주시길 바랍니다.' AS DELIVERY_CONTENT,
+                'sms 설정' AS DELIVERY_CONTENT,
                 MAPPING.SURVEY_SEQ,
                 SYSDATE AS REG_DATE,
                 SYSDATE AS UPDATE_DATE
