@@ -59,13 +59,13 @@
                   </div>
                </div>
 
-         <div class="col-12" style=""><h3 style="text-align:left;"><b>${surveyInfo.surveyName} 피평가자 결과 목록</b> 
-         	<div class="btn-group" style="margin-left: 715px; border-radius: 10px; height: 40px; border: 2px solid #e8e8e8;">
+         <div class="col-12" style=""><h3 style="text-align:left;"><b>${surveyInfo.surveyName} 피평가자 결과 목록</b>
+         	<div class="btn-group" style="margin-left: 790px; border-radius: 10px; height: 40px; border: 2px solid #e8e8e8;">
   				<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
     				평가 참여 여부
   				</button>
   				<div class="dropdown-menu" style="width:170px">
-  					<c:forEach items="${completeSurvey}" var="CS">  				
+  					<c:forEach items="${completeSurvey}" var="CS">
     					<a style="color:black;" href="<c:url value='/survey/evaluatesearch.do/${CS.surveySeq}'/>">${CS.surveyName}<br></a>
   					</c:forEach>
   				</div>
@@ -162,7 +162,7 @@
 function reset_btn_evaluate(){
 	$('.searchRangeAll').empty();
 	html='';
-	
+
 	html +='<div class="searchRange">';
     html +='<select class="subSelection" name="selection2">';
     html += `<option value="">직급</option>
@@ -195,8 +195,8 @@ function reset_btn_evaluate(){
         </div>`;
 	$('.searchRangeAll').append(html);
 
-} 
-   
+}
+
 </script>
 
 

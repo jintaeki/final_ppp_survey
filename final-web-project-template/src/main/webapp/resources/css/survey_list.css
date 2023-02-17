@@ -10,6 +10,13 @@ color:green;
 .hmenu{
 
 }
+#menu_list {
+color:#007bff;
+}
+.menu_a {
+color:black;
+}
+
 
 .copySurvey_btn:hover #copySurvey_btn_plus{
     display: block;

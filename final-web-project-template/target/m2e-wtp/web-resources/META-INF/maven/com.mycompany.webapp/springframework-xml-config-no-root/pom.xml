@@ -34,7 +34,7 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
-		
+
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -54,7 +54,7 @@
 			<artifactId>log4j-slf4j-impl</artifactId>
 			<version>2.17.2</version>
 		</dependency>
-					
+
 		<!-- poi -->
 		 <!-- Excel Read/Write 를 위한 Dependency 추가 -->
 	<dependency>
@@ -149,13 +149,13 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.2.1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.3.2</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
@@ -263,7 +263,7 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>2.14.1</version>
 		</dependency>
-		
+
 		<!-- json object -->
 		<dependency>
     		<groupId>net.sf.json-lib</groupId>
@@ -271,7 +271,7 @@
     		<classifier>jdk15</classifier>
     		<version>2.4</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
@@ -282,7 +282,7 @@
 			<artifactId>jackson-core-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
-		
+
 	</dependencies>
 	<build>
 		<plugins>

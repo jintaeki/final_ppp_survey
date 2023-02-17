@@ -51,7 +51,7 @@ body {
 <!-- 				</form> -->
 
 
-		
+
 
 				<form action="/excelUploadOCD.do" id="excelUploadFormOCD" name="excelUploadForm" enctype="multpart/form-data" method="post">
 					<div class="contents">
@@ -83,7 +83,7 @@ body {
 				</div>
 			</div>
 		</div><!--  모달 끝 -->
-	
+
 
 <div class="menu_profile">
 	<div style="border-bottom: 1px solid white; text-align: center;">
@@ -91,60 +91,63 @@ body {
 			src="${pageContext.request.contextPath}/resources/images/logo_img.png"
 			width="100" height="100" class="d-inline-block align-top">
 	</div>
-	<div style="text-align: center;">
+<div style="text-align: center;">
 		<br> <br>
 		<div class="menu_item" style="">
-			<a style="color:black;" href="<c:url value='/survey/surveysearch.do'/>">
+			<a class="menu_a" id="menu_list" href="<c:url value='/survey/surveysearch.do'/>">
 				목록 조회</a>
 		</div>
-		<br> <br>
+
+		<div class="menu_item"  style="">
+			<a class="menu_a" id="menu_result" href="<c:url value='/survey/surveyresultteam.do'/>">결과 통계</a>
+		</div>
+
 		<div class="menu_item" style="">
 		<div class="btn-group dropright">
-  			<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+  			<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="evaluate_result_btn"
+  				style="padding: 0px!important;">
     			피평가자 결과
   			</button>
   			<div class="dropdown-menu" style="width:170px">
-  				<c:forEach items="${completeSurvey}" var="CS">  				
+  				<c:forEach items="${completeSurvey}" var="CS">
     					<a style="color:black;" href="<c:url value='/survey/evaluatesearch.do//${CS.surveySeq}'/>">${CS.surveyName}<br></a>
   				</c:forEach>
   			</div>
+		 </div>
 		</div>
-		</div>
-		<br> <br>
+
 		<div class="menu_item" style="">
 		<div class="btn-group dropright">
-  			<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+  			<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="evaluate_message_btn"
+  			style="padding: 0px!important;">
     			평가 참여 여부
   			</button>
   			<div class="dropdown-menu" style="width:170px">
-  				<c:forEach items="${completeSurvey}" var="CS">  				
+  				<c:forEach items="${completeSurvey}" var="CS">
     					<a style="color:black;" href="<c:url value='/survey/evaluateMessage.do/${CS.surveySeq}'/>">${CS.surveyName}<br></a>
   				</c:forEach>
   			</div>
 		</div>
 		</div>
-		<br> <br>
-		<div class="menu_item" style="">
-			<a style="color:black;" href="<c:url value='/survey/surveyresultteam.do'/>">결과 통계</a>
-		</div>
-		<br> <br>
 
 		<div class="menu_item"style="height: 70px;">
 			<a data-toggle="modal" style="color:black;" data-target="#json" onclick="">프로젝트 이력 및<br>조직도 업로드</a>
 		</div>
-		<br> <br>
+
 		<c:if test="${checked ne '' }">
 		<div class="menu_item" style="">
 			<a style="color:black;" href="<c:url value='/logout.do'/>">로그아웃</a>
 		</div>
 		</c:if>
+
 		<c:if test="${checked eq '' }">
 		<div class="menu_item"style="">
 			<a style="color:black;" href="<c:url value='/login.do'/>">로그인</a>
 		</div>
 		</c:if>
-	</div>
+
 	<!--<a class="btn btn-success btn-sm" href="#">로그아웃</a> -->
+	</div>
 </div>
 
 <script src="https://malsup.github.io/jquery.form.js"></script>
@@ -290,7 +293,7 @@ function check() {
     		     console.log("요청이 보내지는가?");
     		     },
     		     success:function (result) {    //전송 성공시 실행
-    		   
+
 
 
     		        }, error:function(e) {   //실패, 에러

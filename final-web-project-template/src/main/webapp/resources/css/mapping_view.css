@@ -22,11 +22,12 @@ select{
 	margin-right: 10px;
 }
 .input-group-append{
-	margin-left:30px;
+
 }
 
 .searchRange{
 	display: flex !important;
+	margin-right:5px !important;
 }
 
 .table{

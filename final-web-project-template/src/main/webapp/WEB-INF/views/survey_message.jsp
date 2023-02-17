@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/common/headerformanager.jsp"%>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/survey_evaluate.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/evaluate_message.css"/>
 <script>
 function reset_btn_mapping_pop(surveySeq){
     $('.searchRangeAll').empty();
@@ -91,7 +91,7 @@ function reset_btn_mapping_pop(surveySeq){
                         <div class="input-group-append">
                              <input type="text" class="form-control" id="selectedKeyword" placeholder="평가자  이름 검색창"
                             name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2">
-                        <input type="hidden" name="pageNo" value="1"> 
+                        <input type="hidden" name="pageNo" value="1">
                         <input type="submit" class="btn btn-outline-secondary"
                               id="button-addon2" value="검색">
                         <input type="button"  class="btn btn-outline-secondary" onclick="reset_btn_mapping_pop(${surveySeq})" value="초기화">
@@ -101,19 +101,19 @@ function reset_btn_mapping_pop(surveySeq){
                   </div>
                </div>
          <div class="col-12" style=""><h3 style="text-align:left;"><b>${surveyInfo.surveyName} 평가자 목록</b>
-         <div class="btn-group" style="margin-left: 835px; border-radius: 10px; height: 40px; border: 2px solid #e8e8e8;">
+         <div class="btn-group" style="margin-left: 887px; border-radius: 10px; height: 40px; border: 2px solid #e8e8e8;">
   				<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
     				평가 참여 여부
   				</button>
   				<div class="dropdown-menu" style="width:170px">
-  					<c:forEach items="${completeSurvey}" var="CS">  				
+  					<c:forEach items="${completeSurvey}" var="CS">
     					<a style="color:black;" href="<c:url value='/survey/evaluateMessage.do/${CS.surveySeq}'/>">${CS.surveyName}<br></a>
   					</c:forEach>
   				</div>
 			</div>
-			</h3> 
+			</h3>
 		</div>
-         	
+
             <table class="table table-sm table-striped table-bordered">
                   <thead>
                      <tr>

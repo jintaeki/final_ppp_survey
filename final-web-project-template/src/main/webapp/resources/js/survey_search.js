@@ -98,7 +98,7 @@ function delete_mapping_btn(){
   	    	}
   	    });
   	});
-  	
+
 
   	function search(){
   		var dateleft = $('[name=surveyStartDateLeft]').val();
@@ -191,3 +191,7 @@ function delete_mapping_btn(){
   		$('.searchRangeAll').append(html);
 
   	}
+
+
+
+
