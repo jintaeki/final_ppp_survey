@@ -138,13 +138,13 @@
 	<insert id="insertExcelOCD" parameterType="com.mycompany.webapp.dto.OrganizationChartDTO">
        <foreach collection="excelContent" item="item" index="index" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
        		INTO ORGANIZATION_CHART_COPY(HIGH_DEPARTMENT_ID,DEPARTMENT_ID,DEPARTMENT_NAME,REG_DATE,UPDATE_DATE) VALUES(#{item.A},#{item.B},#{item.C},SYSDATE,SYSDATE)
+       </foreach>
        		WHERE NOT EXISTS (
                 SELECT 1
-                FROMO RGANIZATION_CHART_COPY
-                WHERE HIGH_DEPARTMENT_ID = "" AND DEPARTMENT_ID = "" AND DEPARTMENT_NAME = ""
+                FROM ORGANIZATION_CHART_COPY
+                WHERE (HIGH_DEPARTMENT_ID = ' ' AND DEPARTMENT_ID = ' ' AND DEPARTMENT_NAME = ' ')          
        <foreach collection="excelContent" item="item" index="index" separator=" " open="" close=")">
-                AND HIGH_DEPARTMENT_ID = #{item.A} AND DEPARTMENT_ID = #{item.B} AND DEPARTMENT_NAME = #{item.C}
-       </foreach>
+                OR (HIGH_DEPARTMENT_ID = #{item.A} AND DEPARTMENT_ID = #{item.B} AND DEPARTMENT_NAME = #{item.C})
        </foreach>
     </insert>
 
@@ -155,9 +155,9 @@
        		WHERE NOT EXISTS (
                 SELECT 1
                 FROM PROJECT_HISTORY_COPY
-                WHERE PROJECT_ID = "" and PARTICIPATION_EMPLOYEE_ID = ""
+                WHERE (PROJECT_ID = ' ' and PARTICIPATION_EMPLOYEE_ID = ' ')
        <foreach collection="excelContent" item="item" index="index" separator=" " open="" close=")">
-                AND PROJECT_ID = #{item.A} and PARTICIPATION_EMPLOYEE_ID = #{item.B}
+                OR (PARTICIPATION_EMPLOYEE_ID = #{item.A} AND PROJECT_ID = #{item.B})
        </foreach>
     </insert>
 </mapper>

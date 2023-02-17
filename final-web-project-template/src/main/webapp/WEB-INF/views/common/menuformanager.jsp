@@ -175,6 +175,10 @@ function checkOCD() {
 					alert("모든 데이터가 업로드 되었습니다.");
 					 $('#json').modal('hide');
 				},
+				error:function(e){
+					alert("데이터 업로드가 실패 되었습니다.");
+					 $('#json').modal('hide');
+				},
 		type:"POST"
 		};
 
@@ -200,6 +204,9 @@ function checkPH() {
 					console.log(data);
 					alert("모든 데이터가 업로드 되었습니다.");
 					 $('#json').modal('hide');
+				},
+				error:function(e){
+					alert("데이터 업로드가 실패 되었습니다.");
 				},
 		type:"POST"
 		};
