@@ -89,7 +89,7 @@ body {
 	<div style="border-bottom: 1px solid white; text-align: center;">
 		<img
 			src="${pageContext.request.contextPath}/resources/images/logo_img.png"
-			width="100" height="100" class="d-inline-block align-top">
+			width="160" height="100" class="d-inline-block align-top">
 	</div>
 <div style="text-align: center;">
 		<br> <br>
