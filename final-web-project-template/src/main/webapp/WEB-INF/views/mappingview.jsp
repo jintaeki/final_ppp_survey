@@ -93,7 +93,8 @@ function reset_btn_mapping_pop(surveySeq, month, number){
                                  </c:if>
                               </c:forEach>
                         </select>
-                        <input type="text" class="form-control" id="selectedKeyword" placeholder="피평가자 이름 검색창"
+
+                        <input type="text" class="form-control" style="margin-left:500px" id="selectedKeyword" placeholder="피평가자 이름 검색창"
                                name="keyword2" value="${pagingdto.keyword2}" aria-describedby="button-addon2">
                         <input type="hidden" name="pageNo" value="1">
                         <input type="hidden" name="surveySeq" value="${pagingdto.surveySeq}">

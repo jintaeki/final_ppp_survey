@@ -178,7 +178,7 @@
 								method="POST" class="survey_list_form" style="display: flex;">
 								<div class="searchRangeAll">
 								<div class="searchRange">
-								<b>평가 시작 시간:</b>
+								<b>평가 시작 기간:</b>
 								<input type="date" name="surveyStartDateLeft" id="selectedDate"
 									value="<fmt:formatDate value='${pagingdto.surveyStartDateLeft}' pattern='yyyy-MM-dd' />">
 								<input type="date" name="surveyStartDateRight" id="selectedDate"

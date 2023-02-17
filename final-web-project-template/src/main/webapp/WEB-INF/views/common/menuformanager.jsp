@@ -92,20 +92,25 @@ body {
 	<div style="text-align: center;">
 		<br> <br>
 		<div class="menu_item" style="">
-			<a style="color:black;" href="<c:url value='/survey/surveysearch.do'/>">
+			<a class="menu_a" id="menu_list" href="<c:url value='/survey/surveysearch.do'/>">
 				목록 조회</a>
 		</div>
 		<br> <br>
 
 
-		<div class="menu_item" style="">
-			<a style="color:black;" href="<c:url value='/survey/surveyresultteam.do'/>">결과 통계</a>
+		<div class="menu_item"  style="">
+			<a class="menu_a" id="menu_result" href="<c:url value='/survey/surveyresultteam.do'/>">결과 통계</a>
 		</div>
 		<br> <br>
 
 		<div class="menu_item"style="height: 70px;">
 			<a data-toggle="modal" style="color:black;" data-target="#json" onclick="">프로젝트 이력 및<br>조직도 업로드</a>
 		</div>
+
+		<div class="menu_item"  style="">
+			<a class="menu_a" id="evaluatelist" href="<c:url value='/survey/evaluatesearch.do/'/>">평가 대상자 목록</a>
+		</div>
+
 		<br> <br>
 		<c:if test="${checked ne '' }">
 		<div class="menu_item" style="">
