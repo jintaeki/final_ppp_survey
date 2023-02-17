@@ -34,7 +34,7 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
-		
+
 		<!-- AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -54,14 +54,59 @@
 			<artifactId>log4j-slf4j-impl</artifactId>
 			<version>2.17.2</version>
 		</dependency>
-			
+
 		<!-- poi -->
-		<dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
-            <version>5.0.0</version>
-        </dependency>	
-	
+	<!-- 엑셀다운로드 -->
+
+    <dependency>
+
+        <groupId>org.apache.poi</groupId>
+
+        <artifactId>poi</artifactId>
+
+        <version>3.17</version>
+
+    </dependency>
+
+
+
+    <dependency>
+
+        <groupId>org.apache.poi</groupId>
+
+        <artifactId>poi-ooxml</artifactId>
+
+        <version>3.17</version>
+
+    </dependency>
+
+
+
+
+
+        <dependency>
+
+            <groupId>org.apache.commons</groupId>
+
+            <artifactId>commons-lang3</artifactId>
+
+            <version>3.3.2</version>
+
+            <!--$NO-MVN-MAN-VER$-->
+
+        </dependency>
+
+
+
+        <dependency>
+
+            <groupId>commons-io</groupId>
+
+            <artifactId>commons-io</artifactId>
+
+            <version>2.5</version>
+
+        </dependency>
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -220,7 +265,7 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>2.14.1</version>
 		</dependency>
-		
+
 		<!-- json object -->
 		<dependency>
     		<groupId>net.sf.json-lib</groupId>
@@ -228,7 +273,7 @@
     		<classifier>jdk15</classifier>
     		<version>2.4</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
@@ -239,7 +284,7 @@
 			<artifactId>jackson-core-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
-		
+
 	</dependencies>
 	<build>
 		<plugins>

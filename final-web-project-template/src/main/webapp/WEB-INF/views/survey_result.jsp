@@ -89,7 +89,7 @@
 									<td>${SRL.raterGrade}</td>
 									<td>${SRL.questionType}</td>
 									<td>${SRL.questionContent}</td>
-									<td>${SRL.itemContent}</td>
+									<td>${SRL.aNContent}</td>
 									<td>${SRL.itemScore}</td>
 								</tr>
 							</c:forEach>

@@ -217,22 +217,22 @@ function reset_btn_mapping_pop(surveySeq, month, number){
                         <div>
                            <c:if test="${pagingdto.groupNo>1}">
                               <a class="btn btn-outline-secondary"
-                                 href="set.do?pageNo=${pagingdto.startPageNo-1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">이전</a>
+                                 href="set.do?pageNo=${pagingdto.startPageNo-1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}=keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">이전</a>
                            </c:if>
                            <c:forEach var="i" begin="${pagingdto.startPageNo}"
                               end="${pagingdto.endPageNo}">
                               <c:if test="${pagingdto.pageNo != i}">
                                  <a class="btn btn-outline-secondary"
-                                    href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
+                                    href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}=keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
                               </c:if>
                               <c:if test="${pagingdto.pageNo == i}">
                                  <a class="btn btn-secondary"
-                                    href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
+                                    href="set.do?pageNo=${i}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}=keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">${i}</a>
                               </c:if>
                            </c:forEach>
                            <c:if test="${pagingdto.groupNo<pagingdto.totalGroupNo}">
                               <a class="btn btn-outline-secondary"
-                                 href="set.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">다음</a>
+                                 href="set.do?pageNo=${pagingdto.endPageNo+1}&surveySeq=${pagingdto.surveySeq}&month=${pagingdto.month}&number=${number}&newCheck=0&keyword=${pagingdto.keyword}=keyword2=${pagingdto.keyword2}&selection=${pagingdto.selection}&selection2=${pagingdto.selection}&selectGD=${pagingdto.selectGD}">다음</a>
                            </c:if>
                         </div>
                         <div style="float: right;">
