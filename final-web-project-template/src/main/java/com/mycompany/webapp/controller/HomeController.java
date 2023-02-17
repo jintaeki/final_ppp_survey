@@ -35,7 +35,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -49,8 +48,6 @@ import com.mycompany.webapp.dto.OrganizationChartDTO;
 import com.mycompany.webapp.dto.ProjectHistoryDTO;
 import com.mycompany.webapp.service.ILoginCheckService;
 import com.mycompany.webapp.service.json.IJsonService;
-
-
 
 @Controller
 public class HomeController {
@@ -72,6 +69,63 @@ public class HomeController {
 		model.addAttribute("UCD",UCD);
 		return "login";
 	}
+
+	@ResponseBody
+    @RequestMapping(value = "/excelUploadOCD.do", method = RequestMethod.POST)
+        public boolean excelUploadOCD(MultipartFile testFile, MultipartHttpServletRequest request) throws  Exception{
+
+        System.out.println("업로드 진행");
+
+        MultipartFile excelFile = request.getFile("excelFile");
+
+        if(excelFile == null || excelFile.isEmpty()) {
+            throw new RuntimeException("엑셀파일을 선택해 주세요");
+        }
+
+        File destFile = new File("C:\\upload\\"+excelFile.getOriginalFilename());
+
+        try {
+            //내가 설정한 위치에 내가 올린 파일을 만들고
+            excelFile.transferTo(destFile);
+        }catch(Exception e) {
+            throw new RuntimeException(e.getMessage(),e);
+        }
+
+        //업로드를 진행하고 다시 지우기
+        loginCheckService.excelUploadOCD(destFile);
+
+        destFile.delete();
+
+        return true;
+    }
+
+	@ResponseBody
+    @RequestMapping(value = "/excelUploadPH.do", method = RequestMethod.POST)
+        public boolean excelUploadPH(MultipartFile testFile, MultipartHttpServletRequest request) throws  Exception{
+
+        MultipartFile excelFile = request.getFile("excelFile");
+
+        if(excelFile == null || excelFile.isEmpty()) {
+            throw new RuntimeException("엑셀파일을 선택해 주세요");
+        }
+
+        File destFile = new File("C:\\upload\\"+excelFile.getOriginalFilename());
+
+        try {
+            //내가 설정한 위치에 내가 올린 파일을 만들고
+            excelFile.transferTo(destFile);
+        }catch(Exception e) {
+            throw new RuntimeException(e.getMessage(),e);
+        }
+
+        //업로드를 진행하고 다시 지우기
+        loginCheckService.excelUploadPH(destFile);
+
+        destFile.delete();
+
+        return true;
+    }
+
 
 
 	@GetMapping("/excelDownload.do/{fileType}")

@@ -413,27 +413,27 @@
                         ,m.SURVEY_COMPLETE_YN
                     FROM GRADE g
                          ,USER_INFO ui
-                         ,MAPPING m 
+                         ,MAPPING m
                          ,ORGANIZATION_CHART oc
                    WHERE m.RATER_ID = ui.EMPLOYEE_ID
-                     AND g.GRADE_ID = ui.GRADE_ID 
+                     AND g.GRADE_ID = ui.GRADE_ID
                      AND oc.DEPARTMENT_ID = ui.DEPARTMENT_ID
                      AND UI.EMPLOYEE_NAME LIKE '%' || #{keyword} || '%'
                      AND UI.DEPARTMENT_ID LIKE (
-                         CASE WHEN #{selection} = '60004' 
-                              THEN '%' || '' || '%' 
+                         CASE WHEN #{selection} = '60004'
+                              THEN '%' || '' || '%'
                               ELSE '%' || #{selection} || '%'
-                     END) 
+                     END)
                      AND M.SURVEY_COMPLETE_YN LIKE (
-                         CASE WHEN #{selection2} = '60004' 
-                              THEN '%' || '' || '%' 
+                         CASE WHEN #{selection2} = '60004'
+                              THEN '%' || '' || '%'
                               ELSE '%' || #{selection2} || '%'
-                     END)	
+                     END)
                      AND UI.GRADE_ID LIKE (
-                         CASE WHEN #{selectGD} = '60004' 
-                              THEN '%' || '' || '%' 
+                         CASE WHEN #{selectGD} = '60004'
+                              THEN '%' || '' || '%'
                               ELSE '%' || #{selectGD} || '%'
-                     END) 
+                     END)
                )
                where survey_seq = #{surveySeq}
                ORDER BY ROWNUM  ASC
@@ -473,7 +473,7 @@
            AND U.DEPARTMENT_ID = O.DEPARTMENT_ID
       ORDER BY U.DEPARTMENT_ID
 	</select>
-	
+
 	<select id="organAppraiseeList" resultType="com.mycompany.webapp.dto.OrganizationChartDTO">
 		SELECT DISTINCT
     		   U.DEPARTMENT_ID AS departmentId,
@@ -486,7 +486,7 @@
            AND U.DEPARTMENT_ID = O.DEPARTMENT_ID
       ORDER BY U.DEPARTMENT_ID
 	</select>
-	
+
 	<select id="organRaterList" resultType="com.mycompany.webapp.dto.OrganizationChartDTO">
 		SELECT DISTINCT
     		   U.DEPARTMENT_ID AS departmentId,
@@ -499,13 +499,13 @@
            AND U.DEPARTMENT_ID = O.DEPARTMENT_ID
       ORDER BY U.DEPARTMENT_ID
 	</select>
-	
+
 	<select id="checkList" resultType="com.mycompany.webapp.dto.MappingDTO">
 		SELECT DISTINCT
 			   SURVEY_COMPLETE_YN AS surveyCompleteYN
 	      FROM MAPPING
 	</select>
-	
+
 	<select id="resultList" resultType="com.mycompany.webapp.dto.SurveyResultTeamDTO">
 			SELECT AVG(SCORE) AS SCORE,
          	   DEPARTMENT_NAME
@@ -518,11 +518,11 @@
                ORGANIZATION_CHART O,
                USER_INFO U,
                SURVEY_QUESTION Q,
-               ( SELECT DISTINCT COUNT(M.APPRAISEE_ID) AS DIV, 
+               ( SELECT DISTINCT COUNT(M.APPRAISEE_ID) AS DIV,
                         M.APPRAISEE_ID AS DIVIDE_ID
                         FROM MAPPING M
                         WHERE M.SURVEY_SEQ = #{surveySeq}
-                        GROUP BY  M.APPRAISEE_ID) D  
+                        GROUP BY  M.APPRAISEE_ID) D
          WHERE I.ITEM_SEQ = R.ITEM_SEQ
            AND R.SURVEY_SEQ = #{surveySeq}
            AND R.APPRAISEE_ID = U.EMPLOYEE_ID
@@ -542,11 +542,11 @@
                SURVEY_RESULT R,
                USER_INFO U,
                SURVEY_QUESTION Q,
-               (SELECT DISTINCT COUNT(M.APPRAISEE_ID) AS DIV, 
+               (SELECT DISTINCT COUNT(M.APPRAISEE_ID) AS DIV,
                         M.APPRAISEE_ID AS DIVIDE_ID
                         FROM MAPPING M
                         WHERE M.SURVEY_SEQ = #{surveySeq}
-                        GROUP BY  M.APPRAISEE_ID) D  
+                        GROUP BY  M.APPRAISEE_ID) D
          WHERE I.ITEM_SEQ = R.ITEM_SEQ
            AND R.SURVEY_SEQ = #{surveySeq}
            AND R.APPRAISEE_ID = U.EMPLOYEE_ID
@@ -764,11 +764,11 @@ FROM(
                         SURVEY_RESULT R,
                         USER_INFO U,
                         SURVEY_QUESTION Q,
-                        (SELECT DISTINCT COUNT(M.APPRAISEE_ID) AS DIV, 
+                        (SELECT DISTINCT COUNT(M.APPRAISEE_ID) AS DIV,
                                 M.APPRAISEE_ID AS DIVIDE_ID
                            FROM MAPPING M
                           WHERE M.SURVEY_SEQ = #{surveySeq}
-                      GROUP BY  M.APPRAISEE_ID) D  
+                      GROUP BY  M.APPRAISEE_ID) D
                    WHERE I.ITEM_SEQ = R.ITEM_SEQ
                      AND R.SURVEY_SEQ = #{surveySeq}
                      AND R.APPRAISEE_ID = U.EMPLOYEE_ID
@@ -778,7 +778,7 @@ FROM(
                 )
             )
         ) S
-        ,(SELECT AVG(SCORE) AS AVG,
+        ,(SELECT ROUND(AVG(SCORE),1) AS AVG,
                  MAX(SCORE) AS MAX,
                  MIN(SCORE) AS MIN,
                  SURVEY_SEQ
@@ -790,11 +790,11 @@ FROM(
                         SURVEY_RESULT R,
                         USER_INFO U,
                         SURVEY_QUESTION Q,
-                        (SELECT DISTINCT COUNT(M.APPRAISEE_ID) AS DIV, 
+                        (SELECT DISTINCT COUNT(M.APPRAISEE_ID) AS DIV,
                                 M.APPRAISEE_ID AS DIVIDE_ID
                            FROM MAPPING M
                           WHERE M.SURVEY_SEQ = #{surveySeq}
-                      GROUP BY  M.APPRAISEE_ID) D  
+                      GROUP BY  M.APPRAISEE_ID) D
                    WHERE I.ITEM_SEQ = R.ITEM_SEQ
                      AND R.SURVEY_SEQ = #{surveySeq}
                      AND R.APPRAISEE_ID = U.EMPLOYEE_ID
