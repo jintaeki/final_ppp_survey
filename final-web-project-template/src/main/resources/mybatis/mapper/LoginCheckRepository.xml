@@ -21,6 +21,7 @@
 
 	<select id="getUserInfo" resultType="com.mycompany.webapp.dto.UserCheckDTO">
 		SELECT
+			   S.ANONYMITY_CHECK_CODE,
 			   S.SURVEY_SEQ,
                S.SURVEY_NAME,
                S.SURVEY_CONTENT,

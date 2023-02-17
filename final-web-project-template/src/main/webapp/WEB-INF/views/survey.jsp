@@ -67,10 +67,14 @@
                                  <c:if test="${allAppraisee.surveyCompleteYN eq 'N'}">
                                     <div class="col-3">
 
-                                       <button class="create_btn" style="color: blue;"
-                                          onclick="selectSurvey(this,${raterId})"
-                                          value="${allAppraisee.surveySeq }">조회</button>
-                                    </div>
+<!--                                        <button class="create_btn" style="color: blue;" -->
+<%--                                           onclick="selectSurvey(this,${raterId})" --%>
+<%--                                           value="${allAppraisee.surveySeq }">조회</button> --%>
+											<button style="color:green; margin-bottom: 10px;" 
+											class="create_btn" id="${allAppraisee.appraiseeId}" 
+											onclick="surveyStart(this,${allAppraisee.appraiseeId},${allAppraisee.raterId},${allAppraisee.anonymityCheckCode},${allAppraisee.surveySeq})" 
+											value="${allAppraisee.appraiseeName}">평가하기</button></div>
+                                   
                                  </c:if>
                                  <c:if test="${allAppraisee.surveyCompleteYN eq 'Y'}">
                                     <div class="col-3">
@@ -88,9 +92,12 @@
                      </div>
                   </div>
                </c:forEach>
-            </div>
+               </div>
+               </div>
+           
 
-         </div>
+     
+         
          <div class="col-7" style="padding: 24px;">
             <div class="survey_section">
                <div class="surveyName"></div>
@@ -109,10 +116,9 @@
                </div>
             </div>
          </div>
+          </div>
+         </div>
       </div>
-   </div>
-   <!-- forshadowing_bj -->
-</div>
-<!-- card -->
+
 
 <%@ include file="/WEB-INF/views/common/footerformanager.jsp"%>

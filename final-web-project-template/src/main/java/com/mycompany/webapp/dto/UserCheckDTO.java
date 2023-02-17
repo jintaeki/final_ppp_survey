@@ -19,6 +19,7 @@ public class UserCheckDTO {
 	private String anonymitySeq;
 	private String password;
 	private String gender;
+	private String anonymityCheckCode;
 	
 	public int getSurveySeq() {
 		return surveySeq;
@@ -71,6 +72,9 @@ public class UserCheckDTO {
 	public String getGender() {
 		return gender;
 	}
+	public String getAnonymityCheckCode() {
+		return anonymityCheckCode;
+	}
 	public void setSurveySeq(int surveySeq) {
 		this.surveySeq = surveySeq;
 	}
@@ -119,10 +123,12 @@ public class UserCheckDTO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public void setGenter(String gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	
+	public void setAnonymityCheckCode(String anonymityCheckCode) {
+		this.anonymityCheckCode = anonymityCheckCode;
+	}
 	@Override
 	public String toString() {
 		return "UserCheckDTO [surveySeq=" + surveySeq + ", surveyName=" + surveyName + ", surveyContent="
@@ -130,7 +136,12 @@ public class UserCheckDTO {
 				+ raterDepartmentName + ", raterGradeName=" + raterGradeName + ", appraiseeId=" + appraiseeId
 				+ ", appraiseeName=" + appraiseeName + ", appraiseeDepartmentName=" + appraiseeDepartmentName
 				+ ", appraiseeGradeName=" + appraiseeGradeName + ", surveyCompleteYN=" + surveyCompleteYN + ", email="
-				+ email + ", managerYN=" + managerYN + ", anonymitySeq=" + anonymitySeq + ", gender=" + gender + "]";
+				+ email + ", managerYN=" + managerYN + ", anonymitySeq=" + anonymitySeq + ", password=" + password
+				+ ", gender=" + gender + ", anonymityCheckCode=" + anonymityCheckCode + "]";
 	}
+	
+	
+	
+	
 }
 

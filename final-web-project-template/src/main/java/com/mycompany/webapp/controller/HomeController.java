@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -319,8 +320,21 @@ public class HomeController {
 //	}
 
 	@RequestMapping("/survey.do")
-	public String tosurvey() {
+	public String tosurvey(HttpSession session) {
+		String raterId = (String) session.getAttribute("raterId");
+		String password = (String) session.getAttribute("password");
+		List<Map<String,Object>> surveySeqAndName = loginCheckService.getSurveySeqAndName(raterId);
+		session.setAttribute("raterId",raterId);
+		session.setAttribute("surveySeqAndName",surveySeqAndName);
+		session.setAttribute("surveyResult", new SurveyResultDTO());
+		UserCheckDTO check =  loginCheckService.getUserManagerYN(raterId, password);
 
+		session.setAttribute("checked", check);
+		int nosurveySeqForGetAllUser = 0;
+
+		List<UserCheckDTO> allUser = loginCheckService.getUserInfo(raterId, nosurveySeqForGetAllUser);
+
+		session.setAttribute("allUser",allUser);
 		return "survey";
 	}
 
@@ -344,23 +358,15 @@ public class HomeController {
 		logger.info(UCD.toString());
 		if(loginCheckService.checkUser(UCD)==1) {
 			logger.info("로그인 가능");
-			session.setAttribute("signIn", UCD);
-			UserCheckDTO check =  loginCheckService.getUserManagerYN(UCD);
+//			session.setAttribute("signIn", UCD);
+			UserCheckDTO check =  loginCheckService.getUserManagerYN(UCD.getRaterId(),UCD.getPassword());
 
 			if(check.getManagerYN().equals("N")) {
 				logger.info("평가자 진입");
 				// 평가자가 평가해야할 설문지 조회
-				List<Map<String,Object>> surveySeqAndName = loginCheckService.getSurveySeqAndName(UCD.getRaterId());
-				session.setAttribute("raterId",UCD.getRaterId());
-				session.setAttribute("surveySeqAndName",surveySeqAndName);
-				session.setAttribute("surveyResult", new SurveyResultDTO());
-				session.setAttribute("checked", check);
-				int nosurveySeqForGetAllUser = 0;
-
-				List<UserCheckDTO> allUser = loginCheckService.getUserInfo(UCD.getRaterId(), nosurveySeqForGetAllUser);
-
-				session.setAttribute("allUser",allUser);
-
+				session.setAttribute("raterId", UCD.getRaterId());
+				session.setAttribute("password", UCD.getPassword());
+				
 				return check.getRaterName();
 			}else {
 				logger.info("관리자 진입");
