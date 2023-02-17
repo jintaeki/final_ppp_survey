@@ -91,6 +91,7 @@ public class SurveyController {
 		logger.info("실행");
 
 		List<SurveyListDTO> Sdt = surveyService.surveyList();
+		model.addAttribute("completeSurvey", surveyService.surveyList());
 		JSONArray cJsonArrDP = new JSONArray();
 		JSONArray cJsonArrResult = new JSONArray();
 
@@ -130,6 +131,7 @@ public class SurveyController {
 		model.addAttribute("Sdt", Sdt);
 		model.addAttribute("surveyName", surveyName);
 		model.addAttribute("departmentName", departmentName);
+		model.addAttribute("completeSurvey", surveyService.surveyList());
 
 		JSONArray cJsonArrResult = new JSONArray();
 		JSONObject cJsonObjResult = new JSONObject();
@@ -256,7 +258,7 @@ public class SurveyController {
 			model.addAttribute("SQL", surveyService.getQuestionListOrderByDesc(surveySeq));
 			model.addAttribute("NoQuestion","저장된 문제가 없습니다.");
 		}
-
+		model.addAttribute("completeSurvey", surveyService.surveyList());
 		return "survey_insert";
 	}
 
@@ -489,6 +491,7 @@ public class SurveyController {
 
 		model.addAttribute("commonCodeList", commonCodeService.selectStateCode());
 		model.addAttribute("commonDateList", commonCodeService.selectDateCode());
+		model.addAttribute("completeSurvey", surveyService.surveyList());
 		try {
 
 			List<SurveyListDTO> surveylist = null;
@@ -535,7 +538,10 @@ public class SurveyController {
 		logger.info("설문지 번호" + surveySeq);
 
 		try {
+			SurveyListDTO surveyInfo = surveyService.selectSurvey(surveySeq);
 			model.addAttribute("CommonEvaluteList", commonCodeService.selectEvaluateCode());
+			model.addAttribute("completeSurvey", surveyService.surveyList());
+			model.addAttribute("surveyInfo", surveyInfo);
 			List<Map<String, Object>> evaluateList = null;
 			PagingDTO pagingDto = null;
 			String beforeKeyword = keyword;
@@ -595,14 +601,17 @@ public class SurveyController {
 		logger.info("설문지 번호" + surveySeq);
 
 		try {
+			model.addAttribute("completeSurvey", surveyService.surveyList());
 			model.addAttribute("raterDepartment", surveyService.organRaterList(surveySeq));
 			model.addAttribute("appraiseeDepartment", surveyService.organAppraiseeList(surveySeq));
 			model.addAttribute("gradeList", mappingService.selectGradeList());
 			model.addAttribute("checkList", surveyService.checkList());
+			SurveyListDTO surveyInfo = surveyService.selectSurvey(surveySeq);
 			List<Map<String, Object>> evaluateList = null;
 			PagingDTO pagingDto = null;
 			String beforeKeyword = keyword;
-
+				
+				model.addAttribute("surveyInfo", surveyInfo);
 			 	model.addAttribute("selecton", selection);
 
 			    logger.info("모델 :" + model);

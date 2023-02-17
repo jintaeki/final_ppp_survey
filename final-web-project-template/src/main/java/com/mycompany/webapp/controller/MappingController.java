@@ -59,6 +59,7 @@ public class MappingController {
 							 Model model, RedirectAttributes redirectAttrs) {
 		model.addAttribute("raterDepartment", surveyService.organRaterList(surveySeq));
 		model.addAttribute("appraiseeDepartment", surveyService.organAppraiseeList(surveySeq));
+		model.addAttribute("completeSurvey", surveyService.surveyList());
 		model.addAttribute("commonDateList", commonService.selectDateCode());
 		model.addAttribute("gradeList", mappingService.selectGradeList());
 		model.addAttribute("number", number);
