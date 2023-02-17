@@ -96,8 +96,32 @@ body {
 				목록 조회</a>
 		</div>
 		<br> <br>
-
-
+		<div class="menu_item" style="">
+		<div class="btn-group dropright">
+  			<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    			피평가자 결과
+  			</button>
+  			<div class="dropdown-menu" style="width:170px">
+  				<c:forEach items="${completeSurvey}" var="CS">  				
+    					<a style="color:black;" href="<c:url value='/survey/evaluatesearch.do//${CS.surveySeq}'/>">${CS.surveyName}<br></a>
+  				</c:forEach>
+  			</div>
+		</div>
+		</div>
+		<br> <br>
+		<div class="menu_item" style="">
+		<div class="btn-group dropright">
+  			<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    			평가 참여 여부
+  			</button>
+  			<div class="dropdown-menu" style="width:170px">
+  				<c:forEach items="${completeSurvey}" var="CS">  				
+    					<a style="color:black;" href="<c:url value='/survey/evaluateMessage.do/${CS.surveySeq}'/>">${CS.surveyName}<br></a>
+  				</c:forEach>
+  			</div>
+		</div>
+		</div>
+		<br> <br>
 		<div class="menu_item" style="">
 			<a style="color:black;" href="<c:url value='/survey/surveyresultteam.do'/>">결과 통계</a>
 		</div>
