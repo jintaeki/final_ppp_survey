@@ -152,6 +152,8 @@ function checkOCD() {
 					console.log(data);
 					alert("모든 데이터가 업로드 되었습니다.");
 					 $('#json').modal('hide');
+				},error(){
+					alert("다시 시도해 주세요.")
 				},
 		type:"POST"
 		};
@@ -178,6 +180,8 @@ function checkPH() {
 					console.log(data);
 					alert("모든 데이터가 업로드 되었습니다.");
 					 $('#json').modal('hide');
+				},error(){
+					alert("다시 시도해 주세요.")
 				},
 		type:"POST"
 		};

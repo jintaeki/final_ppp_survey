@@ -297,7 +297,7 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 	   	testDiv +='<div class="input_qus" id="checkTouch">';
 	   	testDiv +='<input type="hidden" name= "surveySeq" value="'+surveySeq+'" id="surveySequence">';
 		testDiv +='<input type="hidden" name= "questionSeq" value="0">';
-		testDiv +='<input type="text" name="questionContent"  id="input_qus"  onclick="manageQus(this,0,10001,'+surveySeq+'); this.onclick=null;" value="hi">';
+		testDiv +='<input type="text" name="questionContent"  id="input_qus"  onclick="manageQus(this,0,10001,'+surveySeq+'); this.onclick=null;" value="">';
 		testDiv +='</div>&nbsp;';
 		testDiv +='&nbsp;&nbsp;<input type="radio" id="obj_radio" name="0'+newQuestionCnt+'" value="10001" onclick="checkit1(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+')" checked> 객관식';
 		testDiv +='&nbsp;&nbsp;<input type="radio" id="subj_radio" name="0'+newQuestionCnt+'" value="10002" onclick="checkit2(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+')"> 주관식';

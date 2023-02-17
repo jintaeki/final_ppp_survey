@@ -217,6 +217,7 @@
 	   
 	      
       Swal.fire({
+    	  
          text: content,
           confirmButtonText: '확인',
 
