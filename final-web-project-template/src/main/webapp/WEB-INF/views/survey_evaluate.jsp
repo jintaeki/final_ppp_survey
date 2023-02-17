@@ -59,7 +59,19 @@
                   </div>
                </div>
 
-         <div class="col-12" style=""><h3 style="text-align:left;"><b>평가 대상자 목록</b></h3></div>
+         <div class="col-12" style=""><h3 style="text-align:left;"><b>${surveyInfo.surveyName} 피평가자 결과 목록</b>
+         	<div class="btn-group" style="margin-left: 790px; border-radius: 10px; height: 40px; border: 2px solid #e8e8e8;">
+  				<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    				평가 참여 여부
+  				</button>
+  				<div class="dropdown-menu" style="width:170px">
+  					<c:forEach items="${completeSurvey}" var="CS">
+    					<a style="color:black;" href="<c:url value='/survey/evaluatesearch.do/${CS.surveySeq}'/>">${CS.surveyName}<br></a>
+  					</c:forEach>
+  				</div>
+			</div>
+			</h3>
+		</div>
 
                <table class="table table-sm table-striped table-bordered" style="text-align: center;">
                   <thead>
@@ -134,12 +146,6 @@
                               href="?pageNo=${pagingdto.totalPageNo}&keyword=${pagingdto.keyword}&selection=${pagingdto.selection}&selection2=${pagingdto.selection2}&surveySeq=${pagingdto.surveySeq}">맨끝</a>
                         </div>
                         <div style="float: right;">
-
-                        <button type="button" class="btn btn-outline-primary" onclick="location.href='<c:url value='/survey/evaluateMessage.do/${surveySeq}'/>'">
-                      평가 참여 여부 확인 하러 가기
-
-
-                  </button>
                        </div>
                      </td>
                   </tr>
@@ -154,7 +160,7 @@
 function reset_btn_evaluate(){
 	$('.searchRangeAll').empty();
 	html='';
-	
+
 	html +='<div class="searchRange">';
     html +='<select class="subSelection" name="selection2">';
     html += `<option value="">직급</option>
@@ -187,8 +193,8 @@ function reset_btn_evaluate(){
         </div>`;
 	$('.searchRangeAll').append(html);
 
-} 
-   
+}
+
 </script>
 
 
