@@ -62,7 +62,7 @@ body {
 						</div>
 					</div>
 					<div  class="modal-footer">
-						<a href="<c:url value='/excelDownload.do/project'/>"> 이력 다운받기</a>
+						<a href="<c:url value='/excelDownload.do/OC'/>"> 조직정보 다운로드</a>
 						<input type="button" id="addExcelImportBtn" onclick="checkOCD()" class="btn btn-primary" value="추가">
 					</div>
 				</form>
@@ -75,7 +75,7 @@ body {
 						</div>
 					</div>
 					<div class="modal-footer">
-					<a href="<c:url value='/excelDownload.do/OC'/>"> 조직정보 다운받기</a>
+						<a href="<c:url value='/excelDownload.do/project'/>"> 이력 다운로드</a>
 						<input type="button" id="addExcelImportBtn" onclick="checkPH()"  class="btn btn-primary" value="추가">
 					</div>
 					</form>
