@@ -278,6 +278,12 @@ public class SurveyService implements ISurveyService{
 		return surveyDao.getItemCnt(surveySeq);
 	}
 
+	@Override
+	public List<SurveyListDTO> getAllSurvey() {
+		
+		return surveyDao.getAllSurvey();
+	}
+
 }
 
 

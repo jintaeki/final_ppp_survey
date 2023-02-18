@@ -822,4 +822,9 @@ WHERE S.EMPLOYEE_ID = U.EMPLOYEE_ID
           SL.SURVEY_SEQ = #{surveySeq}
 	</select>
 
+	<select id="getAllSurvey" resultType="SLD">
+		SELECT SURVEY_NAME, SURVEY_SEQ FROM SURVEY_LIST ORDER BY to_date(REG_DATE) ASC
+	
+	</select>
+
 </mapper>

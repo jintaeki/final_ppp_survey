@@ -14,7 +14,7 @@ public interface ILoginCheckService {
 
 	public List<UserCheckDTO> getUserInfo(String raterId, int surveySeq);
 
-	public UserCheckDTO getUserManagerYN(UserCheckDTO UCD);
+	public UserCheckDTO getUserManagerYN(String raterId, String password);
 
 	public List<Map<String, Object>> getQuestion(int surveySeq);
 

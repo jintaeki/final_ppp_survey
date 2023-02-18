@@ -37,12 +37,12 @@
 			style="margin: 50px 150px;">
 			<div class="login_form">
 				<input type="text" class="form-control" name="raterId" id="raterId"
-					value="105942" required> <label
+					value="" required> <label
 					class="login_form-placeholder" for="raterId">사원 번호</label>
 			</div>
 			<div class="login_form">
 				<input type="password" class="form-control" name="password"
-					value="000000" id="password" required> <label
+					value="" id="password" required> <label
 					class="login_form-placeholder" for="password">password</label>
 			</div>
 			<div class="login_btn">

@@ -55,6 +55,7 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 
 
 			if(questionSeq ==0){
+				
 				var form = $('#0')[0];
 				var formdata = new FormData(form);
 				for(const pairkeys of formdata.keys()){
@@ -65,8 +66,8 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 
 		          for(const pairvalues of formdata.values()){
 		        	  console.log(pairvalues);
-
-		        	  if(pairvalues==''){
+//
+		        	  if(pairvalues==''||pairvalues==null||pairvalues==" "){
 		        		  alert("빈 텍스트는 저장이 불가합니다.");
 		        		  return false;
 		        	  }
@@ -96,7 +97,7 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 				            // 전송 전 실행 코드
 				         },
 				         success : function(data) {
-				 				tag.parent().parent().parent().remove();
+//				 				tag.parent().parent().parent().remove();
 
 				        	 console.log(data[0].questionSeq);
 				        	 if(data[0].questionSeq==0){
@@ -104,8 +105,8 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 				        		 location.reload();
 				        	 }else{
 				        		 console.log(data);
-				        		 location.reload();
-
+//				        		 location.reload();
+				        		 location.href = location.href;
 
 
 // 				        	         var testDiv ='';
@@ -297,7 +298,7 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 	   	testDiv +='<div class="input_qus" id="checkTouch">';
 	   	testDiv +='<input type="hidden" name= "surveySeq" value="'+surveySeq+'" id="surveySequence">';
 		testDiv +='<input type="hidden" name= "questionSeq" value="0">';
-		testDiv +='<input type="text" name="questionContent"  id="input_qus"  onclick="manageQus(this,0,10001,'+surveySeq+'); this.onclick=null;" value="hi">';
+		testDiv +='<input type="text" name="questionContent"  id="input_qus"  onclick="manageQus(this,0,10001,'+surveySeq+'); this.onclick=null;" value="">';
 		testDiv +='</div>&nbsp;';
 		testDiv +='&nbsp;&nbsp;<input type="radio" id="obj_radio" name="0'+newQuestionCnt+'" value="10001" onclick="checkit1(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+')" checked> 객관식';
 		testDiv +='&nbsp;&nbsp;<input type="radio" id="subj_radio" name="0'+newQuestionCnt+'" value="10002" onclick="checkit2(this,10001,0'+newQuestionCnt+',0'+newQuestionCnt+')"> 주관식';
@@ -590,7 +591,6 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
             		contentType : false,
              		cache : false,
              		beforeSend : function() { //보내기 전 실행
-            		console.log("삭제 요청이 보내지는가?");
          			},
             		success:function (data) {    //전송 성공시 실행
             			$(obj).parent().remove();
@@ -643,7 +643,6 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
             contentType : false,
              cache : false,
             beforeSend: function() {
-               console.log("요청 보냈음");
             },
             success: function(data) {
 
@@ -660,7 +659,6 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
                         cache : false,
                        beforeSend: function() {
                           console.log("요청 보냈음");
-                          alert("업데이트 beforesend");
                        },
                        success: function(jsondata) {
 							cntObj = 0;
@@ -704,7 +702,14 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 
    function checkit1(obj,questionType,questionSeq,name) {
 	   $(".beforeTouch").empty();
+//	   if($(obj).parent().children().next("input[type=text]")==""){
+//		   alert('zzz');
+//	   }
+	   if(questionSeq==0){
+		   alert("문제를 먼저 작성하고 저장해 주세요.");
+		   return false;
 
+	   }
 	   newValue=$(obj).val();
 
       if ($("input[type=radio][id=obj_radio]:checked").is(':checked') == true){
@@ -729,7 +734,14 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
    function checkit3(obj,questionType,questionSeq,name) {
 	   $(".beforeTouch").empty();
 	   newValue=$(obj).val();
+//	   if($(obj).parent().children().next(input['text'])==""){
+//		   alert('zzz');
+//	   }
+	   if(questionSeq==0){
+		   alert("문제를 먼저 작성하고 저장해 주세요.");
+		   return false;
 
+	   }
       if ($("input[type=radio][id=mix_radio]:checked").is(':checked') == true){
     	  if(questionType != newValue){
     		  if(confirm("유형이 바뀌면 저장된 데이터가 사라집니다. 계속 진행하시겠습니까?")){
@@ -756,7 +768,13 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
    function checkit2(obj,questionType,questionSeq,name) {
 	   $(".beforeTouch").empty();
 	   newValue=$(obj).val();
-
+//	   if($(obj).parent().children().next(input['text'])==""){
+//		   alert('zzz');
+//	   }
+	   if(questionSeq==0){
+		   alert("문제를 먼저 작성하고 저장해 주세요.");
+		   return false;
+	   }
     if($("input[type=radio][id=subj_radio]:checked").is(':checked') == true){ // 체크 여부(checked)
     	if(questionType != newValue){
   		  if(confirm("유형이 바뀌면 저장된 데이터가 사라집니다. 계속 진행하시겠습니까?")){

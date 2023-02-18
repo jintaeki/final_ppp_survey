@@ -8,6 +8,15 @@
   display: flex;
 }
 
+
+
+#menu_result {
+color:#007bff;
+}
+.menu_a {
+color:black;
+}
+
 #chart_container {
   height: 400px;
 }

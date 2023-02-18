@@ -47,7 +47,7 @@ function reset_btn_mapping_pop(surveySeq, month, number){
     $('.searchRangeAll').append(html);
  }
  </script>
- 
+
    <div class="card">
          <div class="forshadowing">
                <div class="hmenu">
@@ -81,7 +81,7 @@ function reset_btn_mapping_pop(surveySeq, month, number){
                         <input type="text" class="form-control" id="selectedKeyword" placeholder="평가자  이름 검색창"
                                  name="keyword" value="${pagingdto.keyword}" aria-describedby="button-addon2">
                         </div>
-                        <div class="input-group-append">
+                        <div class="input-group-append" oncuechange="">
                         <select name="selection2">
                            <option value="60004">피평가자 부서</option>
                               <c:forEach items="${appraiseeDepartment}" var="adp">
@@ -93,14 +93,15 @@ function reset_btn_mapping_pop(surveySeq, month, number){
                                  </c:if>
                               </c:forEach>
                         </select>
-                        <input type="text" class="form-control" id="selectedKeyword" placeholder="피평가자 이름 검색창"
-                               name="keyword2" value="${pagingdto.keyword2}" aria-describedby="button-addon2"> 
-                        <input type="hidden" name="pageNo" value="1"> 
+
+                        <input type="text" class="form-control" style="margin-left:500px" id="selectedKeyword" placeholder="피평가자 이름 검색창"
+                               name="keyword2" value="${pagingdto.keyword2}" aria-describedby="button-addon2">
+                        <input type="hidden" name="pageNo" value="1">
                         <input type="hidden" name="surveySeq" value="${pagingdto.surveySeq}">
                         <input type="hidden" name="month" value="${pagingdto.month}">
                         <input type="hidden" name="number" value="${number}">
                         <input type="hidden" name="newCheck" value="0">
-                        <input type="submit" class="btn btn-outline-secondary" id="button-addon2" value="검색">
+                        <input type="submit" class="btn btn-outline-secondary" id="button-addon2" value="검색" oncuechange="">
                         <input type="button" style="margin-left:10px;" class="btn btn-outline-secondary" onclick="reset_btn_mapping_pop(${pagingdto.surveySeq},${pagingdto.month},${number})" value="초기화">
                         </div>
                         </div>

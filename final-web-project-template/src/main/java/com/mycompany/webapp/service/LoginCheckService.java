@@ -35,9 +35,9 @@ public class LoginCheckService implements ILoginCheckService{
 	}
 
 	@Override
-	public UserCheckDTO getUserManagerYN(UserCheckDTO UCD) {
+	public UserCheckDTO getUserManagerYN(String raterId, String password) {
 
-		return loginCheckRepository.getUserManagerYN(UCD);
+		return loginCheckRepository.getUserManagerYN(raterId, password);
 	}
 
 	@Override

@@ -1,3 +1,4 @@
+
 function login(){
 	var data = $('#loginCheck')[0];
 	var formdata = new FormData(data);
@@ -15,6 +16,7 @@ function login(){
             // 전송 전 실행 코드
          },
          success : function(data) {
+        	
         	 if(data=='noPassword'){alert("비밀번호를 입력해 주세요."); return false;}
         	 else if(data=='noId'){alert("아이디를 입력해 주세요."); return false;}
         	 else if(data=='successRater'){var raterName = sessionStorage.getItem('raterName');alert(raterName+" 님 어서오세요");location.href="/survey.do" }

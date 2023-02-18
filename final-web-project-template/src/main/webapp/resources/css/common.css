@@ -6,7 +6,12 @@ font-family: "segoe";
    src: url('/manyface/src/main/webapp/resources/font/Segoe UI Bold.ttf');
 
 }
-
+.btn{
+	display: inline;
+}
+.menu_a {
+color:black;
+}
 * {
    box-sizing: border-box;
 }
@@ -29,6 +34,10 @@ label {
     resize: none;
     width: 505px;
 }
+.menu_a {
+color:black;
+}
+
 .survey_section::-webkit-scrollbar {
 	width:7px !important; /* 스크롤바 굵기 */
 }
@@ -504,7 +513,7 @@ input {
    display: block;
    margin: 30px auto; width : 200px;
    height: 200px;
-   width: 200px;
+   width: 300px;
 }
 
 .login_text {

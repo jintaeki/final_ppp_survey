@@ -51,29 +51,31 @@ body {
 <!-- 				</form> -->
 
 
-		
+
 
 				<form action="/excelUploadOCD.do" id="excelUploadFormOCD" name="excelUploadForm" enctype="multpart/form-data" method="post">
 					<div class="contents">
-						<div>조직도 엑셀 파일 첨부. 첨부파일은 한개만 가능합니다.</div>
+						<div>첨부파일은 한개만 가능합니다.</div>
 						<div class="form-group">
 							<label for="recipient-name" class="col-form-label">조직도 엑셀 첨부 파일</label>
 							<input type="file" id="excelFileOCD" name="excelFile" class="form-control">
 						</div>
 					</div>
 					<div  class="modal-footer">
+						<a href="<c:url value='/excelDownload.do/project'/>"> 이력 다운받기</a>
 						<input type="button" id="addExcelImportBtn" onclick="checkOCD()" class="btn btn-primary" value="추가">
 					</div>
 				</form>
 				<form action="/excelUploadPH.do" id="excelUploadFormPH" name="excelUploadForm" enctype="multpart/form-data" method="post">
 					<div class="contents">
-						<div>프로젝트 엑셀 이력 첨부. 첨부파일은 한개만 가능합니다.</div>
+						<div>첨부파일은 한개만 가능합니다.</div>
 						<div class="form-group">
 							<label for="recipient-name" class="col-form-label">프로젝트 엑셀 이력 첨부 파일</label>
 							<input type="file" id="excelFilePH" name="excelFile" class="form-control">
 						</div>
 					</div>
 					<div class="modal-footer">
+					<a href="<c:url value='/excelDownload.do/OC'/>"> 조직정보 다운받기</a>
 						<input type="button" id="addExcelImportBtn" onclick="checkPH()"  class="btn btn-primary" value="추가">
 					</div>
 					</form>
@@ -81,68 +83,71 @@ body {
 				</div>
 			</div>
 		</div><!--  모달 끝 -->
-	
+
 
 <div class="menu_profile">
 	<div style="border-bottom: 1px solid white; text-align: center;">
 		<img
 			src="${pageContext.request.contextPath}/resources/images/logo_img.png"
-			width="100" height="100" class="d-inline-block align-top">
+			width="160" height="100" style="margin-left:10px; margin-top:10px;" class="d-inline-block align-top">
 	</div>
-	<div style="text-align: center;">
+<div style="text-align: center;">
 		<br> <br>
 		<div class="menu_item" style="">
-			<a style="color:black;" href="<c:url value='/survey/surveysearch.do'/>">
+			<a class="menu_a" id="menu_list" href="<c:url value='/survey/surveysearch.do'/>">
 				목록 조회</a>
 		</div>
-		<br> <br>
+ <br>
+		<div class="menu_item"  style="">
+			<a class="menu_a" id="menu_result" href="<c:url value='/survey/surveyresultteam.do'/>">결과 통계</a>
+		</div>
+ <br>
 		<div class="menu_item" style="">
 		<div class="btn-group dropright">
-  			<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+  			<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="evaluate_result_btn"
+  				style="padding: 0px!important;">
     			피평가자 결과
   			</button>
   			<div class="dropdown-menu" style="width:170px">
-  				<c:forEach items="${completeSurvey}" var="CS">  				
+  				<c:forEach items="${completeSurvey}" var="CS">
     					<a style="color:black;" href="<c:url value='/survey/evaluatesearch.do//${CS.surveySeq}'/>">${CS.surveyName}<br></a>
   				</c:forEach>
   			</div>
+		 </div>
 		</div>
-		</div>
-		<br> <br>
+ <br>
 		<div class="menu_item" style="">
 		<div class="btn-group dropright">
-  			<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+  			<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false" id="evaluate_message_btn"
+  			style="padding: 0px!important;">
     			평가 참여 여부
   			</button>
   			<div class="dropdown-menu" style="width:170px">
-  				<c:forEach items="${completeSurvey}" var="CS">  				
+  				<c:forEach items="${completeSurvey}" var="CS">
     					<a style="color:black;" href="<c:url value='/survey/evaluateMessage.do/${CS.surveySeq}'/>">${CS.surveyName}<br></a>
   				</c:forEach>
   			</div>
 		</div>
 		</div>
-		<br> <br>
-		<div class="menu_item" style="">
-			<a style="color:black;" href="<c:url value='/survey/surveyresultteam.do'/>">결과 통계</a>
-		</div>
-		<br> <br>
-
-		<div class="menu_item"style="height: 70px;">
+ <br>
+		<div class="menu_item"style="height: 70px;cursor: pointer;">
 			<a data-toggle="modal" style="color:black;" data-target="#json" onclick="">프로젝트 이력 및<br>조직도 업로드</a>
 		</div>
-		<br> <br>
+ <br>
 		<c:if test="${checked ne '' }">
 		<div class="menu_item" style="">
 			<a style="color:black;" href="<c:url value='/logout.do'/>">로그아웃</a>
 		</div>
 		</c:if>
+ <br>
 		<c:if test="${checked eq '' }">
 		<div class="menu_item"style="">
 			<a style="color:black;" href="<c:url value='/login.do'/>">로그인</a>
 		</div>
 		</c:if>
-	</div>
+ <br>
 	<!--<a class="btn btn-success btn-sm" href="#">로그아웃</a> -->
+	</div>
 </div>
 
 <script src="https://malsup.github.io/jquery.form.js"></script>
@@ -174,6 +179,8 @@ function checkOCD() {
 					console.log(data);
 					alert("모든 데이터가 업로드 되었습니다.");
 					 $('#json').modal('hide');
+				},error(){
+					alert("다시 시도해 주세요.")
 				},
 				error:function(e){
 					alert("데이터 업로드가 실패 되었습니다.");
@@ -204,6 +211,8 @@ function checkPH() {
 					console.log(data);
 					alert("모든 데이터가 업로드 되었습니다.");
 					 $('#json').modal('hide');
+				},error(){
+					alert("다시 시도해 주세요.")
 				},
 				error:function(e){
 					alert("데이터 업로드가 실패 되었습니다.");
@@ -291,7 +300,7 @@ function check() {
     		     console.log("요청이 보내지는가?");
     		     },
     		     success:function (result) {    //전송 성공시 실행
-    		   
+
 
 
     		        }, error:function(e) {   //실패, 에러

@@ -196,15 +196,15 @@ public class SurveyController {
 		logger.info(SLD.toString());
 		if(SLD.getSurveyName()==null || SLD.getSurveyName().isEmpty()) {
 			return "nameEmpty" ;
-		}if(SLD.getSurveyName().getBytes().length>50) {
+		}else if(SLD.getSurveyName().getBytes().length>50) {
 			return "nameLarge" ;
-		}if(SLD.getAnonymityCheckCode() == null) {
+		}else if(SLD.getAnonymityCheckCode() == null) {
 			return "noCode";
-		}if(SLD.getSurveyContent().getBytes().length>500) {
+		}else if(SLD.getSurveyContent().getBytes().length>500) {
 			return "contentLarge";
-		}if(SLD.getSurveyStartDate() ==null || SLD.getSurveyClosedDate()==null) {
+		}else if(SLD.getSurveyStartDate() ==null || SLD.getSurveyClosedDate()==null) {
 			return "dateEmpty";
-		}if(SLD.getSurveySeq() != 0) {
+		}else if(SLD.getSurveySeq() != 0) {
 			List<SurveyQuestionDTO> SQD = surveyService.getQuestionListOrderByAsc(SLD.getSurveySeq());
 			surveyService.setSurvey(SLD);
 			for(int i = 0 ; i< SQD.size();i++) {
@@ -213,7 +213,7 @@ public class SurveyController {
 
 			surveyService.insertQuestionsAndItems(SQD);
 			session.setAttribute("SLD", SLD);
-		}if(SLD.getSurveyStartDate().compareTo(SLD.getSurveyClosedDate())>0){
+		}else if(SLD.getSurveyStartDate().compareTo(SLD.getSurveyClosedDate())>0){
 			return "datemissmatch";
 		}else {
 			surveyService.setSurvey(SLD);
@@ -507,10 +507,10 @@ public class SurveyController {
 			pagingdto.setAnonyMityCheckCode(anonyMityCheckCode);
 
 			surveylist = surveyService.searchListByKeyword(pagingdto);
-
+			List<SurveyListDTO>surveyAllList = surveyService.getAllSurvey(); 
 
 			model.addAttribute("surveylist", surveylist);
-
+			model.addAttribute("surveyAllList",surveyAllList);
 			model.addAttribute("pagingdto", pagingdto);
 			model.addAttribute("keyword", keyword);
 
@@ -552,7 +552,7 @@ public class SurveyController {
 				int totalRows = pagingService.getEvaluateSearchBoardNum(keyword, selection, selection2,  surveySeq);
 
 				System.out.println("totolRows:" + totalRows);
-			    pagingDto = new PagingDTO(12, 10, totalRows, pageNo);
+			    pagingDto = new PagingDTO(14, 10, totalRows, pageNo);
 
 				pagingDto.setSelection(selection);
 				pagingDto.setSelection2(selection2);

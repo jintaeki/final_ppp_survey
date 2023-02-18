@@ -85,6 +85,7 @@ public interface ISurveyRepository {
 	// 문항 수 체크 for 등록완료 가능 여부
 	int getItemCnt(int surveySeq);
 
+	List<SurveyListDTO> getAllSurvey();
 }
 
 

@@ -16,7 +16,7 @@ public interface ILoginCheckRepository {
 
 	public List<UserCheckDTO> getUserInfo(@Param("raterId") String raterId, @Param("surveySeq") int surveySeq);
 
-	public UserCheckDTO getUserManagerYN(UserCheckDTO UCD);
+	public UserCheckDTO getUserManagerYN(@Param("raterId") String raterId, @Param("password") String password);
 
 	public List<Map<String, Object>> getQuestion(int surveySeq);
 
