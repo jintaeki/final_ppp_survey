@@ -28,7 +28,7 @@
 				<form:form modelAttribute="SLD" id="survey_setting_form">
 					<div style="display:flex; justify-content: space-around;">
 							<div>
-							<div class="insert_category"><b>설문지 제목</b><label for="survey_name"></label></div>
+							<div class="insert_category"><b>평가지 제목</b><label for="survey_name"></label></div>
 							<input type="text" id="survey_name"
 								name="surveyName" style="width: 200px;"
 								value="${SLD.surveyName}">
