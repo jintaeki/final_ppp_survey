@@ -59,7 +59,7 @@
                   </div>
                </div>
 
-         <div class="col-12" style=""><h3 style="text-align:left;"><b>${surveyInfo.surveyName} 피평가자 결과 목록</b>
+         <div class="col-12" style=""><h3 style="text-align:left;"><b><${surveyInfo.surveyName}> 피평가자 결과 목록</b>
          	<div class="btn-group" style="margin-left: 790px; border-radius: 10px; height: 40px; border: 2px solid #e8e8e8;">
   				<button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
     				평가 참여 여부
