@@ -666,6 +666,7 @@ public class SurveyController {
 				@PathVariable int surveySeq,
 				@PathVariable int employeeId,
 				                   HttpSession session, Model model) {
+			model.addAttribute("completeSurvey", surveyService.surveyList());
 			List<Map<String, Object>> surveyResultTarget = null;
 			logger.info("employeeId:" + employeeId);
 			logger.info("surveySeq: " + surveySeq);
