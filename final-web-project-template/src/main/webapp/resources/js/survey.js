@@ -446,6 +446,7 @@
                        var tag = $('#'+object['appraiseeId']);
                        console.log(tag);
                       tag.parent().html('<button type="button" class="create_btn" style="margin-bottom: 10px;" disabled>평가완료</button>');
+                      $('.surveyName').empty();
                      }
                   });
                  }
