@@ -50,6 +50,8 @@ public interface ISurveyRepository {
 
 	List<Map<String, Object>> selectItems(int questionSeq);
 
+	List<Map<String, Object>> getQuestions(int surveySeq);
+	
 	void surveyInsertComplete(int surveySeq);
 
 	void deleteSurvey(int surveySeq);

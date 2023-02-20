@@ -106,33 +106,85 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
 				        	 }else{
 				        		 console.log(data);
 //				        		 location.reload();
-				        		 location.href = location.href;
+				        		 /*location.href = location.href;*/
+				        		 $.ajax({
+										method : "GET",
+								         url : 'getallquestion.do/'+surveySeq, // form을 전송할 실제 파일경로
+								         dataType: 'json',
+								         processData : false,
+								         contentType : false,
+								         cache : false,
+								         timeout : 600000,
+								         beforeSend : function() {
+								            // 전송 전 실행 코드
+								         },
+								         success : function(data) {
+							        		 $('#queAfter tbody').empty();
+							        		 html = '';
+								        	 	for(var i = 0; i<data.length; i++){
+								        		 
+								        		 html +='<tr class="deleteThis"> <td style="display: flex;">';
+								        		 html +='<button class="delete_btn" onclick="deleteQus(this,'+surveySeq+')" value="'+data[i].QUESTION_SEQ+'">';
+								        		 html +='<i class="fas fa-xmark"></i></button>';
+								        		 html += '<form id="'+data[i].QUESTION_SEQ+'" onsubmit="return false;">';
+								        		 html +='<div class="input_qus" id="checkTouch"><input type="hidden" name="surveySeq"value="'+data[i].SURVEY_SEQ+'" id="surveySequence">';
+								        		html +='<input type="hidden" name="questionSeq" value="'+data[i].QUESTION_SEQ+'"> ';
+								        		html +='<input name="questionContent" type="text" id="input_qus" onclick="manageQus(this,'+data[i].QUESTION_SEQ+','+data[i].QUESTION_TYPE_CODE+','+data[i].SURVEY_SEQ+'); this.onclick=null;" value="'+data[i].QUESTION_CONTENT+'">';
+
+								        		html +='</div>&nbsp;';
+								        		 if(data[i].QUESTION_TYPE_CODE == '10001'){
+								        			 html +='&nbsp;<input type="radio" id="obj_radio" name="'+data[i].QUESTION_SEQ+'" value="10001" onclick="checkit1(this,'+data[i].QUESTION_TYPE_CODE+','+data[i].QUESTION_SEQ+','+data[i].QUESTION_SEQ+')"checked> 객관식';
+								        			 html +='&nbsp;<input type="radio" id="subj_radio" name="'+data[i].QUESTION_SEQ+'" value="10002" onclick="checkit2(this,'+data[i].QUESTION_TYPE_CODE+','+data[i].QUESTION_SEQ+','+data[i].QUESTION_SEQ+')"> 주관식';
+								        			 html +='&nbsp;<input type="radio" id="mix_radio" name="'+data[i].QUESTION_SEQ+'" value="10003" onclick="checkit3(this,'+data[i].QUESTION_TYPE_CODE+','+data[i].QUESTION_SEQ+','+data[i].QUESTION_SEQ+')"> 혼합식';
+
+								        		 }
+								        		 else if(data[i].QUESTION_TYPE_CODE == '10002'){
+								        			 html +='&nbsp;<input type="radio" id="obj_radio" name="'+data[i].QUESTION_SEQ+'" value="10001" onclick="checkit1(this,'+data[i].QUESTION_TYPE_CODE+','+data[i].QUESTION_SEQ+','+data[i].QUESTION_SEQ+')"> 객관식';
+								        			 html +='&nbsp;<input type="radio" id="subj_radio" name="'+data[i].QUESTION_SEQ+'" value="10002" onclick="checkit2(this,'+data[i].QUESTION_TYPE_CODE+','+data[i].QUESTION_SEQ+','+data[i].QUESTION_SEQ+')"checked> 주관식';
+								        			 html +='&nbsp;<input type="radio" id="mix_radio" name="'+data[i].QUESTION_SEQ+'" value="10003" onclick="checkit3(this,'+data[i].QUESTION_TYPE_CODE+','+data[i].QUESTION_SEQ+','+data[i].QUESTION_SEQ+')"> 혼합식';
+								        			 						
+								        		 }
+								        		 else if(data[i].QUESTION_TYPE_CODE == '10003'){
+								        			 html +='&nbsp;<input type="radio" id="obj_radio" name="'+data[i].QUESTION_SEQ+'" value="10001" onclick="checkit1(this,'+data[i].QUESTION_TYPE_CODE+','+data[i].QUESTION_SEQ+','+data[i].QUESTION_SEQ+')"> 객관식';
+								        			 html +='&nbsp;<input type="radio" id="subj_radio" name="'+data[i].QUESTION_SEQ+'" value="10002" onclick="checkit2(this,'+data[i].QUESTION_TYPE_CODE+','+data[i].QUESTION_SEQ+','+data[i].QUESTION_SEQ+')"> 주관식';
+								        			 html +='&nbsp;<input type="radio" id="mix_radio" name="'+data[i].QUESTION_SEQ+'" value="10003" onclick="checkit3(this,'+data[i].QUESTION_TYPE_CODE+','+data[i].QUESTION_SEQ+','+data[i].QUESTION_SEQ+')" checked> 혼합식';
+								        			
+								        		 }else{
+								        			 html +='&nbsp;<input type="radio" id="obj_radio" name="'+data[i].QUESTION_SEQ+'" value="10001" onclick="checkit1(this,'+data[i].QUESTION_TYPE_CODE+','+data[i].QUESTION_SEQ+','+data[i].QUESTION_SEQ+')" checked> 객관식';
+								        			 html +='&nbsp;<input type="radio" id="subj_radio" name="'+data[i].QUESTION_SEQ+'" value="10002" onclick="checkit2(this,'+data[i].QUESTION_TYPE_CODE+','+data[i].QUESTION_SEQ+','+data[i].QUESTION_SEQ+')"> 주관식';
+								        			 html +='&nbsp;<input type="radio" id="mix_radio" name="'+data[i].QUESTION_SEQ+'" value="10003" onclick="checkit3(this,'+data[i].QUESTION_TYPE_CODE+','+data[i].QUESTION_SEQ+','+data[i].QUESTION_SEQ+')" > 혼합식';
+								        			
+								        		 }
+								        		 
+								        		 html +='</form> <button value="'+data[i].QUESTION_SEQ+'" class="get" onclick="touchQuestion(this)" style="display: none;">';
+								        			html +='<i class="fas fa-search"></i> </button>';
+								        			html +='<div class="blank_under"></div> </td></tr>';
+
+								        			
+								        		 }
+								        	 
 
 
-// 				        	         var testDiv ='';
-// 	   	testDiv +='<div class="deleteThis" style="display:flex;">';
-//       	testDiv +='<button class="delete_btn" onclick="deleteQus(this,'+surveySeq+')"  value="'+data[0].questionSeq+'"><i class="fas fa-xmark"></i></button>';
-// 	 	testDiv +='<form id="'+data[0].questionSeq+'" name="'+data[0].questionSeq+'" onsubmit="return false;">';
-// 	   	testDiv +='<div class="input_qus" id="checkTouch1">';
-// 	   	testDiv +='<input type="hidden" name= "surveySeq" value="'+surveySeq+'" id="surveySequence">';
-// 		testDiv +='<input type="hidden" name= "questionSeq" value="'+data[0].questionSeq+'">';
-// 		testDiv +='<input type="text" name="questionContent"  id="input_qus"  onclick="manageQus(this,'+data[0].questionSeq+',10001,'+surveySeq+'); this.onclick=null;" value="'+data[0].questionContent+'">';
-// 		testDiv +='</div>&nbsp;';
-// 		testDiv +='&nbsp;&nbsp;<input type="radio" id="obj_radio" name="'+data[0].questionSeq+'" value="10001" onclick="checkit1(this,10001,'+data[0].questionSeq+','+data[0].questionSeq+')" checked> 객관식';
-// 		testDiv +='&nbsp;&nbsp;<input type="radio" id="subj_radio" name="'+data[0].questionSeq+'" value="10002" onclick="checkit2(this,10001,'+data[0].questionSeq+','+data[0].questionSeq+')"> 주관식';
-// 		testDiv +='&nbsp;&nbsp;<input type="radio" id="mix_radio" name="'+data[0].questionSeq+'" value="10003" onclick="checkit3(this,10001,'+data[0].questionSeq+','+data[0].questionSeq+')"> 혼합식';
-//       	testDiv +='</form>';
-//       	testDiv +='<button value="'+data[0].questionSeq+'" onclick="touchQuestion(this)"style="display:none;">';
-//       	testDiv +='</button>';
+								        	 	
+								        	 	$('#queAfter tbody').append(html);
+								        	 	 /*$('div#checkTouch').click(function(){
+								        	        	console.log($(this).parent().next('button'));
+								        	        	let target = $(this).parent().next('button');
+								        	           touchQuestion(target); */
+								        	 	$('div#checkTouch').click(function(){ 
+							        	           	console.log($(this).parent().next());
+							        	            $(this).parent().next().click();
 
-//       	testDiv +='<div class="blank_under"></div>';
-//       	testDiv +='</div>';
-// 	        $('#queAfter').prepend(testDiv);
-// 	        $(obj).parent().next('button').click();
-// 	        console.log( $(obj).parent().next('button'));
-
-// 				        	        $('#queAfter div form div input[name=questionContent]').first().focus();
-// 				        	        $('#'+data[0].questionSeq).children().children().next().next().click();
+							        	           });
+								        	        /*});*/
+								        	 	
+								         },
+								         error : function(e) {
+								            // 전송 후 에러 발생 시 실행 코드
+								            console.log("ERROR : ", e);
+								         }
+									})
+				        	
 				        	 }
 
 
@@ -232,7 +284,7 @@ function manageQus(obj,questionSeq,questionTypeCodes,surveySeq){
    // 문제 누르면 touch버튼(돋보기) 활성화
    $(document).ready(function(){
         $('div#checkTouch').click(function(){
-        	console.log($(this).parent().next('button'));
+        	/*console.log($(this).parent().next('button'));*/
            $(this).parent().next().click();
 
         });

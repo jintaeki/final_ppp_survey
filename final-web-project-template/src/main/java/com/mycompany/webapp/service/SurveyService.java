@@ -284,6 +284,12 @@ public class SurveyService implements ISurveyService{
 		return surveyDao.getAllSurvey();
 	}
 
+	@Override
+	public List<Map<String, Object>> getQuestions(int surveySeq) {
+		
+		return surveyDao.getQuestions(surveySeq);
+	}
+
 }
 
 
