@@ -48,7 +48,7 @@ public interface ISurveyService {
 	List<Map<String, Object>> selectQuestionBySeq(int questionSeq,int surveySeq);
 
 	List<Map<String, Object>> selectItems(int questionSeq);
-
+	List<Map<String, Object>> getQuestions(int surveySeq);
 	void surveyInsertComplete(int surveySeq);
 
 	void deleteSurvey(int surveySeq);

@@ -261,7 +261,16 @@ public class SurveyController {
 		model.addAttribute("completeSurvey", surveyService.surveyList());
 		return "survey_insert";
 	}
-
+	
+	@ResponseBody
+	@RequestMapping("/getallquestion.do/{surveySeq}")
+	public List<Map<String,Object>> getQ(@PathVariable int surveySeq) {
+		List<Map<String,Object>> list = surveyService.getQuestions(surveySeq);
+		
+		
+		return list;
+	}
+	
 	// 문항 등록
 	@RequestMapping("/insertItem.do")
 	@ResponseBody

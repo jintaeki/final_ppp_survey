@@ -99,6 +99,14 @@
    </select>
 
 
+	<select id="getQuestions" parameterType="int" resultType="hashmap">
+      SELECT SURVEY_SEQ
+          ,QUESTION_SEQ
+          ,QUESTION_CONTENT
+          ,QUESTION_TYPE_CODE
+      FROM SURVEY_QUESTION WHERE SURVEY_SEQ = #{surveySeq} order by question_seq desc
+   </select>
+
    <select id="getQuestionListOrderByDesc" parameterType="int" resultType="com.mycompany.webapp.dto.SurveyQuestionDTO">
       SELECT SURVEY_SEQ
           ,QUESTION_SEQ
