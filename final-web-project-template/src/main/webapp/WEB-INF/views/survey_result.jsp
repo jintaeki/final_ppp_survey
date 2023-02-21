@@ -64,7 +64,14 @@
 							<c:forEach items="${objectiveResultList}" var="ORL">
 								<tr>
 									<td>${ORL.rnum}</td>
-									<td>${ORL.raterName}</td>
+									<td>
+									<c:if test="${ORL.anonymitySeq eq null}">
+										${ORL.raterName}
+									</c:if>
+									<c:if test="${ORL.anonymitySeq ne null}">
+										${ORL.anonymitySeq}
+									</c:if>
+									</td>
 									<td>${ORL.raterDepartmentName}</td>
 									<td>${ORL.raterGrade}</td>
 									<td>${ORL.questionType}</td>
